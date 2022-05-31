@@ -1,0 +1,81 @@
+!*==lgnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE LGNPPF(P,Ppf)
+      IMPLICIT NONE
+!*--LGNPPF11474
+!*** Start of declarations inserted by SPAG
+      INTEGER ipr
+      REAL P , Ppf
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT LGNPPF
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
+!              FUNCTION VALUE FOR THE LOGNORMAL
+!              DISTRIBUTION.
+!              THE LOGNORMAL DISTRIBUTION USED
+!              HEREIN HAS MEAN = SQRT(E) = 1.64872127
+!              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
+!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
+!              AND HAS THE PROBABILITY DENSITY FUNCTION
+!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-ALOG(X)*ALOG(X)/2)
+!              THE LOGNORMAL DISTRIBUTION USED HEREIN
+!              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
+!              THE VARIATE Z IS NORMALLY DISTRIBUTED
+!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
+!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
+!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
+!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
+!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!                                (BETWEEN 0.0 (EXCLUSIVELY)
+!                                AND 1.0 (EXCLUSIVELY))
+!                                AT WHICH THE PERCENT POINT
+!                                FUNCTION IS TO BE EVALUATED.
+!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!                                POINT FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!             VALUE PPF FOR THE LOGNORMAL DISTRIBUTION
+!             WITH MEAN = SQRT(E) = 1.64872127
+!             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
+!               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
+!                 1946, PAGES 219-220.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LGNPPF SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (ipr,99002) P
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
+     &           ' *****')
+         Ppf = 0.0
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         CALL NORPPF(P,Ppf)
+         Ppf = EXP(Ppf)
+      ENDIF
+!
+      END SUBROUTINE LGNPPF

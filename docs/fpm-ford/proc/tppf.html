@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Statistics">
+    
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>TPPF &ndash; M_datapac</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">M_datapac </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            <li><a href="../lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>TPPF
+      <small>Subroutine</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 1.0% of total for procedures.">153 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/M_datapac.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/m_datapac.f90.html'>M_datapac.f90</a></li>
+    
+     <li><a href='../module/m_datapac.html'>M_datapac</a></li>
+    
+  
+     <li class="active">TPPF</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-iseed~17">Iseed</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-n~111">N</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-nu~7">Nu</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-x~129">X</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-anu~4">anu</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-arg1~10">arg1</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-arg2~9">arg2</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b21~3">b21</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b31~3">b31</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b32~3">b32</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b33~2">b33</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b34~2">b34</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b41~2">b41</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b42~2">b42</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b43~2">b43</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b44">b44</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b45">b45</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b51">b51</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b52">b52</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b53">b53</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b54">b54</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b55">b55</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b56">b56</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-c~10">c</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d1~4">d1</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d3~4">d3</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d5~3">d5</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d7~3">d7</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d9~2">d9</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-darg">darg</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dcon">dcon</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dnu~4">dnu</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dp~4">dp</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dppf">dppf</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dppfn">dppfn</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-i~120">i</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-ipass">ipass</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-ipr~155">ipr</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-ipr~156">ipr</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-j~45">j</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-maxit~4">maxit</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-pi~21">pi</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-pi~22">pi</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-ppfn">ppfn</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-s~8">s</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-sqrt2">sqrt2</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-sum~36">sum</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term1~4">term1</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term2~4">term2</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term3~4">term3</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term4~2">term4</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term5">term5</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-y~8">y</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-z~16">z</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-z~17">z</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-znorm">znorm</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/tppf.html#src">TPPF</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+public subroutine TPPF(P, Nu, Ppf)
+    
+    
+   
+</h2>
+    
+  
+
+
+    
+    <p>&ndash;TPPF31281
+<strong> Start of declarations inserted by SPAG
+==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+&ndash;TRAN31505
+</strong> Start of declarations inserted by SPAG</p>
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-p~33"></span>real</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>P</strong></td><td><p>** End of declarations inserted by SPAG
+CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+      DLL_EXPORT TPPF</p>
+<div class="codehilite"><pre><span></span><code> <span class="n">PURPOSE</span><span class="o">--</span><span class="n">THIS</span> <span class="n">SUBROUTINE</span> <span class="n">COMPUTES</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span>
+          <span class="n">FUNCTION</span> <span class="n">VALUE</span> <span class="kr">FOR</span> <span class="n">THE</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span>
+          <span class="kr">WITH</span> <span class="kt">INTEGER</span> <span class="n">DEGREES</span> <span class="kr">OF</span> <span class="n">FREEDOM</span> <span class="n">PARAMETER</span> <span class="o">=</span> <span class="n">NU</span><span class="p">.</span>
+          <span class="n">THE</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span> <span class="n">USED</span>
+          <span class="n">HEREIN</span> <span class="kr">IS</span> <span class="n">DEFINED</span> <span class="kr">FOR</span> <span class="n">ALL</span> <span class="n">X</span><span class="p">,</span>
+          <span class="n">AND</span> <span class="n">ITS</span> <span class="n">PROBABILITY</span> <span class="n">DENSITY</span> <span class="n">FUNCTION</span> <span class="kr">IS</span> <span class="n">GIVEN</span>
+          <span class="kr">IN</span> <span class="n">THE</span> <span class="n">REFERENCES</span> <span class="n">BELOW</span><span class="p">.</span>
+          <span class="n">NOTE</span> <span class="n">THAT</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="n">FUNCTION</span> <span class="kr">OF</span> <span class="n">A</span> <span class="n">DISTRIBUTION</span>
+          <span class="kr">IS</span> <span class="n">IDENTICALLY</span> <span class="n">THE</span> <span class="n">SAME</span> <span class="n">AS</span> <span class="n">THE</span> <span class="n">INVERSE</span> <span class="n">CUMULATIVE</span>
+          <span class="n">DISTRIBUTION</span> <span class="n">FUNCTION</span> <span class="kr">OF</span> <span class="n">THE</span> <span class="n">DISTRIBUTION</span><span class="p">.</span>
+ <span class="n">INPUT</span>  <span class="n">ARGUMENTS</span><span class="o">--</span><span class="n">P</span>      <span class="o">=</span> <span class="n">THE</span> <span class="n">SINGLE</span> <span class="n">PRECISION</span> <span class="n">VALUE</span>
+                            <span class="p">(</span><span class="n">BETWEEN</span> <span class="mf">0.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">)</span>
+                            <span class="n">AND</span> <span class="mf">1.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">))</span>
+                            <span class="n">AT</span> <span class="n">WHICH</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span>
+                            <span class="n">FUNCTION</span> <span class="kr">IS</span> <span class="kr">TO</span> <span class="n">BE</span> <span class="n">EVALUATED</span><span class="p">.</span>
+                 <span class="o">--</span><span class="n">NU</span>     <span class="o">=</span> <span class="n">THE</span> <span class="kt">INTEGER</span> <span class="n">NUMBER</span> <span class="kr">OF</span> <span class="n">DEGREES</span>
+                            <span class="kr">OF</span> <span class="n">FREEDOM</span><span class="p">.</span>
+                            <span class="n">NU</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">POSITIVE</span><span class="p">.</span>
+ <span class="n">OUTPUT</span> <span class="n">ARGUMENTS</span><span class="o">--</span><span class="n">PPF</span>    <span class="o">=</span> <span class="n">THE</span> <span class="n">SINGLE</span> <span class="n">PRECISION</span> <span class="n">PERCENT</span>
+                            <span class="n">POINT</span> <span class="n">FUNCTION</span> <span class="n">VALUE</span><span class="p">.</span>
+ <span class="n">OUTPUT</span><span class="o">--</span><span class="n">THE</span> <span class="n">SINGLE</span> <span class="n">PRECISION</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="n">FUNCTION</span> <span class="p">.</span>
+         <span class="n">VALUE</span> <span class="n">PPF</span> <span class="kr">FOR</span> <span class="n">THE</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span>
+         <span class="kr">WITH</span> <span class="n">DEGREES</span> <span class="kr">OF</span> <span class="n">FREEDOM</span> <span class="n">PARAMETER</span> <span class="o">=</span> <span class="n">NU</span><span class="p">.</span>
+ <span class="n">PRINTING</span><span class="o">--</span><span class="n">NONE</span> <span class="n">UNLESS</span> <span class="n">AN</span> <span class="n">INPUT</span> <span class="n">ARGUMENT</span> <span class="n">ERROR</span> <span class="n">CONDITION</span> <span class="n">EXISTS</span><span class="p">.</span>
+ <span class="n">RESTRICTIONS</span><span class="o">--</span><span class="n">NU</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">A</span> <span class="n">POSITIVE</span> <span class="kt">INTEGER</span> <span class="n">VARIABLE</span><span class="p">.</span>
+             <span class="o">--</span><span class="n">P</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">BETWEEN</span> <span class="mf">0.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">)</span>
+               <span class="n">AND</span> <span class="mf">1.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">).</span>
+ <span class="n">OTHER</span> <span class="n">DATAPAC</span>   <span class="n">SUBROUTINES</span> <span class="n">NEEDED</span><span class="o">--</span><span class="n">NORPPF</span><span class="p">.</span>
+ <span class="n">FORTRAN</span> <span class="n">LIBRARY</span> <span class="n">SUBROUTINES</span> <span class="n">NEEDED</span><span class="o">--</span><span class="n">DSIN</span><span class="p">,</span> <span class="n">DCOS</span><span class="p">,</span> <span class="n">DSQRT</span><span class="p">,</span> <span class="n">DATAN</span><span class="p">.</span>
+ <span class="n">MODE</span> <span class="kr">OF</span> <span class="n">INTERNAL</span> <span class="n">OPERATIONS</span><span class="o">--</span><span class="n">DOUBLE</span> <span class="n">PRECISION</span><span class="p">.</span>
+ <span class="n">LANGUAGE</span><span class="o">--</span><span class="n">ANSI</span> <span class="n">FORTRAN</span><span class="p">.</span>
+ <span class="n">COMMENT</span><span class="o">--</span><span class="kr">FOR</span> <span class="n">NU</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">AND</span> <span class="n">NU</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="n">FUNCTION</span>
+          <span class="kr">FOR</span> <span class="n">THE</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span> <span class="n">EXISTS</span> <span class="kr">IN</span> <span class="n">SIMPLE</span> <span class="n">CLOSED</span> <span class="n">FORM</span>
+          <span class="n">AND</span> <span class="n">SO</span> <span class="n">THE</span> <span class="n">COMPUTED</span> <span class="n">PERCENT</span> <span class="n">POINTS</span> <span class="n">ARE</span> <span class="n">EXACT</span><span class="p">.</span>
+        <span class="o">--</span><span class="kr">FOR</span> <span class="n">OTHER</span> <span class="n">SMALL</span> <span class="n">VALUES</span> <span class="kr">OF</span> <span class="n">NU</span> <span class="p">(</span><span class="n">NU</span> <span class="n">BETWEEN</span> <span class="mi">3</span> <span class="n">AND</span> <span class="mi">6</span><span class="p">,</span>
+          <span class="n">INCLUSIVELY</span><span class="p">),</span> <span class="n">THE</span> <span class="n">APPROXIMATION</span>
+          <span class="kr">OF</span> <span class="n">THE</span> <span class="n">T</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="kr">BY</span> <span class="n">THE</span> <span class="n">FORMULA</span>
+          <span class="n">GIVEN</span> <span class="kr">IN</span> <span class="n">THE</span> <span class="n">REFERENCE</span> <span class="n">BELOW</span> <span class="kr">IS</span> <span class="n">AUGMENTED</span>
+          <span class="kr">BY</span> <span class="mi">3</span> <span class="n">ITERATIONS</span> <span class="kr">OF</span> <span class="n">NEWTON</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">METHOD</span> <span class="kr">FOR</span>
+          <span class="n">ROOT</span> <span class="n">DETERMINATION</span><span class="p">.</span>
+          <span class="n">THIS</span> <span class="n">IMPROVES</span> <span class="n">THE</span> <span class="n">ACCURACY</span><span class="o">--</span><span class="n">ESPECIALLY</span> <span class="kr">FOR</span>
+          <span class="n">VALUES</span> <span class="kr">OF</span> <span class="n">P</span> <span class="n">NEAR</span> <span class="mi">0</span> <span class="kr">OR</span> <span class="mi">1</span><span class="p">.</span>
+ <span class="n">REFERENCES</span><span class="o">--</span><span class="n">NATIONAL</span> <span class="n">BUREAU</span> <span class="kr">OF</span> <span class="n">STANDARDS</span> <span class="n">APPLIED</span> <span class="n">MATHMATICS</span>
+             <span class="n">SERIES</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">1964</span><span class="p">,</span> <span class="n">PAGE</span> <span class="mi">949</span><span class="p">,</span> <span class="n">FORMULA</span> <span class="mf">26.7</span><span class="p">.</span><span class="mi">5</span><span class="p">.</span>
+           <span class="o">--</span><span class="n">JOHNSON</span> <span class="n">AND</span> <span class="n">KOTZ</span><span class="p">,</span> <span class="n">CONTINUOUS</span> <span class="n">UNIVARIATE</span>
+             <span class="n">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1970</span><span class="p">,</span> <span class="n">PAGE</span> <span class="mi">102</span><span class="p">,</span>
+             <span class="n">FORMULA</span> <span class="mi">11</span><span class="p">.</span>
+           <span class="o">--</span><span class="n">FEDERIGHI</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">EXTENDED</span> <span class="n">TABLES</span> <span class="kr">OF</span> <span class="n">THE</span>
+             <span class="n">PERCENTAGE</span> <span class="n">POINTS</span> <span class="kr">OF</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span>
+             <span class="n">DISTRIBUTION</span><span class="p">,</span> <span class="n">JOURNAL</span> <span class="kr">OF</span> <span class="n">THE</span>
+             <span class="n">AMERICAN</span> <span class="n">STATISTICAL</span> <span class="n">ASSOCIATION</span><span class="p">,</span>
+             <span class="mi">1969</span><span class="p">,</span> <span class="n">PAGES</span> <span class="mi">683</span><span class="o">-</span><span class="mi">688</span><span class="p">.</span>
+           <span class="o">--</span><span class="n">HASTINGS</span> <span class="n">AND</span> <span class="n">PEACOCK</span><span class="p">,</span> <span class="n">STATISTICAL</span>
+             <span class="n">DISTRIBUTIONS</span><span class="o">--</span><span class="n">A</span> <span class="n">HANDBOOK</span> <span class="kr">FOR</span>
+             <span class="n">STUDENTS</span> <span class="n">AND</span> <span class="n">PRACTITIONERS</span><span class="p">,</span> <span class="mi">1975</span><span class="p">,</span>
+             <span class="n">PAGES</span> <span class="mi">120</span><span class="o">-</span><span class="mi">123</span><span class="p">.</span>
+ <span class="n">WRITTEN</span> <span class="kr">BY</span><span class="o">--</span><span class="n">JAMES</span> <span class="n">J</span><span class="p">.</span> <span class="n">FILLIBEN</span>
+             <span class="n">STATISTICAL</span> <span class="n">ENGINEERING</span> <span class="n">LABORATORY</span> <span class="p">(</span><span class="mf">205.03</span><span class="p">)</span>
+             <span class="n">NATIONAL</span> <span class="n">BUREAU</span> <span class="kr">OF</span> <span class="n">STANDARDS</span>
+             <span class="n">WASHINGTON</span><span class="p">,</span> <span class="n">D</span><span class="p">.</span> <span class="n">C</span><span class="p">.</span> <span class="mi">20234</span>
+             <span class="n">PHONE</span><span class="p">:</span>  <span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">2315</span>
+ <span class="n">ORIGINAL</span> <span class="n">VERSION</span><span class="o">--</span><span class="n">OCTOBER</span>   <span class="mi">1975</span><span class="p">.</span>
+ <span class="n">UPDATED</span>         <span class="o">--</span><span class="n">NOVEMBER</span>  <span class="mi">1975</span><span class="p">.</span>
+</code></pre></div>
+
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nu~8"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>Nu</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ppf~18"></span>real</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>Ppf</strong></td><td><p>** End of declarations inserted by SPAG
+CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+      DLL_EXPORT TPPF</p>
+<div class="codehilite"><pre><span></span><code> <span class="n">PURPOSE</span><span class="o">--</span><span class="n">THIS</span> <span class="n">SUBROUTINE</span> <span class="n">COMPUTES</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span>
+          <span class="n">FUNCTION</span> <span class="n">VALUE</span> <span class="kr">FOR</span> <span class="n">THE</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span>
+          <span class="kr">WITH</span> <span class="kt">INTEGER</span> <span class="n">DEGREES</span> <span class="kr">OF</span> <span class="n">FREEDOM</span> <span class="n">PARAMETER</span> <span class="o">=</span> <span class="n">NU</span><span class="p">.</span>
+          <span class="n">THE</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span> <span class="n">USED</span>
+          <span class="n">HEREIN</span> <span class="kr">IS</span> <span class="n">DEFINED</span> <span class="kr">FOR</span> <span class="n">ALL</span> <span class="n">X</span><span class="p">,</span>
+          <span class="n">AND</span> <span class="n">ITS</span> <span class="n">PROBABILITY</span> <span class="n">DENSITY</span> <span class="n">FUNCTION</span> <span class="kr">IS</span> <span class="n">GIVEN</span>
+          <span class="kr">IN</span> <span class="n">THE</span> <span class="n">REFERENCES</span> <span class="n">BELOW</span><span class="p">.</span>
+          <span class="n">NOTE</span> <span class="n">THAT</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="n">FUNCTION</span> <span class="kr">OF</span> <span class="n">A</span> <span class="n">DISTRIBUTION</span>
+          <span class="kr">IS</span> <span class="n">IDENTICALLY</span> <span class="n">THE</span> <span class="n">SAME</span> <span class="n">AS</span> <span class="n">THE</span> <span class="n">INVERSE</span> <span class="n">CUMULATIVE</span>
+          <span class="n">DISTRIBUTION</span> <span class="n">FUNCTION</span> <span class="kr">OF</span> <span class="n">THE</span> <span class="n">DISTRIBUTION</span><span class="p">.</span>
+ <span class="n">INPUT</span>  <span class="n">ARGUMENTS</span><span class="o">--</span><span class="n">P</span>      <span class="o">=</span> <span class="n">THE</span> <span class="n">SINGLE</span> <span class="n">PRECISION</span> <span class="n">VALUE</span>
+                            <span class="p">(</span><span class="n">BETWEEN</span> <span class="mf">0.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">)</span>
+                            <span class="n">AND</span> <span class="mf">1.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">))</span>
+                            <span class="n">AT</span> <span class="n">WHICH</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span>
+                            <span class="n">FUNCTION</span> <span class="kr">IS</span> <span class="kr">TO</span> <span class="n">BE</span> <span class="n">EVALUATED</span><span class="p">.</span>
+                 <span class="o">--</span><span class="n">NU</span>     <span class="o">=</span> <span class="n">THE</span> <span class="kt">INTEGER</span> <span class="n">NUMBER</span> <span class="kr">OF</span> <span class="n">DEGREES</span>
+                            <span class="kr">OF</span> <span class="n">FREEDOM</span><span class="p">.</span>
+                            <span class="n">NU</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">POSITIVE</span><span class="p">.</span>
+ <span class="n">OUTPUT</span> <span class="n">ARGUMENTS</span><span class="o">--</span><span class="n">PPF</span>    <span class="o">=</span> <span class="n">THE</span> <span class="n">SINGLE</span> <span class="n">PRECISION</span> <span class="n">PERCENT</span>
+                            <span class="n">POINT</span> <span class="n">FUNCTION</span> <span class="n">VALUE</span><span class="p">.</span>
+ <span class="n">OUTPUT</span><span class="o">--</span><span class="n">THE</span> <span class="n">SINGLE</span> <span class="n">PRECISION</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="n">FUNCTION</span> <span class="p">.</span>
+         <span class="n">VALUE</span> <span class="n">PPF</span> <span class="kr">FOR</span> <span class="n">THE</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span>
+         <span class="kr">WITH</span> <span class="n">DEGREES</span> <span class="kr">OF</span> <span class="n">FREEDOM</span> <span class="n">PARAMETER</span> <span class="o">=</span> <span class="n">NU</span><span class="p">.</span>
+ <span class="n">PRINTING</span><span class="o">--</span><span class="n">NONE</span> <span class="n">UNLESS</span> <span class="n">AN</span> <span class="n">INPUT</span> <span class="n">ARGUMENT</span> <span class="n">ERROR</span> <span class="n">CONDITION</span> <span class="n">EXISTS</span><span class="p">.</span>
+ <span class="n">RESTRICTIONS</span><span class="o">--</span><span class="n">NU</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">A</span> <span class="n">POSITIVE</span> <span class="kt">INTEGER</span> <span class="n">VARIABLE</span><span class="p">.</span>
+             <span class="o">--</span><span class="n">P</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">BETWEEN</span> <span class="mf">0.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">)</span>
+               <span class="n">AND</span> <span class="mf">1.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">).</span>
+ <span class="n">OTHER</span> <span class="n">DATAPAC</span>   <span class="n">SUBROUTINES</span> <span class="n">NEEDED</span><span class="o">--</span><span class="n">NORPPF</span><span class="p">.</span>
+ <span class="n">FORTRAN</span> <span class="n">LIBRARY</span> <span class="n">SUBROUTINES</span> <span class="n">NEEDED</span><span class="o">--</span><span class="n">DSIN</span><span class="p">,</span> <span class="n">DCOS</span><span class="p">,</span> <span class="n">DSQRT</span><span class="p">,</span> <span class="n">DATAN</span><span class="p">.</span>
+ <span class="n">MODE</span> <span class="kr">OF</span> <span class="n">INTERNAL</span> <span class="n">OPERATIONS</span><span class="o">--</span><span class="n">DOUBLE</span> <span class="n">PRECISION</span><span class="p">.</span>
+ <span class="n">LANGUAGE</span><span class="o">--</span><span class="n">ANSI</span> <span class="n">FORTRAN</span><span class="p">.</span>
+ <span class="n">COMMENT</span><span class="o">--</span><span class="kr">FOR</span> <span class="n">NU</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">AND</span> <span class="n">NU</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="n">FUNCTION</span>
+          <span class="kr">FOR</span> <span class="n">THE</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span> <span class="n">EXISTS</span> <span class="kr">IN</span> <span class="n">SIMPLE</span> <span class="n">CLOSED</span> <span class="n">FORM</span>
+          <span class="n">AND</span> <span class="n">SO</span> <span class="n">THE</span> <span class="n">COMPUTED</span> <span class="n">PERCENT</span> <span class="n">POINTS</span> <span class="n">ARE</span> <span class="n">EXACT</span><span class="p">.</span>
+        <span class="o">--</span><span class="kr">FOR</span> <span class="n">OTHER</span> <span class="n">SMALL</span> <span class="n">VALUES</span> <span class="kr">OF</span> <span class="n">NU</span> <span class="p">(</span><span class="n">NU</span> <span class="n">BETWEEN</span> <span class="mi">3</span> <span class="n">AND</span> <span class="mi">6</span><span class="p">,</span>
+          <span class="n">INCLUSIVELY</span><span class="p">),</span> <span class="n">THE</span> <span class="n">APPROXIMATION</span>
+          <span class="kr">OF</span> <span class="n">THE</span> <span class="n">T</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="kr">BY</span> <span class="n">THE</span> <span class="n">FORMULA</span>
+          <span class="n">GIVEN</span> <span class="kr">IN</span> <span class="n">THE</span> <span class="n">REFERENCE</span> <span class="n">BELOW</span> <span class="kr">IS</span> <span class="n">AUGMENTED</span>
+          <span class="kr">BY</span> <span class="mi">3</span> <span class="n">ITERATIONS</span> <span class="kr">OF</span> <span class="n">NEWTON</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">METHOD</span> <span class="kr">FOR</span>
+          <span class="n">ROOT</span> <span class="n">DETERMINATION</span><span class="p">.</span>
+          <span class="n">THIS</span> <span class="n">IMPROVES</span> <span class="n">THE</span> <span class="n">ACCURACY</span><span class="o">--</span><span class="n">ESPECIALLY</span> <span class="kr">FOR</span>
+          <span class="n">VALUES</span> <span class="kr">OF</span> <span class="n">P</span> <span class="n">NEAR</span> <span class="mi">0</span> <span class="kr">OR</span> <span class="mi">1</span><span class="p">.</span>
+ <span class="n">REFERENCES</span><span class="o">--</span><span class="n">NATIONAL</span> <span class="n">BUREAU</span> <span class="kr">OF</span> <span class="n">STANDARDS</span> <span class="n">APPLIED</span> <span class="n">MATHMATICS</span>
+             <span class="n">SERIES</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">1964</span><span class="p">,</span> <span class="n">PAGE</span> <span class="mi">949</span><span class="p">,</span> <span class="n">FORMULA</span> <span class="mf">26.7</span><span class="p">.</span><span class="mi">5</span><span class="p">.</span>
+           <span class="o">--</span><span class="n">JOHNSON</span> <span class="n">AND</span> <span class="n">KOTZ</span><span class="p">,</span> <span class="n">CONTINUOUS</span> <span class="n">UNIVARIATE</span>
+             <span class="n">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1970</span><span class="p">,</span> <span class="n">PAGE</span> <span class="mi">102</span><span class="p">,</span>
+             <span class="n">FORMULA</span> <span class="mi">11</span><span class="p">.</span>
+           <span class="o">--</span><span class="n">FEDERIGHI</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">EXTENDED</span> <span class="n">TABLES</span> <span class="kr">OF</span> <span class="n">THE</span>
+             <span class="n">PERCENTAGE</span> <span class="n">POINTS</span> <span class="kr">OF</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span>
+             <span class="n">DISTRIBUTION</span><span class="p">,</span> <span class="n">JOURNAL</span> <span class="kr">OF</span> <span class="n">THE</span>
+             <span class="n">AMERICAN</span> <span class="n">STATISTICAL</span> <span class="n">ASSOCIATION</span><span class="p">,</span>
+             <span class="mi">1969</span><span class="p">,</span> <span class="n">PAGES</span> <span class="mi">683</span><span class="o">-</span><span class="mi">688</span><span class="p">.</span>
+           <span class="o">--</span><span class="n">HASTINGS</span> <span class="n">AND</span> <span class="n">PEACOCK</span><span class="p">,</span> <span class="n">STATISTICAL</span>
+             <span class="n">DISTRIBUTIONS</span><span class="o">--</span><span class="n">A</span> <span class="n">HANDBOOK</span> <span class="kr">FOR</span>
+             <span class="n">STUDENTS</span> <span class="n">AND</span> <span class="n">PRACTITIONERS</span><span class="p">,</span> <span class="mi">1975</span><span class="p">,</span>
+             <span class="n">PAGES</span> <span class="mi">120</span><span class="o">-</span><span class="mi">123</span><span class="p">.</span>
+ <span class="n">WRITTEN</span> <span class="kr">BY</span><span class="o">--</span><span class="n">JAMES</span> <span class="n">J</span><span class="p">.</span> <span class="n">FILLIBEN</span>
+             <span class="n">STATISTICAL</span> <span class="n">ENGINEERING</span> <span class="n">LABORATORY</span> <span class="p">(</span><span class="mf">205.03</span><span class="p">)</span>
+             <span class="n">NATIONAL</span> <span class="n">BUREAU</span> <span class="kr">OF</span> <span class="n">STANDARDS</span>
+             <span class="n">WASHINGTON</span><span class="p">,</span> <span class="n">D</span><span class="p">.</span> <span class="n">C</span><span class="p">.</span> <span class="mi">20234</span>
+             <span class="n">PHONE</span><span class="p">:</span>  <span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">2315</span>
+ <span class="n">ORIGINAL</span> <span class="n">VERSION</span><span class="o">--</span><span class="n">OCTOBER</span>   <span class="mi">1975</span><span class="p">.</span>
+ <span class="n">UPDATED</span>         <span class="o">--</span><span class="n">NOVEMBER</span>  <span class="mi">1975</span><span class="p">.</span>
+</code></pre></div>
+
+<hr></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-iseed~17">Iseed</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-n~111">N</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-nu~7">Nu</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-x~129">X</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-anu~4">anu</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-arg1~10">arg1</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-arg2~9">arg2</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b21~3">b21</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b31~3">b31</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b32~3">b32</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b33~2">b33</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b34~2">b34</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b41~2">b41</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b42~2">b42</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b43~2">b43</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b44">b44</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b45">b45</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b51">b51</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b52">b52</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b53">b53</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b54">b54</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b55">b55</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-b56">b56</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-c~10">c</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d1~4">d1</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d3~4">d3</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d5~3">d5</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d7~3">d7</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-d9~2">d9</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-darg">darg</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dcon">dcon</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dnu~4">dnu</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dp~4">dp</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dppf">dppf</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-dppfn">dppfn</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-i~120">i</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-ipass">ipass</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-ipr~155">ipr</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-ipr~156">ipr</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-j~45">j</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-maxit~4">maxit</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-pi~21">pi</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-pi~22">pi</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-ppfn">ppfn</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-s~8">s</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-sqrt2">sqrt2</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-sum~36">sum</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term1~4">term1</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term2~4">term2</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term3~4">term3</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term4~2">term4</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-term5">term5</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-y~8">y</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-z~16">z</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-z~17">z</a>
+      
+      <a class="list-group-item" href="../proc/tppf.html#variable-znorm">znorm</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/tppf.html#src">TPPF</a>
+  </div>
+</div>
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    <section>    
+      <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-iseed~17"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>Iseed</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG
+CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+      DLL_EXPORT TRAN</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+          <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+          <span class="nv">WITH</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">DESIRED</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span>
+                            <span class="nv">OF</span> <span class="k">RANDOM</span> <span class="nv">NUMBERS</span> <span class="nv">TO</span> <span class="nv">BE</span>
+                            <span class="nv">GENERATED</span>.
+                 <span class="o">--</span><span class="nv">NU</span>     <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span>
+                            <span class="ss">(</span><span class="nv">PARAMETER</span><span class="ss">)</span> <span class="k">FOR</span> <span class="nv">THE</span> <span class="nv">T</span>
+                            <span class="nv">DISTRIBUTION</span>.
+ <span class="nv">OUTPUT</span> <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">A</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span>
+                            <span class="ss">(</span><span class="nv">OF</span> <span class="nv">DIMENSION</span> <span class="nv">AT</span> <span class="nv">LEAST</span> <span class="nv">N</span><span class="ss">)</span>
+                            <span class="nv">INTO</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">GENERATED</span>
+                            <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">WILL</span> <span class="nv">BE</span> <span class="nv">PLACED</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+         <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+         <span class="nv">WITH</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">NONE</span> <span class="nv">UNLESS</span> <span class="nv">AN</span> <span class="nv">INPUT</span> <span class="nv">ARGUMENT</span> <span class="nv">ERROR</span> <span class="nv">CONDITION</span> <span class="nv">EXISTS</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THERE</span> <span class="nv">IS</span> <span class="nv">NO</span> <span class="nv">RESTRICTION</span> <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">VALUE</span>
+               <span class="nv">OF</span> <span class="nv">N</span> <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span>.
+             <span class="o">--</span><span class="nv">NU</span> <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">A</span> <span class="nv">POSITIVE</span> <span class="nv">INTEGER</span> <span class="nv">VARIABLE</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">UNIRAN</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">ALOG</span>, <span class="nv">SQRT</span>, <span class="nv">SIN</span>, <span class="nv">COS</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1977</span><span class="ss">)</span>
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">MOOD</span> <span class="nv">AND</span> <span class="nv">GRABLE</span>, <span class="nv">INTRODUCTION</span> <span class="nv">TO</span> <span class="nv">THE</span>
+             <span class="nv">THEORY</span> <span class="nv">OF</span> <span class="nv">STATISTICS</span>, <span class="mi">1963</span>, <span class="nv">PAGE</span> <span class="mi">233</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">2</span>, <span class="mi">1970</span>, <span class="nv">PAGE</span> <span class="mi">94</span>.
+           <span class="o">--</span><span class="nv">HASTINGS</span> <span class="nv">AND</span> <span class="nv">PEACOCK</span>, <span class="nv">STATISTICAL</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="nv">A</span> <span class="nv">HANDBOOK</span> <span class="k">FOR</span>
+             <span class="nv">STUDENTS</span> <span class="nv">AND</span> <span class="nv">PRACTITIONERS</span>, <span class="mi">1975</span>,
+             <span class="nv">PAGE</span> <span class="mi">121</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">DIVISION</span>
+             <span class="nv">CENTER</span> <span class="k">FOR</span> <span class="nv">APPLIED</span> <span class="nv">MATHEMATICS</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span><span class="o">--</span><span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">3651</span>
+ <span class="nv">NOTE</span><span class="o">--</span><span class="nv">DATAPLOT</span> <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">REGISTERED</span> <span class="nv">TRADEMARK</span>
+       <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>.
+       <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">MAY</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">COPIED</span>, <span class="nv">EXTRACTED</span>,
+       <span class="nv">MODIFIED</span>, <span class="nv">OR</span> <span class="nv">OTHERWISE</span> <span class="nv">USED</span> <span class="nv">IN</span> <span class="nv">A</span> <span class="nv">CONTEXT</span>
+       <span class="nv">OUTSIDE</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">DATAPLOT</span> <span class="nv">LANGUAGE</span><span class="o">/</span><span class="nv">SYSTEM</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1966</span><span class="ss">)</span>
+           <span class="nv">EXCEPTION</span><span class="o">--</span><span class="nv">HOLLERITH</span> <span class="nv">STRINGS</span> <span class="nv">IN</span> <span class="nv">FORMAT</span> <span class="nv">STATEMENTS</span>
+                      <span class="nv">DENOTED</span> <span class="nv">BY</span> <span class="nv">QUOTES</span> <span class="nv">RATHER</span> <span class="nv">THAN</span> <span class="nv">NH</span>.
+ <span class="nv">VERSION</span> <span class="nv">NUMBER</span><span class="o">--</span><span class="mi">82</span>.<span class="mi">6</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">DECEMBER</span>  <span class="mi">1981</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">MAY</span>       <span class="mi">1982</span>.
+</code></pre></div>
+
+<p>-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------</p>
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n~111"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>N</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG
+CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+      DLL_EXPORT TRAN</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+          <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+          <span class="nv">WITH</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">DESIRED</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span>
+                            <span class="nv">OF</span> <span class="k">RANDOM</span> <span class="nv">NUMBERS</span> <span class="nv">TO</span> <span class="nv">BE</span>
+                            <span class="nv">GENERATED</span>.
+                 <span class="o">--</span><span class="nv">NU</span>     <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span>
+                            <span class="ss">(</span><span class="nv">PARAMETER</span><span class="ss">)</span> <span class="k">FOR</span> <span class="nv">THE</span> <span class="nv">T</span>
+                            <span class="nv">DISTRIBUTION</span>.
+ <span class="nv">OUTPUT</span> <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">A</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span>
+                            <span class="ss">(</span><span class="nv">OF</span> <span class="nv">DIMENSION</span> <span class="nv">AT</span> <span class="nv">LEAST</span> <span class="nv">N</span><span class="ss">)</span>
+                            <span class="nv">INTO</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">GENERATED</span>
+                            <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">WILL</span> <span class="nv">BE</span> <span class="nv">PLACED</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+         <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+         <span class="nv">WITH</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">NONE</span> <span class="nv">UNLESS</span> <span class="nv">AN</span> <span class="nv">INPUT</span> <span class="nv">ARGUMENT</span> <span class="nv">ERROR</span> <span class="nv">CONDITION</span> <span class="nv">EXISTS</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THERE</span> <span class="nv">IS</span> <span class="nv">NO</span> <span class="nv">RESTRICTION</span> <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">VALUE</span>
+               <span class="nv">OF</span> <span class="nv">N</span> <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span>.
+             <span class="o">--</span><span class="nv">NU</span> <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">A</span> <span class="nv">POSITIVE</span> <span class="nv">INTEGER</span> <span class="nv">VARIABLE</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">UNIRAN</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">ALOG</span>, <span class="nv">SQRT</span>, <span class="nv">SIN</span>, <span class="nv">COS</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1977</span><span class="ss">)</span>
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">MOOD</span> <span class="nv">AND</span> <span class="nv">GRABLE</span>, <span class="nv">INTRODUCTION</span> <span class="nv">TO</span> <span class="nv">THE</span>
+             <span class="nv">THEORY</span> <span class="nv">OF</span> <span class="nv">STATISTICS</span>, <span class="mi">1963</span>, <span class="nv">PAGE</span> <span class="mi">233</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">2</span>, <span class="mi">1970</span>, <span class="nv">PAGE</span> <span class="mi">94</span>.
+           <span class="o">--</span><span class="nv">HASTINGS</span> <span class="nv">AND</span> <span class="nv">PEACOCK</span>, <span class="nv">STATISTICAL</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="nv">A</span> <span class="nv">HANDBOOK</span> <span class="k">FOR</span>
+             <span class="nv">STUDENTS</span> <span class="nv">AND</span> <span class="nv">PRACTITIONERS</span>, <span class="mi">1975</span>,
+             <span class="nv">PAGE</span> <span class="mi">121</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">DIVISION</span>
+             <span class="nv">CENTER</span> <span class="k">FOR</span> <span class="nv">APPLIED</span> <span class="nv">MATHEMATICS</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span><span class="o">--</span><span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">3651</span>
+ <span class="nv">NOTE</span><span class="o">--</span><span class="nv">DATAPLOT</span> <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">REGISTERED</span> <span class="nv">TRADEMARK</span>
+       <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>.
+       <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">MAY</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">COPIED</span>, <span class="nv">EXTRACTED</span>,
+       <span class="nv">MODIFIED</span>, <span class="nv">OR</span> <span class="nv">OTHERWISE</span> <span class="nv">USED</span> <span class="nv">IN</span> <span class="nv">A</span> <span class="nv">CONTEXT</span>
+       <span class="nv">OUTSIDE</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">DATAPLOT</span> <span class="nv">LANGUAGE</span><span class="o">/</span><span class="nv">SYSTEM</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1966</span><span class="ss">)</span>
+           <span class="nv">EXCEPTION</span><span class="o">--</span><span class="nv">HOLLERITH</span> <span class="nv">STRINGS</span> <span class="nv">IN</span> <span class="nv">FORMAT</span> <span class="nv">STATEMENTS</span>
+                      <span class="nv">DENOTED</span> <span class="nv">BY</span> <span class="nv">QUOTES</span> <span class="nv">RATHER</span> <span class="nv">THAN</span> <span class="nv">NH</span>.
+ <span class="nv">VERSION</span> <span class="nv">NUMBER</span><span class="o">--</span><span class="mi">82</span>.<span class="mi">6</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">DECEMBER</span>  <span class="mi">1981</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">MAY</span>       <span class="mi">1982</span>.
+</code></pre></div>
+
+<p>-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------</p>
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nu~7"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>Nu</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG
+CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+      DLL_EXPORT TRAN</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+          <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+          <span class="nv">WITH</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">DESIRED</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span>
+                            <span class="nv">OF</span> <span class="k">RANDOM</span> <span class="nv">NUMBERS</span> <span class="nv">TO</span> <span class="nv">BE</span>
+                            <span class="nv">GENERATED</span>.
+                 <span class="o">--</span><span class="nv">NU</span>     <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span>
+                            <span class="ss">(</span><span class="nv">PARAMETER</span><span class="ss">)</span> <span class="k">FOR</span> <span class="nv">THE</span> <span class="nv">T</span>
+                            <span class="nv">DISTRIBUTION</span>.
+ <span class="nv">OUTPUT</span> <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">A</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span>
+                            <span class="ss">(</span><span class="nv">OF</span> <span class="nv">DIMENSION</span> <span class="nv">AT</span> <span class="nv">LEAST</span> <span class="nv">N</span><span class="ss">)</span>
+                            <span class="nv">INTO</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">GENERATED</span>
+                            <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">WILL</span> <span class="nv">BE</span> <span class="nv">PLACED</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+         <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+         <span class="nv">WITH</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">NONE</span> <span class="nv">UNLESS</span> <span class="nv">AN</span> <span class="nv">INPUT</span> <span class="nv">ARGUMENT</span> <span class="nv">ERROR</span> <span class="nv">CONDITION</span> <span class="nv">EXISTS</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THERE</span> <span class="nv">IS</span> <span class="nv">NO</span> <span class="nv">RESTRICTION</span> <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">VALUE</span>
+               <span class="nv">OF</span> <span class="nv">N</span> <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span>.
+             <span class="o">--</span><span class="nv">NU</span> <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">A</span> <span class="nv">POSITIVE</span> <span class="nv">INTEGER</span> <span class="nv">VARIABLE</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">UNIRAN</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">ALOG</span>, <span class="nv">SQRT</span>, <span class="nv">SIN</span>, <span class="nv">COS</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1977</span><span class="ss">)</span>
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">MOOD</span> <span class="nv">AND</span> <span class="nv">GRABLE</span>, <span class="nv">INTRODUCTION</span> <span class="nv">TO</span> <span class="nv">THE</span>
+             <span class="nv">THEORY</span> <span class="nv">OF</span> <span class="nv">STATISTICS</span>, <span class="mi">1963</span>, <span class="nv">PAGE</span> <span class="mi">233</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">2</span>, <span class="mi">1970</span>, <span class="nv">PAGE</span> <span class="mi">94</span>.
+           <span class="o">--</span><span class="nv">HASTINGS</span> <span class="nv">AND</span> <span class="nv">PEACOCK</span>, <span class="nv">STATISTICAL</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="nv">A</span> <span class="nv">HANDBOOK</span> <span class="k">FOR</span>
+             <span class="nv">STUDENTS</span> <span class="nv">AND</span> <span class="nv">PRACTITIONERS</span>, <span class="mi">1975</span>,
+             <span class="nv">PAGE</span> <span class="mi">121</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">DIVISION</span>
+             <span class="nv">CENTER</span> <span class="k">FOR</span> <span class="nv">APPLIED</span> <span class="nv">MATHEMATICS</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span><span class="o">--</span><span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">3651</span>
+ <span class="nv">NOTE</span><span class="o">--</span><span class="nv">DATAPLOT</span> <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">REGISTERED</span> <span class="nv">TRADEMARK</span>
+       <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>.
+       <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">MAY</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">COPIED</span>, <span class="nv">EXTRACTED</span>,
+       <span class="nv">MODIFIED</span>, <span class="nv">OR</span> <span class="nv">OTHERWISE</span> <span class="nv">USED</span> <span class="nv">IN</span> <span class="nv">A</span> <span class="nv">CONTEXT</span>
+       <span class="nv">OUTSIDE</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">DATAPLOT</span> <span class="nv">LANGUAGE</span><span class="o">/</span><span class="nv">SYSTEM</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1966</span><span class="ss">)</span>
+           <span class="nv">EXCEPTION</span><span class="o">--</span><span class="nv">HOLLERITH</span> <span class="nv">STRINGS</span> <span class="nv">IN</span> <span class="nv">FORMAT</span> <span class="nv">STATEMENTS</span>
+                      <span class="nv">DENOTED</span> <span class="nv">BY</span> <span class="nv">QUOTES</span> <span class="nv">RATHER</span> <span class="nv">THAN</span> <span class="nv">NH</span>.
+ <span class="nv">VERSION</span> <span class="nv">NUMBER</span><span class="o">--</span><span class="mi">82</span>.<span class="mi">6</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">DECEMBER</span>  <span class="mi">1981</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">MAY</span>       <span class="mi">1982</span>.
+</code></pre></div>
+
+<p>-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------</p>
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x~129"></span>real,</td>
+  
+  <td>public,</td>
+  <td>dimension(*)</td><td>::</td>
+  <td><strong>X</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-anu~4"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>anu</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-arg1~10"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>arg1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-arg2~9"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>arg2</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b21~3"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b21</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b31~3"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b31</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b32~3"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b32</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b33~2"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b33</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b34~2"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b34</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b41~2"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b41</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b42~2"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b42</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b43~2"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b43</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b44"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b44</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b45"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b45</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b51"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b51</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b52"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b52</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b53"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b53</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b54"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b54</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b55"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b55</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-b56"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>b56</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-c~10"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>c</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-d1~4"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>d1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-d3~4"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>d3</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-d5~3"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>d5</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-d7~3"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>d7</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-d9~2"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>d9</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-darg"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>darg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dcon"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>dcon</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dnu~4"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>dnu</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dp~4"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>dp</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dppf"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>dppf</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dppfn"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>dppfn</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i~120"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>i</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG
+CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+      DLL_EXPORT TRAN</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+          <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+          <span class="nv">WITH</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">DESIRED</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span>
+                            <span class="nv">OF</span> <span class="k">RANDOM</span> <span class="nv">NUMBERS</span> <span class="nv">TO</span> <span class="nv">BE</span>
+                            <span class="nv">GENERATED</span>.
+                 <span class="o">--</span><span class="nv">NU</span>     <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span>
+                            <span class="ss">(</span><span class="nv">PARAMETER</span><span class="ss">)</span> <span class="k">FOR</span> <span class="nv">THE</span> <span class="nv">T</span>
+                            <span class="nv">DISTRIBUTION</span>.
+ <span class="nv">OUTPUT</span> <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">A</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span>
+                            <span class="ss">(</span><span class="nv">OF</span> <span class="nv">DIMENSION</span> <span class="nv">AT</span> <span class="nv">LEAST</span> <span class="nv">N</span><span class="ss">)</span>
+                            <span class="nv">INTO</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">GENERATED</span>
+                            <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">WILL</span> <span class="nv">BE</span> <span class="nv">PLACED</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+         <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+         <span class="nv">WITH</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">NONE</span> <span class="nv">UNLESS</span> <span class="nv">AN</span> <span class="nv">INPUT</span> <span class="nv">ARGUMENT</span> <span class="nv">ERROR</span> <span class="nv">CONDITION</span> <span class="nv">EXISTS</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THERE</span> <span class="nv">IS</span> <span class="nv">NO</span> <span class="nv">RESTRICTION</span> <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">VALUE</span>
+               <span class="nv">OF</span> <span class="nv">N</span> <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span>.
+             <span class="o">--</span><span class="nv">NU</span> <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">A</span> <span class="nv">POSITIVE</span> <span class="nv">INTEGER</span> <span class="nv">VARIABLE</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">UNIRAN</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">ALOG</span>, <span class="nv">SQRT</span>, <span class="nv">SIN</span>, <span class="nv">COS</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1977</span><span class="ss">)</span>
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">MOOD</span> <span class="nv">AND</span> <span class="nv">GRABLE</span>, <span class="nv">INTRODUCTION</span> <span class="nv">TO</span> <span class="nv">THE</span>
+             <span class="nv">THEORY</span> <span class="nv">OF</span> <span class="nv">STATISTICS</span>, <span class="mi">1963</span>, <span class="nv">PAGE</span> <span class="mi">233</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">2</span>, <span class="mi">1970</span>, <span class="nv">PAGE</span> <span class="mi">94</span>.
+           <span class="o">--</span><span class="nv">HASTINGS</span> <span class="nv">AND</span> <span class="nv">PEACOCK</span>, <span class="nv">STATISTICAL</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="nv">A</span> <span class="nv">HANDBOOK</span> <span class="k">FOR</span>
+             <span class="nv">STUDENTS</span> <span class="nv">AND</span> <span class="nv">PRACTITIONERS</span>, <span class="mi">1975</span>,
+             <span class="nv">PAGE</span> <span class="mi">121</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">DIVISION</span>
+             <span class="nv">CENTER</span> <span class="k">FOR</span> <span class="nv">APPLIED</span> <span class="nv">MATHEMATICS</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span><span class="o">--</span><span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">3651</span>
+ <span class="nv">NOTE</span><span class="o">--</span><span class="nv">DATAPLOT</span> <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">REGISTERED</span> <span class="nv">TRADEMARK</span>
+       <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>.
+       <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">MAY</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">COPIED</span>, <span class="nv">EXTRACTED</span>,
+       <span class="nv">MODIFIED</span>, <span class="nv">OR</span> <span class="nv">OTHERWISE</span> <span class="nv">USED</span> <span class="nv">IN</span> <span class="nv">A</span> <span class="nv">CONTEXT</span>
+       <span class="nv">OUTSIDE</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">DATAPLOT</span> <span class="nv">LANGUAGE</span><span class="o">/</span><span class="nv">SYSTEM</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1966</span><span class="ss">)</span>
+           <span class="nv">EXCEPTION</span><span class="o">--</span><span class="nv">HOLLERITH</span> <span class="nv">STRINGS</span> <span class="nv">IN</span> <span class="nv">FORMAT</span> <span class="nv">STATEMENTS</span>
+                      <span class="nv">DENOTED</span> <span class="nv">BY</span> <span class="nv">QUOTES</span> <span class="nv">RATHER</span> <span class="nv">THAN</span> <span class="nv">NH</span>.
+ <span class="nv">VERSION</span> <span class="nv">NUMBER</span><span class="o">--</span><span class="mi">82</span>.<span class="mi">6</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">DECEMBER</span>  <span class="mi">1981</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">MAY</span>       <span class="mi">1982</span>.
+</code></pre></div>
+
+<p>-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------</p>
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ipass"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ipass</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ipr~155"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ipr</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ipr~156"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ipr</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG
+CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+      DLL_EXPORT TRAN</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+          <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+          <span class="nv">WITH</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">DESIRED</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span>
+                            <span class="nv">OF</span> <span class="k">RANDOM</span> <span class="nv">NUMBERS</span> <span class="nv">TO</span> <span class="nv">BE</span>
+                            <span class="nv">GENERATED</span>.
+                 <span class="o">--</span><span class="nv">NU</span>     <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span>
+                            <span class="ss">(</span><span class="nv">PARAMETER</span><span class="ss">)</span> <span class="k">FOR</span> <span class="nv">THE</span> <span class="nv">T</span>
+                            <span class="nv">DISTRIBUTION</span>.
+ <span class="nv">OUTPUT</span> <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">A</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span>
+                            <span class="ss">(</span><span class="nv">OF</span> <span class="nv">DIMENSION</span> <span class="nv">AT</span> <span class="nv">LEAST</span> <span class="nv">N</span><span class="ss">)</span>
+                            <span class="nv">INTO</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">GENERATED</span>
+                            <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">WILL</span> <span class="nv">BE</span> <span class="nv">PLACED</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+         <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+         <span class="nv">WITH</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">NONE</span> <span class="nv">UNLESS</span> <span class="nv">AN</span> <span class="nv">INPUT</span> <span class="nv">ARGUMENT</span> <span class="nv">ERROR</span> <span class="nv">CONDITION</span> <span class="nv">EXISTS</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THERE</span> <span class="nv">IS</span> <span class="nv">NO</span> <span class="nv">RESTRICTION</span> <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">VALUE</span>
+               <span class="nv">OF</span> <span class="nv">N</span> <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span>.
+             <span class="o">--</span><span class="nv">NU</span> <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">A</span> <span class="nv">POSITIVE</span> <span class="nv">INTEGER</span> <span class="nv">VARIABLE</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">UNIRAN</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">ALOG</span>, <span class="nv">SQRT</span>, <span class="nv">SIN</span>, <span class="nv">COS</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1977</span><span class="ss">)</span>
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">MOOD</span> <span class="nv">AND</span> <span class="nv">GRABLE</span>, <span class="nv">INTRODUCTION</span> <span class="nv">TO</span> <span class="nv">THE</span>
+             <span class="nv">THEORY</span> <span class="nv">OF</span> <span class="nv">STATISTICS</span>, <span class="mi">1963</span>, <span class="nv">PAGE</span> <span class="mi">233</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">2</span>, <span class="mi">1970</span>, <span class="nv">PAGE</span> <span class="mi">94</span>.
+           <span class="o">--</span><span class="nv">HASTINGS</span> <span class="nv">AND</span> <span class="nv">PEACOCK</span>, <span class="nv">STATISTICAL</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="nv">A</span> <span class="nv">HANDBOOK</span> <span class="k">FOR</span>
+             <span class="nv">STUDENTS</span> <span class="nv">AND</span> <span class="nv">PRACTITIONERS</span>, <span class="mi">1975</span>,
+             <span class="nv">PAGE</span> <span class="mi">121</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">DIVISION</span>
+             <span class="nv">CENTER</span> <span class="k">FOR</span> <span class="nv">APPLIED</span> <span class="nv">MATHEMATICS</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span><span class="o">--</span><span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">3651</span>
+ <span class="nv">NOTE</span><span class="o">--</span><span class="nv">DATAPLOT</span> <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">REGISTERED</span> <span class="nv">TRADEMARK</span>
+       <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>.
+       <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">MAY</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">COPIED</span>, <span class="nv">EXTRACTED</span>,
+       <span class="nv">MODIFIED</span>, <span class="nv">OR</span> <span class="nv">OTHERWISE</span> <span class="nv">USED</span> <span class="nv">IN</span> <span class="nv">A</span> <span class="nv">CONTEXT</span>
+       <span class="nv">OUTSIDE</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">DATAPLOT</span> <span class="nv">LANGUAGE</span><span class="o">/</span><span class="nv">SYSTEM</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1966</span><span class="ss">)</span>
+           <span class="nv">EXCEPTION</span><span class="o">--</span><span class="nv">HOLLERITH</span> <span class="nv">STRINGS</span> <span class="nv">IN</span> <span class="nv">FORMAT</span> <span class="nv">STATEMENTS</span>
+                      <span class="nv">DENOTED</span> <span class="nv">BY</span> <span class="nv">QUOTES</span> <span class="nv">RATHER</span> <span class="nv">THAN</span> <span class="nv">NH</span>.
+ <span class="nv">VERSION</span> <span class="nv">NUMBER</span><span class="o">--</span><span class="mi">82</span>.<span class="mi">6</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">DECEMBER</span>  <span class="mi">1981</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">MAY</span>       <span class="mi">1982</span>.
+</code></pre></div>
+
+<p>-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------</p>
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-j~45"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>j</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG
+CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+      DLL_EXPORT TRAN</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+          <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+          <span class="nv">WITH</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">DESIRED</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span>
+                            <span class="nv">OF</span> <span class="k">RANDOM</span> <span class="nv">NUMBERS</span> <span class="nv">TO</span> <span class="nv">BE</span>
+                            <span class="nv">GENERATED</span>.
+                 <span class="o">--</span><span class="nv">NU</span>     <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span>
+                            <span class="ss">(</span><span class="nv">PARAMETER</span><span class="ss">)</span> <span class="k">FOR</span> <span class="nv">THE</span> <span class="nv">T</span>
+                            <span class="nv">DISTRIBUTION</span>.
+ <span class="nv">OUTPUT</span> <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">A</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span>
+                            <span class="ss">(</span><span class="nv">OF</span> <span class="nv">DIMENSION</span> <span class="nv">AT</span> <span class="nv">LEAST</span> <span class="nv">N</span><span class="ss">)</span>
+                            <span class="nv">INTO</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">GENERATED</span>
+                            <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">WILL</span> <span class="nv">BE</span> <span class="nv">PLACED</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="k">RANDOM</span> <span class="nv">SAMPLE</span> <span class="nv">OF</span> <span class="nv">SIZE</span> <span class="nv">N</span>
+         <span class="nv">FROM</span> <span class="nv">THE</span> <span class="nv">STUDENT</span><span class="s1">&#39;</span><span class="s">S T DISTRIBUTION</span>
+         <span class="nv">WITH</span> <span class="nv">DEGREES</span> <span class="nv">OF</span> <span class="nv">FREEDOM</span> <span class="nv">PARAMETER</span> <span class="o">=</span> <span class="nv">NU</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">NONE</span> <span class="nv">UNLESS</span> <span class="nv">AN</span> <span class="nv">INPUT</span> <span class="nv">ARGUMENT</span> <span class="nv">ERROR</span> <span class="nv">CONDITION</span> <span class="nv">EXISTS</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THERE</span> <span class="nv">IS</span> <span class="nv">NO</span> <span class="nv">RESTRICTION</span> <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">VALUE</span>
+               <span class="nv">OF</span> <span class="nv">N</span> <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span>.
+             <span class="o">--</span><span class="nv">NU</span> <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">A</span> <span class="nv">POSITIVE</span> <span class="nv">INTEGER</span> <span class="nv">VARIABLE</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">UNIRAN</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">ALOG</span>, <span class="nv">SQRT</span>, <span class="nv">SIN</span>, <span class="nv">COS</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1977</span><span class="ss">)</span>
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">MOOD</span> <span class="nv">AND</span> <span class="nv">GRABLE</span>, <span class="nv">INTRODUCTION</span> <span class="nv">TO</span> <span class="nv">THE</span>
+             <span class="nv">THEORY</span> <span class="nv">OF</span> <span class="nv">STATISTICS</span>, <span class="mi">1963</span>, <span class="nv">PAGE</span> <span class="mi">233</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">2</span>, <span class="mi">1970</span>, <span class="nv">PAGE</span> <span class="mi">94</span>.
+           <span class="o">--</span><span class="nv">HASTINGS</span> <span class="nv">AND</span> <span class="nv">PEACOCK</span>, <span class="nv">STATISTICAL</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="nv">A</span> <span class="nv">HANDBOOK</span> <span class="k">FOR</span>
+             <span class="nv">STUDENTS</span> <span class="nv">AND</span> <span class="nv">PRACTITIONERS</span>, <span class="mi">1975</span>,
+             <span class="nv">PAGE</span> <span class="mi">121</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">DIVISION</span>
+             <span class="nv">CENTER</span> <span class="k">FOR</span> <span class="nv">APPLIED</span> <span class="nv">MATHEMATICS</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span><span class="o">--</span><span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">3651</span>
+ <span class="nv">NOTE</span><span class="o">--</span><span class="nv">DATAPLOT</span> <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">REGISTERED</span> <span class="nv">TRADEMARK</span>
+       <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>.
+       <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">MAY</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">COPIED</span>, <span class="nv">EXTRACTED</span>,
+       <span class="nv">MODIFIED</span>, <span class="nv">OR</span> <span class="nv">OTHERWISE</span> <span class="nv">USED</span> <span class="nv">IN</span> <span class="nv">A</span> <span class="nv">CONTEXT</span>
+       <span class="nv">OUTSIDE</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">DATAPLOT</span> <span class="nv">LANGUAGE</span><span class="o">/</span><span class="nv">SYSTEM</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span> <span class="ss">(</span><span class="mi">1966</span><span class="ss">)</span>
+           <span class="nv">EXCEPTION</span><span class="o">--</span><span class="nv">HOLLERITH</span> <span class="nv">STRINGS</span> <span class="nv">IN</span> <span class="nv">FORMAT</span> <span class="nv">STATEMENTS</span>
+                      <span class="nv">DENOTED</span> <span class="nv">BY</span> <span class="nv">QUOTES</span> <span class="nv">RATHER</span> <span class="nv">THAN</span> <span class="nv">NH</span>.
+ <span class="nv">VERSION</span> <span class="nv">NUMBER</span><span class="o">--</span><span class="mi">82</span>.<span class="mi">6</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">DECEMBER</span>  <span class="mi">1981</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">MAY</span>       <span class="mi">1982</span>.
+</code></pre></div>
+
+<p>-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------</p>
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-maxit~4"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>maxit</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-pi~21"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>pi</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-pi~22"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>pi</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ppfn"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ppfn</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG
+CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+      DLL_EXPORT TPPF</p>
+<div class="codehilite"><pre><span></span><code> <span class="n">PURPOSE</span><span class="o">--</span><span class="n">THIS</span> <span class="n">SUBROUTINE</span> <span class="n">COMPUTES</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span>
+          <span class="n">FUNCTION</span> <span class="n">VALUE</span> <span class="kr">FOR</span> <span class="n">THE</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span>
+          <span class="kr">WITH</span> <span class="kt">INTEGER</span> <span class="n">DEGREES</span> <span class="kr">OF</span> <span class="n">FREEDOM</span> <span class="n">PARAMETER</span> <span class="o">=</span> <span class="n">NU</span><span class="p">.</span>
+          <span class="n">THE</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span> <span class="n">USED</span>
+          <span class="n">HEREIN</span> <span class="kr">IS</span> <span class="n">DEFINED</span> <span class="kr">FOR</span> <span class="n">ALL</span> <span class="n">X</span><span class="p">,</span>
+          <span class="n">AND</span> <span class="n">ITS</span> <span class="n">PROBABILITY</span> <span class="n">DENSITY</span> <span class="n">FUNCTION</span> <span class="kr">IS</span> <span class="n">GIVEN</span>
+          <span class="kr">IN</span> <span class="n">THE</span> <span class="n">REFERENCES</span> <span class="n">BELOW</span><span class="p">.</span>
+          <span class="n">NOTE</span> <span class="n">THAT</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="n">FUNCTION</span> <span class="kr">OF</span> <span class="n">A</span> <span class="n">DISTRIBUTION</span>
+          <span class="kr">IS</span> <span class="n">IDENTICALLY</span> <span class="n">THE</span> <span class="n">SAME</span> <span class="n">AS</span> <span class="n">THE</span> <span class="n">INVERSE</span> <span class="n">CUMULATIVE</span>
+          <span class="n">DISTRIBUTION</span> <span class="n">FUNCTION</span> <span class="kr">OF</span> <span class="n">THE</span> <span class="n">DISTRIBUTION</span><span class="p">.</span>
+ <span class="n">INPUT</span>  <span class="n">ARGUMENTS</span><span class="o">--</span><span class="n">P</span>      <span class="o">=</span> <span class="n">THE</span> <span class="n">SINGLE</span> <span class="n">PRECISION</span> <span class="n">VALUE</span>
+                            <span class="p">(</span><span class="n">BETWEEN</span> <span class="mf">0.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">)</span>
+                            <span class="n">AND</span> <span class="mf">1.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">))</span>
+                            <span class="n">AT</span> <span class="n">WHICH</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span>
+                            <span class="n">FUNCTION</span> <span class="kr">IS</span> <span class="kr">TO</span> <span class="n">BE</span> <span class="n">EVALUATED</span><span class="p">.</span>
+                 <span class="o">--</span><span class="n">NU</span>     <span class="o">=</span> <span class="n">THE</span> <span class="kt">INTEGER</span> <span class="n">NUMBER</span> <span class="kr">OF</span> <span class="n">DEGREES</span>
+                            <span class="kr">OF</span> <span class="n">FREEDOM</span><span class="p">.</span>
+                            <span class="n">NU</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">POSITIVE</span><span class="p">.</span>
+ <span class="n">OUTPUT</span> <span class="n">ARGUMENTS</span><span class="o">--</span><span class="n">PPF</span>    <span class="o">=</span> <span class="n">THE</span> <span class="n">SINGLE</span> <span class="n">PRECISION</span> <span class="n">PERCENT</span>
+                            <span class="n">POINT</span> <span class="n">FUNCTION</span> <span class="n">VALUE</span><span class="p">.</span>
+ <span class="n">OUTPUT</span><span class="o">--</span><span class="n">THE</span> <span class="n">SINGLE</span> <span class="n">PRECISION</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="n">FUNCTION</span> <span class="p">.</span>
+         <span class="n">VALUE</span> <span class="n">PPF</span> <span class="kr">FOR</span> <span class="n">THE</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span>
+         <span class="kr">WITH</span> <span class="n">DEGREES</span> <span class="kr">OF</span> <span class="n">FREEDOM</span> <span class="n">PARAMETER</span> <span class="o">=</span> <span class="n">NU</span><span class="p">.</span>
+ <span class="n">PRINTING</span><span class="o">--</span><span class="n">NONE</span> <span class="n">UNLESS</span> <span class="n">AN</span> <span class="n">INPUT</span> <span class="n">ARGUMENT</span> <span class="n">ERROR</span> <span class="n">CONDITION</span> <span class="n">EXISTS</span><span class="p">.</span>
+ <span class="n">RESTRICTIONS</span><span class="o">--</span><span class="n">NU</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">A</span> <span class="n">POSITIVE</span> <span class="kt">INTEGER</span> <span class="n">VARIABLE</span><span class="p">.</span>
+             <span class="o">--</span><span class="n">P</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">BETWEEN</span> <span class="mf">0.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">)</span>
+               <span class="n">AND</span> <span class="mf">1.0</span> <span class="p">(</span><span class="n">EXCLUSIVELY</span><span class="p">).</span>
+ <span class="n">OTHER</span> <span class="n">DATAPAC</span>   <span class="n">SUBROUTINES</span> <span class="n">NEEDED</span><span class="o">--</span><span class="n">NORPPF</span><span class="p">.</span>
+ <span class="n">FORTRAN</span> <span class="n">LIBRARY</span> <span class="n">SUBROUTINES</span> <span class="n">NEEDED</span><span class="o">--</span><span class="n">DSIN</span><span class="p">,</span> <span class="n">DCOS</span><span class="p">,</span> <span class="n">DSQRT</span><span class="p">,</span> <span class="n">DATAN</span><span class="p">.</span>
+ <span class="n">MODE</span> <span class="kr">OF</span> <span class="n">INTERNAL</span> <span class="n">OPERATIONS</span><span class="o">--</span><span class="n">DOUBLE</span> <span class="n">PRECISION</span><span class="p">.</span>
+ <span class="n">LANGUAGE</span><span class="o">--</span><span class="n">ANSI</span> <span class="n">FORTRAN</span><span class="p">.</span>
+ <span class="n">COMMENT</span><span class="o">--</span><span class="kr">FOR</span> <span class="n">NU</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">AND</span> <span class="n">NU</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">THE</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="n">FUNCTION</span>
+          <span class="kr">FOR</span> <span class="n">THE</span> <span class="n">T</span> <span class="n">DISTRIBUTION</span> <span class="n">EXISTS</span> <span class="kr">IN</span> <span class="n">SIMPLE</span> <span class="n">CLOSED</span> <span class="n">FORM</span>
+          <span class="n">AND</span> <span class="n">SO</span> <span class="n">THE</span> <span class="n">COMPUTED</span> <span class="n">PERCENT</span> <span class="n">POINTS</span> <span class="n">ARE</span> <span class="n">EXACT</span><span class="p">.</span>
+        <span class="o">--</span><span class="kr">FOR</span> <span class="n">OTHER</span> <span class="n">SMALL</span> <span class="n">VALUES</span> <span class="kr">OF</span> <span class="n">NU</span> <span class="p">(</span><span class="n">NU</span> <span class="n">BETWEEN</span> <span class="mi">3</span> <span class="n">AND</span> <span class="mi">6</span><span class="p">,</span>
+          <span class="n">INCLUSIVELY</span><span class="p">),</span> <span class="n">THE</span> <span class="n">APPROXIMATION</span>
+          <span class="kr">OF</span> <span class="n">THE</span> <span class="n">T</span> <span class="n">PERCENT</span> <span class="n">POINT</span> <span class="kr">BY</span> <span class="n">THE</span> <span class="n">FORMULA</span>
+          <span class="n">GIVEN</span> <span class="kr">IN</span> <span class="n">THE</span> <span class="n">REFERENCE</span> <span class="n">BELOW</span> <span class="kr">IS</span> <span class="n">AUGMENTED</span>
+          <span class="kr">BY</span> <span class="mi">3</span> <span class="n">ITERATIONS</span> <span class="kr">OF</span> <span class="n">NEWTON</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">METHOD</span> <span class="kr">FOR</span>
+          <span class="n">ROOT</span> <span class="n">DETERMINATION</span><span class="p">.</span>
+          <span class="n">THIS</span> <span class="n">IMPROVES</span> <span class="n">THE</span> <span class="n">ACCURACY</span><span class="o">--</span><span class="n">ESPECIALLY</span> <span class="kr">FOR</span>
+          <span class="n">VALUES</span> <span class="kr">OF</span> <span class="n">P</span> <span class="n">NEAR</span> <span class="mi">0</span> <span class="kr">OR</span> <span class="mi">1</span><span class="p">.</span>
+ <span class="n">REFERENCES</span><span class="o">--</span><span class="n">NATIONAL</span> <span class="n">BUREAU</span> <span class="kr">OF</span> <span class="n">STANDARDS</span> <span class="n">APPLIED</span> <span class="n">MATHMATICS</span>
+             <span class="n">SERIES</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">1964</span><span class="p">,</span> <span class="n">PAGE</span> <span class="mi">949</span><span class="p">,</span> <span class="n">FORMULA</span> <span class="mf">26.7</span><span class="p">.</span><span class="mi">5</span><span class="p">.</span>
+           <span class="o">--</span><span class="n">JOHNSON</span> <span class="n">AND</span> <span class="n">KOTZ</span><span class="p">,</span> <span class="n">CONTINUOUS</span> <span class="n">UNIVARIATE</span>
+             <span class="n">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1970</span><span class="p">,</span> <span class="n">PAGE</span> <span class="mi">102</span><span class="p">,</span>
+             <span class="n">FORMULA</span> <span class="mi">11</span><span class="p">.</span>
+           <span class="o">--</span><span class="n">FEDERIGHI</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">EXTENDED</span> <span class="n">TABLES</span> <span class="kr">OF</span> <span class="n">THE</span>
+             <span class="n">PERCENTAGE</span> <span class="n">POINTS</span> <span class="kr">OF</span> <span class="n">STUDENT</span><span class="err">&#39;</span><span class="n">S</span> <span class="n">T</span>
+             <span class="n">DISTRIBUTION</span><span class="p">,</span> <span class="n">JOURNAL</span> <span class="kr">OF</span> <span class="n">THE</span>
+             <span class="n">AMERICAN</span> <span class="n">STATISTICAL</span> <span class="n">ASSOCIATION</span><span class="p">,</span>
+             <span class="mi">1969</span><span class="p">,</span> <span class="n">PAGES</span> <span class="mi">683</span><span class="o">-</span><span class="mi">688</span><span class="p">.</span>
+           <span class="o">--</span><span class="n">HASTINGS</span> <span class="n">AND</span> <span class="n">PEACOCK</span><span class="p">,</span> <span class="n">STATISTICAL</span>
+             <span class="n">DISTRIBUTIONS</span><span class="o">--</span><span class="n">A</span> <span class="n">HANDBOOK</span> <span class="kr">FOR</span>
+             <span class="n">STUDENTS</span> <span class="n">AND</span> <span class="n">PRACTITIONERS</span><span class="p">,</span> <span class="mi">1975</span><span class="p">,</span>
+             <span class="n">PAGES</span> <span class="mi">120</span><span class="o">-</span><span class="mi">123</span><span class="p">.</span>
+ <span class="n">WRITTEN</span> <span class="kr">BY</span><span class="o">--</span><span class="n">JAMES</span> <span class="n">J</span><span class="p">.</span> <span class="n">FILLIBEN</span>
+             <span class="n">STATISTICAL</span> <span class="n">ENGINEERING</span> <span class="n">LABORATORY</span> <span class="p">(</span><span class="mf">205.03</span><span class="p">)</span>
+             <span class="n">NATIONAL</span> <span class="n">BUREAU</span> <span class="kr">OF</span> <span class="n">STANDARDS</span>
+             <span class="n">WASHINGTON</span><span class="p">,</span> <span class="n">D</span><span class="p">.</span> <span class="n">C</span><span class="p">.</span> <span class="mi">20234</span>
+             <span class="n">PHONE</span><span class="p">:</span>  <span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">2315</span>
+ <span class="n">ORIGINAL</span> <span class="n">VERSION</span><span class="o">--</span><span class="n">OCTOBER</span>   <span class="mi">1975</span><span class="p">.</span>
+ <span class="n">UPDATED</span>         <span class="o">--</span><span class="n">NOVEMBER</span>  <span class="mi">1975</span><span class="p">.</span>
+</code></pre></div>
+
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-s~8"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>s</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-sqrt2"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>sqrt2</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-sum~36"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>sum</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-term1~4"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>term1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-term2~4"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>term2</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-term3~4"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>term3</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-term4~2"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>term4</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-term5"></span>double precision,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>term5</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-y~8"></span>real,</td>
+  
+  <td>public,</td>
+  <td>dimension(2)</td><td>::</td>
+  <td><strong>y</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-z~16"></span>double precision,</td>
+  
+  <td>public,</td>
+  <td>dimension(2)</td><td>::</td>
+  <td><strong>z</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-z~17"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>z</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-znorm"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>znorm</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span>      <span class="k">SUBROUTINE </span><span class="n">TPPF</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">Nu</span><span class="p">,</span><span class="n">Ppf</span><span class="p">)</span>
+      <span class="k">IMPLICIT NONE</span>
+<span class="c">!*--TPPF31281</span>
+<span class="c">!*** Start of declarations inserted by SPAG</span>
+      <span class="kt">INTEGER </span><span class="n">ipass</span> <span class="p">,</span> <span class="n">ipr</span> <span class="p">,</span> <span class="n">maxit</span> <span class="p">,</span> <span class="n">Nu</span>
+      <span class="kt">REAL </span><span class="n">P</span> <span class="p">,</span> <span class="n">Ppf</span> <span class="p">,</span> <span class="n">ppfn</span>
+<span class="c">!*** End of declarations inserted by SPAG</span>
+<span class="c">!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.</span>
+<span class="c">!      DLL_EXPORT TPPF</span>
+<span class="c">!</span>
+<span class="c">!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT</span>
+<span class="c">!              FUNCTION VALUE FOR THE STUDENT&#39;S T DISTRIBUTION</span>
+<span class="c">!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.</span>
+<span class="c">!              THE STUDENT&#39;S T DISTRIBUTION USED</span>
+<span class="c">!              HEREIN IS DEFINED FOR ALL X,</span>
+<span class="c">!              AND ITS PROBABILITY DENSITY FUNCTION IS GIVEN</span>
+<span class="c">!              IN THE REFERENCES BELOW.</span>
+<span class="c">!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION</span>
+<span class="c">!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE</span>
+<span class="c">!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.</span>
+<span class="c">!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE</span>
+<span class="c">!                                (BETWEEN 0.0 (EXCLUSIVELY)</span>
+<span class="c">!                                AND 1.0 (EXCLUSIVELY))</span>
+<span class="c">!                                AT WHICH THE PERCENT POINT</span>
+<span class="c">!                                FUNCTION IS TO BE EVALUATED.</span>
+<span class="c">!                     --NU     = THE INTEGER NUMBER OF DEGREES</span>
+<span class="c">!                                OF FREEDOM.</span>
+<span class="c">!                                NU SHOULD BE POSITIVE.</span>
+<span class="c">!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT</span>
+<span class="c">!                                POINT FUNCTION VALUE.</span>
+<span class="c">!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .</span>
+<span class="c">!             VALUE PPF FOR THE STUDENT&#39;S T DISTRIBUTION</span>
+<span class="c">!             WITH DEGREES OF FREEDOM PARAMETER = NU.</span>
+<span class="c">!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.</span>
+<span class="c">!     RESTRICTIONS--NU SHOULD BE A POSITIVE INTEGER VARIABLE.</span>
+<span class="c">!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)</span>
+<span class="c">!                   AND 1.0 (EXCLUSIVELY).</span>
+<span class="c">!     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.</span>
+<span class="c">!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSIN, DCOS, DSQRT, DATAN.</span>
+<span class="c">!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.</span>
+<span class="c">!     LANGUAGE--ANSI FORTRAN.</span>
+<span class="c">!     COMMENT--FOR NU = 1 AND NU = 2, THE PERCENT POINT FUNCTION</span>
+<span class="c">!              FOR THE T DISTRIBUTION EXISTS IN SIMPLE CLOSED FORM</span>
+<span class="c">!              AND SO THE COMPUTED PERCENT POINTS ARE EXACT.</span>
+<span class="c">!            --FOR OTHER SMALL VALUES OF NU (NU BETWEEN 3 AND 6,</span>
+<span class="c">!              INCLUSIVELY), THE APPROXIMATION</span>
+<span class="c">!              OF THE T PERCENT POINT BY THE FORMULA</span>
+<span class="c">!              GIVEN IN THE REFERENCE BELOW IS AUGMENTED</span>
+<span class="c">!              BY 3 ITERATIONS OF NEWTON&#39;S METHOD FOR</span>
+<span class="c">!              ROOT DETERMINATION.</span>
+<span class="c">!              THIS IMPROVES THE ACCURACY--ESPECIALLY FOR</span>
+<span class="c">!              VALUES OF P NEAR 0 OR 1.</span>
+<span class="c">!     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS</span>
+<span class="c">!                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.</span>
+<span class="c">!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE</span>
+<span class="c">!                 DISTRIBUTIONS--2, 1970, PAGE 102,</span>
+<span class="c">!                 FORMULA 11.</span>
+<span class="c">!               --FEDERIGHI, &#39;EXTENDED TABLES OF THE</span>
+<span class="c">!                 PERCENTAGE POINTS OF STUDENT&#39;S T</span>
+<span class="c">!                 DISTRIBUTION, JOURNAL OF THE</span>
+<span class="c">!                 AMERICAN STATISTICAL ASSOCIATION,</span>
+<span class="c">!                 1969, PAGES 683-688.</span>
+<span class="c">!               --HASTINGS AND PEACOCK, STATISTICAL</span>
+<span class="c">!                 DISTRIBUTIONS--A HANDBOOK FOR</span>
+<span class="c">!                 STUDENTS AND PRACTITIONERS, 1975,</span>
+<span class="c">!                 PAGES 120-123.</span>
+<span class="c">!     WRITTEN BY--JAMES J. FILLIBEN</span>
+<span class="c">!                 STATISTICAL ENGINEERING LABORATORY (205.03)</span>
+<span class="c">!                 NATIONAL BUREAU OF STANDARDS</span>
+<span class="c">!                 WASHINGTON, D. C. 20234</span>
+<span class="c">!                 PHONE:  301-921-2315</span>
+<span class="c">!     ORIGINAL VERSION--OCTOBER   1975.</span>
+<span class="c">!     UPDATED         --NOVEMBER  1975.</span>
+<span class="c">!</span>
+<span class="c">!---------------------------------------------------------------------</span>
+<span class="c">!</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">pi</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">sqrt2</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">dp</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">dnu</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">term1</span> <span class="p">,</span> <span class="n">term2</span> <span class="p">,</span> <span class="n">term3</span> <span class="p">,</span> <span class="n">term4</span> <span class="p">,</span> <span class="n">term5</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">dppfn</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">dppf</span> <span class="p">,</span> <span class="n">dcon</span> <span class="p">,</span> <span class="n">darg</span> <span class="p">,</span> <span class="n">z</span> <span class="p">,</span> <span class="n">s</span> <span class="p">,</span> <span class="n">c</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">b21</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">b31</span> <span class="p">,</span> <span class="n">b32</span> <span class="p">,</span> <span class="n">b33</span> <span class="p">,</span> <span class="n">b34</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">b41</span> <span class="p">,</span> <span class="n">b42</span> <span class="p">,</span> <span class="n">b43</span> <span class="p">,</span> <span class="n">b44</span> <span class="p">,</span> <span class="n">b45</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">b51</span> <span class="p">,</span> <span class="n">b52</span> <span class="p">,</span> <span class="n">b53</span> <span class="p">,</span> <span class="n">b54</span> <span class="p">,</span> <span class="n">b55</span> <span class="p">,</span> <span class="n">b56</span>
+      <span class="kt">DOUBLE PRECISION </span><span class="n">d1</span> <span class="p">,</span> <span class="n">d3</span> <span class="p">,</span> <span class="n">d5</span> <span class="p">,</span> <span class="n">d7</span> <span class="p">,</span> <span class="n">d9</span>
+      <span class="k">DATA </span><span class="n">pi</span><span class="o">/</span><span class="mf">3.14159265358979D0</span><span class="o">/</span>
+      <span class="k">DATA </span><span class="n">sqrt2</span><span class="o">/</span><span class="mf">1.414213562D0</span><span class="o">/</span>
+      <span class="k">DATA </span><span class="n">b21</span><span class="o">/</span><span class="mf">0.25D0</span><span class="o">/</span>
+      <span class="k">DATA </span><span class="n">b31</span> <span class="p">,</span> <span class="n">b32</span> <span class="p">,</span> <span class="n">b33</span> <span class="p">,</span> <span class="n">b34</span><span class="o">/</span><span class="mf">0.01041666666667D0</span> <span class="p">,</span> <span class="mf">5.0D0</span> <span class="p">,</span> <span class="mi">1</span><span class="mf">6.0D0</span> <span class="p">,</span>  <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="mf">3.0D0</span><span class="o">/</span>
+      <span class="k">DATA </span><span class="n">b41</span> <span class="p">,</span> <span class="n">b42</span> <span class="p">,</span> <span class="n">b43</span> <span class="p">,</span> <span class="n">b44</span> <span class="p">,</span> <span class="n">b45</span><span class="o">/</span><span class="mf">0.00260416666667D0</span> <span class="p">,</span> <span class="mf">3.0D0</span> <span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="mi">1</span><span class="mf">9.0D0</span> <span class="p">,</span> <span class="mi">1</span><span class="mf">7.0D0</span> <span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="mf">5.0D0</span><span class="o">/</span>
+      <span class="k">DATA </span><span class="n">b51</span> <span class="p">,</span> <span class="n">b52</span> <span class="p">,</span> <span class="n">b53</span> <span class="p">,</span> <span class="n">b54</span> <span class="p">,</span> <span class="n">b55</span> <span class="p">,</span> <span class="n">b56</span><span class="o">/</span><span class="mf">0.00001085069444D0</span> <span class="p">,</span>       <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="mi">7</span><span class="mf">9.0D0</span> <span class="p">,</span> <span class="mi">77</span><span class="mf">6.0D0</span> <span class="p">,</span> <span class="mi">148</span><span class="mf">2.0D0</span> <span class="p">,</span> <span class="o">-</span><span class="mi">192</span><span class="mf">0.0D0</span> <span class="p">,</span> <span class="o">-</span><span class="mi">94</span><span class="mf">5.0D0</span><span class="o">/</span>
+<span class="c">!</span>
+      <span class="n">ipr</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="c">!</span>
+<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
+<span class="c">!</span>
+      <span class="k">IF</span> <span class="p">(</span> <span class="n">P</span><span class="o">&lt;=</span><span class="mf">0.0</span> <span class="p">.</span><span class="nb">OR</span><span class="p">.</span> <span class="n">P</span><span class="o">&gt;=</span><span class="mf">1.0</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">ipr</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span>
+<span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
+     <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE TPPF   SUBROU&amp;</span>
+<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">ipr</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span> <span class="n">P</span>
+<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span>       <span class="p">&amp;</span>
+     <span class="p">&amp;</span>           <span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+         <span class="k">RETURN</span>
+<span class="k">      ELSE</span>
+<span class="c">!</span>
+<span class="c">!-----START POINT-----------------------------------------------------</span>
+<span class="c">!</span>
+         <span class="n">dnu</span> <span class="o">=</span> <span class="n">Nu</span>
+         <span class="n">dp</span> <span class="o">=</span> <span class="n">P</span>
+         <span class="n">maxit</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="c">!</span>
+         <span class="k">IF</span> <span class="p">(</span> <span class="n">Nu</span><span class="o">&gt;=</span><span class="mi">3</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="c">!</span>
+<span class="c">!     TREAT THE NU GREATER THAN OR EQUAL TO 3 CASE</span>
+<span class="c">!</span>
+            <span class="k">CALL </span><span class="n">NORPPF</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">ppfn</span><span class="p">)</span>
+            <span class="n">dppfn</span> <span class="o">=</span> <span class="n">ppfn</span>
+            <span class="n">d1</span> <span class="o">=</span> <span class="n">dppfn</span>
+            <span class="n">d3</span> <span class="o">=</span> <span class="n">dppfn</span><span class="o">**</span><span class="mi">3</span>
+            <span class="n">d5</span> <span class="o">=</span> <span class="n">dppfn</span><span class="o">**</span><span class="mi">5</span>
+            <span class="n">d7</span> <span class="o">=</span> <span class="n">dppfn</span><span class="o">**</span><span class="mi">7</span>
+            <span class="n">d9</span> <span class="o">=</span> <span class="n">dppfn</span><span class="o">**</span><span class="mi">9</span>
+            <span class="n">term1</span> <span class="o">=</span> <span class="n">d1</span>
+            <span class="n">term2</span> <span class="o">=</span> <span class="n">b21</span><span class="o">*</span><span class="p">(</span><span class="n">d3</span><span class="o">+</span><span class="n">d1</span><span class="p">)</span><span class="o">/</span><span class="n">dnu</span>
+            <span class="n">term3</span> <span class="o">=</span> <span class="n">b31</span><span class="o">*</span><span class="p">(</span><span class="n">b32</span><span class="o">*</span><span class="n">d5</span><span class="o">+</span><span class="n">b33</span><span class="o">*</span><span class="n">d3</span><span class="o">+</span><span class="n">b34</span><span class="o">*</span><span class="n">d1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">dnu</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">term4</span> <span class="o">=</span> <span class="n">b41</span><span class="o">*</span><span class="p">(</span><span class="n">b42</span><span class="o">*</span><span class="n">d7</span><span class="o">+</span><span class="n">b43</span><span class="o">*</span><span class="n">d5</span><span class="o">+</span><span class="n">b44</span><span class="o">*</span><span class="n">d3</span><span class="o">+</span><span class="n">b45</span><span class="o">*</span><span class="n">d1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">dnu</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">term5</span> <span class="o">=</span> <span class="n">b51</span><span class="o">*</span><span class="p">(</span><span class="n">b52</span><span class="o">*</span><span class="n">d9</span><span class="o">+</span><span class="n">b53</span><span class="o">*</span><span class="n">d7</span><span class="o">+</span><span class="n">b54</span><span class="o">*</span><span class="n">d5</span><span class="o">+</span><span class="n">b55</span><span class="o">*</span><span class="n">d3</span><span class="o">+</span><span class="n">b56</span><span class="o">*</span><span class="n">d1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">dnu</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">dppf</span> <span class="o">=</span> <span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span> <span class="o">+</span> <span class="n">term4</span> <span class="o">+</span> <span class="n">term5</span>
+            <span class="n">Ppf</span> <span class="o">=</span> <span class="n">dppf</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Nu</span><span class="o">&gt;=</span><span class="mi">7</span> <span class="p">)</span> <span class="k">RETURN</span>
+<span class="k">            IF</span> <span class="p">(</span> <span class="n">Nu</span><span class="o">==</span><span class="mi">3</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="c">!</span>
+<span class="c">!     AUGMENT THE RESULTS FOR THE NU = 3 CASE</span>
+<span class="c">!</span>
+               <span class="n">dcon</span> <span class="o">=</span> <span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">dp</span><span class="o">-</span><span class="mf">0.5D0</span><span class="p">)</span>
+               <span class="n">darg</span> <span class="o">=</span> <span class="n">dppf</span><span class="o">/</span><span class="nb">DSQRT</span><span class="p">(</span><span class="n">dnu</span><span class="p">)</span>
+               <span class="n">z</span> <span class="o">=</span> <span class="nb">DATAN</span><span class="p">(</span><span class="n">darg</span><span class="p">)</span>
+               <span class="k">DO </span><span class="n">ipass</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">maxit</span>
+                  <span class="n">s</span> <span class="o">=</span> <span class="nb">DSIN</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                  <span class="n">c</span> <span class="o">=</span> <span class="nb">DCOS</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                  <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="p">(</span><span class="n">z</span><span class="o">+</span><span class="n">s</span><span class="o">*</span><span class="n">c</span><span class="o">-</span><span class="n">dcon</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0D0</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
+               <span class="k">ENDDO</span>
+<span class="k">               </span><span class="n">Ppf</span> <span class="o">=</span> <span class="nb">DSQRT</span><span class="p">(</span><span class="n">dnu</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">/</span><span class="n">c</span>
+               <span class="k">RETURN</span>
+<span class="k">            </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">Nu</span><span class="o">==</span><span class="mi">4</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="c">!</span>
+<span class="c">!     AUGMENT THE RESULTS FOR THE NU = 4 CASE</span>
+<span class="c">!</span>
+               <span class="n">dcon</span> <span class="o">=</span> <span class="mf">2.0D0</span><span class="o">*</span><span class="p">(</span><span class="n">dp</span><span class="o">-</span><span class="mf">0.5D0</span><span class="p">)</span>
+               <span class="n">darg</span> <span class="o">=</span> <span class="n">dppf</span><span class="o">/</span><span class="nb">DSQRT</span><span class="p">(</span><span class="n">dnu</span><span class="p">)</span>
+               <span class="n">z</span> <span class="o">=</span> <span class="nb">DATAN</span><span class="p">(</span><span class="n">darg</span><span class="p">)</span>
+               <span class="k">DO </span><span class="n">ipass</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">maxit</span>
+                  <span class="n">s</span> <span class="o">=</span> <span class="nb">DSIN</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                  <span class="n">c</span> <span class="o">=</span> <span class="nb">DCOS</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                  <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="p">((</span><span class="mf">1.0D0</span><span class="o">+</span><span class="mf">0.5D0</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">-</span><span class="n">dcon</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">1.5D0</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
+               <span class="k">ENDDO</span>
+<span class="k">               </span><span class="n">Ppf</span> <span class="o">=</span> <span class="nb">DSQRT</span><span class="p">(</span><span class="n">dnu</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">/</span><span class="n">c</span>
+               <span class="k">RETURN</span>
+<span class="k">            </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">Nu</span><span class="o">==</span><span class="mi">5</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="c">!</span>
+<span class="c">!     AUGMENT THE RESULTS FOR THE NU = 5 CASE</span>
+<span class="c">!</span>
+               <span class="n">dcon</span> <span class="o">=</span> <span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">dp</span><span class="o">-</span><span class="mf">0.5D0</span><span class="p">)</span>
+               <span class="n">darg</span> <span class="o">=</span> <span class="n">dppf</span><span class="o">/</span><span class="nb">DSQRT</span><span class="p">(</span><span class="n">dnu</span><span class="p">)</span>
+               <span class="n">z</span> <span class="o">=</span> <span class="nb">DATAN</span><span class="p">(</span><span class="n">darg</span><span class="p">)</span>
+               <span class="k">DO </span><span class="n">ipass</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">maxit</span>
+                  <span class="n">s</span> <span class="o">=</span> <span class="nb">DSIN</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                  <span class="n">c</span> <span class="o">=</span> <span class="nb">DCOS</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                  <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="p">(</span><span class="n">z</span><span class="o">+</span><span class="p">(</span><span class="n">c</span><span class="o">+</span><span class="p">(</span><span class="mf">2.0D0</span><span class="o">/</span><span class="mf">3.0D0</span><span class="p">)</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">-</span><span class="n">dcon</span><span class="p">)</span>            <span class="p">&amp;</span>
+     <span class="p">&amp;</span>                <span class="o">/</span><span class="p">((</span><span class="mf">8.0D0</span><span class="o">/</span><span class="mf">3.0D0</span><span class="p">)</span><span class="o">*</span><span class="n">c</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span>
+               <span class="k">ENDDO</span>
+<span class="k">               </span><span class="n">Ppf</span> <span class="o">=</span> <span class="nb">DSQRT</span><span class="p">(</span><span class="n">dnu</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">/</span><span class="n">c</span>
+               <span class="k">RETURN</span>
+<span class="k">            </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">Nu</span><span class="o">==</span><span class="mi">6</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="c">!</span>
+<span class="c">!     AUGMENT THE RESULTS FOR THE NU = 6 CASE</span>
+<span class="c">!</span>
+               <span class="n">dcon</span> <span class="o">=</span> <span class="mf">2.0D0</span><span class="o">*</span><span class="p">(</span><span class="n">dp</span><span class="o">-</span><span class="mf">0.5D0</span><span class="p">)</span>
+               <span class="n">darg</span> <span class="o">=</span> <span class="n">dppf</span><span class="o">/</span><span class="nb">DSQRT</span><span class="p">(</span><span class="n">dnu</span><span class="p">)</span>
+               <span class="n">z</span> <span class="o">=</span> <span class="nb">DATAN</span><span class="p">(</span><span class="n">darg</span><span class="p">)</span>
+               <span class="k">DO </span><span class="n">ipass</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">maxit</span>
+                  <span class="n">s</span> <span class="o">=</span> <span class="nb">DSIN</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                  <span class="n">c</span> <span class="o">=</span> <span class="nb">DCOS</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                  <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="p">((</span><span class="mf">1.0D0</span><span class="o">+</span><span class="mf">0.5D0</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="o">+</span><span class="mf">0.375D0</span><span class="o">*</span><span class="n">c</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">-</span><span class="n">dcon</span><span class="p">)</span>       <span class="p">&amp;</span>
+     <span class="p">&amp;</span>                <span class="o">/</span><span class="p">((</span><span class="mi">1</span><span class="mf">5.0D0</span><span class="o">/</span><span class="mf">8.0D0</span><span class="p">)</span><span class="o">*</span><span class="n">c</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
+               <span class="k">ENDDO</span>
+<span class="k">               </span><span class="n">Ppf</span> <span class="o">=</span> <span class="nb">DSQRT</span><span class="p">(</span><span class="n">dnu</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">/</span><span class="n">c</span>
+               <span class="k">GOTO </span><span class="mi">99999</span>
+            <span class="k">ENDIF</span>
+<span class="k">         </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">Nu</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="c">!</span>
+<span class="c">!     TREAT THE NU = 1 (CAUCHY) CASE</span>
+<span class="c">!</span>
+            <span class="n">darg</span> <span class="o">=</span> <span class="n">pi</span><span class="o">*</span><span class="n">dp</span>
+            <span class="n">Ppf</span> <span class="o">=</span> <span class="o">-</span><span class="nb">DCOS</span><span class="p">(</span><span class="n">darg</span><span class="p">)</span><span class="o">/</span><span class="nb">DSIN</span><span class="p">(</span><span class="n">darg</span><span class="p">)</span>
+            <span class="k">RETURN</span>
+<span class="k">         </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">Nu</span><span class="o">==</span><span class="mi">2</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="c">!</span>
+<span class="c">!     TREAT THE NU = 2 CASE</span>
+<span class="c">!</span>
+            <span class="n">term1</span> <span class="o">=</span> <span class="n">sqrt2</span><span class="o">/</span><span class="mf">2.0D0</span>
+            <span class="n">term2</span> <span class="o">=</span> <span class="mf">2.0D0</span><span class="o">*</span><span class="n">dp</span> <span class="o">-</span> <span class="mf">1.0D0</span>
+            <span class="n">term3</span> <span class="o">=</span> <span class="nb">DSQRT</span><span class="p">(</span><span class="n">dp</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0D0</span><span class="o">-</span><span class="n">dp</span><span class="p">))</span>
+            <span class="n">Ppf</span> <span class="o">=</span> <span class="n">term1</span><span class="o">*</span><span class="n">term2</span><span class="o">/</span><span class="n">term3</span>
+            <span class="k">RETURN</span>
+<span class="k">         ELSE</span>
+<span class="k">            WRITE</span> <span class="p">(</span><span class="n">ipr</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span>
+<span class="mi">99003</span>       <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;INTERNAL ERROR IN TPPF SUBROUTINE&#39;</span><span class="p">)</span>
+            <span class="n">Ppf</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">RETURN</span>
+<span class="k">         ENDIF</span>
+<span class="k">      ENDIF</span>
+<span class="k">      RETURN</span>
+<span class="c">!</span>
+<span class="mi">99999</span> <span class="k">END SUBROUTINE </span><span class="n">TPPF</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2022 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2022-05-31 00:25  
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

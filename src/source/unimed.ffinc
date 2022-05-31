@@ -1,0 +1,117 @@
+!*==unimed.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE UNIMED(N,X)
+      IMPLICIT NONE
+!*--UNIMED31930
+!*** Start of declarations inserted by SPAG
+      REAL ai , an , gam , X
+      INTEGER i , imax , ipr , irev , N , nevodd , nhalf
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT UNIMED
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES THE N ORDER STATISTIC MEDIANS
+!              FROM THE UNIFORM (RECTANGULAR)
+!              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
+!              THIS DISTRIBUTION HAS MEAN = 0.5
+!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
+!              THIS DISTRIBUTION HAS THE PROBABILITY
+!              DENSITY FUNCTION F(X) = 1.
+!              THIS SUBROUTINE IS A SUPPORT SUBROUTINE FOR
+!              ALL OF THE PROBABILITY PLOT SUBROUTINES
+!              IN DATAPAC; IT IS RARELY USED BY THE
+!              DATA ANALYST DIRECTLY.
+!              A PROBABILITY PLOT FOR A GENERAL DISTRIBUTION
+!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
+!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
+!              THE I-TH ORDER STATISTIC MEDIAN FOR A GENERAL
+!              DISTRIBUTION IS OBTAINED BY TRANSFORMING
+!              THE I-TH UNIFORM ORDER STATISTIC MEDIAN
+!              BY THE PERCENT POINT FUNCTION OF THE DESIRED
+!              DISTRIBUTION--HENCE THE IMPORTANCE OF BEING ABLE TO
+!              GENERATE UNIFORM ORDER STATISTIC MEDIANS.
+!              IT IS OF THEROETICAL INTEREST TO NOTE THAT
+!              THE I-TH UNIFORM ORDER STATISTIC MEDIAN
+!              IN A SAMPLE OF SIZE N IS IDENTICALLY THE
+!              MEDIAN OF THE BETA DISTRIBUTION
+!              WITH PARAMETERS I AND N-I+1.
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF UNIFORM ORDER STATISTIC MEDIANS
+!                                TO BE GENERATED.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                UNIFORM ORDER STATISTIC MEDIANS
+!                                WILL BE PLACED.
+!     OUTPUT--THE N ORDER STATISTIC MEDIANS
+!             FROM THE RECTANGULAR DISTRIBUTION ON (0,1).
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
+!                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNIMED SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE UNIM&
+     &ED SUBROUTINE HAS THE VALUE 1 *****')
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+         an = N
+!
+!     COMPUTE THE MEDIANS FOR THE FIRST AND LAST ORDER STATISTICS
+!
+         X(N) = 0.5**(1.0/an)
+         X(1) = 1.0 - X(N)
+!
+!     DETERMINE IF AN ODD OR EVEN SAMPLE SIZE
+!
+         nhalf = (N/2) + 1
+         nevodd = 2*(N/2)
+         IF ( N/=nevodd ) X(nhalf) = 0.5
+         IF ( N<=3 ) RETURN
+!
+!     COMPUTE THE MEDIANS FOR THE OTHER ORDER STATISTICS
+!
+         gam = 0.3175
+         imax = N/2
+         DO i = 2 , imax
+            ai = i
+            irev = N - i + 1
+            X(i) = (ai-gam)/(an-2.0*gam+1.0)
+            X(irev) = 1.0 - X(i)
+         ENDDO
+      ENDIF
+!
+      END SUBROUTINE UNIMED

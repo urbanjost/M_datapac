@@ -1,0 +1,56 @@
+!*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE NORPDF(X,Pdf)
+      IMPLICIT NONE
+!*--NORPDF14679
+!*** Start of declarations inserted by SPAG
+      REAL c , Pdf , X
+      INTEGER ipr
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT NORPDF
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
+!              FUNCTION VALUE FOR THE NORMAL (GAUSSIAN)
+!              DISTRIBUTION WITH MEAN = 0 AND STANDARD DEVIATION = 1.
+!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
+!              THE PROBABILITY DENSITY FUNCTION
+!              F(X) = (1/SQRT(2*PI))*EXP(-X*X/2).
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!                                WHICH THE PROBABILITY DENSITY
+!                                FUNCTION IS TO BE EVALUATED.
+!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
+!                                DENSITY FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
+!             FUNCTION VALUE PDF.
+!     PRINTING--NONE.
+!     RESTRICTIONS--NONE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DATA c/.3989422804/
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
+!     NO INPUT ARGUMENT ERRORS POSSIBLE
+!     FOR THIS DISTRIBUTION.
+!
+!-----START POINT-----------------------------------------------------
+!
+      Pdf = c*EXP(-(X*X)/2.0)
+!
+      END SUBROUTINE NORPDF

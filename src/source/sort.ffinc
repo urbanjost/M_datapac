@@ -1,0 +1,231 @@
+!*==sort.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE SORT(X,N,Y)
+      IMPLICIT NONE
+!*--SORT27546
+!*** Start of declarations inserted by SPAG
+      REAL amed , hold , tt , X , Y
+      INTEGER i , il , ip1 , ipr , iu , j , jmi , jmk , k , l , lmi ,   &
+     &        m , mid , N , nm1
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT SORT
+!
+!     PURPOSE--THIS SUBROUTINE SORTS (IN ASCENDING ORDER)
+!              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X
+!              AND PUTS THE RESULTING N SORTED VALUES INTO THE
+!              SINGLE PRECISION VECTOR Y.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                OBSERVATIONS TO BE SORTED.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!                                INTO WHICH THE SORTED DATA VALUES
+!                                FROM X WILL BE PLACED.
+!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!             CONTAINING THE SORTED
+!             (IN ASCENDING ORDER) VALUES
+!             OF THE SINGLE PRECISION VECTOR X.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THE DIMENSIONS OF THE VECTORS IL AND IU
+!                   (DEFINED AND USED INTERNALLY WITHIN
+!                   THIS SUBROUTINE) DICTATE THE MAXIMUM
+!                   ALLOWABLE VALUE OF N FOR THIS SUBROUTINE.
+!                   IF IL AND IU EACH HAVE DIMENSION K,
+!                   THEN N MAY NOT EXCEED 2**(K+1) - 1.
+!                   FOR THIS SUBROUTINE AS WRITTEN, THE DIMENSIONS
+!                   OF IL AND IU HAVE BEEN SET TO 36,
+!                   THUS THE MAXIMUM ALLOWABLE VALUE OF N IS
+!                   APPROXIMATELY 137 BILLION.
+!                   SINCE THIS EXCEEDS THE MAXIMUM ALLOWABLE
+!                   VALUE FOR AN INTEGER VARIABLE IN MANY COMPUTERS,
+!                   AND SINCE A SORT OF 137 BILLION ELEMENTS
+!                   IS PRESENTLY IMPRACTICAL AND UNLIKELY,
+!                   THEN THERE IS NO PRACTICAL RESTRICTION
+!                   ON THE MAXIMUM VALUE OF N FOR THIS SUBROUTINE.
+!                   (IN LIGHT OF THE ABOVE, NO CHECK OF THE
+!                   UPPER LIMIT OF N HAS BEEN INCORPORATED
+!                   INTO THIS SUBROUTINE.)
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--THE SMALLEST ELEMENT OF THE VECTOR X
+!              WILL BE PLACED IN THE FIRST POSITION
+!              OF THE VECTOR Y,
+!              THE SECOND SMALLEST ELEMENT IN THE VECTOR X
+!              WILL BE PLACED IN THE SECOND POSITION
+!              OF THE VECTOR Y, ETC.
+!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
+!     COMMENT--IF THE ANALYST DESIRES A SORT 'IN PLACE',
+!              THIS IS DONE BY HAVING THE SAME
+!              OUTPUT VECTOR AS INPUT VECTOR IN THE CALLING SEQUENCE.
+!              THUS, FOR EXAMPLE, THE CALLING SEQUENCE
+!              CALL SORT(X,N,X)
+!              IS ALLOWABLE AND WILL RESULT IN
+!              THE DESIRED 'IN-PLACE' SORT.
+!     COMMENT--THE SORTING ALGORTHM USED HEREIN
+!              IS THE BINARY SORT.
+!              THIS ALGORTHIM IS EXTREMELY FAST AS THE
+!              FOLLOWING TIME TRIALS INDICATE.
+!              THESE TIME TRIALS WERE CARRIED OUT ON THE
+!              UNIVAC 1108 EXEC 8 SYSTEM AT NBS
+!              IN AUGUST OF 1974.
+!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES
+!              FOR THE EASY-TO-PROGRAM BUT EXTREMELY
+!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE
+!              ALSO BEEN INCLUDED--
+!              NUMBER OF RANDOM        BINARY SORT       BUBBLE SORT
+!               NUMBERS SORTED
+!                N = 10                 .002 SEC          .002 SEC
+!                N = 100                .011 SEC          .045 SEC
+!                N = 1000               .141 SEC         4.332 SEC
+!                N = 3000               .476 SEC        37.683 SEC
+!                N = 10000             1.887 SEC      NOT COMPUTED
+!     REFERENCES--CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
+!                 BY RICHARD C. SINGLETON).
+!               --CACM JANUARY 1970, PAGE 54.
+!               --CACM OCTOBER 1970, PAGE 624.
+!               --JACM JANUARY 1961, PAGE 41.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:) , Y(:)
+      DIMENSION iu(36) , il(36)
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORT   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORT&
+     &   SUBROUTINE HAS THE VALUE 1 *****')
+            Y(1) = X(1)
+            RETURN
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE SORT   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+            DO i = 1 , N
+               Y(i) = X(i)
+            ENDDO
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+!     COPY THE VECTOR X INTO THE VECTOR Y
+ 50      DO i = 1 , N
+            Y(i) = X(i)
+         ENDDO
+!
+!     CHECK TO SEE IF THE INPUT VECTOR IS ALREADY SORTED
+!
+         nm1 = N - 1
+         DO i = 1 , nm1
+            ip1 = i + 1
+            IF ( Y(i)>Y(ip1) ) GOTO 100
+         ENDDO
+         RETURN
+      ENDIF
+ 100  m = 1
+      i = 1
+      j = N
+ 200  IF ( i>=j ) GOTO 400
+ 300  k = i
+      mid = (i+j)/2
+      amed = Y(mid)
+      IF ( Y(i)>amed ) THEN
+         Y(mid) = Y(i)
+         Y(i) = amed
+         amed = Y(mid)
+      ENDIF
+      l = j
+      IF ( Y(j)<amed ) THEN
+         Y(mid) = Y(j)
+         Y(j) = amed
+         amed = Y(mid)
+         IF ( Y(i)>amed ) THEN
+            Y(mid) = Y(i)
+            Y(i) = amed
+            amed = Y(mid)
+         ENDIF
+      ENDIF
+      DO
+         l = l - 1
+         IF ( Y(l)<=amed ) THEN
+            tt = Y(l)
+            DO
+               k = k + 1
+               IF ( Y(k)>=amed ) THEN
+                  IF ( k<=l ) THEN
+                     Y(l) = Y(k)
+                     Y(k) = tt
+                     EXIT
+                  ELSE
+                     lmi = l - i
+                     jmk = j - k
+                     IF ( lmi<=jmk ) THEN
+                        il(m) = k
+                        iu(m) = j
+                        j = l
+                        m = m + 1
+                     ELSE
+                        il(m) = i
+                        iu(m) = l
+                        i = k
+                        m = m + 1
+                     ENDIF
+                     GOTO 500
+                  ENDIF
+               ENDIF
+            ENDDO
+         ENDIF
+      ENDDO
+ 400  m = m - 1
+      IF ( m==0 ) RETURN
+      i = il(m)
+      j = iu(m)
+ 500  jmi = j - i
+      IF ( jmi>=11 ) GOTO 300
+      IF ( i==1 ) GOTO 200
+      i = i - 1
+      DO
+         i = i + 1
+         IF ( i==j ) GOTO 400
+         amed = Y(i+1)
+         IF ( Y(i)>amed ) THEN
+            k = i
+            DO
+               Y(k+1) = Y(k)
+               k = k - 1
+               IF ( amed>=Y(k) ) THEN
+                  Y(k+1) = amed
+                  EXIT
+               ENDIF
+            ENDDO
+         ENDIF
+      ENDDO
+      END SUBROUTINE SORT

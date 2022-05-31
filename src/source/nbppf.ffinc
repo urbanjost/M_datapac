@@ -1,0 +1,394 @@
+!*==nbppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE NBPPF(P,Ppar,N,Ppf)
+      IMPLICIT NONE
+!*--NBPPF13546
+!*** Start of declarations inserted by SPAG
+      REAL amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
+     &     Ppar , Ppf , sd , sinh , x0 , x1 , x2 , ymean , yppf , ysd
+      REAL zppf
+      INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT NBPPF
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
+!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE P
+!              FOR THE NEGATIVE BINOMIAL DISTRIBUTION
+!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
+!              PARAMETER = PPAR,
+!              AND INTEGER 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
+!              PARAMETER = N.
+!              THE NEGATIVE BINOMIAL DISTRIBUTION USED
+!              HEREIN HAS MEAN = N*(1-PPAR)/PPAR
+!              AND STANDARD DEVIATION = SQRT(N*(1-PPAR)/(PPAR*PPAR))).
+!              THIS DISTRIBUTION IS DEFINED FOR
+!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
+!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
+!              F(X) = C(N+X-1,N) * PPAR**N * (1-PPAR)**X.
+!              WHERE C(N+X-1,N) IS THE COMBINATORIAL FUNCTION
+!              EQUALING THE NUMBER OF COMBINATIONS OF N+X-1 ITEMS
+!              TAKEN N AT A TIME.
+!              THE NEGATIVE BINOMIAL DISTRIBUTION IS THE
+!              DISTRIBUTION OF THE NUMBER OF FAILURES
+!              BEFORE OBTAINING N SUCCESSES IN AN
+!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
+!              TRIALS WHERE THE PROBABILITY OF SUCCESS
+!              IN A SINGLE TRIAL = PPAR.
+!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
+!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
+!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
+!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!                                (BETWEEN 0.0 (INCLUSIVELY)
+!                                AND 1.0 (EXCLUSIVELY))
+!                                AT WHICH THE PERCENT POINT
+!                                FUNCTION IS TO BE EVALUATED.
+!                     --PPAR   = THE SINGLE PRECISION VALUE
+!                                OF THE 'BERNOULLI PROBABILITY'
+!                                PARAMETER FOR THE NEGATIVE BINOMIAL
+!                                DISTRIBUTION.
+!                                PPAR SHOULD BE BETWEEN
+!                                0.0 (EXCLUSIVELY) AND
+!                                1.0 (EXCLUSIVELY).
+!                     --N      = THE INTEGER VALUE
+!                                OF THE 'NUMBER OF SUCCESSES
+!                                IN BERNOULLI TRIALS' PARAMETER.
+!                                N SHOULD BE A POSITIVE INTEGER.
+!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!                                POINT FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
+!             FUNCTION VALUE PPF
+!             FOR THE NEGATIVE BINOMIAL DISTRIBUTION
+!             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
+!             AND 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
+!             PARAMETER = N.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--PPAR SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!                 --N SHOULD BE A POSITIVE INTEGER.
+!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, NBCDF.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP, ALOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
+!              FROM THIS DISCRETE DISTRIBUTION
+!              PERCENT POINT FUNCTION
+!              SUBROUTINE MUST NECESSARILY BE A
+!              DISCRETE INTEGER VALUE,
+!              THE OUTPUT VARIABLE PPF IS SINGLE
+!              PRECISION IN MODE.
+!              PPF HAS BEEN SPECIFIED AS SINGLE
+!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
+!              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
+!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              THIS CONVENTION IS BASED ON THE BELIEF THAT
+!              1) A MIXTURE OF MODES (FLOATING POINT
+!              VERSUS INTEGER) IS INCONSISTENT AND
+!              AN UNNECESSARY COMPLICATION
+!              IN A DATA ANALYSIS; AND
+!              2) FLOATING POINT MACHINE ARITHMETIC
+!              (AS OPPOSED TO INTEGER ARITHMETIC)
+!              IS THE MORE NATURAL MODE FOR DOING
+!              DATA ANALYSIS.
+!     REFERENCES--JOHNSON AND KOTZ, DISCRETE
+!                 DISTRIBUTIONS, 1969, PAGES 122-142,
+!                 ESPECIALLY PAGE 127, FORMULA 22.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGES 92-95.
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!                 SERIES 55, 1964, PAGE 929.
+!               --FELLER, AN INTRODUCTION TO PROBABILITY
+!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!                 EDITION 2, 1957, PAGES 155-157, 210.
+!               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
+!               --WILLIAMSON AND BRETHERTON, TABLES OF
+!                 THE NEGATIVE BINOMIAL PROBABILITY
+!                 DISTRIBUTION, 1963.
+!               --OWEN, HANDBOOK OF STATISTICAL
+!                 TABLES, 1962, PAGE 304.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DOUBLE PRECISION dppar
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( P<0.0 .OR. P>=1.0 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NBPPF  SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (ipr,99019) P
+         Ppf = 0.0
+         RETURN
+      ELSE
+         IF ( Ppar<=0.0 .OR. Ppar>=1.0 ) THEN
+            WRITE (ipr,99002)
+99002       FORMAT (' ',                                                &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NBPPF  SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+            WRITE (ipr,99019) Ppar
+            Ppf = 0.0
+            RETURN
+         ELSE
+            IF ( N<1 ) THEN
+               WRITE (ipr,99003)
+99003          FORMAT (' ',                                             &
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE NBPPF  SUBROU&
+     &TINE IS NON-POSITIVE *****')
+               WRITE (ipr,99004) N
+99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
+     &                 ' *****')
+               Ppf = 0.0
+               RETURN
+            ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+               an = N
+               dppar = Ppar
+               Ppf = 0.0
+               ix0 = 0
+               ix1 = 0
+               ix2 = 0
+               p0 = 0.0
+               p1 = 0.0
+               p2 = 0.0
+!
+!     TREAT CERTAIN SPECIAL CASES IMMEDIATELY--
+!     1) P = 0.0
+!     2) P = 0.5 AND PPAR = 0.5
+!     3) PPF = 0
+!
+               IF ( P/=0.0 ) THEN
+                  IF ( P==0.5 .AND. Ppar==0.5 ) THEN
+                     Ppf = N - 1
+                     RETURN
+                  ELSE
+                     pf0 = dppar**N
+                     IF ( P>pf0 ) THEN
+!
+!     DETERMINE AN INITIAL APPROXIMATION TO THE NEGATIVE BINOMIAL
+!     PERCENT POINT BY USE OF THE HYPERBOLIC ARCSIN
+!     TRANSFORMATION OF THE NEGATIVE BINOMIAL
+!     TO APPROXIMATE NORMALITY.
+!     (SEE JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS,
+!     PAGE 127, FORMULA 22).
+!
+                        amean = an*(1.0-Ppar)/Ppar
+                        sd = SQRT(an*(1.0-Ppar)/(Ppar*Ppar))
+                        arg = SQRT((amean+0.375)/(an-0.75))
+                        arcsh = ALOG(arg+SQRT(arg*arg+1.0))
+                        ymean = (SQRT(an-0.5))*arcsh
+                        ysd = 0.5
+                        CALL NORPPF(P,zppf)
+                        yppf = ymean + zppf*ysd
+                        arg = yppf/SQRT(an-0.5)
+                        e = EXP(arg)
+                        sinh = (e-1.0/e)/2.0
+                        x2 = -0.375 + (an-0.75)*sinh*sinh
+                        x2 = x2 + 0.5
+                        ix2 = x2
+!
+!     CHECK AND MODIFY (IF NECESSARY) THIS INITIAL
+!     ESTIMATE OF THE PERCENT POINT
+!     TO ASSURE THAT IT BE NON-NEGATIVE.
+!
+                        IF ( ix2<0 ) ix2 = 0
+!
+!     DETERMINE UPPER AND LOWER BOUNDS ON THE DESIRED
+!     PERCENT POINT BY ITERATING OUT (BOTH BELOW AND ABOVE)
+!     FROM THE ORIGINAL APPROXIMATION AT STEPS
+!     OF 1 STANDARD DEVIATION.
+!     THE RESULTING BOUNDS WILL BE AT MOST
+!     1 STANDARD DEVIATION APART.
+!
+                        ix0 = 0
+                        ix1 = huge(0) ! = 10**10
+                        isd = sd + 1.0
+                        x2 = ix2
+                        CALL NBCDF(x2,Ppar,N,p2)
+!
+                        IF ( p2<P ) THEN
+!
+                           ix0 = ix2
+                           DO i = 1 , 100000
+                              ix2 = ix0 + isd
+                              IF ( ix2>=ix1 ) GOTO 100
+                              x2 = ix2
+                              CALL NBCDF(x2,Ppar,N,p2)
+                              IF ( p2>=P ) GOTO 20
+                              ix0 = ix2
+                           ENDDO
+                           WRITE (ipr,99020)
+                           WRITE (ipr,99005)
+!
+99005                      FORMAT (' ',                                 &
+     &                     'NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS'&
+     &                     )
+                        ELSE
+!
+                           ix1 = ix2
+                           DO i = 1 , 100000
+                              ix2 = ix1 - isd
+                              IF ( ix2<=ix0 ) GOTO 100
+                              x2 = ix2
+                              CALL NBCDF(x2,Ppar,N,p2)
+                              IF ( p2<P ) GOTO 50
+                              ix1 = ix2
+                           ENDDO
+                           WRITE (ipr,99020)
+                           WRITE (ipr,99006)
+99006                      FORMAT (' ',                                 &
+     &                     'NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS'&
+     &                     )
+                        ENDIF
+                        GOTO 200
+                     ENDIF
+                  ENDIF
+               ENDIF
+               Ppf = 0.0
+               RETURN
+            ENDIF
+ 20         ix1 = ix2
+            GOTO 100
+         ENDIF
+ 50      ix0 = ix2
+      ENDIF
+!
+ 100  IF ( ix0==ix1 ) THEN
+         IF ( ix0==0 ) THEN
+            ix1 = ix1 + 1
+         ELSEIF ( ix0==N ) THEN
+            ix0 = ix0 - 1
+         ELSE
+            WRITE (ipr,99020)
+            WRITE (ipr,99007)
+99007       FORMAT (' ','LOWER AND UPPER BOUND IDENTICAL')
+            GOTO 200
+         ENDIF
+      ENDIF
+!
+!     COMPUTE NEGATIVE BINOMIAL PROBABILITIES FOR THE
+!     DERIVED LOWER AND UPPER BOUNDS.
+!
+      x0 = ix0
+      x1 = ix1
+      CALL NBCDF(x0,Ppar,N,p0)
+      CALL NBCDF(x1,Ppar,N,p1)
+!
+!     CHECK THE PROBABILITIES FOR PROPER ORDERING
+!
+      IF ( p0<P .AND. P<=p1 ) THEN
+         DO
+!
+!     THE STOPPING CRITERION IS THAT THE LOWER BOUND
+!     AND UPPER BOUND ARE EXACTLY 1 UNIT APART.
+!     CHECK TO SEE IF IX1 = IX0 + 1;
+!     IF SO, THE ITERATIONS ARE COMPLETE;
+!     IF NOT, THEN BISECT, COMPUTE PROBABILIIES,
+!     CHECK PROBABILITIES, AND CONTINUE ITERATING
+!     UNTIL IX1 = IX0 + 1.
+!
+            ix0p1 = ix0 + 1
+            IF ( ix1==ix0p1 ) THEN
+               Ppf = ix1
+               IF ( p0==P ) Ppf = ix0
+               RETURN
+            ELSE
+               ix2 = (ix0+ix1)/2
+               IF ( ix2/=ix0 ) THEN
+                  IF ( ix2==ix1 ) THEN
+                     WRITE (ipr,99020)
+                     WRITE (ipr,99021)
+                     EXIT
+                  ELSE
+                     x2 = ix2
+                     CALL NBCDF(x2,Ppar,N,p2)
+                     IF ( p0<p2 .AND. p2<p1 ) THEN
+                        IF ( p2<=P ) THEN
+                           ix0 = ix2
+                           p0 = p2
+                        ELSE
+                           ix1 = ix2
+                           p1 = p2
+                        ENDIF
+                        CYCLE
+                     ELSEIF ( p2<=p0 ) THEN
+                        WRITE (ipr,99020)
+                        WRITE (ipr,99008)
+99008                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
+     &                          'LESS THAN LOWER BOUND PROBABILITY (P0)'&
+     &                          )
+                        EXIT
+                     ELSEIF ( p2>=p1 ) THEN
+                        WRITE (ipr,99020)
+                        WRITE (ipr,99009)
+99009                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
+     &                       'GREATER THAN UPPER BOUND PROBABILITY (P1)'&
+     &                       )
+                        EXIT
+                     ENDIF
+                  ENDIF
+               ENDIF
+               WRITE (ipr,99020)
+               WRITE (ipr,99021)
+               EXIT
+            ENDIF
+         ENDDO
+      ELSEIF ( p0==P ) THEN
+         Ppf = ix0
+         RETURN
+      ELSEIF ( p1==P ) THEN
+         Ppf = ix1
+         RETURN
+      ELSEIF ( p0>p1 ) THEN
+         WRITE (ipr,99020)
+         WRITE (ipr,99010)
+99010    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
+     &           'UPPER BOUND PROBABILITY (P1)')
+      ELSEIF ( p0>P ) THEN
+         WRITE (ipr,99020)
+         WRITE (ipr,99011)
+99011    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
+     &           'INPUT PROBABILITY (P)')
+      ELSEIF ( p1<P ) THEN
+         WRITE (ipr,99020)
+         WRITE (ipr,99012)
+99012    FORMAT (' ','UPPER BOUND PROBABILITY (P1) LESS    THAN ',      &
+     &           'INPUT PROBABILITY (P)')
+      ELSE
+         WRITE (ipr,99020)
+         WRITE (ipr,99013)
+99013    FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
+      ENDIF
+!
+ 200  WRITE (ipr,99014) ix0 , p0
+99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
+      WRITE (ipr,99015) ix1 , p1
+99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
+      WRITE (ipr,99016) ix2 , p2
+99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
+      WRITE (ipr,99017) P
+99017 FORMAT (' ','P    = ',F14.7)
+      WRITE (ipr,99018) Ppar , N
+99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
+      RETURN
+99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+99020 FORMAT (' ','***** INTERNAL ERROR IN NBPPF  SUBROUTINE *****')
+99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
+99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
+!
+      END SUBROUTINE NBPPF

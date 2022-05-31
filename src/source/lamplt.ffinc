@@ -1,0 +1,187 @@
+!*==lamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE LAMPLT(X,N,Alamba)
+      IMPLICIT NONE
+!*--LAMPLT10738
+!*** Start of declarations inserted by SPAG
+      REAL Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
+     &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
+     &     yint
+      REAL yslope
+      INTEGER i , ipr , iupper , N
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT LAMPLT
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES A (TUKEY) LAMBDA DISTRIBUTION
+!              PROBABILITY PLOT
+!              (WITH TAIL LENGTH PARAMETER VALUE = ALAMBA).
+!              IN GENERAL, THE PROBABILITY DENSITY FUNCTION
+!              FOR THIS DISTRIBUTION IS NOT SIMPLE.
+!              THE PERCENT POINT FUNCTION FOR THIS DISTRIBUTION IS
+!              G(P) = ((P**ALAMBA)-((1-P)**ALAMBA)) / ALAMBA
+!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
+!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
+!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
+!              THE LAMBDA PROBABILITY PLOT IS USEFUL IN
+!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
+!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
+!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
+!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
+!              IS THE LAMBDA DISTRIBUTION
+!              WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
+!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
+!              SHOULD BE NEAR-LINEAR.
+!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
+!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                                (THE TAIL LENGTH PARAMETER).
+!     OUTPUT--A ONE-PAGE LAMBDA PROBABILITY PLOT.
+!     PRINTING--YES.
+!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
+!                   FOR THIS SUBROUTINE IS 7500.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!                 OCTOBER, 1972), PAGES 425-450.
+!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!                 1967, PAGES 260-308.
+!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!                 PRINCETON UNIVERSITY, 1969), PAGES 21-44, 229-231,
+!                 PAGES 53-58.
+!               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
+!                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
+!                 STUDY OF ORDER STATISTICS', ANNALS OF
+!                 MATHEMATICAL STATISTICS, 18, 1947,
+!                 PAGES 413-426.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION Y(7500) , W(7500)
+      COMMON /BLOCK2/ WS(15000)
+      EQUIVALENCE (Y(1),WS(1))
+      EQUIVALENCE (W(1),WS(7501))
+!
+      ipr = 6
+      iupper = 7500
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 .OR. N>iupper ) THEN
+         WRITE (ipr,99001) iupper
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LAMPLT SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( N==1 ) THEN
+         WRITE (ipr,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE LAMP&
+     &LT SUBROUTINE HAS THE VALUE 1 *****')
+         RETURN
+      ELSE
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (ipr,99004) hold
+99004    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE LAMPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      an = N
+!
+!     SORT THE DATA
+!
+         CALL SORT(X,N,Y)
+!
+!     GENERATE UNIFORM ORDER STATISTIC MEDIANS
+!
+         CALL UNIMED(N,W)
+!
+!     COMPUTE LAMBDA DISTRIBUTION ORDER STATISTIC MEDIANS
+!
+         DO i = 1 , N
+            q = W(i)
+            IF ( -0.001<Alamba .AND. Alamba<0.001 ) W(i)                &
+     &           = ALOG(q/(1.0-q))
+            IF ( -0.001>=Alamba .OR. Alamba>=0.001 ) W(i)               &
+     &           = (q**Alamba-(1.0-q)**Alamba)/Alamba
+         ENDDO
+!
+!     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
+!     COMPUTE THE TAIL LENGTH MEASURE OF THE DISTRIBUTION.
+!     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
+!     AND THE SAMPLE SIZE.
+!
+         CALL PLOT(Y,W,N)
+         IF ( -0.001<Alamba .AND. Alamba<0.001 ) tau = 1.63473745
+         IF ( -0.001>=Alamba .OR. Alamba>=0.001 ) THEN
+            q = .9975
+            pp9975 = (q**Alamba-(1.0-q)**Alamba)/Alamba
+            q = .0025
+            pp0025 = (q**Alamba-(1.0-q)**Alamba)/Alamba
+            q = .975
+            pp975 = (q**Alamba-(1.0-q)**Alamba)/Alamba
+            q = .025
+            pp025 = (q**Alamba-(1.0-q)**Alamba)/Alamba
+            tau = (pp9975-pp0025)/(pp975-pp025)
+         ENDIF
+         WRITE (ipr,99005) Alamba , tau , N
+!
+99005    FORMAT (' ','LAMBDA PROBABILITY PLOT WITH LAMBDA = ',E17.10,1X,&
+     &           '(TAU = ',E15.8,')',24X,'THE SAMPLE SIZE N = ',I7)
+!
+!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
+!     COMPUTE LOCATION AND SCALE ESTIMATES
+!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
+!     THEN WRITE THEM OUT.
+!
+         sum1 = 0.0
+         DO i = 1 , N
+            sum1 = sum1 + Y(i)
+         ENDDO
+         ybar = sum1/an
+         wbar = 0.0
+         sum1 = 0.0
+         sum2 = 0.0
+         sum3 = 0.0
+         DO i = 1 , N
+            sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
+            sum2 = sum2 + W(i)*Y(i)
+            sum3 = sum3 + W(i)*W(i)
+         ENDDO
+         cc = sum2/SQRT(sum3*sum1)
+         yslope = sum2/sum3
+         yint = ybar - yslope*wbar
+         WRITE (ipr,99006) cc , yint , yslope
+99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
+     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
+     &           'ESTIMATED SLOPE = ',E15.8)
+      ENDIF
+!
+      END SUBROUTINE LAMPLT

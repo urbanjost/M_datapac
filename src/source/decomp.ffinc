@@ -1,0 +1,174 @@
+!*==decomp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
+      IMPLICIT NONE
+!*--DECOMP3127
+!*** Start of declarations inserted by SPAG
+      REAL D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
+     &     Tol , tol2 , WS
+      INTEGER i , Insing , ip , IPIvot , iqarg , iqarg1 , iqarg2 ,      &
+     &        Irank , irarg , irarg1 , irarg2 , is , ism1 , isp1 , j ,  &
+     &        K , l , m , N
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT DECOMP
+      EXTERNAL DOT
+!
+!     PURPOSE--THIS SUBROUTINE DECOMPOSES THE WEIGHTED DATA
+!     MATRIX Q WHICH ORIGINALLY = THE N BY K DATA MATRIX X
+!     TIMES THE SQUARE ROOT OF THE WEIGHTS (IN W).
+!     THE ORIGINAL Q IS DECOMPOSED INTO A NEW Q TIMES THE
+!     INVERSE OF A DIAGONAL MATRIX D TIMES THE DIAGONAL MATRIX D
+!     TIMES AN UPPER TRIANGULAR MATRIX R.
+!     THE NEW N BY K Q HAS ORTHOGONAL COLUMNS.
+!     A SECOND OUTPUT FROM THIS SUBROUTINE IS THE RANK AND
+!     STATUS (NON-SINGULAR OR SINGULAR) OF THE DATA MATRIX X.
+!     A THIRD OURPUT FROM THIS SUBROUTINE IS THE NUMERICALLY
+!     OPTIMAL PIVOT POINTS FOR THE DECOMPOSITION.
+!     X--NOT USED
+!     Q--USED AND CHANGED
+!     R--DEFINED
+!     D--PERMANENTLY DEFINED
+!     IPIVOT--PERMANENTLY DEFINED
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      LOGICAL fsum
+      DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
+      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+      EQUIVALENCE (Q(1),WS(1))
+      EQUIVALENCE (R(1),WS(10001))
+      EQUIVALENCE (D(1),WS(12501))
+      EQUIVALENCE (IPIvot(1),WS(12551))
+!
+!-----START POINT-----------------------------------------------------
+!
+!     ZERO-OUT SOME VARIABLES, VECTORS, AND ARRAYS
+!
+      Insing = 0
+      Irank = 0
+      DO j = 1 , K
+         D(j) = 0.0
+         DO i = 1 , K
+            irarg = (i-1)*K + j
+            R(irarg) = 0.0
+         ENDDO
+      ENDDO
+!
+      tol2 = Tol*Tol
+      DO j = 1 , K
+         IPIvot(j) = j
+      ENDDO
+      DO is = 1 , K
+!
+!     BEGIN STEP NUMBER      IS      IN THE DECOMPOSITION
+!
+         IF ( is==1 ) fsum = .TRUE.
+ 50      dis = 0.0
+         ip = is
+!
+!     BEGIN THE PIVOT SEARCH
+!
+         DO j = is , K
+            m = IPIvot(j)
+            IF ( fsum ) THEN
+               DO l = 1 , N
+                  iqarg = (l-1)*K + m
+                  DUM1(l) = Q(iqarg)
+                  DUM2(l) = Q(iqarg)
+               ENDDO
+!
+               CALL DOT(DUM1,DUM2,1,N,0.0,D(j))
+            ENDIF
+!
+            IF ( dis<D(j) ) THEN
+               dis = D(j)
+               ip = j
+            ENDIF
+         ENDDO
+!
+!     END THE PIVOT SEARCH
+!
+         m = IPIvot(ip)
+         IF ( fsum ) dn = dis
+         IF ( dis<Eta*dn ) THEN
+            fsum = .TRUE.
+         ELSE
+            fsum = .FALSE.
+         ENDIF
+         IF ( fsum ) GOTO 50
+         IF ( ip/=is ) THEN
+!
+!     BEGIN COLUMN INTERCHANGES
+!
+            D(ip) = D(is)
+            IPIvot(ip) = IPIvot(is)
+            IPIvot(is) = m
+            IF ( is/=1 ) THEN
+               ism1 = is - 1
+               DO i = 1 , ism1
+                  irarg1 = (i-1)*K + ip
+                  irarg2 = (i-1)*K + is
+                  hold = R(irarg1)
+                  R(irarg1) = R(irarg2)
+                  R(irarg2) = hold
+               ENDDO
+            ENDIF
+         ENDIF
+!
+!     END COLUMN INTERCHANGES
+!
+         DO l = 1 , N
+            iqarg = (l-1)*K + m
+            DUM1(l) = Q(iqarg)
+            DUM2(l) = Q(iqarg)
+         ENDDO
+!
+         CALL DOT(DUM1,DUM2,1,N,0.0,D(is))
+!
+         dis = D(is)
+         IF ( dis<=tol2*D(1) ) RETURN
+         IF ( dis/=0.0 ) THEN
+            isp1 = is + 1
+            IF ( isp1<=K ) THEN
+!
+!     BEGIN ORTHOGONALIZATION
+!
+               DO j = isp1 , K
+                  ip = IPIvot(j)
+                  DO l = 1 , N
+                     iqarg1 = (l-1)*K + m
+                     iqarg2 = (l-1)*K + ip
+                     DUM1(l) = Q(iqarg1)
+                     DUM2(l) = Q(iqarg2)
+                  ENDDO
+!
+                  irarg = (is-1)*K + j
+                  CALL DOT(DUM1,DUM2,1,N,0.0,R(irarg))
+                  R(irarg) = R(irarg)/dis
+!
+                  risj = R(irarg)
+                  DO i = 1 , N
+                     iqarg1 = (i-1)*K + ip
+                     iqarg2 = (i-1)*K + m
+                     Q(iqarg1) = Q(iqarg1) - risj*Q(iqarg2)
+                  ENDDO
+                  D(j) = D(j) - dis*risj*risj
+               ENDDO
+            ENDIF
+!
+!     END ORTHOGONALIZATION
+!
+            Irank = is
+         ELSE
+            Insing = 0
+            RETURN
+         ENDIF
+      ENDDO
+!
+!     END STEP NUMBER     IS     INTHE DECOMPOSITION
+!
+      Insing = 1
+      END SUBROUTINE DECOMP

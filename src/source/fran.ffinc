@@ -1,0 +1,162 @@
+!*==fran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
+      IMPLICIT NONE
+!*--FRAN7735
+!*** Start of declarations inserted by SPAG
+      REAL anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
+     &     z
+      INTEGER i , ipr , Istart , j , N , Nu1 , Nu2
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT FRAN
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
+!              FROM THE F DISTRIBUTION
+!              WITH INTEGER DEGREES OF FREEDOM
+!              PARAMETERS = NU1 AND NU2.
+!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X.
+!              THE PROBABILITY DENSITY FUNCTION IS GIVEN
+!              IN THE REFERENCES BELOW.
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!                     --NU1    = THE INTEGER DEGREES OF FREEDOM
+!                                FOR THE NUMERATOR OF THE F RATIO.
+!                     --NU2    = THE INTEGER DEGREES OF FREEDOM
+!                                FOR THE DENOMINATOR OF THE F RATIO.
+!                     --ISTART = AN INTEGER FLAG CODE WHICH
+!                                (IF SET TO 0) WILL START THE
+!                                GENERATOR OVER AND HENCE
+!                                PRODUCE THE SAME RANDOM SAMPLE
+!                                OVER AND OVER AGAIN
+!                                UPON SUCCESSIVE CALLS TO
+!                                THIS SUBROUTINE WITHIN A RUN; OR
+!                                (IF SET TO SOME INTEGER
+!                                VALUE NOT EQUAL TO 0,
+!                                LIKE, SAY, 1) WILL ALLOW
+!                                THE GENERATOR TO CONTINUE
+!                                FROM WHERE IT STOPPED
+!                                AND HENCE PRODUCE DIFFERENT
+!                                RANDOM SAMPLES UPON
+!                                SUCCESSIVE CALLS TO
+!                                THIS SUBROUTINE WITHIN A RUN.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE F DISTRIBUTION
+!             WITH DEGREES OF FREEDOM
+!             PARAMETERS = NU1 AND NU2.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --NU1 SHOULD BE A POSITIVE INTEGER VARIABLE.
+!                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--MOOD AND GRABLE, INTRODUCTION TO THE
+!                 THEORY OF STATISTICS, 1963, PAGES 231-232.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--2, 1970, PAGES 75-93.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGE 64.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION y(2) , z(2)
+      DATA pi/3.14159265358979/
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE FRAN   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99004) N
+         RETURN
+      ELSEIF ( Nu1<=0 ) THEN
+         WRITE (ipr,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FRAN   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99004) Nu1
+         RETURN
+      ELSEIF ( Nu2<=0 ) THEN
+         WRITE (ipr,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FRAN   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99004) Nu2
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         CALL UNIRAN(1,Istart,y)
+!
+!     GENERATE N F RANDOM NUMBERS
+!     USING THE DEFINITION THAT
+!     A F VARIATE WITH NU1 AND NU2 DEGREES OF FREEDOM
+!     EQUALS (CHS1/NU1)/(CHS2/NU2)
+!     WHERE CHS1 IS A CHI-SQUARED VARIATE
+!     WITH NU1 DEGREES OF FREEDOM,
+!     AND   CHS2 IS A CHI-SQUARED VARIATE
+!     WITH NU2 DEGREES OF FREEDOM.
+!     FIRST GENERATE UNIFORM (0,1) RANDOM NUMBERS,
+!     THEN GENERATE NORMAL RANDOM NUMBERS,
+!     THEN CHI-SQUARED RANDOM NUMBERS WITH NU1 DEGREES
+!     OF FREEDOM,
+!     THEN CHI-SQUARED RANDOM NUMBERS WITH NU2 DEGREES
+!     OF FREEDOM,
+!     AND THEN FINALLY THE F RANDOM NUMBER.
+!
+         anu1 = Nu1
+         anu2 = Nu2
+         DO i = 1 , N
+!
+            sum = 0.0
+            DO j = 1 , Nu1 , 2
+               CALL UNIRAN(2,1,y)
+               arg1 = -2.0*ALOG(y(1))
+               arg2 = 2.0*pi*y(2)
+               z(1) = (SQRT(arg1))*(COS(arg2))
+               z(2) = (SQRT(arg1))*(SIN(arg2))
+               sum = sum + z(1)*z(1)
+               IF ( j/=Nu1 ) sum = sum + z(2)*z(2)
+            ENDDO
+            chs1 = sum
+!
+            sum = 0.0
+            DO j = 1 , Nu2 , 2
+               CALL UNIRAN(2,1,y)
+               arg1 = -2.0*ALOG(y(1))
+               arg2 = 2.0*pi*y(2)
+               z(1) = (SQRT(arg1))*(COS(arg2))
+               z(2) = (SQRT(arg1))*(SIN(arg2))
+               sum = sum + z(1)*z(1)
+               IF ( j/=Nu2 ) sum = sum + z(2)*z(2)
+            ENDDO
+            chs2 = sum
+!
+            X(i) = (chs1/anu1)/(chs2/anu2)
+!
+         ENDDO
+      ENDIF
+99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+!
+      END SUBROUTINE FRAN

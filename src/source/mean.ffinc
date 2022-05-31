@@ -1,0 +1,112 @@
+!*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE MEAN(X,N,Iwrite,Xmean)
+      IMPLICIT NONE
+!*--MEAN12515
+!*** Start of declarations inserted by SPAG
+      REAL an , hold , sum , X , Xmean
+      INTEGER i , ipr , Iwrite , N
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT MEAN
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE
+!              SAMPLE MEAN
+!              OF THE DATA IN THE INPUT VECTOR X.
+!              THE SAMPLE MEAN = (SUM OF THE OBSERVATIONS)/N.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --IWRITE = AN INTEGER FLAG CODE WHICH
+!                                (IF SET TO 0) WILL SUPPRESS
+!                                THE PRINTING OF THE
+!                                SAMPLE MEAN
+!                                AS IT IS COMPUTED;
+!                                OR (IF SET TO SOME INTEGER
+!                                VALUE NOT EQUAL TO 0),
+!                                LIKE, SAY, 1) WILL CAUSE
+!                                THE PRINTING OF THE
+!                                SAMPLE MEAN
+!                                AT THE TIME IT IS COMPUTED.
+!     OUTPUT ARGUMENTS--XMEAN  = THE SINGLE PRECISION VALUE OF THE
+!                                COMPUTED SAMPLE MEAN.
+!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!             SAMPLE MEAN.
+!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
+!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
+!               CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
+!                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 4.
+!               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
+!                 OF STATISTICS, EDITION 2, 1963, PAGE 146.
+!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!                 ANALYSIS, EDITION 2, 1957, PAGE 14.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      an = N
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MEAN   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MEAN&
+     &   SUBROUTINE HAS THE VALUE 1 *****')
+            Xmean = X(1)
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE MEAN   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            Xmean = X(1)
+         ENDIF
+         GOTO 100
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      sum = 0.0
+         DO i = 1 , N
+            sum = sum + X(i)
+         ENDDO
+         Xmean = sum/an
+      ENDIF
+!
+ 100  IF ( Iwrite==0 ) RETURN
+      WRITE (ipr,99005)
+99005 FORMAT (' ')
+      WRITE (ipr,99006) N , Xmean
+99006 FORMAT (' ','THE SAMPLE MEAN OF THE ',I6,' OBSERVATIONS IS ',     &
+     &        E15.8)
+      END SUBROUTINE MEAN

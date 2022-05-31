@@ -1,0 +1,219 @@
+!*==subset.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
+      IMPLICIT NONE
+!*--SUBSET29201
+!*** Start of declarations inserted by SPAG
+      REAL D , Dmax , Dmin , hold , pointl , pointu , X
+      INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT SUBSET
+!
+!     PURPOSE--THIS SUBROUTINE RETAINS ALL OBSERVATIONS IN THE
+!              SINGLE PRECISION VECTOR X FOR WHICH THE
+!              CORRESPONDING ELEMENTS IN THE
+!              SINGLE PRECISION VECTOR D ARE INSIDE
+!              THE CLOSED (INCLUSIVE) INTERVAL
+!              DEFINED BY DMIN AND DMAX,
+!              WHILE DELETING ALL OBSERVATIONS IN X
+!              CORRESPONDING TO ELEMENTS OF D
+!              OUTSIDE OF THIS INTERVAL.
+!              THUS ALL OBSERVATIONS IN X WHICH
+!              CORRESPOND TO ELEMENTS IN D WHICH ARE SMALLER
+!              THAN DMIN OR LARGER THAN DMAX ARE DELETED FROM X.
+!              THE USE OF THIS SUBROUTINE
+!              GIVES THE DATA ANALYST THE CAPABILITY TO
+!              EASILY EXTRACT SUBSETS OF THE DATA
+!              PRIOR TO DATA ANALYSIS ON EACH SUBSET.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --D      = THE SINGLE PRECISION VECTOR
+!                                WHICH 'DEFINES' THE VARIOUS
+!                                POSSIBLE SUBSETS OF X.
+!                     --DMIN   = THE SINGLE PRECISION VALUE
+!                                WHICH DEFINES THE LOWER LIMIT
+!                                (INCLUSIVELY) OF THE PARTICULAR
+!                                SUBSET OF INTEREST TO BE RETAINED.
+!                     --DMAX   = THE SINGLE PRECISION VALUE
+!                                WHICH DEFINES THE UPPER LIMIT
+!                                (INCLUSIVELY) OF THE PARTICULAR
+!                                SUBSET OF INTEREST TO BE RETAINED.
+!     OUTPUT ARGUMENTS--NEWN   = THE INTEGER NUMBER OF OBSERVATIONS
+!                                REMAINING (RETAINED) IN X AFTER ALL
+!                                OF THE OBSERVATIONS IN X
+!                                HAVE BEEN DELETED WHICH
+!                                CORRESPOND TO VALUES IN THE
+!                                VECTOR D OUTSIDE THE
+!                                INTERVAL OF INTEREST.
+!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!             IN WHICH ONLY THOSE VALUES
+!             HAVE BEEN RETAINED WHICH
+!             CORRESPOND TO VALUES
+!             IN THE D VECTOR INSIDE
+!             (INCLUSIVELY) THE INTERVAL OF
+!             INTEREST, AND
+!             THE INTEGER VALUE NEWN
+!             WHICH GIVES THE NUMBER OF
+!             OBSERVATIONS RETAINED IN X.
+!             ALSO, 12 LINES OF SUMMARY INFORMATION
+!             WILL BE GENERATED INDICATING
+!             1) WHAT THE INTERVAL OF INTEREST WAS
+!                IN THE D VECTOR;
+!             2) HOW MANY OBSERVATIONS WERE DELETED;
+!             3) WHAT THE OLD (ORIGINAL) SAMPLE SIZE WAS (N);
+!             4) WHAT THE NEW SAMPLE SIZE IS (NEWN).
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
+!              MADE WHATEVER DELETIONS ARE APPROPRIATE,
+!              THE OUTPUT VECTOR X WILL BE 'PACKED';
+!              THAT IS, NO 'HOLES' WILL EXIST IN THE
+!              VECTOR X--ALL OF THE RETAINED ELEMENTS
+!              OF X WILL BE PACKED INTO THE FIRST AVAILABLE
+!              LOCATIONS IN X, WHILE THE REMAINDER
+!              OF THE N LOCATIONS IN X WILL BE ZERO-FILLED.
+!     COMMENT--CAUTION IS TO BE EXERCISED IN
+!              USING THIS SUBROUTINE FOR THE
+!              FOLLOWING REASON--THE INPUT VECTOR X
+!              IS IRREVOCABLY ALTERED BY APPLICATION
+!              OF THIS SUBROUTINE.  ALTHOUGH THERE
+!              MAY BE A CORRESPONDANCE BETWEEN THE
+!              ELEMENTS OF THE X AND D VECTORS
+!              BEFORE APPLICATION OF
+!              THIS SUBROUTINE, THERE WILL
+!              BE NO CORRESPONDANCE BETWEEN
+!              X AND D (DUE TO THE PACKING OF
+!              THE RETAINED ELEMENTS OF X)
+!              AFTER APPLICATION OF THIS SUBROUTINE.
+!              TO SUCCESSIVELY EXTRACT EACH POSSIBLE
+!              SUBSET OF X, IT IS
+!              RECOMMENDED THAT THE
+!              ANALYST USE THE      SUBSA2
+!              SUBROUTINE WHICH LEAVES
+!              THE ORIGINAL INPUT VECTOR X
+!              UNALTERED AND OUTPUTS THE
+!              RETAINED ELEMENTS IN A
+!              SEPARATE SECOND VECTOR Y.
+!     COMMENT--IN THE MAIN (CALLING) ROUTINE, IT IS
+!              PERMISSABLE (IF THE ANALYST SO DESIRES)
+!              TO USE THE SAME VARIABLE NAME
+!              IN THE SIXTH ARGUMENT AS USED IN THE SECOND
+!              ARGUMENT IN THE CALLING SEQUENCE TO THIS
+!              SUBSET SUBROUTINE--NO CONFLICT WILL RESULT
+!              IN THE INTERNAL OPERATION OF THE     SUBSET
+!              SUBROUTINE.  FOR EXAMPLE, IT IS PERMISSIBLE
+!              TO HAVE     CALL SUBSET(X,N,D,0.5,1.5,N)
+!              IN WHICH THE VARIABLE NAME      N    IS USED
+!              AS BOTH THE SECOND AND SIXTH ARGUMENTS.
+!     COMMENT--THIS IS ONE OF THE FEW SUBROUTINES IN DATAPAC
+!              IN WHICH THE INPUT VECTOR X IS ALTERED.
+!     REFERENCES--NONE.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION D(:)
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSET SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SUBS&
+     &ET SUBROUTINE HAS THE VALUE 1 *****')
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE SUBSET SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      pointl = Dmin
+         pointu = Dmax
+         IF ( Dmin>Dmax ) pointl = Dmax
+         IF ( Dmin>Dmax ) pointu = Dmin
+!
+         nold = N
+         k = 0
+         DO i = 1 , nold
+            IF ( D(i)>=pointl .AND. D(i)<=pointu ) THEN
+               k = k + 1
+               X(k) = X(i)
+            ENDIF
+         ENDDO
+         Newn = k
+         ndel = nold - Newn
+!
+         newnp1 = Newn + 1
+         IF ( newnp1<=nold ) THEN
+            DO i = newnp1 , nold
+               X(i) = 0.0
+            ENDDO
+         ENDIF
+!
+!     WRITE OUT A BRIEF SUMMARY
+!
+         WRITE (ipr,99005)
+99005    FORMAT (' ')
+         WRITE (ipr,99006)
+99006    FORMAT (' ','OUTPUT FROM THE SUBSET SUBROUTINE--')
+         WRITE (ipr,99007) pointl , pointu
+99007    FORMAT (' ',7X,'D  LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     &
+     &           E15.8)
+         WRITE (ipr,99008)
+99008    FORMAT (' ',7X,'ONLY THOSE OBSERVATIONS IN X')
+         WRITE (ipr,99009)
+99009    FORMAT (' ',7X,'WILL BE RETAINED')
+         WRITE (ipr,99010)
+99010    FORMAT (' ',7X,'FOR WHICH THECORRESPONDING ELEMENTS OF D')
+         WRITE (ipr,99011)
+99011    FORMAT (' ',7X,'ARE WITHIN (INCLUSIVE)')
+         WRITE (ipr,99012)
+99012    FORMAT (' ',7X,'THE SPECIFIED LIMITS.')
+         WRITE (ipr,99013)
+99013    FORMAT (' ',7X,'ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL')
+         WRITE (ipr,99014)
+99014    FORMAT (' ',7X,'HAVE BEEN DELETED IN X.')
+         WRITE (ipr,99015) nold
+99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
+     &           I6)
+         WRITE (ipr,99016) Newn
+99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', &
+     &           I6)
+         WRITE (ipr,99017) ndel
+99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
+     &           I6)
+      ENDIF
+!
+      END SUBROUTINE SUBSET

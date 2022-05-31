@@ -1,0 +1,10 @@
+'mainpage.txt
+/**
+         @mainpage datapac Fortran Library
+
+         @section Introduction
+	 Statistics
+
+         @image html docs/images/datapac.gif
+
+*/'

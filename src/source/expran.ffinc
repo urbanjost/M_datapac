@@ -1,0 +1,111 @@
+!*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE EXPRAN(N,Iseed,X)
+      IMPLICIT NONE
+!*--EXPRAN6438
+!*** Start of declarations inserted by SPAG
+      INTEGER i , ipr , Iseed , N
+      REAL X
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT EXPRAN
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
+!              FROM THE EXPONENTIAL DISTRIBUTION
+!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
+!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X,
+!              AND HAS THE PROBABILITY DENSITY FUNCTION
+!              F(X) = EXP(-X).
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE EXPONENTIAL DISTRIBUTION
+!             WITH MEAN = 1 AND STANDARD DEVIATION = 1.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     REFERENCES--TOCHER, THE ART OF SIMULATION,
+!                 1963, PAGES 14, 35-36.
+!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!                 1964, PAGE 36.
+!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGE 58.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 CENTER FOR APPLIED MATHEMATICS
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-3651
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL BUREAU OF STANDARDS.
+!           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
+!           MODIFIED, OR OTHERWISE USED IN A CONTEXT
+!           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
+!     LANGUAGE--ANSI FORTRAN (1966)
+!               EXCEPTION--HOLLERITH STRINGS IN FORMAT STATEMENTS
+!                          DENOTED BY QUOTES RATHER THAN NH.
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --JULY      1976.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(*)
+!
+!---------------------------------------------------------------------
+!
+!CCCC CHARACTER*4 IFEEDB
+!CCCC CHARACTER*4 IPRINT
+!
+!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+!CCCC COMMON /PRINT/IFEEDB,IPRINT
+!
+      ipr = 6
+!
+!-----START POINT-----------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+!
+!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+!
+         CALL UNIRAN(N,Iseed,X)
+!
+!     GENERATE N EXPONENTIAL RANDOM NUMBERS
+!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+!
+         DO i = 1 , N
+            X(i) = -ALOG(X(i))
+         ENDDO
+      ENDIF
+!
+      END SUBROUTINE EXPRAN

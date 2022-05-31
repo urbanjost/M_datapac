@@ -1,0 +1,466 @@
+!*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE NOROUT(X,N)
+      IMPLICIT NONE
+!*--NOROUT14213
+!*** Start of declarations inserted by SPAG
+      REAL ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
+     &     res , s , s1 , s13 , s14 , s2 , s23 , s24 , s3 , s4 , ssq
+      REAL ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
+     &     st1 , st2 , st3 , st4 , st5 , st6 , st7 , st8 , st9 , stres ,&
+     &     sum , sum4
+      REAL WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
+     &     xb4 , xline , XPOs , Y
+      INTEGER i , icount , iflag , ipr , irev , iupper , j , mx , N ,   &
+     &        nm1 , nm2 , nm3 , nm4 , nm5
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT NOROUT
+!
+!     PURPOSE--THIS SUBROUTINE PERFORMS A NORMAL OUTLIER ANALYSIS
+!              ON THE DATA IN THE INPUT VECTOR X.
+!              THIS ANALYSIS CONSISTS OF--
+!              1) VARIOUS NORMAL OUTLIER STATISTICS;
+!              2) VARIOUS PARTIAL SAMPLE MEANS
+!              3) VARIOUS PARTIAL SAMPLE STANDARD DEVIATIONS;
+!              4) THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS;
+!              5) A LINE PLOT; AND
+!              6) A NORMAL PROBABILITY PLOT.
+!              WHEN THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS
+!              ARE PRINTED OUT, ALSO INCLUDED FOR EACH
+!              OF THE 40+40 = 80 LISTED DATA VALUES
+!              IS THE CORRESPONDING RESIDUAL ABOUT
+!              THE (FULL) SAMPLE MEAN,
+!              THE STANDARDIZED RESIDUAL,
+!              THE NORMAL N(0,1) VALUE FOR THE STANDARDIZED
+!              RESIDUAL,
+!              AND THE POSITION NUMBER
+!              IN THE ORIGINAL DATA VECTOR X.
+!              THIS LAST PIECE OF INFORMATION ALLOWS
+!              THE DATA ANALYST TO EASILY LOCATE
+!              BACK IN THE ORIGINAL DATA VECTOR .
+!              A SUSPECTED OUTLIER OR OTHERWISE
+!              INTERESTING OBSERVATION.
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS.
+!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR X.
+!     OUTPUT--4 PAGES OF AUTOMATIC PRINTOUT--
+!             1) VARIOUS NORMAL OUTLIER STATISTICS;
+!             2) VARIOUS PARTIAL SAMPLE MEANS
+!             3) VARIOUS PARTIAL SAMPLE STANDARD DEVIATIONS;
+!             4) THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS;
+!             5) A LINE PLOT; AND
+!             6) A NORMAL PROBABILITY PLOT.
+!     PRINTING--YES.
+!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
+!                   FOR THIS SUBROUTINE IS 7500.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--SORTP, NORCDF, NORPLT,
+!                                         SORT, UNIMED, NORPPF, PLOT.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     WRITE OUT THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS,
+!     INCLUDING THEIR RESIDUALS ABOUT THE (FULL) SAMPLE MEAN,
+!     THE STANDARDIZED RESIDUALS,
+!     THE NORMAL N(0,1) CUMULATIVE DISTRIBUTION FUNCTION VALUE
+!     OF THE STANDARDIZED RESIDUAL, AND
+!     THE POSITION NUMBER IN THE ORIGINAL DATA VECTOR X.
+!     REFERENCES--GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      CHARACTER*4 blank , hyphen , alphai , alphax
+      CHARACTER*4 iline1
+      CHARACTER*4 iline2
+!
+      DIMENSION X(:)
+      DIMENSION Y(7500) , XPOs(7500)
+      DIMENSION iline1(130) , iline2(130)
+      DIMENSION xline(13)
+      COMMON /BLOCK2/ WS(15000)
+      EQUIVALENCE (Y(1),WS(1))
+      EQUIVALENCE (XPOs(1),WS(7501))
+!
+      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+!
+      ipr = 6
+      iupper = 7500
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 .OR. N>iupper ) THEN
+         WRITE (ipr,99001) iupper
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NOROUT SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE NORO&
+     &UT SUBROUTINE HAS THE VALUE 1 *****')
+            RETURN
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE NOROUT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      nm1 = N - 1
+         nm2 = N - 2
+         nm3 = N - 3
+         nm4 = N - 4
+         nm5 = N - 5
+         an = N
+         anm1 = nm1
+         anm2 = nm2
+         anm3 = nm3
+         anm4 = nm4
+         anm5 = nm5
+!
+!     SORT THE DATA AND ALSO CARRY ALONG THE OBSERVATION NUMBER--THAT IS,
+!     THE  POSITION IN THE ORIGINAL DATA SET OF THE I-TH ORDER STATISTIC
+!
+         CALL SORTP(X,N,Y,XPOs)
+!
+!     COMPUTE PARTIAL SAMPLE MEANS
+!
+         sum = 0.0
+         DO i = 3 , nm2
+            sum = sum + Y(i)
+         ENDDO
+         xb23 = sum/anm4
+         xb13 = (sum+Y(2))/anm3
+         xb24 = (sum+Y(nm1))/anm3
+         xb3 = (sum+Y(1)+Y(2))/anm2
+         xb2 = (sum+Y(nm1)+Y(N))/anm2
+         xb14 = (sum+Y(2)+Y(nm1))/anm2
+         xb4 = (sum+Y(1)+Y(2)+Y(nm1))/anm1
+         xb1 = (sum+Y(2)+Y(nm1)+Y(N))/anm1
+         xb = (sum+Y(1)+Y(2)+Y(nm1)+Y(N))/an
+!
+!     COMPUTE PARTIAL SUMS OF SQUARED DEVIATIONS
+!     ABOUT THE PARTIAL SAMPLE MEANS
+!
+         ssq = 0.0
+         ssq1 = 0.0
+         ssq4 = 0.0
+         ssq14 = 0.0
+         ssq2 = 0.0
+         ssq3 = 0.0
+         ssq24 = 0.0
+         ssq13 = 0.0
+         ssq23 = 0.0
+         DO i = 1 , N
+            ssq = ssq + (Y(i)-xb)**2
+         ENDDO
+         DO i = 2 , N
+            ssq1 = ssq1 + (Y(i)-xb1)**2
+         ENDDO
+         DO i = 1 , nm1
+            ssq4 = ssq4 + (Y(i)-xb4)**2
+         ENDDO
+         DO i = 2 , nm1
+            ssq14 = ssq14 + (Y(i)-xb14)**2
+         ENDDO
+         DO i = 3 , N
+            ssq2 = ssq2 + (Y(i)-xb2)**2
+         ENDDO
+         DO i = 1 , nm2
+            ssq3 = ssq3 + (Y(i)-xb3)**2
+         ENDDO
+         DO i = 3 , nm1
+            ssq24 = ssq24 + (Y(i)-xb24)**2
+         ENDDO
+         DO i = 2 , nm2
+            ssq13 = ssq13 + (Y(i)-xb13)**2
+         ENDDO
+         DO i = 3 , nm2
+            ssq23 = ssq23 + (Y(i)-xb23)**2
+         ENDDO
+!
+!     COMPUTE PARTIAL SAMPLE STANDARD DEVIATIONS
+!
+         s = SQRT(ssq/anm1)
+         s1 = SQRT(ssq1/anm2)
+         s4 = SQRT(ssq4/anm2)
+         s14 = SQRT(ssq14/anm3)
+         s2 = SQRT(ssq2/anm3)
+         s3 = SQRT(ssq3/anm3)
+         s24 = SQRT(ssq24/anm4)
+         s13 = SQRT(ssq13/anm4)
+         s23 = SQRT(ssq23/anm5)
+!
+!     COMPUTE OUTLIER STATISTICS
+!     OMIT NO OBSERVATIONS, TEST FOR X(1)
+         st1 = (xb-Y(1))/s
+!     OMIT NO OBSERVATIONS, TEST FOR X(N)
+         st2 = (Y(N)-xb)/s
+!     OMIT NO OBSERVATIONS, TEST FOR X(1) AND X(N) SIMULTANEOUSLY
+         st3 = (Y(N)-Y(1))/s
+!     OMIT X(1), TEST FOR X(2)
+         st4 = ssq2/ssq
+!     OMIT X(N), TEST FOR X(N-1)
+         st5 = ssq3/ssq
+!     OMIT X(1) AND X(N), TEST FOR X(2)
+         st6 = (xb14-Y(2))/s14
+!     OMIT X(1) AND X(N), TEST FOR X(N-1)
+         st7 = (Y(nm1)-xb14)/s14
+!     OMIT X(1) AND X(N), TEST FOR X(2) AND X(N-1)
+         st8 = (Y(nm1)-Y(2))/s14
+         sum4 = 0.0
+         DO i = 2 , nm2
+            sum4 = sum4 + (Y(i)-xb14)**4
+         ENDDO
+         st9 = (an-2.0)*sum4/(ssq14**2)
+         st9 = st9 + 3.0
+!
+!     COMPUTE THE LINE PLOT WHICH SHOWS THE DISTRIBUTION OF THE OBSERVED
+!     VALUES IN TERMS OF MULTIPLES OF SAMPLE STANDARD DEVIATIONS AWAY FROM
+!     THE SAMPLE MEAN
+!
+         DO i = 1 , 130
+            iline1(i) = blank
+            iline2(i) = blank
+         ENDDO
+         icount = 0
+         DO i = 1 , N
+            mx = 10.0*(((X(i)-xb)/s)+6.0) + 0.5
+            mx = mx + 7
+            IF ( mx<7 .OR. mx>127 ) icount = icount + 1
+            IF ( mx>=7 .AND. mx<=127 ) iline1(mx) = alphax
+         ENDDO
+         DO i = 7 , 127
+            iline2(i) = hyphen
+         ENDDO
+         DO i = 7 , 127 , 10
+            iline2(i) = alphai
+         ENDDO
+         xline(7) = xb
+         DO i = 1 , 6
+            irev = 13 - i + 1
+            ai = i
+            xline(i) = xb - (7.0-ai)*s
+            xline(irev) = xb + (7.0-ai)*s
+         ENDDO
+!
+!     WRITE EVERYTHING OUT
+!
+!     WRITE OUT THE OUTLIER STATISTICS
+!
+         WRITE (ipr,99041)
+         WRITE (ipr,99005)
+99005    FORMAT (' ',48X,'NORMAL OUTLIER ANALYSIS')
+         WRITE (ipr,99042)
+         WRITE (ipr,99006) N
+99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I5,')')
+         WRITE (ipr,99042)
+         WRITE (ipr,99007)
+99007    FORMAT (' ',39X,                                               &
+     &           'REFERENCE--GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21')
+         DO i = 1 , 6
+            WRITE (ipr,99042)
+         ENDDO
+         WRITE (ipr,99008)
+99008    FORMAT (' ',49X,'OUTLIER STATISTICS')
+         WRITE (ipr,99042)
+         WRITE (ipr,99042)
+         WRITE (ipr,99009)
+99009    FORMAT (' ',                                                   &
+     &'    OMIT             TEST                    FORM                &
+     &  VALUE       PSEUDO-SAMPLE SIZE            TABLE')
+         WRITE (ipr,99010)
+99010    FORMAT (' ',                                                   &
+     &'AS AN OUTLIER    AS AN OUTLIER           OF STATISTIC           O&
+     &F STATISTIC   FOR TABLE LOOK-UP           REFERENCE')
+         WRITE (ipr,99042)
+         WRITE (ipr,99011) st1 , N
+99011    FORMAT (' ',                                                   &
+     &'    NONE             X(1)              (XBAR - X(1))/S           &
+     &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  4')
+         WRITE (ipr,99012) st2 , N
+99012    FORMAT (' ',                                                   &
+     &'    NONE             X(N)              (X(N) - XBAR)/S           &
+     &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  4')
+         WRITE (ipr,99013) st3 , N
+99013    FORMAT (' ',                                                   &
+     &'    NONE         X(1) AND X(N)             RANGE/S               &
+     &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  8')
+         WRITE (ipr,99014) st4 , N
+99014    FORMAT (' ',                                                   &
+     &'    X(1)             X(2)               SSQD(1,2)/SSQD           &
+     &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P. 11')
+         WRITE (ipr,99015) st5 , N
+99015    FORMAT (' ',                                                   &
+     &'    X(N)            X(N-1)             SSQD(N-1,N)/SSQD          &
+     &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P. 11')
+         WRITE (ipr,99016) st6 , nm2
+99016    FORMAT (' ',                                                   &
+     &'X(1) AND X(N)        X(2)          (XBAR(1,N) - X(2))/S(1,N)     &
+     &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  4')
+         WRITE (ipr,99017) st7 , nm2
+99017    FORMAT (' ',                                                   &
+     &'X(1) AND X(N)       X(N-1)        (X(N-1) - XBAR(1,N))/S(1,N)    &
+     &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  4')
+         WRITE (ipr,99018) st8 , nm2
+99018    FORMAT (' ',                                                   &
+     &'X(1) AND X(N)   X(2) AND X(N-1)       RANGE(1,N)/S(1,N)          &
+     &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  8')
+         WRITE (ipr,99019) st9 , nm2
+99019    FORMAT (' ',                                                   &
+     &'X(1) AND X(N)   X(2) AND X(N-1)      SAMPLE KURTOSIS(1,N)        &
+     &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P. 14')
+         DO i = 1 , 10
+            WRITE (ipr,99042)
+         ENDDO
+!
+!     WRITE OUT THE PARTIAL SAMPLE MEANS
+!     AND THE PARTIAL SAMPLE STANDARD DEVIATIONS.
+!
+         WRITE (ipr,99020)
+99020    FORMAT (' ',30X,                                               &
+     &     'PARTIAL SAMPLE MEANS AND PARTIAL SAMPLE STANDARD DEVIATIONS'&
+     &     )
+         WRITE (ipr,99042)
+         WRITE (ipr,99042)
+         WRITE (ipr,99021)
+99021    FORMAT (' ',                                                   &
+     &'            OMIT               PARTIAL SAMPLE      PARTIAL SAMPLE&
+     &')
+         WRITE (ipr,99022)
+99022    FORMAT (' ',                                                   &
+     &'        AS AN OUTLIER               MEAN         STANDARD DEVIATI&
+     &ON')
+         WRITE (ipr,99042)
+         WRITE (ipr,99023) xb , s
+99023    FORMAT (' ','            NONE             ',E15.8,5X,E15.8)
+         WRITE (ipr,99024) xb1 , s1
+99024    FORMAT (' ','            X(1)             ',E15.8,5X,E15.8)
+         WRITE (ipr,99025) xb4 , s4
+99025    FORMAT (' ','            X(N)             ',E15.8,5X,E15.8)
+         WRITE (ipr,99026) xb14 , s14
+99026    FORMAT (' ','       X(1) AND X(N)         ',E15.8,5X,E15.8)
+         WRITE (ipr,99027) xb2 , s2
+99027    FORMAT (' ','       X(1) AND X(2)         ',E15.8,5X,E15.8)
+         WRITE (ipr,99028) xb3 , s3
+99028    FORMAT (' ','      X(N-1) AND X(N)        ',E15.8,5X,E15.8)
+         WRITE (ipr,99029) xb24 , s24
+99029    FORMAT (' ','    X(1), X(2), AND X(N)     ',E15.8,5X,E15.8)
+         WRITE (ipr,99030) xb13 , s13
+99030    FORMAT (' ','   X(1), X(N-1), AND X(N)    ',E15.8,5X,E15.8)
+         WRITE (ipr,99031) xb23 , s23
+99031    FORMAT (' ','X(1), X(2), X(N-1), AND X(N) ',E15.8,5X,E15.8)
+!
+!     WRITE OUT THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS,
+!     INCLUDING THEIR RESIDUALS ABOUT THE (FULL) SAMPLE MEAN,
+!     THE STANDARDIZED RESIDUALS,
+!     THE NORMAL N(0,1) CUMULATIVE DISTRIBUTION FUNCTION VALUE
+!     OF THE STANDARDIZED RESIDUAL, AND
+!     THE POSITION NUMBER IN THE ORIGINAL DATA VECTOR X.
+!
+         WRITE (ipr,99041)
+         WRITE (ipr,99032)
+99032    FORMAT (' ',                                                   &
+     &'ORDER STATISTICS, RESIDUALS ABOUT THE SAMPLE MEAN, STANDARDIZED R&
+     &ESIDUALS, AND NORMAL(0,1) CUMULATIVE DISTRIBUTION FUNCTION VALUES'&
+     &)
+         WRITE (ipr,99042)
+         WRITE (ipr,99042)
+         WRITE (ipr,99033)
+99033    FORMAT (' ',                                                   &
+     &'  INDEX       ORDERED        RESIDUALS        STANDARDIZED       &
+     &NORMAL(0,1)        OBSERVATION')
+         WRITE (ipr,99034)
+99034    FORMAT (' ',                                                   &
+     &'            OBSERVATIONS     ABOUT THE         RESIDUALS      CDF&
+     & VALUES OF THE       NUMBER')
+         WRITE (ipr,99035)
+99035    FORMAT (' ',                                                   &
+     &'                            SAMPLE MEAN                         S&
+     &TANDARDIZED')
+         WRITE (ipr,99036)
+99036    FORMAT (' ',                                                   &
+     &'                                                                 &
+     &RESIDUALS')
+         WRITE (ipr,99042)
+         IF ( N<=80 ) THEN
+            DO i = 1 , N
+               res = Y(i) - xb
+               stres = res/s
+               CALL NORCDF(stres,cdf)
+               WRITE (ipr,99043) i , Y(i) , res , stres , cdf , XPOs(i)
+               iflag = i - (i/10)*10
+               IF ( iflag==0 ) WRITE (ipr,99042)
+            ENDDO
+         ELSE
+            DO i = 1 , 80
+               IF ( i<=40 ) j = i
+               IF ( i>=41 ) j = i + N - 80
+               res = Y(j) - xb
+               stres = res/s
+               CALL NORCDF(stres,cdf)
+               WRITE (ipr,99043) j , Y(j) , res , stres , cdf , XPOs(j)
+               iflag = i - (i/10)*10
+               IF ( iflag==0 ) WRITE (ipr,99042)
+            ENDDO
+         ENDIF
+         DO i = 1 , 10
+            WRITE (ipr,99042)
+         ENDDO
+!
+!     WRITE OUT THE LINE PLOT SHOWING THE DEVIATIONS
+!     OF THE OBSERVATIONS ABOUT THE (FULL) SAMPLE MEAN
+!     IN TERMS OF MULTIPLES OF THE (FULL) SAMPLE STANDARD
+!     DEVIATION.
+!
+         WRITE (ipr,99037)
+99037    FORMAT (' ',                                                   &
+     &'LINE PLOT SHOWING THE DISTRIBUTION OF THE OBSERVATIONS ABOUT THE &
+     &SAMPLE MEAN IN TERMS OF MULTIPLES OF THE SAMPLE STANDARD DEVIATION&
+     &')
+         WRITE (ipr,99042)
+         WRITE (ipr,99042)
+         WRITE (ipr,99044) (iline1(i),i=1,130)
+         WRITE (ipr,99044) (iline2(i),i=1,130)
+         WRITE (ipr,99038)
+99038    FORMAT (' ',                                                   &
+     &'     -6        -5        -4        -3        -2        -1        &
+     & 0         1         2         3         4         5         6')
+         WRITE (ipr,99039) (xline(i),i=1,13)
+99039    FORMAT (' ',13F10.4)
+         WRITE (ipr,99042)
+         WRITE (ipr,99040) icount
+99040    FORMAT (' ',10X,I5,                                            &
+     &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
+     & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
+!
+!     WRITE OUT A NORMAL PROBABILITY PLOT
+!
+         CALL NORPLT(Y,N)
+      ENDIF
+!
+99041 FORMAT ('1')
+99042 FORMAT (' ')
+99043 FORMAT (' ',I5,4X,E15.8,1X,E15.8,7X,F7.2,11X,F8.5,11X,F7.0)
+99044 FORMAT (' ',130A1)
+!
+      END SUBROUTINE NOROUT

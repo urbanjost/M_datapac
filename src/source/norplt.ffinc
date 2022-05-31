@@ -1,0 +1,164 @@
+!*==norplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE NORPLT(X,N)
+      IMPLICIT NONE
+!*--NORPLT14735
+!*** Start of declarations inserted by SPAG
+      REAL an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
+     &     X , Y , ybar , yint , yslope
+      INTEGER i , ipr , iupper , N
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT NORPLT
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES A NORMAL (GAUSSIAN)
+!              PROBABILITY PLOT.
+!              THE PROTOTYPE NORMAL DISTRIBUTION USED HEREIN
+!              HAS MEAN = 0 AND STANDARD DEVIATION = 1.
+!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
+!              THE PROBABILITY DENSITY FUNCTION
+!              F(X) = (1/SQRT(2*PI)) * EXP(-X*X/2).
+!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
+!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
+!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
+!              THE NORMAL PROBABILITY PLOT IS USEFUL IN
+!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
+!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
+!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
+!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
+!              IS THE NORMAL DISTRIBUTION.
+!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
+!              SHOULD BE NEAR-LINEAR.
+!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
+!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!     OUTPUT--A ONE-PAGE NORMAL PROBABILITY PLOT.
+!     PRINTING--YES.
+!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
+!                   FOR THIS SUBROUTINE IS 7500.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!                 OCTOBER, 1972), PAGES 425-450.
+!               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
+!                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!               --RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS
+!                 FOR NORMALITY'  PENNSYLVANIA
+!                 STATE UNIVERSITY REPORT.
+!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!                 1967, PAGES 260-308.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION Y(7500) , W(7500)
+      COMMON /BLOCK2/ WS(15000)
+      EQUIVALENCE (Y(1),WS(1))
+      EQUIVALENCE (W(1),WS(7501))
+!
+      DATA tau/1.43218641/
+!
+      ipr = 6
+      iupper = 7500
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 .OR. N>iupper ) THEN
+         WRITE (ipr,99001) iupper
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NORPLT SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( N==1 ) THEN
+         WRITE (ipr,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE NORP&
+     &LT SUBROUTINE HAS THE VALUE 1 *****')
+         RETURN
+      ELSE
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (ipr,99004) hold
+99004    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE NORPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      an = N
+!
+!     SORT THE DATA
+!
+         CALL SORT(X,N,Y)
+!
+!     GENERATE UNIFORM ORDER STATISTIC MEDIANS
+!
+         CALL UNIMED(N,W)
+!
+!     COMPUTE NORMAL ORDER STATISTIC MEDIANS
+!
+         DO i = 1 , N
+            CALL NORPPF(W(i),W(i))
+         ENDDO
+!
+!     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
+!     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
+!     AND THE SAMPLE SIZE.
+!
+         CALL PLOT(Y,W,N)
+         WRITE (ipr,99005) tau , N
+!
+99005    FORMAT (' ','NORMAL PROBABILITY PLOT (TAU = ',E15.8,')',56X,   &
+     &           'THE SAMPLE SIZE N = ',I7)
+!
+!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
+!     COMPUTE LOCATION AND SCALE ESTIMATES
+!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
+!     THEN WRITE THEM OUT.
+!
+         sum1 = 0.0
+         DO i = 1 , N
+            sum1 = sum1 + Y(i)
+         ENDDO
+         ybar = sum1/an
+         wbar = 0.0
+         sum1 = 0.0
+         sum2 = 0.0
+         sum3 = 0.0
+         DO i = 1 , N
+            sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
+            sum2 = sum2 + W(i)*Y(i)
+            sum3 = sum3 + W(i)*W(i)
+         ENDDO
+         cc = sum2/SQRT(sum3*sum1)
+         yslope = sum2/sum3
+         yint = ybar - yslope*wbar
+         WRITE (ipr,99006) cc , yint , yslope
+99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
+     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
+     &           'ESTIMATED SLOPE = ',E15.8)
+      ENDIF
+!
+      END SUBROUTINE NORPLT

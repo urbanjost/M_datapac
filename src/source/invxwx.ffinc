@@ -1,0 +1,111 @@
+!*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE INVXWX(N,K)
+      IMPLICIT NONE
+!*--INVXWX10396
+!*** Start of declarations inserted by SPAG
+      REAL anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
+      INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 ,   &
+     &        irarg3 , j , jj , K , l , N
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT INVXWX
+      EXTERNAL DOT
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE INVERSE OF X'WX
+!     WHICH IS DONE BY COMPUTING THE INVERSE OF R'R (WHERE
+!     R HAS JUST RECENTLY BEEN MODIFIED BEFORE CALLING THIS
+!     SUBROUTINE.  THE INPUT R = THE SQUARE ROOT OF
+!     THE DIAGONAL MATRIX D TIMES THE OLD MATRIX R.
+!     THE INVERSE OF X'WX WILL BE IDENTICAL
+!     (EXCEPT FOR THE ABSENCE OF S**2 = THE RESIDUAL
+!     VARIANCE) TO THE COVARIANCE MATRIX OF THE COEFFICIENTS.
+!     THE ONLY REASON THIS SUBROUTINE EXISTS IS FOR THE
+!     CALCULATION OF SUCH COVARIANCES.
+!     UNPIVOTING HAS ALSO BEEN DONE HEREIN SO AS TO UNDO
+!     THE PIVOTING DONE IN THE DECOMPOSITION SUBROUTINE (DECOMP).
+!     THE MATRIX C USED HEREIN IS AN INTERMEDIATE RESULT MATRIX.
+!     X--NOT USED
+!     Q--NOT USED
+!     R--USED AND CHANGED
+!     D--NOT USED
+!     IPIVOT--USED
+!     INVERSION ALGORITHM USED--CHOLESKI DECOMPOSITION
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
+      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+      EQUIVALENCE (Q(1),WS(1))
+      EQUIVALENCE (R(1),WS(10001))
+      EQUIVALENCE (D(1),WS(12501))
+      EQUIVALENCE (IPIvot(1),WS(12551))
+      DIMENSION dum3(200)
+!
+!-----START POINT-----------------------------------------------------
+!
+      DO i = 1 , K
+         im1 = i - 1
+         IF ( im1>=1 ) THEN
+            DO j = 1 , im1
+               irarg = (i-1)*K + j
+               R(irarg) = 0.0
+            ENDDO
+         ENDIF
+      ENDDO
+      DO jj = 1 , K
+         j = K + 1 - jj
+         DO ii = 1 , j
+            i = j + 1 - ii
+            ip1 = i + 1
+            IF ( ip1<=K ) THEN
+               DO l = ip1 , K
+                  irarg1 = (i-1)*K + l
+                  irarg2 = (j-1)*K + l
+                  irarg3 = (l-1)*K + j
+                  DUM1(l) = R(irarg1)
+                  IF ( l<j ) DUM2(l) = R(irarg2)
+                  IF ( l==j ) DUM2(l) = dum3(l)
+                  IF ( l>j ) DUM2(l) = R(irarg3)
+               ENDDO
+            ENDIF
+            ri = 0.0
+            irarg = (i-1)*K + i
+            IF ( i==j ) ri = 1.0/R(irarg)
+            anegri = -ri
+!
+            CALL DOT(DUM1,DUM2,ip1,K,anegri,dotpro)
+!
+            irarg = (i-1)*K + i
+            dotpro = -dotpro/R(irarg)
+            IF ( i==j ) dum3(i) = dotpro
+            irarg = (j-1)*K + i
+            IF ( i<j ) R(irarg) = dotpro
+         ENDDO
+      ENDDO
+      DO i = 1 , K
+         irarg = (i-1)*K + i
+         R(irarg) = dum3(i)
+      ENDDO
+!
+!     MATRIX C NOW EQUALS THE INVERSE OF R'R.
+!     NOW 'UNPIVOT' ON C AND PUT THE RESULTS BACK INTO R.
+!
+      DO i = 1 , K
+         ii = IPIvot(i)
+         DO j = 1 , i
+            jj = IPIvot(j)
+            irarg1 = (ii-1)*K + jj
+            irarg2 = (i-1)*K + j
+            irarg3 = (jj-1)*K + ii
+            IF ( ii<jj ) R(irarg1) = R(irarg2)
+            IF ( ii==jj ) dum3(ii) = R(irarg2)
+            IF ( ii>jj ) R(irarg3) = R(irarg2)
+         ENDDO
+      ENDDO
+      DO i = 1 , K
+         irarg = (i-1)*K + i
+         R(irarg) = dum3(i)
+      ENDDO
+      END SUBROUTINE INVXWX

@@ -1,0 +1,26 @@
+# TOML file for fpm as described at https://github.com/fortran-lang/fpm/blob/master/manifest-reference.md
+name = "M_datapac"
+version = "0.1.0"
+license = "MIT"
+author = "John S. Urban"
+maintainer = "urbanjost@comcast.net"
+copyright = "Copyright 2022, John S. Urban"
+description = "DATAPAC statistics from NIST"
+categories = ["statistics"]
+keywords = ["fortran", "statistics"]
+homepage = "https://github.com/urbanjost/M_datapac.git"
+
+[install]
+library=true
+
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+
+[[test]]
+name="test_suite"
+source-dir="test"
+main="test_suite_M_datapac.f90"
+[test.dependencies]
+M_msg          = { git = "https://github.com/urbanjost/M_msg.git" }

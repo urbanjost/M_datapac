@@ -1,0 +1,355 @@
+module M_datapac
+implicit none
+private
+public :: autoco
+public :: betran
+public :: bincdf
+public :: binppf
+public :: binran
+public :: caucdf
+public :: caupdf
+public :: cauplt
+public :: cauppf
+public :: cauran
+public :: causf
+public :: chscdf
+public :: chsplt
+public :: chsppf
+public :: chsran
+public :: code
+public :: copy
+public :: corr
+public :: count
+public :: decomp
+public :: define
+public :: delete
+public :: demod
+public :: dexcdf
+public :: dexpdf
+public :: dexplt
+public :: dexppf
+public :: dexran
+public :: dexsf
+public :: discr2
+public :: discr3
+public :: discre
+public :: dot
+public :: ev1cdf
+public :: ev1plt
+public :: ev1ppf
+public :: ev1ran
+public :: ev2cdf
+public :: ev2plt
+public :: ev2ppf
+public :: ev2ran
+public :: expcdf
+public :: exppdf
+public :: expplt
+public :: expppf
+public :: expran
+public :: expsf
+public :: extrem
+public :: fcdf
+public :: fourie
+public :: fran
+public :: freq
+public :: gamcdf
+public :: gamplt
+public :: gamppf
+public :: gamran
+public :: geocdf
+public :: geoplt
+public :: geoppf
+public :: georan
+public :: hfncdf
+public :: hfnplt
+public :: hfnppf
+public :: hfnran
+public :: hist
+public :: invxwx
+public :: lamcdf
+public :: lampdf
+public :: lamplt
+public :: lamppf
+public :: lamran
+public :: lamsf
+public :: lgncdf
+public :: lgnplt
+public :: lgnppf
+public :: lgnran
+public :: loc
+public :: logcdf
+public :: logpdf
+public :: logplt
+public :: logppf
+public :: logran
+public :: logsf
+public :: max
+public :: mean
+public :: median
+public :: midm
+public :: midr
+public :: min
+public :: move
+public :: nbcdf
+public :: nbppf
+public :: nbran
+public :: norcdf
+public :: norout
+public :: norpdf
+public :: norplt
+public :: norppf
+public :: norran
+public :: norsf
+public :: parcdf
+public :: parplt
+public :: parppf
+public :: parran
+public :: plot10
+public :: plot6
+public :: plot7
+public :: plot8
+public :: plot9
+public :: plotc
+public :: plotco
+public :: plotct
+public :: plot
+public :: plotsc
+public :: plots
+public :: plotsp
+public :: plotst
+public :: plott
+public :: plotu
+public :: plotx
+public :: plotxt
+public :: plotxx
+public :: pltsct
+public :: pltxxt
+public :: poicdf
+public :: poiplt
+public :: poippf
+public :: poiran
+public :: poly
+public :: propor
+public :: range
+public :: rank
+public :: ranper
+public :: read
+public :: readg
+public :: relsd
+public :: replac
+public :: retain
+public :: runs
+public :: sampp
+public :: scale
+public :: sd
+public :: skipr
+public :: sortc
+public :: sort
+public :: sortp
+public :: spcorr
+public :: stmom3
+public :: stmom4
+public :: subse1
+public :: subse2
+public :: subset
+public :: tail
+public :: tcdf
+public :: time
+public :: tol
+public :: tplt
+public :: tppf
+public :: tran
+public :: trim
+public :: unicdf
+public :: unimed
+public :: unipdf
+public :: uniplt
+public :: unippf
+public :: uniran
+public :: unisf
+public :: var
+public :: weib
+public :: weicdf
+public :: weiplt
+public :: weippf
+public :: weiran
+public :: wind
+public :: write
+contains
+$INCLUDE "autoco.ffinc"
+$INCLUDE "betran.ffinc"
+$INCLUDE "bincdf.ffinc"
+$INCLUDE "binppf.ffinc"
+$INCLUDE "binran.ffinc"
+$INCLUDE "caucdf.ffinc"
+$INCLUDE "caupdf.ffinc"
+$INCLUDE "cauplt.ffinc"
+$INCLUDE "cauppf.ffinc"
+$INCLUDE "cauran.ffinc"
+$INCLUDE "causf.ffinc"
+$INCLUDE "chscdf.ffinc"
+$INCLUDE "chsplt.ffinc"
+$INCLUDE "chsppf.ffinc"
+$INCLUDE "chsran.ffinc"
+$INCLUDE "code.ffinc"
+$INCLUDE "copy.ffinc"
+$INCLUDE "corr.ffinc"
+$INCLUDE "count.ffinc"
+$INCLUDE "decomp.ffinc"
+$INCLUDE "define.ffinc"
+$INCLUDE "delete.ffinc"
+$INCLUDE "demod.ffinc"
+$INCLUDE "dexcdf.ffinc"
+$INCLUDE "dexpdf.ffinc"
+$INCLUDE "dexplt.ffinc"
+$INCLUDE "dexppf.ffinc"
+$INCLUDE "dexran.ffinc"
+$INCLUDE "dexsf.ffinc"
+$INCLUDE "discr2.ffinc"
+$INCLUDE "discr3.ffinc"
+$INCLUDE "discre.ffinc"
+$INCLUDE "dot.ffinc"
+$INCLUDE "ev1cdf.ffinc"
+$INCLUDE "ev1plt.ffinc"
+$INCLUDE "ev1ppf.ffinc"
+$INCLUDE "ev1ran.ffinc"
+$INCLUDE "ev2cdf.ffinc"
+$INCLUDE "ev2plt.ffinc"
+$INCLUDE "ev2ppf.ffinc"
+$INCLUDE "ev2ran.ffinc"
+$INCLUDE "expcdf.ffinc"
+$INCLUDE "exppdf.ffinc"
+$INCLUDE "expplt.ffinc"
+$INCLUDE "expppf.ffinc"
+$INCLUDE "expran.ffinc"
+$INCLUDE "expsf.ffinc"
+$INCLUDE "extrem.ffinc"
+$INCLUDE "fcdf.ffinc"
+$INCLUDE "fourie.ffinc"
+$INCLUDE "fran.ffinc"
+$INCLUDE "freq.ffinc"
+$INCLUDE "gamcdf.ffinc"
+$INCLUDE "gamplt.ffinc"
+$INCLUDE "gamppf.ffinc"
+$INCLUDE "gamran.ffinc"
+$INCLUDE "geocdf.ffinc"
+$INCLUDE "geoplt.ffinc"
+$INCLUDE "geoppf.ffinc"
+$INCLUDE "georan.ffinc"
+$INCLUDE "hfncdf.ffinc"
+$INCLUDE "hfnplt.ffinc"
+$INCLUDE "hfnppf.ffinc"
+$INCLUDE "hfnran.ffinc"
+$INCLUDE "hist.ffinc"
+$INCLUDE "invxwx.ffinc"
+$INCLUDE "lamcdf.ffinc"
+$INCLUDE "lampdf.ffinc"
+$INCLUDE "lamplt.ffinc"
+$INCLUDE "lamppf.ffinc"
+$INCLUDE "lamran.ffinc"
+$INCLUDE "lamsf.ffinc"
+$INCLUDE "lgncdf.ffinc"
+$INCLUDE "lgnplt.ffinc"
+$INCLUDE "lgnppf.ffinc"
+$INCLUDE "lgnran.ffinc"
+$INCLUDE "loc.ffinc"
+$INCLUDE "logcdf.ffinc"
+$INCLUDE "logpdf.ffinc"
+$INCLUDE "logplt.ffinc"
+$INCLUDE "logppf.ffinc"
+$INCLUDE "logran.ffinc"
+$INCLUDE "logsf.ffinc"
+$INCLUDE "max.ffinc"
+$INCLUDE "mean.ffinc"
+$INCLUDE "median.ffinc"
+$INCLUDE "midm.ffinc"
+$INCLUDE "midr.ffinc"
+$INCLUDE "min.ffinc"
+$INCLUDE "move.ffinc"
+$INCLUDE "nbcdf.ffinc"
+$INCLUDE "nbppf.ffinc"
+$INCLUDE "nbran.ffinc"
+$INCLUDE "norcdf.ffinc"
+$INCLUDE "norout.ffinc"
+$INCLUDE "norpdf.ffinc"
+$INCLUDE "norplt.ffinc"
+$INCLUDE "norppf.ffinc"
+$INCLUDE "norran.ffinc"
+$INCLUDE "norsf.ffinc"
+$INCLUDE "parcdf.ffinc"
+$INCLUDE "parplt.ffinc"
+$INCLUDE "parppf.ffinc"
+$INCLUDE "parran.ffinc"
+$INCLUDE "plot10.ffinc"
+$INCLUDE "plot6.ffinc"
+$INCLUDE "plot7.ffinc"
+$INCLUDE "plot8.ffinc"
+$INCLUDE "plot9.ffinc"
+$INCLUDE "plotc.ffinc"
+$INCLUDE "plotco.ffinc"
+$INCLUDE "plotct.ffinc"
+$INCLUDE "plot.ffinc"
+$INCLUDE "plotsc.ffinc"
+$INCLUDE "plots.ffinc"
+$INCLUDE "plotsp.ffinc"
+$INCLUDE "plotst.ffinc"
+$INCLUDE "plott.ffinc"
+$INCLUDE "plotu.ffinc"
+$INCLUDE "plotx.ffinc"
+$INCLUDE "plotxt.ffinc"
+$INCLUDE "plotxx.ffinc"
+$INCLUDE "pltsct.ffinc"
+$INCLUDE "pltxxt.ffinc"
+$INCLUDE "poicdf.ffinc"
+$INCLUDE "poiplt.ffinc"
+$INCLUDE "poippf.ffinc"
+$INCLUDE "poiran.ffinc"
+$INCLUDE "poly.ffinc"
+$INCLUDE "propor.ffinc"
+$INCLUDE "range.ffinc"
+$INCLUDE "rank.ffinc"
+$INCLUDE "ranper.ffinc"
+$INCLUDE "read.ffinc"
+$INCLUDE "readg.ffinc"
+$INCLUDE "relsd.ffinc"
+$INCLUDE "replac.ffinc"
+$INCLUDE "retain.ffinc"
+$INCLUDE "runs.ffinc"
+$INCLUDE "sampp.ffinc"
+$INCLUDE "scale.ffinc"
+$INCLUDE "sd.ffinc"
+$INCLUDE "skipr.ffinc"
+$INCLUDE "sortc.ffinc"
+$INCLUDE "sort.ffinc"
+$INCLUDE "sortp.ffinc"
+$INCLUDE "spcorr.ffinc"
+$INCLUDE "stmom3.ffinc"
+$INCLUDE "stmom4.ffinc"
+$INCLUDE "subse1.ffinc"
+$INCLUDE "subse2.ffinc"
+$INCLUDE "subset.ffinc"
+$INCLUDE "tail.ffinc"
+$INCLUDE "tcdf.ffinc"
+$INCLUDE "time.ffinc"
+$INCLUDE "tol.ffinc"
+$INCLUDE "tplt.ffinc"
+$INCLUDE "tppf.ffinc"
+$INCLUDE "tran.ffinc"
+$INCLUDE "trim.ffinc"
+$INCLUDE "unicdf.ffinc"
+$INCLUDE "unimed.ffinc"
+$INCLUDE "unipdf.ffinc"
+$INCLUDE "uniplt.ffinc"
+$INCLUDE "unippf.ffinc"
+$INCLUDE "uniran.ffinc"
+$INCLUDE "unisf.ffinc"
+$INCLUDE "var.ffinc"
+$INCLUDE "weib.ffinc"
+$INCLUDE "weicdf.ffinc"
+$INCLUDE "weiplt.ffinc"
+$INCLUDE "weippf.ffinc"
+$INCLUDE "weiran.ffinc"
+$INCLUDE "wind.ffinc"
+$INCLUDE "write.ffinc"
+end module M_datapac

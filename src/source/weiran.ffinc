@@ -1,0 +1,120 @@
+!*==weiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
+      IMPLICIT NONE
+!*--WEIRAN33493
+!*** Start of declarations inserted by SPAG
+      REAL Gamma , X
+      INTEGER i , ipr , Iseed , N
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT WEIRAN
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
+!              FROM THE WEIBULL DISTRIBUTION
+!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
+!              THE PROTOTYPE WEIBULL DISTRIBUTION USED
+!              HEREIN IS DEFINED FOR ALL POSITIVE X,
+!              AND HAS THE PROBABILITY DENSITY FUNCTION
+!              F(X) = GAMMA * (X**(GAMMA-1)) * EXP(-(X**GAMMA)).
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                                TAIL LENGTH PARAMETER.
+!                                GAMMA SHOULD BE POSITIVE.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE WEIBULL DISTRIBUTION
+!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --GAMMA SHOULD BE POSITIVE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     REFERENCES--TOCHER, THE ART OF SIMULATION,
+!                 1963, PAGES 14-15.
+!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!                 1964, PAGE 36.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGE 128.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 CENTER FOR APPLIED MATHEMATICS
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-3651
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL BUREAU OF STANDARDS.
+!           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
+!           MODIFIED, OR OTHERWISE USED IN A CONTEXT
+!           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
+!     LANGUAGE--ANSI FORTRAN (1966)
+!               EXCEPTION--HOLLERITH STRINGS IN FORMAT STATEMENTS
+!                          DENOTED BY QUOTES RATHER THAN NH.
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(*)
+!
+!---------------------------------------------------------------------
+!
+!CCCC CHARACTER*4 IFEEDB
+!CCCC CHARACTER*4 IPRINT
+!
+!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+!CCCC COMMON /PRINT/IFEEDB,IPRINT
+!
+      ipr = 6
+!
+!-----START POINT-----------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE WEIRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( Gamma<=0.0 ) THEN
+         WRITE (ipr,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99004) Gamma
+99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
+     &           ' *****')
+         RETURN
+      ELSE
+!
+!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+!
+         CALL UNIRAN(N,Iseed,X)
+!
+!     GENERATE N WEIBULL DISTRIBUTION RANDOM NUMBERS
+!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+!
+         DO i = 1 , N
+            X(i) = (-ALOG(1.0-X(i)))**(1.0/Gamma)
+         ENDDO
+      ENDIF
+!
+      END SUBROUTINE WEIRAN

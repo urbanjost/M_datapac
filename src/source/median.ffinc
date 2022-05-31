@@ -1,0 +1,120 @@
+!*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
+      IMPLICIT NONE
+!*--MEDIAN12627
+!*** Start of declarations inserted by SPAG
+      REAL hold , WS , X , Xmed , Y
+      INTEGER i , iflag , ipr , iupper , Iwrite , N , nmid , nmidp1
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT MEDIAN
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE
+!              SAMPLE MEDIAN
+!              OF THE DATA IN THE INPUT VECTOR X.
+!              THE SAMPLE MEDIAN = THAT VALUE SUCH THAT HALF THE
+!              DATA SET IS BELOW IT AND HALF ABOVE IT.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --IWRITE = AN INTEGER FLAG CODE WHICH
+!                                (IF SET TO 0) WILL SUPPRESS
+!                                THE PRINTING OF THE
+!                                SAMPLE MEDIAN
+!                                AS IT IS COMPUTED;
+!                                OR (IF SET TO SOME INTEGER
+!                                VALUE NOT EQUAL TO 0),
+!                                LIKE, SAY, 1) WILL CAUSE
+!                                THE PRINTING OF THE
+!                                SAMPLE MEDIAN
+!                                AT THE TIME IT IS COMPUTED.
+!     OUTPUT ARGUMENTS--XMED   = THE SINGLE PRECISION VALUE OF THE
+!                                COMPUTED SAMPLE MEDIAN.
+!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!             SAMPLE MEDIAN.
+!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
+!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
+!               CONDITION EXISTS.
+!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
+!                   FOR THIS SUBROUTINE IS 15000.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
+!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 326.
+!               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 49.
+!               --DAVID, ORDER STATISTICS, 1970, PAGE 139.
+!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!                 EDITION 6, 1967, PAGE 123.
+!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!                 ANALYSIS, EDITION 2, 1957, PAGE 70.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION Y(15000)
+      COMMON /BLOCK2/ WS(15000)
+      EQUIVALENCE (Y(1),WS(1))
+!
+      ipr = 6
+      iupper = 15000
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 .OR. N>iupper ) THEN
+         WRITE (ipr,99001) iupper
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MEDIAN SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MEDI&
+     &AN SUBROUTINE HAS THE VALUE 1 *****')
+            Xmed = X(1)
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE MEDIAN SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            Xmed = X(1)
+         ENDIF
+         GOTO 100
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      CALL SORT(X,N,Y)
+         iflag = N - (N/2)*2
+         nmid = N/2
+         nmidp1 = nmid + 1
+         IF ( iflag==0 ) Xmed = (Y(nmid)+Y(nmidp1))/2.0
+         IF ( iflag==1 ) Xmed = Y(nmidp1)
+      ENDIF
+!
+ 100  IF ( Iwrite==0 ) RETURN
+      WRITE (ipr,99005)
+99005 FORMAT (' ')
+      WRITE (ipr,99006) N , Xmed
+99006 FORMAT (' ','THE SAMPLE MEDIAN OF THE ',I6,' OBSERVATIONS IS ',   &
+     &        E15.8)
+      END SUBROUTINE MEDIAN

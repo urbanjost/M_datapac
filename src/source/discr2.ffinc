@@ -1,0 +1,238 @@
+!*==discr2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE DISCR2(X,N,Numcla,Y)
+      IMPLICIT NONE
+!*--DISCR24429
+!*** Start of declarations inserted by SPAG
+      REAL ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
+     &     xmax , xmin , Y
+      INTEGER i , icount , ip , ipr , iupncl , N , Numcla
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT DISCR2
+!
+!     PURPOSE--THIS SUBROUTINE 'DISCRETIZES' THE DATA
+!              OF THE SINGLE PRECISION VECTOR X
+!              INTO NUMCLA CLASSES.
+!              ALL VALUES IN THE VECTOR X WITHIN A GIVEN CLASS
+!              WILL BE MAPPED INTO THE MIDPOINT OF THAT CLASS.
+!              THE SAMPLE MINIMUM AND SAMPLE MAXIMUM
+!              ARE AUTOMATICALLY COMPUTED INTERNALLY
+!              AND THE CLASS WIDTH (XDEL) IS COMPUTED AS
+!              THE (SAMPLE MAX - SAMPLE MIN)/NUMCLA.
+!              THE FIRST CLASS INTERVAL IS FROM
+!              THE SAMPLE MIN TO THE SAMPLE MIN + XDEL;
+!              THE SECOND CLASS INTERVAL IS FROM
+!              THE SAMPLE MIN + XDEL TO
+!              THE SAMPLE MIN + 2*XDEL;
+!              ...;
+!              THE LAST CLASS INTERVAL IS FROM
+!              THE SAMPLE MAX - XDEL TO THE SAMPLE MAX.
+!              THE USE OF THIS SUBROUTINE
+!              (AND THE DISCRE AND DISCR3 SUBROUTINES)
+!              GIVES THE DATA ANALYST THE CAPABILITY OF
+!              CONSTRUCTING A DISCRETE VARIATE FROM
+!              A CONTINUOUS ONE.
+!              THE RESULTING DISCRETE VARIATE MIGHT THEN
+!              (FOR EXAMPLE) BE ANALYZED IN ITSELF FOR
+!              GROSS STRUCTURE, OR FOR ADHERENCE TO SOME
+!              THEROETICAL DISCRETE PROBABILITY MODEL,
+!              OR THE DISCRETE VARIATE MIGHT BE USED
+!              AS A SUBSET DEFINITION VECTOR FOR SOME
+!              OTHER VARIATE.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                                TO BE DISCRETIZED.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --NUMLEV = THE INTEGER NUMBER OF CLASSES
+!                                DESIRED IN THE DISCRETIZATION.
+!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!                                DISCRETIZED VALUES (= THE CLASS
+!                                MIDPOINTS) CORRESPONDING TO
+!                                THE CONTINUOUS VALUES IN THE VECTOR X.
+!                                THERE WILL RESULT N SUCH DISCRETIZED
+!                                VALUES.
+!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!             WHICH CONTAINS N DISCRETIZED VALUES
+!             (= THE CLASS MIDPOINTS)
+!             CORRESPONDING TO THE N
+!             CONTINUOUS VALUES IN THE
+!             INPUT VECTOR X.
+!             ALSO, (NUMCLA+5) LINES OF SUMMARY INFORMATION
+!             WILL BE GENERATED INDICATING
+!             1) WHAT THE SAMPLE SIZE IS (N);
+!             2) WHAT THE NUMBER OF CLASSES IS (NUMCLA).
+!             3) WHAT THE CLASS BOUNDARIES AND
+!                THE NUMBER OF OBSERVATIONS
+!                FALLING IN EACH CLASS ARE.
+!     PRINTING--YES
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --NUMCLA SHOULD BE POSITIVE AND NOT EXCEED 1000
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--THIS SUBROUTINE DIFFERS FROM THE DISCR3
+!              SUBROUTINE INASMUCH AS THIS SUBROUTINE
+!              PERFORMS ITS DISCRETIZATION BY OUTPUTING
+!              CLASS MIDPOINTS, WHEREAS THE DISCR3
+!              SUBROUTINE OUTPUTS CLASS NUMBERS
+!              (1, 2, ... , NUMCLA).
+!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
+!     COMMENT--IN THE MAIN (CALLING) ROUTINE, IT IS
+!              PERMISSABLE (IF THE ANALYST SO DESIRES)
+!              TO USE THE SAME VARIABLE NAME
+!              IN THE FOURTH ARGUMENT AS USED IN THE FIRST
+!              ARGUMENT IN THE CALLING SEQUENCE TO THIS
+!              DISCR2 SUBROUTINE--NO CONFLICT WILL RESULT
+!              IN THE INTERNAL OPERATION OF THE     DISCR2
+!              SUBROUTINE.  FOR EXAMPLE, IT IS PERMISSIBLE
+!              TO HAVE        CALL DISCR2(X,N,10,X)
+!              IN WHICH THE VARIABLE NAME      X    IS USED
+!              AS BOTH THE FIRST AND FOURTH ARGUMENTS.
+!     REFERENCES--NONE.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1974.
+!     UPDATED         --APRIL     1975.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:) , Y(:)
+      DIMENSION icount(1000)
+      DIMENSION classm(1000)
+!
+      ipr = 6
+      iupncl = 1000
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DISCR2 SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99015) N
+         RETURN
+      ELSEIF ( N==1 ) THEN
+         WRITE (ipr,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE DISC&
+     &R2 SUBROUTINE HAS THE VALUE 1 *****')
+         Y(1) = X(1)
+         RETURN
+      ELSEIF ( Numcla<1 .OR. Numcla>iupncl ) THEN
+         WRITE (ipr,99003) iupncl
+99003    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE DISCR2 SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         WRITE (ipr,99015) Numcla
+         DO i = 1 , N
+            Y(i) = 0.0
+         ENDDO
+         RETURN
+      ELSE
+         IF ( Numcla==1 ) THEN
+            WRITE (ipr,99004)
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO THE DISC&
+     &R2 SUBROUTINE HAS THE VALUE 1 *****')
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99005) hold
+99005       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE DISCR2 SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+            DO i = 1 , N
+               Y(i) = X(i)
+            ENDDO
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      anuml = Numcla
+!
+!     ZERO OUT THE COUNT VECTOR (ICOUNT)
+!
+         DO i = 1 , Numcla
+            icount(i) = 0
+         ENDDO
+!
+!     COMPUTE THE SAMPLE MINIMUM AND MAXIMUM,
+!     THEN COMPUTE THE CLASS WIDTH.
+!
+         xmin = X(1)
+         xmax = X(1)
+         DO i = 1 , N
+            IF ( X(i)<xmin ) xmin = X(i)
+            IF ( X(i)>xmax ) xmax = X(i)
+         ENDDO
+         xdel = (xmax-xmin)/anuml
+!
+!     COMPUTE THE CLASS MIDPOINT FOR EACH CLASS
+!
+         DO i = 1 , Numcla
+            ai = i
+            classm(i) = xmin + (ai-0.5)*xdel
+         ENDDO
+!
+!     PERFORM THE DISCRETIZING TRANSFORMATION.
+!     ALSO, KEEP A FREQUENCY COUNT FOR EACH CLASS.
+!
+         DO i = 1 , N
+            p = (X(i)-xmin)/(xmax-xmin)
+            p = p*anuml + 1.0
+            ip = p
+            IF ( ip<1 ) ip = 1
+            IF ( ip>Numcla ) ip = Numcla
+            Y(i) = classm(ip)
+            icount(ip) = icount(ip) + 1
+         ENDDO
+!
+!     COMPUTE CLASS LIMITS AND WRITE OUT SUMMARY INFORMATION.
+!
+         WRITE (ipr,99016)
+         WRITE (ipr,99006)
+!
+99006    FORMAT (' ','OUTPUT FROM THE DISCR2 SUBROUTINE--')
+         WRITE (ipr,99016)
+         WRITE (ipr,99007) N
+99007    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
+         WRITE (ipr,99008) Numcla
+99008    FORMAT (' ',7X,'SPECIFIED NUMBER OF LEVELS        = ',I8)
+         WRITE (ipr,99009) xmin
+99009    FORMAT (' ',7X,'COMPUTED  LOWER BOUND OF INTERVAL = ',F15.7)
+         WRITE (ipr,99010) xdel
+99010    FORMAT (' ',7X,'COMPUTED  CLASS WIDTH             = ',F15.7)
+         WRITE (ipr,99011) xmax
+99011    FORMAT (' ',7X,'COMPUTED  UPPER BOUND OF INTERVAL = ',F15.7)
+         WRITE (ipr,99016)
+         WRITE (ipr,99012)
+99012    FORMAT (' ',                                                   &
+     &           '       CLASS     MINIMUM       MIDPOINT      MAXIMUM',&
+     &           '      COUNT')
+         WRITE (ipr,99013)
+99013    FORMAT (' ',                                                   &
+     &           '       -------------------------------------------',  &
+     &           '-------------')
+         DO i = 1 , Numcla
+            ai = i
+            cmin = xmin + (ai-1.0)*xdel
+            cmax = xmin + ai*xdel
+            WRITE (ipr,99014) i , cmin , classm(i) , cmax , icount(i)
+99014       FORMAT (' ',4X,I6,2X,3F14.7,I8)
+         ENDDO
+      ENDIF
+99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99016 FORMAT (' ')
+!
+      END SUBROUTINE DISCR2

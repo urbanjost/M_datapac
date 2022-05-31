@@ -1,0 +1,403 @@
+!*==time.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE TIME(X,N)
+      IMPLICIT NONE
+!*--TIME30314
+!*** Start of declarations inserted by SPAG
+      REAL absr , ak , al , all , almax , an , an2 , arg1 , arg2 , bw , &
+     &     df , dfroun , hold , p , perout , pi , pmsq , ps , pssq , r
+      REAL r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
+     &     sum2 , var , varb , wk , X , xbar
+      INTEGER i , i2 , iarg1 , iarg2 , idf , ilower , imin , ipr ,      &
+     &        irev , j , jmax , jmin , k , kmax , krev , l , ll , llp1 ,&
+     &        lm1 , lmax
+      INTEGER maxlag , N , n2 , ndiv , nmk , numout , numsp
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT TIME
+!
+!     PURPOSE--THIS SUBROUTINE PERFORMS A TIME SERIES ANALYSIS
+!              ON THE DATA IN THE INPUT VECTOR X.
+!              THE ANALYSIS CONSISTS OF THE FOLLOWING--
+!              1) A PLOT OF AUTOCORRELATION VERSUS LAG NUMBER;
+!              2) A TEST FOR WHITE NOISE (ASSUMING NORMALITY);
+!              3) A 'PILOT' SPECTRUM; AND
+!              4) 4 OTHER ESTIMATED SPECTRA--EACH BASED
+!                 ON A DIFFERING BANDWIDTH.
+!
+!              IN ORDER THAT THE RESULTS OF THE TIME SERIES ANALYSIS
+!              BE VALID AND PROPERLY INTERPRETED, THE INPUT DATA
+!              IN X SHOULD BE EQUI-SPACED IN TIME
+!              (OR WHATEVER VARIABLE CORRESPONDS TO TIME).
+!
+!              THE HORIZONTAL AXIS OF THE SPECTRA PRODUCED
+!              BY THIS SUBROUTINE IS FREQUENCY.
+!              THIS FREQUENCY IS MEASURED IN UNITS OF
+!              CYCLES PER 'DATA POINT' OR, MORE PRECISELY, IN
+!              CYCLES PER UNIT TIME WHERE
+!              'UNIT TIME' IS DEFINED AS THE
+!              ELAPSED TIME BETWEEN ADJACENT OBSERVATIONS.
+!              THE RANGE OF THE FREQUENCY AXIS IS 0.0 TO 0.5.
+!
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED) OBSERVATIONS.
+!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR X.
+!     OUTPUT--7 TO 11 PAGES (DEPENDING ON
+!             THE INPUT SAMPLE SIZE) OF
+!             AUTOMATIC PRINTOUT--
+!             1) A PLOT OF AUTOCORRELATION VERSUS LAG NUMBER;
+!                THIS PLOT MAY TAKE AS LITTLE AS 1
+!                OR AS MANY AS 5 PAGES
+!                (THE EXACT NUMBER DEPENDING ON
+!                THE INPUT SAMPLE SIZE N);
+!             2) A TEST FOR WHITE NOISE (ASSUMING NORMALITY);
+!             3) A 'PILOT' SPECTRUM; AND
+!             4) AN ESTIMATED SPECTRUM BASED ON A
+!                BANDWIDTH DERIVED FROM THE DATA SET;
+!             5) AN ESTIMATED SPECTRUM BASED ON A
+!                BANDWIDTH ONLY 1/2 AS WIDE AS IN 4;
+!             6) AN ESTIMATED SPECTRUM BASED ON A
+!                BANDWIDTH ONLY 1/4 AS WIDE AS IN 4;
+!             7) AN ESTIMATED SPECTRUM BASED ON A
+!                BANDWIDTH ONLY 1/8 AS WIDE AS IN 4;
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --THE SAMPLE SIZE N MUST BE GREATER
+!                   THAN OR EQUAL TO 3.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTC0, PLOTSP, AND CHSPPF.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--THE 'FAST FOURIER TRANSFORM' IS NOT USED
+!              IN THIS VERSION OF TIME, BUT WILL BE
+!              IMPLEMENTED IN A FUTURE VERSION.
+!            --THE USUAL MAXIMUM NUMBER OF LAGS
+!              FOR WHICH THE AUTOCORRELATION IS
+!              COMPUTED IS N/4 WHERE N IS
+!              THE SAMPLE SIZE (LENGTH OF THE
+!              DATA RECORD IN THE VECTOR X).
+!              THIS RULE IS OVERRIDDEN IN
+!              LARGE DATA SETS AND IS REPLACED
+!              BY THE RULE THAT THE MAXIMUM
+!              NUMBER OF LAGS = 500
+!              (WHICH CORRESPONDS TO AN
+!              AUTOCORRELATION PLOT COVERING
+!              5 COMPUTER PAGES).
+!              IF MORE LAGS ARE DESIRED,
+!              CHANGE THE VALUE OF THE
+!              VARIABLE     MAXLAG
+!              WITHIN THIS SUBROUTINE
+!              FROM 500 TO WHATEVER DESIRED,
+!              AND ALSO CHANGE THE DIMENSION OF
+!              THE VECTOR R FROM ITS PRESENT 500 TO HOWEVER
+!              MANY LAGS ARE DESIRED.
+!            --IF THE INPUT OBSERVATIONS IN X ARE CONSIDERED
+!              TO HAVE BEEN COLLECTED 1 SECOND APART IN TIME,
+!              THEN THE FREQUENCY AXIS OF THE RESULTING
+!              SPECTRA WOULD BE IN UNITS OF HERTZ
+!              (= CYCLES PER SECOND).
+!            --THE FREQUENCY OF 0.0 CORRESPONDS TO A CYCLE
+!              IN THE DATA OF INFINITE (= 1/(0.0))
+!              LENGTH OR PERIOD.
+!              THE FREQUENCY OF 0.5 CORRESPONDS TO A CYCLE
+!              IN THE DATA OF LENGTH = 1/(0.5) = 2 DATA POINTS.
+!            --ANY EQUI-SPACED TIME SERIES ANALYSIS IS
+!              INTRINSICALLY LIMITED TO DETECTING FREQUENCIES
+!              NO LARGER THAN 0.5 CYCLES PER DATA POINT;
+!              THIS CORRESPONDS TO THE FACT THAT THE
+!              SMALLEST DETECTABLE CYCLE IN THE DATA
+!              IS 2 DATA POINTS PER CYCLE.
+!     REFERENCES--JENKINS AND WATTS, ESPECIALLY PAGE 290.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1977.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION r(500)
+      DIMENSION s(125)
+      DIMENSION pssq(6) , pmsq(6) , ps(6) , p(5) , l(4)
+      DATA pi/3.14159265358979/
+!
+      ipr = 6
+      ilower = 3
+      maxlag = 500
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<ilower ) THEN
+         WRITE (ipr,99001) ilower
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TIME   SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (',I6,',INFINITY) ',                &
+     &'INTERVAL *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 100
+         ENDDO
+         WRITE (ipr,99003) hold
+99003    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE TIME   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         RETURN
+      ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 100  an = N
+!
+!     COMPUTE THE SAMPLE MEAN
+!
+      sum = 0.0
+      DO i = 1 , N
+         sum = sum + X(i)
+      ENDDO
+      xbar = sum/an
+!
+!     COMPUTE THE SAMPLE VARIANCE AND THE SUM OF SQUARED DEVIATIONS
+!
+      sum = 0.0
+      DO i = 1 , N
+         sum = sum + (X(i)-xbar)*(X(i)-xbar)
+      ENDDO
+      ssq = sum
+      varb = ssq/an
+      var = ssq/(an-1.0)
+      sd = SQRT(var)
+!
+!     COMPUTE THE SAMPLE AUTOCORRELATIONS
+!     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 259 (7.1.6)
+!
+      kmax = N/4
+      IF ( N<=32 ) kmax = N/2
+      IF ( N<=16 ) kmax = N
+      IF ( kmax>maxlag ) kmax = maxlag
+      DO k = 1 , kmax
+         sum = 0.0
+         nmk = N - k
+         DO i = 1 , nmk
+            j = i + k
+            sum = sum + (X(i)-xbar)*(X(j)-xbar)
+         ENDDO
+         r(k) = sum/ssq
+      ENDDO
+!
+!     PLOT THE SAMPLE AUTOCORRELATIONS
+!
+      CALL PLOTCO(r,kmax)
+      WRITE (ipr,99004)
+99004 FORMAT (' ',30X,                                                  &
+     & 'AUTOCORRELATION PLOT--PLOT OF SAMPLE AUTOCORRELATION VERSUS LAG'&
+     & )
+      WRITE (ipr,99005) N , kmax
+99005 FORMAT (' ',10X,'THE NUMBER OF OBSERVATIONS = ',I6,10X,           &
+     &        'THE NUMBER OF COMPUTED (AND PLOTTED) AUTOCORRELATIONS = '&
+     &        ,I6)
+!
+!     DO A WHITE NOISE ANALYSIS
+!
+      sdr = 1.0/SQRT(an)
+      r975 = 1.96*sdr
+      IF ( r975>1.0 ) r975 = 1.0
+      r025 = -r975
+      numout = 0
+      DO k = 1 , kmax
+         absr = r(k)
+         IF ( absr<0.0 ) absr = -absr
+         IF ( absr>r975 ) numout = numout + 1
+      ENDDO
+      perout = FLOAT(numout)/FLOAT(kmax)
+      perout = 100.0*perout
+      WRITE (ipr,99017)
+      WRITE (ipr,99006) r025 , r975
+!
+99006 FORMAT (' ',                                                      &
+     &'UNDER THE NULL HYPOTHESIS OF WHITE NOISE (AND NORMALITY), A 2-SID&
+     &ED 95 PERCENT ACCEPTANCE INTERVAL IS (',F6.4,',',F6.4,')')
+      WRITE (ipr,99007)
+99007 FORMAT (' ',                                                      &
+     &'UNDER THE NULL HYPOTHESIS, ONLY 5 PERCENT (ON THE AVERAGE) OF THE&
+     & OBSERVED AUTOCORRELATIONS SHOULD FALL OUTSIDE THIS INTERVAL')
+      WRITE (ipr,99008) numout , kmax , perout
+99008 FORMAT (' ','IT IS OBSERVED THAT ',I5,' OUT OF THE ',I5,          &
+     &        ' (THAT IS, ',F5.1,                                       &
+     &' PERCENT) OF THE COMPUTED AUTOCORRELATIONS FALL OUTSIDE OF THIS I&
+     &NTERVAL')
+      DO i = 1 , 5
+         WRITE (ipr,99017)
+      ENDDO
+      WRITE (ipr,99009) N
+99009 FORMAT (' ','THE SAMPLE SIZE = ',I6)
+      WRITE (ipr,99010) xbar
+99010 FORMAT (' ','THE SAMPLE MEAN = ',E15.8)
+      WRITE (ipr,99011) var
+99011 FORMAT (' ','THE SAMPLE VARIANCE = ',E15.8)
+      WRITE (ipr,99012) sd
+99012 FORMAT (' ','THE SAMPLE STANDARD DEVIATION = ',E15.8)
+      WRITE (ipr,99013) varb
+99013 FORMAT (' ','THE BIASED SAMPLE VARIANCE = ',E15.8)
+!
+!     COMPUTE THE PILOT SPECTRUM FOR THE REDUCED (2**J) SAMPLE
+!     REFERENCE--JENKINS AND WATTS, PAGE 288
+!
+      DO i = 1 , 20
+         ndiv = N/(2**i)
+         IF ( ndiv==0 ) i2 = i - 1
+         IF ( ndiv==0 ) EXIT
+      ENDDO
+      IF ( 7<i2 ) i2 = 7
+      n2 = 2**i2
+      an2 = n2
+      DO k = 1 , i2
+         sum = 0.0
+         imin = 2**k
+         jmax = imin/2
+         DO i = imin , n2 , imin
+            sum1 = 0.0
+            sum2 = 0.0
+            DO j = 1 , jmax
+               iarg1 = i + j - jmax
+               iarg2 = iarg1 - jmax
+               sum1 = sum1 + X(iarg1)
+               sum2 = sum2 + X(iarg2)
+            ENDDO
+            sum = sum + (sum1-sum2)*(sum1-sum2)
+         ENDDO
+         pssq(k) = sum/FLOAT(imin)
+         pmsq(k) = pssq(k)/an2
+         ps(k) = FLOAT(2*imin)*pmsq(k)
+         ps(k) = ps(k)/varb
+      ENDDO
+!
+!     FORM THE PILOT SPECTRUM PLOT
+!
+      DO i = 1 , i2
+         irev = i2 - i + 1
+         jmin = (120/(2**i)) + 1
+         IF ( i==i2 ) jmin = 1
+         jmax = 120/(2**(i-1))
+         DO j = jmin , jmax
+            s(j) = ps(i)
+         ENDDO
+      ENDDO
+      CALL PLOTSP(s,120,0)
+      WRITE (ipr,99017)
+      WRITE (ipr,99014)
+99014 FORMAT (' ',50X,'PILOT SPECTRUM')
+!
+!     DEFINE 4 LAG WINDOW TRUNCATION POINTS
+!     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 260
+!
+      p(1) = .2
+      p(2) = .1
+      p(3) = .05
+      p(4) = .025
+      p(5) = .01
+      lmax = 0
+      DO i = 1 , 5
+         DO k = 1 , kmax
+            krev = kmax - k + 1
+            rk = r(krev)
+            IF ( rk<0.0 ) rk = -rk
+            IF ( rk>=p(i) ) lmax = krev
+            IF ( rk>=p(i) ) GOTO 200
+         ENDDO
+      ENDDO
+      IF ( lmax==0 ) THEN
+         rmax = ABS(r(1))
+         DO k = 1 , kmax
+            rk = r(k)
+            IF ( rk<0.0 ) rk = -rk
+            IF ( rk>=rmax ) lmax = k
+            IF ( rk>=rmax ) rmax = rk
+         ENDDO
+      ENDIF
+ 200  almax = lmax
+      l(1) = (3.0/2.0)*almax
+      IF ( l(1)<=32 ) lmax = 32
+      IF ( l(1)<=32 ) almax = 32.0
+      IF ( l(1)<=32 ) l(1) = 32
+      IF ( l(1)>=kmax ) lmax = kmax
+      IF ( l(1)>=kmax ) almax = kmax
+      IF ( l(1)>=kmax ) l(1) = kmax
+      l(2) = (almax/2.0) + 0.1
+      l(3) = (almax/4.0) + 0.1
+      l(4) = (almax/8.0) + 0.1
+      IF ( l(4)>=3 ) numsp = 4
+      IF ( l(4)<3 ) THEN
+         IF ( l(3)>=3 ) numsp = 3
+         IF ( l(3)<3 ) THEN
+            IF ( l(2)>=3 ) numsp = 2
+            IF ( l(2)<3 ) THEN
+               IF ( l(1)>=3 ) numsp = 1
+               IF ( l(1)<3 ) THEN
+                  WRITE (ipr,99015) N
+99015             FORMAT (' ',                                          &
+     &                   'DUE TO THE SMALL NUMBER OF OBSERVATIONS (N = '&
+     &                   ,I6,                                           &
+     &     '), THERE ARE NOT ENOUGH LAGS TO PRODUCE A RELIABLE SPECTRUM'&
+     &     )
+                  RETURN
+               ENDIF
+            ENDIF
+         ENDIF
+      ENDIF
+!
+!     COMPUTE THE 4 SPECTRUM ESTIMATES
+!     REFERENCE--JENKINS AND WATTS, PAGES 260 AND 244
+!
+!     COMPUTE BANDWIDTHS
+!     REFERENCE--JENKINS AND WATTS, PAGES 257 AND 252
+!
+!     COMPUTE DEGREES OF FREEDOM FOR THE SPECTAL DENSITY ESTIMATE AT INDIVIDUAL
+!     FREQUENCIES
+!     REFERENCE--JENKINS AND WATTS, PAGES 254 AND 252
+!
+!     COMPUTE 95 PERCENT CONFIDENCE INTERVAL LENGTHS FOR THE LOG SPECTRAL
+!     DENSITY ESTIMATES
+!     REFERENCE--JENKINS AND WATTS, PAGES 255 AND 252
+!
+!     WRITE OUT THE 4 SPECTRUM PLOTS
+!
+      DO i = 1 , numsp
+         al = l(i)
+         lm1 = l(i) - 1
+         DO llp1 = 1 , 121
+            ll = llp1 - 1
+            all = ll
+            sum = 0.0
+            DO k = 1 , lm1
+               ak = k
+               arg1 = pi*ak/al
+               arg2 = pi*ak*all/120.0
+               wk = 0.0
+               IF ( k<=l(i) ) wk = 0.5*(1.0+COS(arg1))
+               sum = sum + r(k)*wk*COS(arg2)
+            ENDDO
+            sum = 2.0 + 4.0*sum
+            s(llp1) = sum
+         ENDDO
+         bw = (4.0/3.0)/FLOAT(l(i))
+         df = (8.0/3.0)*an/FLOAT(l(i))
+         idf = df + 0.5
+         CALL PLOTSP(s,121,idf)
+         dfroun = idf
+         WRITE (ipr,99017)
+         WRITE (ipr,99016) l(i) , bw , dfroun
+99016    FORMAT (' ','NUMBER OF LAGS = ',I5,10X,'BANDWIDTH =',F10.3,10X,&
+     &           'DEGREES OF FREEDOM = ',F10.3)
+      ENDDO
+99017 FORMAT (' ')
+!
+      END SUBROUTINE TIME

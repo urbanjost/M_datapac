@@ -1,0 +1,224 @@
+!*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE TPPF(P,Nu,Ppf)
+      IMPLICIT NONE
+!*--TPPF31281
+!*** Start of declarations inserted by SPAG
+      INTEGER ipass , ipr , maxit , Nu
+      REAL P , Ppf , ppfn
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT TPPF
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
+!              FUNCTION VALUE FOR THE STUDENT'S T DISTRIBUTION
+!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
+!              THE STUDENT'S T DISTRIBUTION USED
+!              HEREIN IS DEFINED FOR ALL X,
+!              AND ITS PROBABILITY DENSITY FUNCTION IS GIVEN
+!              IN THE REFERENCES BELOW.
+!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
+!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
+!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
+!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!                                (BETWEEN 0.0 (EXCLUSIVELY)
+!                                AND 1.0 (EXCLUSIVELY))
+!                                AT WHICH THE PERCENT POINT
+!                                FUNCTION IS TO BE EVALUATED.
+!                     --NU     = THE INTEGER NUMBER OF DEGREES
+!                                OF FREEDOM.
+!                                NU SHOULD BE POSITIVE.
+!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!                                POINT FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!             VALUE PPF FOR THE STUDENT'S T DISTRIBUTION
+!             WITH DEGREES OF FREEDOM PARAMETER = NU.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--NU SHOULD BE A POSITIVE INTEGER VARIABLE.
+!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSIN, DCOS, DSQRT, DATAN.
+!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--FOR NU = 1 AND NU = 2, THE PERCENT POINT FUNCTION
+!              FOR THE T DISTRIBUTION EXISTS IN SIMPLE CLOSED FORM
+!              AND SO THE COMPUTED PERCENT POINTS ARE EXACT.
+!            --FOR OTHER SMALL VALUES OF NU (NU BETWEEN 3 AND 6,
+!              INCLUSIVELY), THE APPROXIMATION
+!              OF THE T PERCENT POINT BY THE FORMULA
+!              GIVEN IN THE REFERENCE BELOW IS AUGMENTED
+!              BY 3 ITERATIONS OF NEWTON'S METHOD FOR
+!              ROOT DETERMINATION.
+!              THIS IMPROVES THE ACCURACY--ESPECIALLY FOR
+!              VALUES OF P NEAR 0 OR 1.
+!     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--2, 1970, PAGE 102,
+!                 FORMULA 11.
+!               --FEDERIGHI, 'EXTENDED TABLES OF THE
+!                 PERCENTAGE POINTS OF STUDENT'S T
+!                 DISTRIBUTION, JOURNAL OF THE
+!                 AMERICAN STATISTICAL ASSOCIATION,
+!                 1969, PAGES 683-688.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGES 120-123.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--OCTOBER   1975.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DOUBLE PRECISION pi
+      DOUBLE PRECISION sqrt2
+      DOUBLE PRECISION dp
+      DOUBLE PRECISION dnu
+      DOUBLE PRECISION term1 , term2 , term3 , term4 , term5
+      DOUBLE PRECISION dppfn
+      DOUBLE PRECISION dppf , dcon , darg , z , s , c
+      DOUBLE PRECISION b21
+      DOUBLE PRECISION b31 , b32 , b33 , b34
+      DOUBLE PRECISION b41 , b42 , b43 , b44 , b45
+      DOUBLE PRECISION b51 , b52 , b53 , b54 , b55 , b56
+      DOUBLE PRECISION d1 , d3 , d5 , d7 , d9
+      DATA pi/3.14159265358979D0/
+      DATA sqrt2/1.414213562D0/
+      DATA b21/0.25D0/
+      DATA b31 , b32 , b33 , b34/0.01041666666667D0 , 5.0D0 , 16.0D0 ,  &
+     &     3.0D0/
+      DATA b41 , b42 , b43 , b44 , b45/0.00260416666667D0 , 3.0D0 ,     &
+     &     19.0D0 , 17.0D0 , -15.0D0/
+      DATA b51 , b52 , b53 , b54 , b55 , b56/0.00001085069444D0 ,       &
+     &     79.0D0 , 776.0D0 , 1482.0D0 , -1920.0D0 , -945.0D0/
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE TPPF   SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (ipr,99002) P
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
+     &           ' *****')
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         dnu = Nu
+         dp = P
+         maxit = 5
+!
+         IF ( Nu>=3 ) THEN
+!
+!     TREAT THE NU GREATER THAN OR EQUAL TO 3 CASE
+!
+            CALL NORPPF(P,ppfn)
+            dppfn = ppfn
+            d1 = dppfn
+            d3 = dppfn**3
+            d5 = dppfn**5
+            d7 = dppfn**7
+            d9 = dppfn**9
+            term1 = d1
+            term2 = b21*(d3+d1)/dnu
+            term3 = b31*(b32*d5+b33*d3+b34*d1)/(dnu**2)
+            term4 = b41*(b42*d7+b43*d5+b44*d3+b45*d1)/(dnu**3)
+            term5 = b51*(b52*d9+b53*d7+b54*d5+b55*d3+b56*d1)/(dnu**4)
+            dppf = term1 + term2 + term3 + term4 + term5
+            Ppf = dppf
+            IF ( Nu>=7 ) RETURN
+            IF ( Nu==3 ) THEN
+!
+!     AUGMENT THE RESULTS FOR THE NU = 3 CASE
+!
+               dcon = pi*(dp-0.5D0)
+               darg = dppf/DSQRT(dnu)
+               z = DATAN(darg)
+               DO ipass = 1 , maxit
+                  s = DSIN(z)
+                  c = DCOS(z)
+                  z = z - (z+s*c-dcon)/(2.0D0*c*c)
+               ENDDO
+               Ppf = DSQRT(dnu)*s/c
+               RETURN
+            ELSEIF ( Nu==4 ) THEN
+!
+!     AUGMENT THE RESULTS FOR THE NU = 4 CASE
+!
+               dcon = 2.0D0*(dp-0.5D0)
+               darg = dppf/DSQRT(dnu)
+               z = DATAN(darg)
+               DO ipass = 1 , maxit
+                  s = DSIN(z)
+                  c = DCOS(z)
+                  z = z - ((1.0D0+0.5D0*c*c)*s-dcon)/(1.5D0*c*c*c)
+               ENDDO
+               Ppf = DSQRT(dnu)*s/c
+               RETURN
+            ELSEIF ( Nu==5 ) THEN
+!
+!     AUGMENT THE RESULTS FOR THE NU = 5 CASE
+!
+               dcon = pi*(dp-0.5D0)
+               darg = dppf/DSQRT(dnu)
+               z = DATAN(darg)
+               DO ipass = 1 , maxit
+                  s = DSIN(z)
+                  c = DCOS(z)
+                  z = z - (z+(c+(2.0D0/3.0D0)*c*c*c)*s-dcon)            &
+     &                /((8.0D0/3.0D0)*c**4)
+               ENDDO
+               Ppf = DSQRT(dnu)*s/c
+               RETURN
+            ELSEIF ( Nu==6 ) THEN
+!
+!     AUGMENT THE RESULTS FOR THE NU = 6 CASE
+!
+               dcon = 2.0D0*(dp-0.5D0)
+               darg = dppf/DSQRT(dnu)
+               z = DATAN(darg)
+               DO ipass = 1 , maxit
+                  s = DSIN(z)
+                  c = DCOS(z)
+                  z = z - ((1.0D0+0.5D0*c*c+0.375D0*c**4)*s-dcon)       &
+     &                /((15.0D0/8.0D0)*c**5)
+               ENDDO
+               Ppf = DSQRT(dnu)*s/c
+               GOTO 99999
+            ENDIF
+         ELSEIF ( Nu==1 ) THEN
+!
+!     TREAT THE NU = 1 (CAUCHY) CASE
+!
+            darg = pi*dp
+            Ppf = -DCOS(darg)/DSIN(darg)
+            RETURN
+         ELSEIF ( Nu==2 ) THEN
+!
+!     TREAT THE NU = 2 CASE
+!
+            term1 = sqrt2/2.0D0
+            term2 = 2.0D0*dp - 1.0D0
+            term3 = DSQRT(dp*(1.0D0-dp))
+            Ppf = term1*term2/term3
+            RETURN
+         ELSE
+            WRITE (ipr,99003)
+99003       FORMAT (' ','INTERNAL ERROR IN TPPF SUBROUTINE')
+            Ppf = 0.0
+            RETURN
+         ENDIF
+      ENDIF
+      RETURN
+!
+99999 END SUBROUTINE TPPF

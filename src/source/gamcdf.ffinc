@@ -1,0 +1,165 @@
+!*==gamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE GAMCDF(X,Gamma,Cdf)
+      IMPLICIT NONE
+!*--GAMCDF8063
+!*** Start of declarations inserted by SPAG
+      REAL Cdf , Gamma , X
+      INTEGER i , ipr , maxit
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT GAMCDF
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
+!              FUNCTION VALUE FOR THE GAMMA
+!              DISTRIBUTION WITH SINGLE PRECISION
+!              TAIL LENGTH PARAMETER = GAMMA.
+!              THE GAMMA DISTRIBUTION USED
+!              HEREIN HAS MEAN = GAMMA
+!              AND STANDARD DEVIATION = SQRT(GAMMA).
+!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X,
+!              AND HAS THE PROBABILITY DENSITY FUNCTION
+!              F(X) = (1/CONSTANT) * (X**(GAMMA-1)) * EXP(-X)
+!              WHERE THE CONSTANT = THE GAMMA FUNCTION EVALUATED
+!              AT THE VALUE GAMMA.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!                                AT WHICH THE CUMULATIVE DISTRIBUTION
+!                                FUNCTION IS TO BE EVALUATED.
+!                                X SHOULD BE POSITIVE.
+!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                                OF THE TAIL LENGTH PARAMETER.
+!                                GAMMA SHOULD BE POSITIVE.
+!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!                                DISTRIBUTION FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!             FUNCTION VALUE CDF FOR THE GAMMA DISTRIBUTION
+!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
+!                 --X SHOULD BE POSITIVE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
+!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
+!               COMPARED TO THE KNOWN GAMMA = 1 (EXPONENTIAL)
+!               RESULTS, AGREEMENT WAS HAD OUT TO 7 SIGNIFICANT
+!               DIGITS FOR ALL TESTED X.
+!               THE TESTED X VALUES COVERED THE ENTIRE
+!               RANGE OF THE DISTRIBUTION--FROM THE 0.00001
+!               PERCENT POINT UP TO THE 99.99999 PERCENT POINT
+!               OF THE DISTRIBUTION.
+!     REFERENCES--WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
+!                 PLOTS FOR THE GAMMA DISTRIBUTION',
+!                 TECHNOMETRICS, 1962, PAGES 1-15,
+!                 ESPECIALLY PAGES 3-5.
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGES 68-73.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DOUBLE PRECISION dx , dgamma , ai , term , sum , cut1 , cut2 ,    &
+     &                 cutoff , t
+      DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d , g
+      DOUBLE PRECISION DEXP , DLOG
+      DIMENSION d(10)
+      DATA c/.918938533204672741D0/
+      DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
+     &     -.277777777777777778D-2 , +.793650793650793651D-3 ,          &
+     &     -.595238095238095238D-3 , +.841750841750841751D-3/
+      DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
+     &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
+     &     +.179644372368830573D0 , -.139243221690590111D1/
+!
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( X<=0.0 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GAMC&
+     &DF SUBROUTINE IS NON-POSITIVE *****')
+         WRITE (ipr,99007) X
+         Cdf = 0.0
+         RETURN
+      ELSEIF ( Gamma<=0.0 ) THEN
+         WRITE (ipr,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMCDF SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99007) Gamma
+         Cdf = 0.0
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         dx = X
+         dgamma = Gamma
+         maxit = 10000
+!
+!     COMPUTE THE GAMMA FUNCTION USING THE ALGORITHM IN THE
+!     NBS APPLIED MATHEMATICS SERIES REFERENCE.
+!
+         z = dgamma
+         den = 1.0D0
+         DO WHILE ( z<10.0D0 )
+            den = den*z
+            z = z + 1
+         ENDDO
+         z2 = z*z
+         z3 = z*z2
+         z4 = z2*z2
+         z5 = z2*z3
+         a = (z-0.5D0)*DLOG(z) - z + c
+         b = d(1)/z + d(2)/z3 + d(3)/z5 + d(4)/(z2*z5) + d(5)/(z4*z5)   &
+     &       + d(6)/(z*z5*z5) + d(7)/(z3*z5*z5) + d(8)/(z5*z5*z5) + d(9)&
+     &       /(z2*z5*z5*z5)
+         g = DEXP(a+b)/den
+!
+!     COMPUTE T-SUB-Q AS DEFINED ON PAGE 4 OF THE WILK, GNANADESIKAN,
+!     AND HUYETT REFERENCE
+!
+         sum = 1.0D0/dgamma
+         term = 1.0D0/dgamma
+         cut1 = dx - dgamma
+         cut2 = dx*10000000000.0D0
+         DO i = 1 , maxit
+            ai = i
+            term = dx*term/(dgamma+ai)
+            sum = sum + term
+            cutoff = cut1 + (cut2*term/sum)
+            IF ( ai>cutoff ) GOTO 50
+         ENDDO
+         WRITE (ipr,99003) maxit
+!
+99003    FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMCDF ',&
+     &           'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I7)
+         WRITE (ipr,99004) X
+99004    FORMAT (' ','     THE INPUT VALUE OF X     IS ',E15.8)
+         WRITE (ipr,99005) Gamma
+99005    FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
+         WRITE (ipr,99006)
+99006    FORMAT (' ','     THE OUTPUT VALUE OF CDF HAS BEEN SET TO 1.0')
+         Cdf = 1.0
+         RETURN
+!
+ 50      t = sum
+         Cdf = (dx**dgamma)*(DEXP(-dx))*t/g
+      ENDIF
+99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+!
+      END SUBROUTINE GAMCDF

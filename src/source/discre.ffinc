@@ -1,0 +1,268 @@
+!*==discre.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
+      IMPLICIT NONE
+!*--DISCRE4903
+!*** Start of declarations inserted by SPAG
+      REAL ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
+     &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
+      INTEGER i , icounl , icount , icounu , ip , ipr , N , numcla
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT DISCRE
+!
+!     PURPOSE--THIS SUBROUTINE 'DISCRETIZES' THE DATA
+!              OF THE SINGLE PRECISION VECTOR X.
+!              THE FIRST CLASS INTERVAL IS FROM
+!              XMIN TO XMIN + XDEL;
+!              THE SECOND CLASS INTERVAL IS FROM
+!              XMIN+ XDEL TO XMIN + 2*XDEL;
+!              ETC.
+!              ALL VALUES IN THE VECTOR X WITHIN A GIVEN CLASS
+!              WILL BE MAPPED INTO THE MIDPOINT OF THAT CLASS.
+!              ALL VALUES IN THE VECTOR X SMALLER THAN XMIN
+!              WILL BE MAPPED INTO XMIN - (XDEL/2.0).
+!              ALL VALUES IN THE VECTOR X LARGER THAN XMAX
+!              WILL BE MAPPED INTO XMAX + (XDEL/2.0).
+!              THE USE OF THIS SUBROUTINE
+!              (AND THE DISCR2 AND DISCR3 SUBROUTINES)
+!              GIVES THE DATA ANALYST THE CAPABILITY OF
+!              CONSTRUCTING A DISCRETE VARIATE FROM
+!              A CONTINUOUS ONE.
+!              THE RESULTING DISCRETE VARIATE MIGHT THEN
+!              (FOR EXAMPLE) BE ANALYZED IN ITSELF FOR
+!              GROSS STRUCTURE, OR FOR ADHERENCE TO SOME
+!              THEROETICAL DISCRETE PROBABILITY MODEL,
+!              OR THE DISCRETE VARIATE MIGHT BE USED
+!              AS A SUBSET DEFINITION VECTOR FOR SOME
+!              OTHER VARIATE.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                                TO BE DISCRETIZED.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                                WHICH DEFINES THE LOWER BOUNDARY
+!                                (INCLUSIVELY) OF THE LOWERMOST
+!                                CLASS.
+!                     --XDEL   = THE SINGLE PRECISION VALUE
+!                                OF THE CLASS WIDTH.
+!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                                WHICH DEFINES THE UPPER BOUNDARY
+!                                (INCLUSIVELY) OF THE UPPERMOST
+!                                CLASS.
+!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!                                DISCRETIZED VALUES (= CLASS
+!                                MIDPOINTS) CORRESPONDING TO
+!                                THE CONTINUOUS VALUES IN THE VECTOR X.
+!                                THERE WILL RESULT N SUCH DISCRETIZED
+!                                VALUES.
+!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!             WHICH CONTAINS N DISCRETIZED VALUES
+!             (= CLASS MIDPOINTS)
+!             CORRESPONDING TO THE N
+!             CONTINUOUS VALUES IN THE
+!             INPUT VECTOR X.
+!             ALSO, A FEW LINES LINES OF SUMMARY INFORMATION
+!             WILL BE GENERATED INDICATING
+!             1) WHAT THE SAMPLE SIZE IS (N);
+!             2) WHAT THE NUMBER OF CLASSES IS (NUMCLA).
+!             3) WHAT THE CLASS BOUNDARIES AND
+!                THE NUMBER OF OBSERVATIONS
+!                FALLING IN EACH CLASS ARE.
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --XDEL SHOULD BE POSITIVE.
+!                 --(XMAX-XMIN)/XDEL SHOULD NOT EXCEED 999.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--IT IS SUGGESTED THAT XMIN, XDEL,
+!              AND XMAX HAVE AT LEAST 1 MORE
+!              DECIMAL PLACE THAN THE DATA VALUES
+!              IN THE VECTOR X SO AS TO HELP ASSURE
+!              A UNIQUE DISCRETIZATION MAPPING;
+!              THAT IS, TO HELP ASSURE THAT
+!              NO DATA VALUE WILL FALL
+!              EXACTLY ON THE BOUNDARY POINT
+!              BETWEEN 2 ADJACENT CLASSES.
+!     COMMENT--IN THE MAIN (CALLING) ROUTINE, IT IS
+!              PERMISSABLE (IF THE ANALYST SO DESIRES)
+!              TO USE THE SAME VARIABLE NAME
+!              IN THE SIXTH ARGUMENT AS USED IN THE FIRST
+!              ARGUMENT IN THE CALLING SEQUENCE TO THIS
+!              DISCRE SUBROUTINE--NO CONFLICT WILL RESULT
+!              IN THE INTERNAL OPERATION OF THE     DISCRE
+!              SUBROUTINE.  FOR EXAMPLE, IT IS PERMISSIBLE
+!              TO HAVE     CALL DISCRE(X,N,0.5,1.0,20.5,X)
+!              IN WHICH THE VARIABLE NAME      X    IS USED
+!              AS BOTH THE FIRST AND SIXTH ARGUMENTS.
+!     REFERENCES--NONE.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1974.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:) , Y(:)
+      DIMENSION icount(1000)
+      DIMENSION classm(1000)
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DISCRE SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( N==1 ) THEN
+         WRITE (ipr,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE DISC&
+     &RE SUBROUTINE HAS THE VALUE 1 *****')
+         Y(1) = X(1)
+         RETURN
+      ELSEIF ( Xdel<=0.0 ) THEN
+         WRITE (ipr,99004)
+99004    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE DISCRE SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99005) Xdel
+99005    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.7,       &
+     &           ' *****')
+         DO i = 1 , N
+            Y(i) = 0.0
+         ENDDO
+         RETURN
+      ELSE
+         IF ( Xmin==Xmax ) THEN
+            WRITE (ipr,99006)
+99006       FORMAT (' ','***** FATAL ERROR--THE THIRD AND FIFTH INPUT ',&
+     &              'ARGUMENTS TO THE DISCRE SUBROUTINE ARE IDENTICAL')
+            WRITE (ipr,99007) Xmin
+99007       FORMAT (' ','***** THE VALUE OF THE ARGUMENTS ARE ',E15.7,  &
+     &              ' *****')
+            DO i = 1 , N
+               Y(i) = 0.0
+            ENDDO
+            RETURN
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99008) hold
+99008       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE DISCRE SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+            DO i = 1 , N
+               Y(i) = X(i)
+            ENDDO
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+!     DETERMINE THE TRUE INTERVAL MIN AND MAX;
+!     THEN DETERMINE THE NUMBER OF CLASSES
+!     WITHIN THE SPECIFIED MIN AND MAX.
+!
+ 50      pointl = Xmin
+         pointu = Xmax
+         IF ( Xmin>Xmax ) pointl = Xmax
+         IF ( Xmin>Xmax ) pointu = Xmin
+         totdel = pointu - pointl
+         numcla = (totdel/Xdel) + 0.999
+!
+!     ZERO OUT THE COUNT VECTOR (ICOUNT)
+!     AND THE LOWER AND UPPER COUNT VARIABLES.
+!
+         DO i = 1 , numcla
+            icount(i) = 0
+         ENDDO
+         icounl = 0
+         icounu = 0
+!
+!     COMPUTE THE CLASS MIDPOINT FOR EACH CLASS.
+!
+         DO i = 1 , numcla
+            ai = i
+            cmin = Xmin + (ai-1.0)*Xdel
+            cmax = Xmin + ai*Xdel
+            classm(i) = (cmin+cmax)/2.0
+         ENDDO
+         cmax = pointu
+         classm(numcla) = (cmin+cmax)/2.0
+!
+!     PERFORM THE DISCRETIZING TRANSFORMATION.
+!
+         DO i = 1 , N
+            IF ( X(i)>=pointl .AND. X(i)<=pointu ) THEN
+               ip = (X(i)-pointl)/Xdel
+               ip = ip + 1
+               IF ( ip>numcla ) ip = numcla
+               Y(i) = classm(ip)
+               icount(ip) = icount(ip) + 1
+            ELSEIF ( X(i)<pointl ) THEN
+               clasml = pointl - (Xdel/2.0)
+               Y(i) = clasml
+               icounl = icounl + 1
+            ELSEIF ( X(i)>pointu ) THEN
+               clasmu = pointu + (Xdel/2.0)
+               Y(i) = clasmu
+               icounu = icounu + 1
+            ENDIF
+         ENDDO
+!
+!     COMPUTE CLASS LIMITS AND WRITE OUT SUMMARY INFORMATION.
+!
+         WRITE (ipr,99020)
+         WRITE (ipr,99009)
+!
+99009    FORMAT (' ','OUTPUT FROM THE DISCRE SUBROUTINE--')
+         WRITE (ipr,99020)
+         WRITE (ipr,99010) N
+99010    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
+         WRITE (ipr,99011) Xmin
+99011    FORMAT (' ',7X,'SPECIFIED LOWER BOUND OF INTERVAL = ',F15.7)
+         WRITE (ipr,99012) Xdel
+99012    FORMAT (' ',7X,'SPECIFIED CLASS WIDTH             = ',F15.7)
+         WRITE (ipr,99013) Xmax
+99013    FORMAT (' ',7X,'SPECIFIED UPPER BOUND OF INTERVAL = ',F15.7)
+         WRITE (ipr,99014) numcla
+99014    FORMAT (' ',7X,'COMPUTED  NUMBER OF LEVELS        = ',I8)
+         WRITE (ipr,99020)
+         WRITE (ipr,99015)
+99015    FORMAT (' ',                                                   &
+     &           '       CLASS     MINIMUM       MIDPOINT      MAXIMUM',&
+     &           '      COUNT')
+         WRITE (ipr,99016)
+99016    FORMAT (' ',                                                   &
+     &           '       -------------------------------------------',  &
+     &           '-------------')
+         IF ( icounl>=1 ) WRITE (ipr,99017) clasml , pointl , icounl
+99017    FORMAT (' ',4X,'   BELOW     -INFINITY',2F14.7,I8)
+         DO i = 1 , numcla
+            ai = i
+            cmin = pointl + (ai-1.0)*Xdel
+            cmax = pointl + ai*Xdel
+            IF ( cmax>pointu ) cmax = pointu
+            WRITE (ipr,99018) i , cmin , classm(i) , cmax , icount(i)
+99018       FORMAT (' ',4X,I6,2X,3F14.7,I8)
+         ENDDO
+         IF ( icounu>=1 ) WRITE (ipr,99019) pointu , clasmu , icounu
+99019    FORMAT (' ',4X,'   ABOVE',2F14.7,'     +INFINITY',I8)
+      ENDIF
+99020 FORMAT (' ')
+!
+      END SUBROUTINE DISCRE

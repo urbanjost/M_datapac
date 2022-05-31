@@ -1,0 +1,87 @@
+!*==weippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE WEIPPF(P,Gamma,Ppf)
+      IMPLICIT NONE
+!*--WEIPPF33406
+!*** Start of declarations inserted by SPAG
+      REAL Gamma , P , Ppf
+      INTEGER ipr
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT WEIPPF
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
+!              FUNCTION VALUE FOR THE WEIBULL
+!              DISTRIBUTION WITH SINGLE PRECISION
+!              TAIL LENGTH PARAMETER = GAMMA.
+!              THE WEIBULL DISTRIBUTION USED
+!              HEREIN IS DEFINED FOR ALL POSITIVE X,
+!              AND HAS THE PROBABILITY DENSITY FUNCTION
+!              F(X) = GAMMA * (X**(GAMMA-1)) * EXP(-(X**GAMMA)).
+!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
+!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
+!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
+!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!                                (BETWEEN 0.0 (INCLUSIVELY)
+!                                AND 1.0 (EXCLUSIVELY))
+!                                AT WHICH THE PERCENT POINT
+!                                FUNCTION IS TO BE EVALUATED.
+!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                                OF THE TAIL LENGTH PARAMETER.
+!                                GAMMA SHOULD BE POSITIVE.
+!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!                                POINT FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!             VALUE PPF FOR THE WEIBULL DISTRIBUTION
+!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
+!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGE 124.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( P<0.0 .OR. P>=1.0 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE WEIPPF SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (ipr,99003) P
+         Ppf = 0.0
+         RETURN
+      ELSEIF ( Gamma<=0.0 ) THEN
+         WRITE (ipr,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIPPF SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99003) Gamma
+         Ppf = 0.0
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         Ppf = (-ALOG(1.0-P))**(1.0/Gamma)
+      ENDIF
+99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+!
+      END SUBROUTINE WEIPPF

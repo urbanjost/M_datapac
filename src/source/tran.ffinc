@@ -1,0 +1,140 @@
+!*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE TRAN(N,Nu,Iseed,X)
+      IMPLICIT NONE
+!*--TRAN31505
+!*** Start of declarations inserted by SPAG
+      REAL anu , arg1 , arg2 , pi , sum , X , y , z , znorm
+      INTEGER i , ipr , Iseed , j , N , Nu
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT TRAN
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
+!              FROM THE STUDENT'S T DISTRIBUTION
+!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!                     --NU     = THE INTEGER DEGREES OF FREEDOM
+!                                (PARAMETER) FOR THE T
+!                                DISTRIBUTION.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE STUDENT'S T DISTRIBUTION
+!             WITH DEGREES OF FREEDOM PARAMETER = NU.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     REFERENCES--MOOD AND GRABLE, INTRODUCTION TO THE
+!                 THEORY OF STATISTICS, 1963, PAGE 233.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--2, 1970, PAGE 94.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGE 121.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 CENTER FOR APPLIED MATHEMATICS
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-3651
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL BUREAU OF STANDARDS.
+!           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
+!           MODIFIED, OR OTHERWISE USED IN A CONTEXT
+!           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
+!     LANGUAGE--ANSI FORTRAN (1966)
+!               EXCEPTION--HOLLERITH STRINGS IN FORMAT STATEMENTS
+!                          DENOTED BY QUOTES RATHER THAN NH.
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(*)
+      DIMENSION y(2) , z(2)
+!
+!---------------------------------------------------------------------
+!
+!CCCC CHARACTER*4 IFEEDB
+!CCCC CHARACTER*4 IPRINT
+!
+!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+!CCCC COMMON /PRINT/IFEEDB,IPRINT
+!
+!-----DATA STATEMENTS-------------------------------------------------
+!
+      DATA pi/3.14159265359/
+!
+      ipr = 6
+!
+!-----START POINT-----------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE TRAN   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99003) N
+         RETURN
+      ELSEIF ( Nu<=0 ) THEN
+         WRITE (ipr,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TRAN   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99003) Nu
+         RETURN
+      ELSE
+!
+!     GENERATE N STUDENT'S T RANDOM NUMBERS
+!     USING THE DEFINITION THAT
+!     A STUDENT'S T VARIATE WITH NU DEGREES OF FREEDOM
+!     EQUALS A NORMAL VARIATE DIVIDED BY
+!     A STANDARDIZED CHI VARIATE
+!     (WHERE THE LATTER EQUALS SQRT(CHI-SQUARED/NU).
+!     FIRST GENERATE A NORMAL RANDOM NUMBER,
+!     THEN GENERATE A STANDARDIZED CHI RANDOM NUMBER,
+!     THEN FORM THE RATIO OF THE FIRST DIVIDED BY
+!     THE SECOND.
+!
+         anu = Nu
+         DO i = 1 , N
+!
+            CALL UNIRAN(2,Iseed,y)
+            arg1 = -2.0*ALOG(y(1))
+            arg2 = 2.0*pi*y(2)
+            znorm = (SQRT(arg1))*(COS(arg2))
+!
+            sum = 0.0
+            DO j = 1 , Nu , 2
+               CALL UNIRAN(2,Iseed,y)
+               arg1 = -2.0*ALOG(y(1))
+               arg2 = 2.0*pi*y(2)
+               z(1) = (SQRT(arg1))*(COS(arg2))
+               z(2) = (SQRT(arg1))*(SIN(arg2))
+               sum = sum + z(1)*z(1)
+               IF ( j/=Nu ) sum = sum + z(2)*z(2)
+            ENDDO
+!
+            X(i) = znorm/SQRT(sum/anu)
+!
+         ENDDO
+      ENDIF
+99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+!
+      END SUBROUTINE TRAN

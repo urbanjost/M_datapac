@@ -1,0 +1,133 @@
+!*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE NORRAN(N,Iseed,X)
+      IMPLICIT NONE
+!*--NORRAN15024
+!*** Start of declarations inserted by SPAG
+      REAL arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
+      INTEGER i , ip1 , ipr , Iseed , N
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT NORRAN
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
+!              FROM THE THE NORMAL (GAUSSIAN)
+!              DISTRIBUTION WITH MEAN = 0 AND STANDARD DEVIATION = 1.
+!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
+!              THE PROBABILITY DENSITY FUNCTION
+!              F(X) = (1/SQRT(2*PI))*EXP(-X*X/2).
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE NORMAL DISTRIBUTION
+!             WITH MEAN = 0 AND STANDARD DEVIATION = 1.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     METHOD--BOX-MULLER ALGORITHM.
+!     REFERENCES--BOX AND MULLER, 'A NOTE ON THE GENERATION
+!                 OF RANDOM NORMAL DEVIATES', JOURNAL OF THE
+!                 ASSOCIATION FOR COMPUTING MACHINERY, 1958,
+!                 PAGES 610-611.
+!               --TOCHER, THE ART OF SIMULATION,
+!                 1963, PAGES 33-34.
+!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!                 1964, PAGE 39.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 CENTER FOR APPLIED MATHEMATICS
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-3651
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL BUREAU OF STANDARDS.
+!           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
+!           MODIFIED, OR OTHERWISE USED IN A CONTEXT
+!           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
+!     LANGUAGE--ANSI FORTRAN (1966)
+!               EXCEPTION--HOLLERITH STRINGS IN FORMAT STATEMENTS
+!                          DENOTED BY QUOTES RATHER THAN NH.
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --JULY      1976.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(*)
+      DIMENSION y(2)
+!
+!---------------------------------------------------------------------
+!
+!CCCC CHARACTER*4 IFEEDB
+!CCCC CHARACTER*4 IPRINT
+!
+!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+!CCCC COMMON /PRINT/IFEEDB,IPRINT
+!
+      ipr = 6
+!
+!-----DATA STATEMENTS-------------------------------------------------
+!
+      DATA pi/3.14159265359/
+!
+!-----START POINT-----------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NORRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+!
+!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+!     THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
+!     (TO BE USED BELOW IN FORMING THE N-TH NORMAL
+!     RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N
+!     HAPPENS TO BE ODD).
+!
+         CALL UNIRAN(N,Iseed,X)
+         CALL UNIRAN(2,Iseed,y)
+!
+!     GENERATE N NORMAL RANDOM NUMBERS
+!     USING THE BOX-MULLER METHOD.
+!
+         DO i = 1 , N , 2
+            ip1 = i + 1
+            u1 = X(i)
+            IF ( i==N ) THEN
+               u2 = y(2)
+            ELSE
+               u2 = X(ip1)
+            ENDIF
+            arg1 = -2.0*ALOG(u1)
+            arg2 = 2.0*pi*u2
+            sqrt1 = SQRT(arg1)
+            z1 = sqrt1*COS(arg2)
+            z2 = sqrt1*SIN(arg2)
+            X(i) = z1
+            IF ( i/=N ) X(ip1) = z2
+         ENDDO
+      ENDIF
+!
+      END SUBROUTINE NORRAN

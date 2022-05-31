@@ -1,0 +1,206 @@
+!*==plotco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE PLOTCO(Y,N)
+      IMPLICIT NONE
+!*--PLOTCO18497
+!*** Start of declarations inserted by SPAG
+      REAL hold , ratioy , Y , ylable , ymax , ymin
+      INTEGER i , iaxdel , idel , iflag , imax , imin , ipr , ix ,      &
+     &        ixmax , ixmin , iz , j , jmax , jmin , k , mx , my , N ,  &
+     &        numpag
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT PLOTCO
+!
+!     THIS ROUTINE YIELDS A MULTI-PAGE (IF NECESSARY) PLOT OF THE AUTOCORRELATIO
+!     COEFFICIENT R(K) VERSUS THE LAG K
+!     THERE IS NO RESTRICTION ON THE MAXIMUM VALUE OF N FOR THIS ROUTINE.
+!     PRINTING--YES
+!     SUBROUTINES NEEDED--NONE
+!     WRITTEN BY JAMES J. FILLIBEN, STATISTICAL ENGINEERING LABORATORY (205.03)
+!     NATIONAL BUREAU OF STANDARDS, WASHINGTON, D.C. 20234     JUN 1972
+!                                                      UPDATED FEB 1975
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      CHARACTER*4 IGRaph
+      CHARACTER*4 blank , star , hyphen , alphai
+      DIMENSION Y(:)
+      COMMON /BLOCK1/ IGRaph(55,130)
+      DIMENSION ylable(11)
+      DIMENSION ix(25)
+!
+      DATA blank , star , hyphen , alphai/' ' , '*' , '-' , 'I'/
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( N==1 ) THEN
+         WRITE (ipr,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PLOT&
+     &CO SUBROUTINE HAS THE VALUE 1 *****')
+         RETURN
+      ELSE
+         hold = Y(1)
+         DO i = 2 , N
+            IF ( Y(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (ipr,99004) hold
+99004    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE PLOTCO SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+!
+!-----START POINT-----------------------------------------------------
+!
+!     DETERMINE THE Y VALUES TO BE LISTED ON THE LEFT VERTICAL AXIS
+!
+ 50      ymin = -1.0
+         ymax = 1.0
+         DO i = 1 , 11
+            ylable(i) = FLOAT(6-i)/5.0
+         ENDDO
+!
+!     DETERMINE DISTANCES BETWEEN HORIZONTAL PLOT POINTS AND DISTANCES BETWEEN
+!     HASH MARKS ON THE X AXIS
+!
+         IF ( N<=24 ) idel = 5
+         IF ( 25<=N .AND. N<=40 ) idel = 3
+         IF ( 41<=N .AND. N<=60 ) idel = 2
+         IF ( 61<=N ) idel = 1
+         iaxdel = 10
+         IF ( N<=24 ) iaxdel = 5
+         IF ( 25<=N .AND. N<=40 ) iaxdel = 15
+!
+!     DETERMINE THE NUMBER OF PAGES THE PLOT WILL TAKE UP
+!
+         numpag = ((N-1)/120) + 1
+!
+!     OPERATE  ON EACH PAGE
+!
+         DO iz = 1 , numpag
+!
+!     DETERMINE THE X-AXIS VALUES
+!
+            ixmin = 0
+            ixmax = N
+            IF ( N<=24 ) THEN
+               DO i = 1 , 25
+                  ix(i) = i - 1
+               ENDDO
+            ELSEIF ( 25<=N .AND. N<=40 ) THEN
+               DO i = 1 , 9
+                  ix(i) = 5*(i-1)
+               ENDDO
+            ELSEIF ( 41<=N .AND. N<=60 ) THEN
+               DO i = 1 , 13
+                  ix(i) = 5*(i-1)
+               ENDDO
+            ELSE
+               ixmax = 120*iz
+               ixmin = ixmax - 120
+               i = 0
+               DO
+                  i = i + 1
+                  ix(i) = ixmin + 10*(i-1)
+                  IF ( i>=13 ) EXIT
+               ENDDO
+            ENDIF
+!
+!     BLANK OUT THE GRAPH
+!
+            DO i = 1 , 55
+               DO j = 1 , 130
+                  IGRaph(i,j) = blank
+               ENDDO
+            ENDDO
+!
+!     PRODUCE THE Y AXIS
+!
+            DO i = 5 , 55
+               IGRaph(i,10) = alphai
+               IGRaph(i,130) = alphai
+            ENDDO
+            DO i = 5 , 55 , 5
+               IGRaph(i,10) = hyphen
+               IGRaph(i,130) = hyphen
+            ENDDO
+!
+!     PRODUCE THE X AXIS
+!
+            DO j = 10 , 130
+               IGRaph(55,j) = hyphen
+               IGRaph(30,j) = hyphen
+               IGRaph(5,j) = hyphen
+            ENDDO
+            DO j = 10 , 130 , iaxdel
+               IGRaph(55,j) = alphai
+               IGRaph(5,j) = alphai
+            ENDDO
+!
+!     DETERMINE THE (X,Y) PLOT POSITIONS
+!
+            imin = ixmin + 1
+            imax = ixmax
+            IF ( imax>N ) imax = N
+            ratioy = 50.0/(ymax-ymin)
+            DO i = imin , imax
+               mx = MOD(i,120)
+               mx = mx*idel
+               IF ( mx==0 ) mx = 120
+               mx = mx + 10
+               my = ratioy*(Y(i)-ymin) + 0.5
+               my = 55 - my
+               IGRaph(my,mx) = star
+               jmax = MAX0(my,30)
+               jmin = MIN0(my,30)
+               DO j = jmin , jmax
+                  IGRaph(j,mx) = star
+               ENDDO
+            ENDDO
+!
+!     WRITE OUT THE GRAPH
+!
+            WRITE (ipr,99005)
+99005       FORMAT ('1')
+            IF ( iz==1 ) WRITE (ipr,99006) N
+99006       FORMAT (                                                    &
+     &          ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS '&
+     &          ,I5)
+            IF ( iz>=2 ) WRITE (ipr,99007)
+99007       FORMAT (' ',                                                &
+     &'THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIO&
+     &US PAGE')
+            WRITE (ipr,99008)
+99008       FORMAT (' ')
+            IF ( N<=24 ) WRITE (ipr,99011) (ix(i),i=1,25)
+            IF ( 25<=N .AND. N<=40 ) WRITE (ipr,99012) (ix(i),i=1,9)
+            IF ( 41<=N ) WRITE (ipr,99013) (ix(i),i=1,13)
+            DO i = 5 , 55
+               iflag = i - (i/5)*5
+               k = i/5
+               IF ( iflag/=0 ) WRITE (ipr,99009) (IGRaph(i,j),j=1,130)
+99009          FORMAT (' ',130A1)
+               IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) ,            &
+     &                                (IGRaph(i,j),j=10,130)
+99010          FORMAT (' ',F9.2,130A1)
+            ENDDO
+            IF ( N<=24 ) WRITE (ipr,99011) (ix(i),i=1,25)
+            IF ( 25<=N .AND. N<=40 ) WRITE (ipr,99012) (ix(i),i=1,9)
+            IF ( 41<=N ) WRITE (ipr,99013) (ix(i),i=1,13)
+         ENDDO
+      ENDIF
+99011 FORMAT (' ',6X,24(I4,1X),I4)
+99012 FORMAT (' ',6X,8(I4,11X),I4)
+99013 FORMAT (' ',6X,12(I4,6X),I4)
+      END SUBROUTINE PLOTCO

@@ -1,0 +1,366 @@
+!*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE TOL(X,N)
+      IMPLICIT NONE
+!*--TOL30717
+!*** Start of declarations inserted by SPAG
+      REAL a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
+     &     an4 , an5 , an6 , b , c , c1 , c2 , c3
+      REAL d , d1 , d2 , d3 , d4 , d5 , d6 , d7 , f , hold , p , pa ,   &
+     &     pc , q , r , rsmall , sd , t , tmax , tmin
+      REAL u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
+     &     xmin , xmin2 , xmin3 , z , z1
+      INTEGER i , ipr , j , k , locmax , locmin , locmn2 , locmn3 ,     &
+     &        locmx2 , locmx3 , N , numsec
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT TOL
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES NORMAL AND
+!              DISTRIBUTION-FREE TOLERANCE LIMITS
+!              FOR THE DATA IN THE INPUT VECTOR X.
+!              15 NORMAL TOLERANCE LIMITS ARE COMPUTED; AND
+!              30 DISTRIBUTION-FREE TOLERANCE LIMITS ARE COMPUTED.
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS.
+!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR X.
+!     OUTPUT--2 PAGES OF AUTOMATIC PRINTOUT--
+!             1 PAGE GIVING NORMAL TOLERANCE LIMITS; AND
+!             1 PAGE GIVING DISTRIBUTION-FREE TOLERANCE LIMITS.
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
+!               --WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
+!               --MOOD AND GRABLE, PAGES 416-417
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION pa(6) , pc(6) , z1(3) , a(6) , b(6) , c(6) , rsmall(5,6)&
+     &          , usmall(6,6)
+      DIMENSION tmin(3,6) , tmax(3,6)
+      DIMENSION p(10) , c1(10) , c2(10) , c3(10)
+!
+      DATA pa(1) , pa(2) , pa(3) , pa(4) , pa(5) , pa(6)/50. , 75. ,    &
+     &     90. , 95. , 99. , 99.9/
+      DATA pc(1) , pc(2) , pc(3)/90. , 95. , 99./
+      DATA z1(1) , z1(2) , z1(3)/ - 1.28155157 , -1.64485363 ,          &
+     &     -2.32634787/
+      DATA a(1) , a(2) , a(3) , a(4) , a(5) , a(6)/.6745 , 1.1504 ,     &
+     &     1.6449 , 1.9600 , 2.5758 , 3.2905/
+      DATA b(1) , b(2) , b(3) , b(4) , b(5) , b(6)/.33734 , .57335 ,    &
+     &     .82140 , .97910 , 1.2889 , 1.64038/
+      DATA c(1) , c(2) , c(3) , c(4) , c(5) , c(6)/ - 0.15460 ,         &
+     &     -0.02991 , .22044 , .40675 , .85514 , 1.42601/
+      DATA rsmall(1,1) , rsmall(1,2) , rsmall(1,3) , rsmall(1,4) ,      &
+     &     rsmall(1,5) , rsmall(1,6)/1.0505 , 1.6859 , 2.2844 , 2.6463 ,&
+     &     3.3266 , 4.0903/
+      DATA rsmall(2,1) , rsmall(2,2) , rsmall(2,3) , rsmall(2,4) ,      &
+     &     rsmall(2,5) , rsmall(2,6)/0.8557 , 1.4333 , 2.0078 , 2.3624 ,&
+     &     3.0368 , 3.7983/
+      DATA rsmall(3,1) , rsmall(3,2) , rsmall(3,3) , rsmall(3,4) ,      &
+     &     rsmall(3,5) , rsmall(3,6)/0.7929 , 1.3412 , 1.8979 , 2.2457 ,&
+     &     2.9128 , 3.6708/
+      DATA rsmall(4,1) , rsmall(4,2) , rsmall(4,3) , rsmall(4,4) ,      &
+     &     rsmall(4,5) , rsmall(4,6)/0.7622 , 1.2940 , 1.8388 , 2.1815 ,&
+     &     2.8422 , 3.5965/
+      DATA rsmall(5,1) , rsmall(5,2) , rsmall(5,3) , rsmall(5,4) ,      &
+     &     rsmall(5,5) , rsmall(5,6)/0.7442 , 1.2654 , 1.8019 , 2.1408 ,&
+     &     2.7963 , 3.5472/
+      DATA usmall(1,1) , usmall(1,2) , usmall(1,3)/0. , 0. , 0./
+      DATA usmall(2,1) , usmall(2,2) , usmall(2,3)/7.9579 , 15.9472 ,   &
+     &     79.7863/
+      DATA usmall(3,1) , usmall(3,2) , usmall(3,3)/3.0808 , 4.4154 ,    &
+     &     9.9749/
+      DATA usmall(4,1) , usmall(4,2) , usmall(4,3)/2.2658 , 2.9200 ,    &
+     &     5.1113/
+      DATA usmall(5,1) , usmall(5,2) , usmall(5,3)/1.9393 , 2.3724 ,    &
+     &     3.6692/
+      DATA usmall(6,1) , usmall(6,2) , usmall(6,3)/1.7621 , 2.0893 ,    &
+     &     3.0034/
+      DATA p(1) , p(2) , p(3) , p(4) , p(5) , p(6) , p(7) , p(8) ,      &
+     &     p(9) , p(10)/50. , 75. , 90. , 95. , 97.5 , 99. , 99.5 ,     &
+     &     99.9 , 99.95 , 99.99/
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TOL    SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TOL &
+     &   SUBROUTINE HAS THE VALUE 1 *****')
+            RETURN
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE TOL    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      an = N
+!
+!     COMPUTE NORMAL TOLERANCE LIMITS
+!
+!     COMPUTE THE SAMPLE MEAN
+!
+         xbar = 0.0
+         DO i = 1 , N
+            xbar = xbar + X(i)
+         ENDDO
+         xbar = xbar/an
+!
+!     COMPUTE THE SAMPLE STANDARD DEVIATION
+!
+         var = 0.0
+         DO i = 1 , N
+            var = var + (X(i)-xbar)**2
+         ENDDO
+         var = var/(an-1.0)
+         sd = SQRT(var)
+!
+!     COMPUTE THE NORMAL TOLERANCE LIMITS
+!
+         DO i = 1 , 3
+            z = z1(i)
+            f = N - 1
+            IF ( N<=6 ) u = usmall(N,i)
+            IF ( N>6 ) THEN
+               d1 = 1.0 + z*SQRT(2.0)/SQRT(f)
+               d2 = 2.0*(z**2-1.0)/(3.0*f)
+               d3 = (z**3-7.0*z)/(9.0*SQRT(2.0)*f**1.5)
+               d4 = (6.0*z**4+14.0*z**2-32.0)/(405.0*f**2.0)
+               d5 = (9.0*z**5+256.0*z**3-433.0*z)                       &
+     &              /(4860.0*SQRT(2.0)*f**2.5)
+               d6 = (12.0*z**6-243.0*z**4-923.0*z**2+1472.0)            &
+     &              /(25515.0*f**3.0)
+               d7 = (3753.0*z**7+4353.0*z**5-289517.0*z**3-289717.0*z)  &
+     &              /(9185400.0*SQRT(2.0)*f**3.5)
+               univ = d1 + d2 + d3 - d4 + d5 + d6 - d7
+               u = 1.0/univ
+               u = SQRT(u)
+            ENDIF
+            DO j = 1 , 6
+               r = a(j) + (b(j)/(c(j)+an))
+               IF ( N<=5 ) r = rsmall(N,j)
+               ak = r*u
+               tmin(i,j) = xbar - ak*sd
+               tmax(i,j) = xbar + ak*sd
+            ENDDO
+         ENDDO
+!
+!     WRITE OUT THE NORMAL TOLERANCE LIMITS
+!
+         WRITE (ipr,99016)
+         WRITE (ipr,99005) N
+!
+99005    FORMAT (' ','             NORMAL TOLERANCE LIMITS FOR THE ',I6,&
+     &           ' OBSERVATIONS')
+         WRITE (ipr,99017)
+         WRITE (ipr,99006)
+99006    FORMAT (' ','             REFERENCE--CRC HANDBOOK, PAGES 32-35'&
+     &           )
+         WRITE (ipr,99007)
+99007    FORMAT (' ',                                                   &
+     &'             REFERENCE--GARDINER AND HULL, TECHNOMETRICS, 1966, P&
+     &AGES 115-122')
+         WRITE (ipr,99017)
+         WRITE (ipr,99008) xbar , sd
+99008    FORMAT (' ','             SAMPLE MEAN = ',E15.8,               &
+     &           '         SAMPLE STANDARD DEVIATION = ',E15.8)
+         WRITE (ipr,99017)
+         WRITE (ipr,99017)
+         DO i = 1 , 3
+            DO j = 1 , 6
+               WRITE (ipr,99009) pc(i) , pa(j) , tmin(i,j) , tmax(i,j)
+99009          FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',   &
+     &                 F5.2,                                            &
+     &               ' PERCENT OF THE POPULATION IS BETWEEN XBAR-K*S = '&
+     &               ,E12.5,' AND XBAR+K*S = ',E12.5)
+            ENDDO
+            WRITE (ipr,99017)
+         ENDDO
+!
+!
+!
+!
+!     COMPUTE DISTRIBUTION-FREE TOLERANCE LIMITS
+!
+         k = N/2
+         numsec = 3
+         IF ( k<numsec ) numsec = k
+!
+!     DETERMINE THE SMALLEST 3 AND LARGEST 3 OBSERVATIONS
+!
+         locmin = 1
+         xmin = X(1)
+         DO i = 1 , N
+            IF ( X(i)<=xmin ) locmin = i
+            IF ( X(i)<=xmin ) xmin = X(i)
+         ENDDO
+         locmax = 1
+         xmax = X(1)
+         DO i = 1 , N
+            IF ( X(i)>=xmax ) locmax = i
+            IF ( X(i)>=xmax ) xmax = X(i)
+         ENDDO
+         DO i = 1 , N
+            IF ( i/=locmin ) EXIT
+         ENDDO
+         locmn2 = i
+         xmin2 = X(i)
+         DO i = 1 , N
+            IF ( i/=locmin ) THEN
+               IF ( X(i)<=xmin2 ) locmn2 = i
+               IF ( X(i)<=xmin2 ) xmin2 = X(i)
+            ENDIF
+         ENDDO
+         DO i = 1 , N
+            IF ( i/=locmax ) EXIT
+         ENDDO
+         locmx2 = i
+         xmax2 = X(i)
+         DO i = 1 , N
+            IF ( i/=locmax ) THEN
+               IF ( X(i)>=xmax2 ) locmx2 = i
+               IF ( X(i)>=xmax2 ) xmax2 = X(i)
+            ENDIF
+         ENDDO
+         DO i = 1 , N
+            IF ( i/=locmin .AND. i/=locmn2 ) EXIT
+         ENDDO
+         locmn3 = i
+         xmin3 = X(i)
+         DO i = 1 , N
+            IF ( i/=locmin .AND. i/=locmn2 ) THEN
+               IF ( X(i)<=xmin3 ) locmn3 = i
+               IF ( X(i)<=xmin3 ) xmin3 = X(i)
+            ENDIF
+         ENDDO
+         DO i = 1 , N
+            IF ( i/=locmax .AND. i/=locmx2 ) EXIT
+         ENDDO
+         locmx3 = i
+         xmax3 = X(i)
+         DO i = 1 , N
+            IF ( i/=locmax .AND. i/=locmx2 ) THEN
+               IF ( X(i)>=xmax3 ) locmx3 = i
+               IF ( X(i)>=xmax3 ) xmax3 = X(i)
+            ENDIF
+         ENDDO
+         an1 = an - 1.0
+         an2 = an - 2.0
+         an3 = an - 3.0
+         an4 = an - 4.0
+         an5 = an - 5.0
+         an6 = an - 6.0
+         DO i = 1 , 10
+            d = p(i)/100.0
+            c1(i) = (d**an1)*(-an+an1*d)
+            c1(i) = 1.0 - c1(i)
+            q = 1.0 - d
+            t = q*an
+            c1(i) = 1.0 + an1*q
+            c1(i) = 1.0 - (d**an1)*c1(i)
+            c1(i) = c1(i)*100.0
+            IF ( numsec/=1 ) THEN
+               a0 = 6.0*d*d*d
+               a1 = 2.0 - 7.0*d + 11.0*d*d
+               a2 = -3.0 + 6.0*d
+               a3 = 1.0
+               c2(i) = a0 + a1*t + a2*t*t + a3*t*t*t
+               c2(i) = 1.0 - (d**an3)*c2(i)/6.0
+               c2(i) = c2(i)*100.0
+               IF ( numsec/=2 ) THEN
+                  a0 = 120.0*d*d*d*d*d
+                  a1 = 24.0 - 126.0*d + 274.0*d*d - 326.0*d*d*d +       &
+     &                 274.0*d*d*d*d
+                  a2 = -50.0 + 205.0*d - 320.0*d*d + 225.0*d*d*d
+                  a3 = 35.0 - 100.0*d + 85.0*d*d
+                  a4 = -10.0 + 15.0*d
+                  a5 = 1.0D0
+                  c3(i) = a0 + a1*t + a2*t*t + a3*t*t*t + a4*t*t*t*t +  &
+     &                    a5*t*t*t*t*t
+                  c3(i) = 1.0 - (d**an5)*c3(i)/120.0
+                  c3(i) = c3(i)*100.0
+               ENDIF
+            ENDIF
+         ENDDO
+!
+!     WRITE OUT THE DISTRIBUTION-FREE TOLERANCE LIMITS
+!
+         WRITE (ipr,99016)
+         WRITE (ipr,99010) N
+99010    FORMAT (' ',                                                   &
+     &         '            DISTRIBUTION-FREE TOLERANCE LIMITS FOR THE '&
+     &         ,I6,' OBSERVATIONS')
+         WRITE (ipr,99017)
+         WRITE (ipr,99011)
+99011    FORMAT (' ',                                                   &
+     &           '            REFERENCE--WILKS, ANNALS, 1941, PAGE 92')
+         WRITE (ipr,99012)
+99012    FORMAT (' ',                                                   &
+     &           '            REFERENCE--MOOD AND GRABLE, PAGES 416-417'&
+     &           )
+         WRITE (ipr,99017)
+         WRITE (ipr,99017)
+         IF ( numsec/=1 ) THEN
+            IF ( numsec/=2 ) THEN
+               DO i = 1 , 10
+                  WRITE (ipr,99013) c3(i) , p(i) , xmin3 , xmax3
+99013             FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',&
+     &                    F5.2,                                         &
+     &                   ' PERCENT OF THE POPULATION IS BETWEEN X3   = '&
+     &                   ,F8.3,' AND X(N-2) = ',F8.3)
+               ENDDO
+               WRITE (ipr,99017)
+            ENDIF
+            DO i = 1 , 10
+               WRITE (ipr,99014) c2(i) , p(i) , xmin2 , xmax2
+99014          FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',   &
+     &                 F5.2,                                            &
+     &                 ' PERCENT OF THE POPULATION IS BETWEEN X2   = ', &
+     &                 F8.3,' AND X(N-1) = ',F8.3)
+            ENDDO
+            WRITE (ipr,99017)
+         ENDIF
+         DO i = 1 , 10
+            WRITE (ipr,99015) c1(i) , p(i) , xmin , xmax
+99015       FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',F5.2, &
+     &              ' PERCENT OF THE POPULATION IS BETWEEN XMIN = ',    &
+     &              F8.3,' AND XMAX   = ',F8.3)
+         ENDDO
+      ENDIF
+99016 FORMAT ('1')
+99017 FORMAT (' ')
+!
+      END SUBROUTINE TOL

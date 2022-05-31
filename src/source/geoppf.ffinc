@@ -1,0 +1,132 @@
+!*==geoppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE GEOPPF(P,Ppar,Ppf)
+      IMPLICIT NONE
+!*--GEOPPF9341
+!*** Start of declarations inserted by SPAG
+      REAL aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
+      INTEGER ipr , iratio
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT GEOPPF
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
+!              FUNCTION VALUE FOR THE GEOMETRIC
+!              DISTRIBUTION WITH SINGLE PRECISION
+!              'BERNOULLI PROBABILITY' PARAMETER = PPAR.
+!              THE GEOMETRIC DISTRIBUTION USED
+!              HEREIN HAS MEAN = (1-PPAR)/PPAR
+!              AND STANDARD DEVIATION = SQRT((1-PPAR)/(PPAR*PPAR))).
+!              THIS DISTRIBUTION IS DEFINED FOR
+!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
+!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
+!              F(X) = PPAR * (1-PPAR)**X.
+!              THE GEOMETRIC DISTRIBUTION IS THE
+!              DISTRIBUTION OF THE NUMBER OF FAILURES
+!              BEFORE OBTAINING 1 SUCCESS IN AN
+!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
+!              TRIALS WHERE THE PROBABILITY OF SUCCESS
+!              IN A SINGLE TRIAL = PPAR.
+!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
+!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
+!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
+!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!                                (BETWEEN 0.0 (INCLUSIVELY)
+!                                AND 1.0 (EXCLUSIVELY))
+!                                AT WHICH THE PERCENT POINT
+!                                FUNCTION IS TO BE EVALUATED.
+!                     --PPAR   = THE SINGLE PRECISION VALUE
+!                                OF THE 'BERNOULLI PROBABILITY'
+!                                PARAMETER FOR THE GEOMETRIC
+!                                DISTRIBUTION.
+!                                PPAR SHOULD BE BETWEEN
+!                                0.0 (EXCLUSIVELY) AND
+!                                1.0 (EXCLUSIVELY).
+!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!                                POINT FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!             VALUE PPF FOR THE GEOMETRIC DISTRIBUTION
+!             WITH 'BERNOULLI PROBABILITY' PARAMETER VALUE = PPAR.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--PPAR SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
+!              FROM THIS DISCRETE DISTRIBUTION
+!              PERCENT POINT FUNCTION
+!              SUBROUTINE MUST NECESSARILY BE A
+!              DISCRETE INTEGER VALUE,
+!              THE OUTPUT VARIABLE PPF IS SINGLE
+!              PRECISION IN MODE.
+!              PPF HAS BEEN SPECIFIED AS SINGLE
+!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
+!              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
+!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              THIS CONVENTION IS BASED ON THE BELIEF THAT
+!              1) A MIXTURE OF MODES (FLOATING POINT
+!              VERSUS INTEGER) IS INCONSISTENT AND
+!              AN UNNECESSARY COMPLICATION
+!              IN A DATA ANALYSIS; AND
+!              2) FLOATING POINT MACHINE ARITHMETIC
+!              (AS OPPOSED TO INTEGER ARITHMETIC)
+!              IS THE MORE NATURAL MODE FOR DOING
+!              DATA ANALYSIS.
+!     REFERENCES--FELLER, AN INTRODUCTION TO PROBABILITY
+!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!                 EDITION 2, 1957, PAGES 155-157, 210.
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!                 SERIES 55, 1964, PAGE 929.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( P<0.0 .OR. P>=1.0 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GEOPPF SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (ipr,99003) P
+         Ppf = 0.0
+         RETURN
+      ELSEIF ( Ppar<=0.0 .OR. Ppar>=1.0 ) THEN
+         WRITE (ipr,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOPPF SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (ipr,99003) Ppar
+         Ppf = 0.0
+         RETURN
+!
+!-----START POINT-----------------------------------------------------
+!
+      ELSEIF ( P/=0.0 ) THEN
+!
+         arg1 = 1.0 - P
+         arg2 = 1.0 - Ppar
+         anum = ALOG(arg1)
+         aden = ALOG(arg2)
+         ratio = anum/aden
+         iratio = ratio
+         Ppf = iratio
+         aratio = iratio
+         IF ( aratio==ratio ) Ppf = iratio - 1
+         GOTO 99999
+      ENDIF
+      Ppf = 0.0
+      RETURN
+99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+!
+99999 END SUBROUTINE GEOPPF

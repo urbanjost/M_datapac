@@ -1,0 +1,422 @@
+!*==plot9.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,      &
+     &                 Plchid)
+      IMPLICIT NONE
+!*--PLOT917671
+!*** Start of declarations inserted by SPAG
+      REAL aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
+     &     x25 , x75 , Xaxid , Xmax , xmid , Xmin , Y , Yaxid , ylable ,&
+     &     Ymax , Ymin
+      INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT PLOT9
+!
+!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
+!              OF Y(I) VERSUS X(I):
+!              1) WITH SPECIAL PLOT CHARACTERS;
+!              2) WITH THE VERTICAL (Y) AXIS MIN AND MAX
+!                 AND THE HORIZONTAL (X) AXIS MIN AND MAX
+!                 VALUES SPECIFIED BY THE DATA ANALYST; AND
+!              3) WITH HOLLARITH LABELS (AT MOST 6 CHARACTERS)
+!                 FOR THE VERTICAL AXIS VARIABLE,
+!                 THE HORIZONTAL AXIS VARIABLE, AND
+!                 THE PLOTTING CHARACTER VARIABLE
+!                 ALSO BEING PROVIDED BY THE DATA ANALYST.
+!
+!              THE 'SPECIAL PLOTTING CHARACTER' CAPABILITY
+!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
+!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
+!              THE PLOT.
+!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
+!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
+!              WILL BE
+!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
+!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
+!                .
+!                .
+!                .
+!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
+!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
+!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
+!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
+!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
+!                .
+!                .
+!                .
+!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
+!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
+!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
+!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
+!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
+!                                       0.5 TO  36.5.
+!
+!              THE USE OF THE YMIN, YMAX, XMIN, AND XMAX
+!              SPECIFICATIONS ALLOWS THE DATA ANALYST
+!              TO CONTROL FULLY THE PLOT AXIS LIMITS,
+!              SO AS, FOR EXAMPLE, TO ZERO-IN ON AN
+!              INTERESTING SUB-REGION OF A PREVIOUS PLOT.
+!
+!              THE USE OF HOLLARITH IDENTIFYING LABELS
+!              ALLOWS THE DATA ANALYST TO AUTOMATICALLY
+!              HAVE THE PLOTS LABELED.  THIS IS PARTICULARLY
+!              USEFUL IN A LARGE ANALYSIS WHEN MANY
+!              PLOTS ARE BEING GENERATED.
+!
+!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS
+!                               TO BE PLOTTED VERTICALLY.
+!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS
+!                               TO BE PLOTTED HORIZONTALLY.
+!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                               OBSERVATIONS WHICH CONTROL THE
+!                               VALUE OF EACH INDIVIDUAL PLOT
+!                               CHARACTER.
+!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR Y.
+!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
+!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
+!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
+!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
+!                    --YAXID  = THE HOLLARITH VALUE
+!                               (AT MOST 6 CHARACTERS)
+!                               OF THE DESIRED LABEL FOR THE
+!                               VERTICAL AXIS VARIABLE.
+!                    --XAXID  = THE HOLLARITH VALUE
+!                               (AT MOST 6 CHARACTERS)
+!                               OF THE DESIRED LABEL FOR THE
+!                               HORIZONTAL AXIS VARIABLE.
+!                    --PLCHID = THE HOLLARITH VALUE
+!                               (AT MOST 6 CHARACTERS)
+!                               OF THE DESIRED LABEL FOR THE
+!                               PLOTTING CHARACTER VARIABLE.
+!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
+!             WITH SPECIAL PLOT CHARACTERS,
+!             WITH SPECIFIED AXIS LIMITS,
+!             AND WITH SPECIFIED LABELS.
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
+!              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
+!              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
+!              WHICH ARE SMALLER THAN XMIN OR LARGER THAN XMAX
+!              WILL NOT BE PLOTTED.
+!            --VALUES IN THE VERTICAL AXIS VECTOR (Y),
+!              THE HORIZONTAL AXIS VECTOR (X),
+!              OR THE PLOT CHARACTER VECTOR (CHAR) WHICH ARE
+!              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
+!              PLOTTED.
+!              THIS CONVENTION GREATLY SIMPLIFIES THE PROBLEM
+!              OF PLOTTING WHEN SOME ELEMENTS IN THE VECTOR Y
+!              (OR X, OR CHAR) ARE 'MISSING DATA', OR WHEN WE PURPOSELY
+!              WANT TO IGNORE CERTAIN ELEMENTS IN THE VECTOR Y
+!              (OR X, OR CHAR) FOR PLOTTING PURPOSES (THAT IS, WE DO NOT
+!              WANT CERTAIN ELEMENTS IN Y (OR X, OR CHAR) TO BE
+!              PLOTTED).
+!              TO CAUSE SPECIFIC ELEMENTS IN Y (OR X, OR CHAR) TO BE
+!              IGNORED, WE REPLACE THE ELEMENTS BEFOREHAND
+!              (BY, FOR EXAMPLE, USE OF THE   REPLAC   SUBROUTINE)
+!              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
+!              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
+!              SUBROUTINE.
+!     REFERENCES--FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
+!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
+!                 (AVAILABLE FROM AUTHOR)
+!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
+!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
+!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
+!                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --JUNE      1974.
+!     UPDATED         --OCTOBER   1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --FEBRUARY  1977.
+!     UPDATED         --JUNE      1977.
+!
+!---------------------------------------------------------------------
+!
+      CHARACTER*4 IGRaph
+      CHARACTER*4 iplotc
+      CHARACTER*4 sbnam1 , sbnam2
+      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+      CHARACTER*4 alph41 , alph42
+      CHARACTER*4 blank , hyphen , alphai , alphax
+      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+!
+      DIMENSION Y(:)
+      DIMENSION X(:)
+      DIMENSION Char(:)
+      DIMENSION ylable(11)
+      DIMENSION iplotc(37)
+      COMMON /BLOCK1/ IGRaph(55,130)
+!
+      DATA sbnam1 , sbnam2/'PLOT' , '9   '/
+      DATA alph11 , alph12/'FIRS' , 'T   '/
+      DATA alph21 , alph22/'SECO' , 'ND  '/
+      DATA alph31 , alph32/'THIR' , 'D   '/
+      DATA alph41 , alph42/'FOUR' , 'TH  '/
+      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
+     &     'N' , '='/
+      DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
+     &     iplotc(6) , iplotc(7) , iplotc(8) , iplotc(9) , iplotc(10) , &
+     &     iplotc(11) , iplotc(12) , iplotc(13) , iplotc(14) ,          &
+     &     iplotc(15) , iplotc(16) , iplotc(17) , iplotc(18) ,          &
+     &     iplotc(19) , iplotc(20) , iplotc(21) , iplotc(22) ,          &
+     &     iplotc(23) , iplotc(24) , iplotc(25) , iplotc(26) ,          &
+     &     iplotc(27) , iplotc(28) , iplotc(29) , iplotc(30) ,          &
+     &     iplotc(31) , iplotc(32) , iplotc(33) , iplotc(34) ,          &
+     &     iplotc(35) , iplotc(36) , iplotc(37)/'1' , '2' , '3' , '4' , &
+     &     '5' , '6' , '7' , '8' , '9' , '0' , 'A' , 'B' , 'C' , 'D' ,  &
+     &     'E' , 'F' , 'G' , 'H' , 'I' , 'J' , 'K' , 'L' , 'M' , 'N' ,  &
+     &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
+     &     'Y' , 'Z' , 'X'/
+!
+      ipr = 6
+      cutoff = (10.0**10) - 1000.0
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      WRITE (ipr,99001)
+99001 FORMAT ('1')
+      IF ( N<1 ) THEN
+         WRITE (ipr,99014)
+         WRITE (ipr,99015)
+         WRITE (ipr,99016) alph41 , alph42 , sbnam1 , sbnam2
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+         WRITE (ipr,99014)
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99014)
+            WRITE (ipr,99015)
+            WRITE (ipr,99016) alph41 , alph42 , sbnam1 , sbnam2
+            WRITE (ipr,99003) N
+99003       FORMAT (' ','HAS THE VALUE 1')
+            WRITE (ipr,99014)
+            RETURN
+         ELSE
+!
+            hold = Y(1)
+            DO i = 2 , N
+               IF ( Y(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99014)
+            WRITE (ipr,99015)
+            WRITE (ipr,99016) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (ipr,99017) hold
+            WRITE (ipr,99014)
+            RETURN
+         ENDIF
+ 50      hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 100
+         ENDDO
+         WRITE (ipr,99014)
+         WRITE (ipr,99015)
+         WRITE (ipr,99016) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (ipr,99017) hold
+         WRITE (ipr,99014)
+         RETURN
+      ENDIF
+ 100  hold = Char(1)
+      DO i = 2 , N
+         IF ( Char(i)/=hold ) GOTO 200
+      ENDDO
+      WRITE (ipr,99014)
+      WRITE (ipr,99004)
+99004 FORMAT (' ','               NON-FATAL DIAGNOSTIC               ')
+      WRITE (ipr,99016) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (ipr,99017) hold
+      WRITE (ipr,99014)
+!
+ 200  DO i = 1 , N
+         IF ( Y(i)<cutoff ) GOTO 300
+      ENDDO
+      WRITE (ipr,99014)
+      WRITE (ipr,99015)
+      WRITE (ipr,99016) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (ipr,99018)
+      WRITE (ipr,99019) cutoff
+      WRITE (ipr,99014)
+      RETURN
+ 300  DO i = 1 , N
+         IF ( X(i)<cutoff ) GOTO 400
+      ENDDO
+      WRITE (ipr,99014)
+      WRITE (ipr,99015)
+      WRITE (ipr,99016) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (ipr,99018)
+      WRITE (ipr,99019) cutoff
+      WRITE (ipr,99014)
+      RETURN
+ 400  DO i = 1 , N
+         IF ( Char(i)<cutoff ) GOTO 500
+      ENDDO
+      WRITE (ipr,99014)
+      WRITE (ipr,99015)
+      WRITE (ipr,99016) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (ipr,99018)
+      WRITE (ipr,99019) cutoff
+      WRITE (ipr,99014)
+      RETURN
+!
+ 500  n2 = 0
+      DO i = 1 , N
+         IF ( Y(i)<cutoff .AND. X(i)<cutoff .AND. Char(i)<cutoff ) THEN
+            n2 = n2 + 1
+            IF ( n2>=2 ) GOTO 600
+         ENDIF
+      ENDDO
+      WRITE (ipr,99014)
+      WRITE (ipr,99015)
+      WRITE (ipr,99005) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
+     &                  alph32
+99005 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', AND ',A4,A4)
+      WRITE (ipr,99006) sbnam1 , sbnam2
+99006 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
+      WRITE (ipr,99007)
+99007 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
+     &        ' EXCLUDED FROM THE PLOT.')
+      WRITE (ipr,99008) n2
+99008 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+      WRITE (ipr,99014)
+      RETURN
+!
+!-----START POINT-----------------------------------------------------
+!
+!     DETERMINE THE VALUES TO BE LISTED ON THE LEFT VERTICAL AXIS
+!
+ 600  DO i = 1 , 9
+         aim1 = i - 1
+         ylable(i) = Ymax - (aim1/8.0)*(Ymax-Ymin)
+      ENDDO
+!
+!     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS
+!     DETERMINE XMID, X25 (=THE 25% POINT), AND
+!     X75 (=THE 75% POINT)
+!
+      xmid = (Xmin+Xmax)/2.0
+      x25 = 0.75*Xmin + 0.25*Xmax
+      x75 = 0.25*Xmin + 0.75*Xmax
+!
+!     BLANK OUT THE GRAPH
+!
+      DO i = 1 , 45
+         DO j = 1 , 109
+            IGRaph(i,j) = blank
+         ENDDO
+      ENDDO
+!
+!     PRODUCE THE VERTICAL AXES
+!
+      DO i = 3 , 43
+         IGRaph(i,5) = alphai
+         IGRaph(i,109) = alphai
+      ENDDO
+      DO i = 3 , 43 , 5
+         IGRaph(i,5) = hyphen
+         IGRaph(i,109) = hyphen
+      ENDDO
+      IGRaph(3,1) = equal
+      IGRaph(3,2) = alpham
+      IGRaph(3,3) = alphaa
+      IGRaph(3,4) = alphax
+      IGRaph(23,1) = equal
+      IGRaph(23,2) = alpham
+      IGRaph(23,3) = alphai
+      IGRaph(23,4) = alphad
+      IGRaph(43,1) = equal
+      IGRaph(43,2) = alpham
+      IGRaph(43,3) = alphai
+      IGRaph(43,4) = alphan
+!
+!     PRODUCE THE HORIZONTAL AXES
+!
+      DO j = 7 , 107
+         IGRaph(1,j) = hyphen
+         IGRaph(45,j) = hyphen
+      ENDDO
+      DO j = 7 , 107 , 25
+         IGRaph(1,j) = alphai
+         IGRaph(45,j) = alphai
+      ENDDO
+      DO j = 20 , 107 , 25
+         IGRaph(1,j) = alphai
+         IGRaph(45,j) = alphai
+      ENDDO
+!
+!     DETERMINE THE (X,Y) PLOT POSITIONS
+!
+      ratioy = 40.0/(Ymax-Ymin)
+      ratiox = 100.0/(Xmax-Xmin)
+      DO i = 1 , N
+         IF ( Y(i)<cutoff ) THEN
+            IF ( X(i)<cutoff ) THEN
+               IF ( Char(i)<cutoff ) THEN
+                  IF ( Y(i)>=Ymin .AND. Y(i)<=Ymax ) THEN
+                     IF ( X(i)>=Xmin .AND. X(i)<=Xmax ) THEN
+                        mx = ratiox*(X(i)-Xmin) + 0.5
+                        mx = mx + 7
+                        my = ratioy*(Y(i)-Ymin) + 0.5
+                        my = 43 - my
+                        iarg = 37
+                        IF ( 0.5<Char(i) .AND. Char(i)<36.5 )           &
+     &                       iarg = Char(i) + 0.5
+                        IGRaph(my,mx) = iplotc(iarg)
+                     ENDIF
+                  ENDIF
+               ENDIF
+            ENDIF
+         ENDIF
+      ENDDO
+!
+!     WRITE OUT THE GRAPH
+!
+      DO i = 1 , 45
+         ip2 = i + 2
+         iflag = ip2 - (ip2/5)*5
+         k = ip2/5
+         IF ( iflag/=0 ) WRITE (ipr,99009) (IGRaph(i,j),j=1,109)
+99009    FORMAT (' ',20X,109A1)
+         IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) ,                  &
+     &                          (IGRaph(i,j),j=1,109)
+99010    FORMAT (' ',F20.7,109A1)
+      ENDDO
+      WRITE (ipr,99011) Xmin , x25 , xmid , x75 , Xmax
+99011 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
+!
+      WRITE (ipr,99012) Yaxid , Xaxid , Plchid
+99012 FORMAT (' ',9X,A4,A4,' (VERTICAL AXIS) VERSUS ',A4,A4,            &
+     &        ' (HORIZONTAL AXIS)',20X,'THE PLOTTING CHARACTER IS ',A4, &
+     &        A4)
+      WRITE (ipr,99013) N
+99013 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I8)
+!
+99014 FORMAT (' ','**************************************************', &
+     &        '********************')
+99015 FORMAT (' ','                   FATAL ERROR                    ')
+99016 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
+     &        ' SUBROUTINE')
+99017 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
+99018 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
+99019 FORMAT (' ','VALUE OF ',E15.8)
+!
+      END SUBROUTINE PLOT9

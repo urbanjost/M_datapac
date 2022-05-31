@@ -1,0 +1,493 @@
+!*==read.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE READ(Icol1,Icol2,X,N)
+      IMPLICIT NONE
+!*--READ25117
+!*** Start of declarations inserted by SPAG
+      INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ipr , ird ,    &
+     &        istart , istop , j , jp1 , jp2 , jrev , k , l , locpt ,   &
+     &        maxcol , mincol , N
+      INTEGER nc , ncp1 , ndp , numcrd , numdec , numint
+      REAL sum , X , y
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT READ
+!
+!     PURPOSE--THIS SUBROUTINE PERFORMS A FORMAT-FREE READ
+!              OF DATA FROM PUNCHED CARDS.
+!              ONLY THE CARD COLUMNS BETWEEN ICOL1 AND ICOL2
+!              (INCLUSIVELY) ARE SCANNED FOR THE READ.
+!              THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY
+!              TO GET DATA INTO THE MACHINE WITHOUT HAVING
+!              TO WORRY ABOUT AND SPECIFY FORMATS.
+!              THE DATA CARDS MAY BE PUNCHED UP
+!              WITHOUT REGARD TO ANY PARTICULAR FORMAT
+!              AND MAY BE ENTERED INTO THE MACHINE
+!              WITHOUT DEFINING ANY FORMATS.
+!     INPUT  ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
+!                                WHICH DEFINES THE LOWER BOUND
+!                                (INCLUSIVELY) OF THE INTERVAL
+!                                ON EACH CARD TO BE SCANNED
+!                                FOR THE READ.
+!                     --ICOL2  = THE INTEGER CARD COLUMN NUMBER
+!                                WHICH DEFINES THE UPPER BOUND
+!                                (INCLUSIVELY) OF THE INTERVAL
+!                                ON EACH CARD TO BE SCANNED
+!                                FOR THE READ.
+!     OUTPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!                                INTO WHICH THE READ DATA VALUES
+!                                WILL BE SEQUENTIALLY PLACED.
+!                     --N      = THE INTEGER VALUE
+!                                WHICH WILL EQUAL THE NUMBER OF DATA
+!                                VALUES WHICH WERE READ.
+!     OUTPUT--THE SINGLE PRECISION VECTOR X WHICH
+!             WILL CONTAIN THE READ
+!             DATA VALUES, AND
+!             THE INTEGER VALUE N WHICH WILL
+!             EQUAL THE NUMBER OF DATA VALUES
+!             READ INTO X.
+!             ALSO, 7 LINES OF SUMMARY INFORMATION
+!             WILL BE GENERATED--
+!             REGARDING WHAT WAS IN FACT READ INTO THE MACHINE--
+!             1) THE VALUES OF ICOL1 AND ICOL2;
+!             2) THE (ENTIRE) FIRST DATA CARD READ;
+!             3) THE (ENTIRE) LAST DATA CARD READ;
+!             4) THE TOTAL NUMBER OF DATA CARDS READ;
+!             5) THE TOTAL NUMBER OF DATA VALUES READ.
+!     PRINTING--YES.
+!     RESTRICTIONS--ICOL1 AND ICOL2 MUST BE BETWEEN 1 AND 80,
+!                   INCLUSIVELY.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--ADJACENT DATA VALUES ON THE SAME CARD
+!              MUST BE SEPARATED BY AT LEAST 1 BLANK
+!              OR 1 ALPHABETIC CHARACTER, OR BY  ANY
+!              COMBINATION OF BLANKS AND ALPHABETIC
+!              CHARACTERS.  IN THIS CONTEXT, AN
+!              ALPHABETIC CHARACTER IS ANY CHARACTER
+!              OTHER THAN 0, 1, 2, ..., 9, +, -, OR ..
+!              IN EFFECT, THEREFORE, ALL ALPHABETIC INFORMATION
+!              IN THE INTERVAL DEFINED BY ICOL1 AND ICOL2
+!              (INCLUSIVELY) IS IGNORED FOR READING PURPOSES.
+!              ALL INFORMATION (BOTH NUMERIC AND ALPHABETIC)
+!              OUTSIDE THE DEFINED INTERVAL IS ALSO IGNORED
+!              FOR READING PURPOSES.
+!     COMMENT--THE DATA VALUES ON THE CARDS ARE FREE-FORMAT.
+!              THEY MAY BE EITHER INTEGER OR FLOATING POINT
+!              (THAT IS, WITHOUT OR WITH THE DECIMAL POINTS).
+!              EXPONENTIAL FLOATING POINT FORMAT (E FORMAT)
+!              IS NOT PERMITTED.
+!              ALL DATA, WHETHER WITHOUT OR WITH THE DECIMAL POINT
+!              ON THE CARDS, WILL BE READ INTO THE MACHINE
+!              INTO THE X VECTOR AND WILL RESIDE THERE AS FLOATING
+!              POINT NUMBERS.
+!     COMMENT--ANY PARTICULAR DATA VALUE MUST START AND END
+!              ON THE SAME DATA CARD; DATA VALUES MAY NOT
+!              START ON ONE CARD AND FINISH ON THE NEXT.
+!              VARIOUS ILLEGAL COMBINATIONS (SUCH AS
+!              MULTIPLE DECIMAL POINTS, MULTIPLE PLUSSES OR
+!              MINUSES, INCOMPLETE VALUES CONSISTING ONLY
+!              OF A DECIMAL POINT, OR ONLY OF A SIGN AND A DECIMAL
+!              POINT, ETC. ARE NOT ACCEPTED AND THE
+!              DATA ANALYST WILL BE INFORMED OF THE EXISTENCE OF
+!              SUCH BY AN ERROR DIAGNOSTIC.
+!              IN THE EVENT OF SUCH AN ILLEGAL COMBINATION,
+!              THAT 'NUMBER' AND ALL REMAINING NUMBERS ON THAT CARD WILL
+!              WILL BE IGNORED (NOT READ INTO THE MACHINE)
+!              AND THE NEXT DATA CARD WILL THEN
+!              BE READ.
+!     COMMENT--THIS SUBROUTINE WILL CONTINUOUSLY AND
+!              SEQUENTIALLY READ CARDS UNTIL A CARD WITH
+!              THE WORD         END       (SOMEWHERE BETWEEN
+!              COLUMNS ICOL1 AND ICOL2 (INCLUSIVELY)
+!              IS ENCOUNTERED.
+!              TO TERMINATE A DATA SET, THE ANALYST SHOULD
+!              APPEND SUCH A CARD WHICH HAS THE WORD
+!              END        SOMEWHERE IN THE INTERVAL
+!              DEFINED BY ICOL1 AND ICOL2.
+!              FOR EXAMPLE, IF ICOL1 = 1 AND ICOL2 = 20,
+!              THEN A SEPARATE CARD WITH     END
+!              IN COLUMNS 1, 2, AND 3, OR
+!              IN COLUMNS 10, 11, AND 12, ETC.
+!              WOULD TERMINATE THE READ.
+!              IT IS IMPORTANT TO APPEND SUCH A CARD--
+!              FAILURE TO DO SO WILL RESULT IN AN INCOMPLETE
+!              DATA SET OR (ON SOME COMPUTERS) AN
+!              UNPREDICTABLE RUN TERMINATION.
+!     REFERENCES--NONE.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--DECEMBER  1972.
+!     UPDATED         --AUGUST    1974.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --OCTOBER   1976.
+!
+!---------------------------------------------------------------------
+!
+      CHARACTER*4 plus , minus , point , blank
+      CHARACTER*4 alphae , alphan , alphad
+      CHARACTER*4 ic
+      CHARACTER*4 ia
+      CHARACTER*4 ichar
+      CHARACTER*4 istor1
+      CHARACTER*4 istor2
+!
+      DIMENSION X(:)
+      DIMENSION ia(80) , ichar(41) , ic(10)
+      DIMENSION istor1(80) , istor2(80)
+!
+      DATA plus , minus , point , blank/'+' , '-' , '.' , ' '/
+      DATA alphae , alphan , alphad/'E' , 'N' , 'D'/
+      DATA ic(1) , ic(2) , ic(3) , ic(4) , ic(5) , ic(6) , ic(7) ,      &
+     &     ic(8) , ic(9) , ic(10)/'0' , '1' , '2' , '3' , '4' , '5' ,   &
+     &     '6' , '7' , '8' , '9'/
+!
+      N = 0
+      ird = 5
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      mincol = Icol1
+      maxcol = Icol2
+      IF ( Icol2<Icol1 ) mincol = Icol2
+      IF ( Icol2<Icol1 ) maxcol = Icol1
+      IF ( mincol<1 .OR. maxcol>80 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST OR SECOND (OR BOTH) INPUT ARGUMENT T&
+     &O THE READ   SUBROUTINE IS OUTSIDE THE')
+         WRITE (ipr,99002)
+99002    FORMAT (' ','      ALLOWABLE (1,80) INTERVAL *****')
+         WRITE (ipr,99003) Icol1 , Icol2
+99003    FORMAT (' ','***** THE VALUE OF THE FIRST ARGUMENT IS ',I7,    &
+     &           '  AND THE VALUE OF THE SECOND ARGUMENT IS ',I7,       &
+     &           ' *****')
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         ibug = 0
+!
+         numcrd = 0
+      ENDIF
+ 100  READ (ird,99004,END=700) (ia(i),i=1,80)
+99004 FORMAT (80A1)
+      IF ( ibug==1 ) WRITE (6,99005) (ia(i),i=1,80)
+99005 FORMAT (' ',80A1)
+      DO j = 1 , 78
+         jp1 = j + 1
+         jp2 = j + 2
+         IF ( ia(j)==alphae .AND. ia(jp1)==alphan .AND. ia(jp2)         &
+     &        ==alphad ) GOTO 700
+      ENDDO
+      numcrd = numcrd + 1
+      IF ( numcrd==1 ) THEN
+         DO j = 1 , 80
+            istor1(j) = ia(j)
+            istor2(j) = ia(j)
+         ENDDO
+      ELSE
+         DO j = 1 , 80
+            istor2(j) = ia(j)
+         ENDDO
+      ENDIF
+      i = mincol
+!
+ 200  DO j = 1 , 41
+         ichar(j) = blank
+      ENDDO
+      nc = 0
+      ndp = 0
+ 300  DO
+         DO j = 1 , 10
+            IF ( ia(i)==ic(j) ) GOTO 400
+         ENDDO
+         IF ( ia(i)==plus ) THEN
+!
+            IF ( nc==0 ) THEN
+               nc = 1
+               ichar(nc) = ia(i)
+               i = i + 1
+               IF ( i>maxcol ) THEN
+                  WRITE (ipr,99025)
+                  WRITE (ipr,99006)
+99006             FORMAT (' ',                                          &
+     &'***** PUNCHED INPUT ERROR--THE LAST DATA VALUE ON THE CARD BELOW &
+     &CONSISTS OF ONLY A PLUS *****')
+                  WRITE (ipr,99026)
+                  WRITE (ipr,99027) numcrd
+                  WRITE (ipr,99028) (ia(j),j=1,80)
+                  WRITE (ipr,99025)
+                  GOTO 100
+               ENDIF
+            ELSE
+               WRITE (ipr,99025)
+               WRITE (ipr,99007)
+99007          FORMAT (' ',                                             &
+     &'***** PUNCHED INPUT ERROR--A PLUS HAS OCCURRED IN THE MIDDLE OF S&
+     &OME DATA VALUE ON THE CARD BELOW *****')
+               WRITE (ipr,99026)
+               WRITE (ipr,99027) numcrd
+               WRITE (ipr,99028) (ia(j),j=1,80)
+               WRITE (ipr,99025)
+               GOTO 100
+            ENDIF
+         ELSEIF ( ia(i)==minus ) THEN
+!
+            IF ( nc==0 ) THEN
+               nc = 1
+               ichar(nc) = ia(i)
+               i = i + 1
+               IF ( i>maxcol ) THEN
+                  WRITE (ipr,99025)
+                  WRITE (ipr,99008)
+99008             FORMAT (' ',                                          &
+     &'***** PUNCHED INPUT ERROR--THE LAST DATA VALUE ON THE CARD BELOW &
+     &CONSISTS OF ONLY A MINUS *****')
+                  WRITE (ipr,99026)
+                  WRITE (ipr,99027) numcrd
+                  WRITE (ipr,99028) (ia(j),j=1,80)
+                  WRITE (ipr,99025)
+                  GOTO 100
+               ENDIF
+            ELSE
+               WRITE (ipr,99025)
+               WRITE (ipr,99009)
+99009          FORMAT (' ',                                             &
+     &'***** PUNCHED INPUT ERROR--A MINUS HAS OCCURRED IN THE MIDDLE OF &
+     &SOME DATA VALUE ON THE CARD BELOW *****')
+               WRITE (ipr,99026)
+               WRITE (ipr,99027) numcrd
+               WRITE (ipr,99028) (ia(j),j=1,80)
+               WRITE (ipr,99025)
+               GOTO 100
+            ENDIF
+         ELSEIF ( ia(i)==point ) THEN
+!
+            IF ( nc==0 ) THEN
+               nc = 1
+               ichar(nc) = plus
+               nc = 2
+               ichar(nc) = ia(i)
+               ndp = ndp + 1
+               i = i + 1
+               IF ( i>maxcol ) THEN
+                  WRITE (ipr,99025)
+                  WRITE (ipr,99010)
+99010             FORMAT (' ',                                          &
+     &'***** PUNCHED INPUT ERROR--THE LAST DATA VALUE ON THE CARD BELOW &
+     &CONSISTS OF ONLY A DECIMAL POINT *****')
+                  WRITE (ipr,99026)
+                  WRITE (ipr,99027) numcrd
+                  WRITE (ipr,99028) (ia(j),j=1,80)
+                  WRITE (ipr,99025)
+                  GOTO 100
+               ENDIF
+            ELSEIF ( nc==1 ) THEN
+               nc = 2
+               ichar(nc) = ia(i)
+               ndp = ndp + 1
+               i = i + 1
+               IF ( i>maxcol ) THEN
+                  WRITE (ipr,99025)
+                  WRITE (ipr,99011)
+99011             FORMAT (' ',                                          &
+     &'***** PUNCHED INPUT ERROR--THE LAST DATA VALUE ON THE CARD BELOW &
+     &CONSISTS OF ONLY A      +.     OR OF ONLY A      -.    *****')
+                  WRITE (ipr,99026)
+                  WRITE (ipr,99027) numcrd
+                  WRITE (ipr,99028) (ia(j),j=1,80)
+                  WRITE (ipr,99025)
+                  GOTO 100
+               ENDIF
+            ELSEIF ( ndp==0 ) THEN
+               nc = nc + 1
+               ichar(nc) = ia(i)
+               ndp = ndp + 1
+               i = i + 1
+               IF ( i>maxcol ) THEN
+                  iend = 1
+                  GOTO 500
+               ENDIF
+            ELSE
+               WRITE (ipr,99025)
+               WRITE (ipr,99012)
+99012          FORMAT (' ',                                             &
+     &'***** PUNCHED INPUT ERROR--SOME DATA VALUE ON THE CARD BELOW HAS &
+     &MULTIPLE DECIMAL POINTS *****')
+               WRITE (ipr,99026)
+               WRITE (ipr,99027) numcrd
+               WRITE (ipr,99028) (ia(j),j=1,80)
+               WRITE (ipr,99025)
+               GOTO 100
+            ENDIF
+         ELSEIF ( nc==0 ) THEN
+!
+            i = i + 1
+            IF ( i>maxcol ) GOTO 100
+         ELSEIF ( nc==1 ) THEN
+!
+            WRITE (ipr,99025)
+            WRITE (ipr,99013)
+99013       FORMAT (' ',                                                &
+     &'***** PUNCHED INPUT ERROR--SOME DATA VALUE ON THE CARD BELOW CONS&
+     &ISTS OF ONLY A PLUS OR OF ONLY A MINUS *****')
+            WRITE (ipr,99026)
+            WRITE (ipr,99027) numcrd
+            WRITE (ipr,99028) (ia(j),j=1,80)
+            WRITE (ipr,99025)
+            GOTO 100
+         ELSEIF ( nc==2 ) THEN
+!
+            IF ( ichar(1)==plus .AND. ichar(2)==point ) THEN
+               WRITE (ipr,99025)
+               WRITE (ipr,99014)
+99014          FORMAT (' ',                                             &
+     &'***** PUNCHED INPUT ERROR--SOME DATA VALUE ON THE CARD BELOW CONS&
+     &ISTS OF ONLY A      +.     *****')
+               WRITE (ipr,99026)
+               WRITE (ipr,99027) numcrd
+               WRITE (ipr,99028) (ia(j),j=1,80)
+               WRITE (ipr,99025)
+               GOTO 100
+            ELSEIF ( ichar(1)==minus .AND. ichar(2)==point ) THEN
+               WRITE (ipr,99025)
+               WRITE (ipr,99015)
+99015          FORMAT (' ',                                             &
+     &'***** PUNCHED INPUT ERROR--SOME DATA VALUE ON THE CARD BELOW CONS&
+     &ISTS OF ONLY A      -.     *****')
+               WRITE (ipr,99026)
+               WRITE (ipr,99027) numcrd
+               WRITE (ipr,99028) (ia(j),j=1,80)
+               WRITE (ipr,99025)
+               GOTO 100
+            ELSE
+               iend = 0
+               GOTO 500
+            ENDIF
+         ELSE
+            iend = 0
+            GOTO 500
+         ENDIF
+      ENDDO
+!
+ 400  IF ( nc==0 ) THEN
+         nc = 1
+         ichar(nc) = plus
+      ENDIF
+      nc = nc + 1
+      ichar(nc) = ia(i)
+      i = i + 1
+      IF ( i<=maxcol ) GOTO 300
+      iend = 1
+!
+!
+!
+ 500  DO j = 2 , nc
+         IF ( ichar(j)==point ) GOTO 600
+      ENDDO
+      j = nc + 1
+      ncp1 = nc + 1
+      ichar(ncp1) = point
+      nc = ncp1
+!
+ 600  locpt = j
+      numint = j - 2
+      numdec = nc - j
+      sum = 0.0
+      IF ( numint/=0 ) THEN
+         istart = 2
+         istop = numint + 1
+         ipower = -1
+         DO j = istart , istop
+            jrev = istop - j + 2
+            DO k = 1 , 10
+               IF ( ichar(jrev)==ic(k) ) GOTO 620
+            ENDDO
+            WRITE (ipr,99025)
+            WRITE (ipr,99016)
+99016       FORMAT (' ',                                                &
+     &'***** PROGRAMMING ERROR IN THE READ   SUBROUTINE-- A NON-NUMERIC &
+     &CHARACTER WAS ENCOUNTERED IN CONVERTING THE INTEGER PART')
+            WRITE (ipr,99029) (ichar(l),l=1,41)
+            WRITE (ipr,99028) (ia(l),l=1,80)
+            WRITE (ipr,99027) numcrd
+            WRITE (ipr,99025)
+            RETURN
+!
+ 620        y = k - 1
+            ipower = ipower + 1
+            sum = sum + y*(10.0**ipower)
+         ENDDO
+      ENDIF
+!
+      IF ( numdec/=0 ) THEN
+         istart = locpt + 1
+         istop = nc
+         ipower = 0
+         DO j = istart , istop
+            DO k = 1 , 10
+               IF ( ichar(j)==ic(k) ) GOTO 640
+            ENDDO
+            WRITE (ipr,99025)
+            WRITE (ipr,99017)
+99017       FORMAT (' ',                                                &
+     &'***** PROGRAMMING ERROR IN THE READ   SUBROUTINE-- A NON-NUMERIC &
+     &CHARACTER WAS ENCOUNTERED IN CONVERTING THE DECIMAL PART')
+            WRITE (ipr,99029) (ichar(l),l=1,41)
+            WRITE (ipr,99028) (ia(l),l=1,80)
+            WRITE (ipr,99027) numcrd
+            WRITE (ipr,99025)
+            RETURN
+!
+ 640        y = k - 1
+            ipower = ipower + 1
+            sum = sum + y/(10.0**ipower)
+         ENDDO
+      ENDIF
+!
+      IF ( ichar(1)==minus ) sum = -sum
+      N = N + 1
+      X(N) = sum
+      IF ( iend==1 ) GOTO 100
+      i = i + 1
+      IF ( i>maxcol ) GOTO 100
+      GOTO 200
+ 700  WRITE (ipr,99025)
+      IF ( numcrd/=0 ) THEN
+         WRITE (ipr,99018)
+99018    FORMAT (' ','OUTPUT FROM THE READ   SUBROUTINE--')
+         WRITE (ipr,99019) ird
+99019    FORMAT (' ','THE INPUT UNIT DEVICE NUMBER = ',I7)
+         WRITE (ipr,99020) mincol , maxcol
+99020    FORMAT (' ',                                                   &
+     &           'THE SCANNING INTERVAL FOR EACH DATA CARD WAS COLUMN  '&
+     &           ,I3,' THROUGH COLUMN  ',I3,' (INCLUSIVE)')
+         WRITE (ipr,99021) (istor1(j),j=1,80)
+99021    FORMAT (' ','THE (ENTIRE) FIRST  DATA CARD READ WAS   ',80A1)
+         WRITE (ipr,99022) (istor2(j),j=1,80)
+99022    FORMAT (' ','THE (ENTIRE) LAST   DATA CARD READ WAS   ',80A1)
+      ENDIF
+      WRITE (ipr,99023) numcrd
+99023 FORMAT (' ','THE TOTAL NUMBER OF DATA CARDS READ WAS        ',I7)
+      WRITE (ipr,99024) N
+99024 FORMAT (' ','THE TOTAL NUMBER (= N) OF DATA VALUES READ WAS ',I7)
+      WRITE (ipr,99025)
+      WRITE (ipr,99025)
+      RETURN
+!
+99025 FORMAT (' ')
+99026 FORMAT (' ',                                                      &
+     &'      THIS ILLEGAL DATA VALUE AND ALL SUBSEQUENT DATA VALUES ON T&
+     &HIS CARD (ONLY) HAVE BEEN DELETED')
+99027 FORMAT (' ','      THIS CARD WAS THE ',I7,                        &
+     &        '-TH DATA CARD THAT WAS READ')
+99028 FORMAT (' ','      THE CARD IS AS FOLLOWS--   ',80A1)
+99029 FORMAT (' ','      OF THE FOLLOWING DATA VALUE--   ',41A1)
+      END SUBROUTINE READ

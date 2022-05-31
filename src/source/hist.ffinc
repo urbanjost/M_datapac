@@ -1,0 +1,287 @@
+!*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE HIST(X,N)
+      IMPLICIT NONE
+!*--HIST10109
+!*** Start of declarations inserted by SPAG
+      REAL acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
+     &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
+      INTEGER i , icoun2 , icount , ievodd , ihist , inc , ipr , irev , &
+     &        itlabl , ixlabl , j , jmax , jp1 , jsum , maxfre , mt ,   &
+     &        mx , N , numcla , numhis
+      INTEGER numout
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT HIST
+!
+!     PURPOSE--THIS SUBROUTINE PRODUCES 2 HISTOGRAMS
+!              (WITH DIFFERING CLASS WIDTHS)
+!              OF THE DATA IN THE INPUT VECTOR X.
+!              THE FIRST  HISTOGRAM HAS CLASS WIDTH = 0.1
+!              SAMPLE STANDARD DEVIATIONS;
+!              THE SECOND HISTOGRAM HAS CLASS WIDTH = 0.2
+!              SAMPLE STANDARD DEVIATIONS.
+!              TWO HISTOGRAMS OF THE SAME DATA SET
+!              ARE PRINTED OUT SO AS TO GIVE THE DATA
+!              ANALYST SOME FEEL FOR HOW DEPENDENT
+!              THE HISTOGRAM SHAPE IS AS A FUNCTION
+!              OF THE CLASS WIDTH AND NUMBER OF CLASSES.
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS.
+!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR X.
+!     OUTPUT--1 PAGE OF AUTOMATIC PRINTOUT
+!             CONSISTING OF 2 HALF-PAGE HISTOGRAMS
+!             (WITH CLASS WIDTHS = 0.1 AND 0.2 SAMPLE
+!             STANDARD DEVIATIONS, RESPECTIVELY)
+!             OF THE DATA IN THE INPUT VECTOR X.
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
+!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 4.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--DECEMBER  1972.
+!     UPDATED         --JANUARY   1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      CHARACTER*4 blank , hyphen , alphai , alphax
+      CHARACTER*4 IGRaph
+!
+      DIMENSION X(:)
+      DIMENSION ixlabl(21)
+      COMMON /BLOCK1/ IGRaph(55,130)
+!CCCC COMMON IGRAPH(22,123)
+      DIMENSION icount(121) , icoun2(121)
+      DIMENSION tlable(13) , itlabl(13)
+      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE HIST   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99003)
+99003       FORMAT (' ',                                                &
+     &'***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE HIST&
+     &   SUBROUTINE HAS THE VALUE 1 *****')
+            RETURN
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO T&
+     &HE HIST   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      numhis = 2
+         an = N
+!
+!     FIND THE MINIMUM AND THE MAXIMUM
+         xmin = X(1)
+         xmax = X(1)
+         DO i = 1 , N
+            IF ( X(i)<xmin ) xmin = X(i)
+            IF ( X(i)>xmax ) xmax = X(i)
+         ENDDO
+!
+!     COMPUTE THE SAMPLE MEAN AND SAMPLE STANDARD DEVIATION
+!
+         sum = 0.0
+         DO i = 1 , N
+            sum = sum + X(i)
+         ENDDO
+         xbar = sum/an
+         sum = 0.0
+         DO i = 1 , N
+            sum = sum + (X(i)-xbar)**2
+         ENDDO
+         s = SQRT(sum/(an-1.0))
+!
+!     FORM THE BASIC FREQUENCY TABLE (ICOUNT) WHICH CORRESPONDS TO A HISTOGRAM
+!     WITH 121 CLASSES AND A CLASS WIDTH OF ONE TENTH A SAMPLE STANDARD
+!     DEVIATION.
+!
+         DO i = 1 , 121
+            icount(i) = 0
+         ENDDO
+!
+         numout = 0
+         DO i = 1 , N
+            z = (X(i)-xbar)/s
+            mt = 10.0*(z+6.0) + 2.5
+            IF ( mt<2 .OR. mt>122 ) numout = numout + 1
+            IF ( mt>=2 .AND. mt<=122 ) icount(mt) = icount(mt) + 1
+         ENDDO
+!
+!     LOOP THROUGH NUMHIS (= 2) HISTOGRAMS
+!     NOTE THAT NUMHIS WAS PREVIOUSLY SET TO 6 (BEFORE JANUARY 1975)
+!
+         DO ihist = 1 , numhis
+!
+!     ZERO OUT THE MINI-GRAPH
+!
+            DO i = 1 , 22
+               DO j = 1 , 123
+                  IGRaph(i,j) = blank
+               ENDDO
+            ENDDO
+!
+!     PRODUCE THE HORIZONTAL AXES
+!
+            DO j = 2 , 122
+               IGRaph(1,j) = hyphen
+               IGRaph(22,j) = hyphen
+            ENDDO
+            DO j = 2 , 122 , 10
+               IGRaph(1,j) = alphai
+               IGRaph(22,j) = alphai
+            ENDDO
+!
+!     PRODUCE THE VERTICAL AXES
+!
+            DO i = 2 , 21
+               IGRaph(i,1) = alphai
+               IGRaph(i,123) = alphai
+            ENDDO
+            DO i = 2 , 21 , 5
+               IGRaph(i,1) = hyphen
+               IGRaph(i,123) = hyphen
+            ENDDO
+            inc = ihist
+            IF ( ihist==4 ) inc = 5
+            IF ( ihist==5 ) inc = 10
+            IF ( ihist==6 ) inc = 20
+!
+!     FORM THE FREQUENCY TABLE FOR THIS PARTICULAR HISTOGRAM
+!
+            icoun2(1) = icount(1)
+            DO i = 2 , 121 , inc
+               jmax = i + inc - 1
+               jsum = 0
+               DO j = i , jmax
+                  jsum = jsum + icount(j)
+               ENDDO
+               DO j = i , jmax
+                  icoun2(j) = jsum
+               ENDDO
+            ENDDO
+!
+!     DETERMINE THE MAXIMUM FREQUENCY
+!
+            maxfre = icoun2(1)
+            DO i = 1 , 121
+               IF ( icoun2(i)>maxfre ) maxfre = icoun2(i)
+            ENDDO
+!
+!     DETERMINE THE PLOT POSITIONS
+!
+            amaxfr = maxfre
+            height = 20.0
+            DO j = 1 , 121
+               jp1 = j + 1
+               IF ( maxfre<=20 ) mx = icoun2(j)
+               IF ( maxfre>20 ) THEN
+                  acount = icoun2(j)
+                  prop = acount/amaxfr
+                  mx = prop*height + 0.999
+               ENDIF
+               IF ( mx/=0 ) THEN
+                  DO i = 1 , mx
+                     irev = 22 - i
+                     IGRaph(irev,jp1) = alphax
+                  ENDDO
+               ENDIF
+               IF ( icoun2(j)>=1 ) IGRaph(21,jp1) = alphax
+            ENDDO
+!
+!     DETERMINE THE X VALUES TO BE LISTED ON THE LEFT LEFT VERTICAL AXIS
+!
+            IF ( maxfre>=21 ) THEN
+               DO i = 1 , 20
+                  irev = 22 - i
+                  ai = i
+                  prop = ai/20.0
+                  ixlabl(irev) = prop*amaxfr + 0.5
+               ENDDO
+            ELSE
+               DO i = 1 , 20
+                  irev = 22 - i
+                  ixlabl(irev) = i
+               ENDDO
+            ENDIF
+!
+!     WRITE EVERYTHING OUT
+!
+            ievodd = ihist - 2*(ihist/2)
+            IF ( ievodd==0 ) THEN
+               WRITE (ipr,99005)
+99005          FORMAT (' ')
+            ELSE
+               WRITE (ipr,99006)
+99006          FORMAT ('1')
+            ENDIF
+            WRITE (ipr,99013) (IGRaph(1,j),j=1,123)
+            DO i = 2 , 21
+               WRITE (ipr,99007) ixlabl(i) , (IGRaph(i,j),j=1,123)
+99007          FORMAT (' ',I5,1X,123A1)
+            ENDDO
+            WRITE (ipr,99013) (IGRaph(22,j),j=1,123)
+            numcla = (120/inc) + 1
+            tinc = inc
+            cwidsd = tinc*0.1
+            cwidth = cwidsd*s
+            tlable(7) = xbar
+            itlabl(7) = 0
+            DO i = 1 , 6
+               irev = 13 - i + 1
+               ai = i
+               tlable(i) = xbar - (7.0-ai)*s
+               tlable(irev) = xbar + (7.0-ai)*s
+               itlabl(i) = i - 7
+               itlabl(irev) = 7 - i
+            ENDDO
+            WRITE (ipr,99008) (tlable(i),i=1,13)
+99008       FORMAT (' ',1X,12F10.4,F9.4)
+            WRITE (ipr,99009) (itlabl(i),i=1,13)
+99009       FORMAT (' ',13(1X,I7,2X))
+            WRITE (ipr,99010) numout
+99010       FORMAT (' ',I5,                                             &
+     &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS ABOU&
+     &T THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
+            WRITE (ipr,99011) numcla , cwidth , cwidsd
+99011       FORMAT (' ','HISTOGRAM      THE NUMBER OF CLASSES IS ',I6,  &
+     &              8X,'THE CLASS WIDTH IS ',E15.8,' = ',F7.1,          &
+     &              ' STANDARD DEVIATIONS')
+            WRITE (ipr,99012) N
+99012       FORMAT (' ','THE SAMPLE SIZE N = ',I7)
+         ENDDO
+      ENDIF
+99013 FORMAT (' ',6X,123A1)
+      END SUBROUTINE HIST

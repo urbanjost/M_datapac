@@ -1,0 +1,163 @@
+!*==georan.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE GEORAN(N,P,Iseed,X)
+      IMPLICIT NONE
+!*--GEORAN9473
+!*** Start of declarations inserted by SPAG
+      REAL aden , anum , aratio , arg1 , arg2 , P , ratio , X
+      INTEGER i , ipr , iratio , Iseed , N
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT GEORAN
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
+!              FROM THE GEOMETRIC DISTRIBUTION
+!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
+!              PARAMETER = P.
+!              THE GEOMETRIC DISTRIBUTION USED
+!              HEREIN HAS MEAN = (1-P)/P
+!              AND STANDARD DEVIATION = SQRT((1-P)/(P*P))).
+!              THIS DISTRIBUTION IS DEFINED FOR
+!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
+!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
+!              F(X) = P * (1-P)**X.
+!              THE GEOMETRIC DISTRIBUTION IS THE
+!              DISTRIBUTION OF THE NUMBER OF FAILURES
+!              BEFORE OBTAINING 1 SUCCESS IN AN
+!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
+!              TRIALS WHERE THE PROBABILITY OF SUCCESS
+!              IN A SINGLE TRIAL = P.
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!                     --P      = THE SINGLE PRECISION VALUE
+!                                OF THE 'BERNOULLI PROBABILITY'
+!                                PARAMETER FOR THE GEOMETRIC
+!                                DISTRIBUTION.
+!                                P SHOULD BE BETWEEN
+!                                0.0 (EXCLUSIVELY) AND
+!                                1.0 (EXCLUSIVELY).
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE GEOMETRIC DISTRIBUTION
+!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
+!              FROM THIS DISCRETE RANDOM NUMBER
+!              GENERATOR MUST NECESSARILY BE A
+!              SEQUENCE OF ***INTEGER*** VALUES,
+!              THE OUTPUT VECTOR X IS SINGLE
+!              PRECISION IN MODE.
+!              X HAS BEEN SPECIFIED AS SINGLE
+!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
+!              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
+!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              THIS CONVENTION IS BASED ON THE BELIEF THAT
+!              1) A MIXTURE OF MODES (FLOATING POINT
+!              VERSUS INTEGER) IS INCONSISTENT AND
+!              AN UNNECESSARY COMPLICATION
+!              IN A DATA ANALYSIS; AND
+!              2) FLOATING POINT MACHINE ARITHMETIC
+!              (AS OPPOSED TO INTEGER ARITHMETIC)
+!              IS THE MORE NATURAL MODE FOR DOING
+!              DATA ANALYSIS.
+!     REFERENCES--TOCHER, THE ART OF SIMULATION,
+!                 1963, PAGES 14-15.
+!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!                 1964, PAGE 36.
+!               --FELLER, AN INTRODUCTION TO PROBABILITY
+!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!                 EDITION 2, 1957, PAGES 155-157, 210.
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!                 SERIES 55, 1964, PAGE 929.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 CENTER FOR APPLIED MATHEMATICS
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-3651
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL BUREAU OF STANDARDS.
+!           THIS SUBROUTINE MAY NOT BE COPIED, EXTRACTED,
+!           MODIFIED, OR OTHERWISE USED IN A CONTEXT
+!           OUTSIDE OF THE DATAPLOT LANGUAGE/SYSTEM.
+!     LANGUAGE--ANSI FORTRAN (1966)
+!               EXCEPTION--HOLLERITH STRINGS IN FORMAT STATEMENTS
+!                          DENOTED BY QUOTES RATHER THAN NH.
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(*)
+!
+!---------------------------------------------------------------------
+!
+!CCCC CHARACTER*4 IFEEDB
+!CCCC CHARACTER*4 IPRINT
+!
+!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+!CCCC COMMON /PRINT/IFEEDB,IPRINT
+!
+      ipr = 6
+!
+!-----START POINT-----------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GEORAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( P<=0.0 .OR. P>=1.0 ) THEN
+         WRITE (ipr,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEORAN SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (ipr,99004) P
+99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
+     &           ' *****')
+         RETURN
+      ELSE
+!
+!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+!
+         CALL UNIRAN(N,Iseed,X)
+!
+!     GENERATE N GEOMETRIC RANDOM NUMBERS
+!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+!
+         DO i = 1 , N
+            IF ( X(i)/=0.0 ) THEN
+               arg1 = 1.0 - X(i)
+               arg2 = 1.0 - P
+               anum = ALOG(arg1)
+               aden = ALOG(arg2)
+               ratio = anum/aden
+               iratio = ratio
+               X(i) = iratio
+               aratio = iratio
+               IF ( aratio==ratio ) X(i) = iratio - 1
+            ENDIF
+         ENDDO
+      ENDIF
+!
+      END SUBROUTINE GEORAN

@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Statistics">
+    
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>HFNPLT &ndash; M_datapac</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">M_datapac </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            <li><a href="../lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>HFNPLT
+      <small>Subroutine</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 0.4% of total for procedures.">63 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/M_datapac.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/m_datapac.f90.html'>M_datapac.f90</a></li>
+    
+     <li><a href='../module/m_datapac.html'>M_datapac</a></li>
+    
+  
+     <li class="active">HFNPLT</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading
+  text-left"><h3 class="panel-title"><a data-toggle="collapse"
+  href="#common-0">Common Blocks</a></h3></div>
+  <div id="common-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#common-block2~15">BLOCK2</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-w~9">W</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-ws~29">WS</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-y~17">Y</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-an~18">an</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-cc~10">cc</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-hold~23">hold</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-i~41">i</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-ipr~60">ipr</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-iupper~14">iupper</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-q~6">q</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-sum1~12">sum1</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-sum2~12">sum2</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-sum3~12">sum3</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-tau~9">tau</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-wbar~10">wbar</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-ybar~11">ybar</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-yint~10">yint</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-yslope~10">yslope</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/hfnplt.html#src">HFNPLT</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+public subroutine HFNPLT(X, N)
+    
+    
+   
+</h2>
+    
+  
+
+
+    
+    <p>&ndash;HFNPLT9714
+** Start of declarations inserted by SPAG</p>
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x~48"></span>real</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>X</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n~37"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>N</strong></td><td><p>** End of declarations inserted by SPAG</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="nv">HALFNORMAL</span>
+          <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>.
+          <span class="nv">THE</span> <span class="nv">PROTOTYPE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>
+          <span class="nv">HAS</span> <span class="nv">MEAN</span> <span class="o">=</span> <span class="nv">SQRT</span><span class="ss">(</span><span class="mi">2</span><span class="o">/</span><span class="nv">PI</span><span class="ss">)</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">79788456</span>
+          <span class="nv">AND</span> <span class="nv">STANDARD</span> <span class="nv">DEVIATION</span> <span class="o">=</span> <span class="mi">1</span>.
+          <span class="nv">THIS</span> <span class="nv">DISTRIBUTION</span> <span class="nv">IS</span> <span class="nv">DEFINED</span> <span class="k">FOR</span> <span class="nv">ALL</span> <span class="nv">NON</span><span class="o">-</span><span class="nv">NEGATIVE</span> <span class="nv">X</span>
+          <span class="nv">AND</span> <span class="nv">HAS</span> <span class="nv">THE</span> <span class="nv">PROBABILITY</span> <span class="nv">DENSITY</span> <span class="nv">FUNCTION</span>
+          <span class="nv">F</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="ss">(</span><span class="mi">2</span><span class="o">/</span><span class="nv">SQRT</span><span class="ss">(</span><span class="mi">2</span><span class="o">*</span><span class="nv">PI</span><span class="ss">))</span> <span class="o">*</span> <span class="nv">EXP</span><span class="ss">(</span><span class="o">-</span><span class="nv">X</span><span class="o">*</span><span class="nv">X</span><span class="o">/</span><span class="mi">2</span><span class="ss">)</span>.
+          <span class="nv">THE</span> <span class="nv">PROTOTYPE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>
+          <span class="nv">IS</span> <span class="nv">THE</span> <span class="nv">DISTRIBUTION</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">VARIATE</span> <span class="nv">X</span> <span class="o">=</span> <span class="nv">ABS</span><span class="ss">(</span><span class="nv">Z</span><span class="ss">)</span> <span class="nv">WHERE</span>
+          <span class="nv">THE</span> <span class="nv">VARIATE</span> <span class="nv">Z</span> <span class="nv">IS</span> <span class="nv">NORMALLY</span> <span class="nv">DISTRIBUTED</span>
+          <span class="nv">WITH</span> <span class="nv">MEAN</span> <span class="o">=</span> <span class="mi">0</span> <span class="nv">AND</span> <span class="nv">STANDARD</span> <span class="nv">DEVIATION</span> <span class="o">=</span> <span class="mi">1</span>.
+          <span class="nv">AS</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>, <span class="nv">A</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="k">FOR</span> <span class="nv">A</span> <span class="nv">DISTRIBUTION</span>
+          <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">PLOT</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">ORDERED</span> <span class="nv">OBSERVATIONS</span> <span class="nv">VERSUS</span>
+          <span class="nv">THE</span> <span class="nv">ORDER</span> <span class="nv">STATISTIC</span> <span class="nv">MEDIANS</span> <span class="k">FOR</span> <span class="nv">THAT</span> <span class="nv">DISTRIBUTION</span>.
+          <span class="nv">THE</span> <span class="nv">HALFNORMAL</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="nv">IS</span> <span class="nv">USEFUL</span> <span class="nv">IN</span>
+          <span class="nv">GRAPHICALLY</span> <span class="nv">TESTING</span> <span class="nv">THE</span> <span class="nv">COMPOSITE</span> <span class="ss">(</span><span class="nv">THAT</span> <span class="nv">IS</span>,
+          <span class="nv">LOCATION</span> <span class="nv">AND</span> <span class="nv">SCALE</span> <span class="nv">PARAMETERS</span> <span class="nv">NEED</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">SPECIFIED</span><span class="ss">)</span>
+          <span class="nv">HYPOTHESIS</span> <span class="nv">THAT</span> <span class="nv">THE</span> <span class="nv">UNDERLYING</span> <span class="nv">DISTRIBUTION</span>
+          <span class="nv">FROM</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">DATA</span> <span class="nv">HAVE</span> <span class="nv">BEEN</span> <span class="nv">RANDOMLY</span> <span class="nv">DRAWN</span>
+          <span class="nv">IS</span> <span class="nv">THE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span>.
+          <span class="k">IF</span> <span class="nv">THE</span> <span class="nv">HYPOTHESIS</span> <span class="nv">IS</span> <span class="nv">TRUE</span>, <span class="nv">THE</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>
+          <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">NEAR</span><span class="o">-</span><span class="nv">LINEAR</span>.
+          <span class="nv">A</span> <span class="nv">MEASURE</span> <span class="nv">OF</span> <span class="nv">SUCH</span> <span class="nv">LINEARITY</span> <span class="nv">IS</span> <span class="nv">GIVEN</span> <span class="nv">BY</span> <span class="nv">THE</span>
+          <span class="nv">CALCULATED</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="nv">CORRELATION</span> <span class="nv">COEFFICIENT</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span> <span class="nv">OF</span>
+                            <span class="ss">(</span><span class="nv">UNSORTED</span> <span class="nv">OR</span> <span class="nv">SORTED</span><span class="ss">)</span> <span class="nv">OBSERVATIONS</span>.
+                 <span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span> <span class="nv">OF</span> <span class="nv">OBSERVATIONS</span>
+                            <span class="nv">IN</span> <span class="nv">THE</span> <span class="nv">VECTOR</span> <span class="nv">X</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="nv">ONE</span><span class="o">-</span><span class="nv">PAGE</span> <span class="nv">HALFNORMAL</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">YES</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">ALLOWABLE</span> <span class="nv">VALUE</span> <span class="nv">OF</span> <span class="nv">N</span>
+               <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">IS</span> <span class="mi">7500</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">SORT</span>, <span class="nv">UNIMED</span>, <span class="nv">NORPPF</span>, <span class="nv">PLOT</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">SQRT</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span>.
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">DANIEL</span>, <span class="s1">&#39;</span><span class="s">USE OF HALF-NORMAL PLOTS IN</span>
+             <span class="nv">INTERPRETING</span> <span class="nv">FACTORIAL</span> <span class="nv">TWO</span><span class="o">-</span><span class="nv">LEVEL</span> <span class="nv">EXPERIMENTS</span><span class="s1">&#39;</span><span class="s">,</span>
+             <span class="nv">TECHNOMETRICS</span>, <span class="mi">1959</span>, <span class="nv">PAGES</span> <span class="mi">311</span><span class="o">-</span><span class="mi">341</span>.
+           <span class="o">--</span><span class="nv">FILLIBEN</span>, <span class="s1">&#39;</span><span class="s">TECHNIQUES FOR TAIL LENGTH ANALYSIS</span><span class="s1">&#39;</span>,
+             <span class="nv">PROCEEDINGS</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">EIGHTEENTH</span> <span class="nv">CONFERENCE</span>
+             <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">DESIGN</span> <span class="nv">OF</span> <span class="nv">EXPERIMENTS</span> <span class="nv">IN</span> <span class="nv">ARMY</span> <span class="nv">RESEARCH</span>
+             <span class="nv">DEVELOPMENT</span> <span class="nv">AND</span> <span class="nv">TESTING</span> <span class="ss">(</span><span class="nv">ABERDEEN</span>, <span class="nv">MARYLAND</span>,
+             <span class="nv">OCTOBER</span>, <span class="mi">1972</span><span class="ss">)</span>, <span class="nv">PAGES</span> <span class="mi">425</span><span class="o">-</span><span class="mi">450</span>.
+           <span class="o">--</span><span class="nv">HAHN</span> <span class="nv">AND</span> <span class="nv">SHAPIRO</span>, <span class="nv">STATISTICAL</span> <span class="nv">METHODS</span> <span class="nv">IN</span> <span class="nv">ENGINEERING</span>,
+             <span class="mi">1967</span>, <span class="nv">PAGES</span> <span class="mi">260</span><span class="o">-</span><span class="mi">308</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">1</span>, <span class="mi">1970</span>, <span class="nv">PAGES</span> <span class="mi">53</span>, <span class="mi">59</span>, <span class="mi">81</span>, <span class="mi">83</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">LABORATORY</span> <span class="ss">(</span><span class="mi">205</span>.<span class="mi">03</span><span class="ss">)</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span>:  <span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">2315</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">JUNE</span>      <span class="mi">1972</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">SEPTEMBER</span> <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">FEBRUARY</span>  <span class="mi">1976</span>.
+</code></pre></div>
+
+<hr></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading
+  text-left"><h3 class="panel-title"><a data-toggle="collapse"
+  href="#common-1">Common Blocks</a></h3></div>
+  <div id="common-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#common-block2~15">BLOCK2</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-w~9">W</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-ws~29">WS</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-y~17">Y</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-an~18">an</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-cc~10">cc</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-hold~23">hold</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-i~41">i</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-ipr~60">ipr</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-iupper~14">iupper</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-q~6">q</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-sum1~12">sum1</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-sum2~12">sum2</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-sum3~12">sum3</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-tau~9">tau</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-wbar~10">wbar</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-ybar~11">ybar</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-yint~10">yint</a>
+      
+      <a class="list-group-item" href="../proc/hfnplt.html#variable-yslope~10">yslope</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/hfnplt.html#src">HFNPLT</a>
+  </div>
+</div>
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+    <section>
+      <h2>Common Blocks</h2>
+      
+      
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="common-block2~15"></span><h3>
+      <a data-toggle="popover" data-html="true" tabindex="0" 
+     data-trigger="focus"
+   data-content="<h4>Used Elsewhere:</h4><a href='../proc/cauplt.html#common-block2'>CAUPLT</a> (subroutine)<br><a href='../proc/chscdf.html#common-block2~2'>CHSCDF</a> (subroutine)<br><a href='../proc/code.html#common-block2~3'>CODE</a> (subroutine)<br><a href='../proc/decomp.html#common-block2~4'>DECOMP</a> (subroutine)<br><a href='../proc/demod.html#common-block2~5'>DEMOD</a> (subroutine)<br><a href='../proc/dexplt.html#common-block2~6'>DEXPLT</a> (subroutine)<br><a href='../proc/ev1plt.html#common-block2~7'>EV1PLT</a> (subroutine)<br><a href='../proc/ev2plt.html#common-block2~8'>EV2PLT</a> (subroutine)<br><a href='../proc/expplt.html#common-block2~9'>EXPPLT</a> (subroutine)<br><a href='../proc/extrem.html#common-block2~10'>EXTREM</a> (subroutine)<br><a href='../proc/extrem.html#common-block2~11'>EXTREM</a> (subroutine)<br><a href='../proc/freq.html#common-block2~12'>FREQ</a> (subroutine)<br><a href='../proc/gamplt.html#common-block2~13'>GAMPLT</a> (subroutine)<br><a href='../proc/geoplt.html#common-block2~14'>GEOPLT</a> (subroutine)<br><a href='../proc/invxwx.html#common-block2~16'>INVXWX</a> (subroutine)<br><a href='../proc/lamplt.html#common-block2~17'>LAMPLT</a> (subroutine)<br><a href='../proc/lgnplt.html#common-block2~18'>LGNPLT</a> (subroutine)<br><a href='../proc/loc.html#common-block2~19'>LOC</a> (subroutine)<br><a href='../proc/logplt.html#common-block2~20'>LOGPLT</a> (subroutine)<br><a href='../proc/median.html#common-block2~21'>MEDIAN</a> (subroutine)<br><a href='../proc/midm.html#common-block2~22'>MIDM</a> (subroutine)<br><a href='../proc/norout.html#common-block2~23'>NOROUT</a> (subroutine)<br><a href='../proc/norplt.html#common-block2~24'>NORPLT</a> (subroutine)<br><a href='../proc/parplt.html#common-block2~25'>PARPLT</a> (subroutine)<br><a href='../proc/plotu.html#common-block2~26'>PLOTU</a> (subroutine)<br><a href='../proc/poiplt.html#common-block2~27'>POIPLT</a> (subroutine)<br><a href='../proc/poly.html#common-block2~28'>POLY</a> (subroutine)<br><a href='../proc/runs.html#common-block2~29'>RUNS</a> (subroutine)<br><a href='../proc/sampp.html#common-block2~30'>SAMPP</a> (subroutine)<br><a href='../proc/spcorr.html#common-block2~31'>SPCORR</a> (subroutine)<br><a href='../proc/tail.html#common-block2~32'>TAIL</a> (subroutine)<br><a href='../proc/tplt.html#common-block2~33'>TPLT</a> (subroutine)<br><a href='../proc/trim.html#common-block2~34'>TRIM</a> (subroutine)<br><a href='../proc/uniplt.html#common-block2~35'>UNIPLT</a> (subroutine)<br><a href='../proc/weib.html#common-block2~36'>WEIB</a> (subroutine)<br><a href='../proc/weiplt.html#common-block2~37'>WEIPLT</a> (subroutine)<br><a href='../proc/wind.html#common-block2~38'>WIND</a> (subroutine)<br>">common /BLOCK2/</a>
+      
+  </h3></div>
+  <div class="panel-body">
+    
+    
+    
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ws~30"></span>real</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>WS</strong>(15000)</td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+</div>
+</div>
+
+      
+    </section>
+    <br>
+    <script>
+      $(function () {
+      $('[data-toggle="popover"]').popover()
+      })
+    </script>
+    
+
+    
+    <section>    
+      <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-w~9"></span>real,</td>
+  
+  <td>public,</td>
+  <td>dimension(7500)</td><td>::</td>
+  <td><strong>W</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ws~29"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>WS</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-y~17"></span>real,</td>
+  
+  <td>public,</td>
+  <td>dimension(7500)</td><td>::</td>
+  <td><strong>Y</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-an~18"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>an</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-cc~10"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>cc</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-hold~23"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>hold</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i~41"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>i</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="nv">HALFNORMAL</span>
+          <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>.
+          <span class="nv">THE</span> <span class="nv">PROTOTYPE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>
+          <span class="nv">HAS</span> <span class="nv">MEAN</span> <span class="o">=</span> <span class="nv">SQRT</span><span class="ss">(</span><span class="mi">2</span><span class="o">/</span><span class="nv">PI</span><span class="ss">)</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">79788456</span>
+          <span class="nv">AND</span> <span class="nv">STANDARD</span> <span class="nv">DEVIATION</span> <span class="o">=</span> <span class="mi">1</span>.
+          <span class="nv">THIS</span> <span class="nv">DISTRIBUTION</span> <span class="nv">IS</span> <span class="nv">DEFINED</span> <span class="k">FOR</span> <span class="nv">ALL</span> <span class="nv">NON</span><span class="o">-</span><span class="nv">NEGATIVE</span> <span class="nv">X</span>
+          <span class="nv">AND</span> <span class="nv">HAS</span> <span class="nv">THE</span> <span class="nv">PROBABILITY</span> <span class="nv">DENSITY</span> <span class="nv">FUNCTION</span>
+          <span class="nv">F</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="ss">(</span><span class="mi">2</span><span class="o">/</span><span class="nv">SQRT</span><span class="ss">(</span><span class="mi">2</span><span class="o">*</span><span class="nv">PI</span><span class="ss">))</span> <span class="o">*</span> <span class="nv">EXP</span><span class="ss">(</span><span class="o">-</span><span class="nv">X</span><span class="o">*</span><span class="nv">X</span><span class="o">/</span><span class="mi">2</span><span class="ss">)</span>.
+          <span class="nv">THE</span> <span class="nv">PROTOTYPE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>
+          <span class="nv">IS</span> <span class="nv">THE</span> <span class="nv">DISTRIBUTION</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">VARIATE</span> <span class="nv">X</span> <span class="o">=</span> <span class="nv">ABS</span><span class="ss">(</span><span class="nv">Z</span><span class="ss">)</span> <span class="nv">WHERE</span>
+          <span class="nv">THE</span> <span class="nv">VARIATE</span> <span class="nv">Z</span> <span class="nv">IS</span> <span class="nv">NORMALLY</span> <span class="nv">DISTRIBUTED</span>
+          <span class="nv">WITH</span> <span class="nv">MEAN</span> <span class="o">=</span> <span class="mi">0</span> <span class="nv">AND</span> <span class="nv">STANDARD</span> <span class="nv">DEVIATION</span> <span class="o">=</span> <span class="mi">1</span>.
+          <span class="nv">AS</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>, <span class="nv">A</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="k">FOR</span> <span class="nv">A</span> <span class="nv">DISTRIBUTION</span>
+          <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">PLOT</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">ORDERED</span> <span class="nv">OBSERVATIONS</span> <span class="nv">VERSUS</span>
+          <span class="nv">THE</span> <span class="nv">ORDER</span> <span class="nv">STATISTIC</span> <span class="nv">MEDIANS</span> <span class="k">FOR</span> <span class="nv">THAT</span> <span class="nv">DISTRIBUTION</span>.
+          <span class="nv">THE</span> <span class="nv">HALFNORMAL</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="nv">IS</span> <span class="nv">USEFUL</span> <span class="nv">IN</span>
+          <span class="nv">GRAPHICALLY</span> <span class="nv">TESTING</span> <span class="nv">THE</span> <span class="nv">COMPOSITE</span> <span class="ss">(</span><span class="nv">THAT</span> <span class="nv">IS</span>,
+          <span class="nv">LOCATION</span> <span class="nv">AND</span> <span class="nv">SCALE</span> <span class="nv">PARAMETERS</span> <span class="nv">NEED</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">SPECIFIED</span><span class="ss">)</span>
+          <span class="nv">HYPOTHESIS</span> <span class="nv">THAT</span> <span class="nv">THE</span> <span class="nv">UNDERLYING</span> <span class="nv">DISTRIBUTION</span>
+          <span class="nv">FROM</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">DATA</span> <span class="nv">HAVE</span> <span class="nv">BEEN</span> <span class="nv">RANDOMLY</span> <span class="nv">DRAWN</span>
+          <span class="nv">IS</span> <span class="nv">THE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span>.
+          <span class="k">IF</span> <span class="nv">THE</span> <span class="nv">HYPOTHESIS</span> <span class="nv">IS</span> <span class="nv">TRUE</span>, <span class="nv">THE</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>
+          <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">NEAR</span><span class="o">-</span><span class="nv">LINEAR</span>.
+          <span class="nv">A</span> <span class="nv">MEASURE</span> <span class="nv">OF</span> <span class="nv">SUCH</span> <span class="nv">LINEARITY</span> <span class="nv">IS</span> <span class="nv">GIVEN</span> <span class="nv">BY</span> <span class="nv">THE</span>
+          <span class="nv">CALCULATED</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="nv">CORRELATION</span> <span class="nv">COEFFICIENT</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span> <span class="nv">OF</span>
+                            <span class="ss">(</span><span class="nv">UNSORTED</span> <span class="nv">OR</span> <span class="nv">SORTED</span><span class="ss">)</span> <span class="nv">OBSERVATIONS</span>.
+                 <span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span> <span class="nv">OF</span> <span class="nv">OBSERVATIONS</span>
+                            <span class="nv">IN</span> <span class="nv">THE</span> <span class="nv">VECTOR</span> <span class="nv">X</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="nv">ONE</span><span class="o">-</span><span class="nv">PAGE</span> <span class="nv">HALFNORMAL</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">YES</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">ALLOWABLE</span> <span class="nv">VALUE</span> <span class="nv">OF</span> <span class="nv">N</span>
+               <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">IS</span> <span class="mi">7500</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">SORT</span>, <span class="nv">UNIMED</span>, <span class="nv">NORPPF</span>, <span class="nv">PLOT</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">SQRT</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span>.
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">DANIEL</span>, <span class="s1">&#39;</span><span class="s">USE OF HALF-NORMAL PLOTS IN</span>
+             <span class="nv">INTERPRETING</span> <span class="nv">FACTORIAL</span> <span class="nv">TWO</span><span class="o">-</span><span class="nv">LEVEL</span> <span class="nv">EXPERIMENTS</span><span class="s1">&#39;</span><span class="s">,</span>
+             <span class="nv">TECHNOMETRICS</span>, <span class="mi">1959</span>, <span class="nv">PAGES</span> <span class="mi">311</span><span class="o">-</span><span class="mi">341</span>.
+           <span class="o">--</span><span class="nv">FILLIBEN</span>, <span class="s1">&#39;</span><span class="s">TECHNIQUES FOR TAIL LENGTH ANALYSIS</span><span class="s1">&#39;</span>,
+             <span class="nv">PROCEEDINGS</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">EIGHTEENTH</span> <span class="nv">CONFERENCE</span>
+             <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">DESIGN</span> <span class="nv">OF</span> <span class="nv">EXPERIMENTS</span> <span class="nv">IN</span> <span class="nv">ARMY</span> <span class="nv">RESEARCH</span>
+             <span class="nv">DEVELOPMENT</span> <span class="nv">AND</span> <span class="nv">TESTING</span> <span class="ss">(</span><span class="nv">ABERDEEN</span>, <span class="nv">MARYLAND</span>,
+             <span class="nv">OCTOBER</span>, <span class="mi">1972</span><span class="ss">)</span>, <span class="nv">PAGES</span> <span class="mi">425</span><span class="o">-</span><span class="mi">450</span>.
+           <span class="o">--</span><span class="nv">HAHN</span> <span class="nv">AND</span> <span class="nv">SHAPIRO</span>, <span class="nv">STATISTICAL</span> <span class="nv">METHODS</span> <span class="nv">IN</span> <span class="nv">ENGINEERING</span>,
+             <span class="mi">1967</span>, <span class="nv">PAGES</span> <span class="mi">260</span><span class="o">-</span><span class="mi">308</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">1</span>, <span class="mi">1970</span>, <span class="nv">PAGES</span> <span class="mi">53</span>, <span class="mi">59</span>, <span class="mi">81</span>, <span class="mi">83</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">LABORATORY</span> <span class="ss">(</span><span class="mi">205</span>.<span class="mi">03</span><span class="ss">)</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span>:  <span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">2315</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">JUNE</span>      <span class="mi">1972</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">SEPTEMBER</span> <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">FEBRUARY</span>  <span class="mi">1976</span>.
+</code></pre></div>
+
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ipr~60"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ipr</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="nv">HALFNORMAL</span>
+          <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>.
+          <span class="nv">THE</span> <span class="nv">PROTOTYPE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>
+          <span class="nv">HAS</span> <span class="nv">MEAN</span> <span class="o">=</span> <span class="nv">SQRT</span><span class="ss">(</span><span class="mi">2</span><span class="o">/</span><span class="nv">PI</span><span class="ss">)</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">79788456</span>
+          <span class="nv">AND</span> <span class="nv">STANDARD</span> <span class="nv">DEVIATION</span> <span class="o">=</span> <span class="mi">1</span>.
+          <span class="nv">THIS</span> <span class="nv">DISTRIBUTION</span> <span class="nv">IS</span> <span class="nv">DEFINED</span> <span class="k">FOR</span> <span class="nv">ALL</span> <span class="nv">NON</span><span class="o">-</span><span class="nv">NEGATIVE</span> <span class="nv">X</span>
+          <span class="nv">AND</span> <span class="nv">HAS</span> <span class="nv">THE</span> <span class="nv">PROBABILITY</span> <span class="nv">DENSITY</span> <span class="nv">FUNCTION</span>
+          <span class="nv">F</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="ss">(</span><span class="mi">2</span><span class="o">/</span><span class="nv">SQRT</span><span class="ss">(</span><span class="mi">2</span><span class="o">*</span><span class="nv">PI</span><span class="ss">))</span> <span class="o">*</span> <span class="nv">EXP</span><span class="ss">(</span><span class="o">-</span><span class="nv">X</span><span class="o">*</span><span class="nv">X</span><span class="o">/</span><span class="mi">2</span><span class="ss">)</span>.
+          <span class="nv">THE</span> <span class="nv">PROTOTYPE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>
+          <span class="nv">IS</span> <span class="nv">THE</span> <span class="nv">DISTRIBUTION</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">VARIATE</span> <span class="nv">X</span> <span class="o">=</span> <span class="nv">ABS</span><span class="ss">(</span><span class="nv">Z</span><span class="ss">)</span> <span class="nv">WHERE</span>
+          <span class="nv">THE</span> <span class="nv">VARIATE</span> <span class="nv">Z</span> <span class="nv">IS</span> <span class="nv">NORMALLY</span> <span class="nv">DISTRIBUTED</span>
+          <span class="nv">WITH</span> <span class="nv">MEAN</span> <span class="o">=</span> <span class="mi">0</span> <span class="nv">AND</span> <span class="nv">STANDARD</span> <span class="nv">DEVIATION</span> <span class="o">=</span> <span class="mi">1</span>.
+          <span class="nv">AS</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>, <span class="nv">A</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="k">FOR</span> <span class="nv">A</span> <span class="nv">DISTRIBUTION</span>
+          <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">PLOT</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">ORDERED</span> <span class="nv">OBSERVATIONS</span> <span class="nv">VERSUS</span>
+          <span class="nv">THE</span> <span class="nv">ORDER</span> <span class="nv">STATISTIC</span> <span class="nv">MEDIANS</span> <span class="k">FOR</span> <span class="nv">THAT</span> <span class="nv">DISTRIBUTION</span>.
+          <span class="nv">THE</span> <span class="nv">HALFNORMAL</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="nv">IS</span> <span class="nv">USEFUL</span> <span class="nv">IN</span>
+          <span class="nv">GRAPHICALLY</span> <span class="nv">TESTING</span> <span class="nv">THE</span> <span class="nv">COMPOSITE</span> <span class="ss">(</span><span class="nv">THAT</span> <span class="nv">IS</span>,
+          <span class="nv">LOCATION</span> <span class="nv">AND</span> <span class="nv">SCALE</span> <span class="nv">PARAMETERS</span> <span class="nv">NEED</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">SPECIFIED</span><span class="ss">)</span>
+          <span class="nv">HYPOTHESIS</span> <span class="nv">THAT</span> <span class="nv">THE</span> <span class="nv">UNDERLYING</span> <span class="nv">DISTRIBUTION</span>
+          <span class="nv">FROM</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">DATA</span> <span class="nv">HAVE</span> <span class="nv">BEEN</span> <span class="nv">RANDOMLY</span> <span class="nv">DRAWN</span>
+          <span class="nv">IS</span> <span class="nv">THE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span>.
+          <span class="k">IF</span> <span class="nv">THE</span> <span class="nv">HYPOTHESIS</span> <span class="nv">IS</span> <span class="nv">TRUE</span>, <span class="nv">THE</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>
+          <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">NEAR</span><span class="o">-</span><span class="nv">LINEAR</span>.
+          <span class="nv">A</span> <span class="nv">MEASURE</span> <span class="nv">OF</span> <span class="nv">SUCH</span> <span class="nv">LINEARITY</span> <span class="nv">IS</span> <span class="nv">GIVEN</span> <span class="nv">BY</span> <span class="nv">THE</span>
+          <span class="nv">CALCULATED</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="nv">CORRELATION</span> <span class="nv">COEFFICIENT</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span> <span class="nv">OF</span>
+                            <span class="ss">(</span><span class="nv">UNSORTED</span> <span class="nv">OR</span> <span class="nv">SORTED</span><span class="ss">)</span> <span class="nv">OBSERVATIONS</span>.
+                 <span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span> <span class="nv">OF</span> <span class="nv">OBSERVATIONS</span>
+                            <span class="nv">IN</span> <span class="nv">THE</span> <span class="nv">VECTOR</span> <span class="nv">X</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="nv">ONE</span><span class="o">-</span><span class="nv">PAGE</span> <span class="nv">HALFNORMAL</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">YES</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">ALLOWABLE</span> <span class="nv">VALUE</span> <span class="nv">OF</span> <span class="nv">N</span>
+               <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">IS</span> <span class="mi">7500</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">SORT</span>, <span class="nv">UNIMED</span>, <span class="nv">NORPPF</span>, <span class="nv">PLOT</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">SQRT</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span>.
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">DANIEL</span>, <span class="s1">&#39;</span><span class="s">USE OF HALF-NORMAL PLOTS IN</span>
+             <span class="nv">INTERPRETING</span> <span class="nv">FACTORIAL</span> <span class="nv">TWO</span><span class="o">-</span><span class="nv">LEVEL</span> <span class="nv">EXPERIMENTS</span><span class="s1">&#39;</span><span class="s">,</span>
+             <span class="nv">TECHNOMETRICS</span>, <span class="mi">1959</span>, <span class="nv">PAGES</span> <span class="mi">311</span><span class="o">-</span><span class="mi">341</span>.
+           <span class="o">--</span><span class="nv">FILLIBEN</span>, <span class="s1">&#39;</span><span class="s">TECHNIQUES FOR TAIL LENGTH ANALYSIS</span><span class="s1">&#39;</span>,
+             <span class="nv">PROCEEDINGS</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">EIGHTEENTH</span> <span class="nv">CONFERENCE</span>
+             <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">DESIGN</span> <span class="nv">OF</span> <span class="nv">EXPERIMENTS</span> <span class="nv">IN</span> <span class="nv">ARMY</span> <span class="nv">RESEARCH</span>
+             <span class="nv">DEVELOPMENT</span> <span class="nv">AND</span> <span class="nv">TESTING</span> <span class="ss">(</span><span class="nv">ABERDEEN</span>, <span class="nv">MARYLAND</span>,
+             <span class="nv">OCTOBER</span>, <span class="mi">1972</span><span class="ss">)</span>, <span class="nv">PAGES</span> <span class="mi">425</span><span class="o">-</span><span class="mi">450</span>.
+           <span class="o">--</span><span class="nv">HAHN</span> <span class="nv">AND</span> <span class="nv">SHAPIRO</span>, <span class="nv">STATISTICAL</span> <span class="nv">METHODS</span> <span class="nv">IN</span> <span class="nv">ENGINEERING</span>,
+             <span class="mi">1967</span>, <span class="nv">PAGES</span> <span class="mi">260</span><span class="o">-</span><span class="mi">308</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">1</span>, <span class="mi">1970</span>, <span class="nv">PAGES</span> <span class="mi">53</span>, <span class="mi">59</span>, <span class="mi">81</span>, <span class="mi">83</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">LABORATORY</span> <span class="ss">(</span><span class="mi">205</span>.<span class="mi">03</span><span class="ss">)</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span>:  <span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">2315</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">JUNE</span>      <span class="mi">1972</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">SEPTEMBER</span> <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">FEBRUARY</span>  <span class="mi">1976</span>.
+</code></pre></div>
+
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-iupper~14"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>iupper</strong></td><td></td><td></td><td><p>** End of declarations inserted by SPAG</p>
+<div class="codehilite"><pre><span></span><code> <span class="nv">PURPOSE</span><span class="o">--</span><span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">GENERATES</span> <span class="nv">A</span> <span class="nv">HALFNORMAL</span>
+          <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>.
+          <span class="nv">THE</span> <span class="nv">PROTOTYPE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>
+          <span class="nv">HAS</span> <span class="nv">MEAN</span> <span class="o">=</span> <span class="nv">SQRT</span><span class="ss">(</span><span class="mi">2</span><span class="o">/</span><span class="nv">PI</span><span class="ss">)</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">79788456</span>
+          <span class="nv">AND</span> <span class="nv">STANDARD</span> <span class="nv">DEVIATION</span> <span class="o">=</span> <span class="mi">1</span>.
+          <span class="nv">THIS</span> <span class="nv">DISTRIBUTION</span> <span class="nv">IS</span> <span class="nv">DEFINED</span> <span class="k">FOR</span> <span class="nv">ALL</span> <span class="nv">NON</span><span class="o">-</span><span class="nv">NEGATIVE</span> <span class="nv">X</span>
+          <span class="nv">AND</span> <span class="nv">HAS</span> <span class="nv">THE</span> <span class="nv">PROBABILITY</span> <span class="nv">DENSITY</span> <span class="nv">FUNCTION</span>
+          <span class="nv">F</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="ss">(</span><span class="mi">2</span><span class="o">/</span><span class="nv">SQRT</span><span class="ss">(</span><span class="mi">2</span><span class="o">*</span><span class="nv">PI</span><span class="ss">))</span> <span class="o">*</span> <span class="nv">EXP</span><span class="ss">(</span><span class="o">-</span><span class="nv">X</span><span class="o">*</span><span class="nv">X</span><span class="o">/</span><span class="mi">2</span><span class="ss">)</span>.
+          <span class="nv">THE</span> <span class="nv">PROTOTYPE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>
+          <span class="nv">IS</span> <span class="nv">THE</span> <span class="nv">DISTRIBUTION</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">VARIATE</span> <span class="nv">X</span> <span class="o">=</span> <span class="nv">ABS</span><span class="ss">(</span><span class="nv">Z</span><span class="ss">)</span> <span class="nv">WHERE</span>
+          <span class="nv">THE</span> <span class="nv">VARIATE</span> <span class="nv">Z</span> <span class="nv">IS</span> <span class="nv">NORMALLY</span> <span class="nv">DISTRIBUTED</span>
+          <span class="nv">WITH</span> <span class="nv">MEAN</span> <span class="o">=</span> <span class="mi">0</span> <span class="nv">AND</span> <span class="nv">STANDARD</span> <span class="nv">DEVIATION</span> <span class="o">=</span> <span class="mi">1</span>.
+          <span class="nv">AS</span> <span class="nv">USED</span> <span class="nv">HEREIN</span>, <span class="nv">A</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="k">FOR</span> <span class="nv">A</span> <span class="nv">DISTRIBUTION</span>
+          <span class="nv">IS</span> <span class="nv">A</span> <span class="nv">PLOT</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">ORDERED</span> <span class="nv">OBSERVATIONS</span> <span class="nv">VERSUS</span>
+          <span class="nv">THE</span> <span class="nv">ORDER</span> <span class="nv">STATISTIC</span> <span class="nv">MEDIANS</span> <span class="k">FOR</span> <span class="nv">THAT</span> <span class="nv">DISTRIBUTION</span>.
+          <span class="nv">THE</span> <span class="nv">HALFNORMAL</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="nv">IS</span> <span class="nv">USEFUL</span> <span class="nv">IN</span>
+          <span class="nv">GRAPHICALLY</span> <span class="nv">TESTING</span> <span class="nv">THE</span> <span class="nv">COMPOSITE</span> <span class="ss">(</span><span class="nv">THAT</span> <span class="nv">IS</span>,
+          <span class="nv">LOCATION</span> <span class="nv">AND</span> <span class="nv">SCALE</span> <span class="nv">PARAMETERS</span> <span class="nv">NEED</span> <span class="nv">NOT</span> <span class="nv">BE</span> <span class="nv">SPECIFIED</span><span class="ss">)</span>
+          <span class="nv">HYPOTHESIS</span> <span class="nv">THAT</span> <span class="nv">THE</span> <span class="nv">UNDERLYING</span> <span class="nv">DISTRIBUTION</span>
+          <span class="nv">FROM</span> <span class="nv">WHICH</span> <span class="nv">THE</span> <span class="nv">DATA</span> <span class="nv">HAVE</span> <span class="nv">BEEN</span> <span class="nv">RANDOMLY</span> <span class="nv">DRAWN</span>
+          <span class="nv">IS</span> <span class="nv">THE</span> <span class="nv">HALFNORMAL</span> <span class="nv">DISTRIBUTION</span>.
+          <span class="k">IF</span> <span class="nv">THE</span> <span class="nv">HYPOTHESIS</span> <span class="nv">IS</span> <span class="nv">TRUE</span>, <span class="nv">THE</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>
+          <span class="nv">SHOULD</span> <span class="nv">BE</span> <span class="nv">NEAR</span><span class="o">-</span><span class="nv">LINEAR</span>.
+          <span class="nv">A</span> <span class="nv">MEASURE</span> <span class="nv">OF</span> <span class="nv">SUCH</span> <span class="nv">LINEARITY</span> <span class="nv">IS</span> <span class="nv">GIVEN</span> <span class="nv">BY</span> <span class="nv">THE</span>
+          <span class="nv">CALCULATED</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span> <span class="nv">CORRELATION</span> <span class="nv">COEFFICIENT</span>.
+ <span class="nv">INPUT</span>  <span class="nv">ARGUMENTS</span><span class="o">--</span><span class="nv">X</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">SINGLE</span> <span class="nv">PRECISION</span> <span class="nv">VECTOR</span> <span class="nv">OF</span>
+                            <span class="ss">(</span><span class="nv">UNSORTED</span> <span class="nv">OR</span> <span class="nv">SORTED</span><span class="ss">)</span> <span class="nv">OBSERVATIONS</span>.
+                 <span class="o">--</span><span class="nv">N</span>      <span class="o">=</span> <span class="nv">THE</span> <span class="nv">INTEGER</span> <span class="nv">NUMBER</span> <span class="nv">OF</span> <span class="nv">OBSERVATIONS</span>
+                            <span class="nv">IN</span> <span class="nv">THE</span> <span class="nv">VECTOR</span> <span class="nv">X</span>.
+ <span class="nv">OUTPUT</span><span class="o">--</span><span class="nv">A</span> <span class="nv">ONE</span><span class="o">-</span><span class="nv">PAGE</span> <span class="nv">HALFNORMAL</span> <span class="nv">PROBABILITY</span> <span class="nv">PLOT</span>.
+ <span class="nv">PRINTING</span><span class="o">--</span><span class="nv">YES</span>.
+ <span class="nv">RESTRICTIONS</span><span class="o">--</span><span class="nv">THE</span> <span class="nv">MAXIMUM</span> <span class="nv">ALLOWABLE</span> <span class="nv">VALUE</span> <span class="nv">OF</span> <span class="nv">N</span>
+               <span class="k">FOR</span> <span class="nv">THIS</span> <span class="nv">SUBROUTINE</span> <span class="nv">IS</span> <span class="mi">7500</span>.
+ <span class="nv">OTHER</span> <span class="nv">DATAPAC</span>   <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">SORT</span>, <span class="nv">UNIMED</span>, <span class="nv">NORPPF</span>, <span class="nv">PLOT</span>.
+ <span class="nv">FORTRAN</span> <span class="nv">LIBRARY</span> <span class="nv">SUBROUTINES</span> <span class="nv">NEEDED</span><span class="o">--</span><span class="nv">SQRT</span>.
+ <span class="nv">MODE</span> <span class="nv">OF</span> <span class="nv">INTERNAL</span> <span class="nv">OPERATIONS</span><span class="o">--</span><span class="nv">SINGLE</span> <span class="nv">PRECISION</span>.
+ <span class="nv">LANGUAGE</span><span class="o">--</span><span class="nv">ANSI</span> <span class="nv">FORTRAN</span>.
+ <span class="nv">REFERENCES</span><span class="o">--</span><span class="nv">DANIEL</span>, <span class="s1">&#39;</span><span class="s">USE OF HALF-NORMAL PLOTS IN</span>
+             <span class="nv">INTERPRETING</span> <span class="nv">FACTORIAL</span> <span class="nv">TWO</span><span class="o">-</span><span class="nv">LEVEL</span> <span class="nv">EXPERIMENTS</span><span class="s1">&#39;</span><span class="s">,</span>
+             <span class="nv">TECHNOMETRICS</span>, <span class="mi">1959</span>, <span class="nv">PAGES</span> <span class="mi">311</span><span class="o">-</span><span class="mi">341</span>.
+           <span class="o">--</span><span class="nv">FILLIBEN</span>, <span class="s1">&#39;</span><span class="s">TECHNIQUES FOR TAIL LENGTH ANALYSIS</span><span class="s1">&#39;</span>,
+             <span class="nv">PROCEEDINGS</span> <span class="nv">OF</span> <span class="nv">THE</span> <span class="nv">EIGHTEENTH</span> <span class="nv">CONFERENCE</span>
+             <span class="nv">ON</span> <span class="nv">THE</span> <span class="nv">DESIGN</span> <span class="nv">OF</span> <span class="nv">EXPERIMENTS</span> <span class="nv">IN</span> <span class="nv">ARMY</span> <span class="nv">RESEARCH</span>
+             <span class="nv">DEVELOPMENT</span> <span class="nv">AND</span> <span class="nv">TESTING</span> <span class="ss">(</span><span class="nv">ABERDEEN</span>, <span class="nv">MARYLAND</span>,
+             <span class="nv">OCTOBER</span>, <span class="mi">1972</span><span class="ss">)</span>, <span class="nv">PAGES</span> <span class="mi">425</span><span class="o">-</span><span class="mi">450</span>.
+           <span class="o">--</span><span class="nv">HAHN</span> <span class="nv">AND</span> <span class="nv">SHAPIRO</span>, <span class="nv">STATISTICAL</span> <span class="nv">METHODS</span> <span class="nv">IN</span> <span class="nv">ENGINEERING</span>,
+             <span class="mi">1967</span>, <span class="nv">PAGES</span> <span class="mi">260</span><span class="o">-</span><span class="mi">308</span>.
+           <span class="o">--</span><span class="nv">JOHNSON</span> <span class="nv">AND</span> <span class="nv">KOTZ</span>, <span class="nv">CONTINUOUS</span> <span class="nv">UNIVARIATE</span>
+             <span class="nv">DISTRIBUTIONS</span><span class="o">--</span><span class="mi">1</span>, <span class="mi">1970</span>, <span class="nv">PAGES</span> <span class="mi">53</span>, <span class="mi">59</span>, <span class="mi">81</span>, <span class="mi">83</span>.
+ <span class="nv">WRITTEN</span> <span class="nv">BY</span><span class="o">--</span><span class="nv">JAMES</span> <span class="nv">J</span>. <span class="nv">FILLIBEN</span>
+             <span class="nv">STATISTICAL</span> <span class="nv">ENGINEERING</span> <span class="nv">LABORATORY</span> <span class="ss">(</span><span class="mi">205</span>.<span class="mi">03</span><span class="ss">)</span>
+             <span class="nv">NATIONAL</span> <span class="nv">BUREAU</span> <span class="nv">OF</span> <span class="nv">STANDARDS</span>
+             <span class="nv">WASHINGTON</span>, <span class="nv">D</span>. <span class="nv">C</span>. <span class="mi">20234</span>
+             <span class="nv">PHONE</span>:  <span class="mi">301</span><span class="o">-</span><span class="mi">921</span><span class="o">-</span><span class="mi">2315</span>
+ <span class="nv">ORIGINAL</span> <span class="nv">VERSION</span><span class="o">--</span><span class="nv">JUNE</span>      <span class="mi">1972</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">SEPTEMBER</span> <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">NOVEMBER</span>  <span class="mi">1975</span>.
+ <span class="nv">UPDATED</span>         <span class="o">--</span><span class="nv">FEBRUARY</span>  <span class="mi">1976</span>.
+</code></pre></div>
+
+<hr></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-q~6"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>q</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-sum1~12"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>sum1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-sum2~12"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>sum2</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-sum3~12"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>sum3</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-tau~9"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>tau</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-wbar~10"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>wbar</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ybar~11"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ybar</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-yint~10"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>yint</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-yslope~10"></span>real,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>yslope</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span>      <span class="k">SUBROUTINE </span><span class="n">HFNPLT</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+      <span class="k">IMPLICIT NONE</span>
+<span class="c">!*--HFNPLT9714</span>
+<span class="c">!*** Start of declarations inserted by SPAG</span>
+      <span class="kt">REAL </span><span class="n">an</span> <span class="p">,</span> <span class="n">cc</span> <span class="p">,</span> <span class="n">hold</span> <span class="p">,</span> <span class="n">q</span> <span class="p">,</span> <span class="n">sum1</span> <span class="p">,</span> <span class="n">sum2</span> <span class="p">,</span> <span class="n">sum3</span> <span class="p">,</span> <span class="n">tau</span> <span class="p">,</span> <span class="n">W</span> <span class="p">,</span> <span class="n">wbar</span> <span class="p">,</span>   <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="n">WS</span> <span class="p">,</span> <span class="n">X</span> <span class="p">,</span> <span class="n">Y</span> <span class="p">,</span> <span class="n">ybar</span> <span class="p">,</span> <span class="n">yint</span> <span class="p">,</span> <span class="n">yslope</span>
+      <span class="kt">INTEGER </span><span class="n">i</span> <span class="p">,</span> <span class="n">ipr</span> <span class="p">,</span> <span class="n">iupper</span> <span class="p">,</span> <span class="n">N</span>
+<span class="c">!*** End of declarations inserted by SPAG</span>
+<span class="c">!</span>
+<span class="c">!     PURPOSE--THIS SUBROUTINE GENERATES A HALFNORMAL</span>
+<span class="c">!              PROBABILITY PLOT.</span>
+<span class="c">!              THE PROTOTYPE HALFNORMAL DISTRIBUTION USED HEREIN</span>
+<span class="c">!              HAS MEAN = SQRT(2/PI) = 0.79788456</span>
+<span class="c">!              AND STANDARD DEVIATION = 1.</span>
+<span class="c">!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X</span>
+<span class="c">!              AND HAS THE PROBABILITY DENSITY FUNCTION</span>
+<span class="c">!              F(X) = (2/SQRT(2*PI)) * EXP(-X*X/2).</span>
+<span class="c">!              THE PROTOTYPE HALFNORMAL DISTRIBUTION USED HEREIN</span>
+<span class="c">!              IS THE DISTRIBUTION OF THE VARIATE X = ABS(Z) WHERE</span>
+<span class="c">!              THE VARIATE Z IS NORMALLY DISTRIBUTED</span>
+<span class="c">!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.</span>
+<span class="c">!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION</span>
+<span class="c">!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS</span>
+<span class="c">!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.</span>
+<span class="c">!              THE HALFNORMAL PROBABILITY PLOT IS USEFUL IN</span>
+<span class="c">!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,</span>
+<span class="c">!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)</span>
+<span class="c">!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION</span>
+<span class="c">!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN</span>
+<span class="c">!              IS THE HALFNORMAL DISTRIBUTION.</span>
+<span class="c">!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT</span>
+<span class="c">!              SHOULD BE NEAR-LINEAR.</span>
+<span class="c">!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE</span>
+<span class="c">!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.</span>
+<span class="c">!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF</span>
+<span class="c">!                                (UNSORTED OR SORTED) OBSERVATIONS.</span>
+<span class="c">!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS</span>
+<span class="c">!                                IN THE VECTOR X.</span>
+<span class="c">!     OUTPUT--A ONE-PAGE HALFNORMAL PROBABILITY PLOT.</span>
+<span class="c">!     PRINTING--YES.</span>
+<span class="c">!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N</span>
+<span class="c">!                   FOR THIS SUBROUTINE IS 7500.</span>
+<span class="c">!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.</span>
+<span class="c">!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.</span>
+<span class="c">!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.</span>
+<span class="c">!     LANGUAGE--ANSI FORTRAN.</span>
+<span class="c">!     REFERENCES--DANIEL, &#39;USE OF HALF-NORMAL PLOTS IN</span>
+<span class="c">!                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS&#39;,</span>
+<span class="c">!                 TECHNOMETRICS, 1959, PAGES 311-341.</span>
+<span class="c">!               --FILLIBEN, &#39;TECHNIQUES FOR TAIL LENGTH ANALYSIS&#39;,</span>
+<span class="c">!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE</span>
+<span class="c">!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH</span>
+<span class="c">!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,</span>
+<span class="c">!                 OCTOBER, 1972), PAGES 425-450.</span>
+<span class="c">!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,</span>
+<span class="c">!                 1967, PAGES 260-308.</span>
+<span class="c">!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE</span>
+<span class="c">!                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.</span>
+<span class="c">!     WRITTEN BY--JAMES J. FILLIBEN</span>
+<span class="c">!                 STATISTICAL ENGINEERING LABORATORY (205.03)</span>
+<span class="c">!                 NATIONAL BUREAU OF STANDARDS</span>
+<span class="c">!                 WASHINGTON, D. C. 20234</span>
+<span class="c">!                 PHONE:  301-921-2315</span>
+<span class="c">!     ORIGINAL VERSION--JUNE      1972.</span>
+<span class="c">!     UPDATED         --SEPTEMBER 1975.</span>
+<span class="c">!     UPDATED         --NOVEMBER  1975.</span>
+<span class="c">!     UPDATED         --FEBRUARY  1976.</span>
+<span class="c">!</span>
+<span class="c">!---------------------------------------------------------------------</span>
+<span class="c">!</span>
+      <span class="k">DIMENSION </span><span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">DIMENSION </span><span class="n">Y</span><span class="p">(</span><span class="mi">7500</span><span class="p">)</span> <span class="p">,</span> <span class="n">W</span><span class="p">(</span><span class="mi">7500</span><span class="p">)</span>
+      <span class="k">COMMON</span> <span class="o">/</span><span class="n">BLOCK2</span><span class="o">/</span> <span class="n">WS</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
+      <span class="k">EQUIVALENCE</span> <span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+      <span class="k">EQUIVALENCE</span> <span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">7501</span><span class="p">))</span>
+<span class="c">!</span>
+      <span class="k">DATA </span><span class="n">tau</span><span class="o">/</span><span class="mf">1.41223913</span><span class="o">/</span>
+<span class="c">!</span>
+      <span class="n">ipr</span> <span class="o">=</span> <span class="mi">6</span>
+      <span class="n">iupper</span> <span class="o">=</span> <span class="mi">7500</span>
+<span class="c">!</span>
+<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
+<span class="c">!</span>
+      <span class="k">IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">&lt;</span><span class="mi">1</span> <span class="p">.</span><span class="nb">OR</span><span class="p">.</span> <span class="n">N</span><span class="o">&gt;</span><span class="n">iupper</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">ipr</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span> <span class="n">iupper</span>
+<span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
+     <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE HFNPLT SUBROU&amp;</span>
+<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">ipr</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span> <span class="n">N</span>
+<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+         <span class="k">RETURN</span>
+<span class="k">      </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">N</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">ipr</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span>
+<span class="mi">99003</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
+     <span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE HFNP&amp;</span>
+<span class="s1">     &amp;LT SUBROUTINE HAS THE VALUE 1 *****&#39;</span><span class="p">)</span>
+         <span class="k">RETURN</span>
+<span class="k">      ELSE</span>
+<span class="k">         </span><span class="n">hold</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">,</span> <span class="n">N</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span> <span class="p">)</span> <span class="k">GOTO </span><span class="mi">50</span>
+         <span class="k">ENDDO</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">ipr</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span> <span class="n">hold</span>
+<span class="mi">99004</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
+     <span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &amp;</span>
+<span class="s1">     &amp;TO THE HFNPLT SUBROUTINE HAS ALL ELEMENTS = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="c">!</span>
+<span class="c">!-----START POINT-----------------------------------------------------</span>
+<span class="c">!</span>
+ <span class="mi">50</span>      <span class="n">an</span> <span class="o">=</span> <span class="n">N</span>
+<span class="c">!</span>
+<span class="c">!     SORT THE DATA</span>
+<span class="c">!</span>
+         <span class="k">CALL </span><span class="n">SORT</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+<span class="c">!</span>
+<span class="c">!     GENERATE UNIFORM ORDER STATISTIC MEDIANS</span>
+<span class="c">!</span>
+         <span class="k">CALL </span><span class="n">UNIMED</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">W</span><span class="p">)</span>
+<span class="c">!</span>
+<span class="c">!     COMPUTE HALFNORMAL ORDER STATISTIC MEDIANS</span>
+<span class="c">!</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">N</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span><span class="o">+</span><span class="mf">1.0</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+            <span class="k">CALL </span><span class="n">NORPPF</span><span class="p">(</span><span class="n">q</span><span class="p">,</span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.</span>
+<span class="c">!     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION</span>
+<span class="c">!     AND THE SAMPLE SIZE.</span>
+<span class="c">!</span>
+         <span class="k">CALL </span><span class="n">PLOT</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">ipr</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span> <span class="n">tau</span> <span class="p">,</span> <span class="n">N</span>
+<span class="c">!</span>
+<span class="mi">99005</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;HALFNORMAL PROBABILITY PLOT (TAU = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">,</span>   <span class="p">&amp;</span>
+     <span class="p">&amp;</span>           <span class="mi">52</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I7</span><span class="p">)</span>
+<span class="c">!</span>
+<span class="c">!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.</span>
+<span class="c">!     COMPUTE LOCATION AND SCALE ESTIMATES</span>
+<span class="c">!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.</span>
+<span class="c">!     THEN WRITE THEM OUT.</span>
+<span class="c">!</span>
+         <span class="n">sum1</span> <span class="o">=</span> <span class="mf">0.0</span>
+         <span class="n">sum2</span> <span class="o">=</span> <span class="mf">0.0</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">N</span>
+            <span class="n">sum1</span> <span class="o">=</span> <span class="n">sum1</span> <span class="o">+</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">sum2</span> <span class="o">=</span> <span class="n">sum2</span> <span class="o">+</span> <span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         </span><span class="n">ybar</span> <span class="o">=</span> <span class="n">sum1</span><span class="o">/</span><span class="n">an</span>
+         <span class="n">wbar</span> <span class="o">=</span> <span class="n">sum2</span><span class="o">/</span><span class="n">an</span>
+         <span class="n">sum1</span> <span class="o">=</span> <span class="mf">0.0</span>
+         <span class="n">sum2</span> <span class="o">=</span> <span class="mf">0.0</span>
+         <span class="n">sum3</span> <span class="o">=</span> <span class="mf">0.0</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">N</span>
+            <span class="n">sum1</span> <span class="o">=</span> <span class="n">sum1</span> <span class="o">+</span> <span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">ybar</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">ybar</span><span class="p">)</span>
+            <span class="n">sum2</span> <span class="o">=</span> <span class="n">sum2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">ybar</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">wbar</span><span class="p">)</span>
+            <span class="n">sum3</span> <span class="o">=</span> <span class="n">sum3</span> <span class="o">+</span> <span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">wbar</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">wbar</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         </span><span class="n">cc</span> <span class="o">=</span> <span class="n">sum2</span><span class="o">/</span><span class="nb">SQRT</span><span class="p">(</span><span class="n">sum3</span><span class="o">*</span><span class="n">sum1</span><span class="p">)</span>
+         <span class="n">yslope</span> <span class="o">=</span> <span class="n">sum2</span><span class="o">/</span><span class="n">sum3</span>
+         <span class="n">yint</span> <span class="o">=</span> <span class="n">ybar</span> <span class="o">-</span> <span class="n">yslope</span><span class="o">*</span><span class="n">wbar</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">ipr</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span> <span class="n">cc</span> <span class="p">,</span> <span class="n">yint</span> <span class="p">,</span> <span class="n">yslope</span>
+<span class="mi">99006</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;PROBABILITY PLOT CORRELATION COEFFICIENT = &#39;</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">5</span><span class="p">,&amp;</span>
+     <span class="p">&amp;</span>           <span class="mi">5</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;ESTIMATED INTERCEPT = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="n">X</span><span class="p">,</span>                  <span class="p">&amp;</span>
+     <span class="p">&amp;</span>           <span class="s1">&#39;ESTIMATED SLOPE = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
+      <span class="k">ENDIF</span>
+<span class="c">!</span>
+      <span class="k">END SUBROUTINE </span><span class="n">HFNPLT</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2022 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2022-05-31 00:25  
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

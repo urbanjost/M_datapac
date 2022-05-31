@@ -1,0 +1,285 @@
+!*==sortc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE SORTC(X,Y,N,Xs,Yc)
+      IMPLICIT NONE
+!*--SORTC27777
+!*** Start of declarations inserted by SPAG
+      REAL amed , bmed , hold , tx , ty , X , Xs , Y , Yc
+      INTEGER i , il , ip1 , ipr , iu , j , jmi , jmk , k , l , lmi ,   &
+     &        m , mid , N , nm1
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT SORTC
+!
+!     PURPOSE--THIS SUBROUTINE SORTS (IN ASCENDING ORDER)
+!              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X,
+!              PUTS THE RESULTING N SORTED VALUES INTO THE
+!              SINGLE PRECISION VECTOR XS,
+!              REARRANGES THE ELEMENTS OF THE VECTOR Y
+!              (ACCORDING TO THE SORT ON X),
+!              AND PUTS THE REARRANGED Y VALUES
+!              INTO THE SINGLE PRECISION VECTOR YC.
+!              THIS SUBROUTINE GIVES THE DATA ANALYST
+!              THE ABILITY TO SORT ONE DATA VECTOR
+!              WHILE 'CARRYING ALONG' THE ELEMENTS
+!              OF A SECOND DATA VECTOR.
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                OBSERVATIONS TO BE SORTED.
+!                     --Y      = THE SINGLE PRECISION VECTOR OF
+!                                OBSERVATIONS TO BE 'CARRIED ALONG',
+!                                THAT IS, TO BE REARRANGED ACCORDING
+!                                TO THE SORT ON X.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!     OUTPUT ARGUMENTS--XS     = THE SINGLE PRECISION VECTOR
+!                                INTO WHICH THE SORTED DATA VALUES
+!                                FROM X WILL BE PLACED.
+!                     --YC     = THE SINGLE PRECISION VECTOR
+!                                INTO WHICH THE REARRANGED
+!                                (ACCORDING TO THE SORT OF THE
+!                                VECTOR X) VALUES OF THE VECTOR Y
+!                                WILL BE PLACED.
+!     OUTPUT--THE SINGLE PRECISION VECTOR XS
+!             CONTAINING THE SORTED
+!             (IN ASCENDING ORDER) VALUES
+!             OF THE SINGLE PRECISION VECTOR X, AND
+!             THE SINGLE PRECISION VECTOR YC
+!             CONTAINING THE REARRANGED
+!             (ACCORDING TO THE SORT ON X)
+!             VALUES OF THE VECTOR Y.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THE DIMENSIONS OF THE VECTORS IL AND IU
+!                   (DEFINED AND USED INTERNALLY WITHIN
+!                   THIS SUBROUTINE) DICTATE THE MAXIMUM
+!                   ALLOWABLE VALUE OF N FOR THIS SUBROUTINE.
+!                   IF IL AND IU EACH HAVE DIMENSION K,
+!                   THEN N MAY NOT EXCEED 2**(K+1) - 1.
+!                   FOR THIS SUBROUTINE AS WRITTEN, THE DIMENSIONS
+!                   OF IL AND IU HAVE BEEN SET TO 36,
+!                   THUS THE MAXIMUM ALLOWABLE VALUE OF N IS
+!                   APPROXIMATELY 137 BILLION.
+!                   SINCE THIS EXCEEDS THE MAXIMUM ALLOWABLE
+!                   VALUE FOR AN INTEGER VARIABLE IN MANY COMPUTERS,
+!                   AND SINCE A SORT OF 137 BILLION ELEMENTS
+!                   IS PRESENTLY IMPRACTICAL AND UNLIKELY,
+!                   THEN THERE IS NO PRACTICAL RESTRICTION
+!                   ON THE MAXIMUM VALUE OF N FOR THIS SUBROUTINE.
+!                   (IN LIGHT OF THE ABOVE, NO CHECK OF THE
+!                   UPPER LIMIT OF N HAS BEEN INCORPORATED
+!                   INTO THIS SUBROUTINE.)
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--THE SMALLEST ELEMENT OF THE VECTOR X
+!              WILL BE PLACED IN THE FIRST POSITION
+!              OF THE VECTOR XS,
+!              THE SECOND SMALLEST ELEMENT IN THE VECTOR X
+!              WILL BE PLACED IN THE SECOND POSITION
+!              OF THE VECTOR XS,
+!              ETC.
+!     COMMENT--THE ELEMENT IN THE VECTOR Y CORRESPONDING
+!              TO THE SMALLEST ELEMENT IN X
+!              WILL BE PLACED IN THE FIRST POSITION
+!              OF THE VECTOR YC,
+!              THE ELEMENT IN THE VECTOR Y CORRESPONDING
+!              TO THE SECOND SMALLEST ELEMENT IN X
+!              WILL BE PLACED IN THE SECOND POSITION
+!              OF THE VECTOR YC,
+!              ETC.
+!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
+!     COMMENT--IF THE ANALYST DESIRES A SORT 'IN PLACE',
+!              THIS IS DONE BY HAVING THE SAME
+!              OUTPUT VECTOR AS INPUT VECTOR IN THE CALLING SEQUENCE.
+!              THUS, FOR EXAMPLE, THE CALLING SEQUENCE
+!              CALL SORTC(X,Y,N,X,YC)
+!              IS ALLOWABLE AND WILL RESULT IN
+!              THE DESIRED 'IN-PLACE' SORT.
+!     COMMENT--THE SORTING ALGORTHM USED HEREIN
+!              IS THE BINARY SORT.
+!              THIS ALGORTHIM IS EXTREMELY FAST AS THE
+!              FOLLOWING TIME TRIALS INDICATE.
+!              THESE TIME TRIALS WERE CARRIED OUT ON THE
+!              UNIVAC 1108 EXEC 8 SYSTEM AT NBS
+!              IN AUGUST OF 1974.
+!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES
+!              FOR THE EASY-TO-PROGRAM BUT EXTREMELY
+!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE
+!              ALSO BEEN INCLUDED--
+!              NUMBER OF RANDOM        BINARY SORT       BUBBLE SORT
+!               NUMBERS SORTED
+!                N = 10                 .002 SEC          .002 SEC
+!                N = 100                .011 SEC          .045 SEC
+!                N = 1000               .141 SEC         4.332 SEC
+!                N = 3000               .476 SEC        37.683 SEC
+!                N = 10000             1.887 SEC      NOT COMPUTED
+!     REFERENCES--CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
+!                 BY RICHARD C. SINGLETON).
+!               --CACM JANUARY 1970, PAGE 54.
+!               --CACM OCTOBER 1970, PAGE 624.
+!               --JACM JANUARY 1961, PAGE 41.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE--301-921-2315
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:) , Y(:) , Xs(:) , Yc(:)
+      DIMENSION iu(36) , il(36)
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      ipr = 6
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTC  SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (ipr,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORT&
+     &C  SUBROUTINE HAS THE VALUE 1 *****')
+            Xs(1) = X(1)
+            Yc(1) = Y(1)
+            RETURN
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (ipr,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE SORTC  SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+            DO i = 1 , N
+               Xs(i) = X(i)
+               Yc(i) = Y(i)
+            ENDDO
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+!     COPY THE VECTOR X INTO THE VECTOR XS
+ 50      DO i = 1 , N
+            Xs(i) = X(i)
+         ENDDO
+!
+!     COPY THE VECTOR Y INTO THE VECTOR YS
+!
+         DO i = 1 , N
+            Yc(i) = Y(i)
+         ENDDO
+!
+!     CHECK TO SEE IF THE INPUT VECTOR IS ALREADY SORTED
+!
+         nm1 = N - 1
+         DO i = 1 , nm1
+            ip1 = i + 1
+            IF ( Xs(i)>Xs(ip1) ) GOTO 100
+         ENDDO
+         RETURN
+      ENDIF
+ 100  m = 1
+      i = 1
+      j = N
+ 200  IF ( i>=j ) GOTO 400
+ 300  k = i
+      mid = (i+j)/2
+      amed = Xs(mid)
+      bmed = Yc(mid)
+      IF ( Xs(i)>amed ) THEN
+         Xs(mid) = Xs(i)
+         Yc(mid) = Yc(i)
+         Xs(i) = amed
+         Yc(i) = bmed
+         amed = Xs(mid)
+         bmed = Yc(mid)
+      ENDIF
+      l = j
+      IF ( Xs(j)<amed ) THEN
+         Xs(mid) = Xs(j)
+         Yc(mid) = Yc(j)
+         Xs(j) = amed
+         Yc(j) = bmed
+         amed = Xs(mid)
+         bmed = Yc(mid)
+         IF ( Xs(i)>amed ) THEN
+            Xs(mid) = Xs(i)
+            Yc(mid) = Yc(i)
+            Xs(i) = amed
+            Yc(i) = bmed
+            amed = Xs(mid)
+            bmed = Yc(mid)
+         ENDIF
+      ENDIF
+      DO
+         l = l - 1
+         IF ( Xs(l)<=amed ) THEN
+            tx = Xs(l)
+            ty = Yc(l)
+            DO
+               k = k + 1
+               IF ( Xs(k)>=amed ) THEN
+                  IF ( k<=l ) THEN
+                     Xs(l) = Xs(k)
+                     Yc(l) = Yc(k)
+                     Xs(k) = tx
+                     Yc(k) = ty
+                     EXIT
+                  ELSE
+                     lmi = l - i
+                     jmk = j - k
+                     IF ( lmi<=jmk ) THEN
+                        il(m) = k
+                        iu(m) = j
+                        j = l
+                        m = m + 1
+                     ELSE
+                        il(m) = i
+                        iu(m) = l
+                        i = k
+                        m = m + 1
+                     ENDIF
+                     GOTO 500
+                  ENDIF
+               ENDIF
+            ENDDO
+         ENDIF
+      ENDDO
+ 400  m = m - 1
+      IF ( m==0 ) RETURN
+      i = il(m)
+      j = iu(m)
+ 500  jmi = j - i
+      IF ( jmi>=11 ) GOTO 300
+      IF ( i==1 ) GOTO 200
+      i = i - 1
+      DO
+         i = i + 1
+         IF ( i==j ) GOTO 400
+         amed = Xs(i+1)
+         bmed = Yc(i+1)
+         IF ( Xs(i)>amed ) THEN
+            k = i
+            DO
+               Xs(k+1) = Xs(k)
+               Yc(k+1) = Yc(k)
+               k = k - 1
+               IF ( amed>=Xs(k) ) THEN
+                  Xs(k+1) = amed
+                  Yc(k+1) = bmed
+                  EXIT
+               ENDIF
+            ENDDO
+         ENDIF
+      ENDDO
+      END SUBROUTINE SORTC

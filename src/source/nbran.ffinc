@@ -1,0 +1,209 @@
+!*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE NBRAN(N,P,Npar,Istart,X)
+      IMPLICIT NONE
+!*--NBRAN13940
+!*** Start of declarations inserted by SPAG
+      REAL b(1) , g(1) , P , X
+      INTEGER i , ib , ig , ipr , Istart , isum , j , N , Npar
+!*** End of declarations inserted by SPAG
+!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
+!      DLL_EXPORT NBRAN
+!
+!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
+!              FROM THE NEGATIVE BINOMIAL DISTRIBUTION
+!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
+!              PARAMETER = P,
+!              AND INTEGER 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
+!              PARAMETER = NPAR.
+!              THE NEGATIVE BINOMIAL DISTRIBUTION USED
+!              HEREIN HAS MEAN = NPAR*(1-P)/P
+!              AND STANDARD DEVIATION = SQRT(NPAR*(1-P)/(P*P))).
+!              THIS DISTRIBUTION IS DEFINED FOR
+!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
+!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
+!              F(X) = C(NPAR+X-1,NPAR) * P**NPAR * (1-P)**X.
+!              WHERE C(NPAR+X-1,NPAR) IS THE COMBINATORIAL FUNCTION
+!              EQUALING THE NUMBER OF COMBINATIONS OF NPAR+X-1 ITEMS
+!              TAKEN NPAR AT A TIME.
+!              THE NEGATIVE BINOMIAL DISTRIBUTION IS THE
+!              DISTRIBUTION OF THE NUMBER OF FAILURES
+!              BEFORE OBTAINING NPAR SUCCESSES IN AN
+!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
+!              TRIALS WHERE THE PROBABILITY OF SUCCESS
+!              IN A SINGLE TRIAL = P.
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!                     --P      = THE SINGLE PRECISION VALUE
+!                                OF THE 'BERNOULLI PROBABILITY'
+!                                PARAMETER FOR THE NEGATIVE BINOMIAL
+!                                DISTRIBUTION.
+!                                P SHOULD BE BETWEEN
+!                                0.0 (EXCLUSIVELY) AND
+!                                1.0 (EXCLUSIVELY).
+!                     --NPAR   = THE INTEGER VALUE
+!                                OF THE 'NUMBER OF SUCCESSES
+!                                IN BERNOULLI TRIALS' PARAMETER.
+!                                NPAR SHOULD BE A POSITIVE INTEGER.
+!                     --ISTART = AN INTEGER FLAG CODE WHICH
+!                                (IF SET TO 0) WILL START THE
+!                                GENERATOR OVER AND HENCE
+!                                PRODUCE THE SAME RANDOM SAMPLE
+!                                OVER AND OVER AGAIN
+!                                UPON SUCCESSIVE CALLS TO
+!                                THIS SUBROUTINE WITHIN A RUN; OR
+!                                (IF SET TO SOME INTEGER
+!                                VALUE NOT EQUAL TO 0,
+!                                LIKE, SAY, 1) WILL ALLOW
+!                                THE GENERATOR TO CONTINUE
+!                                FROM WHERE IT STOPPED
+!                                AND HENCE PRODUCE DIFFERENT
+!                                RANDOM SAMPLES UPON
+!                                SUCCESSIVE CALLS TO
+!                                THIS SUBROUTINE WITHIN A RUN.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE NEGATIVE BINOMIAL DISTRIBUTION
+!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
+!             AND 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
+!             PARAMETER = NPAR.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!                 --NPAR SHOULD BE A POSITIVE INTEGER.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, BINRAN, GEORAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
+!              FROM THIS DISCRETE RANDOM NUMBER
+!              GENERATOR MUST NECESSARILY BE A
+!              SEQUENCE OF ***INTEGER*** VALUES,
+!              THE OUTPUT VECTOR X IS SINGLE
+!              PRECISION IN MODE.
+!              X HAS BEEN SPECIFIED AS SINGLE
+!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
+!              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
+!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              THIS CONVENTION IS BASED ON THE BELIEF THAT
+!              1) A MIXTURE OF MODES (FLOATING POINT
+!              VERSUS INTEGER) IS INCONSISTENT AND
+!              AN UNNECESSARY COMPLICATION
+!              IN A DATA ANALYSIS; AND
+!              2) FLOATING POINT MACHINE ARITHMETIC
+!              (AS OPPOSED TO INTEGER ARITHMETIC)
+!              IS THE MORE NATURAL MODE FOR DOING
+!              DATA ANALYSIS.
+!     REFERENCES--HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGE 95.
+!               --JOHNSON AND KOTZ, DISCRETE
+!                 DISTRIBUTIONS, 1969, PAGES 122-142.
+!               --FELLER, AN INTRODUCTION TO PROBABILITY
+!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!                 EDITION 2, 1957, PAGES 155-157, 210.
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!                 SERIES 55, 1964, PAGE 929.
+!               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING LABORATORY (205.03)
+!                 NATIONAL BUREAU OF STANDARDS
+!                 WASHINGTON, D. C. 20234
+!                 PHONE:  301-921-2315
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+!
+      ipr = 6
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (ipr,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99005) N
+         RETURN
+      ELSEIF ( P<=0.0 .OR. P>=1.0 ) THEN
+         WRITE (ipr,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (ipr,99003) P
+99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
+     &           ' *****')
+         RETURN
+      ELSEIF ( Npar<1 ) THEN
+         WRITE (ipr,99004)
+99004    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (ipr,99005) Npar
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         CALL UNIRAN(1,Istart,g(1))
+!
+!     CHECK ON THE MAGNITUDE OF P,
+!     AND BRANCH TO THE FASTER
+!     GENERATION METHOD ACCORDINGLY.
+!
+         IF ( P<0.1 ) THEN
+!
+!     IF P IS SMALL,
+!     GENERATE N NEGATIVE BINOMIAL NUMBERS
+!     BY USING THE FACT THAT THE SUM
+!     OF GEOMETRIC VARIATES IS A
+!     NEGATIVE BINOMIAL VARIATE.
+!
+            DO i = 1 , N
+               isum = 0
+               DO j = 1 , Npar
+                  CALL GEORAN(1,P,1,g)
+                  ig = g(1) + 0.5
+                  isum = isum + ig
+               ENDDO
+               X(i) = isum
+            ENDDO
+            GOTO 99999
+         ENDIF
+      ENDIF
+!
+!     IF P IS MODERATE OR LARGE,
+!     GENERATE N NEGATIVE BINOMIAL NUMBERS
+!     USING THE FACT THAT THE
+!     WAITING TIME FOR NPAR SUCCESSES IN
+!     BERNOULLI TRIALS HAS A
+!     NEGATIVE BINOMIAL DISTRIBUTION.
+!
+      DO i = 1 , N
+         isum = 0
+         j = 1
+         DO
+            CALL BINRAN(1,P,1,1,b)
+            ib = b(1) + 0.5
+            isum = isum + ib
+            IF ( isum==Npar ) THEN
+               X(i) = j
+               EXIT
+            ELSE
+               j = j + 1
+            ENDIF
+         ENDDO
+      ENDDO
+      RETURN
+99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+!
+99999 END SUBROUTINE NBRAN

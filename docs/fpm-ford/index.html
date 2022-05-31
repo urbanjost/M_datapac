@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Statistics">
+    
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="./favicon.png">
+
+    <title> M_datapac </title>
+
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/pygments.css" rel="stylesheet">
+    <link href="./css/font-awesome.min.css" rel="stylesheet">
+    <link href="./css/local.css" rel="stylesheet">
+    
+    <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="./js/jquery-2.1.3.min.js"></script>
+    <script src="./js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html">M_datapac </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="./lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="./lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="./lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            <li><a href="./lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/procedures.html">Procedures</a></li>
+
+                             
+
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="./search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <p>Statistics</p>
+        	 
+	<p> Find us on&hellip;</p>
+        <p>
+        	 
+          <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_datapac" role="button">GitHub</a>
+			 
+			 
+			 
+			 
+	         
+			 
+        </p>
+      </div>
+
+      <div class="row" id='text'>
+		  
+        <div class="col-md-8">
+		  
+          <h1>M_datapac</h1>
+          <h1 id="m_datapac">M_DATAPAC</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The original DATAPAC library was written by James Filliben of the Statistical
+Engineering Division, 
+<a href="https://www.nist.gov/">National Institute of Standards and Technology</a>.
+After these routines were incorporated into the <a href="https://www.nist.gov/statistical-engineering-division/dataplot">Dataplot</a>. 
+program, development of DATAPAC stopped. However, there are some
+subroutines here that may still be of interest. In particular, there are
+a number of routines for computing various probability functions.</p>
+<p>This software is not formally supported and is not being further
+developed. It is provided on an &ldquo;as is&rdquo; basis. There is no formal
+documentation for the subroutines. However, most of the subroutines
+contain usage instructions in the comments in the source code.</p>
+<p>These routines were written in Fortran 77 and were ported to a
+modern Fortran module accessible via <code>fpm</code>.</p>
+<h2 id="contents">Contents</h2>
+<p>The following subroutines are available in M_datapac:</p>
+<ul>
+<li><a href="src/source/autoco.ffinc">AUTOCO.ffinc</a> - compute the sample autocorrelation coefficient</li>
+<li><a href="src/source/betran.ffinc">BETRAN.ffinc</a> - generate beta random numbers</li>
+<li><a href="src/source/bincdf.ffinc">BINCDF.ffinc</a> - compute the binomial cumulative distribution function</li>
+<li><a href="src/source/binppf.ffinc">BINPPF.ffinc</a> - compute the binomial percent point function</li>
+<li><a href="src/source/binran.ffinc">BINRAN.ffinc</a> - generate binomial random numbers</li>
+<li><a href="src/source/caucdf.ffinc">CAUCDF.ffinc</a> - compute the Cauchy cumulative distribution function</li>
+<li><a href="src/source/caupdf.ffinc">CAUPDF.ffinc</a> - compute the Cauchy probability density function</li>
+<li><a href="src/source/cauplt.ffinc">CAUPLT.ffinc</a> - generate a Cauchy probability plot (line printer graph)</li>
+<li><a href="src/source/cauppf.ffinc">CAUPPF.ffinc</a> - compute the Cauchy percent point function</li>
+<li><a href="src/source/cauran.ffinc">CAURAN.ffinc</a> - generate Cauchy random numbers</li>
+<li><a href="src/source/causf.ffinc">CAUSF.ffinc</a> - compute the Cauchy sparsity function</li>
+<li><a href="src/source/chscdf.ffinc">CHSCDF.ffinc</a> - compute the chi-square cumulative distribution function</li>
+<li><a href="src/source/chsplt.ffinc">CHSPLT.ffinc</a> - generate a chi-square probability plot (line printer graph)</li>
+<li><a href="src/source/chsppf.ffinc">CHSPPF.ffinc</a> - compute the chi-square percent point function</li>
+<li><a href="src/source/chsran.ffinc">CHSRAN.ffinc</a> - generate chi-square random numbers</li>
+<li><a href="src/source/code.ffinc">CODE.ffinc</a> - code the elements of a vector (1 for the minimum, 2 for the next larger value, and so on)</li>
+<li><a href="src/source/copy.ffinc">COPY.ffinc</a> - copy the elements of one vector into another vector</li>
+<li><a href="src/source/corr.ffinc">CORR.ffinc</a> - compute the sample correlation coefficient</li>
+<li><a href="src/source/count.ffinc">COUNT.ffinc</a> - compute the number of observations between a minimum and a maximum value</li>
+<li><a href="src/source/decomp.ffinc">DECOMP.ffinc</a> - decomposes a weighted data matrix (utility routine used by other routines)</li>
+<li><a href="src/source/define.ffinc">DEFINE.ffinc</a> - set all elements of a vector equal to a specified constant</li>
+<li><a href="src/source/delete.ffinc">DELETE.ffinc</a> - delete all elements of a vector within some specified interval</li>
+<li><a href="src/source/demod.ffinc">DEMOD.ffinc</a> - perform a complex demodulation</li>
+<li><a href="src/source/dexcdf.ffinc">DEXCDF.ffinc</a> - compute the double exponential cumulative distribution function</li>
+<li><a href="src/source/dexpdf.ffinc">DEXPDF.ffinc</a> - compute the double exponential probability density function</li>
+<li><a href="src/source/dexplt.ffinc">DEXPLT.ffinc</a> - generate a double exponential probability plot (line printer graph)</li>
+<li><a href="src/source/dexppf.ffinc">DEXPPF.ffinc</a> - compute the double exponential percent point function</li>
+<li><a href="src/source/dexran.ffinc">DEXRAN.ffinc</a> - generate double exponential random numbers</li>
+<li><a href="src/source/dexsf.ffinc">DEXSF.ffinc</a> - compute the double exponential sparsity function</li>
+<li><a href="src/source/discr2.ffinc">DISCR2.ffinc</a> - bin the elements of a vector (output vector contains class midpoints)</li>
+<li><a href="src/source/discr3.ffinc">DISCR3.ffinc</a> - bin the elements of a vector (output vector contains 1&rsquo;s, 2&rsquo;s, 3&rsquo;s, and so on)</li>
+<li><a href="src/source/discre.ffinc">DISCRE.ffinc</a> - bin the elements of a vector (like DISCR2, but allows specification of min and max class limits)</li>
+<li><a href="src/source/dot.ffinc">DOT.ffinc</a> - compute a dot product of two vectors</li>
+<li><a href="src/source/ev1cdf.ffinc">EV1CDF.ffinc</a> - compute the extreme value type 1 (Gumbel) cumulative distribution function</li>
+<li><a href="src/source/ev1plt.ffinc">EV1PLT.ffinc</a> - generate a extreme value type 1 (Gumbel) probability plot (line printer graph)</li>
+<li><a href="src/source/ev1ppf.ffinc">EV1PPF.ffinc</a> - compute the extreme value type 1 (Gumbel) percent point function</li>
+<li><a href="src/source/ev1ran.ffinc">EV1RAN.ffinc</a> - generate extreme value type 1 (Gumbel) random numbers</li>
+<li><a href="src/source/ev2cdf.ffinc">EV2CDF.ffinc</a> - compute the extreme value type 2 (Frechet) cumulative distribution function</li>
+<li><a href="src/source/ev2plt.ffinc">EV2PLT.ffinc</a> - generate a extreme value type 2 (Frechet) probability plot (line printer graph)</li>
+<li><a href="src/source/ev2ppf.ffinc">EV2PPF.ffinc</a> - compute the extreme value type 2 (Frechet) percent point function</li>
+<li><a href="src/source/ev2ran.ffinc">EV2RAN.ffinc</a> - generate extreme value type 2 (Frechet) random numbers</li>
+<li><a href="src/source/expcdf.ffinc">EXPCDF.ffinc</a> - compute the exponential cumulative distribution function</li>
+<li><a href="src/source/exppdf.ffinc">EXPPDF.ffinc</a> - compute the exponential probability density function</li>
+<li><a href="src/source/expplt.ffinc">EXPPLT.ffinc</a> - generate a exponential probability plot (line printer graph)</li>
+<li><a href="src/source/expppf.ffinc">EXPPPF.ffinc</a> - compute the exponential percent point function</li>
+<li><a href="src/source/expran.ffinc">EXPRAN.ffinc</a> - generate exponential random numbers</li>
+<li><a href="src/source/expsf.ffinc">EXPSF.ffinc</a> - compute the exponential sparsity function</li>
+<li><a href="src/source/extrem.ffinc">EXTREME.ffinc</a> - determine whether a type 1 or type 2 extreme value distribution better fits a given data set</li>
+<li><a href="src/source/fcdf.ffinc">FCDF.ffinc</a> - compute the F cumulative distribution function</li>
+<li><a href="src/source/fourie.ffinc">FOURIE.ffinc</a> - perform a Fourier analysis of a data set</li>
+<li><a href="src/source/fran.ffinc">FRAN.ffinc</a> - generate F random numbers</li>
+<li><a href="src/source/freq.ffinc">FREQ.ffinc</a> - compute the sample frequency and cumulative sample frequency of a vector</li>
+<li><a href="src/source/gamcdf.ffinc">GAMCDF.ffinc</a> - compute the gamma cumulative distribution function</li>
+<li><a href="src/source/gamplt.ffinc">GAMPLT.ffinc</a> - generate a gamma probability plot (line printer graph)</li>
+<li><a href="src/source/gamppf.ffinc">GAMPPF.ffinc</a> - compute the gamma percent point function</li>
+<li><a href="src/source/gamran.ffinc">GAMRAN.ffinc</a> - generate gamma random numbers</li>
+<li><a href="src/source/geocdf.ffinc">GEOCDF.ffinc</a> - compute the geometric cumulative distribution function</li>
+<li><a href="src/source/gamplt.ffinc">GEOPLT.ffinc</a> - generate a geometric probability plot (line printer graph)</li>
+<li><a href="src/source/geoppf.ffinc">GEOPPF.ffinc</a> - compute the geometric percent point function</li>
+<li><a href="src/source/georan.ffinc">GEORAN.ffinc</a> - generate geometric random numbers</li>
+<li><a href="src/source/hfncdf.ffinc">HFNCDF.ffinc</a> - compute the half-normal cumulative distribution function</li>
+<li><a href="src/source/hfnplt.ffinc">HFNPLT.ffinc</a> - generate a half-normal probability plot (line printer graph)</li>
+<li><a href="src/source/hfnppf.ffinc">HFNPPF.ffinc</a> - compute the half-normal percent point function</li>
+<li><a href="src/source/hfnran.ffinc">HFNRAN.ffinc</a> - generate half-normal random numbers</li>
+<li><a href="src/source/hist.ffinc">HIST.ffinc</a> - generates histograms based on two different class widths</li>
+<li><a href="src/source/invxwx.ffinc">INVXWX.ffinc</a> - compute the inverse of X&rsquo;WX</li>
+<li><a href="src/source/lamcdf.ffinc">LAMCDF.ffinc</a> - compute the Tukey-Lambda cumulative distribution function</li>
+<li><a href="src/source/lampdf.ffinc">LAMPDF.ffinc</a> - compute the Tukey-Lambda probability density function</li>
+<li><a href="src/source/lamplt.ffinc">LAMPLT.ffinc</a> - generate a Tukey-Lambda probability plot (line printer graph)</li>
+<li><a href="src/source/lamppf.ffinc">LAMPPF.ffinc</a> - compute the Tukey-Lambda percent point function</li>
+<li><a href="src/source/lamran.ffinc">LAMRAN.ffinc</a> - generate Tukey-Lambda random numbers</li>
+<li><a href="src/source/lamsf.ffinc">LAMSF.ffinc</a> - compute the Tukey-Lambda sparsity function</li>
+<li><a href="src/source/caucdf.ffinc">CAUCDF.ffinc</a> - compute the lognormal cumulative distribution function</li>
+<li><a href="src/source/caupdf.ffinc">CAUPDF.ffinc</a> - compute the lognormal probability density function</li>
+<li><a href="src/source/cauplt.ffinc">CAUPLT.ffinc</a> - generate a lognormal probability plot (line printer graph)</li>
+<li><a href="src/source/cauppf.ffinc">CAUPPF.ffinc</a> - compute the lognormal percent point function</li>
+<li><a href="src/source/cauran.ffinc">CAURAN.ffinc</a> - generate lognormal random numbers</li>
+<li><a href="src/source/loc.ffinc">LOC.ffinc</a> - compute the sample mean, midrange, midmean, and median</li>
+<li><a href="src/source/logcdf.ffinc">LOGCDF.ffinc</a> - compute the logistic cumulative distribution function</li>
+<li><a href="src/source/logpdf.ffinc">LOGPDF.ffinc</a> - compute the logistic probability density function</li>
+<li><a href="src/source/logplt.ffinc">LOGPLT.ffinc</a> - generate a logistic probability plot (line printer graph)</li>
+<li><a href="src/source/logppf.ffinc">LOGPPF.ffinc</a> - compute the logistic percent point function</li>
+<li><a href="src/source/logran.ffinc">LOGRAN.ffinc</a> - generate logistic random numbers</li>
+<li><a href="src/source/logsf.ffinc">LOGSF.ffinc</a> - compute the logistic sparsity function</li>
+<li><a href="src/source/max.ffinc">MAX.ffinc</a> - compute the maximum of a data vector</li>
+<li><a href="src/source/mean.ffinc">MEAN.ffinc</a> - compute the mean of a data vector</li>
+<li><a href="src/source/median.ffinc">MEDIAN.ffinc</a> - compute the median of a data vector</li>
+<li><a href="src/source/midm.ffinc">MIDM.ffinc</a> - compute the midmean of a data vector</li>
+<li><a href="src/source/midr.ffinc">MIDR.ffinc</a> - compute the midrange of a data vector</li>
+<li><a href="src/source/min.ffinc">MIN.ffinc</a> - compute the minimum of a data vector</li>
+<li><a href="src/source/move.ffinc">MOVE.ffinc</a> - move selected elements of one vector into another vector</li>
+<li><a href="src/source/nbcdf.ffinc">NBCDF.ffinc</a> - compute the negative binomial cumulative distribution function</li>
+<li><a href="src/source/nbppf.ffinc">NBPPF.ffinc</a> - compute the negative binomial percent point function</li>
+<li><a href="src/source/nbran.ffinc">NBRAN.ffinc</a> - generate negative binomial random numbers</li>
+<li><a href="src/source/norcdf.ffinc">NORCDF.ffinc</a> - compute the normal cumulative distribution function</li>
+<li><a href="src/source/norpdf.ffinc">NORPDF.ffinc</a> - compute the normal probability density function</li>
+<li><a href="src/source/norplt.ffinc">NORPLT.ffinc</a> - generate a normal probability plot (line printer graph)</li>
+<li><a href="src/source/norppf.ffinc">NORPPF.ffinc</a> - compute the normal percent point function</li>
+<li><a href="src/source/norran.ffinc">NORRAN.ffinc</a> - generate normal random numbers</li>
+<li><a href="src/source/norsf.ffinc">NORSF.ffinc</a> - compute the normal sparsity function</li>
+<li><a href="src/source/parcdf.ffinc">PARCDF.ffinc</a> - compute the Pareto cumulative distribution function</li>
+<li><a href="src/source/parplt.ffinc">PARPLT.ffinc</a> - generate a Pareto probability plot (line printer graph)</li>
+<li><a href="src/source/parppf.ffinc">PARPPF.ffinc</a> - compute the Pareto percent point function</li>
+<li><a href="src/source/parran.ffinc">PARRAN.ffinc</a> - generate Pareto random numbers</li>
+<li><a href="src/source/plot10.ffinc">PLOT10.ffinc</a> - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/plot6.ffinc">PLOT6.ffinc</a> - generate a line printer plot</li>
+<li><a href="src/source/plot7.ffinc">PLOT7.ffinc</a> - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/plot8.ffinc">PLOT8.ffinc</a> - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/plot9.ffinc">PLOT9.ffinc</a> - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/plotc.ffinc">PLOTC.ffinc</a> - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/plotco.ffinc">PLOTCO.ffinc</a> - generate a line printer autocorrelation plot</li>
+<li><a href="src/source/plotct.ffinc">PLOTCT.ffinc</a> - generate a line printer plot for the terminal (71 characters wide)</li>
+<li><a href="src/source/plotsc.ffinc">PLOTSC.ffinc</a> - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/plots.ffinc">PLOTS.ffinc</a> - generate a line printer plot of Y vs X</li>
+<li><a href="src/source/plotsp.ffinc">PLOTSP.ffinc</a> - generate a line printer spectrum plot</li>
+<li><a href="src/source/plotst.ffinc">PLOTST.ffinc</a> - generate a line printer plot of Y vs X for the terminal (71 characters wide)</li>
+<li><a href="src/source/plott.ffinc">PLOTT.ffinc</a> - generate a line printer plot of Y vs X for the terminal (71 characters wide)</li>
+<li><a href="src/source/plotu.ffinc">PLOTU.ffinc</a> - generate a line printer 4-plot</li>
+<li><a href="src/source/plotx.ffinc">PLOTX.ffinc</a> - generate a line printer run sequence plot</li>
+<li><a href="src/source/plotxt.ffinc">PLOTXT.ffinc</a> - generate a line printer run sequence plot for the terminal (71 characters wide)</li>
+<li><a href="src/source/plotxx.ffinc">PLOTXX.ffinc</a> - generate a line printer lag plot</li>
+<li><a href="src/source/pltsct.ffinc">PLTSCT.ffinc</a> - generate a line printer plot with special plot characters for the terminal (71 characters wide)</li>
+<li><a href="src/source/pltxxt.ffinc">PLTXXT.ffinc</a> - generate a line printer lag plot for the terminal (71 characters wide)</li>
+<li><a href="src/source/poicdf.ffinc">POICDF.ffinc</a> - compute the Poisson cumulative distribution function</li>
+<li><a href="src/source/poiplt.ffinc">POIPLT.ffinc</a> - generate a Poisson probability plot (line printer graph)</li>
+<li><a href="src/source/poippf.ffinc">POIPPF.ffinc</a> - compute the Poisson percent point function</li>
+<li><a href="src/source/poiran.ffinc">POIRAN.ffinc</a> - generate Poisson random numbers</li>
+<li><a href="src/source/poly.ffinc">POLY.ffinc</a> - compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)</li>
+<li><a href="src/source/propor.ffinc">PROPOR.ffinc</a> - compute the sample proportion</li>
+<li><a href="src/source/range.ffinc">RANGE.ffinc</a> - compute the sample range</li>
+<li><a href="src/source/rank.ffinc">RANK.ffinc</a> - rank a vector of sample observations</li>
+<li><a href="src/source/ranper.ffinc">RANPER.ffinc</a> - generates a random permutation</li>
+<li><a href="src/source/read.ffinc">READ.ffinc</a> - perform a format-free read of data from a file</li>
+<li><a href="src/source/readg.ffinc">READG.ffinc</a> - perform a format-free read of data from a file restricted to a user-specified set of columns</li>
+<li><a href="src/source/relsd.ffinc">RELSD.ffinc</a> - compute the relative standard deviation of a vector of observations</li>
+<li><a href="src/source/replac.ffinc">REPLAC.ffinc</a> - replace all observations in a vector within a given interval with a user-specified constant</li>
+<li><a href="src/source/retain.ffinc">RETAIN.ffinc</a> - retain all observations in a vector within a user-specified interval</li>
+<li><a href="src/source/runs.ffinc">RUNS.ffinc</a> - perform a runs test</li>
+<li><a href="src/source/sampp.ffinc">SAMPP.ffinc</a> - compute the sample 100P percent point (i.e., percentile)</li>
+<li><a href="src/source/scale.ffinc">SCALE.ffinc</a> - compute the sample
+    range, sample standard deviation, sample relative standard deviation, and sample variance</li>
+<li><a href="src/source/sd.ffinc">SD.ffinc</a> - compute the standard deviation of a vector of observations</li>
+<li><a href="src/source/skipr.ffinc">SKIPR.ffinc</a> - skip over a user-specified number of rows in reading a data file</li>
+<li><a href="src/source/sortc.ffinc">SORTC.ffinc</a> - sort a vector of sample observations and &ldquo;carry&rdquo; a second a vector</li>
+<li><a href="src/source/sort.ffinc">SORT.ffinc</a> - sort a vector of sample observations, also return the positions in the original vector</li>
+<li><a href="src/source/spcorr.ffinc">SPCORR.ffinc</a> - compute the sample Spearman rank correlation coefficient between two vectors of observations</li>
+<li><a href="src/source/stmom3.ffinc">STMOM3.ffinc</a> - compute the third central moment (i.e., the skewness) of a vector of observations</li>
+<li><a href="src/source/stmom4.ffinc">STMOM4.ffinc</a> - compute the fourth central moment (i.e., the kurtosis) of a vector of observations</li>
+<li><a href="src/source/subse1.ffinc">SUBSE1.ffinc</a> - extract the elements of a vector which fall into a user-specified subset (one subset variable)</li>
+<li><a href="src/source/subse2.ffinc">SUBSE2.ffinc</a> - extract the elements of a vector which fall into a user-specified subset (two subset variables)</li>
+<li><a href="src/source/subset.ffinc">SUBSET.ffinc</a> - extract the elements of a vector which fall into a user-specified subset (one subset variable)</li>
+<li><a href="src/source/tail.ffinc">TAIL.ffinc</a> - performs a symmetric distribution tail length analysis</li>
+<li><a href="src/source/tcdf.ffinc">TCDF.ffinc</a> - compute the /t/ cumulative distribution function</li>
+<li><a href="src/source/time.ffinc">TIME.ffinc</a> - perform a time series analysis 
+  (autocorrelation plot, a test for white noise, a &ldquo;pilot&rdquo; spectrum, and 4 other estimated spectra based on differing bandwidth)</li>
+<li><a href="src/source/tol.ffinc">TOL.ffinc</a> - compute normal and distribution-free tolerance limits</li>
+<li><a href="src/source/tplt.ffinc">TPLT.ffinc</a> - generate a /t/ probability plot (line printer graph)</li>
+<li><a href="src/source/tppf.ffinc">TPPF.ffinc</a> - compute the /t/ percent point function</li>
+<li><a href="src/source/tran.ffinc">TRAN.ffinc</a> - generate /t/ random numbers</li>
+<li><a href="src/source/unicdf.ffinc">UNICDF.ffinc</a> - compute the Uniform cumulative distribution function</li>
+<li><a href="src/source/unimed.ffinc">UNIMED.ffinc</a> - generate the /N/ order statistic medians (used in creating probability plots)</li>
+<li><a href="src/source/unipdf.ffinc">UNIPDF.ffinc</a> - compute the Uniform probability density function</li>
+<li><a href="src/source/uniplt.ffinc">UNIPLT.ffinc</a> - generate a Uniform probability plot (line printer graph)</li>
+<li><a href="src/source/unippf.ffinc">UNIPPF.ffinc</a> - compute the Uniform percent point function</li>
+<li><a href="src/source/uniran.ffinc">UNIRAN.ffinc</a> - generate Uniform random numbers</li>
+<li><a href="src/source/unisf.ffinc">UNISF.ffinc</a> - compute the Uniform sparsity function</li>
+<li><a href="src/source/var.ffinc">VAR.ffinc</a> - compute the sample variance of a vector of observations</li>
+<li><a href="src/source/weib.ffinc">WEIB.ffinc</a> - perform a Weibull distribution analysis (Weibull PPCC analysis)</li>
+<li><a href="src/source/weicdf.ffinc">WEICDF.ffinc</a> - compute the Weibull cumulative distribution function</li>
+<li><a href="src/source/weiplt.ffinc">WEIPLT.ffinc</a> - generate a Weibull probability plot (line printer graph)</li>
+<li><a href="src/source/weippf.ffinc">WEIPPF.ffinc</a> - compute the Weibull percent point function</li>
+<li><a href="src/source/weiran.ffinc">WEIRAN.ffinc</a> - generate Weibull random numbers</li>
+<li><a href="src/source/wind.ffinc">WIND.ffinc</a> - compute the sample Winsorized mean of a vector of observations</li>
+<li><a href="src/source/write.ffinc">WRITE.ffinc</a> - write a vector of observations in a &ldquo;neat&rdquo; fashion</li>
+</ul>
+<hr>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.nist.gov/itl/sed/datapac">datapac</a></li>
+</ul>
+        </div>
+		  
+        <div class="col-md-4">
+	  <div class="well">
+          <h2>Developer Info</h2>
+          <h4>John S. Urban</h4>
+          
+          
+			   
+            <div class="text-center"><div class="btn-group" role="group">
+              
+              
+              
+              <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_datapac"><i class="fa fa-github fa-lg"></i></a>
+				  
+				  
+              
+              
+              
+              
+            </div></div>
+            
+       </div>
+       </div>
+       
+      </div>
+      
+      
+      
+      
+		
+      <div class="row">
+        <div class="col-xs-6 col-sm-4">
+              <h3>Source Files</h3>
+              <ul>
+                
+                  
+                    <li><a href='./sourcefile/check.f90.html'>check.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/m_datapac.f90.html'>M_datapac.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/main.f90.html'>main.f90</a></li>
+                  
+                
+              </ul>
+          </div>
+          
+		  <div class="col-xs-6 col-sm-4">
+              <h3>Modules</h3>
+              <ul>
+                
+                  
+                    <li><a href='./module/m_datapac.html'>M_datapac</a></li>
+                  
+                
+              </ul>
+          </div>
+          
+          
+		  <div class="col-xs-6 col-sm-4">
+              <h3>Procedures</h3>
+              <ul>
+                
+                  
+                    <li><a href='./proc/autoco.html'>AUTOCO</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/betran.html'>BETRAN</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/bincdf.html'>BINCDF</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/binppf.html'>BINPPF</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/binran.html'>BINRAN</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/caupdf.html'>CAUPDF</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/cauplt.html'>CAUPLT</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/cauppf.html'>CAUPPF</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/cauran.html'>CAURAN</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/causf.html'>CAUSF</a></li>
+                  
+                
+                  
+                    <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+          </div>
+          
+          
+      </div>
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2022 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2022-05-31 00:25  
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="./js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="./tipuesearch/tipuesearch_content.js"></script>
+    <script src="./tipuesearch/tipuesearch_set.js"></script>
+    <script src="./tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>
