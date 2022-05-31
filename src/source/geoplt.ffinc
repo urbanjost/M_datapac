@@ -1,3 +1,50 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file geoplt.3datapac.man
+NAME
+   geoplt(3f) - [M_datapac:STATISTICS] GEOPLT generate a geometric probability plot (line printer graph)
+
+SYNOPSIS
+    Subroutine geoplt (X, Y)
+
+     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+     Real, Intent (In)                      :: Y
+
+   Where ${TYPE}(kind=${KIND}) may be
+
+      o Real(kind=real32)
+      o Real(kind=real64)
+      o Integer(kind=int32)
+      o Character(kind=selected_char_kind("DEFAULT"),len=*)
+
+DESCRIPTION
+  Description
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_geoplt
+   ! generate a random perturbation of an array
+   use M_datapac, only : geoplt
+   implicit none
+   character(len=*),parameter :: g='(*(g0,1x))'
+   call geoplt(x,y)
+   end program demo_geoplt
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==geoplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEOPLT(X,N,P)
       IMPLICIT NONE

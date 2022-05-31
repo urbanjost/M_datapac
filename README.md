@@ -1,6 +1,6 @@
 ## Name
    M_datapac(3f) - an fpm module build from the NIST DATAPAC package
-   (LICENSE:MIT)
+   (LICENSE: CC0-1.0)
 ## Synopsis
 ```text
        use M_datapac
@@ -115,7 +115,7 @@ The following subroutines are available in M_datapac:
   * [EXPPPF](src/source/expppf.ffinc)  - compute the exponential percent point function
   * [EXPRAN](src/source/expran.ffinc)  - generate exponential random numbers
   * [EXPSF](src/source/expsf.ffinc)    - compute the exponential sparsity function
-  * [EXTREME](src/source/extrem.ffinc) - determine whether a type 1 or type 2 extreme value distribution better fits a given data set
+  * [EXTREM](src/source/extrem.ffinc)  - determine whether a type 1 or type 2 extreme value distribution better fits a given data set
   * [FCDF](src/source/fcdf.ffinc)      - compute the F cumulative distribution function
   * [FOURIE](src/source/fourie.ffinc)  - perform a Fourier analysis of a data set
   * [FRAN](src/source/fran.ffinc)      - generate F random numbers
@@ -277,6 +277,10 @@ The following subroutines are available in M_datapac:
    - [doxygen(1) output](https://urbanjost.github.io/M_datapac/doxygen_out/html/index.html).
    - [github action status](docs/STATUS.md) 
 ---
+
+### License
+   CC0-1.0
+
 ## References
    * [datapac](https://www.nist.gov/itl/sed/datapac)
 ---

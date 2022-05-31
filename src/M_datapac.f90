@@ -177,6 +177,65 @@ public :: weiran
 public :: wind
 public :: write
 contains
+!>
+!!##NAME
+!!    autoco(3f) - [M_datapac:STATISTICS] AUTOCO compute the sample
+!!                 autocorrelation coefficient
+!!
+!!##SYNOPSIS
+!!
+!!     SUBROUTINE AUTOCO(X,N,Iwrite,Xautoc)
+!!
+!!      Real, Intent (InOut) :: X(:)
+!!      Real, Intent (In)    :: Xautoc
+!!
+!!##DESCRIPTION
+!!
+!! This subroutine computes the sample autocorrelation coefficient of the
+!! data in the input vector X.  The sample autocorrelation coefficient
+!! =  the correlation between X(I) and X(I+1) over the entire sample.
+!! The autocorrelation coefficient coefficient will be a single precision
+!! value between -1.0 AND 1.0 (inclusively).
+!!
+!!##INPUT  ARGUMENTS
+!!    X        The single precision vector of (unsorted) observations.
+!!    N        The integer number of observations in the vector x.
+!!    IWRITE   An integer flag code which (if set to 0) will suppress
+!!             the printing of the sample autocorrelation coefficient
+!!             as it is computed; or (if set to some integer value not
+!!             equal to 0), like, say, 1) will cause the printing of the
+!!             sample autocorrelation coefficient at the time it is computed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    XAUTOC   The single precision value of the computed sample autocorrelation coefficient.
+!!             This single precision value will be between -1.0 and 1.0 (inclusively).
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_autoco
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : autoco
+!!    implicit none
+!!    real :: x(100)
+!!       call autoco(x,size(x),1,xautoc)
+!!    end program demo_autoco
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==autoco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE AUTOCO(X,N,Iwrite,Xautoc)
       IMPLICIT NONE
@@ -307,6 +366,52 @@ contains
      &        'THE LINEAR AUTOCORRELATION COEFFICIENT OF THE SET OF ',  &
      &        I6,' OBSERVATIONS IS ',F14.6)
       END SUBROUTINE AUTOCO
+!>
+!!##NAME
+!!    betran(3f) - [M_datapac:STATISTICS] BETRAN generate beta random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine betran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_betran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : betran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call betran(x,y)
+!!    end program demo_betran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==betran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
       IMPLICIT NONE
@@ -528,6 +633,52 @@ contains
 99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE BETRAN
+!>
+!!##NAME
+!!    bincdf(3f) - [M_datapac:STATISTICS] BINCDF compute the binomial cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine bincdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_bincdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : bincdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call bincdf(x,y)
+!!    end program demo_bincdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE BINCDF(X,P,N,Cdf)
       IMPLICIT NONE
@@ -845,6 +996,52 @@ contains
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE BINCDF
+!>
+!!##NAME
+!!    binppf(3f) - [M_datapac:STATISTICS] BINPPF compute the binomial percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine binppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_binppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : binppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call binppf(x,y)
+!!    end program demo_binppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==binppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE BINPPF(P,Ppar,N,Ppf)
       IMPLICIT NONE
@@ -1233,6 +1430,52 @@ contains
 99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
       END SUBROUTINE BINPPF
+!>
+!!##NAME
+!!    binran(3f) - [M_datapac:STATISTICS] BINRAN generate binomial random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine binran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_binran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : binran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call binran(x,y)
+!!    end program demo_binran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==binran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
       IMPLICIT NONE
@@ -1444,6 +1687,52 @@ contains
 99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
 99999 END SUBROUTINE BINRAN
+!>
+!!##NAME
+!!    caucdf(3f) - [M_datapac:STATISTICS] CAUCDF compute the Cauchy cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine caucdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_caucdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : caucdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call caucdf(x,y)
+!!    end program demo_caucdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==caucdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUCDF(X,Cdf)
       IMPLICIT NONE
@@ -1500,6 +1789,52 @@ contains
       Cdf = 0.5 + ((1.0/pi)*ATAN(X))
 !
       END SUBROUTINE CAUCDF
+!>
+!!##NAME
+!!    caupdf(3f) - [M_datapac:STATISTICS] CAUPDF compute the Cauchy probability density function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine caupdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_caupdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : caupdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call caupdf(x,y)
+!!    end program demo_caupdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUPDF(X,Pdf)
       IMPLICIT NONE
@@ -1556,6 +1891,52 @@ contains
       Pdf = c*(1.0/(1.0+X*X))
 !
       END SUBROUTINE CAUPDF
+!>
+!!##NAME
+!!    cauplt(3f) - [M_datapac:STATISTICS] CAUPLT generate a Cauchy probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine cauplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_cauplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : cauplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call cauplt(x,y)
+!!    end program demo_cauplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUPLT(X,N)
       IMPLICIT NONE
@@ -1717,6 +2098,52 @@ contains
       ENDIF
 !
       END SUBROUTINE CAUPLT
+!>
+!!##NAME
+!!    cauppf(3f) - [M_datapac:STATISTICS] CAUPPF compute the Cauchy percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine cauppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_cauppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : cauppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call cauppf(x,y)
+!!    end program demo_cauppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUPPF(P,Ppf)
       IMPLICIT NONE
@@ -1794,6 +2221,52 @@ contains
       ENDIF
 !
       END SUBROUTINE CAUPPF
+!>
+!!##NAME
+!!    cauran(3f) - [M_datapac:STATISTICS] CAURAN generate Cauchy random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine cauran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_cauran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : cauran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call cauran(x,y)
+!!    end program demo_cauran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==cauran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAURAN(N,Iseed,X)
       IMPLICIT NONE
@@ -1910,6 +2383,52 @@ contains
       ENDIF
 !
       END SUBROUTINE CAURAN
+!>
+!!##NAME
+!!    causf(3f) - [M_datapac:STATISTICS] CAUSF compute the Cauchy sparsity function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine causf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_causf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : causf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call causf(x,y)
+!!    end program demo_causf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==causf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUSF(P,Sf)
       IMPLICIT NONE
@@ -1988,6 +2507,52 @@ contains
       ENDIF
 !
       END SUBROUTINE CAUSF
+!>
+!!##NAME
+!!    chscdf(3f) - [M_datapac:STATISTICS] CHSCDF compute the chi-square cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine chscdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_chscdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : chscdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call chscdf(x,y)
+!!    end program demo_chscdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSCDF(X,Nu,Cdf)
       IMPLICIT NONE
@@ -2230,6 +2795,52 @@ contains
       RETURN
 !
 99999 END SUBROUTINE CHSCDF
+!>
+!!##NAME
+!!    chsplt(3f) - [M_datapac:STATISTICS] CHSPLT generate a chi-square probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine chsplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_chsplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : chsplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call chsplt(x,y)
+!!    end program demo_chsplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==chsplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSPLT(X,N,Nu)
       IMPLICIT NONE
@@ -2422,6 +3033,52 @@ contains
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
       END SUBROUTINE CHSPLT
+!>
+!!##NAME
+!!    chsppf(3f) - [M_datapac:STATISTICS] CHSPPF compute the chi-square percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine chsppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_chsppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : chsppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call chsppf(x,y)
+!!    end program demo_chsppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==chsppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSPPF(P,Nu,Ppf)
       IMPLICIT NONE
@@ -2658,6 +3315,52 @@ contains
       ENDIF
 !
       END SUBROUTINE CHSPPF
+!>
+!!##NAME
+!!    chsran(3f) - [M_datapac:STATISTICS] CHSRAN generate chi-square random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine chsran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_chsran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : chsran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call chsran(x,y)
+!!    end program demo_chsran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSRAN(N,Nu,Iseed,X)
       IMPLICIT NONE
@@ -2791,6 +3494,52 @@ contains
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
       END SUBROUTINE CHSRAN
+!>
+!!##NAME
+!!    code(3f) - [M_datapac:STATISTICS] CODE code the elements of a vector (1 for the minimum, 2 for the next larger value, and so on)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine code (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_code
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : code
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call code(x,y)
+!!    end program demo_code
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==code.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CODE(X,N,Y)
       IMPLICIT NONE
@@ -2938,6 +3687,52 @@ contains
 99011 FORMAT (' ')
 !
       END SUBROUTINE CODE
+!>
+!!##NAME
+!!    copy(3f) - [M_datapac:STATISTICS] COPY copy the elements of one vector into another vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine copy (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_copy
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : copy
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call copy(x,y)
+!!    end program demo_copy
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==copy.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE COPY(X,N,Y)
       IMPLICIT NONE
@@ -3024,6 +3819,52 @@ contains
       ENDIF
 !
       END SUBROUTINE COPY
+!>
+!!##NAME
+!!    corr(3f) - [M_datapac:STATISTICS] CORR compute the sample correlation coefficient
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine corr (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_corr
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : corr
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call corr(x,y)
+!!    end program demo_corr
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==corr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CORR(X,Y,N,Iwrite,C)
       IMPLICIT NONE
@@ -3172,6 +4013,52 @@ contains
      &     ,I6,' OBSERVATIONS IS ',F14.5)
       ENDIF
       END SUBROUTINE CORR
+!>
+!!##NAME
+!!    count(3f) - [M_datapac:STATISTICS] COUNT compute the number of observations between a minimum and a maximum value
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine count (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_count
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : count
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call count(x,y)
+!!    end program demo_count
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==count.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
       IMPLICIT NONE
@@ -3299,6 +4186,52 @@ contains
      &           ' IS ',E15.7)
       ENDIF
       END SUBROUTINE COUNT
+!>
+!!##NAME
+!!    decomp(3f) - [M_datapac:STATISTICS] DECOMP decomposes a weighted data matrix (utility routine used by other routines)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine decomp (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_decomp
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : decomp
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call decomp(x,y)
+!!    end program demo_decomp
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==decomp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
       IMPLICIT NONE
@@ -3473,6 +4406,52 @@ contains
 !
       Insing = 1
       END SUBROUTINE DECOMP
+!>
+!!##NAME
+!!    define(3f) - [M_datapac:STATISTICS] DEFINE set all elements of a vector equal to a specified constant
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine define (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_define
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : define
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call define(x,y)
+!!    end program demo_define
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==define.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEFINE(X,N,Xnew)
       IMPLICIT NONE
@@ -3572,6 +4551,52 @@ contains
       ENDIF
 !
       END SUBROUTINE DEFINE
+!>
+!!##NAME
+!!    delete(3f) - [M_datapac:STATISTICS] DELETE delete all elements of a vector within some specified interval
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine delete (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_delete
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : delete
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call delete(x,y)
+!!    end program demo_delete
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==delete.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
       IMPLICIT NONE
@@ -3750,6 +4775,52 @@ contains
       ENDIF
 !
       END SUBROUTINE DELETE
+!>
+!!##NAME
+!!    demod(3f) - [M_datapac:STATISTICS] DEMOD perform a complex demodulation
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine demod (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_demod
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : demod
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call demod(x,y)
+!!    end program demo_demod
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==demod.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEMOD(X,N,F)
       IMPLICIT NONE
@@ -4065,6 +5136,52 @@ contains
       ENDIF
 !
       END SUBROUTINE DEMOD
+!>
+!!##NAME
+!!    dexcdf(3f) - [M_datapac:STATISTICS] DEXCDF compute the double exponential cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine dexcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_dexcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : dexcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call dexcdf(x,y)
+!!    end program demo_dexcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==dexcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXCDF(X,Cdf)
       IMPLICIT NONE
@@ -4121,6 +5238,52 @@ contains
       IF ( X>0.0 ) Cdf = 1.0 - (0.5*EXP(-X))
 !
       END SUBROUTINE DEXCDF
+!>
+!!##NAME
+!!    dexpdf(3f) - [M_datapac:STATISTICS] DEXPDF compute the double exponential probability density function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine dexpdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_dexpdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : dexpdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call dexpdf(x,y)
+!!    end program demo_dexpdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXPDF(X,Pdf)
       IMPLICIT NONE
@@ -4179,6 +5342,52 @@ contains
       Pdf = 0.5*EXP(-arg)
 !
       END SUBROUTINE DEXPDF
+!>
+!!##NAME
+!!    dexplt(3f) - [M_datapac:STATISTICS] DEXPLT generate a double exponential probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine dexplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_dexplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : dexplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call dexplt(x,y)
+!!    end program demo_dexplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==dexplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXPLT(X,N)
       IMPLICIT NONE
@@ -4340,6 +5549,52 @@ contains
       ENDIF
 !
       END SUBROUTINE DEXPLT
+!>
+!!##NAME
+!!    dexppf(3f) - [M_datapac:STATISTICS] DEXPPF compute the double exponential percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine dexppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_dexppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : dexppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call dexppf(x,y)
+!!    end program demo_dexppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==dexppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXPPF(P,Ppf)
       IMPLICIT NONE
@@ -4416,6 +5671,52 @@ contains
       ENDIF
 !
       END SUBROUTINE DEXPPF
+!>
+!!##NAME
+!!    dexran(3f) - [M_datapac:STATISTICS] DEXRAN generate double exponential random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine dexran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_dexran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : dexran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call dexran(x,y)
+!!    end program demo_dexran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==dexran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXRAN(N,Istart,X)
       IMPLICIT NONE
@@ -4524,6 +5825,52 @@ contains
       ENDIF
 !
       END SUBROUTINE DEXRAN
+!>
+!!##NAME
+!!    dexsf(3f) - [M_datapac:STATISTICS] DEXSF compute the double exponential sparsity function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine dexsf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_dexsf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : dexsf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call dexsf(x,y)
+!!    end program demo_dexsf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==dexsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXSF(P,Sf)
       IMPLICIT NONE
@@ -4601,6 +5948,52 @@ contains
       ENDIF
 !
       END SUBROUTINE DEXSF
+!>
+!!##NAME
+!!    discr2(3f) - [M_datapac:STATISTICS] DISCR2 bin the elements of a vector (output vector contains class midpoints)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine discr2 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_discr2
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : discr2
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call discr2(x,y)
+!!    end program demo_discr2
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==discr2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCR2(X,N,Numcla,Y)
       IMPLICIT NONE
@@ -4839,6 +6232,52 @@ contains
 99016 FORMAT (' ')
 !
       END SUBROUTINE DISCR2
+!>
+!!##NAME
+!!    discr3(3f) - [M_datapac:STATISTICS] DISCR3 bin the elements of a vector (output vector contains 1's, 2's, 3's, and so on)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine discr3 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_discr3
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : discr3
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call discr3(x,y)
+!!    end program demo_discr3
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==discr3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCR3(X,N,Numcla,Y)
       IMPLICIT NONE
@@ -5075,6 +6514,52 @@ contains
 99016 FORMAT (' ')
 !
       END SUBROUTINE DISCR3
+!>
+!!##NAME
+!!    discre(3f) - [M_datapac:STATISTICS] DISCRE bin the elements of a vector (like DISCR2, but allows specification of min and max class limits)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine discre (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_discre
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : discre
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call discre(x,y)
+!!    end program demo_discre
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==discre.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
       IMPLICIT NONE
@@ -5343,6 +6828,52 @@ contains
 99020 FORMAT (' ')
 !
       END SUBROUTINE DISCRE
+!>
+!!##NAME
+!!    dot(3f) - [M_datapac:STATISTICS] DOT compute a dot product of two vectors
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine dot (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_dot
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : dot
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call dot(x,y)
+!!    end program demo_dot
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
       IMPLICIT NONE
@@ -5377,6 +6908,52 @@ contains
       Dotpro = sum + dparpr
 !
       END SUBROUTINE DOT
+!>
+!!##NAME
+!!    ev1cdf(3f) - [M_datapac:STATISTICS] EV1CDF compute the extreme value type 1 (Gumbel) cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ev1cdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ev1cdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : ev1cdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call ev1cdf(x,y)
+!!    end program demo_ev1cdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==ev1cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1CDF(X,Cdf)
       IMPLICIT NONE
@@ -5434,6 +7011,52 @@ contains
       Cdf = 1.0 - EXP(-(EXP(-X)))
 !
       END SUBROUTINE EV1CDF
+!>
+!!##NAME
+!!    ev1plt(3f) - [M_datapac:STATISTICS] EV1PLT generate a extreme value type 1 (Gumbel) probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ev1plt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ev1plt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : ev1plt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call ev1plt(x,y)
+!!    end program demo_ev1plt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==ev1plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1PLT(X,N)
       IMPLICIT NONE
@@ -5597,6 +7220,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EV1PLT
+!>
+!!##NAME
+!!    ev1ppf(3f) - [M_datapac:STATISTICS] EV1PPF compute the extreme value type 1 (Gumbel) percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ev1ppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ev1ppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : ev1ppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call ev1ppf(x,y)
+!!    end program demo_ev1ppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==ev1ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1PPF(P,Ppf)
       IMPLICIT NONE
@@ -5671,6 +7340,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EV1PPF
+!>
+!!##NAME
+!!    ev1ran(3f) - [M_datapac:STATISTICS] EV1RAN generate extreme value type 1 (Gumbel) random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ev1ran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ev1ran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : ev1ran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call ev1ran(x,y)
+!!    end program demo_ev1ran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==ev1ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1RAN(N,Iseed,X)
       IMPLICIT NONE
@@ -5776,6 +7491,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EV1RAN
+!>
+!!##NAME
+!!    ev2cdf(3f) - [M_datapac:STATISTICS] EV2CDF compute the extreme value type 2 (Frechet) cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ev2cdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ev2cdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : ev2cdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call ev2cdf(x,y)
+!!    end program demo_ev2cdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==ev2cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2CDF(X,Gamma,Cdf)
       IMPLICIT NONE
@@ -5856,6 +7617,52 @@ contains
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE EV2CDF
+!>
+!!##NAME
+!!    ev2plt(3f) - [M_datapac:STATISTICS] EV2PLT generate a extreme value type 2 (Frechet) probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ev2plt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ev2plt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : ev2plt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call ev2plt(x,y)
+!!    end program demo_ev2plt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==ev2plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2PLT(X,N,Gamma)
       IMPLICIT NONE
@@ -6045,6 +7852,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EV2PLT
+!>
+!!##NAME
+!!    ev2ppf(3f) - [M_datapac:STATISTICS] EV2PPF compute the extreme value type 2 (Frechet) percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ev2ppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ev2ppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : ev2ppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call ev2ppf(x,y)
+!!    end program demo_ev2ppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2PPF(P,Gamma,Ppf)
       IMPLICIT NONE
@@ -6128,6 +7981,52 @@ contains
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE EV2PPF
+!>
+!!##NAME
+!!    ev2ran(3f) - [M_datapac:STATISTICS] EV2RAN generate extreme value type 2 (Frechet) random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ev2ran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ev2ran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : ev2ran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call ev2ran(x,y)
+!!    end program demo_ev2ran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==ev2ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
@@ -6244,6 +8143,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EV2RAN
+!>
+!!##NAME
+!!    expcdf(3f) - [M_datapac:STATISTICS] EXPCDF compute the exponential cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine expcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_expcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : expcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call expcdf(x,y)
+!!    end program demo_expcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==expcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPCDF(X,Cdf)
       IMPLICIT NONE
@@ -6309,6 +8254,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EXPCDF
+!>
+!!##NAME
+!!    exppdf(3f) - [M_datapac:STATISTICS] EXPPDF compute the exponential probability density function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine exppdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_exppdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : exppdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call exppdf(x,y)
+!!    end program demo_exppdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==exppdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPPDF(X,Pdf)
       IMPLICIT NONE
@@ -6374,6 +8365,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EXPPDF
+!>
+!!##NAME
+!!    expplt(3f) - [M_datapac:STATISTICS] EXPPLT generate a exponential probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine expplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_expplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : expplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call expplt(x,y)
+!!    end program demo_expplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==expplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPPLT(X,N)
       IMPLICIT NONE
@@ -6535,6 +8572,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EXPPLT
+!>
+!!##NAME
+!!    expppf(3f) - [M_datapac:STATISTICS] EXPPPF compute the exponential percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine expppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_expppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : expppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call expppf(x,y)
+!!    end program demo_expppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==expppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPPPF(P,Ppf)
       IMPLICIT NONE
@@ -6610,6 +8693,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EXPPPF
+!>
+!!##NAME
+!!    expran(3f) - [M_datapac:STATISTICS] EXPRAN generate exponential random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine expran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_expran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : expran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call expran(x,y)
+!!    end program demo_expran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPRAN(N,Iseed,X)
       IMPLICIT NONE
@@ -6721,6 +8850,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EXPRAN
+!>
+!!##NAME
+!!    expsf(3f) - [M_datapac:STATISTICS] EXPSF compute the exponential sparsity function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine expsf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_expsf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : expsf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call expsf(x,y)
+!!    end program demo_expsf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==expsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPSF(P,Sf)
       IMPLICIT NONE
@@ -6797,6 +8972,52 @@ contains
       ENDIF
 !
       END SUBROUTINE EXPSF
+!>
+!!##NAME
+!!    extrem(3f) - [M_datapac:STATISTICS] EXTREM determine whether a type 1 or type 2 extreme value distribution better fits a given data set
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine extrem (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_extrem
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : extrem
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call extrem(x,y)
+!!    end program demo_extrem
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXTREM(X,N)
       IMPLICIT NONE
@@ -7228,6 +9449,52 @@ contains
 99030 FORMAT (' ',2X,F9.1,13X,F10.2,17X,F10.2)
 !
 99999 END SUBROUTINE EXTREM
+!>
+!!##NAME
+!!    fcdf(3f) - [M_datapac:STATISTICS] FCDF compute the F cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine fcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_fcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : fcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call fcdf(x,y)
+!!    end program demo_fcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
       IMPLICIT NONE
@@ -7587,6 +9854,52 @@ contains
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
 99999 END SUBROUTINE FCDF
+!>
+!!##NAME
+!!    fourie(3f) - [M_datapac:STATISTICS] FOURIE perform a Fourier analysis of a data set
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine fourie (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_fourie
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : fourie
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call fourie(x,y)
+!!    end program demo_fourie
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FOURIE(X,N)
       IMPLICIT NONE
@@ -7907,6 +10220,52 @@ contains
 99014 FORMAT (' ')
 !
       END SUBROUTINE FOURIE
+!>
+!!##NAME
+!!    fran(3f) - [M_datapac:STATISTICS] FRAN generate F random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine fran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_fran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : fran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call fran(x,y)
+!!    end program demo_fran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==fran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
       IMPLICIT NONE
@@ -8069,6 +10428,52 @@ contains
 99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
       END SUBROUTINE FRAN
+!>
+!!##NAME
+!!    freq(3f) - [M_datapac:STATISTICS] FREQ compute the sample frequency and cumulative sample frequency of a vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine freq (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_freq
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : freq
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call freq(x,y)
+!!    end program demo_freq
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==freq.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FREQ(X,N)
       IMPLICIT NONE
@@ -8235,6 +10640,52 @@ contains
 99013 FORMAT (' ',I8,4X,E17.10,3X,I8,6X,F8.4,10X,I8,6X,F8.4)
 99014 FORMAT (' ')
       END SUBROUTINE FREQ
+!>
+!!##NAME
+!!    gamcdf(3f) - [M_datapac:STATISTICS] GAMCDF compute the gamma cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine gamcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_gamcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : gamcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call gamcdf(x,y)
+!!    end program demo_gamcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==gamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMCDF(X,Gamma,Cdf)
       IMPLICIT NONE
@@ -8400,6 +10851,52 @@ contains
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE GAMCDF
+!>
+!!##NAME
+!!    gamplt(3f) - [M_datapac:STATISTICS] GAMPLT generate a gamma probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine gamplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_gamplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : gamplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call gamplt(x,y)
+!!    end program demo_gamplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPLT(X,N,Gamma)
       IMPLICIT NONE
@@ -8760,6 +11257,52 @@ contains
       ENDIF
 !
       END SUBROUTINE GAMPLT
+!>
+!!##NAME
+!!    gamppf(3f) - [M_datapac:STATISTICS] GAMPPF compute the gamma percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine gamppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_gamppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : gamppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call gamppf(x,y)
+!!    end program demo_gamppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==gamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPPF(P,Gamma,Ppf)
       IMPLICIT NONE
@@ -8991,6 +11534,52 @@ contains
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE GAMPPF
+!>
+!!##NAME
+!!    gamran(3f) - [M_datapac:STATISTICS] GAMRAN generate gamma random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine gamran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_gamran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : gamran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call gamran(x,y)
+!!    end program demo_gamran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
@@ -9177,6 +11766,52 @@ contains
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE GAMRAN
+!>
+!!##NAME
+!!    geocdf(3f) - [M_datapac:STATISTICS] GEOCDF compute the geometric cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine geocdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_geocdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : geocdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call geocdf(x,y)
+!!    end program demo_geocdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==geocdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEOCDF(X,P,Cdf)
       IMPLICIT NONE
@@ -9309,6 +11944,52 @@ contains
 99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE GEOCDF
+!>
+!!##NAME
+!!    geoplt(3f) - [M_datapac:STATISTICS] GEOPLT generate a geometric probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine geoplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_geoplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : geoplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call geoplt(x,y)
+!!    end program demo_geoplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==geoplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEOPLT(X,N,P)
       IMPLICIT NONE
@@ -9513,6 +12194,52 @@ contains
       ENDIF
 !
       END SUBROUTINE GEOPLT
+!>
+!!##NAME
+!!    geoppf(3f) - [M_datapac:STATISTICS] GEOPPF compute the geometric percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine geoppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_geoppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : geoppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call geoppf(x,y)
+!!    end program demo_geoppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==geoppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEOPPF(P,Ppar,Ppf)
       IMPLICIT NONE
@@ -9645,6 +12372,52 @@ contains
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
 99999 END SUBROUTINE GEOPPF
+!>
+!!##NAME
+!!    georan(3f) - [M_datapac:STATISTICS] GEORAN generate geometric random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine georan (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_georan
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : georan
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call georan(x,y)
+!!    end program demo_georan
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==georan.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEORAN(N,P,Iseed,X)
       IMPLICIT NONE
@@ -9808,6 +12581,52 @@ contains
       ENDIF
 !
       END SUBROUTINE GEORAN
+!>
+!!##NAME
+!!    hfncdf(3f) - [M_datapac:STATISTICS] HFNCDF compute the half-normal cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine hfncdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_hfncdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : hfncdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call hfncdf(x,y)
+!!    end program demo_hfncdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==hfncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNCDF(X,Cdf)
       IMPLICIT NONE
@@ -9886,6 +12705,52 @@ contains
       ENDIF
 !
       END SUBROUTINE HFNCDF
+!>
+!!##NAME
+!!    hfnplt(3f) - [M_datapac:STATISTICS] HFNPLT generate a half-normal probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine hfnplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_hfnplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : hfnplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call hfnplt(x,y)
+!!    end program demo_hfnplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==hfnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNPLT(X,N)
       IMPLICIT NONE
@@ -10055,6 +12920,52 @@ contains
       ENDIF
 !
       END SUBROUTINE HFNPLT
+!>
+!!##NAME
+!!    hfnppf(3f) - [M_datapac:STATISTICS] HFNPPF compute the half-normal percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine hfnppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_hfnppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : hfnppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call hfnppf(x,y)
+!!    end program demo_hfnppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNPPF(P,Ppf)
       IMPLICIT NONE
@@ -10139,6 +13050,52 @@ contains
       ENDIF
 !
       END SUBROUTINE HFNPPF
+!>
+!!##NAME
+!!    hfnran(3f) - [M_datapac:STATISTICS] HFNRAN generate half-normal random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine hfnran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_hfnran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : hfnran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call hfnran(x,y)
+!!    end program demo_hfnran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==hfnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNRAN(N,Iseed,X)
       IMPLICIT NONE
@@ -10281,6 +13238,52 @@ contains
       ENDIF
 !
       END SUBROUTINE HFNRAN
+!>
+!!##NAME
+!!    hist(3f) - [M_datapac:STATISTICS] HIST generates histograms based on two different class widths
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine hist (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_hist
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : hist
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call hist(x,y)
+!!    end program demo_hist
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HIST(X,N)
       IMPLICIT NONE
@@ -10568,6 +13571,52 @@ contains
       ENDIF
 99013 FORMAT (' ',6X,123A1)
       END SUBROUTINE HIST
+!>
+!!##NAME
+!!    invxwx(3f) - [M_datapac:STATISTICS] INVXWX compute the inverse of X'WX
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine invxwx (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_invxwx
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : invxwx
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call invxwx(x,y)
+!!    end program demo_invxwx
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE INVXWX(N,K)
       IMPLICIT NONE
@@ -10679,6 +13728,52 @@ contains
          R(irarg) = dum3(i)
       ENDDO
       END SUBROUTINE INVXWX
+!>
+!!##NAME
+!!    lamcdf(3f) - [M_datapac:STATISTICS] LAMCDF compute the Tukey-Lambda cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lamcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lamcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lamcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lamcdf(x,y)
+!!    end program demo_lamcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMCDF(X,Alamba,Cdf)
       IMPLICIT NONE
@@ -10810,6 +13905,52 @@ contains
       ENDIF
 !
 99999 END SUBROUTINE LAMCDF
+!>
+!!##NAME
+!!    lampdf(3f) - [M_datapac:STATISTICS] LAMPDF compute the Tukey-Lambda probability density function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lampdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lampdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lampdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lampdf(x,y)
+!!    end program demo_lampdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPDF(X,Alamba,Pdf)
       IMPLICIT NONE
@@ -10910,6 +14051,52 @@ contains
       Pdf = 1.0/sf
 !
       END SUBROUTINE LAMPDF
+!>
+!!##NAME
+!!    lamplt(3f) - [M_datapac:STATISTICS] LAMPLT generate a Tukey-Lambda probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lamplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lamplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lamplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lamplt(x,y)
+!!    end program demo_lamplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPLT(X,N,Alamba)
       IMPLICIT NONE
@@ -11097,6 +14284,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LAMPLT
+!>
+!!##NAME
+!!    lamppf(3f) - [M_datapac:STATISTICS] LAMPPF compute the Tukey-Lambda percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lamppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lamppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lamppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lamppf(x,y)
+!!    end program demo_lamppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
       IMPLICIT NONE
@@ -11193,6 +14426,52 @@ contains
       RETURN
 !
 99999 END SUBROUTINE LAMPPF
+!>
+!!##NAME
+!!    lamran(3f) - [M_datapac:STATISTICS] LAMRAN generate Tukey-Lambda random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lamran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lamran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lamran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lamran(x,y)
+!!    end program demo_lamran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
       IMPLICIT NONE
@@ -11309,6 +14588,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LAMRAN
+!>
+!!##NAME
+!!    lamsf(3f) - [M_datapac:STATISTICS] LAMSF compute the Tukey-Lambda sparsity function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lamsf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lamsf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lamsf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lamsf(x,y)
+!!    end program demo_lamsf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lamsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMSF(P,Alamba,Sf)
       IMPLICIT NONE
@@ -11400,6 +14725,52 @@ contains
       RETURN
 !
 99999 END SUBROUTINE LAMSF
+!>
+!!##NAME
+!!    lgncdf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lgncdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lgncdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lgncdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lgncdf(x,y)
+!!    end program demo_lgncdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lgncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNCDF(X,Cdf)
       IMPLICIT NONE
@@ -11476,6 +14847,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LGNCDF
+!>
+!!##NAME
+!!    lgnplt(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lgnplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lgnplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lgnplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lgnplt(x,y)
+!!    end program demo_lgnplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lgnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNPLT(X,N)
       IMPLICIT NONE
@@ -11646,6 +15063,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LGNPLT
+!>
+!!##NAME
+!!    lgnppf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lgnppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lgnppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lgnppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lgnppf(x,y)
+!!    end program demo_lgnppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lgnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNPPF(P,Ppf)
       IMPLICIT NONE
@@ -11727,6 +15190,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LGNPPF
+!>
+!!##NAME
+!!    lgnran(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine lgnran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_lgnran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : lgnran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call lgnran(x,y)
+!!    end program demo_lgnran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==lgnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNRAN(N,Iseed,X)
       IMPLICIT NONE
@@ -11875,6 +15384,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LGNRAN
+!>
+!!##NAME
+!!    loc(3f) - [M_datapac:STATISTICS] LOC compute the sample mean, midrange, midmean, and median
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine loc (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_loc
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : loc
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call loc(x,y)
+!!    end program demo_loc
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==loc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOC(X,N)
       IMPLICIT NONE
@@ -12050,6 +15605,52 @@ contains
 99011 FORMAT (' ')
 !
       END SUBROUTINE LOC
+!>
+!!##NAME
+!!    logcdf(3f) - [M_datapac:STATISTICS] LOGCDF compute the logistic cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine logcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_logcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : logcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call logcdf(x,y)
+!!    end program demo_logcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==logcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGCDF(X,Cdf)
       IMPLICIT NONE
@@ -12110,6 +15711,52 @@ contains
       RETURN
 !
 99999 END SUBROUTINE LOGCDF
+!>
+!!##NAME
+!!    logpdf(3f) - [M_datapac:STATISTICS] LOGPDF compute the logistic probability density function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine logpdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_logpdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : logpdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call logpdf(x,y)
+!!    end program demo_logpdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==logpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGPDF(X,Pdf)
       IMPLICIT NONE
@@ -12164,6 +15811,52 @@ contains
       Pdf = EXP(X)/((1.0+EXP(X))**2)
 !
       END SUBROUTINE LOGPDF
+!>
+!!##NAME
+!!    logplt(3f) - [M_datapac:STATISTICS] LOGPLT generate a logistic probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine logplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_logplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : logplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call logplt(x,y)
+!!    end program demo_logplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==logplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGPLT(X,N)
       IMPLICIT NONE
@@ -12323,6 +16016,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LOGPLT
+!>
+!!##NAME
+!!    logppf(3f) - [M_datapac:STATISTICS] LOGPPF compute the logistic percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine logppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_logppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : logppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call logppf(x,y)
+!!    end program demo_logppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==logppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGPPF(P,Ppf)
       IMPLICIT NONE
@@ -12399,6 +16138,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LOGPPF
+!>
+!!##NAME
+!!    logran(3f) - [M_datapac:STATISTICS] LOGRAN generate logistic random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine logran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_logran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : logran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call logran(x,y)
+!!    end program demo_logran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==logran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGRAN(N,Iseed,X)
       IMPLICIT NONE
@@ -12509,6 +16294,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LOGRAN
+!>
+!!##NAME
+!!    logsf(3f) - [M_datapac:STATISTICS] LOGSF compute the logistic sparsity function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine logsf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_logsf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : logsf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call logsf(x,y)
+!!    end program demo_logsf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGSF(P,Sf)
       IMPLICIT NONE
@@ -12584,6 +16415,52 @@ contains
       ENDIF
 !
       END SUBROUTINE LOGSF
+!>
+!!##NAME
+!!    max(3f) - [M_datapac:STATISTICS] MAX compute the maximum of a data vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine max (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_max
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : max
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call max(x,y)
+!!    end program demo_max
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==max.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MAX(X,N,Iwrite,Xmax)
       IMPLICIT NONE
@@ -12687,6 +16564,52 @@ contains
 99006 FORMAT (' ','THE MAXIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ',  &
      &        E15.8)
       END SUBROUTINE MAX
+!>
+!!##NAME
+!!    mean(3f) - [M_datapac:STATISTICS] MEAN compute the mean of a data vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine mean (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_mean
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : mean
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call mean(x,y)
+!!    end program demo_mean
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MEAN(X,N,Iwrite,Xmean)
       IMPLICIT NONE
@@ -12799,6 +16722,52 @@ contains
 99006 FORMAT (' ','THE SAMPLE MEAN OF THE ',I6,' OBSERVATIONS IS ',     &
      &        E15.8)
       END SUBROUTINE MEAN
+!>
+!!##NAME
+!!    median(3f) - [M_datapac:STATISTICS] MEDIAN compute the median of a data vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine median (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_median
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : median
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call median(x,y)
+!!    end program demo_median
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
       IMPLICIT NONE
@@ -12919,6 +16888,52 @@ contains
 99006 FORMAT (' ','THE SAMPLE MEDIAN OF THE ',I6,' OBSERVATIONS IS ',   &
      &        E15.8)
       END SUBROUTINE MEDIAN
+!>
+!!##NAME
+!!    midm(3f) - [M_datapac:STATISTICS] MIDM compute the midmean of a data vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine midm (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_midm
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : midm
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call midm(x,y)
+!!    end program demo_midm
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==midm.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
       IMPLICIT NONE
@@ -13070,6 +17085,52 @@ contains
      &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
 !
       END SUBROUTINE MIDM
+!>
+!!##NAME
+!!    midr(3f) - [M_datapac:STATISTICS] MIDR compute the midrange of a data vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine midr (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_midr
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : midr
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call midr(x,y)
+!!    end program demo_midr
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==midr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
       IMPLICIT NONE
@@ -13183,6 +17244,52 @@ contains
 99006 FORMAT (' ','THE SAMPLE MIDRANGE OF THE ',I6,' OBSERVATIONS IS ', &
      &        E22.15)
       END SUBROUTINE MIDR
+!>
+!!##NAME
+!!    min(3f) - [M_datapac:STATISTICS] MIN compute the minimum of a data vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine min (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_min
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : min
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call min(x,y)
+!!    end program demo_min
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==min.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIN(X,N,Iwrite,Xmin)
       IMPLICIT NONE
@@ -13286,6 +17393,52 @@ contains
 99006 FORMAT (' ','THE MINIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ',  &
      &        E15.8)
       END SUBROUTINE MIN
+!>
+!!##NAME
+!!    move(3f) - [M_datapac:STATISTICS] MOVE move selected elements of one vector into another vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine move (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_move
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : move
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call move(x,y)
+!!    end program demo_move
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==move.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
       IMPLICIT NONE
@@ -13411,6 +17564,52 @@ contains
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
       END SUBROUTINE MOVE
+!>
+!!##NAME
+!!    nbcdf(3f) - [M_datapac:STATISTICS] NBCDF compute the negative binomial cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine nbcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_nbcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : nbcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call nbcdf(x,y)
+!!    end program demo_nbcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==nbcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBCDF(X,P,N,Cdf)
       IMPLICIT NONE
@@ -13718,6 +17917,52 @@ contains
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE NBCDF
+!>
+!!##NAME
+!!    nbppf(3f) - [M_datapac:STATISTICS] NBPPF compute the negative binomial percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine nbppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_nbppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : nbppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call nbppf(x,y)
+!!    end program demo_nbppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==nbppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
       IMPLICIT NONE
@@ -14112,6 +18357,52 @@ contains
 99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
       END SUBROUTINE NBPPF
+!>
+!!##NAME
+!!    nbran(3f) - [M_datapac:STATISTICS] NBRAN generate negative binomial random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine nbran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_nbran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : nbran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call nbran(x,y)
+!!    end program demo_nbran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
       IMPLICIT NONE
@@ -14321,6 +18612,52 @@ contains
 99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
 99999 END SUBROUTINE NBRAN
+!>
+!!##NAME
+!!    norcdf(3f) - [M_datapac:STATISTICS] NORCDF compute the normal cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine norcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_norcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : norcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call norcdf(x,y)
+!!    end program demo_norcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==norcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORCDF(X,Cdf)
       IMPLICIT NONE
@@ -14385,6 +18722,52 @@ contains
       IF ( X<0.0 ) Cdf = 1.0 - Cdf
 !
       END SUBROUTINE NORCDF
+!>
+!!##NAME
+!!    norout(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine norout (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_norout
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : norout
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call norout(x,y)
+!!    end program demo_norout
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NOROUT(X,N)
       IMPLICIT NONE
@@ -14851,6 +19234,52 @@ contains
 99044 FORMAT (' ',130A1)
 !
       END SUBROUTINE NOROUT
+!>
+!!##NAME
+!!    norpdf(3f) - [M_datapac:STATISTICS] NORPDF compute the normal probability density function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine norpdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_norpdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : norpdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call norpdf(x,y)
+!!    end program demo_norpdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORPDF(X,Pdf)
       IMPLICIT NONE
@@ -14907,6 +19336,52 @@ contains
       Pdf = c*EXP(-(X*X)/2.0)
 !
       END SUBROUTINE NORPDF
+!>
+!!##NAME
+!!    norplt(3f) - [M_datapac:STATISTICS] NORPLT generate a normal probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine norplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_norplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : norplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call norplt(x,y)
+!!    end program demo_norplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==norplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORPLT(X,N)
       IMPLICIT NONE
@@ -15071,6 +19546,52 @@ contains
       ENDIF
 !
       END SUBROUTINE NORPLT
+!>
+!!##NAME
+!!    norppf(3f) - [M_datapac:STATISTICS] NORPPF compute the normal percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine norppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_norppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : norppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call norppf(x,y)
+!!    end program demo_norppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==norppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORPPF(P,Ppf)
       IMPLICIT NONE
@@ -15196,6 +19717,52 @@ contains
       RETURN
 !
 99999 END SUBROUTINE NORPPF
+!>
+!!##NAME
+!!    norran(3f) - [M_datapac:STATISTICS] NORRAN generate normal random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine norran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_norran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : norran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call norran(x,y)
+!!    end program demo_norran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORRAN(N,Iseed,X)
       IMPLICIT NONE
@@ -15329,6 +19896,52 @@ contains
       ENDIF
 !
       END SUBROUTINE NORRAN
+!>
+!!##NAME
+!!    norsf(3f) - [M_datapac:STATISTICS] NORSF compute the normal sparsity function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine norsf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_norsf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : norsf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call norsf(x,y)
+!!    end program demo_norsf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==norsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORSF(P,Sf)
       IMPLICIT NONE
@@ -15408,6 +20021,52 @@ contains
       ENDIF
 !
       END SUBROUTINE NORSF
+!>
+!!##NAME
+!!    parcdf(3f) - [M_datapac:STATISTICS] PARCDF compute the Pareto cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine parcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_parcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : parcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call parcdf(x,y)
+!!    end program demo_parcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==parcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARCDF(X,Gamma,Cdf)
       IMPLICIT NONE
@@ -15493,6 +20152,52 @@ contains
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE PARCDF
+!>
+!!##NAME
+!!    parplt(3f) - [M_datapac:STATISTICS] PARPLT generate a Pareto probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine parplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_parplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : parplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call parplt(x,y)
+!!    end program demo_parplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==parplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPLT(X,N,Gamma)
       IMPLICIT NONE
@@ -15682,6 +20387,52 @@ contains
       ENDIF
 !
       END SUBROUTINE PARPLT
+!>
+!!##NAME
+!!    parppf(3f) - [M_datapac:STATISTICS] PARPPF compute the Pareto percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine parppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_parppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : parppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call parppf(x,y)
+!!    end program demo_parppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==parppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPPF(P,Gamma,Ppf)
       IMPLICIT NONE
@@ -15770,6 +20521,52 @@ contains
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE PARPPF
+!>
+!!##NAME
+!!    parran(3f) - [M_datapac:STATISTICS] PARRAN generate Pareto random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine parran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_parran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : parran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call parran(x,y)
+!!    end program demo_parran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==parran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
@@ -15891,6 +20688,52 @@ contains
       ENDIF
 !
       END SUBROUTINE PARRAN
+!>
+!!##NAME
+!!    plot10(3f) - [M_datapac:STATISTICS] PLOT10 generate a line printer plot with special plot characters
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plot10 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plot10
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plot10
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plot10(x,y)
+!!    end program demo_plot10
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plot10.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
       SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,     &
@@ -16379,6 +21222,52 @@ contains
 99022 FORMAT (' ','VALUE OF ',E15.8)
 !
       END SUBROUTINE PLOT10
+!>
+!!##NAME
+!!    plot6(3f) - [M_datapac:STATISTICS] PLOT6 generate a line printer plot
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plot6 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plot6
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plot6
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plot6(x,y)
+!!    end program demo_plot6
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plot6.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
       IMPLICIT NONE
@@ -16683,6 +21572,52 @@ contains
 99016 FORMAT (' ','VALUE OF ',E15.8)
 !
       END SUBROUTINE PLOT6
+!>
+!!##NAME
+!!    plot7(3f) - [M_datapac:STATISTICS] PLOT7 generate a line printer plot with special plot characters
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plot7 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plot7
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plot7
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plot7(x,y)
+!!    end program demo_plot7
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
       IMPLICIT NONE
@@ -17073,6 +22008,52 @@ contains
 99017 FORMAT (' ','VALUE OF ',E15.8)
 !
       END SUBROUTINE PLOT7
+!>
+!!##NAME
+!!    plot8(3f) - [M_datapac:STATISTICS] PLOT8 generate a line printer plot with special plot characters
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plot8 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plot8
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plot8
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plot8(x,y)
+!!    end program demo_plot8
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plot8.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
       IMPLICIT NONE
@@ -17529,6 +22510,52 @@ contains
 99020 FORMAT (' ','VALUE OF ',E15.8)
 !
       END SUBROUTINE PLOT8
+!>
+!!##NAME
+!!    plot9(3f) - [M_datapac:STATISTICS] PLOT9 generate a line printer plot with special plot characters
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plot9 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plot9
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plot9
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plot9(x,y)
+!!    end program demo_plot9
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plot9.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,      &
      &                 Plchid)
@@ -17951,6 +22978,52 @@ contains
 99019 FORMAT (' ','VALUE OF ',E15.8)
 !
       END SUBROUTINE PLOT9
+!>
+!!##NAME
+!!    plotc(3f) - [M_datapac:STATISTICS] PLOTC generate a line printer plot with special plot characters
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotc (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotc
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotc
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotc(x,y)
+!!    end program demo_plotc
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTC(Y,X,Char,N)
       IMPLICIT NONE
@@ -18356,6 +23429,52 @@ contains
 99017 FORMAT (' ','VALUE OF ',E15.8)
 !
       END SUBROUTINE PLOTC
+!>
+!!##NAME
+!!    plotco(3f) - [M_datapac:STATISTICS] PLOTCO generate a line printer autocorrelation plot
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotco (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotco
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotco
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotco(x,y)
+!!    end program demo_plotco
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTCO(Y,N)
       IMPLICIT NONE
@@ -18562,6 +23681,52 @@ contains
 99012 FORMAT (' ',6X,8(I4,11X),I4)
 99013 FORMAT (' ',6X,12(I4,6X),I4)
       END SUBROUTINE PLOTCO
+!>
+!!##NAME
+!!    plotct(3f) - [M_datapac:STATISTICS] PLOTCT generate a line printer plot for the terminal (71 characters wide)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotct (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotct
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotct
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotct(x,y)
+!!    end program demo_plotct
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTCT(Y,X,Char,N)
       IMPLICIT NONE
@@ -18959,6 +24124,52 @@ contains
 99019 FORMAT (' ',15X,A1)
 !
       END SUBROUTINE PLOTCT
+!>
+!!##NAME
+!!    plot(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plot (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plot
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plot
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plot(x,y)
+!!    end program demo_plot
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT(Y,X,N)
       IMPLICIT NONE
@@ -19272,6 +24483,52 @@ contains
 99016 FORMAT (' ','VALUE OF ',E15.8)
 !
       END SUBROUTINE PLOT
+!>
+!!##NAME
+!!    plotsc(3f) - [M_datapac:STATISTICS] PLOTSC generate a line printer plot with special plot characters
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotsc (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotsc
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotsc
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotsc(x,y)
+!!    end program demo_plotsc
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotsc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTSC(Y,X,Char,N,D,Dmin,Dmax)
       IMPLICIT NONE
@@ -19756,6 +25013,52 @@ contains
 99020 FORMAT (' ','VALUE OF ',E15.8)
 !
       END SUBROUTINE PLOTSC
+!>
+!!##NAME
+!!    plots(3f) - [M_datapac:STATISTICS] PLOTS generate a line printer plot of Y vs X
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plots (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plots
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plots
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plots(x,y)
+!!    end program demo_plots
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plots.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)
       IMPLICIT NONE
@@ -20148,6 +25451,52 @@ contains
 99020 FORMAT (' ','VALUE OF ',E15.8)
 !
       END SUBROUTINE PLOTS
+!>
+!!##NAME
+!!    plotsp(3f) - [M_datapac:STATISTICS] PLOTSP generate a line printer spectrum plot
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotsp (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotsp
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotsp
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotsp(x,y)
+!!    end program demo_plotsp
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotsp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTSP(Y,N,Idf)
       IMPLICIT NONE
@@ -20327,6 +25676,52 @@ contains
      &')
       ENDIF
       END SUBROUTINE PLOTSP
+!>
+!!##NAME
+!!    plotst(3f) - [M_datapac:STATISTICS] PLOTST generate a line printer plot of Y vs X for the terminal (71 characters wide)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotst (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotst
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotst
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotst(x,y)
+!!    end program demo_plotst
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotst.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTST(Y,X,N,D,Dmin,Dmax)
       IMPLICIT NONE
@@ -20709,6 +26104,52 @@ contains
 99022 FORMAT (' ',15X,A1)
 !
       END SUBROUTINE PLOTST
+!>
+!!##NAME
+!!    plott(3f) - [M_datapac:STATISTICS] PLOTT generate a line printer plot of Y vs X for the terminal (71 characters wide)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plott (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plott
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plott
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plott(x,y)
+!!    end program demo_plott
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plott.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTT(Y,X,N)
       IMPLICIT NONE
@@ -21015,6 +26456,52 @@ contains
 99018 FORMAT (' ',15X,A1)
 !
       END SUBROUTINE PLOTT
+!>
+!!##NAME
+!!    plotu(3f) - [M_datapac:STATISTICS] PLOTU generate a line printer 4-plot
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotu (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotu
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotu
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotu(x,y)
+!!    end program demo_plotu
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTU(X,N)
       IMPLICIT NONE
@@ -21561,6 +27048,52 @@ contains
 99020 FORMAT (' ',17X,5F10.4,15X,4F10.4,F9.3)
 !
       END SUBROUTINE PLOTU
+!>
+!!##NAME
+!!    plotx(3f) - [M_datapac:STATISTICS] PLOTX generate a line printer run sequence plot
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotx (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotx
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotx
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotx(x,y)
+!!    end program demo_plotx
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTX(X,N)
       IMPLICIT NONE
@@ -21810,6 +27343,52 @@ contains
      &        ' SUBROUTINE')
 !
       END SUBROUTINE PLOTX
+!>
+!!##NAME
+!!    plotxt(3f) - [M_datapac:STATISTICS] PLOTXT generate a line printer run sequence plot for the terminal (71 characters wide)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotxt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotxt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotxt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotxt(x,y)
+!!    end program demo_plotxt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTXT(X,N)
       IMPLICIT NONE
@@ -22055,6 +27634,52 @@ contains
 99014 FORMAT (' ',15X,A1)
 !
       END SUBROUTINE PLOTXT
+!>
+!!##NAME
+!!    plotxx(3f) - [M_datapac:STATISTICS] PLOTXX generate a line printer lag plot
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine plotxx (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_plotxx
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : plotxx
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call plotxx(x,y)
+!!    end program demo_plotxx
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==plotxx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTXX(X,N)
       IMPLICIT NONE
@@ -22330,6 +27955,52 @@ contains
      &        ' SUBROUTINE')
 !
       END SUBROUTINE PLOTXX
+!>
+!!##NAME
+!!    pltsct(3f) - [M_datapac:STATISTICS] PLTSCT generate a line printer plot with special plot characters for the terminal (71 characters wide)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine pltsct (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_pltsct
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : pltsct
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call pltsct(x,y)
+!!    end program demo_pltsct
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==pltsct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTSCT(Y,X,Char,N,D,Dmin,Dmax)
       IMPLICIT NONE
@@ -22793,6 +28464,52 @@ contains
 99022 FORMAT (' ',15X,A1)
 !
       END SUBROUTINE PLTSCT
+!>
+!!##NAME
+!!    pltxxt(3f) - [M_datapac:STATISTICS] PLTXXT generate a line printer lag plot for the terminal (71 characters wide)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine pltxxt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_pltxxt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : pltxxt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call pltxxt(x,y)
+!!    end program demo_pltxxt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==pltxxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTXXT(X,N)
       IMPLICIT NONE
@@ -23059,6 +28776,52 @@ contains
 99014 FORMAT (' ',15X,A1)
 !
       END SUBROUTINE PLTXXT
+!>
+!!##NAME
+!!    poicdf(3f) - [M_datapac:STATISTICS] POICDF compute the Poisson cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine poicdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_poicdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : poicdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call poicdf(x,y)
+!!    end program demo_poicdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==poicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POICDF(X,Alamba,Cdf)
       IMPLICIT NONE
@@ -23254,6 +29017,52 @@ contains
 99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE POICDF
+!>
+!!##NAME
+!!    poiplt(3f) - [M_datapac:STATISTICS] POIPLT generate a Poisson probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine poiplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_poiplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : poiplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call poiplt(x,y)
+!!    end program demo_poiplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==poiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPLT(X,N,Alamba)
       IMPLICIT NONE
@@ -23532,6 +29341,52 @@ contains
       ENDIF
 !
       END SUBROUTINE POIPLT
+!>
+!!##NAME
+!!    poippf(3f) - [M_datapac:STATISTICS] POIPPF compute the Poisson percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine poippf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_poippf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : poippf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call poippf(x,y)
+!!    end program demo_poippf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==poippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
       IMPLICIT NONE
@@ -23885,6 +29740,52 @@ contains
 99020 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
       END SUBROUTINE POIPPF
+!>
+!!##NAME
+!!    poiran(3f) - [M_datapac:STATISTICS] POIRAN generate Poisson random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine poiran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_poiran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : poiran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call poiran(x,y)
+!!    end program demo_poiran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==poiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
       IMPLICIT NONE
@@ -24053,6 +29954,52 @@ contains
       ENDIF
 !
       END SUBROUTINE POIRAN
+!>
+!!##NAME
+!!    poly(3f) - [M_datapac:STATISTICS] POLY compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine poly (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_poly
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : poly
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call poly(x,y)
+!!    end program demo_poly
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==poly.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POLY(Y,X,W,N,Ideg,Iwrite,B,Sdb,S,Df,Pred,Res)
       IMPLICIT NONE
@@ -24703,6 +30650,52 @@ contains
 99038 FORMAT (' ',3X,I8,8E15.8)
 !
 99999 END SUBROUTINE POLY
+!>
+!!##NAME
+!!    propor(3f) - [M_datapac:STATISTICS] PROPOR compute the sample proportion
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine propor (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_propor
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : propor
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call propor(x,y)
+!!    end program demo_propor
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==propor.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
       IMPLICIT NONE
@@ -24839,6 +30832,52 @@ contains
      &           ' IS ',E15.7)
       ENDIF
       END SUBROUTINE PROPOR
+!>
+!!##NAME
+!!    range(3f) - [M_datapac:STATISTICS] RANGE compute the sample range
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine range (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_range
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : range
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call range(x,y)
+!!    end program demo_range
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==range.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANGE(X,N,Iwrite,Xrange)
       IMPLICIT NONE
@@ -24954,6 +30993,52 @@ contains
 99006 FORMAT (' ','THE SAMPLE RANGE OF THE ',I6,' OBSERVATIONS IS ',    &
      &        E15.8)
       END SUBROUTINE RANGE
+!>
+!!##NAME
+!!    rank(3f) - [M_datapac:STATISTICS] RANK rank a vector of sample observations
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine rank (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_rank
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : rank
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call rank(x,y)
+!!    end program demo_rank
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANK(X,N,Xr)
       IMPLICIT NONE
@@ -25183,6 +31268,52 @@ contains
      &        'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
 !
       END SUBROUTINE RANK
+!>
+!!##NAME
+!!    ranper(3f) - [M_datapac:STATISTICS] RANPER generates a random permutation
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ranper (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_ranper
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : ranper
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call ranper(x,y)
+!!    end program demo_ranper
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==ranper.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANPER(N,Istart,X)
       IMPLICIT NONE
@@ -25289,6 +31420,52 @@ contains
          ENDDO
       ENDIF
       END SUBROUTINE RANPER
+!>
+!!##NAME
+!!    read(3f) - [M_datapac:STATISTICS] READ perform a format-free read of data from a file
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine read (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_read
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : read
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call read(x,y)
+!!    end program demo_read
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==read.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE READ(Icol1,Icol2,X,N)
       IMPLICIT NONE
@@ -25782,6 +31959,52 @@ contains
 99028 FORMAT (' ','      THE CARD IS AS FOLLOWS--   ',80A1)
 99029 FORMAT (' ','      OF THE FOLLOWING DATA VALUE--   ',41A1)
       END SUBROUTINE READ
+!>
+!!##NAME
+!!    readg(3f) - [M_datapac:STATISTICS] READG perform a format-free read of data from a file restricted to a user-specified set of columns
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine readg (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_readg
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : readg
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call readg(x,y)
+!!    end program demo_readg
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==readg.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE READG(Ird,Icol1,Icol2,X,N)
       IMPLICIT NONE
@@ -26287,6 +32510,52 @@ contains
 99028 FORMAT (' ','      OF THE FOLLOWING DATA VALUE--   ',41A1)
 !
       END SUBROUTINE READG
+!>
+!!##NAME
+!!    relsd(3f) - [M_datapac:STATISTICS] RELSD compute the relative standard deviation of a vector of observations
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine relsd (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_relsd
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : relsd
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call relsd(x,y)
+!!    end program demo_relsd
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==relsd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
       IMPLICIT NONE
@@ -26411,6 +32680,52 @@ contains
      &        'DEVIATION/MEAN) FOR THE ',I6,' OBSERVATIONS IS ',E12.8,  &
      &        ' PERCENT')
       END SUBROUTINE RELSD
+!>
+!!##NAME
+!!    replac(3f) - [M_datapac:STATISTICS] REPLAC replace all observations in a vector within a given interval with a user-specified constant
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine replac (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_replac
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : replac
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call replac(x,y)
+!!    end program demo_replac
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==replac.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
       IMPLICIT NONE
@@ -26587,6 +32902,52 @@ contains
       ENDIF
 !
       END SUBROUTINE REPLAC
+!>
+!!##NAME
+!!    retain(3f) - [M_datapac:STATISTICS] RETAIN retain all observations in a vector within a user-specified interval
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine retain (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_retain
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : retain
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call retain(x,y)
+!!    end program demo_retain
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==retain.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
       IMPLICIT NONE
@@ -26768,6 +33129,52 @@ contains
       ENDIF
 !
       END SUBROUTINE RETAIN
+!>
+!!##NAME
+!!    runs(3f) - [M_datapac:STATISTICS] RUNS perform a runs test
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine runs (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_runs
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : runs
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call runs(x,y)
+!!    end program demo_runs
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==runs.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RUNS(X,N)
       IMPLICIT NONE
@@ -27209,6 +33616,52 @@ contains
 99024 FORMAT ('1')
 99025 FORMAT (' ')
       END SUBROUTINE RUNS
+!>
+!!##NAME
+!!    sampp(3f) - [M_datapac:STATISTICS] SAMPP compute the sample 100P percent point (i.e., percentile)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine sampp (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_sampp
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : sampp
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call sampp(x,y)
+!!    end program demo_sampp
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
       IMPLICIT NONE
@@ -27363,6 +33816,52 @@ contains
      &        '*****')
 !
       END SUBROUTINE SAMPP
+!>
+!!##NAME
+!!    scale(3f) - [M_datapac:STATISTICS] SCALE compute the sample range, sample standard deviation, sample relative standard deviation, and sample variance
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine scale (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_scale
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : scale
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call scale(x,y)
+!!    end program demo_scale
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SCALE(X,N)
       IMPLICIT NONE
@@ -27536,6 +34035,52 @@ contains
 99011 FORMAT (' ')
 !
       END SUBROUTINE SCALE
+!>
+!!##NAME
+!!    sd(3f) - [M_datapac:STATISTICS] SD compute the standard deviation of a vector of observations
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine sd (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_sd
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : sd
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call sd(x,y)
+!!    end program demo_sd
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==sd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SD(X,N,Iwrite,Xsd)
       IMPLICIT NONE
@@ -27652,6 +34197,52 @@ contains
 99006 FORMAT (' ','THE SAMPLE STANDARD DEVIATION OF THE ',I6,           &
      &        ' OBSERVATIONS IS ',E15.8)
       END SUBROUTINE SD
+!>
+!!##NAME
+!!    skipr(3f) - [M_datapac:STATISTICS] SKIPR skip over a user-specified number of rows in reading a data file
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine skipr (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_skipr
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : skipr
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call skipr(x,y)
+!!    end program demo_skipr
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==skipr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SKIPR(Nlhead)
       IMPLICIT NONE
@@ -27718,6 +34309,52 @@ contains
       ENDIF
 !
       END SUBROUTINE SKIPR
+!>
+!!##NAME
+!!    sortc(3f) - [M_datapac:STATISTICS] SORTC sort a vector of sample observations and "carry" a second a vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine sortc (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_sortc
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : sortc
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call sortc(x,y)
+!!    end program demo_sortc
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==sortc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SORTC(X,Y,N,Xs,Yc)
       IMPLICIT NONE
@@ -28003,6 +34640,52 @@ contains
          ENDIF
       ENDDO
       END SUBROUTINE SORTC
+!>
+!!##NAME
+!!    sort(3f) - [M_datapac:STATISTICS] SORT sort a vector of sample observations, also return the positions in the original vector
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine sort (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_sort
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : sort
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call sort(x,y)
+!!    end program demo_sort
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==sort.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SORT(X,N,Y)
       IMPLICIT NONE
@@ -28234,6 +34917,52 @@ contains
          ENDIF
       ENDDO
       END SUBROUTINE SORT
+!>
+!!##NAME
+!!    sortp(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine sortp (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_sortp
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : sortp
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call sortp(x,y)
+!!    end program demo_sortp
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SORTP(X,N,Y,Xpos)
       IMPLICIT NONE
@@ -28528,6 +35257,52 @@ contains
          ENDIF
       ENDDO
       END SUBROUTINE SORTP
+!>
+!!##NAME
+!!    spcorr(3f) - [M_datapac:STATISTICS] SPCORR compute the sample Spearman rank correlation coefficient between two vectors of observations
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine spcorr (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_spcorr
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : spcorr
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call spcorr(x,y)
+!!    end program demo_spcorr
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==spcorr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
       IMPLICIT NONE
@@ -28676,6 +35451,52 @@ contains
      &     ,I6,' OBSERVATIONS IS ',F14.5)
       ENDIF
       END SUBROUTINE SPCORR
+!>
+!!##NAME
+!!    stmom3(3f) - [M_datapac:STATISTICS] STMOM3 compute the third central moment (i.e., the skewness) of a vector of observations
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine stmom3 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_stmom3
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : stmom3
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call stmom3(x,y)
+!!    end program demo_stmom3
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==stmom3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
       IMPLICIT NONE
@@ -28801,6 +35622,52 @@ contains
      &        'THE SAMPLE STANDARDIZED THIRD  CENTRAL MOMENT FOR THE ', &
      &        I6,' OBSERVATIONS IS ',E15.8)
       END SUBROUTINE STMOM3
+!>
+!!##NAME
+!!    stmom4(3f) - [M_datapac:STATISTICS] STMOM4 compute the fourth central moment (i.e., the kurtosis) of a vector of observations
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine stmom4 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_stmom4
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : stmom4
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call stmom4(x,y)
+!!    end program demo_stmom4
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
       IMPLICIT NONE
@@ -28926,6 +35793,52 @@ contains
      &        'THE SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT FOR THE ', &
      &        I6,' OBSERVATIONS IS ',E15.8)
       END SUBROUTINE STMOM4
+!>
+!!##NAME
+!!    subse1(3f) - [M_datapac:STATISTICS] SUBSE1 extract the elements of a vector which fall into a user-specified subset (one subset variable)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine subse1 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_subse1
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : subse1
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call subse1(x,y)
+!!    end program demo_subse1
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==subse1.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
       IMPLICIT NONE
@@ -29136,6 +36049,52 @@ contains
       ENDIF
 !
       END SUBROUTINE SUBSE1
+!>
+!!##NAME
+!!    subse2(3f) - [M_datapac:STATISTICS] SUBSE2 extract the elements of a vector which fall into a user-specified subset (two subset variables)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine subse2 (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_subse2
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : subse2
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call subse2(x,y)
+!!    end program demo_subse2
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==subse2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SUBSE2(X,N,D1,D1min,D1max,D2,D2min,D2max,Y,Ny)
       IMPLICIT NONE
@@ -29373,6 +36332,52 @@ contains
       ENDIF
 !
       END SUBROUTINE SUBSE2
+!>
+!!##NAME
+!!    subset(3f) - [M_datapac:STATISTICS] SUBSET extract the elements of a vector which fall into a user-specified subset (one subset variable)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine subset (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_subset
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : subset
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call subset(x,y)
+!!    end program demo_subset
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==subset.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
       IMPLICIT NONE
@@ -29592,6 +36597,52 @@ contains
       ENDIF
 !
       END SUBROUTINE SUBSET
+!>
+!!##NAME
+!!    tail(3f) - [M_datapac:STATISTICS] TAIL performs a symmetric distribution tail length analysis
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine tail (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_tail
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : tail
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call tail(x,y)
+!!    end program demo_tail
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TAIL(X,N)
       IMPLICIT NONE
@@ -30280,6 +37331,52 @@ contains
 99045 FORMAT (' ')
 !
       END SUBROUTINE TAIL
+!>
+!!##NAME
+!!    tcdf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine tcdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_tcdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : tcdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call tcdf(x,y)
+!!    end program demo_tcdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==tcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TCDF(X,Nu,Cdf)
       IMPLICIT NONE
@@ -30477,6 +37574,52 @@ contains
       ENDIF
 !
       END SUBROUTINE TCDF
+!>
+!!##NAME
+!!    time(3f) - [M_datapac:STATISTICS] TIME perform a time series analysis (autocorrelation plot, a test for white noise, a "pilot" spectrum, and 4 other estimated spectra based on differing bandwidth)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine time (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_time
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : time
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call time(x,y)
+!!    end program demo_time
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==time.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TIME(X,N)
       IMPLICIT NONE
@@ -30880,6 +38023,52 @@ contains
 99017 FORMAT (' ')
 !
       END SUBROUTINE TIME
+!>
+!!##NAME
+!!    tol(3f) - [M_datapac:STATISTICS] TOL compute normal and distribution-free tolerance limits
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine tol (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_tol
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : tol
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call tol(x,y)
+!!    end program demo_tol
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TOL(X,N)
       IMPLICIT NONE
@@ -31246,6 +38435,52 @@ contains
 99017 FORMAT (' ')
 !
       END SUBROUTINE TOL
+!>
+!!##NAME
+!!    tplt(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine tplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_tplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : tplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call tplt(x,y)
+!!    end program demo_tplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==tplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TPLT(X,N,Nu)
       IMPLICIT NONE
@@ -31444,6 +38679,52 @@ contains
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
       END SUBROUTINE TPLT
+!>
+!!##NAME
+!!    tppf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine tppf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_tppf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : tppf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call tppf(x,y)
+!!    end program demo_tppf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TPPF(P,Nu,Ppf)
       IMPLICIT NONE
@@ -31668,6 +38949,52 @@ contains
       RETURN
 !
 99999 END SUBROUTINE TPPF
+!>
+!!##NAME
+!!    tran(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine tran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_tran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : tran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call tran(x,y)
+!!    end program demo_tran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TRAN(N,Nu,Iseed,X)
       IMPLICIT NONE
@@ -31808,6 +39135,52 @@ contains
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
       END SUBROUTINE TRAN
+!>
+!!##NAME
+!!    trim(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine trim (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_trim
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : trim
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call trim(x,y)
+!!    end program demo_trim
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==trim.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
       IMPLICIT NONE
@@ -32026,6 +39399,52 @@ contains
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE TRIM
+!>
+!!##NAME
+!!    unicdf(3f) - [M_datapac:STATISTICS] UNICDF compute the Uniform cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine unicdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_unicdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : unicdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call unicdf(x,y)
+!!    end program demo_unicdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==unicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNICDF(X,Cdf)
       IMPLICIT NONE
@@ -32093,6 +39512,52 @@ contains
       ENDIF
 !
       END SUBROUTINE UNICDF
+!>
+!!##NAME
+!!    unimed(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine unimed (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_unimed
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : unimed
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call unimed(x,y)
+!!    end program demo_unimed
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==unimed.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIMED(N,X)
       IMPLICIT NONE
@@ -32210,6 +39675,52 @@ contains
       ENDIF
 !
       END SUBROUTINE UNIMED
+!>
+!!##NAME
+!!    unipdf(3f) - [M_datapac:STATISTICS] UNIPDF compute the Uniform probability density function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine unipdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_unipdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : unipdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call unipdf(x,y)
+!!    end program demo_unipdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==unipdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIPDF(X,Pdf)
       IMPLICIT NONE
@@ -32276,6 +39787,52 @@ contains
       ENDIF
 !
       END SUBROUTINE UNIPDF
+!>
+!!##NAME
+!!    uniplt(3f) - [M_datapac:STATISTICS] UNIPLT generate a Uniform probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine uniplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_uniplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : uniplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call uniplt(x,y)
+!!    end program demo_uniplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==uniplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIPLT(X,N)
       IMPLICIT NONE
@@ -32431,6 +39988,52 @@ contains
       ENDIF
 !
       END SUBROUTINE UNIPLT
+!>
+!!##NAME
+!!    unippf(3f) - [M_datapac:STATISTICS] UNIPPF compute the Uniform percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine unippf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_unippf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : unippf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call unippf(x,y)
+!!    end program demo_unippf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==unippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIPPF(P,Ppf)
       IMPLICIT NONE
@@ -32506,6 +40109,52 @@ contains
       ENDIF
 !
       END SUBROUTINE UNIPPF
+!>
+!!##NAME
+!!    uniran(3f) - [M_datapac:STATISTICS] UNIRAN generate Uniform random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine uniran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_uniran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : uniran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call uniran(x,y)
+!!    end program demo_uniran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIRAN(N,Iseed,X)
       IMPLICIT NONE
@@ -32777,6 +40426,52 @@ contains
 !CCCC AT 90
 !CCCC TRACE ON
       END SUBROUTINE UNIRAN
+!>
+!!##NAME
+!!    unisf(3f) - [M_datapac:STATISTICS] UNISF compute the Uniform sparsity function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine unisf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_unisf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : unisf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call unisf(x,y)
+!!    end program demo_unisf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==unisf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNISF(P,Sf)
       IMPLICIT NONE
@@ -32853,6 +40548,52 @@ contains
       ENDIF
 !
       END SUBROUTINE UNISF
+!>
+!!##NAME
+!!    var(3f) - [M_datapac:STATISTICS] VAR compute the sample variance of a vector of observations
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine var (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_var
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : var
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call var(x,y)
+!!    end program demo_var
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE VAR(X,N,Iwrite,Xvar)
       IMPLICIT NONE
@@ -32970,6 +40711,52 @@ contains
 99006 FORMAT (' ','THE SAMPLE VARIANCE OF THE ',I6,' OBSERVATIONS IS ', &
      &        E15.8)
       END SUBROUTINE VAR
+!>
+!!##NAME
+!!    weib(3f) - [M_datapac:STATISTICS] WEIB perform a Weibull distribution analysis (Weibull PPCC analysis)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine weib (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_weib
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : weib
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call weib(x,y)
+!!    end program demo_weib
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==weib.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEIB(X,N)
       IMPLICIT NONE
@@ -33296,6 +41083,52 @@ contains
 99020 FORMAT (' ')
 !
       END SUBROUTINE WEIB
+!>
+!!##NAME
+!!    weicdf(3f) - [M_datapac:STATISTICS] WEICDF compute the Weibull cumulative distribution function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine weicdf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_weicdf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : weicdf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call weicdf(x,y)
+!!    end program demo_weicdf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEICDF(X,Gamma,Cdf)
       IMPLICIT NONE
@@ -33378,6 +41211,52 @@ contains
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE WEICDF
+!>
+!!##NAME
+!!    weiplt(3f) - [M_datapac:STATISTICS] WEIPLT generate a Weibull probability plot (line printer graph)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine weiplt (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_weiplt
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : weiplt
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call weiplt(x,y)
+!!    end program demo_weiplt
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==weiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEIPLT(X,N,Gamma)
       IMPLICIT NONE
@@ -33569,6 +41448,52 @@ contains
       ENDIF
 !
       END SUBROUTINE WEIPLT
+!>
+!!##NAME
+!!    weippf(3f) - [M_datapac:STATISTICS] WEIPPF compute the Weibull percent point function
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine weippf (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_weippf
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : weippf
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call weippf(x,y)
+!!    end program demo_weippf
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==weippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEIPPF(P,Gamma,Ppf)
       IMPLICIT NONE
@@ -33656,6 +41581,52 @@ contains
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE WEIPPF
+!>
+!!##NAME
+!!    weiran(3f) - [M_datapac:STATISTICS] WEIRAN generate Weibull random numbers
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine weiran (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_weiran
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : weiran
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call weiran(x,y)
+!!    end program demo_weiran
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==weiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
@@ -33776,6 +41747,52 @@ contains
       ENDIF
 !
       END SUBROUTINE WEIRAN
+!>
+!!##NAME
+!!    wind(3f) - [M_datapac:STATISTICS] WIND compute the sample Winsorized mean of a vector of observations
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine wind (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_wind
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : wind
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call wind(x,y)
+!!    end program demo_wind
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
       IMPLICIT NONE
@@ -33999,6 +42016,52 @@ contains
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
       END SUBROUTINE WIND
+!>
+!!##NAME
+!!    write(3f) - [M_datapac:STATISTICS] WRITE write a vector of observations in a "neat" fashion
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine write (X, Y)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+!!      Real, Intent (In)                      :: Y
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!   Description
+!!
+!!##OPTIONS
+!!     X   description of parameter
+!!     Y   description of parameter
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_write
+!!    ! generate a random perturbation of an array
+!!    use M_datapac, only : write
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    call write(x,y)
+!!    end program demo_write
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    Engineering Division, National Institute of Standards and Technology.
+!!##MAINTAINER
+!!    John Urban, 2022.05.31
+!!##LICENSE
+!!    CC0-1.0
 !*==write.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
       IMPLICIT NONE

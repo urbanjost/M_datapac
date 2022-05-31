@@ -1,3 +1,50 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file copy.3datapac.man
+NAME
+   copy(3f) - [M_datapac:STATISTICS] COPY copy the elements of one vector into another vector
+
+SYNOPSIS
+    Subroutine copy (X, Y)
+
+     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+     Real, Intent (In)                      :: Y
+
+   Where ${TYPE}(kind=${KIND}) may be
+
+      o Real(kind=real32)
+      o Real(kind=real64)
+      o Integer(kind=int32)
+      o Character(kind=selected_char_kind("DEFAULT"),len=*)
+
+DESCRIPTION
+  Description
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_copy
+   ! generate a random perturbation of an array
+   use M_datapac, only : copy
+   implicit none
+   character(len=*),parameter :: g='(*(g0,1x))'
+   call copy(x,y)
+   end program demo_copy
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==copy.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE COPY(X,N,Y)
       IMPLICIT NONE

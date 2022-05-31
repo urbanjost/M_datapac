@@ -1,3 +1,50 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file plotc.3datapac.man
+NAME
+   plotc(3f) - [M_datapac:STATISTICS] PLOTC generate a line printer plot with special plot characters
+
+SYNOPSIS
+    Subroutine plotc (X, Y)
+
+     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
+     Real, Intent (In)                      :: Y
+
+   Where ${TYPE}(kind=${KIND}) may be
+
+      o Real(kind=real32)
+      o Real(kind=real64)
+      o Integer(kind=int32)
+      o Character(kind=selected_char_kind("DEFAULT"),len=*)
+
+DESCRIPTION
+  Description
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_plotc
+   ! generate a random perturbation of an array
+   use M_datapac, only : plotc
+   implicit none
+   character(len=*),parameter :: g='(*(g0,1x))'
+   call plotc(x,y)
+   end program demo_plotc
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plotc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTC(Y,X,Char,N)
       IMPLICIT NONE
