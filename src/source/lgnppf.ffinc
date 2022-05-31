@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lgnppf.3datapac.man
 NAME
-   lgnppf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+   lgnppf(3f) - [M_datapac:STATISTICS] compute the lognormal percent point function
 
 SYNOPSIS
     Subroutine lgnppf (X, Y)

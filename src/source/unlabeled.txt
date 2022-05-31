@@ -1,0 +1,11 @@
+Do not appear in original index from NIST 
+
+norout.ffinc: norout(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+plot.ffinc:   plot(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+sortp.ffinc:  sortp(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+tcdf.ffinc:   tcdf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+tplt.ffinc:   tplt(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+tppf.ffinc:   tppf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+tran.ffinc:   tran(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+trim.ffinc:   trim(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+unimed.ffinc: unimed(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}

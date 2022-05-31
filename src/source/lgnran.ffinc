@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lgnran.3datapac.man
 NAME
-   lgnran(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+   lgnran(3f) - [M_datapac:STATISTICS] generate lognormal random numbers
 
 SYNOPSIS
     Subroutine lgnran (X, Y)

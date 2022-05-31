@@ -14671,7 +14671,8 @@ contains
 99999 END SUBROUTINE LAMSF
 !>
 !!##NAME
-!!    lgncdf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    lgncdf(3f) - [M_datapac:STATISTICS] compute the lognormal cumulative
+!!                 distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -14793,7 +14794,7 @@ contains
       END SUBROUTINE LGNCDF
 !>
 !!##NAME
-!!    lgnplt(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    lgnplt(3f) - [M_datapac:STATISTICS] generates a lognormal probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -15009,7 +15010,7 @@ contains
       END SUBROUTINE LGNPLT
 !>
 !!##NAME
-!!    lgnppf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    lgnppf(3f) - [M_datapac:STATISTICS] compute the lognormal percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -15136,7 +15137,7 @@ contains
       END SUBROUTINE LGNPPF
 !>
 !!##NAME
-!!    lgnran(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    lgnran(3f) - [M_datapac:STATISTICS] generate lognormal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -38895,7 +38896,8 @@ contains
 99999 END SUBROUTINE TPPF
 !>
 !!##NAME
-!!    tran(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    tran(3f) - [m_datapac:statistics] a random sample of size n from the
+!!    student's t distribution with integer degrees of freedom parameter NU.
 !!
 !!##SYNOPSIS
 !!

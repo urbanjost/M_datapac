@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lgnplt.3datapac.man
 NAME
-   lgnplt(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+   lgnplt(3f) - [M_datapac:STATISTICS] generates a lognormal probability plot
 
 SYNOPSIS
     Subroutine lgnplt (X, Y)

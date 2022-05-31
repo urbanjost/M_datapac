@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lgncdf.3datapac.man
 NAME
-   lgncdf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+   lgncdf(3f) - [M_datapac:STATISTICS] compute the lognormal cumulative
+                distribution function
 
 SYNOPSIS
     Subroutine lgncdf (X, Y)

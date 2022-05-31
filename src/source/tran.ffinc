@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tran.3datapac.man
 NAME
-   tran(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+   tran(3f) - [m_datapac:statistics] a random sample of size n from the
+   student's t distribution with integer degrees of freedom parameter NU.
 
 SYNOPSIS
     Subroutine tran (X, Y)

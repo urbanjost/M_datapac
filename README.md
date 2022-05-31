@@ -142,10 +142,10 @@ The following subroutines are available in M_datapac:
   * [LAMPPF](src/source/lamppf.ffinc)  - compute the Tukey-Lambda percent point function
   * [LAMRAN](src/source/lamran.ffinc)  - generate Tukey-Lambda random numbers
   * [LAMSF](src/source/lamsf.ffinc)    - compute the Tukey-Lambda sparsity function
-  * [CAUCDF](src/source/caucdf.ffinc)  - compute the lognormal cumulative distribution function
-  * [CAUPDF](src/source/caupdf.ffinc)  - compute the lognormal probability density function
-  * [CAUPPF](src/source/cauppf.ffinc)  - compute the lognormal percent point function
-  * [CAURAN](src/source/cauran.ffinc)  - generate lognormal random numbers
+  * [LGNCDF](src/source/lgncdf.ffinc)  - compute the lognormal cumulative distribution function
+  * [LGNPDF](src/source/lgnpdf.ffinc)  - compute the lognormal probability density function
+  * [LGNPPF](src/source/lgnppf.ffinc)  - compute the lognormal percent point function
+  * [LGNRAN](src/source/lgnran.ffinc)  - generate lognormal random numbers
   * [LOC](src/source/loc.ffinc)        - compute the sample mean, midrange, midmean, and median
   * [LOGCDF](src/source/logcdf.ffinc)  - compute the logistic cumulative distribution function
   * [LOGPDF](src/source/logpdf.ffinc)  - compute the logistic probability density function
@@ -177,8 +177,8 @@ The following subroutines are available in M_datapac:
   * [RANGE](src/source/range.ffinc)    - compute the sample range
   * [RANK](src/source/rank.ffinc)      - rank a vector of sample observations
   * [RANPER](src/source/ranper.ffinc)  - generates a random permutation
-  * [READ](src/source/read.ffinc)      - perform a format-free read of data from a file
   * [READG](src/source/readg.ffinc)    - perform a format-free read of data from a file restricted to a user-specified set of columns
+  * [READ](src/source/read.ffinc)      - perform a format-free read of data from a file
   * [RELSD](src/source/relsd.ffinc)    - compute the relative standard deviation of a vector of observations
   * [REPLAC](src/source/replac.ffinc)  - replace all observations in a vector within a given interval with a user-specified constant
   * [RETAIN](src/source/retain.ffinc)  - retain all observations in a vector within a user-specified interval
@@ -225,7 +225,7 @@ The following subroutines are available in M_datapac:
   * [GEOPLT](src/source/gamplt.ffinc)  - generate a geometric probability plot (line printer graph)
   * [HFNPLT](src/source/hfnplt.ffinc)  - generate a half-normal probability plot (line printer graph)
   * [LAMPLT](src/source/lamplt.ffinc)  - generate a Tukey-Lambda probability plot (line printer graph)
-  * [CAUPLT](src/source/cauplt.ffinc)  - generate a lognormal probability plot (line printer graph)
+  * [LGNPLT](src/source/lgnplt.ffinc)  - generate a lognormal probability plot (line printer graph)
   * [LOGPLT](src/source/logplt.ffinc)  - generate a logistic probability plot (line printer graph)
   * [NORPLT](src/source/norplt.ffinc)  - generate a normal probability plot (line printer graph)
   * [PARPLT](src/source/parplt.ffinc)  - generate a Pareto probability plot (line printer graph)
