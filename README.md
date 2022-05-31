@@ -18,13 +18,19 @@ program, development of DATAPAC stopped. However, there are some
 subroutines here that may still be of interest. In particular, there are
 a number of routines for computing various probability functions.
 
-This software is not formally supported and is not being further
-developed. It is provided on an "as is" basis. There is no formal
-documentation for the subroutines. However, most of the subroutines
-contain usage instructions in the comments in the source code.
+It is also useful to have the routines apart from Dataplot and as a a
+separate make(1) and fpm(1) package for use in other applications.
 
-These routines were written in Fortran 77 and were ported to a
-modern Fortran module accessible via `fpm`.
+It is provided on an "as is" basis.
+
+This software is not formally supported and is not being further developed
+other than to develop a test suite at this time.
+
+There is no formal documentation for the subroutines. However, most of the
+subroutines contain usage instructions in the comments in the source code.
+
+These routines were written in Fortran 77 and were ported to a modern
+Fortran module accessible via `fpm`.
 
 ## Needs
 
