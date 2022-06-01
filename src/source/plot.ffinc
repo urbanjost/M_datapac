@@ -1,14 +1,15 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plot.3m_datapac.man
 NAME
-   plot(3f) - [M_datapac:STATISTICS] yields a one-page printer plot of
-   y(i) versus x(i)
+   plot(3f) - [M_datapac:STATISTICS:LINE PLOT] yields a one-page printer
+   plot of y(i) versus x(i)
 
 SYNOPSIS
-    Subroutine plot (X, Y)
+    Subroutine plot (X, Y, N)
 
      Real, Intent (In) :: X(:)
      Real, Intent (In) :: Y(:)
+     Integer, Intent (In) :: N
 
 DESCRIPTION
    This subroutine yields a one-page printer plot of Y(I) versus X(I).
@@ -38,8 +39,15 @@ EXAMPLES
    program demo_plot
    use M_datapac, only : plot
    implicit none
+   integer :: i
+   real, allocatable :: x(:), y(:)
    character(len=*),parameter :: g='(*(g0,1x))'
-   ! call plot(x,y)
+     x=[(real(i),i=1,30)]
+     y=0.075*(x**4)-0.525*(x**3)+0.75*(x**2)+2.40
+     call plot(x,y,size(x))
+     y=[(real(i)/10.0,i=1,30)]
+     x=y**3.78-6*y**2.52+9*y**1.26
+     call plot(x,y,size(x))
    end program demo_plot
 
   Results:
@@ -54,10 +62,13 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOT(Y,X,N)
-      IMPLICIT NONE
-      REAL aim1, cutoff, hold, ratiox, ratioy, X, x25, x75, xmax, xmid, xmin, Y, ylable, ymax, ymin
-      INTEGER i, iflag, ip2, ipr, j, k, mx, my, N, n2
+SUBROUTINE PLOT(Y,X,N)
+IMPLICIT NONE
+REAL,intent(in) ::  X(:),  Y(:)
+integer,intent(in) :: n
+REAL aim1, cutoff, hold, ratiox, ratioy, x25, x75, xmax, xmid, xmin, ymax, ymin
+REAL ylable(11)
+INTEGER i, iflag, ip2, ipr, j, k, mx, my, n2
 !
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
@@ -71,22 +82,19 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     UPDATED         --FEBRUARY  1977.
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
-      DIMENSION Y(:)
-      DIMENSION X(:)
-      DIMENSION ylable(11)
-      COMMON /BLOCK1/ IGRaph(55,130)
+CHARACTER(len=4) ::  IGRaph
+CHARACTER(len=4) ::  sbnam1 , sbnam2
+CHARACTER(len=4) ::  alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) ::  blank , hyphen , alphai , alphax
+CHARACTER(len=4) ::  alpham , alphaa , alphad , alphan , equal
+COMMON /BLOCK1/ IGRaph(55,130)
 !
-      DATA sbnam1 , sbnam2/'PLOT' , '    '/
-      DATA alph11 , alph12/'FIRS' , 'T   '/
-      DATA alph21 , alph22/'SECO' , 'ND  '/
-      DATA alph31 , alph32/'THIR' , 'D   '/
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
+DATA sbnam1 , sbnam2/'PLOT' , '    '/
+DATA alph11 , alph12/'FIRS' , 'T   '/
+DATA alph21 , alph22/'SECO' , 'ND  '/
+DATA alph31 , alph32/'THIR' , 'D   '/
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 !
       ipr = 6
       cutoff = (10.0**10) - 1000.0
@@ -299,10 +307,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          k = ip2/5
          IF ( iflag/=0 ) WRITE (ipr,99008) (IGRaph(i,j),j=1,109)
 !
-99008    FORMAT (' ',20X,109A1)
          IF ( iflag==0 ) WRITE (ipr,99009) ylable(k) ,(IGRaph(i,j),j=1,109)
-99009    FORMAT (' ',F20.7,109A1)
       ENDDO
+99008 FORMAT (' ',20X,109A1)
+99009 FORMAT (' ',F20.7,109A1)
       WRITE (ipr,99010) xmin , x25 , xmid , x75 , xmax
 99010 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
@@ -313,4 +321,4 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99015 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99016 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOT
+END SUBROUTINE PLOT
