@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file georan.3m_datapac.man
 NAME
-   georan(3f) - [M_datapac:STATISTICS] generate geometric random numbers
+   georan(3f) - [M_datapac:STATISTICS:RANDOM] generate geometric random numbers
 
 SYNOPSIS
     Subroutine georan (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_georan
-   ! generate a random perturbation of an array
    use M_datapac, only : georan
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call georan(x,y)
+   ! call georan(x,y)
    end program demo_georan
 
   Results:

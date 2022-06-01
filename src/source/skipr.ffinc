@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_skipr
-   ! generate a random perturbation of an array
    use M_datapac, only : skipr
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call skipr(x,y)
+   ! call skipr(x,y)
    end program demo_skipr
 
   Results:

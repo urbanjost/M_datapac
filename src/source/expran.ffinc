@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file expran.3m_datapac.man
 NAME
-   expran(3f) - [M_datapac:STATISTICS] generate exponential random numbers
+   expran(3f) - [M_datapac:STATISTICS:RANDOM] generate exponential random numbers
 
 SYNOPSIS
     Subroutine expran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_expran
-   ! generate a random perturbation of an array
    use M_datapac, only : expran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call expran(x,y)
+   ! call expran(x,y)
    end program demo_expran
 
   Results:

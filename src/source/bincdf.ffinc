@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_bincdf
-   ! generate a random perturbation of an array
    use M_datapac, only : bincdf
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call bincdf(x,y)
+   ! call bincdf(x,y)
    end program demo_bincdf
 
   Results:

@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_sort
-   ! generate a random perturbation of an array
    use M_datapac, only : sort
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call sort(x,y)
+   ! call sort(x,y)
    end program demo_sort
 
   Results:

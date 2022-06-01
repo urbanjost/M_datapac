@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file weiran.3m_datapac.man
 NAME
-   weiran(3f) - [M_datapac:STATISTICS] generate Weibull random numbers
+   weiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Weibull random numbers
 
 SYNOPSIS
     Subroutine weiran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_weiran
-   ! generate a random perturbation of an array
    use M_datapac, only : weiran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call weiran(x,y)
+   ! call weiran(x,y)
    end program demo_weiran
 
   Results:

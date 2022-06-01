@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_poly
-   ! generate a random perturbation of an array
    use M_datapac, only : poly
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call poly(x,y)
+   ! call poly(x,y)
    end program demo_poly
 
   Results:
@@ -65,10 +64,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &        jsp1 , k , kk , kmax , kp1 , l , m , N , ni , nk , nkm5 , &
      &        nkmax
       INTEGER nm5 , nmax , numset
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT POLY
-      EXTERNAL DOT
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES A LEAST SQUARES
 !              POLYNOMIAL FIT (OF DEGREE = IDEG) OF THE

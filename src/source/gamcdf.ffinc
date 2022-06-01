@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_gamcdf
-   ! generate a random perturbation of an array
    use M_datapac, only : gamcdf
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call gamcdf(x,y)
+   ! call gamcdf(x,y)
    end program demo_gamcdf
 
   Results:

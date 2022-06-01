@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_dexcdf
-   ! generate a random perturbation of an array
    use M_datapac, only : dexcdf
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call dexcdf(x,y)
+   ! call dexcdf(x,y)
    end program demo_dexcdf
 
   Results:

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file ev1ran.3m_datapac.man
 NAME
-   ev1ran(3f) - [M_datapac:STATISTICS] generate extreme value type 1
+   ev1ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 1
    (Gumbel) random numbers
 
 SYNOPSIS
@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_ev1ran
-   ! generate a random perturbation of an array
    use M_datapac, only : ev1ran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call ev1ran(x,y)
+   ! call ev1ran(x,y)
    end program demo_ev1ran
 
   Results:

@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_weiplt
-   ! generate a random perturbation of an array
    use M_datapac, only : weiplt
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call weiplt(x,y)
+   ! call weiplt(x,y)
    end program demo_weiplt
 
   Results:

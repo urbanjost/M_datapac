@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file parran.3m_datapac.man
 NAME
-   parran(3f) - [M_datapac:STATISTICS] generate Pareto random numbers
+   parran(3f) - [M_datapac:STATISTICS:RANDOM] generate Pareto random numbers
 
 SYNOPSIS
     Subroutine parran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_parran
-   ! generate a random perturbation of an array
    use M_datapac, only : parran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call parran(x,y)
+   ! call parran(x,y)
    end program demo_parran
 
   Results:

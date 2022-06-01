@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file ranper.3m_datapac.man
 NAME
-   ranper(3f) - [M_datapac:STATISTICS] generates a random permutation
+   ranper(3f) - [M_datapac:STATISTICS:RANDOM] generates a random permutation
 
 SYNOPSIS
     Subroutine ranper (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_ranper
-   ! generate a random perturbation of an array
    use M_datapac, only : ranper
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call ranper(x,y)
+   ! call ranper(x,y)
    end program demo_ranper
 
   Results:

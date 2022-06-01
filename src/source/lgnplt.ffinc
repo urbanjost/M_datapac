@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_lgnplt
-   ! generate a random perturbation of an array
    use M_datapac, only : lgnplt
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call lgnplt(x,y)
+   ! call lgnplt(x,y)
    end program demo_lgnplt
 
   Results:

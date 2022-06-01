@@ -29,11 +29,10 @@ EXAMPLES
   Sample program:
 
    program demo_tcdf
-   ! generate a random perturbation of an array
    use M_datapac, only : tcdf
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call tcdf(x,y)
+   ! call tcdf(x,y)
    end program demo_tcdf
 
   Results:

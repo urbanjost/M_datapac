@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_logsf
-   ! generate a random perturbation of an array
    use M_datapac, only : logsf
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call logsf(x,y)
+   ! call logsf(x,y)
    end program demo_logsf
 
   Results:

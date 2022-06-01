@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_replac
-   ! generate a random perturbation of an array
    use M_datapac, only : replac
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call replac(x,y)
+   ! call replac(x,y)
    end program demo_replac
 
   Results:

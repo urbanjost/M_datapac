@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_runs
-   ! generate a random perturbation of an array
    use M_datapac, only : runs
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call runs(x,y)
+   ! call runs(x,y)
    end program demo_runs
 
   Results:

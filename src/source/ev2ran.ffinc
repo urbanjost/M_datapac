@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file ev2ran.3m_datapac.man
 NAME
-   ev2ran(3f) - [M_datapac:STATISTICS] generate extreme value type 2
+   ev2ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 2
    (Frechet) random numbers
 
 SYNOPSIS
@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_ev2ran
-   ! generate a random perturbation of an array
    use M_datapac, only : ev2ran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call ev2ran(x,y)
+   ! call ev2ran(x,y)
    end program demo_ev2ran
 
   Results:

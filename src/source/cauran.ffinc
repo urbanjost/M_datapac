@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file cauran.3m_datapac.man
 NAME
-   cauran(3f) - [M_datapac:STATISTICS] generate Cauchy random numbers
+   cauran(3f) - [M_datapac:STATISTICS:RANDOM] generate Cauchy random numbers
 
 SYNOPSIS
     Subroutine cauran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_cauran
-   ! generate a random perturbation of an array
    use M_datapac, only : cauran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call cauran(x,y)
+   ! call cauran(x,y)
    end program demo_cauran
 
   Results:

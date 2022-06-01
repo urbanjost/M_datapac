@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_binppf
-   ! generate a random perturbation of an array
    use M_datapac, only : binppf
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call binppf(x,y)
+   ! call binppf(x,y)
    end program demo_binppf
 
   Results:

@@ -29,11 +29,10 @@ EXAMPLES
   Sample program:
 
    program demo_unimed
-   ! generate a random perturbation of an array
    use M_datapac, only : unimed
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call unimed(x,y)
+   ! call unimed(x,y)
    end program demo_unimed
 
   Results:

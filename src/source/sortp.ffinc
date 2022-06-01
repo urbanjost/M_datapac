@@ -33,11 +33,10 @@ EXAMPLES
   Sample program:
 
    program demo_sortp
-   ! generate a random perturbation of an array
    use M_datapac, only : sortp
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call sortp(x,y)
+   ! call sortp(x,y)
    end program demo_sortp
 
   Results:

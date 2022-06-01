@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file poiran.3m_datapac.man
 NAME
-   poiran(3f) - [M_datapac:STATISTICS] generate Poisson random numbers
+   poiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Poisson random numbers
 
 SYNOPSIS
     Subroutine poiran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_poiran
-   ! generate a random perturbation of an array
    use M_datapac, only : poiran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call poiran(x,y)
+   ! call poiran(x,y)
    end program demo_poiran
 
   Results:

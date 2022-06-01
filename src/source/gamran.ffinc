@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file gamran.3m_datapac.man
 NAME
-   gamran(3f) - [M_datapac:STATISTICS] generate gamma random numbers
+   gamran(3f) - [M_datapac:STATISTICS:RANDOM] generate gamma random numbers
 
 SYNOPSIS
     Subroutine gamran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_gamran
-   ! generate a random perturbation of an array
    use M_datapac, only : gamran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call gamran(x,y)
+   ! call gamran(x,y)
    end program demo_gamran
 
   Results:

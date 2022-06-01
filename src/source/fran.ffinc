@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file fran.3m_datapac.man
 NAME
-   fran(3f) - [M_datapac:STATISTICS] generate F random numbers
+   fran(3f) - [M_datapac:STATISTICS:RANDOM] generate F random numbers
 
 SYNOPSIS
     Subroutine fran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_fran
-   ! generate a random perturbation of an array
    use M_datapac, only : fran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call fran(x,y)
+   ! call fran(x,y)
    end program demo_fran
 
   Results:

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tran.3m_datapac.man
 NAME
-   tran(3f) - [M_datapac:STATISTICS] a random sample of size n from the
+   tran(3f) - [M_datapac:STATISTICS:RANDOM] a random sample of size n from the
    student's t distribution with integer degrees of freedom parameter NU.
 
 SYNOPSIS
@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_tran
-   ! generate a random perturbation of an array
    use M_datapac, only : tran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call tran(x,y)
+   ! call tran(x,y)
    end program demo_tran
 
   Results:

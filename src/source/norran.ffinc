@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file norran.3m_datapac.man
 NAME
-   norran(3f) - [M_datapac:STATISTICS] generate normal random numbers
+   norran(3f) - [M_datapac:STATISTICS:RANDOM] generate normal random numbers
 
 SYNOPSIS
     Subroutine norran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_norran
-   ! generate a random perturbation of an array
    use M_datapac, only : norran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call norran(x,y)
+   ! call norran(x,y)
    end program demo_norran
 
   Results:

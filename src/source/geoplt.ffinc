@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_geoplt
-   ! generate a random perturbation of an array
    use M_datapac, only : geoplt
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call geoplt(x,y)
+   ! call geoplt(x,y)
    end program demo_geoplt
 
   Results:

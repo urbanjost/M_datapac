@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file nbran.3m_datapac.man
 NAME
-   nbran(3f) - [M_datapac:STATISTICS] generate negative binomial random numbers
+   nbran(3f) - [M_datapac:STATISTICS:RANDOM] generate negative binomial random numbers
 
 SYNOPSIS
     Subroutine nbran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_nbran
-   ! generate a random perturbation of an array
    use M_datapac, only : nbran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call nbran(x,y)
+   ! call nbran(x,y)
    end program demo_nbran
 
   Results:

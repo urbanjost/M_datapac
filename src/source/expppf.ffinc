@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_expppf
-   ! generate a random perturbation of an array
    use M_datapac, only : expppf
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call expppf(x,y)
+   ! call expppf(x,y)
    end program demo_expppf
 
   Results:

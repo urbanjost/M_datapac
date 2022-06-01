@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_hfnplt
-   ! generate a random perturbation of an array
    use M_datapac, only : hfnplt
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call hfnplt(x,y)
+   ! call hfnplt(x,y)
    end program demo_hfnplt
 
   Results:

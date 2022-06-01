@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_subset
-   ! generate a random perturbation of an array
    use M_datapac, only : subset
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call subset(x,y)
+   ! call subset(x,y)
    end program demo_subset
 
   Results:

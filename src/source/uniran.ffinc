@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file uniran.3m_datapac.man
 NAME
-   uniran(3f) - [M_datapac:STATISTICS] generate Uniform random numbers
+   uniran(3f) - [M_datapac:STATISTICS:RANDOM] generate Uniform random numbers
 
 SYNOPSIS
     Subroutine uniran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_uniran
-   ! generate a random perturbation of an array
    use M_datapac, only : uniran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call uniran(x,y)
+   ! call uniran(x,y)
    end program demo_uniran
 
   Results:

@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_unipdf
-   ! generate a random perturbation of an array
    use M_datapac, only : unipdf
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call unipdf(x,y)
+   ! call unipdf(x,y)
    end program demo_unipdf
 
   Results:

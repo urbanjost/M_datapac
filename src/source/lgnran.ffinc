@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lgnran.3m_datapac.man
 NAME
-   lgnran(3f) - [M_datapac:STATISTICS] generate lognormal random numbers
+   lgnran(3f) - [M_datapac:STATISTICS:RANDOM] generate lognormal random numbers
 
 SYNOPSIS
     Subroutine lgnran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_lgnran
-   ! generate a random perturbation of an array
    use M_datapac, only : lgnran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call lgnran(x,y)
+   ! call lgnran(x,y)
    end program demo_lgnran
 
   Results:

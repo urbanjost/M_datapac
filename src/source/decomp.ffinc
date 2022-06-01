@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_decomp
-   ! generate a random perturbation of an array
    use M_datapac, only : decomp
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call decomp(x,y)
+   ! call decomp(x,y)
    end program demo_decomp
 
   Results:
@@ -56,10 +55,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       INTEGER i , Insing , ip , IPIvot , iqarg , iqarg1 , iqarg2 ,      &
      &        Irank , irarg , irarg1 , irarg2 , is , ism1 , isp1 , j ,  &
      &        K , l , m , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DECOMP
-      EXTERNAL DOT
+
 !
 !     PURPOSE--THIS SUBROUTINE DECOMPOSES THE WEIGHTED DATA
 !     MATRIX Q WHICH ORIGINALLY = THE N BY K DATA MATRIX X

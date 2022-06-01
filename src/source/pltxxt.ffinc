@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_pltxxt
-   ! generate a random perturbation of an array
    use M_datapac, only : pltxxt
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call pltxxt(x,y)
+   ! call pltxxt(x,y)
    end program demo_pltxxt
 
   Results:

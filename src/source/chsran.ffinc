@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file chsran.3m_datapac.man
 NAME
-   chsran(3f) - [M_datapac:STATISTICS] generate chi-square random numbers
+   chsran(3f) - [M_datapac:STATISTICS:RANDOM] generate chi-square random numbers
 
 SYNOPSIS
     Subroutine chsran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_chsran
-   ! generate a random perturbation of an array
    use M_datapac, only : chsran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call chsran(x,y)
+   ! call chsran(x,y)
    end program demo_chsran
 
   Results:

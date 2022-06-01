@@ -28,11 +28,10 @@ EXAMPLES
   Sample program:
 
    program demo_corr
-   ! generate a random perturbation of an array
    use M_datapac, only : corr
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call corr(x,y)
+   ! call corr(x,y)
    end program demo_corr
 
   Results:

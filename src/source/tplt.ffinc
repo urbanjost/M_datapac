@@ -1,8 +1,9 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tplt.3m_datapac.man
 NAME
-   tplt(3f) - [M_datapac:STATISTICS] generates a student's t probability
-   plot (with integer degrees of freedom parameter value = nu).
+   tplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a student's
+   t probability plot (with integer degrees of freedom parameter value
+   NU).
 
 SYNOPSIS
     Subroutine tplt (X, Y)
@@ -28,11 +29,10 @@ EXAMPLES
   Sample program:
 
    program demo_tplt
-   ! generate a random perturbation of an array
    use M_datapac, only : tplt
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call tplt(x,y)
+   ! call tplt(x,y)
    end program demo_tplt
 
   Results:
@@ -243,4 +243,4 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDIF
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-      END SUBROUTINE TPLT
+END SUBROUTINE TPLT

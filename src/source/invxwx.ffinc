@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_invxwx
-   ! generate a random perturbation of an array
    use M_datapac, only : invxwx
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call invxwx(x,y)
+   ! call invxwx(x,y)
    end program demo_invxwx
 
   Results:
@@ -48,15 +47,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE INVXWX(N,K)
       IMPLICIT NONE
-!*--INVXWX10396
-!*** Start of declarations inserted by SPAG
+
       REAL anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
-      INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 ,   &
-     &        irarg3 , j , jj , K , l , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT INVXWX
-      EXTERNAL DOT
+      INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
+
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE INVERSE OF X'WX
 !     WHICH IS DONE BY COMPUTING THE INVERSE OF R'R (WHERE
 !     R HAS JUST RECENTLY BEEN MODIFIED BEFORE CALLING THIS

@@ -217,11 +217,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_autoco
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : autoco
 !!    implicit none
 !!    real :: x(100)
-!!       call autoco(x,size(x),1,xautoc)
+!!    !call   call autoco(x,size(x),1,xautoc)
 !!    end program demo_autoco
 !!
 !!   Results:
@@ -316,35 +315,57 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine betran (X, Y)
+!!     subroutine BETRAN (N,Alpha,Beta,Iseed,X)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!       REAL :: Alpha, Beta, X(N)
+!!       INTEGER :: Iseed,  N
 !!
 !!##DESCRIPTION
-!!   Description
+!!
+!!    BETRAN(3f) generates a random sample of size N from the beta distribution
+!!    with single precision shape parameters ALPHA and BETA.
+!!
+!!    The prototype beta distribution used
+!!    herein has
+!!
+!!       mean = ALPHA/(ALPHA+BETA)
+!!
+!!    and
+!!
+!!       standard_deviation=sqrt((ALPHA*BETA)/((ALPHA+BETA)**2)*(ALPHA+BETA+1))
+!!
+!!    This distribution is defined for all X between 0.0 (inclusively) and 1.0
+!!    (inclusively).  and has the probability density function
+!!
+!!       f(x) = (1/constant) * x**(alpha-1) * (1.0-x)**(beta-1)
+!!
+!!    where the constant = the beta function evaluated at the values ALPHA
+!!    and BETA.
 !!
 !!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    N      The desired integer number of random numbers to be generated.
+!!
+!!    ALPHA  The single precision value of the first shape parameter.
+!!           ALPHA should be greater than or equal to 1.0.
+!!
+!!    BETA   The single precision value of the second shape parameter.
+!!           BETA should be greater than or equal to 1.0.
+!!##OUTPUT
+!!    X      A random sample of size N from the beta distribution
+!!           with shape parameter values ALPHA and BETA.
+!!
+!!           A single precision vector (of dimension at least N) into which
+!!           the generated random sample will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_betran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : betran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call betran(x,y)
+!!    ! call betran(x,y)
 !!    end program demo_betran
 !!
 !!   Results:
@@ -357,63 +378,16 @@ contains
 !!##LICENSE
 !!    CC0-1.0
 !*==betran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
-      IMPLICIT NONE
-!*--BETRAN135
-!*** Start of declarations inserted by SPAG
-      REAL a1 , a2 , Alpha , arg , athird , b1 , b2 , Beta , funct ,    &
-     &     sqrt3 , term , u , X , xg , xg01 , xg02 , xg1 , xg2 , xn(1) ,   &
-     &     xn01
-      REAL xn02
-      INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT BETRAN
+SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
+IMPLICIT NONE
+
+REAL :: a1, a2, Alpha, arg, athird, b1, b2, Beta, funct, sqrt3, term, u, X, xg, xg01, xg02, xg1, xg2, xn(1)
+REAL :: xn01, xn02
+INTEGER :: i , ipr , Iseed , N
+
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE BETA DISTRIBUTION
-!          WITH SINGLE PRECISION SHAPE
-!          PARAMETERS = ALPHA AND BETA.
-!              THE PROTOTYPE BETA DISTRIBUTION USED
-!              HEREIN HAS MEAN = ALPHA/(ALPHA+BETA)
-!              AND STANDARD DEVIATION =
-!              SQRT((ALPHA*BETA) / ((ALPHA+BETA)**2)*(ALPHA+BETA+1))
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X
-!              BETWEEN 0.0 (INCLUSIVELY) AND 1.0 (INCLUSIVELY).
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/CONSTANT) * X**(ALPHA-1) * (1.0-X)**(BETA-1)
-!              WHERE THE CONSTANT = THE BETA FUNCTION EVALUATED
-!              AT THE VALUES ALPHA AND BETA.
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --ALPHA  = THE SINGLE PRECISION VALUE OF THE
-!                                FIRST  SHAPE PARAMETER.
-!                                ALPHA SHOULD BE GREATER THAN
-!                                OR EQUAL TO 1.0.
-!                     --BETA   = THE SINGLE PRECISION VALUE OF THE
-!                                SECOND SHAPE PARAMETER.
-!                                BETA  SHOULD BE GREATER THAN
-!                                OR EQUAL TO 1.0.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE BETA DISTRIBUTION
-!             WITH SHAPE PARAMETER VALUES = ALPHA AND BETA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --ALPHA SHOULD BE GREATER THAN
-!                   OR EQUAL TO 1.0.
-!                 --BETA  SHOULD BE GREATER THAN
-!                   OR EQUAL TO 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--GREENWOOD, 'A FAST GENERATOR FOR
 !                 BETA-DISTRIBUTED RANDOM VARIABLES',
 !                 COMPSTAT 1974, PROCEEDINGS IN
@@ -455,7 +429,7 @@ contains
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
       DIMENSION u(10)
 !
@@ -481,24 +455,18 @@ contains
 !
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BETRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+99001    FORMAT (' ','***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( Alpha<1.0 ) THEN
          WRITE (ipr,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BETRAN SUBROU&
-     &TINE IS SMALLER THAN 1.0 *****')
+99003    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS SMALLER THAN 1.0 *****')
          WRITE (ipr,99005) Alpha
          RETURN
       ELSEIF ( Beta<1.0 ) THEN
          WRITE (ipr,99004)
-99004    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BETRAN SUBROU&
-     &TINE IS SMALLER THAN 1.0 *****')
+99004    FORMAT (' ','***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS SMALLER THAN 1.0 *****')
          WRITE (ipr,99005) Beta
          RETURN
       ELSE
@@ -576,7 +544,7 @@ contains
       ENDIF
 99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE BETRAN
+END SUBROUTINE BETRAN
 !>
 !!##NAME
 !!    bincdf(3f) - [M_datapac:STATISTICS] compute the binomial cumulative
@@ -608,11 +576,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_bincdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : bincdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call bincdf(x,y)
+!!    ! call bincdf(x,y)
 !!    end program demo_bincdf
 !!
 !!   Results:
@@ -972,11 +939,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_binppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : binppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call binppf(x,y)
+!!    ! call binppf(x,y)
 !!    end program demo_binppf
 !!
 !!   Results:
@@ -1378,7 +1344,7 @@ contains
       END SUBROUTINE BINPPF
 !>
 !!##NAME
-!!    binran(3f) - [M_datapac:STATISTICS] generate binomial random numbers
+!!    binran(3f) - [M_datapac:STATISTICS:RANDOM] generate binomial random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -1406,11 +1372,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_binran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : binran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call binran(x,y)
+!!    ! call binran(x,y)
 !!    end program demo_binran
 !!
 !!   Results:
@@ -1664,11 +1629,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_caucdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : caucdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call caucdf(x,y)
+!!    ! call caucdf(x,y)
 !!    end program demo_caucdf
 !!
 !!   Results:
@@ -1767,11 +1731,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_caupdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : caupdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call caupdf(x,y)
+!!    ! call caupdf(x,y)
 !!    end program demo_caupdf
 !!
 !!   Results:
@@ -1869,11 +1832,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_cauplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : cauplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call cauplt(x,y)
+!!    ! call cauplt(x,y)
 !!    end program demo_cauplt
 !!
 !!   Results:
@@ -2077,11 +2039,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_cauppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : cauppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call cauppf(x,y)
+!!    ! call cauppf(x,y)
 !!    end program demo_cauppf
 !!
 !!   Results:
@@ -2172,7 +2133,7 @@ contains
       END SUBROUTINE CAUPPF
 !>
 !!##NAME
-!!    cauran(3f) - [M_datapac:STATISTICS] generate Cauchy random numbers
+!!    cauran(3f) - [M_datapac:STATISTICS:RANDOM] generate Cauchy random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -2200,11 +2161,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_cauran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : cauran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call cauran(x,y)
+!!    ! call cauran(x,y)
 !!    end program demo_cauran
 !!
 !!   Results:
@@ -2362,11 +2322,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_causf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : causf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call causf(x,y)
+!!    ! call causf(x,y)
 !!    end program demo_causf
 !!
 !!   Results:
@@ -2487,11 +2446,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_chscdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : chscdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call chscdf(x,y)
+!!    ! call chscdf(x,y)
 !!    end program demo_chscdf
 !!
 !!   Results:
@@ -2776,11 +2734,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_chsplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : chsplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call chsplt(x,y)
+!!    ! call chsplt(x,y)
 !!    end program demo_chsplt
 !!
 !!   Results:
@@ -3015,11 +2972,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_chsppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : chsppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call chsppf(x,y)
+!!    ! call chsppf(x,y)
 !!    end program demo_chsppf
 !!
 !!   Results:
@@ -3269,7 +3225,7 @@ contains
       END SUBROUTINE CHSPPF
 !>
 !!##NAME
-!!    chsran(3f) - [M_datapac:STATISTICS] generate chi-square random numbers
+!!    chsran(3f) - [M_datapac:STATISTICS:RANDOM] generate chi-square random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -3297,11 +3253,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_chsran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : chsran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call chsran(x,y)
+!!    ! call chsran(x,y)
 !!    end program demo_chsran
 !!
 !!   Results:
@@ -3477,11 +3432,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_code
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : code
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call code(x,y)
+!!    ! call code(x,y)
 !!    end program demo_code
 !!
 !!   Results:
@@ -3671,11 +3625,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_copy
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : copy
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call copy(x,y)
+!!    ! call copy(x,y)
 !!    end program demo_copy
 !!
 !!   Results:
@@ -3804,11 +3757,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_corr
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : corr
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call corr(x,y)
+!!    ! call corr(x,y)
 !!    end program demo_corr
 !!
 !!   Results:
@@ -3999,11 +3951,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_count
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : count
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call count(x,y)
+!!    ! call count(x,y)
 !!    end program demo_count
 !!
 !!   Results:
@@ -4173,11 +4124,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_decomp
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : decomp
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call decomp(x,y)
+!!    ! call decomp(x,y)
 !!    end program demo_decomp
 !!
 !!   Results:
@@ -4199,10 +4149,7 @@ contains
       INTEGER i , Insing , ip , IPIvot , iqarg , iqarg1 , iqarg2 ,      &
      &        Irank , irarg , irarg1 , irarg2 , is , ism1 , isp1 , j ,  &
      &        K , l , m , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DECOMP
-      EXTERNAL DOT
+
 !
 !     PURPOSE--THIS SUBROUTINE DECOMPOSES THE WEIGHTED DATA
 !     MATRIX Q WHICH ORIGINALLY = THE N BY K DATA MATRIX X
@@ -4394,11 +4341,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_define
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : define
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call define(x,y)
+!!    ! call define(x,y)
 !!    end program demo_define
 !!
 !!   Results:
@@ -4540,11 +4486,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_delete
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : delete
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call delete(x,y)
+!!    ! call delete(x,y)
 !!    end program demo_delete
 !!
 !!   Results:
@@ -4764,11 +4709,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_demod
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : demod
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call demod(x,y)
+!!    ! call demod(x,y)
 !!    end program demo_demod
 !!
 !!   Results:
@@ -5126,11 +5070,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_dexcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : dexcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call dexcdf(x,y)
+!!    ! call dexcdf(x,y)
 !!    end program demo_dexcdf
 !!
 !!   Results:
@@ -5229,11 +5172,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_dexpdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : dexpdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call dexpdf(x,y)
+!!    ! call dexpdf(x,y)
 !!    end program demo_dexpdf
 !!
 !!   Results:
@@ -5334,11 +5276,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_dexplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : dexplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call dexplt(x,y)
+!!    ! call dexplt(x,y)
 !!    end program demo_dexplt
 !!
 !!   Results:
@@ -5542,11 +5483,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_dexppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : dexppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call dexppf(x,y)
+!!    ! call dexppf(x,y)
 !!    end program demo_dexppf
 !!
 !!   Results:
@@ -5636,7 +5576,7 @@ contains
       END SUBROUTINE DEXPPF
 !>
 !!##NAME
-!!    dexran(3f) - [M_datapac:STATISTICS] generate double exponential
+!!    dexran(3f) - [M_datapac:STATISTICS:RANDOM] generate double exponential
 !!    random numbers
 !!
 !!##SYNOPSIS
@@ -5665,11 +5605,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_dexran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : dexran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call dexran(x,y)
+!!    ! call dexran(x,y)
 !!    end program demo_dexran
 !!
 !!   Results:
@@ -5820,11 +5759,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_dexsf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : dexsf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call dexsf(x,y)
+!!    ! call dexsf(x,y)
 !!    end program demo_dexsf
 !!
 !!   Results:
@@ -5944,11 +5882,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_discr2
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : discr2
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call discr2(x,y)
+!!    ! call discr2(x,y)
 !!    end program demo_discr2
 !!
 !!   Results:
@@ -6229,11 +6166,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_discr3
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : discr3
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call discr3(x,y)
+!!    ! call discr3(x,y)
 !!    end program demo_discr3
 !!
 !!   Results:
@@ -6512,11 +6448,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_discre
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : discre
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call discre(x,y)
+!!    ! call discre(x,y)
 !!    end program demo_discre
 !!
 !!   Results:
@@ -6826,11 +6761,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_dot
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : dot
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call dot(x,y)
+!!    ! call dot(x,y)
 !!    end program demo_dot
 !!
 !!   Results:
@@ -6907,11 +6841,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_ev1cdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : ev1cdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call ev1cdf(x,y)
+!!    ! call ev1cdf(x,y)
 !!    end program demo_ev1cdf
 !!
 !!   Results:
@@ -7011,11 +6944,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_ev1plt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : ev1plt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call ev1plt(x,y)
+!!    ! call ev1plt(x,y)
 !!    end program demo_ev1plt
 !!
 !!   Results:
@@ -7221,11 +7153,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_ev1ppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : ev1ppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call ev1ppf(x,y)
+!!    ! call ev1ppf(x,y)
 !!    end program demo_ev1ppf
 !!
 !!   Results:
@@ -7313,7 +7244,7 @@ contains
       END SUBROUTINE EV1PPF
 !>
 !!##NAME
-!!    ev1ran(3f) - [M_datapac:STATISTICS] generate extreme value type 1
+!!    ev1ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 1
 !!    (Gumbel) random numbers
 !!
 !!##SYNOPSIS
@@ -7342,11 +7273,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_ev1ran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : ev1ran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call ev1ran(x,y)
+!!    ! call ev1ran(x,y)
 !!    end program demo_ev1ran
 !!
 !!   Results:
@@ -7494,11 +7424,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_ev2cdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : ev2cdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call ev2cdf(x,y)
+!!    ! call ev2cdf(x,y)
 !!    end program demo_ev2cdf
 !!
 !!   Results:
@@ -7621,11 +7550,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_ev2plt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : ev2plt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call ev2plt(x,y)
+!!    ! call ev2plt(x,y)
 !!    end program demo_ev2plt
 !!
 !!   Results:
@@ -7857,11 +7785,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_ev2ppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : ev2ppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call ev2ppf(x,y)
+!!    ! call ev2ppf(x,y)
 !!    end program demo_ev2ppf
 !!
 !!   Results:
@@ -7958,7 +7885,7 @@ contains
       END SUBROUTINE EV2PPF
 !>
 !!##NAME
-!!    ev2ran(3f) - [M_datapac:STATISTICS] generate extreme value type 2
+!!    ev2ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 2
 !!    (Frechet) random numbers
 !!
 !!##SYNOPSIS
@@ -7987,11 +7914,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_ev2ran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : ev2ran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call ev2ran(x,y)
+!!    ! call ev2ran(x,y)
 !!    end program demo_ev2ran
 !!
 !!   Results:
@@ -8150,11 +8076,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_expcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : expcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call expcdf(x,y)
+!!    ! call expcdf(x,y)
 !!    end program demo_expcdf
 !!
 !!   Results:
@@ -8262,11 +8187,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_exppdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : exppdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call exppdf(x,y)
+!!    ! call exppdf(x,y)
 !!    end program demo_exppdf
 !!
 !!   Results:
@@ -8374,11 +8298,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_expplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : expplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call expplt(x,y)
+!!    ! call expplt(x,y)
 !!    end program demo_expplt
 !!
 !!   Results:
@@ -8582,11 +8505,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_expppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : expppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call expppf(x,y)
+!!    ! call expppf(x,y)
 !!    end program demo_expppf
 !!
 !!   Results:
@@ -8675,7 +8597,7 @@ contains
       END SUBROUTINE EXPPPF
 !>
 !!##NAME
-!!    expran(3f) - [M_datapac:STATISTICS] generate exponential random numbers
+!!    expran(3f) - [M_datapac:STATISTICS:RANDOM] generate exponential random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -8703,11 +8625,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_expran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : expran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call expran(x,y)
+!!    ! call expran(x,y)
 !!    end program demo_expran
 !!
 !!   Results:
@@ -8860,11 +8781,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_expsf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : expsf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call expsf(x,y)
+!!    ! call expsf(x,y)
 !!    end program demo_expsf
 !!
 !!   Results:
@@ -8983,11 +8903,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_extrem
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : extrem
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call extrem(x,y)
+!!    ! call extrem(x,y)
 !!    end program demo_extrem
 !!
 !!   Results:
@@ -9461,11 +9380,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_fcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : fcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call fcdf(x,y)
+!!    ! call fcdf(x,y)
 !!    end program demo_fcdf
 !!
 !!   Results:
@@ -9866,11 +9784,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_fourie
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : fourie
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call fourie(x,y)
+!!    ! call fourie(x,y)
 !!    end program demo_fourie
 !!
 !!   Results:
@@ -10204,7 +10121,7 @@ contains
       END SUBROUTINE FOURIE
 !>
 !!##NAME
-!!    fran(3f) - [M_datapac:STATISTICS] generate F random numbers
+!!    fran(3f) - [M_datapac:STATISTICS:RANDOM] generate F random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -10232,11 +10149,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_fran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : fran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call fran(x,y)
+!!    ! call fran(x,y)
 !!    end program demo_fran
 !!
 !!   Results:
@@ -10441,11 +10357,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_freq
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : freq
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call freq(x,y)
+!!    ! call freq(x,y)
 !!    end program demo_freq
 !!
 !!   Results:
@@ -10654,11 +10569,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_gamcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : gamcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call gamcdf(x,y)
+!!    ! call gamcdf(x,y)
 !!    end program demo_gamcdf
 !!
 !!   Results:
@@ -10865,11 +10779,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_gamplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : gamplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call gamplt(x,y)
+!!    ! call gamplt(x,y)
 !!    end program demo_gamplt
 !!
 !!   Results:
@@ -11271,11 +11184,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_gamppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : gamppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call gamppf(x,y)
+!!    ! call gamppf(x,y)
 !!    end program demo_gamppf
 !!
 !!   Results:
@@ -11520,7 +11432,7 @@ contains
       END SUBROUTINE GAMPPF
 !>
 !!##NAME
-!!    gamran(3f) - [M_datapac:STATISTICS] generate gamma random numbers
+!!    gamran(3f) - [M_datapac:STATISTICS:RANDOM] generate gamma random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -11548,11 +11460,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_gamran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : gamran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call gamran(x,y)
+!!    ! call gamran(x,y)
 !!    end program demo_gamran
 !!
 !!   Results:
@@ -11781,11 +11692,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_geocdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : geocdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call geocdf(x,y)
+!!    ! call geocdf(x,y)
 !!    end program demo_geocdf
 !!
 !!   Results:
@@ -11960,11 +11870,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_geoplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : geoplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call geoplt(x,y)
+!!    ! call geoplt(x,y)
 !!    end program demo_geoplt
 !!
 !!   Results:
@@ -12211,11 +12120,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_geoppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : geoppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call geoppf(x,y)
+!!    ! call geoppf(x,y)
 !!    end program demo_geoppf
 !!
 !!   Results:
@@ -12361,7 +12269,7 @@ contains
 99999 END SUBROUTINE GEOPPF
 !>
 !!##NAME
-!!    georan(3f) - [M_datapac:STATISTICS] generate geometric random numbers
+!!    georan(3f) - [M_datapac:STATISTICS:RANDOM] generate geometric random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -12389,11 +12297,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_georan
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : georan
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call georan(x,y)
+!!    ! call georan(x,y)
 !!    end program demo_georan
 !!
 !!   Results:
@@ -12599,11 +12506,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_hfncdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : hfncdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call hfncdf(x,y)
+!!    ! call hfncdf(x,y)
 !!    end program demo_hfncdf
 !!
 !!   Results:
@@ -12724,11 +12630,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_hfnplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : hfnplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call hfnplt(x,y)
+!!    ! call hfnplt(x,y)
 !!    end program demo_hfnplt
 !!
 !!   Results:
@@ -12940,11 +12845,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_hfnppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : hfnppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call hfnppf(x,y)
+!!    ! call hfnppf(x,y)
 !!    end program demo_hfnppf
 !!
 !!   Results:
@@ -13042,7 +12946,7 @@ contains
       END SUBROUTINE HFNPPF
 !>
 !!##NAME
-!!    hfnran(3f) - [M_datapac:STATISTICS] generate half-normal random numbers
+!!    hfnran(3f) - [M_datapac:STATISTICS:RANDOM] generate half-normal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -13070,11 +12974,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_hfnran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : hfnran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call hfnran(x,y)
+!!    ! call hfnran(x,y)
 !!    end program demo_hfnran
 !!
 !!   Results:
@@ -13259,11 +13162,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_hist
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : hist
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call hist(x,y)
+!!    ! call hist(x,y)
 !!    end program demo_hist
 !!
 !!   Results:
@@ -13592,11 +13494,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_invxwx
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : invxwx
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call invxwx(x,y)
+!!    ! call invxwx(x,y)
 !!    end program demo_invxwx
 !!
 !!   Results:
@@ -13611,15 +13512,10 @@ contains
 !*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE INVXWX(N,K)
       IMPLICIT NONE
-!*--INVXWX10396
-!*** Start of declarations inserted by SPAG
+
       REAL anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
-      INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 ,   &
-     &        irarg3 , j , jj , K , l , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT INVXWX
-      EXTERNAL DOT
+      INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
+
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE INVERSE OF X'WX
 !     WHICH IS DONE BY COMPUTING THE INVERSE OF R'R (WHERE
 !     R HAS JUST RECENTLY BEEN MODIFIED BEFORE CALLING THIS
@@ -13750,11 +13646,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lamcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lamcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lamcdf(x,y)
+!!    ! call lamcdf(x,y)
 !!    end program demo_lamcdf
 !!
 !!   Results:
@@ -13928,11 +13823,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lampdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lampdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lampdf(x,y)
+!!    ! call lampdf(x,y)
 !!    end program demo_lampdf
 !!
 !!   Results:
@@ -14075,11 +13969,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lamplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lamplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lamplt(x,y)
+!!    ! call lamplt(x,y)
 !!    end program demo_lamplt
 !!
 !!   Results:
@@ -14309,11 +14202,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lamppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lamppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lamppf(x,y)
+!!    ! call lamppf(x,y)
 !!    end program demo_lamppf
 !!
 !!   Results:
@@ -14423,7 +14315,7 @@ contains
 99999 END SUBROUTINE LAMPPF
 !>
 !!##NAME
-!!    lamran(3f) - [M_datapac:STATISTICS] generate Tukey-Lambda random numbers
+!!    lamran(3f) - [M_datapac:STATISTICS:RANDOM] generate Tukey-Lambda random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -14451,11 +14343,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lamran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lamran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lamran(x,y)
+!!    ! call lamran(x,y)
 !!    end program demo_lamran
 !!
 !!   Results:
@@ -14613,11 +14504,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lamsf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lamsf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lamsf(x,y)
+!!    ! call lamsf(x,y)
 !!    end program demo_lamsf
 !!
 !!   Results:
@@ -14751,11 +14641,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lgncdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lgncdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lgncdf(x,y)
+!!    ! call lgncdf(x,y)
 !!    end program demo_lgncdf
 !!
 !!   Results:
@@ -14873,11 +14762,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lgnplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lgnplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lgnplt(x,y)
+!!    ! call lgnplt(x,y)
 !!    end program demo_lgnplt
 !!
 !!   Results:
@@ -15090,11 +14978,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lgnppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lgnppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lgnppf(x,y)
+!!    ! call lgnppf(x,y)
 !!    end program demo_lgnppf
 !!
 !!   Results:
@@ -15189,7 +15076,7 @@ contains
       END SUBROUTINE LGNPPF
 !>
 !!##NAME
-!!    lgnran(3f) - [M_datapac:STATISTICS] generate lognormal random numbers
+!!    lgnran(3f) - [M_datapac:STATISTICS:RANDOM] generate lognormal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -15217,11 +15104,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_lgnran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : lgnran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call lgnran(x,y)
+!!    ! call lgnran(x,y)
 !!    end program demo_lgnran
 !!
 !!   Results:
@@ -15412,11 +15298,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_loc
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : loc
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call loc(x,y)
+!!    ! call loc(x,y)
 !!    end program demo_loc
 !!
 !!   Results:
@@ -15634,11 +15519,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_logcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : logcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call logcdf(x,y)
+!!    ! call logcdf(x,y)
 !!    end program demo_logcdf
 !!
 !!   Results:
@@ -15741,11 +15625,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_logpdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : logpdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call logpdf(x,y)
+!!    ! call logpdf(x,y)
 !!    end program demo_logpdf
 !!
 !!   Results:
@@ -15842,11 +15725,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_logplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : logplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call logplt(x,y)
+!!    ! call logplt(x,y)
 !!    end program demo_logplt
 !!
 !!   Results:
@@ -16048,11 +15930,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_logppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : logppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call logppf(x,y)
+!!    ! call logppf(x,y)
 !!    end program demo_logppf
 !!
 !!   Results:
@@ -16142,7 +16023,7 @@ contains
       END SUBROUTINE LOGPPF
 !>
 !!##NAME
-!!    logran(3f) - [M_datapac:STATISTICS] generate logistic random numbers
+!!    logran(3f) - [M_datapac:STATISTICS:RANDOM] generate logistic random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -16170,11 +16051,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_logran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : logran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call logran(x,y)
+!!    ! call logran(x,y)
 !!    end program demo_logran
 !!
 !!   Results:
@@ -16326,11 +16206,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_logsf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : logsf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call logsf(x,y)
+!!    ! call logsf(x,y)
 !!    end program demo_logsf
 !!
 !!   Results:
@@ -16447,11 +16326,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_max
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : max
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call max(x,y)
+!!    ! call max(x,y)
 !!    end program demo_max
 !!
 !!   Results:
@@ -16596,11 +16474,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_mean
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : mean
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call mean(x,y)
+!!    ! call mean(x,y)
 !!    end program demo_mean
 !!
 !!   Results:
@@ -16754,11 +16631,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_median
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : median
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call median(x,y)
+!!    ! call median(x,y)
 !!    end program demo_median
 !!
 !!   Results:
@@ -16920,11 +16796,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_midm
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : midm
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call midm(x,y)
+!!    ! call midm(x,y)
 !!    end program demo_midm
 !!
 !!   Results:
@@ -17117,11 +16992,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_midr
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : midr
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call midr(x,y)
+!!    ! call midr(x,y)
 !!    end program demo_midr
 !!
 !!   Results:
@@ -17276,11 +17150,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_min
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : min
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call min(x,y)
+!!    ! call min(x,y)
 !!    end program demo_min
 !!
 !!   Results:
@@ -17426,11 +17299,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_move
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : move
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call move(x,y)
+!!    ! call move(x,y)
 !!    end program demo_move
 !!
 !!   Results:
@@ -17598,11 +17470,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_nbcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : nbcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call nbcdf(x,y)
+!!    ! call nbcdf(x,y)
 !!    end program demo_nbcdf
 !!
 !!   Results:
@@ -17952,11 +17823,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_nbppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : nbppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call nbppf(x,y)
+!!    ! call nbppf(x,y)
 !!    end program demo_nbppf
 !!
 !!   Results:
@@ -18364,7 +18234,7 @@ contains
       END SUBROUTINE NBPPF
 !>
 !!##NAME
-!!    nbran(3f) - [M_datapac:STATISTICS] generate negative binomial random numbers
+!!    nbran(3f) - [M_datapac:STATISTICS:RANDOM] generate negative binomial random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -18392,11 +18262,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_nbran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : nbran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call nbran(x,y)
+!!    ! call nbran(x,y)
 !!    end program demo_nbran
 !!
 !!   Results:
@@ -18648,11 +18517,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_norcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : norcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call norcdf(x,y)
+!!    ! call norcdf(x,y)
 !!    end program demo_norcdf
 !!
 !!   Results:
@@ -18759,11 +18627,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_norout
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : norout
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call norout(x,y)
+!!    ! call norout(x,y)
 !!    end program demo_norout
 !!
 !!   Results:
@@ -19272,11 +19139,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_norpdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : norpdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call norpdf(x,y)
+!!    ! call norpdf(x,y)
 !!    end program demo_norpdf
 !!
 !!   Results:
@@ -19374,11 +19240,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_norplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : norplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call norplt(x,y)
+!!    ! call norplt(x,y)
 !!    end program demo_norplt
 !!
 !!   Results:
@@ -19584,11 +19449,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_norppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : norppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call norppf(x,y)
+!!    ! call norppf(x,y)
 !!    end program demo_norppf
 !!
 !!   Results:
@@ -19727,7 +19591,7 @@ contains
 99999 END SUBROUTINE NORPPF
 !>
 !!##NAME
-!!    norran(3f) - [M_datapac:STATISTICS] generate normal random numbers
+!!    norran(3f) - [M_datapac:STATISTICS:RANDOM] generate normal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -19755,11 +19619,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_norran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : norran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call norran(x,y)
+!!    ! call norran(x,y)
 !!    end program demo_norran
 !!
 !!   Results:
@@ -19934,11 +19797,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_norsf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : norsf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call norsf(x,y)
+!!    ! call norsf(x,y)
 !!    end program demo_norsf
 !!
 !!   Results:
@@ -20060,11 +19922,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_parcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : parcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call parcdf(x,y)
+!!    ! call parcdf(x,y)
 !!    end program demo_parcdf
 !!
 !!   Results:
@@ -20191,11 +20052,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_parplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : parplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call parplt(x,y)
+!!    ! call parplt(x,y)
 !!    end program demo_parplt
 !!
 !!   Results:
@@ -20426,11 +20286,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_parppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : parppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call parppf(x,y)
+!!    ! call parppf(x,y)
 !!    end program demo_parppf
 !!
 !!   Results:
@@ -20532,7 +20391,7 @@ contains
       END SUBROUTINE PARPPF
 !>
 !!##NAME
-!!    parran(3f) - [M_datapac:STATISTICS] generate Pareto random numbers
+!!    parran(3f) - [M_datapac:STATISTICS:RANDOM] generate Pareto random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -20560,11 +20419,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_parran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : parran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call parran(x,y)
+!!    ! call parran(x,y)
 !!    end program demo_parran
 !!
 !!   Results:
@@ -20728,11 +20586,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plot10
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plot10
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plot10(x,y)
+!!    ! call plot10(x,y)
 !!    end program demo_plot10
 !!
 !!   Results:
@@ -21262,11 +21119,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plot6
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plot6
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plot6(x,y)
+!!    ! call plot6(x,y)
 !!    end program demo_plot6
 !!
 !!   Results:
@@ -21613,11 +21469,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plot7
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plot7
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plot7(x,y)
+!!    ! call plot7(x,y)
 !!    end program demo_plot7
 !!
 !!   Results:
@@ -22050,11 +21905,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plot8
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plot8
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plot8(x,y)
+!!    ! call plot8(x,y)
 !!    end program demo_plot8
 !!
 !!   Results:
@@ -22553,11 +22407,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plot9
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plot9
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plot9(x,y)
+!!    ! call plot9(x,y)
 !!    end program demo_plot9
 !!
 !!   Results:
@@ -23022,11 +22875,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotc
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotc
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotc(x,y)
+!!    ! call plotc(x,y)
 !!    end program demo_plotc
 !!
 !!   Results:
@@ -23474,11 +23326,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotco
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotco
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotco(x,y)
+!!    ! call plotco(x,y)
 !!    end program demo_plotco
 !!
 !!   Results:
@@ -23727,11 +23578,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotct
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotct
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotct(x,y)
+!!    ! call plotct(x,y)
 !!    end program demo_plotct
 !!
 !!   Results:
@@ -24179,11 +24029,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plot
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plot
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plot(x,y)
+!!    ! call plot(x,y)
 !!    end program demo_plot
 !!
 !!   Results:
@@ -24487,11 +24336,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotsc
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotsc
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotsc(x,y)
+!!    ! call plotsc(x,y)
 !!    end program demo_plotsc
 !!
 !!   Results:
@@ -25017,11 +24865,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plots
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plots
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plots(x,y)
+!!    ! call plots(x,y)
 !!    end program demo_plots
 !!
 !!   Results:
@@ -25455,11 +25302,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotsp
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotsp
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotsp(x,y)
+!!    ! call plotsp(x,y)
 !!    end program demo_plotsp
 !!
 !!   Results:
@@ -25681,11 +25527,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotst
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotst
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotst(x,y)
+!!    ! call plotst(x,y)
 !!    end program demo_plotst
 !!
 !!   Results:
@@ -26110,11 +25955,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plott
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plott
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plott(x,y)
+!!    ! call plott(x,y)
 !!    end program demo_plott
 !!
 !!   Results:
@@ -26462,11 +26306,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotu
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotu
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotu(x,y)
+!!    ! call plotu(x,y)
 !!    end program demo_plotu
 !!
 !!   Results:
@@ -27054,11 +26897,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotx
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotx
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotx(x,y)
+!!    ! call plotx(x,y)
 !!    end program demo_plotx
 !!
 !!   Results:
@@ -27350,11 +27192,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotxt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotxt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotxt(x,y)
+!!    ! call plotxt(x,y)
 !!    end program demo_plotxt
 !!
 !!   Results:
@@ -27641,11 +27482,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_plotxx
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : plotxx
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call plotxx(x,y)
+!!    ! call plotxx(x,y)
 !!    end program demo_plotxx
 !!
 !!   Results:
@@ -27963,11 +27803,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_pltsct
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : pltsct
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call pltsct(x,y)
+!!    ! call pltsct(x,y)
 !!    end program demo_pltsct
 !!
 !!   Results:
@@ -28473,11 +28312,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_pltxxt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : pltxxt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call pltxxt(x,y)
+!!    ! call pltxxt(x,y)
 !!    end program demo_pltxxt
 !!
 !!   Results:
@@ -28786,11 +28624,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_poicdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : poicdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call poicdf(x,y)
+!!    ! call poicdf(x,y)
 !!    end program demo_poicdf
 !!
 !!   Results:
@@ -29028,11 +28865,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_poiplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : poiplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call poiplt(x,y)
+!!    ! call poiplt(x,y)
 !!    end program demo_poiplt
 !!
 !!   Results:
@@ -29353,11 +29189,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_poippf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : poippf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call poippf(x,y)
+!!    ! call poippf(x,y)
 !!    end program demo_poippf
 !!
 !!   Results:
@@ -29724,7 +29559,7 @@ contains
       END SUBROUTINE POIPPF
 !>
 !!##NAME
-!!    poiran(3f) - [M_datapac:STATISTICS] generate Poisson random numbers
+!!    poiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Poisson random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -29752,11 +29587,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_poiran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : poiran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call poiran(x,y)
+!!    ! call poiran(x,y)
 !!    end program demo_poiran
 !!
 !!   Results:
@@ -29966,11 +29800,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_poly
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : poly
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call poly(x,y)
+!!    ! call poly(x,y)
 !!    end program demo_poly
 !!
 !!   Results:
@@ -30002,10 +29835,6 @@ contains
      &        jsp1 , k , kk , kmax , kp1 , l , m , N , ni , nk , nkm5 , &
      &        nkmax
       INTEGER nm5 , nmax , numset
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT POLY
-      EXTERNAL DOT
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES A LEAST SQUARES
 !              POLYNOMIAL FIT (OF DEGREE = IDEG) OF THE
@@ -30662,11 +30491,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_propor
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : propor
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call propor(x,y)
+!!    ! call propor(x,y)
 !!    end program demo_propor
 !!
 !!   Results:
@@ -30844,11 +30672,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_range
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : range
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call range(x,y)
+!!    ! call range(x,y)
 !!    end program demo_range
 !!
 !!   Results:
@@ -31005,11 +30832,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_rank
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : rank
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call rank(x,y)
+!!    ! call rank(x,y)
 !!    end program demo_rank
 !!
 !!   Results:
@@ -31252,7 +31078,7 @@ contains
       END SUBROUTINE RANK
 !>
 !!##NAME
-!!    ranper(3f) - [M_datapac:STATISTICS] generates a random permutation
+!!    ranper(3f) - [M_datapac:STATISTICS:RANDOM] generates a random permutation
 !!
 !!##SYNOPSIS
 !!
@@ -31280,11 +31106,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_ranper
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : ranper
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call ranper(x,y)
+!!    ! call ranper(x,y)
 !!    end program demo_ranper
 !!
 !!   Results:
@@ -31433,11 +31258,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_read
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : read
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call read(x,y)
+!!    ! call read(x,y)
 !!    end program demo_read
 !!
 !!   Results:
@@ -31973,11 +31797,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_readg
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : readg
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call readg(x,y)
+!!    ! call readg(x,y)
 !!    end program demo_readg
 !!
 !!   Results:
@@ -32525,11 +32348,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_relsd
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : relsd
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call relsd(x,y)
+!!    ! call relsd(x,y)
 !!    end program demo_relsd
 !!
 !!   Results:
@@ -32696,11 +32518,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_replac
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : replac
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call replac(x,y)
+!!    ! call replac(x,y)
 !!    end program demo_replac
 !!
 !!   Results:
@@ -32919,11 +32740,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_retain
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : retain
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call retain(x,y)
+!!    ! call retain(x,y)
 !!    end program demo_retain
 !!
 !!   Results:
@@ -33146,11 +32966,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_runs
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : runs
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call runs(x,y)
+!!    ! call runs(x,y)
 !!    end program demo_runs
 !!
 !!   Results:
@@ -33634,11 +33453,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_sampp
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : sampp
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call sampp(x,y)
+!!    ! call sampp(x,y)
 !!    end program demo_sampp
 !!
 !!   Results:
@@ -33836,11 +33654,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_scale
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : scale
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call scale(x,y)
+!!    ! call scale(x,y)
 !!    end program demo_scale
 !!
 !!   Results:
@@ -34056,11 +33873,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_sd
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : sd
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call sd(x,y)
+!!    ! call sd(x,y)
 !!    end program demo_sd
 !!
 !!   Results:
@@ -34219,11 +34035,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_skipr
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : skipr
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call skipr(x,y)
+!!    ! call skipr(x,y)
 !!    end program demo_skipr
 !!
 !!   Results:
@@ -34332,11 +34147,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_sortc
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : sortc
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call sortc(x,y)
+!!    ! call sortc(x,y)
 !!    end program demo_sortc
 !!
 !!   Results:
@@ -34664,11 +34478,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_sort
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : sort
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call sort(x,y)
+!!    ! call sort(x,y)
 !!    end program demo_sort
 !!
 !!   Results:
@@ -34947,11 +34760,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_sortp
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : sortp
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call sortp(x,y)
+!!    ! call sortp(x,y)
 !!    end program demo_sortp
 !!
 !!   Results:
@@ -35263,11 +35075,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_spcorr
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : spcorr
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call spcorr(x,y)
+!!    ! call spcorr(x,y)
 !!    end program demo_spcorr
 !!
 !!   Results:
@@ -35458,11 +35269,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_stmom3
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : stmom3
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call stmom3(x,y)
+!!    ! call stmom3(x,y)
 !!    end program demo_stmom3
 !!
 !!   Results:
@@ -35630,11 +35440,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_stmom4
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : stmom4
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call stmom4(x,y)
+!!    ! call stmom4(x,y)
 !!    end program demo_stmom4
 !!
 !!   Results:
@@ -35802,11 +35611,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_subse1
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : subse1
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call subse1(x,y)
+!!    ! call subse1(x,y)
 !!    end program demo_subse1
 !!
 !!   Results:
@@ -36059,11 +35867,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_subse2
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : subse2
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call subse2(x,y)
+!!    ! call subse2(x,y)
 !!    end program demo_subse2
 !!
 !!   Results:
@@ -36343,11 +36150,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_subset
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : subset
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call subset(x,y)
+!!    ! call subset(x,y)
 !!    end program demo_subset
 !!
 !!   Results:
@@ -36609,11 +36415,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_tail
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : tail
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call tail(x,y)
+!!    ! call tail(x,y)
 !!    end program demo_tail
 !!
 !!   Results:
@@ -37345,11 +37150,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_tcdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : tcdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call tcdf(x,y)
+!!    ! call tcdf(x,y)
 !!    end program demo_tcdf
 !!
 !!   Results:
@@ -37590,11 +37394,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_time
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : time
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call time(x,y)
+!!    ! call time(x,y)
 !!    end program demo_time
 !!
 !!   Results:
@@ -38040,11 +37843,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_tol
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : tol
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call tol(x,y)
+!!    ! call tol(x,y)
 !!    end program demo_tol
 !!
 !!   Results:
@@ -38424,8 +38226,9 @@ END SUBROUTINE SORTP
       END SUBROUTINE TOL
 !>
 !!##NAME
-!!    tplt(3f) - [M_datapac:STATISTICS] generates a student's t probability
-!!    plot (with integer degrees of freedom parameter value = nu).
+!!    tplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a student's
+!!    t probability plot (with integer degrees of freedom parameter value
+!!    NU).
 !!
 !!##SYNOPSIS
 !!
@@ -38453,11 +38256,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_tplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : tplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call tplt(x,y)
+!!    ! call tplt(x,y)
 !!    end program demo_tplt
 !!
 !!   Results:
@@ -38666,7 +38468,7 @@ END SUBROUTINE SORTP
       ENDIF
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-      END SUBROUTINE TPLT
+END SUBROUTINE TPLT
 !>
 !!##NAME
 !!    tppf(3f) - [M_datapac:STATISTICS] This subroutine computes the percent
@@ -38699,11 +38501,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_tppf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : tppf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call tppf(x,y)
+!!    ! call tppf(x,y)
 !!    end program demo_tppf
 !!
 !!   Results:
@@ -38941,7 +38742,7 @@ END SUBROUTINE SORTP
 99999 END SUBROUTINE TPPF
 !>
 !!##NAME
-!!    tran(3f) - [M_datapac:STATISTICS] a random sample of size n from the
+!!    tran(3f) - [M_datapac:STATISTICS:RANDOM] a random sample of size n from the
 !!    student's t distribution with integer degrees of freedom parameter NU.
 !!
 !!##SYNOPSIS
@@ -38970,11 +38771,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_tran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : tran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call tran(x,y)
+!!    ! call tran(x,y)
 !!    end program demo_tran
 !!
 !!   Results:
@@ -39157,11 +38957,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_trim
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : trim
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call trim(x,y)
+!!    ! call trim(x,y)
 !!    end program demo_trim
 !!
 !!   Results:
@@ -39416,11 +39215,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_unicdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : unicdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call unicdf(x,y)
+!!    ! call unicdf(x,y)
 !!    end program demo_unicdf
 !!
 !!   Results:
@@ -39531,11 +39329,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_unimed
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : unimed
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call unimed(x,y)
+!!    ! call unimed(x,y)
 !!    end program demo_unimed
 !!
 !!   Results:
@@ -39695,11 +39492,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_unipdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : unipdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call unipdf(x,y)
+!!    ! call unipdf(x,y)
 !!    end program demo_unipdf
 !!
 !!   Results:
@@ -39808,11 +39604,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_uniplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : uniplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call uniplt(x,y)
+!!    ! call uniplt(x,y)
 !!    end program demo_uniplt
 !!
 !!   Results:
@@ -40010,11 +39805,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_unippf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : unippf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call unippf(x,y)
+!!    ! call unippf(x,y)
 !!    end program demo_unippf
 !!
 !!   Results:
@@ -40103,7 +39897,7 @@ END SUBROUTINE SORTP
       END SUBROUTINE UNIPPF
 !>
 !!##NAME
-!!    uniran(3f) - [M_datapac:STATISTICS] generate Uniform random numbers
+!!    uniran(3f) - [M_datapac:STATISTICS:RANDOM] generate Uniform random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -40131,11 +39925,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_uniran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : uniran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call uniran(x,y)
+!!    ! call uniran(x,y)
 !!    end program demo_uniran
 !!
 !!   Results:
@@ -40448,11 +40241,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_unisf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : unisf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call unisf(x,y)
+!!    ! call unisf(x,y)
 !!    end program demo_unisf
 !!
 !!   Results:
@@ -40571,11 +40363,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_var
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : var
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call var(x,y)
+!!    ! call var(x,y)
 !!    end program demo_var
 !!
 !!   Results:
@@ -40735,11 +40526,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_weib
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : weib
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call weib(x,y)
+!!    ! call weib(x,y)
 !!    end program demo_weib
 !!
 !!   Results:
@@ -41108,11 +40898,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_weicdf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : weicdf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call weicdf(x,y)
+!!    ! call weicdf(x,y)
 !!    end program demo_weicdf
 !!
 !!   Results:
@@ -41237,11 +41026,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_weiplt
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : weiplt
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call weiplt(x,y)
+!!    ! call weiplt(x,y)
 !!    end program demo_weiplt
 !!
 !!   Results:
@@ -41475,11 +41263,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_weippf
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : weippf
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call weippf(x,y)
+!!    ! call weippf(x,y)
 !!    end program demo_weippf
 !!
 !!   Results:
@@ -41580,7 +41367,7 @@ END SUBROUTINE SORTP
       END SUBROUTINE WEIPPF
 !>
 !!##NAME
-!!    weiran(3f) - [M_datapac:STATISTICS] generate Weibull random numbers
+!!    weiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Weibull random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -41608,11 +41395,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_weiran
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : weiran
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call weiran(x,y)
+!!    ! call weiran(x,y)
 !!    end program demo_weiran
 !!
 !!   Results:
@@ -41775,11 +41561,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_wind
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : wind
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call wind(x,y)
+!!    ! call wind(x,y)
 !!    end program demo_wind
 !!
 !!   Results:
@@ -42045,11 +41830,10 @@ END SUBROUTINE SORTP
 !!   Sample program:
 !!
 !!    program demo_write
-!!    ! generate a random perturbation of an array
 !!    use M_datapac, only : write
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    call write(x,y)
+!!    ! call write(x,y)
 !!    end program demo_write
 !!
 !!   Results:

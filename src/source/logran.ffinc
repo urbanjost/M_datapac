@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file logran.3m_datapac.man
 NAME
-   logran(3f) - [M_datapac:STATISTICS] generate logistic random numbers
+   logran(3f) - [M_datapac:STATISTICS:RANDOM] generate logistic random numbers
 
 SYNOPSIS
     Subroutine logran (X, Y)
@@ -27,11 +27,10 @@ EXAMPLES
   Sample program:
 
    program demo_logran
-   ! generate a random perturbation of an array
    use M_datapac, only : logran
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   call logran(x,y)
+   ! call logran(x,y)
    end program demo_logran
 
   Results:
