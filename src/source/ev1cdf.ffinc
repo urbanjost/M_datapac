@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file ev1cdf.3datapac.man
+$BLOCK COMMENT --file ev1cdf.3m_datapac.man
 NAME
-   ev1cdf(3f) - [M_datapac:STATISTICS] EV1CDF compute the extreme value type 1 (Gumbel) cumulative distribution function
+   ev1cdf(3f) - [M_datapac:STATISTICS] compute the extreme value type 1
+   (Gumbel) cumulative distribution function
 
 SYNOPSIS
     Subroutine ev1cdf (X, Y)

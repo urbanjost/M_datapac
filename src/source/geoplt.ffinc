@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file geoplt.3datapac.man
+$BLOCK COMMENT --file geoplt.3m_datapac.man
 NAME
-   geoplt(3f) - [M_datapac:STATISTICS] GEOPLT generate a geometric probability plot (line printer graph)
+   geoplt(3f) - [M_datapac:STATISTICS] generate a geometric probability
+   plot (line printer graph)
 
 SYNOPSIS
     Subroutine geoplt (X, Y)

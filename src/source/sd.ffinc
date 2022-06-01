@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file sd.3datapac.man
+$BLOCK COMMENT --file sd.3m_datapac.man
 NAME
-   sd(3f) - [M_datapac:STATISTICS] SD compute the standard deviation of a vector of observations
+   sd(3f) - [M_datapac:STATISTICS] compute the standard deviation of a
+   vector of observations
 
 SYNOPSIS
     Subroutine sd (X, Y)

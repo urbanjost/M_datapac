@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file ev1ran.3datapac.man
+$BLOCK COMMENT --file ev1ran.3m_datapac.man
 NAME
-   ev1ran(3f) - [M_datapac:STATISTICS] EV1RAN generate extreme value type 1 (Gumbel) random numbers
+   ev1ran(3f) - [M_datapac:STATISTICS] generate extreme value type 1
+   (Gumbel) random numbers
 
 SYNOPSIS
     Subroutine ev1ran (X, Y)

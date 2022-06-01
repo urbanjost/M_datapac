@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file chscdf.3datapac.man
+$BLOCK COMMENT --file chscdf.3m_datapac.man
 NAME
-   chscdf(3f) - [M_datapac:STATISTICS] CHSCDF compute the chi-square cumulative distribution function
+   chscdf(3f) - [M_datapac:STATISTICS] compute the chi-square cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine chscdf (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file corr.3datapac.man
+$BLOCK COMMENT --file corr.3m_datapac.man
 NAME
-   corr(3f) - [M_datapac:STATISTICS] CORR compute the sample correlation coefficient
+   corr(3f) - [M_datapac:STATISTICS] compute the sample correlation
+   coefficient
 
 SYNOPSIS
     Subroutine corr (X, Y)

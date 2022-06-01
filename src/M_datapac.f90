@@ -312,7 +312,7 @@ contains
       end subroutine autoco
 !>
 !!##NAME
-!!    betran(3f) - [M_datapac:STATISTICS] BETRAN generate beta random numbers
+!!    betran(3f) - [M_datapac:STATISTICS] generate beta random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -579,7 +579,8 @@ contains
       END SUBROUTINE BETRAN
 !>
 !!##NAME
-!!    bincdf(3f) - [M_datapac:STATISTICS] BINCDF compute the binomial cumulative distribution function
+!!    bincdf(3f) - [M_datapac:STATISTICS] compute the binomial cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -942,7 +943,8 @@ contains
       END SUBROUTINE BINCDF
 !>
 !!##NAME
-!!    binppf(3f) - [M_datapac:STATISTICS] BINPPF compute the binomial percent point function
+!!    binppf(3f) - [M_datapac:STATISTICS] compute the binomial percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -1376,7 +1378,7 @@ contains
       END SUBROUTINE BINPPF
 !>
 !!##NAME
-!!    binran(3f) - [M_datapac:STATISTICS] BINRAN generate binomial random numbers
+!!    binran(3f) - [M_datapac:STATISTICS] generate binomial random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -1633,7 +1635,8 @@ contains
 99999 END SUBROUTINE BINRAN
 !>
 !!##NAME
-!!    caucdf(3f) - [M_datapac:STATISTICS] CAUCDF compute the Cauchy cumulative distribution function
+!!    caucdf(3f) - [M_datapac:STATISTICS] compute the Cauchy cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -1735,7 +1738,8 @@ contains
       END SUBROUTINE CAUCDF
 !>
 !!##NAME
-!!    caupdf(3f) - [M_datapac:STATISTICS] CAUPDF compute the Cauchy probability density function
+!!    caupdf(3f) - [M_datapac:STATISTICS] compute the Cauchy probability
+!!    density function
 !!
 !!##SYNOPSIS
 !!
@@ -1837,7 +1841,8 @@ contains
       END SUBROUTINE CAUPDF
 !>
 !!##NAME
-!!    cauplt(3f) - [M_datapac:STATISTICS] CAUPLT generate a Cauchy probability plot (line printer graph)
+!!    cauplt(3f) - [M_datapac:STATISTICS] generate a Cauchy probability plot
+!!    (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -2044,7 +2049,8 @@ contains
       END SUBROUTINE CAUPLT
 !>
 !!##NAME
-!!    cauppf(3f) - [M_datapac:STATISTICS] CAUPPF compute the Cauchy percent point function
+!!    cauppf(3f) - [M_datapac:STATISTICS] compute the Cauchy percent point
+!!    function
 !!
 !!##SYNOPSIS
 !!
@@ -2167,7 +2173,7 @@ contains
       END SUBROUTINE CAUPPF
 !>
 !!##NAME
-!!    cauran(3f) - [M_datapac:STATISTICS] CAURAN generate Cauchy random numbers
+!!    cauran(3f) - [M_datapac:STATISTICS] generate Cauchy random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -2329,7 +2335,7 @@ contains
       END SUBROUTINE CAURAN
 !>
 !!##NAME
-!!    causf(3f) - [M_datapac:STATISTICS] CAUSF compute the Cauchy sparsity function
+!!    causf(3f) - [M_datapac:STATISTICS] compute the Cauchy sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -2453,7 +2459,8 @@ contains
       END SUBROUTINE CAUSF
 !>
 !!##NAME
-!!    chscdf(3f) - [M_datapac:STATISTICS] CHSCDF compute the chi-square cumulative distribution function
+!!    chscdf(3f) - [M_datapac:STATISTICS] compute the chi-square cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -2741,7 +2748,8 @@ contains
 99999 END SUBROUTINE CHSCDF
 !>
 !!##NAME
-!!    chsplt(3f) - [M_datapac:STATISTICS] CHSPLT generate a chi-square probability plot (line printer graph)
+!!    chsplt(3f) - [M_datapac:STATISTICS] generate a chi-square probability
+!!    plot (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -2979,7 +2987,8 @@ contains
       END SUBROUTINE CHSPLT
 !>
 !!##NAME
-!!    chsppf(3f) - [M_datapac:STATISTICS] CHSPPF compute the chi-square percent point function
+!!    chsppf(3f) - [M_datapac:STATISTICS] compute the chi-square percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -3261,7 +3270,7 @@ contains
       END SUBROUTINE CHSPPF
 !>
 !!##NAME
-!!    chsran(3f) - [M_datapac:STATISTICS] CHSRAN generate chi-square random numbers
+!!    chsran(3f) - [M_datapac:STATISTICS] generate chi-square random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -3440,7 +3449,8 @@ contains
       END SUBROUTINE CHSRAN
 !>
 !!##NAME
-!!    code(3f) - [M_datapac:STATISTICS] CODE code the elements of a vector (1 for the minimum, 2 for the next larger value, and so on)
+!!    code(3f) - [M_datapac:STATISTICS] code the elements of a vector
+!!    (1 for the minimum, 2 for the next larger value, and so on)
 !!
 !!##SYNOPSIS
 !!
@@ -3633,7 +3643,8 @@ contains
       END SUBROUTINE CODE
 !>
 !!##NAME
-!!    copy(3f) - [M_datapac:STATISTICS] COPY copy the elements of one vector into another vector
+!!    copy(3f) - [M_datapac:STATISTICS] copy the elements of one vector
+!!    into another vector
 !!
 !!##SYNOPSIS
 !!
@@ -3765,7 +3776,8 @@ contains
       END SUBROUTINE COPY
 !>
 !!##NAME
-!!    corr(3f) - [M_datapac:STATISTICS] CORR compute the sample correlation coefficient
+!!    corr(3f) - [M_datapac:STATISTICS] compute the sample correlation
+!!    coefficient
 !!
 !!##SYNOPSIS
 !!
@@ -3959,7 +3971,8 @@ contains
       END SUBROUTINE CORR
 !>
 !!##NAME
-!!    count(3f) - [M_datapac:STATISTICS] COUNT compute the number of observations between a minimum and a maximum value
+!!    count(3f) - [M_datapac:STATISTICS] compute the number of observations
+!!    between a minimum and a maximum value
 !!
 !!##SYNOPSIS
 !!
@@ -4132,7 +4145,8 @@ contains
       END SUBROUTINE COUNT
 !>
 !!##NAME
-!!    decomp(3f) - [M_datapac:STATISTICS] DECOMP decomposes a weighted data matrix (utility routine used by other routines)
+!!    decomp(3f) - [M_datapac:STATISTICS] decomposes a weighted data matrix
+!!    (utility routine used by other routines)
 !!
 !!##SYNOPSIS
 !!
@@ -4352,7 +4366,8 @@ contains
       END SUBROUTINE DECOMP
 !>
 !!##NAME
-!!    define(3f) - [M_datapac:STATISTICS] DEFINE set all elements of a vector equal to a specified constant
+!!    define(3f) - [M_datapac:STATISTICS] set all elements of a vector
+!!    equal to a specified constant
 !!
 !!##SYNOPSIS
 !!
@@ -4497,7 +4512,8 @@ contains
       END SUBROUTINE DEFINE
 !>
 !!##NAME
-!!    delete(3f) - [M_datapac:STATISTICS] DELETE delete all elements of a vector within some specified interval
+!!    delete(3f) - [M_datapac:STATISTICS] delete all elements of a vector
+!!    within some specified interval
 !!
 !!##SYNOPSIS
 !!
@@ -4721,7 +4737,7 @@ contains
       END SUBROUTINE DELETE
 !>
 !!##NAME
-!!    demod(3f) - [M_datapac:STATISTICS] DEMOD perform a complex demodulation
+!!    demod(3f) - [M_datapac:STATISTICS] perform a complex demodulation
 !!
 !!##SYNOPSIS
 !!
@@ -5082,7 +5098,8 @@ contains
       END SUBROUTINE DEMOD
 !>
 !!##NAME
-!!    dexcdf(3f) - [M_datapac:STATISTICS] DEXCDF compute the double exponential cumulative distribution function
+!!    dexcdf(3f) - [M_datapac:STATISTICS] compute the double exponential
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -5184,7 +5201,8 @@ contains
       END SUBROUTINE DEXCDF
 !>
 !!##NAME
-!!    dexpdf(3f) - [M_datapac:STATISTICS] DEXPDF compute the double exponential probability density function
+!!    dexpdf(3f) - [M_datapac:STATISTICS] compute the double exponential
+!!    probability density function
 !!
 !!##SYNOPSIS
 !!
@@ -5288,7 +5306,8 @@ contains
       END SUBROUTINE DEXPDF
 !>
 !!##NAME
-!!    dexplt(3f) - [M_datapac:STATISTICS] DEXPLT generate a double exponential probability plot (line printer graph)
+!!    dexplt(3f) - [M_datapac:STATISTICS] generate a double exponential
+!!    probability plot (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -5495,7 +5514,8 @@ contains
       END SUBROUTINE DEXPLT
 !>
 !!##NAME
-!!    dexppf(3f) - [M_datapac:STATISTICS] DEXPPF compute the double exponential percent point function
+!!    dexppf(3f) - [M_datapac:STATISTICS] compute the double exponential
+!!    percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -5617,7 +5637,8 @@ contains
       END SUBROUTINE DEXPPF
 !>
 !!##NAME
-!!    dexran(3f) - [M_datapac:STATISTICS] DEXRAN generate double exponential random numbers
+!!    dexran(3f) - [M_datapac:STATISTICS] generate double exponential
+!!    random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -5771,7 +5792,8 @@ contains
       END SUBROUTINE DEXRAN
 !>
 !!##NAME
-!!    dexsf(3f) - [M_datapac:STATISTICS] DEXSF compute the double exponential sparsity function
+!!    dexsf(3f) - [M_datapac:STATISTICS] compute the double exponential
+!!    sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -5894,7 +5916,8 @@ contains
       END SUBROUTINE DEXSF
 !>
 !!##NAME
-!!    discr2(3f) - [M_datapac:STATISTICS] DISCR2 bin the elements of a vector (output vector contains class midpoints)
+!!    discr2(3f) - [M_datapac:STATISTICS] bin the elements of a vector
+!!    (output vector contains class midpoints)
 !!
 !!##SYNOPSIS
 !!
@@ -6178,7 +6201,8 @@ contains
       END SUBROUTINE DISCR2
 !>
 !!##NAME
-!!    discr3(3f) - [M_datapac:STATISTICS] DISCR3 bin the elements of a vector (output vector contains 1's, 2's, 3's, and so on)
+!!    discr3(3f) - [M_datapac:STATISTICS] bin the elements of a vector
+!!    (output vector contains 1's, 2's, 3's, and so on)
 !!
 !!##SYNOPSIS
 !!
@@ -6460,7 +6484,8 @@ contains
       END SUBROUTINE DISCR3
 !>
 !!##NAME
-!!    discre(3f) - [M_datapac:STATISTICS] DISCRE bin the elements of a vector (like DISCR2, but allows specification of min and max class limits)
+!!    discre(3f) - [M_datapac:STATISTICS] bin the elements of a vector
+!!    (like DISCR2, but allows specification of min and max class limits)
 !!
 !!##SYNOPSIS
 !!
@@ -6774,7 +6799,7 @@ contains
       END SUBROUTINE DISCRE
 !>
 !!##NAME
-!!    dot(3f) - [M_datapac:STATISTICS] DOT compute a dot product of two vectors
+!!    dot(3f) - [M_datapac:STATISTICS] compute a dot product of two vectors
 !!
 !!##SYNOPSIS
 !!
@@ -6854,7 +6879,8 @@ contains
       END SUBROUTINE DOT
 !>
 !!##NAME
-!!    ev1cdf(3f) - [M_datapac:STATISTICS] EV1CDF compute the extreme value type 1 (Gumbel) cumulative distribution function
+!!    ev1cdf(3f) - [M_datapac:STATISTICS] compute the extreme value type 1
+!!    (Gumbel) cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -6957,7 +6983,8 @@ contains
       END SUBROUTINE EV1CDF
 !>
 !!##NAME
-!!    ev1plt(3f) - [M_datapac:STATISTICS] EV1PLT generate a extreme value type 1 (Gumbel) probability plot (line printer graph)
+!!    ev1plt(3f) - [M_datapac:STATISTICS] generate a extreme value type 1
+!!    (Gumbel) probability plot (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -7166,7 +7193,8 @@ contains
       END SUBROUTINE EV1PLT
 !>
 !!##NAME
-!!    ev1ppf(3f) - [M_datapac:STATISTICS] EV1PPF compute the extreme value type 1 (Gumbel) percent point function
+!!    ev1ppf(3f) - [M_datapac:STATISTICS] compute the extreme value type 1
+!!    (Gumbel) percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -7286,7 +7314,8 @@ contains
       END SUBROUTINE EV1PPF
 !>
 !!##NAME
-!!    ev1ran(3f) - [M_datapac:STATISTICS] EV1RAN generate extreme value type 1 (Gumbel) random numbers
+!!    ev1ran(3f) - [M_datapac:STATISTICS] generate extreme value type 1
+!!    (Gumbel) random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -7437,7 +7466,8 @@ contains
       END SUBROUTINE EV1RAN
 !>
 !!##NAME
-!!    ev2cdf(3f) - [M_datapac:STATISTICS] EV2CDF compute the extreme value type 2 (Frechet) cumulative distribution function
+!!    ev2cdf(3f) - [M_datapac:STATISTICS] compute the extreme value type 2
+!!    (Frechet) cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -7563,7 +7593,8 @@ contains
       END SUBROUTINE EV2CDF
 !>
 !!##NAME
-!!    ev2plt(3f) - [M_datapac:STATISTICS] EV2PLT generate a extreme value type 2 (Frechet) probability plot (line printer graph)
+!!    ev2plt(3f) - [M_datapac:STATISTICS] generate a extreme value type 2
+!!    (Frechet) probability plot (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -7798,7 +7829,8 @@ contains
       END SUBROUTINE EV2PLT
 !>
 !!##NAME
-!!    ev2ppf(3f) - [M_datapac:STATISTICS] EV2PPF compute the extreme value type 2 (Frechet) percent point function
+!!    ev2ppf(3f) - [M_datapac:STATISTICS] compute the extreme value type 2
+!!    (Frechet) percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -7927,7 +7959,8 @@ contains
       END SUBROUTINE EV2PPF
 !>
 !!##NAME
-!!    ev2ran(3f) - [M_datapac:STATISTICS] EV2RAN generate extreme value type 2 (Frechet) random numbers
+!!    ev2ran(3f) - [M_datapac:STATISTICS] generate extreme value type 2
+!!    (Frechet) random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -8089,7 +8122,8 @@ contains
       END SUBROUTINE EV2RAN
 !>
 !!##NAME
-!!    expcdf(3f) - [M_datapac:STATISTICS] EXPCDF compute the exponential cumulative distribution function
+!!    expcdf(3f) - [M_datapac:STATISTICS] compute the exponential cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -8200,7 +8234,8 @@ contains
       END SUBROUTINE EXPCDF
 !>
 !!##NAME
-!!    exppdf(3f) - [M_datapac:STATISTICS] EXPPDF compute the exponential probability density function
+!!    exppdf(3f) - [M_datapac:STATISTICS] compute the exponential probability
+!!    density function
 !!
 !!##SYNOPSIS
 !!
@@ -8311,7 +8346,8 @@ contains
       END SUBROUTINE EXPPDF
 !>
 !!##NAME
-!!    expplt(3f) - [M_datapac:STATISTICS] EXPPLT generate a exponential probability plot (line printer graph)
+!!    expplt(3f) - [M_datapac:STATISTICS] generate a exponential probability
+!!    plot (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -8518,7 +8554,8 @@ contains
       END SUBROUTINE EXPPLT
 !>
 !!##NAME
-!!    expppf(3f) - [M_datapac:STATISTICS] EXPPPF compute the exponential percent point function
+!!    expppf(3f) - [M_datapac:STATISTICS] compute the exponential percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -8639,7 +8676,7 @@ contains
       END SUBROUTINE EXPPPF
 !>
 !!##NAME
-!!    expran(3f) - [M_datapac:STATISTICS] EXPRAN generate exponential random numbers
+!!    expran(3f) - [M_datapac:STATISTICS] generate exponential random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -8796,7 +8833,7 @@ contains
       END SUBROUTINE EXPRAN
 !>
 !!##NAME
-!!    expsf(3f) - [M_datapac:STATISTICS] EXPSF compute the exponential sparsity function
+!!    expsf(3f) - [M_datapac:STATISTICS] compute the exponential sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -8918,7 +8955,8 @@ contains
       END SUBROUTINE EXPSF
 !>
 !!##NAME
-!!    extrem(3f) - [M_datapac:STATISTICS] EXTREM determine whether a type 1 or type 2 extreme value distribution better fits a given data set
+!!    extrem(3f) - [M_datapac:STATISTICS] determine whether a type 1 or
+!!    type 2 extreme value distribution better fits a given data set
 !!
 !!##SYNOPSIS
 !!
@@ -9395,7 +9433,8 @@ contains
 99999 END SUBROUTINE EXTREM
 !>
 !!##NAME
-!!    fcdf(3f) - [M_datapac:STATISTICS] FCDF compute the F cumulative distribution function
+!!    fcdf(3f) - [M_datapac:STATISTICS] compute the F cumulative distribution
+!!    function
 !!
 !!##SYNOPSIS
 !!
@@ -9800,7 +9839,7 @@ contains
 99999 END SUBROUTINE FCDF
 !>
 !!##NAME
-!!    fourie(3f) - [M_datapac:STATISTICS] FOURIE perform a Fourier analysis of a data set
+!!    fourie(3f) - [M_datapac:STATISTICS] perform a Fourier analysis of a data set
 !!
 !!##SYNOPSIS
 !!
@@ -10166,7 +10205,7 @@ contains
       END SUBROUTINE FOURIE
 !>
 !!##NAME
-!!    fran(3f) - [M_datapac:STATISTICS] FRAN generate F random numbers
+!!    fran(3f) - [M_datapac:STATISTICS] generate F random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -10374,7 +10413,8 @@ contains
       END SUBROUTINE FRAN
 !>
 !!##NAME
-!!    freq(3f) - [M_datapac:STATISTICS] FREQ compute the sample frequency and cumulative sample frequency of a vector
+!!    freq(3f) - [M_datapac:STATISTICS] compute the sample frequency and
+!!    cumulative sample frequency of a vector
 !!
 !!##SYNOPSIS
 !!
@@ -10586,7 +10626,8 @@ contains
       END SUBROUTINE FREQ
 !>
 !!##NAME
-!!    gamcdf(3f) - [M_datapac:STATISTICS] GAMCDF compute the gamma cumulative distribution function
+!!    gamcdf(3f) - [M_datapac:STATISTICS] compute the gamma cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -10797,7 +10838,8 @@ contains
       END SUBROUTINE GAMCDF
 !>
 !!##NAME
-!!    gamplt(3f) - [M_datapac:STATISTICS] GAMPLT generate a gamma probability plot (line printer graph)
+!!    gamplt(3f) - [M_datapac:STATISTICS] generate a gamma probability plot
+!!    (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -11203,7 +11245,7 @@ contains
       END SUBROUTINE GAMPLT
 !>
 !!##NAME
-!!    gamppf(3f) - [M_datapac:STATISTICS] GAMPPF compute the gamma percent point function
+!!    gamppf(3f) - [M_datapac:STATISTICS] compute the gamma percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -11480,7 +11522,7 @@ contains
       END SUBROUTINE GAMPPF
 !>
 !!##NAME
-!!    gamran(3f) - [M_datapac:STATISTICS] GAMRAN generate gamma random numbers
+!!    gamran(3f) - [M_datapac:STATISTICS] generate gamma random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -11712,7 +11754,8 @@ contains
       END SUBROUTINE GAMRAN
 !>
 !!##NAME
-!!    geocdf(3f) - [M_datapac:STATISTICS] GEOCDF compute the geometric cumulative distribution function
+!!    geocdf(3f) - [M_datapac:STATISTICS] compute the geometric cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -11890,7 +11933,8 @@ contains
       END SUBROUTINE GEOCDF
 !>
 !!##NAME
-!!    geoplt(3f) - [M_datapac:STATISTICS] GEOPLT generate a geometric probability plot (line printer graph)
+!!    geoplt(3f) - [M_datapac:STATISTICS] generate a geometric probability
+!!    plot (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -12140,7 +12184,8 @@ contains
       END SUBROUTINE GEOPLT
 !>
 !!##NAME
-!!    geoppf(3f) - [M_datapac:STATISTICS] GEOPPF compute the geometric percent point function
+!!    geoppf(3f) - [M_datapac:STATISTICS] compute the geometric percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -12318,7 +12363,7 @@ contains
 99999 END SUBROUTINE GEOPPF
 !>
 !!##NAME
-!!    georan(3f) - [M_datapac:STATISTICS] GEORAN generate geometric random numbers
+!!    georan(3f) - [M_datapac:STATISTICS] generate geometric random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -12527,7 +12572,8 @@ contains
       END SUBROUTINE GEORAN
 !>
 !!##NAME
-!!    hfncdf(3f) - [M_datapac:STATISTICS] HFNCDF compute the half-normal cumulative distribution function
+!!    hfncdf(3f) - [M_datapac:STATISTICS] compute the half-normal cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -12651,7 +12697,8 @@ contains
       END SUBROUTINE HFNCDF
 !>
 !!##NAME
-!!    hfnplt(3f) - [M_datapac:STATISTICS] HFNPLT generate a half-normal probability plot (line printer graph)
+!!    hfnplt(3f) - [M_datapac:STATISTICS] generate a half-normal probability
+!!    plot (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -12866,7 +12913,8 @@ contains
       END SUBROUTINE HFNPLT
 !>
 !!##NAME
-!!    hfnppf(3f) - [M_datapac:STATISTICS] HFNPPF compute the half-normal percent point function
+!!    hfnppf(3f) - [M_datapac:STATISTICS] compute the half-normal percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -12996,7 +13044,7 @@ contains
       END SUBROUTINE HFNPPF
 !>
 !!##NAME
-!!    hfnran(3f) - [M_datapac:STATISTICS] HFNRAN generate half-normal random numbers
+!!    hfnran(3f) - [M_datapac:STATISTICS] generate half-normal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -13184,7 +13232,8 @@ contains
       END SUBROUTINE HFNRAN
 !>
 !!##NAME
-!!    hist(3f) - [M_datapac:STATISTICS] HIST generates histograms based on two different class widths
+!!    hist(3f) - [M_datapac:STATISTICS] generates histograms based on two
+!!    different class widths
 !!
 !!##SYNOPSIS
 !!
@@ -13517,7 +13566,7 @@ contains
       END SUBROUTINE HIST
 !>
 !!##NAME
-!!    invxwx(3f) - [M_datapac:STATISTICS] INVXWX compute the inverse of X'WX
+!!    invxwx(3f) - [M_datapac:STATISTICS] compute the inverse of X'WX
 !!
 !!##SYNOPSIS
 !!
@@ -13674,7 +13723,8 @@ contains
       END SUBROUTINE INVXWX
 !>
 !!##NAME
-!!    lamcdf(3f) - [M_datapac:STATISTICS] LAMCDF compute the Tukey-Lambda cumulative distribution function
+!!    lamcdf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -13851,7 +13901,8 @@ contains
 99999 END SUBROUTINE LAMCDF
 !>
 !!##NAME
-!!    lampdf(3f) - [M_datapac:STATISTICS] LAMPDF compute the Tukey-Lambda probability density function
+!!    lampdf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda
+!!    probability density function
 !!
 !!##SYNOPSIS
 !!
@@ -13997,7 +14048,8 @@ contains
       END SUBROUTINE LAMPDF
 !>
 !!##NAME
-!!    lamplt(3f) - [M_datapac:STATISTICS] LAMPLT generate a Tukey-Lambda probability plot (line printer graph)
+!!    lamplt(3f) - [M_datapac:STATISTICS] generate a Tukey-Lambda probability
+!!    plot (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -14230,7 +14282,8 @@ contains
       END SUBROUTINE LAMPLT
 !>
 !!##NAME
-!!    lamppf(3f) - [M_datapac:STATISTICS] LAMPPF compute the Tukey-Lambda percent point function
+!!    lamppf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -14372,7 +14425,7 @@ contains
 99999 END SUBROUTINE LAMPPF
 !>
 !!##NAME
-!!    lamran(3f) - [M_datapac:STATISTICS] LAMRAN generate Tukey-Lambda random numbers
+!!    lamran(3f) - [M_datapac:STATISTICS] generate Tukey-Lambda random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -14534,7 +14587,7 @@ contains
       END SUBROUTINE LAMRAN
 !>
 !!##NAME
-!!    lamsf(3f) - [M_datapac:STATISTICS] LAMSF compute the Tukey-Lambda sparsity function
+!!    lamsf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -15010,7 +15063,8 @@ contains
       END SUBROUTINE LGNPLT
 !>
 !!##NAME
-!!    lgnppf(3f) - [M_datapac:STATISTICS] compute the lognormal percent point function
+!!    lgnppf(3f) - [M_datapac:STATISTICS] compute the lognormal percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -15331,7 +15385,8 @@ contains
       END SUBROUTINE LGNRAN
 !>
 !!##NAME
-!!    loc(3f) - [M_datapac:STATISTICS] LOC compute the sample mean, midrange, midmean, and median
+!!    loc(3f) - [M_datapac:STATISTICS] compute the sample mean, midrange,
+!!    midmean, and median
 !!
 !!##SYNOPSIS
 !!
@@ -15552,7 +15607,8 @@ contains
       END SUBROUTINE LOC
 !>
 !!##NAME
-!!    logcdf(3f) - [M_datapac:STATISTICS] LOGCDF compute the logistic cumulative distribution function
+!!    logcdf(3f) - [M_datapac:STATISTICS] compute the logistic cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -15658,7 +15714,8 @@ contains
 99999 END SUBROUTINE LOGCDF
 !>
 !!##NAME
-!!    logpdf(3f) - [M_datapac:STATISTICS] LOGPDF compute the logistic probability density function
+!!    logpdf(3f) - [M_datapac:STATISTICS] compute the logistic probability
+!!    density function
 !!
 !!##SYNOPSIS
 !!
@@ -15758,7 +15815,8 @@ contains
       END SUBROUTINE LOGPDF
 !>
 !!##NAME
-!!    logplt(3f) - [M_datapac:STATISTICS] LOGPLT generate a logistic probability plot (line printer graph)
+!!    logplt(3f) - [M_datapac:STATISTICS] generate a logistic probability
+!!    plot (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -15963,7 +16021,8 @@ contains
       END SUBROUTINE LOGPLT
 !>
 !!##NAME
-!!    logppf(3f) - [M_datapac:STATISTICS] LOGPPF compute the logistic percent point function
+!!    logppf(3f) - [M_datapac:STATISTICS] compute the logistic percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -16085,7 +16144,7 @@ contains
       END SUBROUTINE LOGPPF
 !>
 !!##NAME
-!!    logran(3f) - [M_datapac:STATISTICS] LOGRAN generate logistic random numbers
+!!    logran(3f) - [M_datapac:STATISTICS] generate logistic random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -16241,7 +16300,7 @@ contains
       END SUBROUTINE LOGRAN
 !>
 !!##NAME
-!!    logsf(3f) - [M_datapac:STATISTICS] LOGSF compute the logistic sparsity function
+!!    logsf(3f) - [M_datapac:STATISTICS] compute the logistic sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -16511,7 +16570,7 @@ contains
       END SUBROUTINE MAX
 !>
 !!##NAME
-!!    mean(3f) - [M_datapac:STATISTICS] MEAN compute the mean of a data vector
+!!    mean(3f) - [M_datapac:STATISTICS] compute the mean of a data vector
 !!
 !!##SYNOPSIS
 !!
@@ -16669,7 +16728,7 @@ contains
       END SUBROUTINE MEAN
 !>
 !!##NAME
-!!    median(3f) - [M_datapac:STATISTICS] MEDIAN compute the median of a data vector
+!!    median(3f) - [M_datapac:STATISTICS] compute the median of a data vector
 !!
 !!##SYNOPSIS
 !!
@@ -16835,7 +16894,7 @@ contains
       END SUBROUTINE MEDIAN
 !>
 !!##NAME
-!!    midm(3f) - [M_datapac:STATISTICS] MIDM compute the midmean of a data vector
+!!    midm(3f) - [M_datapac:STATISTICS] compute the midmean of a data vector
 !!
 !!##SYNOPSIS
 !!
@@ -17032,7 +17091,7 @@ contains
       END SUBROUTINE MIDM
 !>
 !!##NAME
-!!    midr(3f) - [M_datapac:STATISTICS] MIDR compute the midrange of a data vector
+!!    midr(3f) - [M_datapac:STATISTICS] compute the midrange of a data vector
 !!
 !!##SYNOPSIS
 !!
@@ -17191,7 +17250,7 @@ contains
       END SUBROUTINE MIDR
 !>
 !!##NAME
-!!    min(3f) - [M_datapac:STATISTICS] MIN compute the minimum of a data vector
+!!    min(3f) - [M_datapac:STATISTICS] compute the minimum of a data vector
 !!
 !!##SYNOPSIS
 !!
@@ -17340,7 +17399,8 @@ contains
       END SUBROUTINE MIN
 !>
 !!##NAME
-!!    move(3f) - [M_datapac:STATISTICS] MOVE move selected elements of one vector into another vector
+!!    move(3f) - [M_datapac:STATISTICS] move selected elements of one vector
+!!    into another vector
 !!
 !!##SYNOPSIS
 !!
@@ -17511,7 +17571,8 @@ contains
       END SUBROUTINE MOVE
 !>
 !!##NAME
-!!    nbcdf(3f) - [M_datapac:STATISTICS] NBCDF compute the negative binomial cumulative distribution function
+!!    nbcdf(3f) - [M_datapac:STATISTICS] compute the negative binomial
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -17864,7 +17925,8 @@ contains
       END SUBROUTINE NBCDF
 !>
 !!##NAME
-!!    nbppf(3f) - [M_datapac:STATISTICS] NBPPF compute the negative binomial percent point function
+!!    nbppf(3f) - [M_datapac:STATISTICS] compute the negative binomial
+!!    percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -18304,7 +18366,7 @@ contains
       END SUBROUTINE NBPPF
 !>
 !!##NAME
-!!    nbran(3f) - [M_datapac:STATISTICS] NBRAN generate negative binomial random numbers
+!!    nbran(3f) - [M_datapac:STATISTICS] generate negative binomial random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -18559,7 +18621,8 @@ contains
 99999 END SUBROUTINE NBRAN
 !>
 !!##NAME
-!!    norcdf(3f) - [M_datapac:STATISTICS] NORCDF compute the normal cumulative distribution function
+!!    norcdf(3f) - [M_datapac:STATISTICS] compute the normal cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -18669,7 +18732,8 @@ contains
       END SUBROUTINE NORCDF
 !>
 !!##NAME
-!!    norout(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    norout(3f) - [M_datapac:STATISTICS] Performs a normal outlier analysis
+!!                 on the data in the input vector X.
 !!
 !!##SYNOPSIS
 !!
@@ -19181,7 +19245,8 @@ contains
       END SUBROUTINE NOROUT
 !>
 !!##NAME
-!!    norpdf(3f) - [M_datapac:STATISTICS] NORPDF compute the normal probability density function
+!!    norpdf(3f) - [M_datapac:STATISTICS] compute the normal probability
+!!    density function
 !!
 !!##SYNOPSIS
 !!
@@ -19283,7 +19348,8 @@ contains
       END SUBROUTINE NORPDF
 !>
 !!##NAME
-!!    norplt(3f) - [M_datapac:STATISTICS] NORPLT generate a normal probability plot (line printer graph)
+!!    norplt(3f) - [M_datapac:STATISTICS] generate a normal probability plot
+!!    (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -19493,7 +19559,7 @@ contains
       END SUBROUTINE NORPLT
 !>
 !!##NAME
-!!    norppf(3f) - [M_datapac:STATISTICS] NORPPF compute the normal percent point function
+!!    norppf(3f) - [M_datapac:STATISTICS] compute the normal percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -19664,7 +19730,7 @@ contains
 99999 END SUBROUTINE NORPPF
 !>
 !!##NAME
-!!    norran(3f) - [M_datapac:STATISTICS] NORRAN generate normal random numbers
+!!    norran(3f) - [M_datapac:STATISTICS] generate normal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -19843,7 +19909,7 @@ contains
       END SUBROUTINE NORRAN
 !>
 !!##NAME
-!!    norsf(3f) - [M_datapac:STATISTICS] NORSF compute the normal sparsity function
+!!    norsf(3f) - [M_datapac:STATISTICS] compute the normal sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -19968,7 +20034,8 @@ contains
       END SUBROUTINE NORSF
 !>
 !!##NAME
-!!    parcdf(3f) - [M_datapac:STATISTICS] PARCDF compute the Pareto cumulative distribution function
+!!    parcdf(3f) - [M_datapac:STATISTICS] compute the Pareto cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -20099,7 +20166,8 @@ contains
       END SUBROUTINE PARCDF
 !>
 !!##NAME
-!!    parplt(3f) - [M_datapac:STATISTICS] PARPLT generate a Pareto probability plot (line printer graph)
+!!    parplt(3f) - [M_datapac:STATISTICS] generate a Pareto probability plot
+!!    (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -20334,7 +20402,7 @@ contains
       END SUBROUTINE PARPLT
 !>
 !!##NAME
-!!    parppf(3f) - [M_datapac:STATISTICS] PARPPF compute the Pareto percent point function
+!!    parppf(3f) - [M_datapac:STATISTICS] compute the Pareto percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -20468,7 +20536,7 @@ contains
       END SUBROUTINE PARPPF
 !>
 !!##NAME
-!!    parran(3f) - [M_datapac:STATISTICS] PARRAN generate Pareto random numbers
+!!    parran(3f) - [M_datapac:STATISTICS] generate Pareto random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -20635,7 +20703,8 @@ contains
       END SUBROUTINE PARRAN
 !>
 !!##NAME
-!!    plot10(3f) - [M_datapac:STATISTICS] PLOT10 generate a line printer plot with special plot characters
+!!    plot10(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -21169,7 +21238,7 @@ contains
       END SUBROUTINE PLOT10
 !>
 !!##NAME
-!!    plot6(3f) - [M_datapac:STATISTICS] PLOT6 generate a line printer plot
+!!    plot6(3f) - [M_datapac:STATISTICS] generate a line printer plot
 !!
 !!##SYNOPSIS
 !!
@@ -21519,7 +21588,8 @@ contains
       END SUBROUTINE PLOT6
 !>
 !!##NAME
-!!    plot7(3f) - [M_datapac:STATISTICS] PLOT7 generate a line printer plot with special plot characters
+!!    plot7(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -21955,7 +22025,8 @@ contains
       END SUBROUTINE PLOT7
 !>
 !!##NAME
-!!    plot8(3f) - [M_datapac:STATISTICS] PLOT8 generate a line printer plot with special plot characters
+!!    plot8(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -22457,7 +22528,8 @@ contains
       END SUBROUTINE PLOT8
 !>
 !!##NAME
-!!    plot9(3f) - [M_datapac:STATISTICS] PLOT9 generate a line printer plot with special plot characters
+!!    plot9(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -22925,7 +22997,8 @@ contains
       END SUBROUTINE PLOT9
 !>
 !!##NAME
-!!    plotc(3f) - [M_datapac:STATISTICS] PLOTC generate a line printer plot with special plot characters
+!!    plotc(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -23376,7 +23449,8 @@ contains
       END SUBROUTINE PLOTC
 !>
 !!##NAME
-!!    plotco(3f) - [M_datapac:STATISTICS] PLOTCO generate a line printer autocorrelation plot
+!!    plotco(3f) - [M_datapac:STATISTICS] generate a line printer
+!!    autocorrelation plot
 !!
 !!##SYNOPSIS
 !!
@@ -23628,7 +23702,8 @@ contains
       END SUBROUTINE PLOTCO
 !>
 !!##NAME
-!!    plotct(3f) - [M_datapac:STATISTICS] PLOTCT generate a line printer plot for the terminal (71 characters wide)
+!!    plotct(3f) - [M_datapac:STATISTICS] generate a line printer plot for
+!!    the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -24071,28 +24146,37 @@ contains
       END SUBROUTINE PLOTCT
 !>
 !!##NAME
-!!    plot(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    plot(3f) - [M_datapac:STATISTICS] yields a one-page printer plot of
+!!    y(i) versus x(i)
 !!
 !!##SYNOPSIS
 !!
 !!     Subroutine plot (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!      Real, Intent (In) :: X(:)
+!!      Real, Intent (In) :: Y(:)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    This subroutine yields a one-page printer plot of Y(I) versus X(I).
+!!
+!!    Values in the vertical axis vector (Y) or the horizontal axis vector
+!!    (X) which are equal to or in excess of 10.0**10 will not be plotted.
+!!
+!!    This convention greatly simplifies the problem of plotting when
+!!    some elements in the vector Y (or X) are 'missing data', or when
+!!    we purposely want to ignore certain elements in the vector Y (or X)
+!!    for plotting purposes (That is, we do not want certain elements in
+!!    Y (or X) to be plotted).  To cause specific elements in Y (or X)
+!!    to be ignored, we replace the elements beforehand (by, for example,
+!!    use of the   REPLAC   subroutine) by some large value (like, say,
+!!    10.0**10) and they will subsequently be ignored in the plot subroutine.
 !!
 !!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!     Y     The single precision vector of (unsorted or sorted) observations
+!!           to be plotted vertically.
+!!     X     The single precision vector of (unsorted or sorted) observations
+!!           to be plotted horizontally.
+!!     N     The integer number of observations in the vector Y.
 !!
 !!##EXAMPLES
 !!
@@ -24118,55 +24202,9 @@ contains
 !*==plot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT(Y,X,N)
       IMPLICIT NONE
-!*--PLOT15719
-!*** Start of declarations inserted by SPAG
-      REAL aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
-     &     xmax , xmid , xmin , Y , ylable , ymax , ymin
-      INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOT
+      REAL aim1, cutoff, hold, ratiox, ratioy, X, x25, x75, xmax, xmid, xmin, Y, ylable, ymax, ymin
+      INTEGER i, iflag, ip2, ipr, j, k, mx, my, N, n2
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I).
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED HORIZONTALLY.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR Y.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I).
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
-!     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
-!              OR THE HORIZONTAL AXIS VECTOR (X) WHICH ARE
-!              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
-!              PLOTTED.
-!              THIS CONVENTION GREATLY SIMPLIFIES THE PROBLEM
-!              OF PLOTTING WHEN SOME ELEMENTS IN THE VECTOR Y
-!              (OR X) ARE 'MISSING DATA', OR WHEN WE PURPOSELY
-!              WANT TO IGNORE CERTAIN ELEMENTS IN THE VECTOR Y
-!              (OR X) FOR PLOTTING PURPOSES (THAT IS, WE DO NOT
-!              WANT CERTAIN ELEMENTS IN Y (OR X) TO BE PLOTTED).
-!              TO CAUSE SPECIFIC ELEMENTS IN Y (OR X) TO BE
-!              IGNORED, WE REPLACE THE ELEMENTS BEFOREHAND
-!              (BY, FOR EXAMPLE, USE OF THE   REPLAC   SUBROUTINE)
-!              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
-!              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOT
-!              SUBROUTINE.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --NOVEMBER  1974.
@@ -24177,7 +24215,6 @@ contains
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
-!
 !---------------------------------------------------------------------
 !
       CHARACTER*4 IGRaph
@@ -24195,8 +24232,7 @@ contains
       DATA alph21 , alph22/'SECO' , 'ND  '/
       DATA alph31 , alph32/'THIR' , 'D   '/
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
-     &     'N' , '='/
+      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 !
       ipr = 6
       cutoff = (10.0**10) - 1000.0
@@ -24282,8 +24318,7 @@ contains
       WRITE (ipr,99005) sbnam1 , sbnam2
 99005 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
       WRITE (ipr,99006)
-99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
-     &        ' EXCLUDED FROM THE PLOT.')
+99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN EXCLUDED FROM THE PLOT.')
       WRITE (ipr,99007) n2
 99007 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (ipr,99011)
@@ -24411,18 +24446,15 @@ contains
          IF ( iflag/=0 ) WRITE (ipr,99008) (IGRaph(i,j),j=1,109)
 !
 99008    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99009) ylable(k) ,                  &
-     &                          (IGRaph(i,j),j=1,109)
+         IF ( iflag==0 ) WRITE (ipr,99009) ylable(k) ,(IGRaph(i,j),j=1,109)
 99009    FORMAT (' ',F20.7,109A1)
       ENDDO
       WRITE (ipr,99010) xmin , x25 , xmid , x75 , xmax
 99010 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
-99011 FORMAT (' ','**************************************************', &
-     &        '********************')
+99011 FORMAT (' ','**********************************************************************')
 99012 FORMAT (' ','                   FATAL ERROR                    ')
-99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
-     &        ' SUBROUTINE')
+99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
 99014 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
 99015 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99016 FORMAT (' ','VALUE OF ',E15.8)
@@ -24430,7 +24462,8 @@ contains
       END SUBROUTINE PLOT
 !>
 !!##NAME
-!!    plotsc(3f) - [M_datapac:STATISTICS] PLOTSC generate a line printer plot with special plot characters
+!!    plotsc(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -24960,7 +24993,7 @@ contains
       END SUBROUTINE PLOTSC
 !>
 !!##NAME
-!!    plots(3f) - [M_datapac:STATISTICS] PLOTS generate a line printer plot of Y vs X
+!!    plots(3f) - [M_datapac:STATISTICS] generate a line printer plot of Y vs X
 !!
 !!##SYNOPSIS
 !!
@@ -25398,7 +25431,7 @@ contains
       END SUBROUTINE PLOTS
 !>
 !!##NAME
-!!    plotsp(3f) - [M_datapac:STATISTICS] PLOTSP generate a line printer spectrum plot
+!!    plotsp(3f) - [M_datapac:STATISTICS] generate a line printer spectrum plot
 !!
 !!##SYNOPSIS
 !!
@@ -25623,7 +25656,8 @@ contains
       END SUBROUTINE PLOTSP
 !>
 !!##NAME
-!!    plotst(3f) - [M_datapac:STATISTICS] PLOTST generate a line printer plot of Y vs X for the terminal (71 characters wide)
+!!    plotst(3f) - [M_datapac:STATISTICS] generate a line printer plot of
+!!    Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -26051,7 +26085,8 @@ contains
       END SUBROUTINE PLOTST
 !>
 !!##NAME
-!!    plott(3f) - [M_datapac:STATISTICS] PLOTT generate a line printer plot of Y vs X for the terminal (71 characters wide)
+!!    plott(3f) - [M_datapac:STATISTICS] generate a line printer plot of
+!!    Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -26403,7 +26438,7 @@ contains
       END SUBROUTINE PLOTT
 !>
 !!##NAME
-!!    plotu(3f) - [M_datapac:STATISTICS] PLOTU generate a line printer 4-plot
+!!    plotu(3f) - [M_datapac:STATISTICS] generate a line printer 4-plot
 !!
 !!##SYNOPSIS
 !!
@@ -26995,7 +27030,7 @@ contains
       END SUBROUTINE PLOTU
 !>
 !!##NAME
-!!    plotx(3f) - [M_datapac:STATISTICS] PLOTX generate a line printer run sequence plot
+!!    plotx(3f) - [M_datapac:STATISTICS] generate a line printer run sequence plot
 !!
 !!##SYNOPSIS
 !!
@@ -27290,7 +27325,8 @@ contains
       END SUBROUTINE PLOTX
 !>
 !!##NAME
-!!    plotxt(3f) - [M_datapac:STATISTICS] PLOTXT generate a line printer run sequence plot for the terminal (71 characters wide)
+!!    plotxt(3f) - [M_datapac:STATISTICS] generate a line printer run
+!!    sequence plot for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -27581,7 +27617,7 @@ contains
       END SUBROUTINE PLOTXT
 !>
 !!##NAME
-!!    plotxx(3f) - [M_datapac:STATISTICS] PLOTXX generate a line printer lag plot
+!!    plotxx(3f) - [M_datapac:STATISTICS] generate a line printer lag plot
 !!
 !!##SYNOPSIS
 !!
@@ -27902,7 +27938,8 @@ contains
       END SUBROUTINE PLOTXX
 !>
 !!##NAME
-!!    pltsct(3f) - [M_datapac:STATISTICS] PLTSCT generate a line printer plot with special plot characters for the terminal (71 characters wide)
+!!    pltsct(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    special plot characters for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -28411,7 +28448,8 @@ contains
       END SUBROUTINE PLTSCT
 !>
 !!##NAME
-!!    pltxxt(3f) - [M_datapac:STATISTICS] PLTXXT generate a line printer lag plot for the terminal (71 characters wide)
+!!    pltxxt(3f) - [M_datapac:STATISTICS] generate a line printer lag plot
+!!    for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -28723,7 +28761,8 @@ contains
       END SUBROUTINE PLTXXT
 !>
 !!##NAME
-!!    poicdf(3f) - [M_datapac:STATISTICS] POICDF compute the Poisson cumulative distribution function
+!!    poicdf(3f) - [M_datapac:STATISTICS] compute the Poisson cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -28964,7 +29003,8 @@ contains
       END SUBROUTINE POICDF
 !>
 !!##NAME
-!!    poiplt(3f) - [M_datapac:STATISTICS] POIPLT generate a Poisson probability plot (line printer graph)
+!!    poiplt(3f) - [M_datapac:STATISTICS] generate a Poisson probability plot
+!!    (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -29288,7 +29328,8 @@ contains
       END SUBROUTINE POIPLT
 !>
 !!##NAME
-!!    poippf(3f) - [M_datapac:STATISTICS] POIPPF compute the Poisson percent point function
+!!    poippf(3f) - [M_datapac:STATISTICS] compute the Poisson percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -29687,7 +29728,7 @@ contains
       END SUBROUTINE POIPPF
 !>
 !!##NAME
-!!    poiran(3f) - [M_datapac:STATISTICS] POIRAN generate Poisson random numbers
+!!    poiran(3f) - [M_datapac:STATISTICS] generate Poisson random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -29901,7 +29942,7 @@ contains
       END SUBROUTINE POIRAN
 !>
 !!##NAME
-!!    poly(3f) - [M_datapac:STATISTICS] POLY compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)
+!!    poly(3f) - [M_datapac:STATISTICS] compute a least squares polynomial fit
 !!
 !!##SYNOPSIS
 !!
@@ -30597,7 +30638,7 @@ contains
 99999 END SUBROUTINE POLY
 !>
 !!##NAME
-!!    propor(3f) - [M_datapac:STATISTICS] PROPOR compute the sample proportion
+!!    propor(3f) - [M_datapac:STATISTICS] compute the sample proportion
 !!
 !!##SYNOPSIS
 !!
@@ -30779,7 +30820,7 @@ contains
       END SUBROUTINE PROPOR
 !>
 !!##NAME
-!!    range(3f) - [M_datapac:STATISTICS] RANGE compute the sample range
+!!    range(3f) - [M_datapac:STATISTICS] compute the sample range
 !!
 !!##SYNOPSIS
 !!
@@ -30940,7 +30981,7 @@ contains
       END SUBROUTINE RANGE
 !>
 !!##NAME
-!!    rank(3f) - [M_datapac:STATISTICS] RANK rank a vector of sample observations
+!!    rank(3f) - [M_datapac:STATISTICS] rank a vector of sample observations
 !!
 !!##SYNOPSIS
 !!
@@ -31215,7 +31256,7 @@ contains
       END SUBROUTINE RANK
 !>
 !!##NAME
-!!    ranper(3f) - [M_datapac:STATISTICS] RANPER generates a random permutation
+!!    ranper(3f) - [M_datapac:STATISTICS] generates a random permutation
 !!
 !!##SYNOPSIS
 !!
@@ -31367,7 +31408,8 @@ contains
       END SUBROUTINE RANPER
 !>
 !!##NAME
-!!    read(3f) - [M_datapac:STATISTICS] READ perform a format-free read of data from a file
+!!    read(3f) - [M_datapac:STATISTICS] perform a format-free read of data
+!!    from a file
 !!
 !!##SYNOPSIS
 !!
@@ -31906,7 +31948,8 @@ contains
       END SUBROUTINE READ
 !>
 !!##NAME
-!!    readg(3f) - [M_datapac:STATISTICS] READG perform a format-free read of data from a file restricted to a user-specified set of columns
+!!    readg(3f) - [M_datapac:STATISTICS] perform a format-free read of data
+!!    from a file restricted to a user-specified set of columns
 !!
 !!##SYNOPSIS
 !!
@@ -32457,7 +32500,8 @@ contains
       END SUBROUTINE READG
 !>
 !!##NAME
-!!    relsd(3f) - [M_datapac:STATISTICS] RELSD compute the relative standard deviation of a vector of observations
+!!    relsd(3f) - [M_datapac:STATISTICS] compute the relative standard
+!!    deviation of a vector of observations
 !!
 !!##SYNOPSIS
 !!
@@ -32627,7 +32671,8 @@ contains
       END SUBROUTINE RELSD
 !>
 !!##NAME
-!!    replac(3f) - [M_datapac:STATISTICS] REPLAC replace all observations in a vector within a given interval with a user-specified constant
+!!    replac(3f) - [M_datapac:STATISTICS] replace all observations in a
+!!    vector within a given interval with a user-specified constant
 !!
 !!##SYNOPSIS
 !!
@@ -32849,7 +32894,8 @@ contains
       END SUBROUTINE REPLAC
 !>
 !!##NAME
-!!    retain(3f) - [M_datapac:STATISTICS] RETAIN retain all observations in a vector within a user-specified interval
+!!    retain(3f) - [M_datapac:STATISTICS] retain all observations in a
+!!    vector within a user-specified interval
 !!
 !!##SYNOPSIS
 !!
@@ -33076,7 +33122,7 @@ contains
       END SUBROUTINE RETAIN
 !>
 !!##NAME
-!!    runs(3f) - [M_datapac:STATISTICS] RUNS perform a runs test
+!!    runs(3f) - [M_datapac:STATISTICS] perform a runs test
 !!
 !!##SYNOPSIS
 !!
@@ -33563,7 +33609,8 @@ contains
       END SUBROUTINE RUNS
 !>
 !!##NAME
-!!    sampp(3f) - [M_datapac:STATISTICS] SAMPP compute the sample 100P percent point (i.e., percentile)
+!!    sampp(3f) - [M_datapac:STATISTICS] compute the sample 100P percent
+!!    point (i.e., percentile)
 !!
 !!##SYNOPSIS
 !!
@@ -33763,7 +33810,9 @@ contains
       END SUBROUTINE SAMPP
 !>
 !!##NAME
-!!    scale(3f) - [M_datapac:STATISTICS] SCALE compute the sample range, sample standard deviation, sample relative standard deviation, and sample variance
+!!    scale(3f) - [M_datapac:STATISTICS] compute the sample range, sample
+!!    standard deviation, sample relative standard deviation, and sample
+!!    variance
 !!
 !!##SYNOPSIS
 !!
@@ -33982,7 +34031,8 @@ contains
       END SUBROUTINE SCALE
 !>
 !!##NAME
-!!    sd(3f) - [M_datapac:STATISTICS] SD compute the standard deviation of a vector of observations
+!!    sd(3f) - [M_datapac:STATISTICS] compute the standard deviation of a
+!!    vector of observations
 !!
 !!##SYNOPSIS
 !!
@@ -34144,7 +34194,8 @@ contains
       END SUBROUTINE SD
 !>
 !!##NAME
-!!    skipr(3f) - [M_datapac:STATISTICS] SKIPR skip over a user-specified number of rows in reading a data file
+!!    skipr(3f) - [M_datapac:STATISTICS] skip over a user-specified number
+!!    of rows in reading a data file
 !!
 !!##SYNOPSIS
 !!
@@ -34256,7 +34307,8 @@ contains
       END SUBROUTINE SKIPR
 !>
 !!##NAME
-!!    sortc(3f) - [M_datapac:STATISTICS] SORTC sort a vector of sample observations and "carry" a second a vector
+!!    sortc(3f) - [M_datapac:STATISTICS] sort a vector of sample observations
+!!    and "carry" a second a vector
 !!
 !!##SYNOPSIS
 !!
@@ -34587,7 +34639,8 @@ contains
       END SUBROUTINE SORTC
 !>
 !!##NAME
-!!    sort(3f) - [M_datapac:STATISTICS] SORT sort a vector of sample observations, also return the positions in the original vector
+!!    sort(3f) - [M_datapac:STATISTICS] sort a vector of sample observations,
+!!    also return the positions in the original vector
 !!
 !!##SYNOPSIS
 !!
@@ -34864,24 +34917,30 @@ contains
       END SUBROUTINE SORT
 !>
 !!##NAME
-!!    sortp(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    sortp(3f) - [M_datapac:STATISTICS] sorts and ranks a numeric vector X
 !!
 !!##SYNOPSIS
 !!
+!!     SUBROUTINE SORTP(X,N,Y,Xpos)
 !!     Subroutine sortp (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!      Integer, Intent (In) :: N
+!!      Real, Intent (In)    :: X(N)
+!!      Real, Intent (Out)   :: Y(N)
+!!      Real, Intent (Out)   :: XPOS(N)
 !!
 !!##DESCRIPTION
-!!   Description
+!!
+!!   SORTP(3f) sorts (in ascending order) the N elements of the single
+!!   precision vector X, puts the resulting N sorted values into the single
+!!   precision vector Y; and puts the position (in the original vector X)
+!!   of each of the sorted values into the single precision vector XPOS.
+!!
+!!   This subroutine gives the data analyst not only the ability to determine
+!!   what the MIN and MAX (for example) of the data set are, but also where
+!!   in the original data set the MIN and MAX occur.
+!!
+!!   This is especially useful for large data sets.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -34909,32 +34968,14 @@ contains
 !!##LICENSE
 !!    CC0-1.0
 !*==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SORTP(X,N,Y,Xpos)
-      IMPLICIT NONE
-!*--SORTP28062
-!*** Start of declarations inserted by SPAG
+SUBROUTINE SORTP(X,N,Y,Xpos)
+IMPLICIT NONE
       REAL amed , bmed , hold , tt , X , Xpos , Y
-      INTEGER i , il , ip1 , ipr , itt , iu , j , jmi , jmk , k , l ,   &
-     &        lmi , m , mid , N , nm1
-!*** End of declarations inserted by SPAG
+      INTEGER i , il , ip1 , ipr , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
+
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT SORTP
 !
-!     PURPOSE--THIS SUBROUTINE SORTS (IN ASCENDING ORDER)
-!              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X,
-!              PUTS THE RESULTING N SORTED VALUES INTO THE
-!              SINGLE PRECISION VECTOR Y,
-!              AND PUTS THE POSITION (IN THE ORIGINAL VECTOR X)
-!              OF EACH OF THE SORTED VALUES.
-!              INTO THE SINGLE PRECISION VECTOR XPOS.
-!              THIS SUBROUTINE GIVES THE DATA ANALYST
-!              NOT ONLY THE ABILITY TO DETERMINE
-!              WHAT THE MIN AND MAX (FOR EXAMPLE)
-!              OF THE DATA SET ARE, BUT ALSO
-!              WHERE IN THE ORIGINAL DATA SET
-!              THE MIN AND MAX OCCUR.
-!              THIS IS ESPECIALLY USEFUL FOR
-!              LARGE DATA SETS.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE SORTED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -34975,10 +35016,7 @@ contains
 !                   (IN LIGHT OF THE ABOVE, NO CHECK OF THE
 !                   UPPER LIMIT OF N HAS BEEN INCORPORATED
 !                   INTO THIS SUBROUTINE.)
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--THE SMALLEST ELEMENT OF THE VECTOR X
 !              WILL BE PLACED IN THE FIRST POSITION
 !              OF THE VECTOR Y,
@@ -35030,8 +35068,7 @@ contains
 !                N = 1000               .141 SEC         4.332 SEC
 !                N = 3000               .476 SEC        37.683 SEC
 !                N = 10000             1.887 SEC      NOT COMPUTED
-!     REFERENCES--CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
-!                 BY RICHARD C. SINGLETON).
+!     REFERENCES--CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
 !               --CACM JANUARY 1970, PAGE 54.
 !               --CACM OCTOBER 1970, PAGE 624.
 !               --JACM JANUARY 1961, PAGE 41.
@@ -35053,18 +35090,14 @@ contains
       ipr = 6
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTP  SUBROU&
-     &TINE IS NON-POSITIVE *****')
+99001    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTP  SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (ipr,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORT&
-     &P  SUBROUTINE HAS THE VALUE 1 *****')
+99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORTP SUBROUTINE HAS THE VALUE 1 *****')
             Y(1) = X(1)
             Xpos(1) = 1.0
             RETURN
@@ -35074,9 +35107,10 @@ contains
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (ipr,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE SORTP  SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+99004       FORMAT (' ',&
+             & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORTP  SUBROUTINE HAS ALL ELEMENTS =',&
+             & E15.8,&
+             & ' *****')
             DO i = 1 , N
                Y(i) = X(i)
                Xpos(i) = i
@@ -35201,10 +35235,11 @@ contains
             ENDDO
          ENDIF
       ENDDO
-      END SUBROUTINE SORTP
+END SUBROUTINE SORTP
 !>
 !!##NAME
-!!    spcorr(3f) - [M_datapac:STATISTICS] SPCORR compute the sample Spearman rank correlation coefficient between two vectors of observations
+!!    spcorr(3f) - [M_datapac:STATISTICS] compute the sample Spearman rank
+!!    correlation coefficient between two vectors of observations
 !!
 !!##SYNOPSIS
 !!
@@ -35398,7 +35433,8 @@ contains
       END SUBROUTINE SPCORR
 !>
 !!##NAME
-!!    stmom3(3f) - [M_datapac:STATISTICS] STMOM3 compute the third central moment (i.e., the skewness) of a vector of observations
+!!    stmom3(3f) - [M_datapac:STATISTICS] compute the third central moment
+!!    (i.e., the skewness) of a vector of observations
 !!
 !!##SYNOPSIS
 !!
@@ -35569,7 +35605,8 @@ contains
       END SUBROUTINE STMOM3
 !>
 !!##NAME
-!!    stmom4(3f) - [M_datapac:STATISTICS] STMOM4 compute the fourth central moment (i.e., the kurtosis) of a vector of observations
+!!    stmom4(3f) - [M_datapac:STATISTICS] compute the fourth central moment
+!!    (i.e., the kurtosis) of a vector of observations
 !!
 !!##SYNOPSIS
 !!
@@ -35740,7 +35777,8 @@ contains
       END SUBROUTINE STMOM4
 !>
 !!##NAME
-!!    subse1(3f) - [M_datapac:STATISTICS] SUBSE1 extract the elements of a vector which fall into a user-specified subset (one subset variable)
+!!    subse1(3f) - [M_datapac:STATISTICS] extract the elements of a vector
+!!    which fall into a user-specified subset (one subset variable)
 !!
 !!##SYNOPSIS
 !!
@@ -35996,7 +36034,8 @@ contains
       END SUBROUTINE SUBSE1
 !>
 !!##NAME
-!!    subse2(3f) - [M_datapac:STATISTICS] SUBSE2 extract the elements of a vector which fall into a user-specified subset (two subset variables)
+!!    subse2(3f) - [M_datapac:STATISTICS] extract the elements of a vector
+!!    which fall into a user-specified subset (two subset variables)
 !!
 !!##SYNOPSIS
 !!
@@ -36279,7 +36318,8 @@ contains
       END SUBROUTINE SUBSE2
 !>
 !!##NAME
-!!    subset(3f) - [M_datapac:STATISTICS] SUBSET extract the elements of a vector which fall into a user-specified subset (one subset variable)
+!!    subset(3f) - [M_datapac:STATISTICS] extract the elements of a vector
+!!    which fall into a user-specified subset (one subset variable)
 !!
 !!##SYNOPSIS
 !!
@@ -36544,7 +36584,8 @@ contains
       END SUBROUTINE SUBSET
 !>
 !!##NAME
-!!    tail(3f) - [M_datapac:STATISTICS] TAIL performs a symmetric distribution tail length analysis
+!!    tail(3f) - [M_datapac:STATISTICS] performs a symmetric distribution
+!!    tail length analysis
 !!
 !!##SYNOPSIS
 !!
@@ -37278,7 +37319,9 @@ contains
       END SUBROUTINE TAIL
 !>
 !!##NAME
-!!    tcdf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    tcdf(3f) - [M_datapac:STATISTICS] computes the cumulative distribution
+!!    function value for student's t distribution with integer degrees of
+!!    freedom NU.
 !!
 !!##SYNOPSIS
 !!
@@ -37521,7 +37564,9 @@ contains
       END SUBROUTINE TCDF
 !>
 !!##NAME
-!!    time(3f) - [M_datapac:STATISTICS] TIME perform a time series analysis (autocorrelation plot, a test for white noise, a "pilot" spectrum, and 4 other estimated spectra based on differing bandwidth)
+!!    time(3f) - [M_datapac:STATISTICS] perform a time series analysis
+!!    (autocorrelation plot, a test for white noise, a "pilot" spectrum,
+!!    and 4 other estimated spectra based on differing bandwidth)
 !!
 !!##SYNOPSIS
 !!
@@ -37970,7 +38015,8 @@ contains
       END SUBROUTINE TIME
 !>
 !!##NAME
-!!    tol(3f) - [M_datapac:STATISTICS] TOL compute normal and distribution-free tolerance limits
+!!    tol(3f) - [M_datapac:STATISTICS] compute normal and distribution-free
+!!    tolerance limits
 !!
 !!##SYNOPSIS
 !!
@@ -38382,7 +38428,8 @@ contains
       END SUBROUTINE TOL
 !>
 !!##NAME
-!!    tplt(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    tplt(3f) - [M_datapac:STATISTICS] generates a student's t probability
+!!    plot (with integer degrees of freedom parameter value = nu).
 !!
 !!##SYNOPSIS
 !!
@@ -38626,7 +38673,9 @@ contains
       END SUBROUTINE TPLT
 !>
 !!##NAME
-!!    tppf(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    tppf(3f) - [M_datapac:STATISTICS] This subroutine computes the percent
+!!    point function value for the student's T distribution with integer
+!!    degrees of freedom parameter NU.
 !!
 !!##SYNOPSIS
 !!
@@ -39083,7 +39132,8 @@ contains
       END SUBROUTINE TRAN
 !>
 !!##NAME
-!!    trim(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    trim(3f) - [M_datapac:STATISTICS] computes the sample trimmed mean
+!!    of the data in the input vector X.
 !!
 !!##SYNOPSIS
 !!
@@ -39130,16 +39180,10 @@ contains
 !*==trim.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
       IMPLICIT NONE
-!*--TRIM31645
-!*** Start of declarations inserted by SPAG
-      REAL ak , an , hold , P1 , P2 , perp1 , perp2 , perp3 , psum ,    &
-     &     sum , WS , X , Xtrim , Y
-      INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
-     &        np2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TRIM
-!
+
+      REAL ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
+      INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
+
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE
 !              SAMPLE TRIMMED MEAN
 !              OF THE DATA IN THE INPUT VECTOR X.
@@ -39347,7 +39391,8 @@ contains
       END SUBROUTINE TRIM
 !>
 !!##NAME
-!!    unicdf(3f) - [M_datapac:STATISTICS] UNICDF compute the Uniform cumulative distribution function
+!!    unicdf(3f) - [M_datapac:STATISTICS] compute the Uniform cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -39460,7 +39505,9 @@ contains
       END SUBROUTINE UNICDF
 !>
 !!##NAME
-!!    unimed(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+!!    unimed(3f) - [M_datapac:STATISTICS] generates the N order statistic
+!!    medians from the uniform (rectangular) distribution on the unit
+!!    interval (0,1).
 !!
 !!##SYNOPSIS
 !!
@@ -39623,7 +39670,8 @@ contains
       END SUBROUTINE UNIMED
 !>
 !!##NAME
-!!    unipdf(3f) - [M_datapac:STATISTICS] UNIPDF compute the Uniform probability density function
+!!    unipdf(3f) - [M_datapac:STATISTICS] compute the Uniform probability
+!!    density function
 !!
 !!##SYNOPSIS
 !!
@@ -39735,7 +39783,8 @@ contains
       END SUBROUTINE UNIPDF
 !>
 !!##NAME
-!!    uniplt(3f) - [M_datapac:STATISTICS] UNIPLT generate a Uniform probability plot (line printer graph)
+!!    uniplt(3f) - [M_datapac:STATISTICS] generate a Uniform probability plot
+!!    (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -39936,7 +39985,8 @@ contains
       END SUBROUTINE UNIPLT
 !>
 !!##NAME
-!!    unippf(3f) - [M_datapac:STATISTICS] UNIPPF compute the Uniform percent point function
+!!    unippf(3f) - [M_datapac:STATISTICS] compute the Uniform percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -40057,7 +40107,7 @@ contains
       END SUBROUTINE UNIPPF
 !>
 !!##NAME
-!!    uniran(3f) - [M_datapac:STATISTICS] UNIRAN generate Uniform random numbers
+!!    uniran(3f) - [M_datapac:STATISTICS] generate Uniform random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -40374,7 +40424,7 @@ contains
       END SUBROUTINE UNIRAN
 !>
 !!##NAME
-!!    unisf(3f) - [M_datapac:STATISTICS] UNISF compute the Uniform sparsity function
+!!    unisf(3f) - [M_datapac:STATISTICS] compute the Uniform sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -40496,7 +40546,8 @@ contains
       END SUBROUTINE UNISF
 !>
 !!##NAME
-!!    var(3f) - [M_datapac:STATISTICS] VAR compute the sample variance of a vector of observations
+!!    var(3f) - [M_datapac:STATISTICS] compute the sample variance of a
+!!    vector of observations
 !!
 !!##SYNOPSIS
 !!
@@ -40659,7 +40710,8 @@ contains
       END SUBROUTINE VAR
 !>
 !!##NAME
-!!    weib(3f) - [M_datapac:STATISTICS] WEIB perform a Weibull distribution analysis (Weibull PPCC analysis)
+!!    weib(3f) - [M_datapac:STATISTICS] perform a Weibull distribution
+!!    analysis (Weibull PPCC analysis)
 !!
 !!##SYNOPSIS
 !!
@@ -41031,7 +41083,8 @@ contains
       END SUBROUTINE WEIB
 !>
 !!##NAME
-!!    weicdf(3f) - [M_datapac:STATISTICS] WEICDF compute the Weibull cumulative distribution function
+!!    weicdf(3f) - [M_datapac:STATISTICS] compute the Weibull cumulative
+!!    distribution function
 !!
 !!##SYNOPSIS
 !!
@@ -41159,7 +41212,8 @@ contains
       END SUBROUTINE WEICDF
 !>
 !!##NAME
-!!    weiplt(3f) - [M_datapac:STATISTICS] WEIPLT generate a Weibull probability plot (line printer graph)
+!!    weiplt(3f) - [M_datapac:STATISTICS] generate a Weibull probability plot
+!!    (line printer graph)
 !!
 !!##SYNOPSIS
 !!
@@ -41396,7 +41450,8 @@ contains
       END SUBROUTINE WEIPLT
 !>
 !!##NAME
-!!    weippf(3f) - [M_datapac:STATISTICS] WEIPPF compute the Weibull percent point function
+!!    weippf(3f) - [M_datapac:STATISTICS] compute the Weibull percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
@@ -41529,7 +41584,7 @@ contains
       END SUBROUTINE WEIPPF
 !>
 !!##NAME
-!!    weiran(3f) - [M_datapac:STATISTICS] WEIRAN generate Weibull random numbers
+!!    weiran(3f) - [M_datapac:STATISTICS] generate Weibull random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -41695,7 +41750,8 @@ contains
       END SUBROUTINE WEIRAN
 !>
 !!##NAME
-!!    wind(3f) - [M_datapac:STATISTICS] WIND compute the sample Winsorized mean of a vector of observations
+!!    wind(3f) - [M_datapac:STATISTICS] compute the sample Winsorized mean
+!!    of a vector of observations
 !!
 !!##SYNOPSIS
 !!
@@ -41964,7 +42020,8 @@ contains
       END SUBROUTINE WIND
 !>
 !!##NAME
-!!    write(3f) - [M_datapac:STATISTICS] WRITE write a vector of observations in a "neat" fashion
+!!    write(3f) - [M_datapac:STATISTICS] write a vector of observations in a
+!!    "neat" fashion
 !!
 !!##SYNOPSIS
 !!

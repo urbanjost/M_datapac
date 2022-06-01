@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file norcdf.3datapac.man
+$BLOCK COMMENT --file norcdf.3m_datapac.man
 NAME
-   norcdf(3f) - [M_datapac:STATISTICS] NORCDF compute the normal cumulative distribution function
+   norcdf(3f) - [M_datapac:STATISTICS] compute the normal cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine norcdf (X, Y)

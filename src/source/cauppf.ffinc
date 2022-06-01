@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file cauppf.3datapac.man
+$BLOCK COMMENT --file cauppf.3m_datapac.man
 NAME
-   cauppf(3f) - [M_datapac:STATISTICS] CAUPPF compute the Cauchy percent point function
+   cauppf(3f) - [M_datapac:STATISTICS] compute the Cauchy percent point
+   function
 
 SYNOPSIS
     Subroutine cauppf (X, Y)

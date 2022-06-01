@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file median.3datapac.man
+$BLOCK COMMENT --file median.3m_datapac.man
 NAME
-   median(3f) - [M_datapac:STATISTICS] MEDIAN compute the median of a data vector
+   median(3f) - [M_datapac:STATISTICS] compute the median of a data vector
 
 SYNOPSIS
     Subroutine median (X, Y)

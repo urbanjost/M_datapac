@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file extrem.3datapac.man
+$BLOCK COMMENT --file extrem.3m_datapac.man
 NAME
-   extrem(3f) - [M_datapac:STATISTICS] EXTREM determine whether a type 1 or type 2 extreme value distribution better fits a given data set
+   extrem(3f) - [M_datapac:STATISTICS] determine whether a type 1 or
+   type 2 extreme value distribution better fits a given data set
 
 SYNOPSIS
     Subroutine extrem (X, Y)

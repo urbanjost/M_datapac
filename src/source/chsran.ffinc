@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file chsran.3datapac.man
+$BLOCK COMMENT --file chsran.3m_datapac.man
 NAME
-   chsran(3f) - [M_datapac:STATISTICS] CHSRAN generate chi-square random numbers
+   chsran(3f) - [M_datapac:STATISTICS] generate chi-square random numbers
 
 SYNOPSIS
     Subroutine chsran (X, Y)

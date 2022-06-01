@@ -1,7 +1,9 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file unimed.3datapac.man
+$BLOCK COMMENT --file unimed.3m_datapac.man
 NAME
-   unimed(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+   unimed(3f) - [M_datapac:STATISTICS] generates the N order statistic
+   medians from the uniform (rectangular) distribution on the unit
+   interval (0,1).
 
 SYNOPSIS
     Subroutine unimed (X, Y)

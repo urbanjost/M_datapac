@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file chsppf.3datapac.man
+$BLOCK COMMENT --file chsppf.3m_datapac.man
 NAME
-   chsppf(3f) - [M_datapac:STATISTICS] CHSPPF compute the chi-square percent point function
+   chsppf(3f) - [M_datapac:STATISTICS] compute the chi-square percent
+   point function
 
 SYNOPSIS
     Subroutine chsppf (X, Y)

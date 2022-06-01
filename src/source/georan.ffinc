@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file georan.3datapac.man
+$BLOCK COMMENT --file georan.3m_datapac.man
 NAME
-   georan(3f) - [M_datapac:STATISTICS] GEORAN generate geometric random numbers
+   georan(3f) - [M_datapac:STATISTICS] generate geometric random numbers
 
 SYNOPSIS
     Subroutine georan (X, Y)

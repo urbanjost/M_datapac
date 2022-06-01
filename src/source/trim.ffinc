@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file trim.3datapac.man
+$BLOCK COMMENT --file trim.3m_datapac.man
 NAME
-   trim(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+   trim(3f) - [M_datapac:STATISTICS] computes the sample trimmed mean
+   of the data in the input vector X.
 
 SYNOPSIS
     Subroutine trim (X, Y)
@@ -48,16 +49,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==trim.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
       IMPLICIT NONE
-!*--TRIM31645
-!*** Start of declarations inserted by SPAG
-      REAL ak , an , hold , P1 , P2 , perp1 , perp2 , perp3 , psum ,    &
-     &     sum , WS , X , Xtrim , Y
-      INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
-     &        np2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TRIM
-!
+
+      REAL ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
+      INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
+
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE
 !              SAMPLE TRIMMED MEAN
 !              OF THE DATA IN THE INPUT VECTOR X.

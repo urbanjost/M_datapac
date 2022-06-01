@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file bincdf.3datapac.man
+$BLOCK COMMENT --file bincdf.3m_datapac.man
 NAME
-   bincdf(3f) - [M_datapac:STATISTICS] BINCDF compute the binomial cumulative distribution function
+   bincdf(3f) - [M_datapac:STATISTICS] compute the binomial cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine bincdf (X, Y)

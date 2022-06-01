@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file plotxt.3datapac.man
+$BLOCK COMMENT --file plotxt.3m_datapac.man
 NAME
-   plotxt(3f) - [M_datapac:STATISTICS] PLOTXT generate a line printer run sequence plot for the terminal (71 characters wide)
+   plotxt(3f) - [M_datapac:STATISTICS] generate a line printer run
+   sequence plot for the terminal (71 characters wide)
 
 SYNOPSIS
     Subroutine plotxt (X, Y)

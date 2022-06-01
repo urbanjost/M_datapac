@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file plotco.3datapac.man
+$BLOCK COMMENT --file plotco.3m_datapac.man
 NAME
-   plotco(3f) - [M_datapac:STATISTICS] PLOTCO generate a line printer autocorrelation plot
+   plotco(3f) - [M_datapac:STATISTICS] generate a line printer
+   autocorrelation plot
 
 SYNOPSIS
     Subroutine plotco (X, Y)

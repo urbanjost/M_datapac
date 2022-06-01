@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file poly.3datapac.man
+$BLOCK COMMENT --file poly.3m_datapac.man
 NAME
-   poly(3f) - [M_datapac:STATISTICS] POLY compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)
+   poly(3f) - [M_datapac:STATISTICS] compute a least squares polynomial fit
 
 SYNOPSIS
     Subroutine poly (X, Y)

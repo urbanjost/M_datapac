@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file logplt.3datapac.man
+$BLOCK COMMENT --file logplt.3m_datapac.man
 NAME
-   logplt(3f) - [M_datapac:STATISTICS] LOGPLT generate a logistic probability plot (line printer graph)
+   logplt(3f) - [M_datapac:STATISTICS] generate a logistic probability
+   plot (line printer graph)
 
 SYNOPSIS
     Subroutine logplt (X, Y)

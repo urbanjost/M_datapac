@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file uniplt.3datapac.man
+$BLOCK COMMENT --file uniplt.3m_datapac.man
 NAME
-   uniplt(3f) - [M_datapac:STATISTICS] UNIPLT generate a Uniform probability plot (line printer graph)
+   uniplt(3f) - [M_datapac:STATISTICS] generate a Uniform probability plot
+   (line printer graph)
 
 SYNOPSIS
     Subroutine uniplt (X, Y)

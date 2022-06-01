@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file freq.3datapac.man
+$BLOCK COMMENT --file freq.3m_datapac.man
 NAME
-   freq(3f) - [M_datapac:STATISTICS] FREQ compute the sample frequency and cumulative sample frequency of a vector
+   freq(3f) - [M_datapac:STATISTICS] compute the sample frequency and
+   cumulative sample frequency of a vector
 
 SYNOPSIS
     Subroutine freq (X, Y)

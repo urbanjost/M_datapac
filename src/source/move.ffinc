@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file move.3datapac.man
+$BLOCK COMMENT --file move.3m_datapac.man
 NAME
-   move(3f) - [M_datapac:STATISTICS] MOVE move selected elements of one vector into another vector
+   move(3f) - [M_datapac:STATISTICS] move selected elements of one vector
+   into another vector
 
 SYNOPSIS
     Subroutine move (X, Y)

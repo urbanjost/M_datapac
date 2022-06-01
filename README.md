@@ -187,8 +187,9 @@ The following subroutines are available in M_datapac:
   * [SCALE](src/source/scale.ffinc)    - compute the sample range, sample standard deviation, sample relative standard deviation, and sample variance
   * [SD](src/source/sd.ffinc)          - compute the standard deviation of a vector of observations
   * [SKIPR](src/source/skipr.ffinc)    - skip over a user-specified number of rows in reading a data file
-  * [SORTC](src/source/sortc.ffinc)    - sort a vector of sample observations and "carry" a second a vector
   * [SORT](src/source/sort.ffinc)      - sort a vector of sample observations, also return the positions in the original vector
+  * [SORTC](src/source/sortc.ffinc)    - sort a vector of sample observations and "carry" a second a vector
+  * [SORTP](src/source/sortp.ffinc)   - sorts and ranks a numeric vector X
   * [SPCORR](src/source/spcorr.ffinc)  - compute the sample Spearman rank correlation coefficient between two vectors of observations
   * [STMOM3](src/source/stmom3.ffinc)  - compute the third central moment (i.e., the skewness) of a vector of observations
   * [STMOM4](src/source/stmom4.ffinc)  - compute the fourth central moment (i.e., the kurtosis) of a vector of observations
@@ -200,6 +201,7 @@ The following subroutines are available in M_datapac:
   * [TOL](src/source/tol.ffinc)        - compute normal and distribution-free tolerance limits
   * [TPPF](src/source/tppf.ffinc)      - compute the /t/ percent point function
   * [TRAN](src/source/tran.ffinc)      - generate /t/ random numbers
+  * [TRIM](src/source/trim.ffinc)    - computes the sample trimmed mean of the data in the input vector X.
   * [UNICDF](src/source/unicdf.ffinc)  - compute the Uniform cumulative distribution function
   * [UNIMED](src/source/unimed.ffinc)  - generate the /N/ order statistic medians (used in creating probability plots)
   * [UNIPDF](src/source/unipdf.ffinc)  - compute the Uniform probability density function
@@ -227,8 +229,10 @@ The following subroutines are available in M_datapac:
   * [LAMPLT](src/source/lamplt.ffinc)  - generate a Tukey-Lambda probability plot (line printer graph)
   * [LGNPLT](src/source/lgnplt.ffinc)  - generate a lognormal probability plot (line printer graph)
   * [LOGPLT](src/source/logplt.ffinc)  - generate a logistic probability plot (line printer graph)
+  * [NOROUT](src/source/norout.ffinc)  - Performs a normal outlier analysis on the data in the input vector X.
   * [NORPLT](src/source/norplt.ffinc)  - generate a normal probability plot (line printer graph)
   * [PARPLT](src/source/parplt.ffinc)  - generate a Pareto probability plot (line printer graph)
+  * [PLOT](src/source/plot.ffinc)      - yields a one-page printer plot of y(i) versus x(i)
   * [PLOT10](src/source/plot10.ffinc)  - generate a line printer plot with special plot characters
   * [PLOT6](src/source/plot6.ffinc)    - generate a line printer plot
   * [PLOT7](src/source/plot7.ffinc)    - generate a line printer plot with special plot characters

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file demod.3datapac.man
+$BLOCK COMMENT --file demod.3m_datapac.man
 NAME
-   demod(3f) - [M_datapac:STATISTICS] DEMOD perform a complex demodulation
+   demod(3f) - [M_datapac:STATISTICS] perform a complex demodulation
 
 SYNOPSIS
     Subroutine demod (X, Y)

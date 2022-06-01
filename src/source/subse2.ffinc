@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file subse2.3datapac.man
+$BLOCK COMMENT --file subse2.3m_datapac.man
 NAME
-   subse2(3f) - [M_datapac:STATISTICS] SUBSE2 extract the elements of a vector which fall into a user-specified subset (two subset variables)
+   subse2(3f) - [M_datapac:STATISTICS] extract the elements of a vector
+   which fall into a user-specified subset (two subset variables)
 
 SYNOPSIS
     Subroutine subse2 (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file logpdf.3datapac.man
+$BLOCK COMMENT --file logpdf.3m_datapac.man
 NAME
-   logpdf(3f) - [M_datapac:STATISTICS] LOGPDF compute the logistic probability density function
+   logpdf(3f) - [M_datapac:STATISTICS] compute the logistic probability
+   density function
 
 SYNOPSIS
     Subroutine logpdf (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file norpdf.3datapac.man
+$BLOCK COMMENT --file norpdf.3m_datapac.man
 NAME
-   norpdf(3f) - [M_datapac:STATISTICS] NORPDF compute the normal probability density function
+   norpdf(3f) - [M_datapac:STATISTICS] compute the normal probability
+   density function
 
 SYNOPSIS
     Subroutine norpdf (X, Y)

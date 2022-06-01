@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file expppf.3datapac.man
+$BLOCK COMMENT --file expppf.3m_datapac.man
 NAME
-   expppf(3f) - [M_datapac:STATISTICS] EXPPPF compute the exponential percent point function
+   expppf(3f) - [M_datapac:STATISTICS] compute the exponential percent
+   point function
 
 SYNOPSIS
     Subroutine expppf (X, Y)

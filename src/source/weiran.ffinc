@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file weiran.3datapac.man
+$BLOCK COMMENT --file weiran.3m_datapac.man
 NAME
-   weiran(3f) - [M_datapac:STATISTICS] WEIRAN generate Weibull random numbers
+   weiran(3f) - [M_datapac:STATISTICS] generate Weibull random numbers
 
 SYNOPSIS
     Subroutine weiran (X, Y)

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file nbran.3datapac.man
+$BLOCK COMMENT --file nbran.3m_datapac.man
 NAME
-   nbran(3f) - [M_datapac:STATISTICS] NBRAN generate negative binomial random numbers
+   nbran(3f) - [M_datapac:STATISTICS] generate negative binomial random numbers
 
 SYNOPSIS
     Subroutine nbran (X, Y)

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file invxwx.3datapac.man
+$BLOCK COMMENT --file invxwx.3m_datapac.man
 NAME
-   invxwx(3f) - [M_datapac:STATISTICS] INVXWX compute the inverse of X'WX
+   invxwx(3f) - [M_datapac:STATISTICS] compute the inverse of X'WX
 
 SYNOPSIS
     Subroutine invxwx (X, Y)

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file range.3datapac.man
+$BLOCK COMMENT --file range.3m_datapac.man
 NAME
-   range(3f) - [M_datapac:STATISTICS] RANGE compute the sample range
+   range(3f) - [M_datapac:STATISTICS] compute the sample range
 
 SYNOPSIS
     Subroutine range (X, Y)

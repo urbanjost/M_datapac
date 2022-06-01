@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file expcdf.3datapac.man
+$BLOCK COMMENT --file expcdf.3m_datapac.man
 NAME
-   expcdf(3f) - [M_datapac:STATISTICS] EXPCDF compute the exponential cumulative distribution function
+   expcdf(3f) - [M_datapac:STATISTICS] compute the exponential cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine expcdf (X, Y)

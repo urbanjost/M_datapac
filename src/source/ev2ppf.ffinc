@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file ev2ppf.3datapac.man
+$BLOCK COMMENT --file ev2ppf.3m_datapac.man
 NAME
-   ev2ppf(3f) - [M_datapac:STATISTICS] EV2PPF compute the extreme value type 2 (Frechet) percent point function
+   ev2ppf(3f) - [M_datapac:STATISTICS] compute the extreme value type 2
+   (Frechet) percent point function
 
 SYNOPSIS
     Subroutine ev2ppf (X, Y)

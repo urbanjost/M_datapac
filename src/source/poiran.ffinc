@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file poiran.3datapac.man
+$BLOCK COMMENT --file poiran.3m_datapac.man
 NAME
-   poiran(3f) - [M_datapac:STATISTICS] POIRAN generate Poisson random numbers
+   poiran(3f) - [M_datapac:STATISTICS] generate Poisson random numbers
 
 SYNOPSIS
     Subroutine poiran (X, Y)

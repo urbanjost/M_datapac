@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file min.3datapac.man
+$BLOCK COMMENT --file min.3m_datapac.man
 NAME
-   min(3f) - [M_datapac:STATISTICS] MIN compute the minimum of a data vector
+   min(3f) - [M_datapac:STATISTICS] compute the minimum of a data vector
 
 SYNOPSIS
     Subroutine min (X, Y)

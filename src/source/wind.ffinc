@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file wind.3datapac.man
+$BLOCK COMMENT --file wind.3m_datapac.man
 NAME
-   wind(3f) - [M_datapac:STATISTICS] WIND compute the sample Winsorized mean of a vector of observations
+   wind(3f) - [M_datapac:STATISTICS] compute the sample Winsorized mean
+   of a vector of observations
 
 SYNOPSIS
     Subroutine wind (X, Y)

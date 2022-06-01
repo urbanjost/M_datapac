@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file hfnppf.3datapac.man
+$BLOCK COMMENT --file hfnppf.3m_datapac.man
 NAME
-   hfnppf(3f) - [M_datapac:STATISTICS] HFNPPF compute the half-normal percent point function
+   hfnppf(3f) - [M_datapac:STATISTICS] compute the half-normal percent
+   point function
 
 SYNOPSIS
     Subroutine hfnppf (X, Y)

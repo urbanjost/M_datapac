@@ -1,5 +1,5 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file lgncdf.3datapac.man
+$BLOCK COMMENT --file lgncdf.3m_datapac.man
 NAME
    lgncdf(3f) - [M_datapac:STATISTICS] compute the lognormal cumulative
                 distribution function

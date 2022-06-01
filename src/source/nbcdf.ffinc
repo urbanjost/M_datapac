@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file nbcdf.3datapac.man
+$BLOCK COMMENT --file nbcdf.3m_datapac.man
 NAME
-   nbcdf(3f) - [M_datapac:STATISTICS] NBCDF compute the negative binomial cumulative distribution function
+   nbcdf(3f) - [M_datapac:STATISTICS] compute the negative binomial
+   cumulative distribution function
 
 SYNOPSIS
     Subroutine nbcdf (X, Y)

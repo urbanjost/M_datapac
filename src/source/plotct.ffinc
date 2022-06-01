@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file plotct.3datapac.man
+$BLOCK COMMENT --file plotct.3m_datapac.man
 NAME
-   plotct(3f) - [M_datapac:STATISTICS] PLOTCT generate a line printer plot for the terminal (71 characters wide)
+   plotct(3f) - [M_datapac:STATISTICS] generate a line printer plot for
+   the terminal (71 characters wide)
 
 SYNOPSIS
     Subroutine plotct (X, Y)

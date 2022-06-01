@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file ranper.3datapac.man
+$BLOCK COMMENT --file ranper.3m_datapac.man
 NAME
-   ranper(3f) - [M_datapac:STATISTICS] RANPER generates a random permutation
+   ranper(3f) - [M_datapac:STATISTICS] generates a random permutation
 
 SYNOPSIS
     Subroutine ranper (X, Y)

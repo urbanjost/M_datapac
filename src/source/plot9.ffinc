@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file plot9.3datapac.man
+$BLOCK COMMENT --file plot9.3m_datapac.man
 NAME
-   plot9(3f) - [M_datapac:STATISTICS] PLOT9 generate a line printer plot with special plot characters
+   plot9(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+   special plot characters
 
 SYNOPSIS
     Subroutine plot9 (X, Y)

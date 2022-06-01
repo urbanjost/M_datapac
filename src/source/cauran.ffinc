@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file cauran.3datapac.man
+$BLOCK COMMENT --file cauran.3m_datapac.man
 NAME
-   cauran(3f) - [M_datapac:STATISTICS] CAURAN generate Cauchy random numbers
+   cauran(3f) - [M_datapac:STATISTICS] generate Cauchy random numbers
 
 SYNOPSIS
     Subroutine cauran (X, Y)

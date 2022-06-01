@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file delete.3datapac.man
+$BLOCK COMMENT --file delete.3m_datapac.man
 NAME
-   delete(3f) - [M_datapac:STATISTICS] DELETE delete all elements of a vector within some specified interval
+   delete(3f) - [M_datapac:STATISTICS] delete all elements of a vector
+   within some specified interval
 
 SYNOPSIS
     Subroutine delete (X, Y)

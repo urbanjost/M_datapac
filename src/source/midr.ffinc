@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file midr.3datapac.man
+$BLOCK COMMENT --file midr.3m_datapac.man
 NAME
-   midr(3f) - [M_datapac:STATISTICS] MIDR compute the midrange of a data vector
+   midr(3f) - [M_datapac:STATISTICS] compute the midrange of a data vector
 
 SYNOPSIS
     Subroutine midr (X, Y)

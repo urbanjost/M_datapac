@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file geoppf.3datapac.man
+$BLOCK COMMENT --file geoppf.3m_datapac.man
 NAME
-   geoppf(3f) - [M_datapac:STATISTICS] GEOPPF compute the geometric percent point function
+   geoppf(3f) - [M_datapac:STATISTICS] compute the geometric percent
+   point function
 
 SYNOPSIS
     Subroutine geoppf (X, Y)

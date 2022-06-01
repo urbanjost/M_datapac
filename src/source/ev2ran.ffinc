@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file ev2ran.3datapac.man
+$BLOCK COMMENT --file ev2ran.3m_datapac.man
 NAME
-   ev2ran(3f) - [M_datapac:STATISTICS] EV2RAN generate extreme value type 2 (Frechet) random numbers
+   ev2ran(3f) - [M_datapac:STATISTICS] generate extreme value type 2
+   (Frechet) random numbers
 
 SYNOPSIS
     Subroutine ev2ran (X, Y)

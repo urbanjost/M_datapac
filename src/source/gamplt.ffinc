@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file gamplt.3datapac.man
+$BLOCK COMMENT --file gamplt.3m_datapac.man
 NAME
-   gamplt(3f) - [M_datapac:STATISTICS] GAMPLT generate a gamma probability plot (line printer graph)
+   gamplt(3f) - [M_datapac:STATISTICS] generate a gamma probability plot
+   (line printer graph)
 
 SYNOPSIS
     Subroutine gamplt (X, Y)

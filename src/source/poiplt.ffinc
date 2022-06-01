@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file poiplt.3datapac.man
+$BLOCK COMMENT --file poiplt.3m_datapac.man
 NAME
-   poiplt(3f) - [M_datapac:STATISTICS] POIPLT generate a Poisson probability plot (line printer graph)
+   poiplt(3f) - [M_datapac:STATISTICS] generate a Poisson probability plot
+   (line printer graph)
 
 SYNOPSIS
     Subroutine poiplt (X, Y)

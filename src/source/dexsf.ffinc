@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file dexsf.3datapac.man
+$BLOCK COMMENT --file dexsf.3m_datapac.man
 NAME
-   dexsf(3f) - [M_datapac:STATISTICS] DEXSF compute the double exponential sparsity function
+   dexsf(3f) - [M_datapac:STATISTICS] compute the double exponential
+   sparsity function
 
 SYNOPSIS
     Subroutine dexsf (X, Y)

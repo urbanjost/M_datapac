@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file mean.3datapac.man
+$BLOCK COMMENT --file mean.3m_datapac.man
 NAME
-   mean(3f) - [M_datapac:STATISTICS] MEAN compute the mean of a data vector
+   mean(3f) - [M_datapac:STATISTICS] compute the mean of a data vector
 
 SYNOPSIS
     Subroutine mean (X, Y)

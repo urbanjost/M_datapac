@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file poicdf.3datapac.man
+$BLOCK COMMENT --file poicdf.3m_datapac.man
 NAME
-   poicdf(3f) - [M_datapac:STATISTICS] POICDF compute the Poisson cumulative distribution function
+   poicdf(3f) - [M_datapac:STATISTICS] compute the Poisson cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine poicdf (X, Y)

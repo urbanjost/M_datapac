@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file plotx.3datapac.man
+$BLOCK COMMENT --file plotx.3m_datapac.man
 NAME
-   plotx(3f) - [M_datapac:STATISTICS] PLOTX generate a line printer run sequence plot
+   plotx(3f) - [M_datapac:STATISTICS] generate a line printer run sequence plot
 
 SYNOPSIS
     Subroutine plotx (X, Y)

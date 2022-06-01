@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file betran.3datapac.man
+$BLOCK COMMENT --file betran.3m_datapac.man
 NAME
-   betran(3f) - [M_datapac:STATISTICS] BETRAN generate beta random numbers
+   betran(3f) - [M_datapac:STATISTICS] generate beta random numbers
 
 SYNOPSIS
     Subroutine betran (X, Y)

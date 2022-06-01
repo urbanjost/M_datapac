@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file expplt.3datapac.man
+$BLOCK COMMENT --file expplt.3m_datapac.man
 NAME
-   expplt(3f) - [M_datapac:STATISTICS] EXPPLT generate a exponential probability plot (line printer graph)
+   expplt(3f) - [M_datapac:STATISTICS] generate a exponential probability
+   plot (line printer graph)
 
 SYNOPSIS
     Subroutine expplt (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file discr2.3datapac.man
+$BLOCK COMMENT --file discr2.3m_datapac.man
 NAME
-   discr2(3f) - [M_datapac:STATISTICS] DISCR2 bin the elements of a vector (output vector contains class midpoints)
+   discr2(3f) - [M_datapac:STATISTICS] bin the elements of a vector
+   (output vector contains class midpoints)
 
 SYNOPSIS
     Subroutine discr2 (X, Y)

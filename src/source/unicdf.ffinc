@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file unicdf.3datapac.man
+$BLOCK COMMENT --file unicdf.3m_datapac.man
 NAME
-   unicdf(3f) - [M_datapac:STATISTICS] UNICDF compute the Uniform cumulative distribution function
+   unicdf(3f) - [M_datapac:STATISTICS] compute the Uniform cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine unicdf (X, Y)

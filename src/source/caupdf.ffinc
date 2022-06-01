@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file caupdf.3datapac.man
+$BLOCK COMMENT --file caupdf.3m_datapac.man
 NAME
-   caupdf(3f) - [M_datapac:STATISTICS] CAUPDF compute the Cauchy probability density function
+   caupdf(3f) - [M_datapac:STATISTICS] compute the Cauchy probability
+   density function
 
 SYNOPSIS
     Subroutine caupdf (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file hist.3datapac.man
+$BLOCK COMMENT --file hist.3m_datapac.man
 NAME
-   hist(3f) - [M_datapac:STATISTICS] HIST generates histograms based on two different class widths
+   hist(3f) - [M_datapac:STATISTICS] generates histograms based on two
+   different class widths
 
 SYNOPSIS
     Subroutine hist (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file retain.3datapac.man
+$BLOCK COMMENT --file retain.3m_datapac.man
 NAME
-   retain(3f) - [M_datapac:STATISTICS] RETAIN retain all observations in a vector within a user-specified interval
+   retain(3f) - [M_datapac:STATISTICS] retain all observations in a
+   vector within a user-specified interval
 
 SYNOPSIS
     Subroutine retain (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file decomp.3datapac.man
+$BLOCK COMMENT --file decomp.3m_datapac.man
 NAME
-   decomp(3f) - [M_datapac:STATISTICS] DECOMP decomposes a weighted data matrix (utility routine used by other routines)
+   decomp(3f) - [M_datapac:STATISTICS] decomposes a weighted data matrix
+   (utility routine used by other routines)
 
 SYNOPSIS
     Subroutine decomp (X, Y)

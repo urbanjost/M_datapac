@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file code.3datapac.man
+$BLOCK COMMENT --file code.3m_datapac.man
 NAME
-   code(3f) - [M_datapac:STATISTICS] CODE code the elements of a vector (1 for the minimum, 2 for the next larger value, and so on)
+   code(3f) - [M_datapac:STATISTICS] code the elements of a vector
+   (1 for the minimum, 2 for the next larger value, and so on)
 
 SYNOPSIS
     Subroutine code (X, Y)

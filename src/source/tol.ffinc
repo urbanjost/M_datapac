@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file tol.3datapac.man
+$BLOCK COMMENT --file tol.3m_datapac.man
 NAME
-   tol(3f) - [M_datapac:STATISTICS] TOL compute normal and distribution-free tolerance limits
+   tol(3f) - [M_datapac:STATISTICS] compute normal and distribution-free
+   tolerance limits
 
 SYNOPSIS
     Subroutine tol (X, Y)

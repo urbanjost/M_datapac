@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file norplt.3datapac.man
+$BLOCK COMMENT --file norplt.3m_datapac.man
 NAME
-   norplt(3f) - [M_datapac:STATISTICS] NORPLT generate a normal probability plot (line printer graph)
+   norplt(3f) - [M_datapac:STATISTICS] generate a normal probability plot
+   (line printer graph)
 
 SYNOPSIS
     Subroutine norplt (X, Y)

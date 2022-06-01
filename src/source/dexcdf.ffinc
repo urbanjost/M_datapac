@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file dexcdf.3datapac.man
+$BLOCK COMMENT --file dexcdf.3m_datapac.man
 NAME
-   dexcdf(3f) - [M_datapac:STATISTICS] DEXCDF compute the double exponential cumulative distribution function
+   dexcdf(3f) - [M_datapac:STATISTICS] compute the double exponential
+   cumulative distribution function
 
 SYNOPSIS
     Subroutine dexcdf (X, Y)

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file lamran.3datapac.man
+$BLOCK COMMENT --file lamran.3m_datapac.man
 NAME
-   lamran(3f) - [M_datapac:STATISTICS] LAMRAN generate Tukey-Lambda random numbers
+   lamran(3f) - [M_datapac:STATISTICS] generate Tukey-Lambda random numbers
 
 SYNOPSIS
     Subroutine lamran (X, Y)

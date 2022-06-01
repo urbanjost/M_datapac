@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file chsplt.3datapac.man
+$BLOCK COMMENT --file chsplt.3m_datapac.man
 NAME
-   chsplt(3f) - [M_datapac:STATISTICS] CHSPLT generate a chi-square probability plot (line printer graph)
+   chsplt(3f) - [M_datapac:STATISTICS] generate a chi-square probability
+   plot (line printer graph)
 
 SYNOPSIS
     Subroutine chsplt (X, Y)

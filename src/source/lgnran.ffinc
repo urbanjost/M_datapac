@@ -1,5 +1,5 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file lgnran.3datapac.man
+$BLOCK COMMENT --file lgnran.3m_datapac.man
 NAME
    lgnran(3f) - [M_datapac:STATISTICS] generate lognormal random numbers
 

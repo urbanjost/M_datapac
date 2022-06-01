@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file weicdf.3datapac.man
+$BLOCK COMMENT --file weicdf.3m_datapac.man
 NAME
-   weicdf(3f) - [M_datapac:STATISTICS] WEICDF compute the Weibull cumulative distribution function
+   weicdf(3f) - [M_datapac:STATISTICS] compute the Weibull cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine weicdf (X, Y)

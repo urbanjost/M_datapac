@@ -1,5 +1,5 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file max.3datapac.man
+$BLOCK COMMENT --file max.3m_datapac.man
 NAME
    max(3f) - [M_datapac:STATISTICS] MAX compute the maximum of a data vector
 

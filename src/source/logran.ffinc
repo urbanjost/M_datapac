@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file logran.3datapac.man
+$BLOCK COMMENT --file logran.3m_datapac.man
 NAME
-   logran(3f) - [M_datapac:STATISTICS] LOGRAN generate logistic random numbers
+   logran(3f) - [M_datapac:STATISTICS] generate logistic random numbers
 
 SYNOPSIS
     Subroutine logran (X, Y)

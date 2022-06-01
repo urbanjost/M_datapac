@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file spcorr.3datapac.man
+$BLOCK COMMENT --file spcorr.3m_datapac.man
 NAME
-   spcorr(3f) - [M_datapac:STATISTICS] SPCORR compute the sample Spearman rank correlation coefficient between two vectors of observations
+   spcorr(3f) - [M_datapac:STATISTICS] compute the sample Spearman rank
+   correlation coefficient between two vectors of observations
 
 SYNOPSIS
     Subroutine spcorr (X, Y)

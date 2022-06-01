@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file parcdf.3datapac.man
+$BLOCK COMMENT --file parcdf.3m_datapac.man
 NAME
-   parcdf(3f) - [M_datapac:STATISTICS] PARCDF compute the Pareto cumulative distribution function
+   parcdf(3f) - [M_datapac:STATISTICS] compute the Pareto cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine parcdf (X, Y)

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file binran.3datapac.man
+$BLOCK COMMENT --file binran.3m_datapac.man
 NAME
-   binran(3f) - [M_datapac:STATISTICS] BINRAN generate binomial random numbers
+   binran(3f) - [M_datapac:STATISTICS] generate binomial random numbers
 
 SYNOPSIS
     Subroutine binran (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file count.3datapac.man
+$BLOCK COMMENT --file count.3m_datapac.man
 NAME
-   count(3f) - [M_datapac:STATISTICS] COUNT compute the number of observations between a minimum and a maximum value
+   count(3f) - [M_datapac:STATISTICS] compute the number of observations
+   between a minimum and a maximum value
 
 SYNOPSIS
     Subroutine count (X, Y)

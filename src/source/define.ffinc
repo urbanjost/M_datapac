@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file define.3datapac.man
+$BLOCK COMMENT --file define.3m_datapac.man
 NAME
-   define(3f) - [M_datapac:STATISTICS] DEFINE set all elements of a vector equal to a specified constant
+   define(3f) - [M_datapac:STATISTICS] set all elements of a vector
+   equal to a specified constant
 
 SYNOPSIS
     Subroutine define (X, Y)

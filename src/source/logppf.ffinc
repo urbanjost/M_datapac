@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file logppf.3datapac.man
+$BLOCK COMMENT --file logppf.3m_datapac.man
 NAME
-   logppf(3f) - [M_datapac:STATISTICS] LOGPPF compute the logistic percent point function
+   logppf(3f) - [M_datapac:STATISTICS] compute the logistic percent
+   point function
 
 SYNOPSIS
     Subroutine logppf (X, Y)

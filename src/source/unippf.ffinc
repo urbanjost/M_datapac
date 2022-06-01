@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file unippf.3datapac.man
+$BLOCK COMMENT --file unippf.3m_datapac.man
 NAME
-   unippf(3f) - [M_datapac:STATISTICS] UNIPPF compute the Uniform percent point function
+   unippf(3f) - [M_datapac:STATISTICS] compute the Uniform percent
+   point function
 
 SYNOPSIS
     Subroutine unippf (X, Y)

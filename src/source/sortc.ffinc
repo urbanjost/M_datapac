@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file sortc.3datapac.man
+$BLOCK COMMENT --file sortc.3m_datapac.man
 NAME
-   sortc(3f) - [M_datapac:STATISTICS] SORTC sort a vector of sample observations and "carry" a second a vector
+   sortc(3f) - [M_datapac:STATISTICS] sort a vector of sample observations
+   and "carry" a second a vector
 
 SYNOPSIS
     Subroutine sortc (X, Y)

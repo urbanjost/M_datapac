@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file hfncdf.3datapac.man
+$BLOCK COMMENT --file hfncdf.3m_datapac.man
 NAME
-   hfncdf(3f) - [M_datapac:STATISTICS] HFNCDF compute the half-normal cumulative distribution function
+   hfncdf(3f) - [M_datapac:STATISTICS] compute the half-normal cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine hfncdf (X, Y)

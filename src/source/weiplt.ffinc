@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file weiplt.3datapac.man
+$BLOCK COMMENT --file weiplt.3m_datapac.man
 NAME
-   weiplt(3f) - [M_datapac:STATISTICS] WEIPLT generate a Weibull probability plot (line printer graph)
+   weiplt(3f) - [M_datapac:STATISTICS] generate a Weibull probability plot
+   (line printer graph)
 
 SYNOPSIS
     Subroutine weiplt (X, Y)

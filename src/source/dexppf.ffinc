@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file dexppf.3datapac.man
+$BLOCK COMMENT --file dexppf.3m_datapac.man
 NAME
-   dexppf(3f) - [M_datapac:STATISTICS] DEXPPF compute the double exponential percent point function
+   dexppf(3f) - [M_datapac:STATISTICS] compute the double exponential
+   percent point function
 
 SYNOPSIS
     Subroutine dexppf (X, Y)

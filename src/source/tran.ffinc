@@ -1,5 +1,5 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file tran.3datapac.man
+$BLOCK COMMENT --file tran.3m_datapac.man
 NAME
    tran(3f) - [m_datapac:statistics] a random sample of size n from the
    student's t distribution with integer degrees of freedom parameter NU.

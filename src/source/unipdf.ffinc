@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file unipdf.3datapac.man
+$BLOCK COMMENT --file unipdf.3m_datapac.man
 NAME
-   unipdf(3f) - [M_datapac:STATISTICS] UNIPDF compute the Uniform probability density function
+   unipdf(3f) - [M_datapac:STATISTICS] compute the Uniform probability
+   density function
 
 SYNOPSIS
     Subroutine unipdf (X, Y)

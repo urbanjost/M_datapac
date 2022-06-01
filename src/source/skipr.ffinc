@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file skipr.3datapac.man
+$BLOCK COMMENT --file skipr.3m_datapac.man
 NAME
-   skipr(3f) - [M_datapac:STATISTICS] SKIPR skip over a user-specified number of rows in reading a data file
+   skipr(3f) - [M_datapac:STATISTICS] skip over a user-specified number
+   of rows in reading a data file
 
 SYNOPSIS
     Subroutine skipr (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file lamcdf.3datapac.man
+$BLOCK COMMENT --file lamcdf.3m_datapac.man
 NAME
-   lamcdf(3f) - [M_datapac:STATISTICS] LAMCDF compute the Tukey-Lambda cumulative distribution function
+   lamcdf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine lamcdf (X, Y)

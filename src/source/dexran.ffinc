@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file dexran.3datapac.man
+$BLOCK COMMENT --file dexran.3m_datapac.man
 NAME
-   dexran(3f) - [M_datapac:STATISTICS] DEXRAN generate double exponential random numbers
+   dexran(3f) - [M_datapac:STATISTICS] generate double exponential
+   random numbers
 
 SYNOPSIS
     Subroutine dexran (X, Y)

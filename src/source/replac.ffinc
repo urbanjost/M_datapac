@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file replac.3datapac.man
+$BLOCK COMMENT --file replac.3m_datapac.man
 NAME
-   replac(3f) - [M_datapac:STATISTICS] REPLAC replace all observations in a vector within a given interval with a user-specified constant
+   replac(3f) - [M_datapac:STATISTICS] replace all observations in a
+   vector within a given interval with a user-specified constant
 
 SYNOPSIS
     Subroutine replac (X, Y)

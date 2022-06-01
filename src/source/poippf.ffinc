@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file poippf.3datapac.man
+$BLOCK COMMENT --file poippf.3m_datapac.man
 NAME
-   poippf(3f) - [M_datapac:STATISTICS] POIPPF compute the Poisson percent point function
+   poippf(3f) - [M_datapac:STATISTICS] compute the Poisson percent
+   point function
 
 SYNOPSIS
     Subroutine poippf (X, Y)

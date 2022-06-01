@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file propor.3datapac.man
+$BLOCK COMMENT --file propor.3m_datapac.man
 NAME
-   propor(3f) - [M_datapac:STATISTICS] PROPOR compute the sample proportion
+   propor(3f) - [M_datapac:STATISTICS] compute the sample proportion
 
 SYNOPSIS
     Subroutine propor (X, Y)

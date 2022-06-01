@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file tail.3datapac.man
+$BLOCK COMMENT --file tail.3m_datapac.man
 NAME
-   tail(3f) - [M_datapac:STATISTICS] TAIL performs a symmetric distribution tail length analysis
+   tail(3f) - [M_datapac:STATISTICS] performs a symmetric distribution
+   tail length analysis
 
 SYNOPSIS
     Subroutine tail (X, Y)

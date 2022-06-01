@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file expran.3datapac.man
+$BLOCK COMMENT --file expran.3m_datapac.man
 NAME
-   expran(3f) - [M_datapac:STATISTICS] EXPRAN generate exponential random numbers
+   expran(3f) - [M_datapac:STATISTICS] generate exponential random numbers
 
 SYNOPSIS
     Subroutine expran (X, Y)

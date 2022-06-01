@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file stmom3.3datapac.man
+$BLOCK COMMENT --file stmom3.3m_datapac.man
 NAME
-   stmom3(3f) - [M_datapac:STATISTICS] STMOM3 compute the third central moment (i.e., the skewness) of a vector of observations
+   stmom3(3f) - [M_datapac:STATISTICS] compute the third central moment
+   (i.e., the skewness) of a vector of observations
 
 SYNOPSIS
     Subroutine stmom3 (X, Y)

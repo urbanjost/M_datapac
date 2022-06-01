@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file gamcdf.3datapac.man
+$BLOCK COMMENT --file gamcdf.3m_datapac.man
 NAME
-   gamcdf(3f) - [M_datapac:STATISTICS] GAMCDF compute the gamma cumulative distribution function
+   gamcdf(3f) - [M_datapac:STATISTICS] compute the gamma cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine gamcdf (X, Y)

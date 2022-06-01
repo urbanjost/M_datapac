@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file write.3datapac.man
+$BLOCK COMMENT --file write.3m_datapac.man
 NAME
-   write(3f) - [M_datapac:STATISTICS] WRITE write a vector of observations in a "neat" fashion
+   write(3f) - [M_datapac:STATISTICS] write a vector of observations in a
+   "neat" fashion
 
 SYNOPSIS
     Subroutine write (X, Y)

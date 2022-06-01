@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file stmom4.3datapac.man
+$BLOCK COMMENT --file stmom4.3m_datapac.man
 NAME
-   stmom4(3f) - [M_datapac:STATISTICS] STMOM4 compute the fourth central moment (i.e., the kurtosis) of a vector of observations
+   stmom4(3f) - [M_datapac:STATISTICS] compute the fourth central moment
+   (i.e., the kurtosis) of a vector of observations
 
 SYNOPSIS
     Subroutine stmom4 (X, Y)

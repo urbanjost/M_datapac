@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file geocdf.3datapac.man
+$BLOCK COMMENT --file geocdf.3m_datapac.man
 NAME
-   geocdf(3f) - [M_datapac:STATISTICS] GEOCDF compute the geometric cumulative distribution function
+   geocdf(3f) - [M_datapac:STATISTICS] compute the geometric cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine geocdf (X, Y)

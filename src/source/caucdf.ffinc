@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file caucdf.3datapac.man
+$BLOCK COMMENT --file caucdf.3m_datapac.man
 NAME
-   caucdf(3f) - [M_datapac:STATISTICS] CAUCDF compute the Cauchy cumulative distribution function
+   caucdf(3f) - [M_datapac:STATISTICS] compute the Cauchy cumulative
+   distribution function
 
 SYNOPSIS
     Subroutine caucdf (X, Y)

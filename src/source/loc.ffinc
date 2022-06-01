@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file loc.3datapac.man
+$BLOCK COMMENT --file loc.3m_datapac.man
 NAME
-   loc(3f) - [M_datapac:STATISTICS] LOC compute the sample mean, midrange, midmean, and median
+   loc(3f) - [M_datapac:STATISTICS] compute the sample mean, midrange,
+   midmean, and median
 
 SYNOPSIS
     Subroutine loc (X, Y)

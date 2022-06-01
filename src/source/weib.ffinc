@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file weib.3datapac.man
+$BLOCK COMMENT --file weib.3m_datapac.man
 NAME
-   weib(3f) - [M_datapac:STATISTICS] WEIB perform a Weibull distribution analysis (Weibull PPCC analysis)
+   weib(3f) - [M_datapac:STATISTICS] perform a Weibull distribution
+   analysis (Weibull PPCC analysis)
 
 SYNOPSIS
     Subroutine weib (X, Y)

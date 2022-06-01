@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file lamppf.3datapac.man
+$BLOCK COMMENT --file lamppf.3m_datapac.man
 NAME
-   lamppf(3f) - [M_datapac:STATISTICS] LAMPPF compute the Tukey-Lambda percent point function
+   lamppf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda percent
+   point function
 
 SYNOPSIS
     Subroutine lamppf (X, Y)

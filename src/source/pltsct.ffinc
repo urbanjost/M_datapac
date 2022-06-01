@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file pltsct.3datapac.man
+$BLOCK COMMENT --file pltsct.3m_datapac.man
 NAME
-   pltsct(3f) - [M_datapac:STATISTICS] PLTSCT generate a line printer plot with special plot characters for the terminal (71 characters wide)
+   pltsct(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+   special plot characters for the terminal (71 characters wide)
 
 SYNOPSIS
     Subroutine pltsct (X, Y)

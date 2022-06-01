@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file copy.3datapac.man
+$BLOCK COMMENT --file copy.3m_datapac.man
 NAME
-   copy(3f) - [M_datapac:STATISTICS] COPY copy the elements of one vector into another vector
+   copy(3f) - [M_datapac:STATISTICS] copy the elements of one vector
+   into another vector
 
 SYNOPSIS
     Subroutine copy (X, Y)

@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file binppf.3datapac.man
+$BLOCK COMMENT --file binppf.3m_datapac.man
 NAME
-   binppf(3f) - [M_datapac:STATISTICS] BINPPF compute the binomial percent point function
+   binppf(3f) - [M_datapac:STATISTICS] compute the binomial percent
+   point function
 
 SYNOPSIS
     Subroutine binppf (X, Y)

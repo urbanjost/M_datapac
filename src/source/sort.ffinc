@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file sort.3datapac.man
+$BLOCK COMMENT --file sort.3m_datapac.man
 NAME
-   sort(3f) - [M_datapac:STATISTICS] SORT sort a vector of sample observations, also return the positions in the original vector
+   sort(3f) - [M_datapac:STATISTICS] sort a vector of sample observations,
+   also return the positions in the original vector
 
 SYNOPSIS
     Subroutine sort (X, Y)

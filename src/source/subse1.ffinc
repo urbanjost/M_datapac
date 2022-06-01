@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file subse1.3datapac.man
+$BLOCK COMMENT --file subse1.3m_datapac.man
 NAME
-   subse1(3f) - [M_datapac:STATISTICS] SUBSE1 extract the elements of a vector which fall into a user-specified subset (one subset variable)
+   subse1(3f) - [M_datapac:STATISTICS] extract the elements of a vector
+   which fall into a user-specified subset (one subset variable)
 
 SYNOPSIS
     Subroutine subse1 (X, Y)

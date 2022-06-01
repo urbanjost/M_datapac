@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file relsd.3datapac.man
+$BLOCK COMMENT --file relsd.3m_datapac.man
 NAME
-   relsd(3f) - [M_datapac:STATISTICS] RELSD compute the relative standard deviation of a vector of observations
+   relsd(3f) - [M_datapac:STATISTICS] compute the relative standard
+   deviation of a vector of observations
 
 SYNOPSIS
     Subroutine relsd (X, Y)

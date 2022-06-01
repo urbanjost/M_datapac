@@ -1,7 +1,9 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file time.3datapac.man
+$BLOCK COMMENT --file time.3m_datapac.man
 NAME
-   time(3f) - [M_datapac:STATISTICS] TIME perform a time series analysis (autocorrelation plot, a test for white noise, a "pilot" spectrum, and 4 other estimated spectra based on differing bandwidth)
+   time(3f) - [M_datapac:STATISTICS] perform a time series analysis
+   (autocorrelation plot, a test for white noise, a "pilot" spectrum,
+   and 4 other estimated spectra based on differing bandwidth)
 
 SYNOPSIS
     Subroutine time (X, Y)

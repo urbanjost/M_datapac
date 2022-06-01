@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file tplt.3datapac.man
+$BLOCK COMMENT --file tplt.3m_datapac.man
 NAME
-   tplt(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+   tplt(3f) - [M_datapac:STATISTICS] generates a student's t probability
+   plot (with integer degrees of freedom parameter value = nu).
 
 SYNOPSIS
     Subroutine tplt (X, Y)

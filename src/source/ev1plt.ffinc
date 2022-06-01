@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file ev1plt.3datapac.man
+$BLOCK COMMENT --file ev1plt.3m_datapac.man
 NAME
-   ev1plt(3f) - [M_datapac:STATISTICS] EV1PLT generate a extreme value type 1 (Gumbel) probability plot (line printer graph)
+   ev1plt(3f) - [M_datapac:STATISTICS] generate a extreme value type 1
+   (Gumbel) probability plot (line printer graph)
 
 SYNOPSIS
     Subroutine ev1plt (X, Y)

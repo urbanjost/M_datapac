@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file gamppf.3datapac.man
+$BLOCK COMMENT --file gamppf.3m_datapac.man
 NAME
-   gamppf(3f) - [M_datapac:STATISTICS] GAMPPF compute the gamma percent point function
+   gamppf(3f) - [M_datapac:STATISTICS] compute the gamma percent point function
 
 SYNOPSIS
     Subroutine gamppf (X, Y)

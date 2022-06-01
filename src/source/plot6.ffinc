@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file plot6.3datapac.man
+$BLOCK COMMENT --file plot6.3m_datapac.man
 NAME
-   plot6(3f) - [M_datapac:STATISTICS] PLOT6 generate a line printer plot
+   plot6(3f) - [M_datapac:STATISTICS] generate a line printer plot
 
 SYNOPSIS
     Subroutine plot6 (X, Y)

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file plots.3datapac.man
+$BLOCK COMMENT --file plots.3m_datapac.man
 NAME
-   plots(3f) - [M_datapac:STATISTICS] PLOTS generate a line printer plot of Y vs X
+   plots(3f) - [M_datapac:STATISTICS] generate a line printer plot of Y vs X
 
 SYNOPSIS
     Subroutine plots (X, Y)

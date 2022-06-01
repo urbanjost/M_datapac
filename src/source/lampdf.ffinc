@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file lampdf.3datapac.man
+$BLOCK COMMENT --file lampdf.3m_datapac.man
 NAME
-   lampdf(3f) - [M_datapac:STATISTICS] LAMPDF compute the Tukey-Lambda probability density function
+   lampdf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda
+   probability density function
 
 SYNOPSIS
     Subroutine lampdf (X, Y)

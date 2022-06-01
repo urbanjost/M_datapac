@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file midm.3datapac.man
+$BLOCK COMMENT --file midm.3m_datapac.man
 NAME
-   midm(3f) - [M_datapac:STATISTICS] MIDM compute the midmean of a data vector
+   midm(3f) - [M_datapac:STATISTICS] compute the midmean of a data vector
 
 SYNOPSIS
     Subroutine midm (X, Y)

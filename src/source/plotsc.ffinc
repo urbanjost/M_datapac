@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file plotsc.3datapac.man
+$BLOCK COMMENT --file plotsc.3m_datapac.man
 NAME
-   plotsc(3f) - [M_datapac:STATISTICS] PLOTSC generate a line printer plot with special plot characters
+   plotsc(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+   special plot characters
 
 SYNOPSIS
     Subroutine plotsc (X, Y)

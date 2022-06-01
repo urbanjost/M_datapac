@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file rank.3datapac.man
+$BLOCK COMMENT --file rank.3m_datapac.man
 NAME
-   rank(3f) - [M_datapac:STATISTICS] RANK rank a vector of sample observations
+   rank(3f) - [M_datapac:STATISTICS] rank a vector of sample observations
 
 SYNOPSIS
     Subroutine rank (X, Y)

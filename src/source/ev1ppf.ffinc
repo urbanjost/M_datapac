@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file ev1ppf.3datapac.man
+$BLOCK COMMENT --file ev1ppf.3m_datapac.man
 NAME
-   ev1ppf(3f) - [M_datapac:STATISTICS] EV1PPF compute the extreme value type 1 (Gumbel) percent point function
+   ev1ppf(3f) - [M_datapac:STATISTICS] compute the extreme value type 1
+   (Gumbel) percent point function
 
 SYNOPSIS
     Subroutine ev1ppf (X, Y)

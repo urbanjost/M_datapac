@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file readg.3datapac.man
+$BLOCK COMMENT --file readg.3m_datapac.man
 NAME
-   readg(3f) - [M_datapac:STATISTICS] READG perform a format-free read of data from a file restricted to a user-specified set of columns
+   readg(3f) - [M_datapac:STATISTICS] perform a format-free read of data
+   from a file restricted to a user-specified set of columns
 
 SYNOPSIS
     Subroutine readg (X, Y)

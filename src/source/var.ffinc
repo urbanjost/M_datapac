@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file var.3datapac.man
+$BLOCK COMMENT --file var.3m_datapac.man
 NAME
-   var(3f) - [M_datapac:STATISTICS] VAR compute the sample variance of a vector of observations
+   var(3f) - [M_datapac:STATISTICS] compute the sample variance of a
+   vector of observations
 
 SYNOPSIS
     Subroutine var (X, Y)

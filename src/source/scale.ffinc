@@ -1,7 +1,9 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file scale.3datapac.man
+$BLOCK COMMENT --file scale.3m_datapac.man
 NAME
-   scale(3f) - [M_datapac:STATISTICS] SCALE compute the sample range, sample standard deviation, sample relative standard deviation, and sample variance
+   scale(3f) - [M_datapac:STATISTICS] compute the sample range, sample
+   standard deviation, sample relative standard deviation, and sample
+   variance
 
 SYNOPSIS
     Subroutine scale (X, Y)

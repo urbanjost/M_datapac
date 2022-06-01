@@ -1,27 +1,36 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file plot.3datapac.man
+$BLOCK COMMENT --file plot.3m_datapac.man
 NAME
-   plot(3f) - [M_datapac:STATISTICS] ${DESCRIPTION}
+   plot(3f) - [M_datapac:STATISTICS] yields a one-page printer plot of
+   y(i) versus x(i)
 
 SYNOPSIS
     Subroutine plot (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
-
-   Where ${TYPE}(kind=${KIND}) may be
-
-      o Real(kind=real32)
-      o Real(kind=real64)
-      o Integer(kind=int32)
-      o Character(kind=selected_char_kind("DEFAULT"),len=*)
+     Real, Intent (In) :: X(:)
+     Real, Intent (In) :: Y(:)
 
 DESCRIPTION
-  Description
+   This subroutine yields a one-page printer plot of Y(I) versus X(I).
+
+   Values in the vertical axis vector (Y) or the horizontal axis vector
+   (X) which are equal to or in excess of 10.0**10 will not be plotted.
+
+   This convention greatly simplifies the problem of plotting when
+   some elements in the vector Y (or X) are 'missing data', or when
+   we purposely want to ignore certain elements in the vector Y (or X)
+   for plotting purposes (That is, we do not want certain elements in
+   Y (or X) to be plotted).  To cause specific elements in Y (or X)
+   to be ignored, we replace the elements beforehand (by, for example,
+   use of the   REPLAC   subroutine) by some large value (like, say,
+   10.0**10) and they will subsequently be ignored in the plot subroutine.
 
 OPTIONS
-    X   description of parameter
-    Y   description of parameter
+    Y     The single precision vector of (unsorted or sorted) observations
+          to be plotted vertically.
+    X     The single precision vector of (unsorted or sorted) observations
+          to be plotted horizontally.
+    N     The integer number of observations in the vector Y.
 
 EXAMPLES
   Sample program:
@@ -48,55 +57,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT(Y,X,N)
       IMPLICIT NONE
-!*--PLOT15719
-!*** Start of declarations inserted by SPAG
-      REAL aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
-     &     xmax , xmid , xmin , Y , ylable , ymax , ymin
-      INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOT
+      REAL aim1, cutoff, hold, ratiox, ratioy, X, x25, x75, xmax, xmid, xmin, Y, ylable, ymax, ymin
+      INTEGER i, iflag, ip2, ipr, j, k, mx, my, N, n2
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I).
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED HORIZONTALLY.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR Y.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I).
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
-!     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
-!              OR THE HORIZONTAL AXIS VECTOR (X) WHICH ARE
-!              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
-!              PLOTTED.
-!              THIS CONVENTION GREATLY SIMPLIFIES THE PROBLEM
-!              OF PLOTTING WHEN SOME ELEMENTS IN THE VECTOR Y
-!              (OR X) ARE 'MISSING DATA', OR WHEN WE PURPOSELY
-!              WANT TO IGNORE CERTAIN ELEMENTS IN THE VECTOR Y
-!              (OR X) FOR PLOTTING PURPOSES (THAT IS, WE DO NOT
-!              WANT CERTAIN ELEMENTS IN Y (OR X) TO BE PLOTTED).
-!              TO CAUSE SPECIFIC ELEMENTS IN Y (OR X) TO BE
-!              IGNORED, WE REPLACE THE ELEMENTS BEFOREHAND
-!              (BY, FOR EXAMPLE, USE OF THE   REPLAC   SUBROUTINE)
-!              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
-!              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOT
-!              SUBROUTINE.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --NOVEMBER  1974.
@@ -107,7 +70,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
-!
 !---------------------------------------------------------------------
 !
       CHARACTER*4 IGRaph
@@ -125,8 +87,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       DATA alph21 , alph22/'SECO' , 'ND  '/
       DATA alph31 , alph32/'THIR' , 'D   '/
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
-     &     'N' , '='/
+      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 !
       ipr = 6
       cutoff = (10.0**10) - 1000.0
@@ -212,8 +173,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       WRITE (ipr,99005) sbnam1 , sbnam2
 99005 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
       WRITE (ipr,99006)
-99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
-     &        ' EXCLUDED FROM THE PLOT.')
+99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN EXCLUDED FROM THE PLOT.')
       WRITE (ipr,99007) n2
 99007 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (ipr,99011)
@@ -341,18 +301,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          IF ( iflag/=0 ) WRITE (ipr,99008) (IGRaph(i,j),j=1,109)
 !
 99008    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99009) ylable(k) ,                  &
-     &                          (IGRaph(i,j),j=1,109)
+         IF ( iflag==0 ) WRITE (ipr,99009) ylable(k) ,(IGRaph(i,j),j=1,109)
 99009    FORMAT (' ',F20.7,109A1)
       ENDDO
       WRITE (ipr,99010) xmin , x25 , xmid , x75 , xmax
 99010 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
-99011 FORMAT (' ','**************************************************', &
-     &        '********************')
+99011 FORMAT (' ','**********************************************************************')
 99012 FORMAT (' ','                   FATAL ERROR                    ')
-99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
-     &        ' SUBROUTINE')
+99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
 99014 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
 99015 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99016 FORMAT (' ','VALUE OF ',E15.8)

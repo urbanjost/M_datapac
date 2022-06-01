@@ -1,5 +1,5 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file lgnplt.3datapac.man
+$BLOCK COMMENT --file lgnplt.3m_datapac.man
 NAME
    lgnplt(3f) - [M_datapac:STATISTICS] generates a lognormal probability plot
 

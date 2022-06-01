@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file fcdf.3datapac.man
+$BLOCK COMMENT --file fcdf.3m_datapac.man
 NAME
-   fcdf(3f) - [M_datapac:STATISTICS] FCDF compute the F cumulative distribution function
+   fcdf(3f) - [M_datapac:STATISTICS] compute the F cumulative distribution
+   function
 
 SYNOPSIS
     Subroutine fcdf (X, Y)

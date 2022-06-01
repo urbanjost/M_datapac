@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file discr3.3datapac.man
+$BLOCK COMMENT --file discr3.3m_datapac.man
 NAME
-   discr3(3f) - [M_datapac:STATISTICS] DISCR3 bin the elements of a vector (output vector contains 1's, 2's, 3's, and so on)
+   discr3(3f) - [M_datapac:STATISTICS] bin the elements of a vector
+   (output vector contains 1's, 2's, 3's, and so on)
 
 SYNOPSIS
     Subroutine discr3 (X, Y)
