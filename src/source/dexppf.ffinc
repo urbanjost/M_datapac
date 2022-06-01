@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine dexppf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_dexppf
    use M_datapac, only : dexppf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call dexppf(x,y)
    end program demo_dexppf
 
@@ -51,7 +51,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*--DEXPPF4168
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Ppf
+REAL(kind=wp) :: P , Ppf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT DEXPPF
@@ -103,7 +103,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE DEXPPF SUBROU&
@@ -116,8 +116,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----START POINT-----------------------------------------------------
 !
-         IF ( P<=0.5 ) Ppf = ALOG(2.0*P)
-         IF ( P>0.5 ) Ppf = -ALOG(2.0*(1.0-P))
+         IF ( P<=0.5_wp ) Ppf = ALOG(2.0_wp*P)
+         IF ( P>0.5_wp ) Ppf = -ALOG(2.0_wp*(1.0_wp-P))
       ENDIF
 !
       END SUBROUTINE DEXPPF

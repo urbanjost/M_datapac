@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine corr (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_corr
    use M_datapac, only : corr
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call corr(x,y)
    end program demo_corr
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--CORR2852
 !*** Start of declarations inserted by SPAG
-      REAL an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
+REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
       INTEGER i , iflag , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -127,7 +127,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
-      C = 0.0
+      C = 0.0_wp
       iflag = 0
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
@@ -166,8 +166,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----START POINT-----------------------------------------------------
 !
-         xbar = 0.0
-         ybar = 0.0
+         xbar = 0.0_wp
+         ybar = 0.0_wp
          DO i = 1 , N
             xbar = xbar + X(i)
             ybar = ybar + Y(i)
@@ -175,9 +175,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          xbar = xbar/an
          ybar = ybar/an
 !
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (X(i)-xbar)*(Y(i)-ybar)
             sum2 = sum2 + (X(i)-xbar)**2

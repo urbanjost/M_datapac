@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine poippf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_poippf
    use M_datapac, only : poippf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call poippf(x,y)
    end program demo_poippf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--POIPPF23360
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
+REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2
 !*** End of declarations inserted by SPAG
@@ -159,41 +159,41 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE POIPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99017) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
-         IF ( Alamba<=0.0 ) THEN
+         IF ( Alamba<=0.0_wp ) THEN
             WRITE (ipr,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
             WRITE (ipr,99017) Alamba
-            Ppf = 0.0
+            Ppf = 0.0_wp
             RETURN
          ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
             dlamba = Alamba
-            Ppf = 0.0
+            Ppf = 0.0_wp
             ix0 = 0
             ix1 = 0
             ix2 = 0
-            p0 = 0.0
-            p1 = 0.0
-            p2 = 0.0
+            p0 = 0.0_wp
+            p1 = 0.0_wp
+            p2 = 0.0_wp
 !
 !     TREAT CERTAIN SPECIAL CASES IMMEDIATELY--
-!     1) P = 0.0
+!     1) P = 0.0_wp
 !     2) PPF = 0
 !
-            IF ( P/=0.0 ) THEN
+            IF ( P/=0.0_wp ) THEN
                pf0 = DEXP(-dlamba)
                IF ( P>pf0 ) THEN
 !
@@ -206,7 +206,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   amean = Alamba
                   sd = SQRT(Alamba)
                   CALL NORPPF(P,zppf)
-                  x2 = amean - 1.0 + zppf*sd
+                  x2 = amean - 1.0_wp + zppf*sd
                   ix2 = x2
 !
 !     CHECK AND MODIFY (IF NECESSARY) THIS INITIAL
@@ -224,7 +224,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
                   ix0 = 0
                   ix1 = huge(0) ! = 10**10
-                  isd = sd + 1.0
+                  isd = sd + 1.0_wp
                   x2 = ix2
                   CALL POICDF(x2,Alamba,p2)
 !
@@ -265,7 +265,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   GOTO 400
                ENDIF
             ENDIF
-            Ppf = 0.0
+            Ppf = 0.0_wp
             RETURN
          ENDIF
  50      ix1 = ix2

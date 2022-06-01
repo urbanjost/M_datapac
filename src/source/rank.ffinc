@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine rank (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_rank
    use M_datapac, only : rank
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call rank(x,y)
    end program demo_rank
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--RANK24782
 !*** Start of declarations inserted by SPAG
-      REAL an , avrank , hold , rprev , X , xprev , Xr , XS
+REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
       INTEGER i , ibran , ipr , iupper , j , jmin , jp1 , k , N , nm1
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -181,7 +181,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RANK&
      &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xr(1) = 1.0
+            Xr(1) = 1.0_wp
             RETURN
          ELSE
             hold = X(1)
@@ -192,7 +192,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE RANK   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            avrank = (an+1.0)/2.0
+            avrank = (an+1.0_wp)/2.0_wp
             DO i = 1 , N
                Xr(i) = avrank
             ENDDO
@@ -249,7 +249,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   ENDDO
                   k = N + 1
  55               avrank = j + k - 1
-                  avrank = avrank/2.0
+                  avrank = avrank/2.0_wp
                   Xr(i) = avrank
                   GOTO 80
                ENDIF

@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine nbppf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_nbppf
    use M_datapac, only : nbppf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call nbppf(x,y)
    end program demo_nbppf
 
@@ -50,9 +50,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--NBPPF13546
 !*** Start of declarations inserted by SPAG
-      REAL amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
+REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
      &     Ppar , Ppf , sd , sinh , x0 , x1 , x2 , ymean , yppf , ysd
-      REAL zppf
+REAL(kind=wp) :: zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -172,22 +172,22 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NBPPF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99019) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
-         IF ( Ppar<=0.0 .OR. Ppar>=1.0 ) THEN
+         IF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
             WRITE (ipr,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NBPPF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
             WRITE (ipr,99019) Ppar
-            Ppf = 0.0
+            Ppf = 0.0_wp
             RETURN
          ELSE
             IF ( N<1 ) THEN
@@ -198,7 +198,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                WRITE (ipr,99004) N
 99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
      &                 ' *****')
-               Ppf = 0.0
+               Ppf = 0.0_wp
                RETURN
             ELSE
 !
@@ -206,21 +206,21 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
                an = N
                dppar = Ppar
-               Ppf = 0.0
+               Ppf = 0.0_wp
                ix0 = 0
                ix1 = 0
                ix2 = 0
-               p0 = 0.0
-               p1 = 0.0
-               p2 = 0.0
+               p0 = 0.0_wp
+               p1 = 0.0_wp
+               p2 = 0.0_wp
 !
 !     TREAT CERTAIN SPECIAL CASES IMMEDIATELY--
 !     1) P = 0.0
 !     2) P = 0.5 AND PPAR = 0.5
 !     3) PPF = 0
 !
-               IF ( P/=0.0 ) THEN
-                  IF ( P==0.5 .AND. Ppar==0.5 ) THEN
+               IF ( P/=0.0_wp ) THEN
+                  IF ( P==0.5_wp .AND. Ppar==0.5_wp ) THEN
                      Ppf = N - 1
                      RETURN
                   ELSE
@@ -234,19 +234,19 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     (SEE JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS,
 !     PAGE 127, FORMULA 22).
 !
-                        amean = an*(1.0-Ppar)/Ppar
-                        sd = SQRT(an*(1.0-Ppar)/(Ppar*Ppar))
-                        arg = SQRT((amean+0.375)/(an-0.75))
-                        arcsh = ALOG(arg+SQRT(arg*arg+1.0))
-                        ymean = (SQRT(an-0.5))*arcsh
-                        ysd = 0.5
+                        amean = an*(1.0_wp-Ppar)/Ppar
+                        sd = SQRT(an*(1.0_wp-Ppar)/(Ppar*Ppar))
+                        arg = SQRT((amean+0.375_wp)/(an-0.75_wp))
+                        arcsh = ALOG(arg+SQRT(arg*arg+1.0_wp))
+                        ymean = (SQRT(an-0.5_wp))*arcsh
+                        ysd = 0.5_wp
                         CALL NORPPF(P,zppf)
                         yppf = ymean + zppf*ysd
-                        arg = yppf/SQRT(an-0.5)
+                        arg = yppf/SQRT(an-0.5_wp)
                         e = EXP(arg)
-                        sinh = (e-1.0/e)/2.0
-                        x2 = -0.375 + (an-0.75)*sinh*sinh
-                        x2 = x2 + 0.5
+                        sinh = (e-1.0_wp/e)/2.0_wp
+                        x2 = -0.375_wp + (an-0.75_wp)*sinh*sinh
+                        x2 = x2 + 0.5_wp
                         ix2 = x2
 !
 !     CHECK AND MODIFY (IF NECESSARY) THIS INITIAL
@@ -264,7 +264,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
                         ix0 = 0
                         ix1 = huge(0) ! = 10**10
-                        isd = sd + 1.0
+                        isd = sd + 1.0_wp
                         x2 = ix2
                         CALL NBCDF(x2,Ppar,N,p2)
 !
@@ -306,7 +306,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                      ENDIF
                   ENDIF
                ENDIF
-               Ppf = 0.0
+               Ppf = 0.0_wp
                RETURN
             ENDIF
  20         ix1 = ix2

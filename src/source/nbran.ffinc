@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine nbran (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_nbran
    use M_datapac, only : nbran
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call nbran(x,y)
    end program demo_nbran
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--NBRAN13940
 !*** Start of declarations inserted by SPAG
-      REAL b(1) , g(1) , P , X
+REAL(kind=wp) :: b(1) , g(1) , P , X
       INTEGER i , ib , ig , ipr , Istart , isum , j , N , Npar
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -180,7 +180,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99005) N
          RETURN
-      ELSEIF ( P<=0.0 .OR. P>=1.0 ) THEN
+      ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROU&
@@ -206,7 +206,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     AND BRANCH TO THE FASTER
 !     GENERATION METHOD ACCORDINGLY.
 !
-         IF ( P<0.1 ) THEN
+         IF ( P<0.1_wp ) THEN
 !
 !     IF P IS SMALL,
 !     GENERATE N NEGATIVE BINOMIAL NUMBERS
@@ -218,7 +218,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                isum = 0
                DO j = 1 , Npar
                   CALL GEORAN(1,P,1,g)
-                  ig = g(1) + 0.5
+                  ig = g(1) + 0.5_wp
                   isum = isum + ig
                ENDDO
                X(i) = isum
@@ -239,7 +239,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          j = 1
          DO
             CALL BINRAN(1,P,1,1,b)
-            ib = b(1) + 0.5
+            ib = b(1) + 0.5_wp
             isum = isum + ib
             IF ( isum==Npar ) THEN
                X(i) = j

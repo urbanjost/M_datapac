@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine poly (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_poly
    use M_datapac, only : poly
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call poly(x,y)
    end program demo_poly
 
@@ -49,13 +49,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--POLY23881
 !*** Start of declarations inserted by SPAG
-      REAL ak , amb , amdb1 , amdb2 , amdr1 , amdr2 , amr , an ,        &
+REAL(kind=wp) :: ak , amb , amdb1 , amdb2 , amdr1 , amdr2 , amr , an ,        &
      &     aneggi , aneggj , ani , B , b2 , cdf , cdf2 , D , Df , DUM1 ,&
      &     DUM2 , e
-      REAL eta , eta2 , etap1 , f , fitdf , fitms , fitss , fstat , g , &
+REAL(kind=wp) :: eta , eta2 , etap1 , f , fitdf , fitms , fitss , fstat , g , &
      &     h , Pred , Q , R , repdf , repsd , repss , repv , Res ,      &
      &     resdf , resms
-      REAL resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
+REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
      &     WS , X , Y , ymean
       INTEGER i , iconv , Ideg , ifitdf , insing , IPIvot , ipr ,       &
      &        iqarg , iqarg1 , iqarg2 , iramax , iramin , irank ,       &
@@ -168,7 +168,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     TO A LARGE VALUE
 !     IN CASE A PREMATURE EXIT OCCURS DUE TO NUMERICAL INSTABILITY.
 !
-      value = (10.0**10) + 1000.0
+      value = (10.0_wp**10) + 1000.0_wp
       S = value
       IF ( k>0 ) THEN
          DO i = 1 , k
@@ -228,7 +228,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          IF ( j==1 ) THEN
             DO i = 1 , N
                iqarg = (i-1)*k + 1
-               Q(iqarg) = 1.0
+               Q(iqarg) = 1.0_wp
             ENDDO
          ELSEIF ( j==2 ) THEN
             DO i = 1 , N
@@ -256,11 +256,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     COMPUTE ETA AND TOL (FOR THE UNIVAC 1108, ETA = 2**-27)
 !     WHICH WILL BE USED IN THE DECOMP SUBROUTINE
 !
-      eta = 1.0
+      eta = 1.0_wp
       DO
-         eta = 0.5*eta
-         etap1 = eta + 1.0
-         IF ( etap1<=1.0 ) THEN
+         eta = 0.5_wp*eta
+         etap1 = eta + 1.0_wp
+         IF ( etap1<=1.0_wp ) THEN
             tol = eta*ak
             nm5 = N - 5
             nkm5 = nk - 5
@@ -300,20 +300,20 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !
                eta2 = eta*eta
-               b2(kp1) = -1.0
+               b2(kp1) = -1.0_wp
                DO i = 1 , N
                   f(i) = Y(i)
-                  wres(i) = 0.0
-                  Res(i) = 0.0
+                  wres(i) = 0.0_wp
+                  Res(i) = 0.0_wp
                ENDDO
                DO j = 1 , k
-                  b2(j) = 0.0
-                  g(j) = 0.0
-                  h(j) = 0.0
+                  b2(j) = 0.0_wp
+                  g(j) = 0.0_wp
+                  h(j) = 0.0_wp
                ENDDO
                m = 0
-               amdb2 = 0.0
-               amdr2 = 0.0
+               amdb2 = 0.0_wp
+               amdr2 = 0.0_wp
                EXIT
             ELSE
                WRITE (ipr,99009) irank , k
@@ -330,9 +330,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     BEGIN THE M-TH ITERATION STEP IN THE ITERATIVE REFINEMENT
 !
  200  IF ( m>=2 ) THEN
-         IF ( .NOT.(((64.*amdb2<amdb1) .AND. (amdb2>eta2*amb)) .OR.     &
-     &        ((64.*amdr2<amdr1) .AND. (amdr2>eta2*amr))) ) THEN
-            IF ( (amdr2>4.*eta2*amr) .AND. (amdb2>4.*eta2*amb) ) THEN
+         IF ( .NOT.(((64.0_wp*amdb2<amdb1) .AND. (amdb2>eta2*amb)) .OR.     &
+     &        ((64.0_wp*amdr2<amdr1) .AND. (amdr2>eta2*amr))) ) THEN
+            IF ( (amdr2>4.0_wp*eta2*amr) .AND. (amdb2>4.0_wp*eta2*amb) ) THEN
                iconv = 0
             ELSE
                iconv = 1
@@ -371,12 +371,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   B(i) = b2(i)
                ENDDO
                DO i = 1 , N
-                  IF ( Res(i)/=0.0 ) GOTO 210
+                  IF ( Res(i)/=0.0_wp ) GOTO 210
                ENDDO
                WRITE (ipr,99010)
 99010          FORMAT (' ',10X,                                         &
      &                 'NOTE THAT AN EXACT FIT HAS BEEN OBTAINED')
- 210           sum = 0.0
+ 210           sum = 0.0_wp
                IF ( iwflag==0 ) THEN
                   DO i = 1 , N
                      sum = sum + Res(i)*Res(i)*W(i)
@@ -394,7 +394,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                IF ( k/=N ) THEN
                   resdf = an - ak
                   Df = resdf
-                  iresdf = an - ak + 0.5
+                  iresdf = an - ak + 0.5_wp
                   resms = resss/resdf
                   S = SQRT(resms)
                ENDIF
@@ -451,7 +451,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   ENDDO
                   DO j = 1 , k
                      irarg = (j-1)*k + j
-                     R(irarg) = 1.0
+                     R(irarg) = 1.0_wp
                   ENDDO
 !CCCC WRITE(IPR,2405)
                   DO i = 1 , k
@@ -484,7 +484,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     AND ANALYZE IT THEREIN
 !
                   irepdf = 0
-                  repss = 0.0
+                  repss = 0.0_wp
                   DO iset = 1 , numset
                      ni = 0
                      DO i = 1 , N
@@ -492,12 +492,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                         IF ( X(i)==DUM1(iset) ) DUM2(ni) = Y(i)
                      ENDDO
                      ani = ni
-                     sum = 0.0
+                     sum = 0.0_wp
                      DO i = 1 , ni
                         sum = sum + DUM2(i)
                      ENDDO
                      ymean = sum/ani
-                     sum = 0.0
+                     sum = 0.0_wp
                      DO i = 1 , ni
                         sum = sum + (DUM2(i)-ymean)**2
                      ENDDO
@@ -557,8 +557,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDIF
       amdb1 = amdb2
       amdr1 = amdr2
-      amdb2 = 0.0
-      amdr2 = 0.0
+      amdb2 = 0.0_wp
+      amdr2 = 0.0_wp
       IF ( m/=0 ) THEN
 !
 !     BEGIN FORMING NEW RESIDUALS
@@ -581,11 +581,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                IF ( j>=2 ) THEN
                   DUM1(l) = X(l)**(j-1)
                ELSE
-                  DUM1(l) = 1.0
+                  DUM1(l) = 1.0_wp
                ENDIF
             ENDDO
 !
-            CALL DOT(DUM1,wres,1,N,0.0,g(is))
+            CALL DOT(DUM1,wres,1,N,0.0_wp,g(is))
             g(is) = -g(is)
          ENDDO
 !
@@ -595,7 +595,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                IF ( l>=2 ) THEN
                   DUM1(l) = X(i)**(l-1)
                ELSE
-                  DUM1(l) = 1.0
+                  DUM1(l) = 1.0_wp
                ENDIF
             ENDDO
             DUM1(kp1) = Y(i)

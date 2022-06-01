@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine ev1ran (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_ev1ran
    use M_datapac, only : ev1ran
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call ev1ran(x,y)
    end program demo_ev1ran
 
@@ -51,7 +51,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*--EV1RAN5499
 !*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
-      REAL X
+REAL(kind=wp) :: X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT EV1RAN
@@ -131,7 +131,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = -ALOG(ALOG(1.0/X(i)))
+            X(i) = -ALOG(ALOG(1.0_wp/X(i)))
          ENDDO
       ENDIF
 !

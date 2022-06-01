@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine loc (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_loc
    use M_datapac, only : loc
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call loc(x,y)
    end program demo_loc
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--LOC11703
 !*** Start of declarations inserted by SPAG
-      REAL aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
+REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
      &     xmidm , Y
       INTEGER i , iflag , imax , imaxm1 , imin , iminp1 , ipr , iupper ,&
      &        N , nmid , nmidp1
@@ -118,10 +118,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      xmid = 0.0
-      xmean = 0.0
-      xmidm = 0.0
-      xmed = 0.0
+      xmid = 0.0_wp
+      xmean = 0.0_wp
+      xmidm = 0.0_wp
+      xmed = 0.0_wp
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (ipr,99001) iupper
 99001    FORMAT (' ',                                                   &
@@ -158,11 +158,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     THEN COMPUTE THE SAMPLE MIDRANGE.
 !
             CALL SORT(X,N,Y)
-            xmid = (Y(1)+Y(N))/2.0
+            xmid = (Y(1)+Y(N))/2.0_wp
 !
 !     COMPUTE THE SAMPLE MEAN
 !
-            sum = 0.0
+            sum = 0.0_wp
             DO i = 1 , N
                sum = sum + Y(i)
             ENDDO
@@ -174,9 +174,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             aiflag = iflag
             imin = N/4 + 1
             imax = N - imin + 1
-            sum = 0.0
-            sum = sum + Y(imin)*(4.0-aiflag)/4.0
-            sum = sum + Y(imax)*(4.0-aiflag)/4.0
+            sum = 0.0_wp
+            sum = sum + Y(imin)*(4.0_wp-aiflag)/4.0_wp
+            sum = sum + Y(imax)*(4.0_wp-aiflag)/4.0_wp
             iminp1 = imin + 1
             imaxm1 = imax - 1
             IF ( iminp1<=imaxm1 ) THEN
@@ -184,14 +184,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   sum = sum + Y(i)
                ENDDO
             ENDIF
-            xmidm = sum/(an/2.0)
+            xmidm = sum/(an/2.0_wp)
 !
 !     COMPUTE THE SAMPLE MEDIAN
 !
             iflag = N - (N/2)*2
             nmid = N/2
             nmidp1 = nmid + 1
-            IF ( iflag==0 ) xmed = (Y(nmid)+Y(nmidp1))/2.0
+            IF ( iflag==0 ) xmed = (Y(nmid)+Y(nmidp1))/2.0_wp
             IF ( iflag==1 ) xmed = Y(nmidp1)
          ENDIF
 !

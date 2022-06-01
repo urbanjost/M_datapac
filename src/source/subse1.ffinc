@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine subse1 (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_subse1
    use M_datapac, only : subse1
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call subse1(x,y)
    end program demo_subse1
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--SUBSE128754
 !*** Start of declarations inserted by SPAG
-      REAL D , Dmax , Dmin , hold , pointl , pointu , X , Y
+REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
       INTEGER i , ipr , k , N , ndel , Ny
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.

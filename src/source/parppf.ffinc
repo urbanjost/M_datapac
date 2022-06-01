@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine parppf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_parppf
    use M_datapac, only : parppf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call parppf(x,y)
    end program demo_parppf
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PARPPF15510
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , P , Ppf
+REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -107,27 +107,27 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE PARPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99003) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) Gamma
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = (1.0-P)**(-1.0/Gamma)
+         Ppf = (1.0_wp-P)**(-1.0_wp/Gamma)
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !

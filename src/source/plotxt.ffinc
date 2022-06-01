@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine plotxt (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_plotxt
    use M_datapac, only : plotxt
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call plotxt(x,y)
    end program demo_plotxt
 
@@ -50,10 +50,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PLOTXT21638
 !*** Start of declarations inserted by SPAG
-      REAL ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
+REAL(kind=wp) :: ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
      &     anumcm , anumlm , anumr , anumrm , cutoff , delai , delx ,   &
      &     hold , X , xlable , xlower , xmax , xmin
-      REAL xupper , xwidth
+REAL(kind=wp) :: xupper , xwidth
       INTEGER i , icol , icolmx , ipr , irow , ixdel , N , numcol ,     &
      &        numlab , numr25 , numr50 , numr75 , numrow
 !*** End of declarations inserted by SPAG
@@ -129,7 +129,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -238,15 +238,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             iline(icol) = blank
          ENDDO
          airow = irow
-         xupper = xmax + (1.5-airow)*xwidth
-         xlable = xmax + (1.0-airow)*xwidth
-         xlower = xmax + (0.5-airow)*xwidth
+         xupper = xmax + (1.5_wp-airow)*xwidth
+         xlable = xmax + (1.0_wp-airow)*xwidth
+         xlower = xmax + (0.5_wp-airow)*xwidth
          IF ( irow==numrow ) xlable = xmin
          DO i = 1 , N
             ai = i
             IF ( X(i)<cutoff ) THEN
                IF ( xlower<=X(i) .AND. X(i)<xupper ) THEN
-                  icol = ((ai-aimin)/aiwidt) + 1.5
+                  icol = ((ai-aimin)/aiwidt) + 1.5_wp
                   iline(icol) = alphax
                ENDIF
             ENDIF
@@ -264,7 +264,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABLES.
+!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
       WRITE (ipr,99014) blank
       DO icol = 1 , numcol

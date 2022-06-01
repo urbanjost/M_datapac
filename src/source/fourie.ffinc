@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine fourie (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_fourie
    use M_datapac, only : fourie
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call fourie(x,y)
    end program demo_fourie
 
@@ -49,10 +49,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--FOURIE7415
 !*** Start of declarations inserted by SPAG
-      REAL A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
+REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
      &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
      &     suma , sumb , t
-      REAL vbias , WS , X , xbar
+REAL(kind=wp) :: vbias , WS , X , xbar
       INTEGER i , ievodd , ilower , ipage , ipr , iskip , iupper , j ,  &
      &        maxpag , N , nhalf , nnpage
 !*** End of declarations inserted by SPAG
@@ -195,7 +195,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (A(1),WS(1))
       EQUIVALENCE (B(1),WS(7501))
-      DATA pi/3.14159265358979/
+      DATA pi/3.14159265358979_wp/
       DATA alperc/'%'/
 !
       ipr = 6
@@ -232,12 +232,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     DETERMINE IF N IS ODD OR EVEN
 !
       ievodd = N - 2*(N/2)
-      del = (an+1.0)/2.0
-      IF ( ievodd==0 ) del = (an+2.0)/2.0
+      del = (an+1.0_wp)/2.0_wp
+      IF ( ievodd==0 ) del = (an+2.0_wp)/2.0_wp
 !
 !     COMPUTE THE SAMPLE MEAN
 !
-      sum = 0.0
+      sum = 0.0_wp
       DO i = 1 , N
          sum = sum + X(i)
       ENDDO
@@ -245,7 +245,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     COMPUTE THE BIASED SAMPLE VARIANCE
 !
-      sum = 0.0
+      sum = 0.0_wp
       DO i = 1 , N
          sum = sum + (X(i)-xbar)**2
       ENDDO
@@ -257,12 +257,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       nhalf = N/2
       DO i = 1 , nhalf
          ai = i
-         suma = 0.0
-         sumb = 0.0
+         suma = 0.0_wp
+         sumb = 0.0_wp
          DO j = 1 , N
             t = j
-            suma = suma + X(j)*COS(2.0*pi*(ai/an)*(t-del))
-            sumb = sumb + X(j)*SIN(2.0*pi*(ai/an)*(t-del))
+            suma = suma + X(j)*COS(2.0_wp*pi*(ai/an)*(t-del))
+            sumb = sumb + X(j)*SIN(2.0_wp*pi*(ai/an)*(t-del))
          ENDDO
          A(i) = suma/an
          B(i) = sumb/an
@@ -329,15 +329,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             i = i + 1
             ai = i
             ffreq = ai/an
-            period = 1.0/ffreq
-            angrad = (ai/an)*2.0*pi
-            angdeg = (ai/an)*360.0
+            period = 1.0_wp/ffreq
+            angrad = (ai/an)*2.0_wp*pi
+            angdeg = (ai/an)*360.0_wp
             amp = SQRT(A(i)*A(i)+B(i)*B(i))
             phase1 = ATAN(-B(i)/A(i))
-            phase2 = phase1*360.0/(2.0*pi)
-            conmsq = 2.0*amp*amp
-            IF ( i==nhalf .AND. ievodd==0 ) conmsq = conmsq/2.0
-            percon = 100.0*(conmsq/vbias)
+            phase2 = phase1*360.0_wp/(2.0_wp*pi)
+            conmsq = 2.0_wp*amp*amp
+            IF ( i==nhalf .AND. ievodd==0 ) conmsq = conmsq/2.0_wp
+            percon = 100.0_wp*(conmsq/vbias)
             WRITE (ipr,99011) i , ffreq , period , A(i) , B(i) , amp ,  &
      &                        phase1 , phase2 , conmsq , percon , alperc
 99011       FORMAT (' ',I6,2X,F8.6,1X,F8.2,6(1X,E14.7),2X,F6.2,A1)

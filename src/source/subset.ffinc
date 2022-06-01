@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine subset (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_subset
    use M_datapac, only : subset
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call subset(x,y)
    end program demo_subset
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--SUBSET29201
 !*** Start of declarations inserted by SPAG
-      REAL D , Dmax , Dmin , hold , pointl , pointu , X
+REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -225,7 +225,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          newnp1 = Newn + 1
          IF ( newnp1<=nold ) THEN
             DO i = newnp1 , nold
-               X(i) = 0.0
+               X(i) = 0.0_wp
             ENDDO
          ENDIF
 !

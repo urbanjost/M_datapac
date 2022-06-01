@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine gamppf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_gamppf
    use M_datapac, only : gamppf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call gamppf(x,y)
    end program demo_gamppf
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--GAMPPF8588
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , P , Ppf
+REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -145,21 +145,21 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GAMPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99007) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99007) Gamma
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
@@ -246,7 +246,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99005 FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
       WRITE (ipr,99006)
 99006 FORMAT (' ','     THE OUTPUT VALUE OF PPF HAS BEEN SET TO 0.0')
-      Ppf = 0.0
+      Ppf = 0.0_wp
       RETURN
 !
  600  t = sum

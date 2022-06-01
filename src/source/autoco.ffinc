@@ -7,9 +7,9 @@ NAME
 SYNOPSIS
     SUBROUTINE AUTOCO(X,N,Iwrite,Xautoc)
 
-     Real, Intent (InOut) :: X(:)
-     Integer, Intent (In) :: Iwrite
-     Real, Intent (In)    :: Xautoc
+   Real(kind=wp) :: (InOut) ::  X(:)
+     Integer, Intent (In) ::  Iwrite
+   Real(kind=wp) :: (In)    ::  Xautoc
 
 DESCRIPTION
 
@@ -39,39 +39,34 @@ EXAMPLES
    program demo_autoco
    use M_datapac, only : autoco
    implicit none
-   real :: x(100)
+   real ::  x(100)
    !call   call autoco(x,size(x),1,xautoc)
    end program demo_autoco
 
   Results:
+REFERENCES
+   Jenkins and Watts, Spectral Analysis and its Applications, 1968, Pages 5, 182.
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
+   The original DATAPAC library was written by James J. Filliben of the Statistical
    Engineering Division, National Institute of Standards and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==autoco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      subroutine autoco(x,n,iwrite,xautoc)
-      implicit none
-
-      real an , hold , sum1 , sum2 , sum3 , x(:) , xautoc , xbar , xbar1 , xbar2
-      integer i , ip1 , ipr , iwrite , n , nm1
-
-!     REFERENCES--JENKINS AND WATTS, SPECTRAL ANALYSIS AND ITS APPLICATIONS, 1968, PAGES 5, 182.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING DIVISION (714)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 GAITHERSBURG, MD  20899
-!                 PHONE:  301-921-3651
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --MAY       2022.
-!---------------------------------------------------------------------
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==autoco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+subroutine autoco(x,n,iwrite,xautoc)
+implicit none
+
+real(kind=wp) :: an, hold , sum1 , sum2 , sum3 , x(:) , xautoc , xbar , xbar1 , xbar2
+integer i , ip1 , ipr , iwrite , n , nm1
+
       ipr = 6
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
       an = n
@@ -85,7 +80,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          if ( n==1 ) then
             write (ipr,99003)
 99003       format (' ', '***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE AUTOCO SUBROUTINE HAS THE VALUE 1 *****')
-            xautoc = 0.0
+            xautoc = 0.0_wp
          else
             hold = x(1)
             do i = 2 , n
@@ -96,24 +91,24 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
              & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE AUTOCO SUBROUTINE HAS ALL ELEMENTS = ', &
              & e15.8, &
              & ' *****')
-            xautoc = 0.0
+            xautoc = 0.0_wp
          endif
          goto 100
 !
 !-----START POINT-----------------------------------------------------
 !
  50      continue
-         xbar = 0.0
+         xbar = 0.0_wp
          do i = 1 , n
             xbar = xbar + x(i)
          enddo
          xbar1 = xbar - x(n)
-         xbar1 = xbar1/(an-1.0)
+         xbar1 = xbar1/(an-1.0_wp)
          xbar2 = xbar - x(1)
-         xbar2 = xbar2/(an-1.0)
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         xbar2 = xbar2/(an-1.0_wp)
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          nm1 = n - 1
          do i = 1 , nm1
             ip1 = i + 1
@@ -130,4 +125,4 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99005 format (' ')
       write (ipr,99006) n , xautoc
 99006 format (' ', 'THE LINEAR AUTOCORRELATION COEFFICIENT OF THE SET OF ',i6,' OBSERVATIONS IS ',f14.6)
-      end subroutine autoco
+end subroutine autoco

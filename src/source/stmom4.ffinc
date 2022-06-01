@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine stmom4 (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_stmom4
    use M_datapac, only : stmom4
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call stmom4(x,y)
    end program demo_stmom4
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--STMOM428629
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
+REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -130,7 +130,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE STMO&
      &M4 SUBROUTINE HAS THE VALUE 1 *****')
-            Xsmom4 = 0.0
+            Xsmom4 = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -140,19 +140,19 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE STMOM4 SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xsmom4 = 0.0
+            Xsmom4 = 0.0_wp
          ENDIF
          GOTO 100
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      sum = 0.0
+ 50      sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum2 = 0.0
-         sum4 = 0.0
+         sum2 = 0.0_wp
+         sum4 = 0.0_wp
          DO i = 1 , N
             sum2 = sum2 + (X(i)-xmean)**2
             sum4 = sum4 + (X(i)-xmean)**4
@@ -169,4 +169,4 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99006 FORMAT (' ',                                                      &
      &        'THE SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT FOR THE ', &
      &        I6,' OBSERVATIONS IS ',E15.8)
-      END SUBROUTINE STMOM4
+END SUBROUTINE STMOM4

@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine logcdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_logcdf
    use M_datapac, only : logcdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call logcdf(x,y)
    end program demo_logcdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--LOGCDF11878
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , X
+REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -92,16 +92,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
+!     NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( X>=0.0 ) THEN
-         Cdf = 1.0/(1.0+EXP(-X))
-         GOTO 99999
+      IF ( X>=0.0_wp ) THEN
+         Cdf = 1.0_wp/(1.0_wp+EXP(-X))
+      ELSE
+         Cdf = EXP(X)/(1.0_wp+EXP(X))
       ENDIF
-      Cdf = EXP(X)/(1.0+EXP(X))
-      RETURN
 !
-99999 END SUBROUTINE LOGCDF
+END SUBROUTINE LOGCDF

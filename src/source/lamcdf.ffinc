@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine lamcdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_lamcdf
    use M_datapac, only : lamcdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call lamcdf(x,y)
    end program demo_lamcdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--LAMCDF10507
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
+REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
      &     X , xcalc , xmax , xmin
       INTEGER icount , ipr
 !*** End of declarations inserted by SPAG
@@ -107,8 +107,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0 ) THEN
-         xmax = 1.0/Alamba
+      IF ( Alamba>0.0_wp ) THEN
+         xmax = 1.0_wp/Alamba
          xmin = -xmax
          IF ( X<xmin .OR. X>xmax ) THEN
             WRITE (ipr,99001)
@@ -118,48 +118,48 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             WRITE (ipr,99002) X
 99002       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
-            IF ( X<xmin ) Cdf = 0.0
-            IF ( X>xmax ) Cdf = 1.0
+            IF ( X<xmin ) Cdf = 0.0_wp
+            IF ( X>xmax ) Cdf = 1.0_wp
             RETURN
          ENDIF
       ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( Alamba>0.0 ) THEN
+      IF ( Alamba>0.0_wp ) THEN
 !
-         xmax = 1.0/Alamba
+         xmax = 1.0_wp/Alamba
          xmin = -xmax
-         IF ( X<=xmin ) Cdf = 0.0
-         IF ( X>=xmax ) Cdf = 1.0
+         IF ( X<=xmin ) Cdf = 0.0_wp
+         IF ( X>=xmax ) Cdf = 1.0_wp
          IF ( X<=xmin .OR. X>=xmax ) RETURN
       ENDIF
 !
-      IF ( -0.001>=Alamba .OR. Alamba>=0.001 ) THEN
+      IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
 !
-         IF ( -0.001>=Alamba .OR. Alamba>=0.001 ) THEN
-            pmin = 0.0
-            pmid = 0.5
-            pmax = 1.0
+         IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
+            pmin = 0.0_wp
+            pmid = 0.5_wp
+            pmax = 1.0_wp
             plower = pmin
             pupper = pmax
             icount = 0
             DO
-               xcalc = (pmid**Alamba-(1.0-pmid)**Alamba)/Alamba
+               xcalc = (pmid**Alamba-(1.0_wp-pmid)**Alamba)/Alamba
                IF ( xcalc==X ) THEN
                   Cdf = pmid
                   GOTO 99999
                ELSE
                   IF ( xcalc>X ) THEN
                      pupper = pmid
-                     pmid = (pmid+plower)/2.0
+                     pmid = (pmid+plower)/2.0_wp
                   ELSE
                      plower = pmid
-                     pmid = (pmid+pupper)/2.0
+                     pmid = (pmid+pupper)/2.0_wp
                   ENDIF
                   pdel = ABS(pmid-plower)
                   icount = icount + 1
-                  IF ( pdel<0.000001 .OR. icount>30 ) THEN
+                  IF ( pdel<0.000001_wp .OR. icount>30 ) THEN
                      Cdf = pmid
                      GOTO 99999
                   ENDIF
@@ -167,11 +167,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             ENDDO
          ENDIF
       ENDIF
-      IF ( X>=0.0 ) THEN
-         Cdf = 1.0/(1.0+EXP(-X))
+      IF ( X>=0.0_wp ) THEN
+         Cdf = 1.0_wp/(1.0_wp+EXP(-X))
          RETURN
       ELSE
-         Cdf = EXP(X)/(1.0+EXP(X))
+         Cdf = EXP(X)/(1.0_wp+EXP(X))
          RETURN
       ENDIF
 !

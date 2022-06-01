@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine ranper (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_ranper
    use M_datapac, only : ranper
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call ranper(x,y)
    end program demo_ranper
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--RANPER25011
 !*** Start of declarations inserted by SPAG
-      REAL add , an , hold , u , X
+REAL(kind=wp) :: add , an , hold , u , X
       INTEGER i , iadd , ipr , Istart , j , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -138,7 +138,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
          DO i = 1 , N
             CALL UNIRAN(1,1,u)
-            add = an*u(1) + 1.0
+            add = an*u(1) + 1.0_wp
             iadd = add
             IF ( iadd<1 ) iadd = 1
             IF ( iadd>N ) iadd = N

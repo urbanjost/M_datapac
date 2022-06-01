@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine retain (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_retain
    use M_datapac, only : retain
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call retain(x,y)
    end program demo_retain
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--RETAIN26415
 !*** Start of declarations inserted by SPAG
-      REAL hold , pointl , pointu , X , Xmax , Xmin
+REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -195,7 +195,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          newnp1 = Newn + 1
          IF ( newnp1<=nold ) THEN
             DO i = newnp1 , nold
-               X(i) = 0.0
+               X(i) = 0.0_wp
             ENDDO
          ENDIF
 !

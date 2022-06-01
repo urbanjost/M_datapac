@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine bincdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_bincdf
    use M_datapac, only : bincdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call bincdf(x,y)
    end program demo_bincdf
 
@@ -46,11 +46,11 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE BINCDF(X,P,N,Cdf)
-      IMPLICIT NONE
+SUBROUTINE BINCDF(X,P,N,Cdf)
+IMPLICIT NONE
 !*--BINCDF356
 !*** Start of declarations inserted by SPAG
-      REAL an , Cdf , del , fintx , P , X
+REAL(kind=wp) :: an , Cdf , del , fintx , P , X
       INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
      &        N , nu1 , nu2
 !*** End of declarations inserted by SPAG
@@ -167,8 +167,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !---------------------------------------------------------------------
 !
-      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai ,    &
-     &                 coef1 , coef2 , arg
+      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
       DOUBLE PRECISION coef
       DOUBLE PRECISION theta , sinth , costh , a , b
       DOUBLE PRECISION DSQRT , DATAN
@@ -179,13 +178,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
-      IF ( P<0.0 .OR. P>1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINCDF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99006) P
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSEIF ( N<1 ) THEN
          WRITE (ipr,99002)
@@ -194,23 +193,23 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) N
 99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( X<0.0 .OR. X>an ) THEN
+      ELSEIF ( X<0.0_wp .OR. X>an ) THEN
          WRITE (ipr,99004) N
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE BINC&
      &DF SUBROUTINE IS OUTSIDE THE USUAL (0,N) = (0,',I7,',INTERVAL *')
          WRITE (ipr,99006) X
-         IF ( X<0.0 ) Cdf = 0.0
-         IF ( X>an ) Cdf = 1.0
+         IF ( X<0.0_wp ) Cdf = 0.0_wp
+         IF ( X>an ) Cdf = 1.0_wp
          RETURN
       ELSE
-         intx = X + 0.0001
+         intx = X + 0.0001_wp
          fintx = intx
          del = X - fintx
-         IF ( del<0.0 ) del = -del
-         IF ( del>0.001 ) THEN
+         IF ( del<0.0_wp ) del = -del
+         IF ( del>0.001_wp ) THEN
             WRITE (ipr,99005)
 99005       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE BINC&
@@ -222,20 +221,20 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     TREAT IMMEDIATELY THE SPECIAL CASE OF X = N,
 !     IN WHICH CASE CDF = 1.0.
-!     ALSO TREAT IMMEDIATELY THE SPECIAL CASE OF P = 0.0
+!     ALSO TREAT IMMEDIATELY THE SPECIAL CASE OF P = 0.0_wp
 !     IN WHICH CASE CDF = 1.0 FOR ALL X.
 !     THIRDLY, TREAT THE SPECIAL CASE IN WHICH P = 1.0
 !     IN WHICH CASE CDF = 0.0 FOR ALL X SMALLER THAN N
 !     AND CDF = 1.0 FOR ALL X EQUAL TO OR LARGER
 !     THAN N.
 !
-         intx = X + 0.0001
-         Cdf = 1.0
+         intx = X + 0.0001_wp
+         Cdf = 1.0_wp
          IF ( intx==N ) RETURN
-         IF ( P==0.0 ) RETURN
-         IF ( P==1.0 .AND. intx>=N ) RETURN
-         IF ( P==1.0 .AND. intx<N ) Cdf = 0.0
-         IF ( P==1.0 .AND. intx<N ) RETURN
+         IF ( P==0.0_wp ) RETURN
+         IF ( P==1.0_wp .AND. intx>=N ) RETURN
+         IF ( P==1.0_wp .AND. intx<N ) Cdf = 0.0_wp
+         IF ( P==1.0_wp .AND. intx<N ) RETURN
 !
 !     EXPRESS THE BINOMIAL CUMULATIVE DISTRIBUTION
 !     FUNCTION IN TERMS OF THE EQUIVALENT F
@@ -243,9 +242,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     AND THEN EVALUATE THE LATTER.
 !
          an = N
-         dx = (P/(1.0-P))*((an-X)/(X+1.0))
-         nu1 = 2.0*(X+1.0) + 0.1
-         nu2 = 2.0*(an-X) + 0.1
+         dx = (P/(1.0_wp-P))*((an-X)/(X+1.0_wp))
+         nu1 = 2.0_wp*(X+1.0_wp) + 0.1_wp
+         nu2 = 2.0_wp*(an-X) + 0.1_wp
          anu1 = nu1
          anu2 = nu2
          z = anu2/(anu2+anu1*dx)
@@ -351,7 +350,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                ENDIF
 !
                coef = coef*anu2
-               IF ( ievodd/=0 ) coef = coef*(2.0D0/pi)
+               IF ( ievodd /= 0 ) coef = coef*(2.0D0/pi)
 !
                b = coef*sum
             ENDIF
@@ -361,4 +360,4 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDIF
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE BINCDF
+END SUBROUTINE BINCDF

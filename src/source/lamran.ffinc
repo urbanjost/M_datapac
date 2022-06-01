@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine lamran (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_lamran
    use M_datapac, only : lamran
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call lamran(x,y)
    end program demo_lamran
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--LAMRAN11021
 !*** Start of declarations inserted by SPAG
-      REAL alamb2 , Alamba , q , X
+REAL(kind=wp) :: alamb2 , Alamba , q , X
       INTEGER i , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -138,10 +138,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
          DO i = 1 , N
             q = X(i)
-            IF ( -0.001<alamb2 .AND. alamb2<0.001 ) X(i)                &
+            IF ( -0.001_wp<alamb2 .AND. alamb2<0.001_wp ) X(i)                &
      &           = ALOG(q/(1.0-q))
-            IF ( -0.001>=alamb2 .OR. alamb2>=0.001 ) X(i)               &
-     &           = (q**alamb2-(1.0-q)**alamb2)/alamb2
+            IF ( -0.001_wp>=alamb2 .OR. alamb2>=0.001_wp ) X(i)               &
+     &           = (q**alamb2-(1.0_wp-q)**alamb2)/alamb2
          ENDDO
       ENDIF
 !

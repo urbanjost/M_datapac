@@ -8,8 +8,8 @@ NAME
 SYNOPSIS
     Subroutine scale (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -31,7 +31,7 @@ EXAMPLES
    program demo_scale
    use M_datapac, only : scale
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call scale(x,y)
    end program demo_scale
 
@@ -51,7 +51,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--SCALE27191
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
+REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
      &     xsd , xvar
       INTEGER i , ipr , N
 !*** End of declarations inserted by SPAG
@@ -122,10 +122,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      xrange = 0.0
-      xsd = 0.0
-      xrelsd = 0.0
-      xvar = 0.0
+      xrange = 0.0_wp
+      xsd = 0.0_wp
+      xrelsd = 0.0_wp
+      xvar = 0.0_wp
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
@@ -140,9 +140,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SCAL&
      &E  SUBROUTINE HAS THE VALUE 1 *****')
-            xrange = 0.0
-            xsd = 0.0
-            xrelsd = 0.0
+            xrange = 0.0_wp
+            xsd = 0.0_wp
+            xrelsd = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -171,16 +171,16 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     COMPUTE THE SAMPLE VARIANCE,
 !     AND THEN THE SAMPLE STANDARDD DEVIATION.
 !
-            sum = 0.0
+            sum = 0.0_wp
             DO i = 1 , N
                sum = sum + X(i)
             ENDDO
             xmean = sum/an
-            sum = 0.0
+            sum = 0.0_wp
             DO i = 1 , N
                sum = sum + (X(i)-xmean)**2
             ENDDO
-            xvar = sum/(an-1.0)
+            xvar = sum/(an-1.0_wp)
             xsd = SQRT(xvar)
 !
 !     COMPUTE THE SAMPLE RELATIVE STANDARD DEVIATION;
@@ -189,8 +189,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     THE RESULTING SAMPLE STANDARD DEVIATION IS EXPRESSED
 !     AS A PERCENT.
 !
-            xrelsd = 100.0*xsd/xmean
-            IF ( xrelsd<0.0 ) xrelsd = -xrelsd
+            xrelsd = 100.0_wp*xsd/xmean
+            IF ( xrelsd<0.0_wp ) xrelsd = -xrelsd
          ENDIF
 !
 !     WRITE EVERYTHING OUT

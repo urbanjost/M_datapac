@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine wind (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_wind
    use M_datapac, only : wind
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call wind(x,y)
    end program demo_wind
 
@@ -46,17 +46,13 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
+SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
       IMPLICIT NONE
-!*--WIND33613
-!*** Start of declarations inserted by SPAG
-      REAL ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
+
+REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
      &     perp3 , psum , sum , WS , X , Xwind , Y
       INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT WIND
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE
 !              SAMPLE WINDSORIZED MEAN
@@ -176,25 +172,25 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             Xwind = X(1)
          ENDIF
          GOTO 100
- 50      IF ( P1<0.0 .OR. P1>=1.0 ) THEN
+ 50      IF ( P1<0.0_wp .OR. P1>=1.0_wp ) THEN
             WRITE (ipr,99005)
 99005       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WIND   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
             WRITE (ipr,99017) P1
-            Xwind = 0.0
+            Xwind = 0.0_wp
             RETURN
-         ELSEIF ( P2<0.0 .OR. P2>=1.0 ) THEN
+         ELSEIF ( P2<0.0_wp .OR. P2>=1.0_wp ) THEN
             WRITE (ipr,99006)
 99006       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE WIND   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
             WRITE (ipr,99017) P2
-            Xwind = 0.0
+            Xwind = 0.0_wp
             RETURN
          ELSE
             psum = P1 + P2
-            IF ( psum<0.0 .OR. psum>=1.0 ) THEN
+            IF ( psum<0.0_wp .OR. psum>=1.0_wp ) THEN
                WRITE (ipr,99007)
 99007          FORMAT (' ',                                             &
      &                 '***** FATAL ERROR--THE SUM OF INPUT ARGUMENTS ',&
@@ -209,7 +205,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                WRITE (ipr,99010) psum
 99010          FORMAT (' ','                  INPUT ARGUMENT 3 + ',     &
      &                 'INPUT ARGUMENT 4 = ',E15.8)
-               Xwind = 0.0
+               Xwind = 0.0_wp
                RETURN
             ELSE
 !
@@ -218,18 +214,18 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                CALL SORT(X,N,Y)
 !
                an = N
-               np1 = P1*an + 0.0001
+               np1 = P1*an + 0.0001_wp
                istart = np1 + 1
-               np2 = P2*an + 0.0001
+               np2 = P2*an + 0.0001_wp
                istop = N - np2
-               sum = 0.0
+               sum = 0.0_wp
                k = 0
                IF ( istart>istop ) THEN
                   WRITE (ipr,99011)
 99011             FORMAT (' ','INTERNAL ERROR IN WIND   SUBROUTINE--',  &
      &                   'THE START INDEX IS HIGHER THAN THE STOP INDEX'&
      &                   )
-                  Xwind = 0.0
+                  Xwind = 0.0_wp
                   RETURN
                ELSE
                   DO i = istart , istop
@@ -248,9 +244,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      perp1 = 100.0*P1
-      perp2 = 100.0*P2
-      perp3 = 100.0 - perp1 - perp2
+      perp1 = 100.0_wp*P1
+      perp2 = 100.0_wp*P2
+      perp3 = 100.0_wp - perp1 - perp2
       WRITE (ipr,99012)
 99012 FORMAT (' ')
       WRITE (ipr,99013) N , Xwind
@@ -267,4 +263,4 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &        ' OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE WIND
+END SUBROUTINE WIND

@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine plotsp (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_plotsp
    use M_datapac, only : plotsp
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call plotsp(x,y)
    end program demo_plotsp
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PLOTSP19976
 !*** Start of declarations inserted by SPAG
-      REAL ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
+REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
      &     slower , spmax , spmin , supper , xi , Y , ylable , ymax ,   &
      &     ymin
       INTEGER i , Idf , iflag , ipr , j , k , mx , my , N
@@ -137,8 +137,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             ymax = spmax
          ELSE
             df = Idf
-            CALL CHSPPF(.975,Idf,pp975)
-            CALL CHSPPF(.025,Idf,pp025)
+            CALL CHSPPF(0.975_wp,Idf,pp975)
+            CALL CHSPPF(0.025_wp,Idf,pp025)
             ymax = df*spmax/pp025
             ymin = df*spmin/pp975
          ENDIF
@@ -146,7 +146,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     DETERMINE THE 11 VALUES TO BE LISTED ON THE LEFT VERTICAL AXIS
 !
          DO i = 1 , 11
-            ylable(i) = ymax - ((FLOAT(i-1))/10.0)*(ymax-ymin)
+            ylable(i) = ymax - ((FLOAT(i-1))/10.0_wp)*(ymax-ymin)
          ENDDO
 !
 !     BLANK OUT THE GRAPH
@@ -177,24 +177,24 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          ENDDO
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
-         ratioy = 50.0/(ymax-ymin)
-         ratiox = 240.0
+         ratioy = 50.0_wp/(ymax-ymin)
+         ratiox = 240.0_wp
          DO i = 1 , N
             ai = i
-            xi = (ai-1.0)/(2.0*(an-1.0))
-            mx = ratiox*xi + 0.5
+            xi = (ai-1.0_wp)/(2.0_wp*(an-1.0_wp))
+            mx = ratiox*xi + 0.5_wp
             mx = mx + 10
             IF ( Idf/=0 ) THEN
                supper = df*Y(i)/pp025
                slower = df*Y(i)/pp975
-               my = ratioy*(supper-ymin) + 0.5
+               my = ratioy*(supper-ymin) + 0.5_wp
                my = 55 - my
                IGRaph(my,mx) = dot
-               my = ratioy*(slower-ymin) + 0.5
+               my = ratioy*(slower-ymin) + 0.5_wp
                my = 55 - my
                IGRaph(my,mx) = dot
             ENDIF
-            my = ratioy*(Y(i)-ymin) + 0.5
+            my = ratioy*(Y(i)-ymin) + 0.5_wp
             my = 55 - my
             IGRaph(my,mx) = alphax
          ENDDO

@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine geoppf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_geoppf
    use M_datapac, only : geoppf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call geoppf(x,y)
    end program demo_geoppf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--GEOPPF9341
 !*** Start of declarations inserted by SPAG
-      REAL aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
+REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
       INTEGER ipr , iratio
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -140,29 +140,29 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GEOPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99003) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
-      ELSEIF ( Ppar<=0.0 .OR. Ppar>=1.0 ) THEN
+      ELSEIF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99003) Ppar
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
 !
 !-----START POINT-----------------------------------------------------
 !
       ELSEIF ( P/=0.0 ) THEN
 !
-         arg1 = 1.0 - P
-         arg2 = 1.0 - Ppar
+         arg1 = 1.0_wp - P
+         arg2 = 1.0_wp - Ppar
          anum = ALOG(arg1)
          aden = ALOG(arg2)
          ratio = anum/aden
@@ -172,7 +172,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          IF ( aratio==ratio ) Ppf = iratio - 1
          GOTO 99999
       ENDIF
-      Ppf = 0.0
+      Ppf = 0.0_wp
       RETURN
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !

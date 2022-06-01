@@ -8,8 +8,8 @@ NAME
 SYNOPSIS
     Subroutine tplt (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -31,7 +31,7 @@ EXAMPLES
    program demo_tplt
    use M_datapac, only : tplt
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call tplt(x,y)
    end program demo_tplt
 
@@ -51,7 +51,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--TPLT31083
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
+REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope
       INTEGER i , ipr , iupper , N , Nu
@@ -197,13 +197,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         q = .9975
+         q = .9975_wp
          CALL TPPF(q,Nu,pp9975)
-         q = .0025
+         q = .0025_wp
          CALL TPPF(q,Nu,pp0025)
-         q = .975
+         q = .975_wp
          CALL TPPF(q,Nu,pp975)
-         q = .025
+         q = .025_wp
          CALL TPPF(q,Nu,pp025)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99005) Nu , tau , N
@@ -217,17 +217,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)

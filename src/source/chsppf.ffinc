@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine chsppf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_chsppf
    use M_datapac, only : chsppf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call chsppf(x,y)
    end program demo_chsppf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--CHSPPF2250
 !*** Start of declarations inserted by SPAG
-      REAL anu , dnu , gamma , P , Ppf
+REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit , Nu
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -141,7 +141,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CHSPPF SUBROU&
@@ -149,7 +149,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          WRITE (ipr,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSEIF ( Nu<1 ) THEN
          WRITE (ipr,99003)
@@ -158,7 +158,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99004) Nu
 99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
@@ -170,7 +170,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     AND THEN EVALUATE THE LATTER.
 !
          anu = Nu
-         gamma = anu/2.0
+         gamma = anu/2.0_wp
          dp = P
          dnu = Nu
          dgamma = dnu/2.0D0
@@ -253,7 +253,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99007 FORMAT (' ','     THE INPUT VALUE OF NU    IS ',I8)
       WRITE (ipr,99008)
 99008 FORMAT (' ','     THE OUTPUT VALUE OF PPF HAS BEEN SET TO 0.0')
-      Ppf = 0.0
+      Ppf = 0.0_wp
       RETURN
 !
  600  t = sum

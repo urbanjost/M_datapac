@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine gamplt (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_gamplt
    use M_datapac, only : gamplt
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call gamplt(x,y)
    end program demo_gamplt
 
@@ -49,13 +49,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--GAMPLT8228
 !*** Start of declarations inserted by SPAG
-      REAL acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
+REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
      &     dx , g , Gamma , hold , pcalc , pp0025 , pp025 , pp975 ,     &
      &     pp9975 , sum , sum1
-      REAL sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
+REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
      &     xlower , xmax , xmid , xmin , xmin0 , xupper , Y , ybar ,    &
      &     yint
-      REAL yslope
+REAL(kind=wp) :: yslope
       INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -164,7 +164,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
-         IF ( Gamma<=0.0 ) THEN
+         IF ( Gamma<=0.0_wp ) THEN
             WRITE (ipr,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE GAMPLT SUBROU&
@@ -250,7 +250,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDIF
  100  IF ( itail==0 ) u = W(i)
       dp = u
-      xmin0 = (u*Gamma*g)**(1.0/Gamma)
+      xmin0 = (u*Gamma*g)**(1.0_wp/Gamma)
       xmin = xmin0
       IF ( i==N .OR. itail>=1 ) THEN
          iloop = 1
@@ -264,7 +264,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       xmax = acount*xmin0
       dx = xmax
       GOTO 600
- 300  xmid = (xmin+xmax)/2.0
+ 300  xmid = (xmin+xmax)/2.0_wp
 !
 !     AT THIS STAGE WE NOW HAVE LOWER AND UPPER LIMITS ON
 !     THE DESIRED I-TH GAMMA ORDER STATISITC MEDIAN W(I).
@@ -296,22 +296,22 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     AND THE SAMPLE SIZE.
 !
       IF ( itail==0 ) THEN
-         u = .9975
+         u = 0.9975_wp
          itail = 1
          GOTO 100
       ELSEIF ( itail==1 ) THEN
          pp9975 = xmid
-         u = .0025
+         u = 0.0025_wp
          itail = 2
          GOTO 100
       ELSEIF ( itail==2 ) THEN
          pp0025 = xmid
-         u = .975
+         u = 0.975_wp
          itail = 3
          GOTO 100
       ELSEIF ( itail==3 ) THEN
          pp975 = xmid
-         u = .025
+         u = 0.025_wp
          itail = 4
          GOTO 100
       ELSE
@@ -328,17 +328,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -364,10 +364,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     COMPUTE T-SUB-Q AS DEFINED ON PAGE 4 OF THE WILK, GNANADESIKAN,
 !     AND HUYETT REFERENCE
 !
- 600  sum = 1.0/dgamma
-      term = 1.0/dgamma
+ 600  sum = 1.0_wp/dgamma
+      term = 1.0_wp/dgamma
       cut1 = dx - dgamma
-      cut2 = dx*10000000.0
+      cut2 = dx*10000000.0_wp
       DO j = 1 , 1000
          aj = j
          term = dx*term/(dgamma+aj)
@@ -392,14 +392,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          IF ( pcalc==dp ) GOTO 500
          IF ( pcalc>dp ) THEN
             xupper = xmid
-            xmid = (xmid+xlower)/2.0
+            xmid = (xmid+xlower)/2.0_wp
          ELSE
             xlower = xmid
-            xmid = (xmid+xupper)/2.0
+            xmid = (xmid+xupper)/2.0_wp
          ENDIF
          xdel = ABS(xmid-xlower)
          icount = icount + 1
-         IF ( xdel>=0.0000001 .AND. icount<=100 ) GOTO 400
+         IF ( xdel>=0.0000001_wp .AND. icount<=100 ) GOTO 400
          GOTO 500
       ENDIF
 !

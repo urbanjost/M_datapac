@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine georan (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_georan
    use M_datapac, only : georan
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call georan(x,y)
    end program demo_georan
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--GEORAN9473
 !*** Start of declarations inserted by SPAG
-      REAL aden , anum , aratio , arg1 , arg2 , P , ratio , X
+REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
       INTEGER i , ipr , iratio , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -159,7 +159,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( P<=0.0 .OR. P>=1.0 ) THEN
+      ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEORAN SUBROU&
@@ -178,9 +178,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            IF ( X(i)/=0.0 ) THEN
-               arg1 = 1.0 - X(i)
-               arg2 = 1.0 - P
+            IF ( X(i)/=0.0_wp ) THEN
+               arg1 = 1.0_wp - X(i)
+               arg2 = 1.0_wp - P
                anum = ALOG(arg1)
                aden = ALOG(arg2)
                ratio = anum/aden

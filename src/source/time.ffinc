@@ -8,8 +8,8 @@ NAME
 SYNOPSIS
     Subroutine time (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -31,7 +31,7 @@ EXAMPLES
    program demo_time
    use M_datapac, only : time
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call time(x,y)
    end program demo_time
 
@@ -51,9 +51,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--TIME30314
 !*** Start of declarations inserted by SPAG
-      REAL absr , ak , al , all , almax , an , an2 , arg1 , arg2 , bw , &
+REAL(kind=wp) :: absr , ak , al , all , almax , an , an2 , arg1 , arg2 , bw , &
      &     df , dfroun , hold , p , perout , pi , pmsq , ps , pssq , r
-      REAL r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
+REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
      &     sum2 , var , varb , wk , X , xbar
       INTEGER i , i2 , iarg1 , iarg2 , idf , ilower , imin , ipr ,      &
      &        irev , j , jmax , jmin , k , kmax , krev , l , ll , llp1 ,&
@@ -172,7 +172,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       DIMENSION r(500)
       DIMENSION s(125)
       DIMENSION pssq(6) , pmsq(6) , ps(6) , p(5) , l(4)
-      DATA pi/3.14159265358979/
+      DATA pi/3.14159265358979_wp/
 !
       ipr = 6
       ilower = 3
@@ -207,7 +207,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     COMPUTE THE SAMPLE MEAN
 !
-      sum = 0.0
+      sum = 0.0_wp
       DO i = 1 , N
          sum = sum + X(i)
       ENDDO
@@ -215,13 +215,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     COMPUTE THE SAMPLE VARIANCE AND THE SUM OF SQUARED DEVIATIONS
 !
-      sum = 0.0
+      sum = 0.0_wp
       DO i = 1 , N
          sum = sum + (X(i)-xbar)*(X(i)-xbar)
       ENDDO
       ssq = sum
       varb = ssq/an
-      var = ssq/(an-1.0)
+      var = ssq/(an-1.0_wp)
       sd = SQRT(var)
 !
 !     COMPUTE THE SAMPLE AUTOCORRELATIONS
@@ -232,7 +232,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IF ( N<=16 ) kmax = N
       IF ( kmax>maxlag ) kmax = maxlag
       DO k = 1 , kmax
-         sum = 0.0
+         sum = 0.0_wp
          nmk = N - k
          DO i = 1 , nmk
             j = i + k
@@ -255,18 +255,18 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     DO A WHITE NOISE ANALYSIS
 !
-      sdr = 1.0/SQRT(an)
-      r975 = 1.96*sdr
-      IF ( r975>1.0 ) r975 = 1.0
+      sdr = 1.0_wp/SQRT(an)
+      r975 = 1.96_wp*sdr
+      IF ( r975>1.0_wp ) r975 = 1.0_wp
       r025 = -r975
       numout = 0
       DO k = 1 , kmax
          absr = r(k)
-         IF ( absr<0.0 ) absr = -absr
+         IF ( absr<0.0_wp ) absr = -absr
          IF ( absr>r975 ) numout = numout + 1
       ENDDO
       perout = FLOAT(numout)/FLOAT(kmax)
-      perout = 100.0*perout
+      perout = 100.0_wp*perout
       WRITE (ipr,99017)
       WRITE (ipr,99006) r025 , r975
 !
@@ -308,12 +308,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       n2 = 2**i2
       an2 = n2
       DO k = 1 , i2
-         sum = 0.0
+         sum = 0.0_wp
          imin = 2**k
          jmax = imin/2
          DO i = imin , n2 , imin
-            sum1 = 0.0
-            sum2 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
             DO j = 1 , jmax
                iarg1 = i + j - jmax
                iarg2 = iarg1 - jmax
@@ -347,17 +347,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     DEFINE 4 LAG WINDOW TRUNCATION POINTS
 !     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 260
 !
-      p(1) = .2
-      p(2) = .1
-      p(3) = .05
-      p(4) = .025
-      p(5) = .01
+      p(1) = 0.2_wp
+      p(2) = 0.1_wp
+      p(3) = 0.05_wp
+      p(4) = 0.025_wp
+      p(5) = 0.01_wp
       lmax = 0
       DO i = 1 , 5
          DO k = 1 , kmax
             krev = kmax - k + 1
             rk = r(krev)
-            IF ( rk<0.0 ) rk = -rk
+            IF ( rk<0.0_wp ) rk = -rk
             IF ( rk>=p(i) ) lmax = krev
             IF ( rk>=p(i) ) GOTO 200
          ENDDO
@@ -366,22 +366,22 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          rmax = ABS(r(1))
          DO k = 1 , kmax
             rk = r(k)
-            IF ( rk<0.0 ) rk = -rk
+            IF ( rk<0.0_wp ) rk = -rk
             IF ( rk>=rmax ) lmax = k
             IF ( rk>=rmax ) rmax = rk
          ENDDO
       ENDIF
  200  almax = lmax
-      l(1) = (3.0/2.0)*almax
+      l(1) = (3.0_wp/2.0_wp)*almax
       IF ( l(1)<=32 ) lmax = 32
-      IF ( l(1)<=32 ) almax = 32.0
+      IF ( l(1)<=32 ) almax = 32.0_wp
       IF ( l(1)<=32 ) l(1) = 32
       IF ( l(1)>=kmax ) lmax = kmax
       IF ( l(1)>=kmax ) almax = kmax
       IF ( l(1)>=kmax ) l(1) = kmax
-      l(2) = (almax/2.0) + 0.1
-      l(3) = (almax/4.0) + 0.1
-      l(4) = (almax/8.0) + 0.1
+      l(2) = (almax/2.0_wp) + 0.1_wp
+      l(3) = (almax/4.0_wp) + 0.1_wp
+      l(4) = (almax/8.0_wp) + 0.1_wp
       IF ( l(4)>=3 ) numsp = 4
       IF ( l(4)<3 ) THEN
          IF ( l(3)>=3 ) numsp = 3
@@ -424,20 +424,20 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          DO llp1 = 1 , 121
             ll = llp1 - 1
             all = ll
-            sum = 0.0
+            sum = 0.0_wp
             DO k = 1 , lm1
                ak = k
                arg1 = pi*ak/al
-               arg2 = pi*ak*all/120.0
-               wk = 0.0
-               IF ( k<=l(i) ) wk = 0.5*(1.0+COS(arg1))
+               arg2 = pi*ak*all/120.0_wp
+               wk = 0.0_wp
+               IF ( k<=l(i) ) wk = 0.5_wp*(1.0_wp+COS(arg1))
                sum = sum + r(k)*wk*COS(arg2)
             ENDDO
-            sum = 2.0 + 4.0*sum
+            sum = 2.0_wp + 4.0_wp*sum
             s(llp1) = sum
          ENDDO
-         bw = (4.0/3.0)/FLOAT(l(i))
-         df = (8.0/3.0)*an/FLOAT(l(i))
+         bw = (4.0_wp/3.0_wp)/FLOAT(l(i))
+         df = (8.0_wp/3.0_wp)*an/FLOAT(l(i))
          idf = df + 0.5
          CALL PLOTSP(s,121,idf)
          dfroun = idf

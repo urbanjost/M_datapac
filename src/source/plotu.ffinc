@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine plotu (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_plotu
    use M_datapac, only : plotu
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call plotu(x,y)
    end program demo_plotu
 
@@ -49,13 +49,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PLOTU20843
 !*** Start of declarations inserted by SPAG
-      REAL ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
+REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
      &     promin , ratiox , ratioy , s , sum , sum1 , sum2 , sum23 ,   &
      &     sum3 , width , WS , X
-      REAL X2 , x25 , x75 , xmax , xmax2 , xmean , xmid , xmin , xmin2 ,&
+REAL(kind=wp) :: X2 , x25 , x75 , xmax , xmax2 , xmean , xmid , xmin , xmin2 ,&
      &     Y2 , ylable , ymax , ymin , z , zautoc , zdeva , zdevb ,     &
      &     zmax , zmean , zmean1
-      REAL zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
+REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
       INTEGER i , ibax , ibaxis , ibaxm1 , ibaxm2 , ievodd , ilax ,     &
      &        ilaxis , ilaxm1 , ilaxm2 , ilaxm3 , ilaxm4 , ilaxp2 ,     &
      &        ilower , inc , ip1 , iplot , ipr , irax , iraxis
@@ -269,7 +269,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          IF ( Y2(i)<ymin ) ymin = Y2(i)
          IF ( Y2(i)>ymax ) ymax = Y2(i)
       ENDDO
-      IF ( iplot==3 ) ymin = 1.0
+      IF ( iplot==3 ) ymin = 1.0_wp
       DO i = itaxp2 , ibaxm2
          anum = i - itaxp2
          ylable(i,iplot) = ymax - (anum/height)*(ymax-ymin)
@@ -286,24 +286,24 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDDO
       xmin(iplot) = xmin2
       xmax(iplot) = xmax2
-      xmid(iplot) = (xmin2+xmax2)/2.0
-      x25(iplot) = 0.75*xmin2 + 0.25*xmax2
-      x75(iplot) = 0.25*xmin2 + 0.75*xmax2
+      xmid(iplot) = (xmin2+xmax2)/2.0_wp
+      x25(iplot) = 0.75_wp*xmin2 + 0.25_wp*xmax2
+      x75(iplot) = 0.25_wp*xmin2 + 0.75_wp*xmax2
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 0.0
-      ratiox = 0.0
+      ratioy = 0.0_wp
+      ratiox = 0.0_wp
       IF ( ymax>ymin ) ratioy = height/(ymax-ymin)
       IF ( xmax(iplot)>xmin(iplot) )                                    &
      &     ratiox = width/(xmax(iplot)-xmin(iplot))
       IF ( iplot==3 ) THEN
 !
          DO i = 1 , n2
-            IF ( Y2(i)>0.5 ) THEN
-               mx = ratiox*(X2(i)-xmin(iplot)) + 0.5
+            IF ( Y2(i)>0.5_wp ) THEN
+               mx = ratiox*(X2(i)-xmin(iplot)) + 0.5_wp
                mx = mx + ilaxp2
-               my = ratioy*(Y2(i)-ymin) + 0.5
+               my = ratioy*(Y2(i)-ymin) + 0.5_wp
                my = ibaxm2 - my
                IGRaph(my,mx) = alphax
                DO iy = my , ibaxm2
@@ -313,9 +313,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          ENDDO
       ELSE
          DO i = 1 , n2
-            mx = ratiox*(X2(i)-xmin(iplot)) + 0.5
+            mx = ratiox*(X2(i)-xmin(iplot)) + 0.5_wp
             mx = mx + ilaxp2
-            my = ratioy*(Y2(i)-ymin) + 0.5
+            my = ratioy*(Y2(i)-ymin) + 0.5_wp
             my = ibaxm2 - my
             IGRaph(my,mx) = alphax
          ENDDO
@@ -352,31 +352,31 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     COMPUTE THE SAMPLE MEAN AND SAMPLE STANDARD DEVIATION
 !
          an = N
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xmean)**2
          ENDDO
-         s = SQRT(sum/(an-1.0))
+         s = SQRT(sum/(an-1.0_wp))
 !
 !     FORM THE FREQUENCY TABLE (Y2) WHICH CORRESPONDS TO A HISTOGRAM
 !     WITH 41 CLASSES AND A CLASS WIDTH OF THREE TENTHS OF A SAMPLE STANDARD
 !     DEVIATION.
 !
          DO i = 1 , 41
-            Y2(i) = 0.0
+            Y2(i) = 0.0_wp
          ENDDO
 !
          numout = 0
          DO i = 1 , N
             z = (X(i)-xmean)/s
-            IF ( -6.0<=z .AND. z<=6.0 ) THEN
-               mt = ((z+6.0)/0.3) + 1.5
-               Y2(mt) = Y2(mt) + 1.0
+            IF ( -6.0_wp<=z .AND. z<=6.0_wp ) THEN
+               mt = ((z+6.0_wp)/0.3_wp) + 1.5_wp
+               Y2(mt) = Y2(mt) + 1.0_wp
             ELSE
                numout = numout + 1
             ENDIF
@@ -384,11 +384,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
          DO i = 1 , 41
             ai = i
-            X2(i) = xmean + ((ai-21.0)*0.3)*s
+            X2(i) = xmean + ((ai-21.0_wp)*0.3_wp)*s
          ENDDO
 !
          numcla = 41
-         cwidsd = 0.3
+         cwidsd = 0.3_wp
          cwidth = cwidsd*s
 !
          iplot = 3
@@ -424,13 +424,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          zmean = xmean
          zsd = s
          zdevb = zmean - zmin
-         zrdevb = 0.0
-         IF ( zmean/=0.0 ) zrdevb = 100.0*zdevb/zmean
-         IF ( zrdevb<0.0 ) zrdevb = -zrdevb
+         zrdevb = 0.0_wp
+         IF ( zmean/=0.0_wp ) zrdevb = 100.0_wp*zdevb/zmean
+         IF ( zrdevb<0.0_wp ) zrdevb = -zrdevb
          zdeva = zmax - zmean
-         zrdeva = 0.0
-         IF ( zmean/=0.0 ) zrdeva = 100.0*zdeva/zmean
-         IF ( zrdeva<0.0 ) zrdeva = -zrdeva
+         zrdeva = 0.0_wp
+         IF ( zmean/=0.0_wp ) zrdeva = 100.0_wp*zdeva/zmean
+         IF ( zrdeva<0.0_wp ) zrdeva = -zrdeva
 !
 !     DETERMINE THE NUMBER OF DISTINCT POINTS
 !
@@ -447,7 +447,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          ievodd = N - 2*(N/2)
          IF ( ievodd==0 ) THEN
             nhalfp = nhalf + 1
-            zmed = (Y2(nhalf)+Y2(nhalfp))/2.0
+            zmed = (Y2(nhalf)+Y2(nhalfp))/2.0_wp
          ELSE
             zmed = Y2(nhalf)
          ENDIF
@@ -469,17 +469,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             IF ( Y2(irev)/=Y2(nmi) ) EXIT
          ENDDO
          promin = nummin
-         promin = 100.0*promin/an
+         promin = 100.0_wp*promin/an
          promax = nummax
-         promax = 100.0*promax/an
+         promax = 100.0_wp*promax/an
 !
 !     COMPUTE THE AUTOCORRELATION
 !
-         zmean1 = (an*zmean-X(N))/(an-1.0)
-         zmean2 = (an*zmean-X(1))/(an-1.0)
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         zmean1 = (an*zmean-X(N))/(an-1.0_wp)
+         zmean2 = (an*zmean-X(1))/(an-1.0_wp)
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          nm1 = N - 1
          DO i = 1 , nm1
             ip1 = i + 1
@@ -488,9 +488,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             sum3 = sum3 + (X(ip1)-zmean2)**2
          ENDDO
          sum23 = sum2*sum3
-         zautoc = 9999.99
-         IF ( sum23>0.0 ) zautoc = sum1/(SQRT(sum23))
-         zautoc = 100.0*zautoc
+         zautoc = 9999.99_wp
+         IF ( sum23>0.0_wp ) zautoc = sum1/(SQRT(sum23))
+         zautoc = 100.0_wp*zautoc
 !
 !     WRITE EVERYTHING OUT
 !

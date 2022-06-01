@@ -1,4 +1,5 @@
 module M_datapac
+use,intrinsic :: iso_fortran_env, only : real_kinds,wp=>real32,real64,real128
 implicit none
 private
 public :: autoco
@@ -186,9 +187,9 @@ contains
 !!
 !!     SUBROUTINE AUTOCO(X,N,Iwrite,Xautoc)
 !!
-!!      Real, Intent (InOut) :: X(:)
-!!      Integer, Intent (In) :: Iwrite
-!!      Real, Intent (In)    :: Xautoc
+!!    Real(kind=wp) :: (InOut) ::  X(:)
+!!      Integer, Intent (In) ::  Iwrite
+!!    Real(kind=wp) :: (In)    ::  Xautoc
 !!
 !!##DESCRIPTION
 !!
@@ -219,37 +220,32 @@ contains
 !!    program demo_autoco
 !!    use M_datapac, only : autoco
 !!    implicit none
-!!    real :: x(100)
+!!    real ::  x(100)
 !!    !call   call autoco(x,size(x),1,xautoc)
 !!    end program demo_autoco
 !!
 !!   Results:
+!!##REFERENCES
+!!    Jenkins and Watts, Spectral Analysis and its Applications, 1968, Pages 5, 182.
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
+!!    The original DATAPAC library was written by James J. Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==autoco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      subroutine autoco(x,n,iwrite,xautoc)
-      implicit none
-
-      real an , hold , sum1 , sum2 , sum3 , x(:) , xautoc , xbar , xbar1 , xbar2
-      integer i , ip1 , ipr , iwrite , n , nm1
-
-!     REFERENCES--JENKINS AND WATTS, SPECTRAL ANALYSIS AND ITS APPLICATIONS, 1968, PAGES 5, 182.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING DIVISION (714)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 GAITHERSBURG, MD  20899
-!                 PHONE:  301-921-3651
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --MAY       2022.
-!---------------------------------------------------------------------
+!*==autoco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+subroutine autoco(x,n,iwrite,xautoc)
+implicit none
+
+real(kind=wp) :: an, hold , sum1 , sum2 , sum3 , x(:) , xautoc , xbar , xbar1 , xbar2
+integer i , ip1 , ipr , iwrite , n , nm1
+
       ipr = 6
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
       an = n
@@ -263,7 +259,7 @@ contains
          if ( n==1 ) then
             write (ipr,99003)
 99003       format (' ', '***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE AUTOCO SUBROUTINE HAS THE VALUE 1 *****')
-            xautoc = 0.0
+            xautoc = 0.0_wp
          else
             hold = x(1)
             do i = 2 , n
@@ -274,24 +270,24 @@ contains
              & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE AUTOCO SUBROUTINE HAS ALL ELEMENTS = ', &
              & e15.8, &
              & ' *****')
-            xautoc = 0.0
+            xautoc = 0.0_wp
          endif
          goto 100
 !
 !-----START POINT-----------------------------------------------------
 !
  50      continue
-         xbar = 0.0
+         xbar = 0.0_wp
          do i = 1 , n
             xbar = xbar + x(i)
          enddo
          xbar1 = xbar - x(n)
-         xbar1 = xbar1/(an-1.0)
+         xbar1 = xbar1/(an-1.0_wp)
          xbar2 = xbar - x(1)
-         xbar2 = xbar2/(an-1.0)
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         xbar2 = xbar2/(an-1.0_wp)
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          nm1 = n - 1
          do i = 1 , nm1
             ip1 = i + 1
@@ -308,7 +304,7 @@ contains
 99005 format (' ')
       write (ipr,99006) n , xautoc
 99006 format (' ', 'THE LINEAR AUTOCORRELATION COEFFICIENT OF THE SET OF ',i6,' OBSERVATIONS IS ',f14.6)
-      end subroutine autoco
+end subroutine autoco
 !>
 !!##NAME
 !!    betran(3f) - [M_datapac:STATISTICS] generate beta random numbers
@@ -317,8 +313,8 @@ contains
 !!
 !!     subroutine BETRAN (N,Alpha,Beta,Iseed,X)
 !!
-!!       REAL :: Alpha, Beta, X(N)
-!!       INTEGER :: Iseed,  N
+!! REAL(kind=wp) :: Alpha, Beta, X(N)
+!!       INTEGER ::  Iseed,  N
 !!
 !!##DESCRIPTION
 !!
@@ -364,7 +360,7 @@ contains
 !!    program demo_betran
 !!    use M_datapac, only : betran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call betran(x,y)
 !!    end program demo_betran
 !!
@@ -377,13 +373,18 @@ contains
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     VERSION NUMBER--82.3
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --JUNE      1978.
+!     UPDATED         --DECEMBER  1981.
 !*==betran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
 IMPLICIT NONE
 
-REAL :: a1, a2, Alpha, arg, athird, b1, b2, Beta, funct, sqrt3, term, u, X, xg, xg01, xg02, xg1, xg2, xn(1)
-REAL :: xn01, xn02
-INTEGER :: i , ipr , Iseed , N
+REAL(kind=wp) :: a1, a2, Alpha, arg, athird, b1, b2, Beta, funct, sqrt3, term, u, X, xg, xg01, xg02, xg1, xg2, xn(1)
+REAL(kind=wp) :: xn01, xn02
+INTEGER ::  i , ipr , Iseed , N
 
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !
@@ -405,11 +406,6 @@ INTEGER :: i , ipr , Iseed , N
 !                 PAGES 30-35.
 !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 952.
-!     VERSION NUMBER--82.3
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
-!     UPDATED         --JUNE      1978.
-!     UPDATED         --DECEMBER  1981.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -429,8 +425,8 @@ INTEGER :: i , ipr , Iseed , N
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA athird/0.33333333/
-      DATA sqrt3/1.73205081/
+      DATA athird/0.33333333_wp/
+      DATA sqrt3/1.73205081_wp/
 !
       ipr = 6
 !
@@ -445,12 +441,12 @@ INTEGER :: i , ipr , Iseed , N
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( Alpha<1.0 ) THEN
+      ELSEIF ( Alpha<1.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS SMALLER THAN 1.0 *****')
          WRITE (ipr,99005) Alpha
          RETURN
-      ELSEIF ( Beta<1.0 ) THEN
+      ELSEIF ( Beta<1.0_wp ) THEN
          WRITE (ipr,99004)
 99004    FORMAT (' ','***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS SMALLER THAN 1.0 *****')
          WRITE (ipr,99005) Beta
@@ -484,23 +480,23 @@ INTEGER :: i , ipr , Iseed , N
 !        THE REJECTION FUNCTION VALUE, THEN REJECT
 !        THE PSEUDO-RANDOM NUMBER AS A GAMMA VARIATE.
 !
-         a1 = 1.0/(9.0*Alpha)
+         a1 = 1.0_wp/(9.0_wp*Alpha)
          b1 = SQRT(a1)
          xn01 = -sqrt3 + b1
-         xg01 = Alpha*(1.0-a1+b1*xn01)**3
-         a2 = 1.0/(9.0*Beta)
+         xg01 = Alpha*(1.0_wp-a1+b1*xn01)**3
+         a2 = 1.0_wp/(9.0_wp*Beta)
          b2 = SQRT(a2)
          xn02 = -sqrt3 + b2
-         xg02 = Beta*(1.0-a2+b2*xn02)**3
+         xg02 = Beta*(1.0_wp-a2+b2*xn02)**3
 !
          DO i = 1 , N
             DO
 !
                CALL NORRAN(1,Iseed,xn(1))
-               xg = Alpha*(1.0-a1+b1*xn(1))**3
-               IF ( xg>=0.0 ) THEN
+               xg = Alpha*(1.0_wp-a1+b1*xn(1))**3
+               IF ( xg>=0.0_wp ) THEN
                   term = (xg/xg01)**(Alpha-athird)
-                  arg = 0.5*xn(1)*xn(1) - xg - 0.5*xn01*xn01 + xg01
+                  arg = 0.5_wp*xn(1)*xn(1) - xg - 0.5_wp*xn01*xn01 + xg01
                   funct = term*EXP(arg)
                   CALL UNIRAN(1,Iseed,u)
                   IF ( u(1)<=funct ) THEN
@@ -508,10 +504,10 @@ INTEGER :: i , ipr , Iseed , N
                      DO
 !
                         CALL NORRAN(1,Iseed,xn(1))
-                        xg = Beta*(1.0-a2+b2*xn(1))**3
-                        IF ( xg>=0.0 ) THEN
+                        xg = Beta*(1.0_wp-a2+b2*xn(1))**3
+                        IF ( xg>=0.0_wp ) THEN
                            term = (xg/xg02)**(Beta-athird)
-                           arg = 0.5*xn(1)*xn(1) - xg - 0.5*xn02*xn02 + xg02
+                           arg = 0.5_wp*xn(1)*xn(1) - xg - 0.5_wp*xn02*xn02 + xg02
                            funct = term*EXP(arg)
                            CALL UNIRAN(1,Iseed,u)
                            IF ( u(1)<=funct ) THEN
@@ -540,8 +536,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine bincdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -564,7 +560,7 @@ END SUBROUTINE BETRAN
 !!    program demo_bincdf
 !!    use M_datapac, only : bincdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call bincdf(x,y)
 !!    end program demo_bincdf
 !!
@@ -578,11 +574,11 @@ END SUBROUTINE BETRAN
 !!##LICENSE
 !!    CC0-1.0
 !*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE BINCDF(X,P,N,Cdf)
-      IMPLICIT NONE
+SUBROUTINE BINCDF(X,P,N,Cdf)
+IMPLICIT NONE
 !*--BINCDF356
 !*** Start of declarations inserted by SPAG
-      REAL an , Cdf , del , fintx , P , X
+REAL(kind=wp) :: an , Cdf , del , fintx , P , X
       INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
      &        N , nu1 , nu2
 !*** End of declarations inserted by SPAG
@@ -699,8 +695,7 @@ END SUBROUTINE BETRAN
 !
 !---------------------------------------------------------------------
 !
-      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai ,    &
-     &                 coef1 , coef2 , arg
+      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
       DOUBLE PRECISION coef
       DOUBLE PRECISION theta , sinth , costh , a , b
       DOUBLE PRECISION DSQRT , DATAN
@@ -711,13 +706,13 @@ END SUBROUTINE BETRAN
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
-      IF ( P<0.0 .OR. P>1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINCDF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99006) P
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSEIF ( N<1 ) THEN
          WRITE (ipr,99002)
@@ -726,23 +721,23 @@ END SUBROUTINE BETRAN
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) N
 99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( X<0.0 .OR. X>an ) THEN
+      ELSEIF ( X<0.0_wp .OR. X>an ) THEN
          WRITE (ipr,99004) N
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE BINC&
      &DF SUBROUTINE IS OUTSIDE THE USUAL (0,N) = (0,',I7,',INTERVAL *')
          WRITE (ipr,99006) X
-         IF ( X<0.0 ) Cdf = 0.0
-         IF ( X>an ) Cdf = 1.0
+         IF ( X<0.0_wp ) Cdf = 0.0_wp
+         IF ( X>an ) Cdf = 1.0_wp
          RETURN
       ELSE
-         intx = X + 0.0001
+         intx = X + 0.0001_wp
          fintx = intx
          del = X - fintx
-         IF ( del<0.0 ) del = -del
-         IF ( del>0.001 ) THEN
+         IF ( del<0.0_wp ) del = -del
+         IF ( del>0.001_wp ) THEN
             WRITE (ipr,99005)
 99005       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE BINC&
@@ -754,20 +749,20 @@ END SUBROUTINE BETRAN
 !
 !     TREAT IMMEDIATELY THE SPECIAL CASE OF X = N,
 !     IN WHICH CASE CDF = 1.0.
-!     ALSO TREAT IMMEDIATELY THE SPECIAL CASE OF P = 0.0
+!     ALSO TREAT IMMEDIATELY THE SPECIAL CASE OF P = 0.0_wp
 !     IN WHICH CASE CDF = 1.0 FOR ALL X.
 !     THIRDLY, TREAT THE SPECIAL CASE IN WHICH P = 1.0
 !     IN WHICH CASE CDF = 0.0 FOR ALL X SMALLER THAN N
 !     AND CDF = 1.0 FOR ALL X EQUAL TO OR LARGER
 !     THAN N.
 !
-         intx = X + 0.0001
-         Cdf = 1.0
+         intx = X + 0.0001_wp
+         Cdf = 1.0_wp
          IF ( intx==N ) RETURN
-         IF ( P==0.0 ) RETURN
-         IF ( P==1.0 .AND. intx>=N ) RETURN
-         IF ( P==1.0 .AND. intx<N ) Cdf = 0.0
-         IF ( P==1.0 .AND. intx<N ) RETURN
+         IF ( P==0.0_wp ) RETURN
+         IF ( P==1.0_wp .AND. intx>=N ) RETURN
+         IF ( P==1.0_wp .AND. intx<N ) Cdf = 0.0_wp
+         IF ( P==1.0_wp .AND. intx<N ) RETURN
 !
 !     EXPRESS THE BINOMIAL CUMULATIVE DISTRIBUTION
 !     FUNCTION IN TERMS OF THE EQUIVALENT F
@@ -775,9 +770,9 @@ END SUBROUTINE BETRAN
 !     AND THEN EVALUATE THE LATTER.
 !
          an = N
-         dx = (P/(1.0-P))*((an-X)/(X+1.0))
-         nu1 = 2.0*(X+1.0) + 0.1
-         nu2 = 2.0*(an-X) + 0.1
+         dx = (P/(1.0_wp-P))*((an-X)/(X+1.0_wp))
+         nu1 = 2.0_wp*(X+1.0_wp) + 0.1_wp
+         nu2 = 2.0_wp*(an-X) + 0.1_wp
          anu1 = nu1
          anu2 = nu2
          z = anu2/(anu2+anu1*dx)
@@ -883,7 +878,7 @@ END SUBROUTINE BETRAN
                ENDIF
 !
                coef = coef*anu2
-               IF ( ievodd/=0 ) coef = coef*(2.0D0/pi)
+               IF ( ievodd /= 0 ) coef = coef*(2.0D0/pi)
 !
                b = coef*sum
             ENDIF
@@ -893,7 +888,7 @@ END SUBROUTINE BETRAN
       ENDIF
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE BINCDF
+END SUBROUTINE BINCDF
 !>
 !!##NAME
 !!    binppf(3f) - [M_datapac:STATISTICS] compute the binomial percent
@@ -903,8 +898,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine binppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -927,7 +922,7 @@ END SUBROUTINE BETRAN
 !!    program demo_binppf
 !!    use M_datapac, only : binppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call binppf(x,y)
 !!    end program demo_binppf
 !!
@@ -941,16 +936,12 @@ END SUBROUTINE BETRAN
 !!##LICENSE
 !!    CC0-1.0
 !*==binppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE BINPPF(P,Ppar,N,Ppf)
-      IMPLICIT NONE
-!*--BINPPF673
+SUBROUTINE BINPPF(P,Ppar,N,Ppf)
+
 !*** Start of declarations inserted by SPAG
-      REAL amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
+REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
      &     x0 , x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT BINPPF
 
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
@@ -1065,22 +1056,22 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99019) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
-         IF ( Ppar<=0.0 .OR. Ppar>=1.0 ) THEN
+         IF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
             WRITE (ipr,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
             WRITE (ipr,99019) Ppar
-            Ppf = 0.0
+            Ppf = 0.0_wp
             RETURN
          ELSE
             IF ( N<1 ) THEN
@@ -1091,7 +1082,7 @@ END SUBROUTINE BETRAN
                WRITE (ipr,99004) N
 99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
      &                 ' *****')
-               Ppf = 0.0
+               Ppf = 0.0_wp
                RETURN
             ELSE
 !
@@ -1099,22 +1090,22 @@ END SUBROUTINE BETRAN
 !
                an = N
                dppar = Ppar
-               Ppf = 0.0
+               Ppf = 0.0_wp
                ix0 = 0
                ix1 = 0
                ix2 = 0
-               p0 = 0.0
-               p1 = 0.0
-               p2 = 0.0
+               p0 = 0.0_wp
+               p1 = 0.0_wp
+               p2 = 0.0_wp
 !
 !     TREAT CERTAIN SPECIAL CASES IMMEDIATELY--
 !     1) P = 0.0 OR 1.0
 !     2) P = 0.5 AND PPAR = 0.5
 !     3) PPF = 0 OR N
 !
-               IF ( P/=0.0 ) THEN
-                  IF ( P==1.0 ) GOTO 20
-                  IF ( P==0.5 .AND. Ppar==0.5 ) THEN
+               IF ( P/=0.0_wp ) THEN
+                  IF ( P==1.0_wp ) GOTO 20
+                  IF ( P==0.5_wp .AND. Ppar==0.5_wp ) THEN
                      Ppf = N/2
                      RETURN
                   ELSE
@@ -1130,9 +1121,9 @@ END SUBROUTINE BETRAN
 !     PAGE 64, FORMULA 36).
 !
                         amean = an*Ppar
-                        sd = SQRT(an*Ppar*(1.0-Ppar))
+                        sd = SQRT(an*Ppar*(1.0_wp-Ppar))
                         CALL NORPPF(P,zppf)
-                        x2 = amean - 0.5 + zppf*sd
+                        x2 = amean - 0.5_wp + zppf*sd
                         ix2 = x2
 !
 !     CHECK AND MODIFY (IF NECESSARY) THIS INITIAL
@@ -1151,7 +1142,7 @@ END SUBROUTINE BETRAN
 !
                         ix0 = 0
                         ix1 = N
-                        isd = sd + 1.0
+                        isd = sd + 1.0_wp
                         x2 = ix2
                         CALL BINCDF(x2,Ppar,N,p2)
 !
@@ -1193,7 +1184,7 @@ END SUBROUTINE BETRAN
                      ENDIF
                   ENDIF
                ENDIF
-               Ppf = 0.0
+               Ppf = 0.0_wp
                RETURN
             ENDIF
  20         Ppf = N
@@ -1327,7 +1318,7 @@ END SUBROUTINE BETRAN
 99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
 99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
-      END SUBROUTINE BINPPF
+END SUBROUTINE BINPPF
 !>
 !!##NAME
 !!    binran(3f) - [M_datapac:STATISTICS:RANDOM] generate binomial random numbers
@@ -1336,8 +1327,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine binran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -1360,7 +1351,7 @@ END SUBROUTINE BETRAN
 !!    program demo_binran
 !!    use M_datapac, only : binran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call binran(x,y)
 !!    end program demo_binran
 !!
@@ -1378,7 +1369,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--BINRAN1061
 !*** Start of declarations inserted by SPAG
-      REAL g(1) , P , u(1) , X
+REAL(kind=wp) :: g(1) , P , u(1) , X
       INTEGER i , ig , ipr , Iseed , isum , j , N , Npar
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -1512,7 +1503,7 @@ END SUBROUTINE BETRAN
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99005) N
          RETURN
-      ELSEIF ( P<=0.0 .OR. P>=1.0 ) THEN
+      ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROU&
@@ -1533,7 +1524,7 @@ END SUBROUTINE BETRAN
 !     AND BRANCH TO THE FASTER
 !     GENERATION METHOD ACCORDINGLY.
 !
-      ELSEIF ( P<0.1 ) THEN
+      ELSEIF ( P<0.1_wp ) THEN
 !
 !     IF P IS SMALL,
 !     GENERATE N BINOMIAL NUMBERS
@@ -1547,7 +1538,7 @@ END SUBROUTINE BETRAN
             j = 1
             DO
                CALL GEORAN(1,P,Iseed,g)
-               ig = g(1) + 0.5
+               ig = g(1) + 0.5_wp
                isum = isum + ig + 1
                IF ( isum>Npar ) THEN
                   X(i) = j - 1
@@ -1585,8 +1576,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine caucdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -1609,7 +1600,7 @@ END SUBROUTINE BETRAN
 !!    program demo_caucdf
 !!    use M_datapac, only : caucdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call caucdf(x,y)
 !!    end program demo_caucdf
 !!
@@ -1627,7 +1618,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CAUCDF1272
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , pi , X
+REAL(kind=wp) :: Cdf , pi , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -1665,7 +1656,7 @@ END SUBROUTINE BETRAN
 !
 !---------------------------------------------------------------------
 !
-      DATA pi/3.14159265358979/
+      DATA pi/3.14159265358979_wp/
 !
       ipr = 6
 !
@@ -1675,7 +1666,7 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-      Cdf = 0.5 + ((1.0/pi)*ATAN(X))
+      Cdf = 0.5_wp + ((1.0_wp/pi)*ATAN(X))
 !
       END SUBROUTINE CAUCDF
 !>
@@ -1687,8 +1678,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine caupdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -1711,7 +1702,7 @@ END SUBROUTINE BETRAN
 !!    program demo_caupdf
 !!    use M_datapac, only : caupdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call caupdf(x,y)
 !!    end program demo_caupdf
 !!
@@ -1729,7 +1720,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CAUPDF1328
 !*** Start of declarations inserted by SPAG
-      REAL c , Pdf , X
+REAL(kind=wp) :: c , Pdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -1767,7 +1758,7 @@ END SUBROUTINE BETRAN
 !
 !---------------------------------------------------------------------
 !
-      DATA c/.31830988618379/
+      DATA c/.31830988618379_wp/
 !
       ipr = 6
 !
@@ -1777,9 +1768,9 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-      Pdf = c*(1.0/(1.0+X*X))
+      Pdf = c*(1.0_wp/(1.0_wp+X*X))
 !
-      END SUBROUTINE CAUPDF
+END SUBROUTINE CAUPDF
 !>
 !!##NAME
 !!    cauplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Cauchy probability plot
@@ -1788,8 +1779,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine cauplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -1812,7 +1803,7 @@ END SUBROUTINE BETRAN
 !!    program demo_cauplt
 !!    use M_datapac, only : cauplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call cauplt(x,y)
 !!    end program demo_cauplt
 !!
@@ -1830,7 +1821,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CAUPLT1384
 !*** Start of declarations inserted by SPAG
-      REAL an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
+REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
      &     wbar , WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -1896,8 +1887,8 @@ END SUBROUTINE BETRAN
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA pi/3.14159265358979/
-      DATA tau/10.02040649/
+      DATA pi/3.14159265358979_wp/
+      DATA tau/10.02040649_wp/
 !
       ipr = 6
       iupper = 7500
@@ -1962,15 +1953,15 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
+         sum1 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
          ENDDO
          ybar = sum1/an
-         wbar = 0.0
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         wbar = 0.0_wp
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + W(i)*Y(i)
@@ -1985,7 +1976,7 @@ END SUBROUTINE BETRAN
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE CAUPLT
+END SUBROUTINE CAUPLT
 !>
 !!##NAME
 !!    cauppf(3f) - [M_datapac:STATISTICS] compute the Cauchy percent point
@@ -1995,8 +1986,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine cauppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -2019,7 +2010,7 @@ END SUBROUTINE BETRAN
 !!    program demo_cauppf
 !!    use M_datapac, only : cauppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call cauppf(x,y)
 !!    end program demo_cauppf
 !!
@@ -2037,7 +2028,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CAUPPF1545
 !*** Start of declarations inserted by SPAG
-      REAL arg , P , pi , Ppf
+REAL(kind=wp) :: arg , P , pi , Ppf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -2085,20 +2076,18 @@ END SUBROUTINE BETRAN
 !
 !---------------------------------------------------------------------
 !
-      DATA pi/3.14159265358979/
+      DATA pi/3.14159265358979_wp/
 !
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+99001    FORMAT (' ',&
+         & '***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          RETURN
       ELSE
 !
@@ -2117,8 +2106,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine cauran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -2141,7 +2130,7 @@ END SUBROUTINE BETRAN
 !!    program demo_cauran
 !!    use M_datapac, only : cauran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call cauran(x,y)
 !!    end program demo_cauran
 !!
@@ -2159,7 +2148,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CAURAN1622
 !*** Start of declarations inserted by SPAG
-      REAL arg , pi , X
+REAL(kind=wp) :: arg , pi , X
       INTEGER i , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -2223,7 +2212,7 @@ END SUBROUTINE BETRAN
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA pi/3.14159265359/
+      DATA pi/3.14159265359_wp/
 !
       ipr = 6
 !
@@ -2264,8 +2253,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine causf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -2288,7 +2277,7 @@ END SUBROUTINE BETRAN
 !!    program demo_causf
 !!    use M_datapac, only : causf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call causf(x,y)
 !!    end program demo_causf
 !!
@@ -2306,7 +2295,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CAUSF1738
 !*** Start of declarations inserted by SPAG
-      REAL arg , P , pi , Sf
+REAL(kind=wp) :: arg , P , pi , Sf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -2355,13 +2344,13 @@ END SUBROUTINE BETRAN
 !
 !---------------------------------------------------------------------
 !
-      DATA pi/3.14159265358979/
+      DATA pi/3.14159265358979_wp/
 !
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUSF  SUBROU&
@@ -2388,8 +2377,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine chscdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -2412,7 +2401,7 @@ END SUBROUTINE BETRAN
 !!    program demo_chscdf
 !!    use M_datapac, only : chscdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chscdf(x,y)
 !!    end program demo_chscdf
 !!
@@ -2430,7 +2419,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CHSCDF1816
 !*** Start of declarations inserted by SPAG
-      REAL amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
+REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
       INTEGER i , ibran , ievodd , imax , imin , ipr , Nu , nucut
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -2518,10 +2507,10 @@ END SUBROUTINE BETRAN
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) Nu
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
-         IF ( X<0.0 ) THEN
+         IF ( X<0.0_wp ) THEN
             WRITE (ipr,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE CHSC&
@@ -2529,7 +2518,7 @@ END SUBROUTINE BETRAN
             WRITE (ipr,99004) X
 99004       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
-            Cdf = 0.0
+            Cdf = 0.0_wp
             RETURN
          ELSE
 !
@@ -2553,14 +2542,14 @@ END SUBROUTINE BETRAN
 !     STANDARD DEVIATIONS ABOVE THE MEAN,
 !     SET CDF = 1.0 AND RETURN.
 !
-            IF ( X>0.0 ) THEN
+            IF ( X>0.0_wp ) THEN
                amean = anu
-               sd = SQRT(2.0*anu)
+               sd = SQRT(2.0_wp*anu)
                z = (X-amean)/sd
-               IF ( Nu>=10 .OR. z>=-200.0 ) THEN
-                  IF ( Nu<10 .OR. z>=-100.0 ) THEN
-                     IF ( Nu<10 .AND. z>200.0 ) GOTO 50
-                     IF ( Nu>=10 .AND. z>100.0 ) GOTO 50
+               IF ( Nu>=10 .OR. z>=-200.0_wp ) THEN
+                  IF ( Nu<10 .OR. z>=-100.0_wp ) THEN
+                     IF ( Nu<10 .AND. z>200.0_wp ) GOTO 50
+                     IF ( Nu>=10 .AND. z>100.0_wp ) GOTO 50
 !
 !     DISTINGUISH BETWEEN 3 SEPARATE REGIONS
 !     OF THE (X,NU) SPACE.
@@ -2586,7 +2575,7 @@ END SUBROUTINE BETRAN
                         ELSE
 !
                            sum = 0.0D0
-                           term = 1.0/chi
+                           term = 1.0_wp/chi
                            imin = 1
                            imax = Nu - 1
                         ENDIF
@@ -2657,10 +2646,10 @@ END SUBROUTINE BETRAN
                   ENDIF
                ENDIF
             ENDIF
-            Cdf = 0.0
+            Cdf = 0.0_wp
             RETURN
          ENDIF
- 50      Cdf = 1.0
+ 50      Cdf = 1.0_wp
          RETURN
       ENDIF
  100  Cdf = 1.0D0 - sum
@@ -2676,8 +2665,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine chsplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -2700,7 +2689,7 @@ END SUBROUTINE BETRAN
 !!    program demo_chsplt
 !!    use M_datapac, only : chsplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chsplt(x,y)
 !!    end program demo_chsplt
 !!
@@ -2718,7 +2707,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CHSPLT2058
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
+REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope
       INTEGER i , ipr , iupper , N , Nu
@@ -2858,13 +2847,13 @@ END SUBROUTINE BETRAN
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         q = .9975
+         q = .9975_wp
          CALL CHSPPF(q,Nu,pp9975)
-         q = .0025
+         q = .0025_wp
          CALL CHSPPF(q,Nu,pp0025)
-         q = .975
+         q = .975_wp
          CALL CHSPPF(q,Nu,pp975)
-         q = .025
+         q = .025_wp
          CALL CHSPPF(q,Nu,pp025)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99005) Nu , tau , N
@@ -2878,17 +2867,17 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -2914,8 +2903,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine chsppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -2938,7 +2927,7 @@ END SUBROUTINE BETRAN
 !!    program demo_chsppf
 !!    use M_datapac, only : chsppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chsppf(x,y)
 !!    end program demo_chsppf
 !!
@@ -2956,7 +2945,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CHSPPF2250
 !*** Start of declarations inserted by SPAG
-      REAL anu , dnu , gamma , P , Ppf
+REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit , Nu
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -3047,7 +3036,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CHSPPF SUBROU&
@@ -3055,7 +3044,7 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSEIF ( Nu<1 ) THEN
          WRITE (ipr,99003)
@@ -3064,7 +3053,7 @@ END SUBROUTINE BETRAN
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99004) Nu
 99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
@@ -3076,7 +3065,7 @@ END SUBROUTINE BETRAN
 !     AND THEN EVALUATE THE LATTER.
 !
          anu = Nu
-         gamma = anu/2.0
+         gamma = anu/2.0_wp
          dp = P
          dnu = Nu
          dgamma = dnu/2.0D0
@@ -3159,7 +3148,7 @@ END SUBROUTINE BETRAN
 99007 FORMAT (' ','     THE INPUT VALUE OF NU    IS ',I8)
       WRITE (ipr,99008)
 99008 FORMAT (' ','     THE OUTPUT VALUE OF PPF HAS BEEN SET TO 0.0')
-      Ppf = 0.0
+      Ppf = 0.0_wp
       RETURN
 !
  600  t = sum
@@ -3195,8 +3184,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine chsran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -3219,7 +3208,7 @@ END SUBROUTINE BETRAN
 !!    program demo_chsran
 !!    use M_datapac, only : chsran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chsran(x,y)
 !!    end program demo_chsran
 !!
@@ -3237,7 +3226,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CHSRAN2486
 !*** Start of declarations inserted by SPAG
-      REAL arg1 , arg2 , pi , sum , X , y , z
+REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
       INTEGER i , ipr , Iseed , j , N , Nu
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -3301,7 +3290,7 @@ END SUBROUTINE BETRAN
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA pi/3.14159265359/
+      DATA pi/3.14159265359_wp/
 !
       ipr = 6
 !
@@ -3335,11 +3324,11 @@ END SUBROUTINE BETRAN
 !     THEN FORM THE SUM OF SQUARED NORMAL RANDOM NUMBERS.
 !
          DO i = 1 , N
-            sum = 0.0
+            sum = 0.0_wp
             DO j = 1 , Nu , 2
                CALL UNIRAN(2,Iseed,y)
-               arg1 = -2.0*ALOG(y(1))
-               arg2 = 2.0*pi*y(2)
+               arg1 = -2.0_wp*ALOG(y(1))
+               arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
                sum = sum + z(1)*z(1)
@@ -3360,8 +3349,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine code (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -3384,7 +3373,7 @@ END SUBROUTINE BETRAN
 !!    program demo_code
 !!    use M_datapac, only : code
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call code(x,y)
 !!    end program demo_code
 !!
@@ -3402,7 +3391,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CODE2619
 !*** Start of declarations inserted by SPAG
-      REAL ai , DISt , hold , WS , X , Y
+REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
       INTEGER i , ipr , iupper , j , N , numdis
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -3476,7 +3465,7 @@ END SUBROUTINE BETRAN
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE CODE&
      &   SUBROUTINE HAS THE VALUE 1 *****')
-            Y(1) = 1.0
+            Y(1) = 1.0_wp
             RETURN
          ELSE
             hold = X(1)
@@ -3553,8 +3542,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine copy (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -3577,7 +3566,7 @@ END SUBROUTINE BETRAN
 !!    program demo_copy
 !!    use M_datapac, only : copy
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call copy(x,y)
 !!    end program demo_copy
 !!
@@ -3595,7 +3584,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--COPY2766
 !*** Start of declarations inserted by SPAG
-      REAL hold , X , Y
+REAL(kind=wp) :: hold , X , Y
       INTEGER i , ipr , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -3685,8 +3674,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine corr (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -3709,7 +3698,7 @@ END SUBROUTINE BETRAN
 !!    program demo_corr
 !!    use M_datapac, only : corr
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call corr(x,y)
 !!    end program demo_corr
 !!
@@ -3727,7 +3716,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--CORR2852
 !*** Start of declarations inserted by SPAG
-      REAL an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
+REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
       INTEGER i , iflag , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -3804,7 +3793,7 @@ END SUBROUTINE BETRAN
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
-      C = 0.0
+      C = 0.0_wp
       iflag = 0
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
@@ -3843,8 +3832,8 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-         xbar = 0.0
-         ybar = 0.0
+         xbar = 0.0_wp
+         ybar = 0.0_wp
          DO i = 1 , N
             xbar = xbar + X(i)
             ybar = ybar + Y(i)
@@ -3852,9 +3841,9 @@ END SUBROUTINE BETRAN
          xbar = xbar/an
          ybar = ybar/an
 !
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (X(i)-xbar)*(Y(i)-ybar)
             sum2 = sum2 + (X(i)-xbar)**2
@@ -3879,8 +3868,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine count (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -3903,7 +3892,7 @@ END SUBROUTINE BETRAN
 !!    program demo_count
 !!    use M_datapac, only : count
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call count(x,y)
 !!    end program demo_count
 !!
@@ -3921,7 +3910,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--COUNT3000
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , X , Xcount , Xmax , Xmin
+REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
       INTEGER i , ipr , isum , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -3999,7 +3988,7 @@ END SUBROUTINE BETRAN
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE COUN&
      &T  SUBROUTINE HAS THE VALUE 1 *****')
-         Xcount = 0.0
+         Xcount = 0.0_wp
          RETURN
       ELSE
          IF ( Xmin==Xmax ) THEN
@@ -4009,7 +3998,7 @@ END SUBROUTINE BETRAN
             WRITE (ipr,99005) Xmin
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENTS ARE ',E15.7,  &
      &              ' *****')
-            Xcount = 0.0
+            Xcount = 0.0_wp
             RETURN
          ELSE
             hold = X(1)
@@ -4020,14 +4009,14 @@ END SUBROUTINE BETRAN
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE COUNT  SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
-            Xcount = 0.0
+            Xcount = 0.0_wp
             RETURN
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
  50      an = N
-         Xcount = 0.0
+         Xcount = 0.0_wp
          isum = 0
          DO i = 1 , N
             IF ( X(i)>=Xmin .AND. Xmax>=X(i) ) isum = isum + 1
@@ -4052,8 +4041,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine decomp (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -4076,7 +4065,7 @@ END SUBROUTINE BETRAN
 !!    program demo_decomp
 !!    use M_datapac, only : decomp
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call decomp(x,y)
 !!    end program demo_decomp
 !!
@@ -4094,7 +4083,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DECOMP3127
 !*** Start of declarations inserted by SPAG
-      REAL D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
+REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
      &     Tol , tol2 , WS
       INTEGER i , Insing , ip , IPIvot , iqarg , iqarg1 , iqarg2 ,      &
      &        Irank , irarg , irarg1 , irarg2 , is , ism1 , isp1 , j ,  &
@@ -4138,10 +4127,10 @@ END SUBROUTINE BETRAN
       Insing = 0
       Irank = 0
       DO j = 1 , K
-         D(j) = 0.0
+         D(j) = 0.0_wp
          DO i = 1 , K
             irarg = (i-1)*K + j
-            R(irarg) = 0.0
+            R(irarg) = 0.0_wp
          ENDDO
       ENDDO
 !
@@ -4154,7 +4143,7 @@ END SUBROUTINE BETRAN
 !     BEGIN STEP NUMBER      IS      IN THE DECOMPOSITION
 !
          IF ( is==1 ) fsum = .TRUE.
- 50      dis = 0.0
+ 50      dis = 0.0_wp
          ip = is
 !
 !     BEGIN THE PIVOT SEARCH
@@ -4168,7 +4157,7 @@ END SUBROUTINE BETRAN
                   DUM2(l) = Q(iqarg)
                ENDDO
 !
-               CALL DOT(DUM1,DUM2,1,N,0.0,D(j))
+               CALL DOT(DUM1,DUM2,1,N,0.0_wp,D(j))
             ENDIF
 !
             IF ( dis<D(j) ) THEN
@@ -4214,11 +4203,11 @@ END SUBROUTINE BETRAN
             DUM2(l) = Q(iqarg)
          ENDDO
 !
-         CALL DOT(DUM1,DUM2,1,N,0.0,D(is))
+         CALL DOT(DUM1,DUM2,1,N,0.0_wp,D(is))
 !
          dis = D(is)
          IF ( dis<=tol2*D(1) ) RETURN
-         IF ( dis/=0.0 ) THEN
+         IF ( dis/=0.0_wp ) THEN
             isp1 = is + 1
             IF ( isp1<=K ) THEN
 !
@@ -4234,7 +4223,7 @@ END SUBROUTINE BETRAN
                   ENDDO
 !
                   irarg = (is-1)*K + j
-                  CALL DOT(DUM1,DUM2,1,N,0.0,R(irarg))
+                  CALL DOT(DUM1,DUM2,1,N,0.0_wp,R(irarg))
                   R(irarg) = R(irarg)/dis
 !
                   risj = R(irarg)
@@ -4269,8 +4258,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine define (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -4293,7 +4282,7 @@ END SUBROUTINE BETRAN
 !!    program demo_define
 !!    use M_datapac, only : define
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call define(x,y)
 !!    end program demo_define
 !!
@@ -4312,7 +4301,7 @@ END SUBROUTINE BETRAN
 !*--DEFINE3301
 !*** Start of declarations inserted by SPAG
       INTEGER i , ipr , N
-      REAL X , Xnew
+REAL(kind=wp) :: X , Xnew
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT DEFINE
@@ -4414,8 +4403,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine delete (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -4438,7 +4427,7 @@ END SUBROUTINE BETRAN
 !!    program demo_delete
 !!    use M_datapac, only : delete
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call delete(x,y)
 !!    end program demo_delete
 !!
@@ -4456,7 +4445,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DELETE3400
 !*** Start of declarations inserted by SPAG
-      REAL hold , pointl , pointu , X , Xmax , Xmin
+REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -4599,7 +4588,7 @@ END SUBROUTINE BETRAN
          newnp1 = Newn + 1
          IF ( newnp1<=nold ) THEN
             DO i = newnp1 , nold
-               X(i) = 0.0
+               X(i) = 0.0_wp
             ENDDO
          ENDIF
 !
@@ -4628,7 +4617,7 @@ END SUBROUTINE BETRAN
      &           I6)
       ENDIF
 !
-      END SUBROUTINE DELETE
+END SUBROUTINE DELETE
 !>
 !!##NAME
 !!    demod(3f) - [M_datapac:STATISTICS] perform a complex demodulation
@@ -4637,8 +4626,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine demod (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -4661,7 +4650,7 @@ END SUBROUTINE BETRAN
 !!    program demo_demod
 !!    use M_datapac, only : demod
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call demod(x,y)
 !!    end program demo_demod
 !!
@@ -4679,10 +4668,10 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DEMOD3578
 !*** Start of declarations inserted by SPAG
-      REAL ai , aiflag , aimax2 , alen1 , alen2 , an , del , F , fest , &
+REAL(kind=wp) :: ai , aiflag , aimax2 , alen1 , alen2 , an , del , F , fest , &
      &     fmin , hold , pi , range , slopeh , sloper , sum , WS , X ,  &
      &     Y1 , Y2
-      REAL Z , zmax , zmin , znew
+REAL(kind=wp) :: Z , zmax , zmin , znew
       INTEGER i , iend , iendp1 , iflag , ilower , imax1 , imax2 ,      &
      &        imax2m , ip1 , ipr , istart , iupper , j , lenma1 ,       &
      &        lenma2 , N
@@ -4801,13 +4790,13 @@ END SUBROUTINE BETRAN
       EQUIVALENCE (Y1(1),WS(1))
       EQUIVALENCE (Y2(1),WS(5001))
       EQUIVALENCE (Z(1),WS(10001))
-      DATA pi/3.141592653/
+      DATA pi/3.141592653_wp/
 !
       ipr = 6
       ilower = 3
       iupper = 5000
       an = N
-      fmin = 2.0/(an-2.0)
+      fmin = 2.0_wp/(an-2.0_wp)
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -4820,7 +4809,7 @@ END SUBROUTINE BETRAN
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
-         IF ( F<=fmin .OR. F>=0.5 ) THEN
+         IF ( F<=fmin .OR. F>=0.5_wp ) THEN
             WRITE (ipr,99003) fmin
 99003       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD INPUT ARGUMENT TO THE  DEMOD  SUBROU&
@@ -4851,14 +4840,14 @@ END SUBROUTINE BETRAN
 !
  50      DO i = 1 , N
             ai = i
-            Y1(i) = X(i)*COS(6.2831853*F*ai)
-            Y2(i) = X(i)*SIN(6.2831853*F*ai)
+            Y1(i) = X(i)*COS(6.2831853_wp*F*ai)
+            Y2(i) = X(i)*SIN(6.2831853_wp*F*ai)
          ENDDO
 !
 !     DEFINE THE LENGTH OF THE 2 MOVING AVERAGES
 !
-         lenma1 = 1.0/F
-         lenma2 = 1.0/F
+         lenma1 = 1.0_wp/F
+         lenma2 = 1.0_wp/F
          alen1 = lenma1
          alen2 = lenma2
          imax1 = N - lenma1
@@ -4870,11 +4859,11 @@ END SUBROUTINE BETRAN
             istart = i + 1
             iend = i + lenma1 - 1
             iendp1 = i + lenma1
-            sum = 0.0
+            sum = 0.0_wp
             DO j = istart , iend
                sum = sum + Y1(j)
             ENDDO
-            sum = sum + Y1(i)/2.0 + Y1(iendp1)/2.0
+            sum = sum + Y1(i)/2.0_wp + Y1(iendp1)/2.0_wp
             Z(i) = sum/alen1
          ENDDO
 !
@@ -4884,11 +4873,11 @@ END SUBROUTINE BETRAN
             istart = i + 1
             iend = i + lenma2 - 1
             iendp1 = i + lenma2
-            sum = 0.0
+            sum = 0.0_wp
             DO j = istart , iend
                sum = sum + Z(j)
             ENDDO
-            sum = sum + Z(i)/2.0 + Z(iendp1)/2.0
+            sum = sum + Z(i)/2.0_wp + Z(iendp1)/2.0_wp
             Y1(i) = sum/alen2
          ENDDO
 !
@@ -4898,11 +4887,11 @@ END SUBROUTINE BETRAN
             istart = i + 1
             iend = i + lenma1 - 1
             iendp1 = i + lenma1
-            sum = 0.0
+            sum = 0.0_wp
             DO j = istart , iend
                sum = sum + Y2(j)
             ENDDO
-            sum = sum + Y2(i)/2.0 + Y2(iendp1)/2.0
+            sum = sum + Y2(i)/2.0_wp + Y2(iendp1)/2.0_wp
             Z(i) = sum/alen1
          ENDDO
 !
@@ -4912,11 +4901,11 @@ END SUBROUTINE BETRAN
             istart = i + 1
             iend = i + lenma1 - 1
             iendp1 = i + lenma1
-            sum = 0.0
+            sum = 0.0_wp
             DO j = istart , iend
                sum = sum + Z(j)
             ENDDO
-            sum = sum + Z(i)/2.0 + Z(iendp1)/2.0
+            sum = sum + Z(i)/2.0_wp + Z(iendp1)/2.0_wp
             Y2(i) = sum/alen2
          ENDDO
 !
@@ -4924,7 +4913,7 @@ END SUBROUTINE BETRAN
 !     FORM THE AMPLITUDES AND PLOT THEM
 !
          DO i = 1 , imax2
-            Z(i) = 2.0*SQRT(Y1(i)*Y1(i)+Y2(i)*Y2(i))
+            Z(i) = 2.0_wp*SQRT(Y1(i)*Y1(i)+Y2(i)*Y2(i))
          ENDDO
          CALL PLOTX(Z,imax2)
          WRITE (ipr,99007) F
@@ -4967,8 +4956,8 @@ END SUBROUTINE BETRAN
          DO i = 1 , imax2m
             ip1 = i + 1
             del = Z(ip1) - Z(i)
-            IF ( del>2.5 ) iflag = iflag - 1
-            IF ( del<-2.5 ) iflag = iflag + 1
+            IF ( del>2.5_wp ) iflag = iflag - 1
+            IF ( del<-2.5_wp ) iflag = iflag + 1
             aiflag = iflag
             znew = Z(ip1) + aiflag*pi
             IF ( znew<zmin ) zmin = znew
@@ -4976,7 +4965,7 @@ END SUBROUTINE BETRAN
          ENDDO
          range = zmax - zmin
          sloper = range/aimax2
-         slopeh = sloper/(2.0*pi)
+         slopeh = sloper/(2.0_wp*pi)
          fest = F + slopeh
          WRITE (ipr,99010) zmin , zmax , range
 99010    FORMAT (' ',3X,'MINIMUM PHASE = ',E15.8,' RADIANS   ',         &
@@ -4998,8 +4987,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine dexcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -5022,7 +5011,7 @@ END SUBROUTINE BETRAN
 !!    program demo_dexcdf
 !!    use M_datapac, only : dexcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexcdf(x,y)
 !!    end program demo_dexcdf
 !!
@@ -5040,7 +5029,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DEXCDF3893
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , X
+REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -5087,8 +5076,8 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( X<=0.0 ) Cdf = 0.5*EXP(X)
-      IF ( X>0.0 ) Cdf = 1.0 - (0.5*EXP(-X))
+      IF ( X<=0.0_wp ) Cdf = 0.5_wp*EXP(X)
+      IF ( X>0.0_wp ) Cdf = 1.0_wp - (0.5_wp*EXP(-X))
 !
       END SUBROUTINE DEXCDF
 !>
@@ -5100,8 +5089,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine dexpdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -5124,7 +5113,7 @@ END SUBROUTINE BETRAN
 !!    program demo_dexpdf
 !!    use M_datapac, only : dexpdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexpdf(x,y)
 !!    end program demo_dexpdf
 !!
@@ -5142,7 +5131,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DEXPDF3949
 !*** Start of declarations inserted by SPAG
-      REAL arg , Pdf , X
+REAL(kind=wp) :: arg , Pdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -5191,8 +5180,8 @@ END SUBROUTINE BETRAN
 !-----START POINT-----------------------------------------------------
 !
       arg = X
-      IF ( X<0.0 ) arg = -X
-      Pdf = 0.5*EXP(-arg)
+      IF ( X<0.0_wp ) arg = -X
+      Pdf = 0.5_wp*EXP(-arg)
 !
       END SUBROUTINE DEXPDF
 !>
@@ -5204,8 +5193,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine dexplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -5228,7 +5217,7 @@ END SUBROUTINE BETRAN
 !!    program demo_dexplt
 !!    use M_datapac, only : dexplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexplt(x,y)
 !!    end program demo_dexplt
 !!
@@ -5246,7 +5235,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DEXPLT4007
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
+REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -5312,7 +5301,7 @@ END SUBROUTINE BETRAN
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/1.76862179/
+      DATA tau/1.76862179_wp/
 !
       ipr = 6
       iupper = 7500
@@ -5359,8 +5348,8 @@ END SUBROUTINE BETRAN
 !
          DO i = 1 , N
             q = W(i)
-            IF ( q<=0.5 ) W(i) = ALOG(2.0*q)
-            IF ( q>0.5 ) W(i) = -ALOG(2.0*(1.0-q))
+            IF ( q<=0.5_wp ) W(i) = ALOG(2.0_wp*q)
+            IF ( q>0.5_wp ) W(i) = -ALOG(2.0_wp*(1.0_wp-q))
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -5378,15 +5367,15 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
+         sum1 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
          ENDDO
          ybar = sum1/an
-         wbar = 0.0
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         wbar = 0.0_wp
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + W(i)*Y(i)
@@ -5411,8 +5400,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine dexppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -5435,7 +5424,7 @@ END SUBROUTINE BETRAN
 !!    program demo_dexppf
 !!    use M_datapac, only : dexppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexppf(x,y)
 !!    end program demo_dexppf
 !!
@@ -5454,7 +5443,7 @@ END SUBROUTINE BETRAN
 !*--DEXPPF4168
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Ppf
+REAL(kind=wp) :: P , Ppf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT DEXPPF
@@ -5506,7 +5495,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE DEXPPF SUBROU&
@@ -5519,8 +5508,8 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-         IF ( P<=0.5 ) Ppf = ALOG(2.0*P)
-         IF ( P>0.5 ) Ppf = -ALOG(2.0*(1.0-P))
+         IF ( P<=0.5_wp ) Ppf = ALOG(2.0_wp*P)
+         IF ( P>0.5_wp ) Ppf = -ALOG(2.0_wp*(1.0_wp-P))
       ENDIF
 !
       END SUBROUTINE DEXPPF
@@ -5533,8 +5522,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine dexran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -5557,7 +5546,7 @@ END SUBROUTINE BETRAN
 !!    program demo_dexran
 !!    use M_datapac, only : dexran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexran(x,y)
 !!    end program demo_dexran
 !!
@@ -5576,7 +5565,7 @@ END SUBROUTINE BETRAN
 !*--DEXRAN4244
 !*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Istart , N
-      REAL q , X
+REAL(kind=wp) :: q , X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT DEXRAN
@@ -5672,12 +5661,12 @@ END SUBROUTINE BETRAN
 !
          DO i = 1 , N
             q = X(i)
-            IF ( q<=0.5 ) X(i) = ALOG(2.0*q)
-            IF ( q>0.5 ) X(i) = -ALOG(2.0*(1.0-q))
+            IF ( q<=0.5_wp ) X(i) = ALOG(2.0_wp*q)
+            IF ( q>0.5_wp ) X(i) = -ALOG(2.0_wp*(1.0-q))
          ENDDO
       ENDIF
 !
-      END SUBROUTINE DEXRAN
+END SUBROUTINE DEXRAN
 !>
 !!##NAME
 !!    dexsf(3f) - [M_datapac:STATISTICS] compute the double exponential
@@ -5687,8 +5676,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine dexsf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -5711,7 +5700,7 @@ END SUBROUTINE BETRAN
 !!    program demo_dexsf
 !!    use M_datapac, only : dexsf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexsf(x,y)
 !!    end program demo_dexsf
 !!
@@ -5730,7 +5719,7 @@ END SUBROUTINE BETRAN
 !*--DEXSF4352
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Sf
+REAL(kind=wp) :: P , Sf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT DEXSF
@@ -5783,7 +5772,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE DEXSF  SUBROU&
@@ -5796,8 +5785,8 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-         IF ( P<=0.5 ) Sf = 1.0/P
-         IF ( P>0.5 ) Sf = 1.0/(1.0-P)
+         IF ( P<=0.5_wp ) Sf = 1.0_wp/P
+         IF ( P>0.5_wp ) Sf = 1.0_wp/(1.0_wp-P)
       ENDIF
 !
       END SUBROUTINE DEXSF
@@ -5810,8 +5799,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine discr2 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -5834,7 +5823,7 @@ END SUBROUTINE BETRAN
 !!    program demo_discr2
 !!    use M_datapac, only : discr2
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call discr2(x,y)
 !!    end program demo_discr2
 !!
@@ -5852,7 +5841,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DISCR24429
 !*** Start of declarations inserted by SPAG
-      REAL ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
+REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
      &     xmax , xmin , Y
       INTEGER i , icount , ip , ipr , iupncl , N , Numcla
 !*** End of declarations inserted by SPAG
@@ -5982,7 +5971,7 @@ END SUBROUTINE BETRAN
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
          WRITE (ipr,99015) Numcla
          DO i = 1 , N
-            Y(i) = 0.0
+            Y(i) = 0.0_wp
          ENDDO
          RETURN
       ELSE
@@ -6031,7 +6020,7 @@ END SUBROUTINE BETRAN
 !
          DO i = 1 , Numcla
             ai = i
-            classm(i) = xmin + (ai-0.5)*xdel
+            classm(i) = xmin + (ai-0.5_wp)*xdel
          ENDDO
 !
 !     PERFORM THE DISCRETIZING TRANSFORMATION.
@@ -6039,7 +6028,7 @@ END SUBROUTINE BETRAN
 !
          DO i = 1 , N
             p = (X(i)-xmin)/(xmax-xmin)
-            p = p*anuml + 1.0
+            p = p*anuml + 1.0_wp
             ip = p
             IF ( ip<1 ) ip = 1
             IF ( ip>Numcla ) ip = Numcla
@@ -6075,7 +6064,7 @@ END SUBROUTINE BETRAN
      &           '-------------')
          DO i = 1 , Numcla
             ai = i
-            cmin = xmin + (ai-1.0)*xdel
+            cmin = xmin + (ai-1.0_wp)*xdel
             cmax = xmin + ai*xdel
             WRITE (ipr,99014) i , cmin , classm(i) , cmax , icount(i)
 99014       FORMAT (' ',4X,I6,2X,3F14.7,I8)
@@ -6094,8 +6083,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine discr3 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -6118,7 +6107,7 @@ END SUBROUTINE BETRAN
 !!    program demo_discr3
 !!    use M_datapac, only : discr3
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call discr3(x,y)
 !!    end program demo_discr3
 !!
@@ -6136,7 +6125,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DISCR34667
 !*** Start of declarations inserted by SPAG
-      REAL ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
+REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
      &     xmin , Y
       INTEGER i , icount , ip , ipr , iupncl , N , Numcla
 !*** End of declarations inserted by SPAG
@@ -6273,7 +6262,7 @@ END SUBROUTINE BETRAN
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
          WRITE (ipr,99015) Numcla
          DO i = 1 , N
-            Y(i) = 0.0
+            Y(i) = 0.0_wp
          ENDDO
          RETURN
       ELSE
@@ -6323,7 +6312,7 @@ END SUBROUTINE BETRAN
 !
          DO i = 1 , N
             p = (X(i)-xmin)/(xmax-xmin)
-            p = p*anuml + 1.0
+            p = p*anuml + 1.0_wp
             ip = p
             IF ( ip<1 ) ip = 1
             IF ( ip>Numcla ) ip = Numcla
@@ -6357,7 +6346,7 @@ END SUBROUTINE BETRAN
      &           )
          DO i = 1 , Numcla
             ai = i
-            cmin = xmin + (ai-1.0)*xdel
+            cmin = xmin + (ai-1.0_wp)*xdel
             cmax = xmin + ai*xdel
             WRITE (ipr,99014) i , cmin , cmax , icount(i)
 99014       FORMAT (' ',4X,I6,2X,2F14.7,I8)
@@ -6376,8 +6365,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine discre (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -6400,7 +6389,7 @@ END SUBROUTINE BETRAN
 !!    program demo_discre
 !!    use M_datapac, only : discre
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call discre(x,y)
 !!    end program demo_discre
 !!
@@ -6418,7 +6407,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DISCRE4903
 !*** Start of declarations inserted by SPAG
-      REAL ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
+REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
       INTEGER i , icounl , icount , icounu , ip , ipr , N , numcla
 !*** End of declarations inserted by SPAG
@@ -6547,7 +6536,7 @@ END SUBROUTINE BETRAN
      &RE SUBROUTINE HAS THE VALUE 1 *****')
          Y(1) = X(1)
          RETURN
-      ELSEIF ( Xdel<=0.0 ) THEN
+      ELSEIF ( Xdel<=0.0_wp ) THEN
          WRITE (ipr,99004)
 99004    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE DISCRE SUBROU&
@@ -6556,7 +6545,7 @@ END SUBROUTINE BETRAN
 99005    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.7,       &
      &           ' *****')
          DO i = 1 , N
-            Y(i) = 0.0
+            Y(i) = 0.0_wp
          ENDDO
          RETURN
       ELSE
@@ -6568,7 +6557,7 @@ END SUBROUTINE BETRAN
 99007       FORMAT (' ','***** THE VALUE OF THE ARGUMENTS ARE ',E15.7,  &
      &              ' *****')
             DO i = 1 , N
-               Y(i) = 0.0
+               Y(i) = 0.0_wp
             ENDDO
             RETURN
          ELSE
@@ -6597,7 +6586,7 @@ END SUBROUTINE BETRAN
          IF ( Xmin>Xmax ) pointl = Xmax
          IF ( Xmin>Xmax ) pointu = Xmin
          totdel = pointu - pointl
-         numcla = (totdel/Xdel) + 0.999
+         numcla = (totdel/Xdel) + 0.999_wp
 !
 !     ZERO OUT THE COUNT VECTOR (ICOUNT)
 !     AND THE LOWER AND UPPER COUNT VARIABLES.
@@ -6614,10 +6603,10 @@ END SUBROUTINE BETRAN
             ai = i
             cmin = Xmin + (ai-1.0)*Xdel
             cmax = Xmin + ai*Xdel
-            classm(i) = (cmin+cmax)/2.0
+            classm(i) = (cmin+cmax)/2.0_wp
          ENDDO
          cmax = pointu
-         classm(numcla) = (cmin+cmax)/2.0
+         classm(numcla) = (cmin+cmax)/2.0_wp
 !
 !     PERFORM THE DISCRETIZING TRANSFORMATION.
 !
@@ -6629,11 +6618,11 @@ END SUBROUTINE BETRAN
                Y(i) = classm(ip)
                icount(ip) = icount(ip) + 1
             ELSEIF ( X(i)<pointl ) THEN
-               clasml = pointl - (Xdel/2.0)
+               clasml = pointl - (Xdel/2.0_wp)
                Y(i) = clasml
                icounl = icounl + 1
             ELSEIF ( X(i)>pointu ) THEN
-               clasmu = pointu + (Xdel/2.0)
+               clasmu = pointu + (Xdel/2.0_wp)
                Y(i) = clasmu
                icounu = icounu + 1
             ENDIF
@@ -6669,7 +6658,7 @@ END SUBROUTINE BETRAN
 99017    FORMAT (' ',4X,'   BELOW     -INFINITY',2F14.7,I8)
          DO i = 1 , numcla
             ai = i
-            cmin = pointl + (ai-1.0)*Xdel
+            cmin = pointl + (ai-1.0_wp)*Xdel
             cmax = pointl + ai*Xdel
             IF ( cmax>pointu ) cmax = pointu
             WRITE (ipr,99018) i , cmin , classm(i) , cmax , icount(i)
@@ -6689,8 +6678,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine dot (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -6713,7 +6702,7 @@ END SUBROUTINE BETRAN
 !!    program demo_dot
 !!    use M_datapac, only : dot
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dot(x,y)
 !!    end program demo_dot
 !!
@@ -6731,7 +6720,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--DOT5171
 !*** Start of declarations inserted by SPAG
-      REAL A , B , Dotpro , Parpro
+REAL(kind=wp) :: A , B , Dotpro , Parpro
       INTEGER i , Imax , Imin
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -6769,8 +6758,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine ev1cdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -6793,7 +6782,7 @@ END SUBROUTINE BETRAN
 !!    program demo_ev1cdf
 !!    use M_datapac, only : ev1cdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1cdf(x,y)
 !!    end program demo_ev1cdf
 !!
@@ -6811,7 +6800,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--EV1CDF5205
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , X
+REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -6860,7 +6849,7 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-      Cdf = 1.0 - EXP(-(EXP(-X)))
+      Cdf = 1.0_wp - EXP(-(EXP(-X)))
 !
       END SUBROUTINE EV1CDF
 !>
@@ -6872,8 +6861,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine ev1plt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -6896,7 +6885,7 @@ END SUBROUTINE BETRAN
 !!    program demo_ev1plt
 !!    use M_datapac, only : ev1plt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1plt(x,y)
 !!    end program demo_ev1plt
 !!
@@ -6914,7 +6903,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--EV1PLT5262
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
+REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -6981,7 +6970,7 @@ END SUBROUTINE BETRAN
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/1.56186687/
+      DATA tau/1.56186687_wp/
 !
       ipr = 6
       iupper = 7500
@@ -7027,7 +7016,7 @@ END SUBROUTINE BETRAN
 !     COMPUTE EXTREME VALUE TYPE 1 ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = -ALOG(ALOG(1.0/W(i)))
+            W(i) = -ALOG(ALOG(1.0_wp/W(i)))
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -7046,17 +7035,17 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -7081,8 +7070,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine ev1ppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -7105,7 +7094,7 @@ END SUBROUTINE BETRAN
 !!    program demo_ev1ppf
 !!    use M_datapac, only : ev1ppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1ppf(x,y)
 !!    end program demo_ev1ppf
 !!
@@ -7124,7 +7113,7 @@ END SUBROUTINE BETRAN
 !*--EV1PPF5425
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Ppf
+REAL(kind=wp) :: P , Ppf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT EV1PPF
@@ -7174,7 +7163,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1PPF SUBROU&
@@ -7182,13 +7171,13 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = -ALOG(ALOG(1.0/P))
+         Ppf = -ALOG(ALOG(1.0_wp/P))
       ENDIF
 !
       END SUBROUTINE EV1PPF
@@ -7201,8 +7190,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine ev1ran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -7225,7 +7214,7 @@ END SUBROUTINE BETRAN
 !!    program demo_ev1ran
 !!    use M_datapac, only : ev1ran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1ran(x,y)
 !!    end program demo_ev1ran
 !!
@@ -7244,7 +7233,7 @@ END SUBROUTINE BETRAN
 !*--EV1RAN5499
 !*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
-      REAL X
+REAL(kind=wp) :: X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT EV1RAN
@@ -7324,7 +7313,7 @@ END SUBROUTINE BETRAN
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = -ALOG(ALOG(1.0/X(i)))
+            X(i) = -ALOG(ALOG(1.0_wp/X(i)))
          ENDDO
       ENDIF
 !
@@ -7338,8 +7327,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine ev2cdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -7362,7 +7351,7 @@ END SUBROUTINE BETRAN
 !!    program demo_ev2cdf
 !!    use M_datapac, only : ev2cdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2cdf(x,y)
 !!    end program demo_ev2cdf
 !!
@@ -7380,7 +7369,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--EV2CDF5604
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , Gamma , X
+REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -7428,28 +7417,28 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<0.0 ) THEN
+      IF ( X<0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EV2C&
      &DF SUBROUTINE IS NEGATIVE *****')
          WRITE (ipr,99003) X
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2CDF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) Gamma
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Cdf = 0.0
-         IF ( X==0.0 ) RETURN
+         Cdf = 0.0_wp
+         IF ( X==0.0_wp ) RETURN
          Cdf = EXP(-(X**(-Gamma)))
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
@@ -7464,8 +7453,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine ev2plt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -7488,7 +7477,7 @@ END SUBROUTINE BETRAN
 !!    program demo_ev2plt
 !!    use M_datapac, only : ev2plt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2plt(x,y)
 !!    end program demo_ev2plt
 !!
@@ -7506,10 +7495,10 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--EV2PLT5684
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
+REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
-      REAL yslope
+REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -7599,7 +7588,7 @@ END SUBROUTINE BETRAN
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
-         IF ( Gamma<=0.0 ) THEN
+         IF ( Gamma<=0.0_wp ) THEN
             WRITE (ipr,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE EV2PLT SUBROU&
@@ -7635,7 +7624,7 @@ END SUBROUTINE BETRAN
 !     COMPUTE EXREME VALUE TYPE 2 DISTRIBUTION ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = (-ALOG(W(i)))**(-1.0/Gamma)
+            W(i) = (-ALOG(W(i)))**(-1.0_wp/Gamma)
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -7644,14 +7633,14 @@ END SUBROUTINE BETRAN
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         q = .9975
-         pp9975 = (-ALOG(q))**(-1.0/Gamma)
-         q = .0025
-         pp0025 = (-ALOG(q))**(-1.0/Gamma)
-         q = .975
-         pp975 = (-ALOG(q))**(-1.0/Gamma)
-         q = .025
-         pp025 = (-ALOG(q))**(-1.0/Gamma)
+         q = .9975_wp
+         pp9975 = (-ALOG(q))**(-1.0_wp/Gamma)
+         q = .0025_wp
+         pp0025 = (-ALOG(q))**(-1.0_wp/Gamma)
+         q = .975_wp
+         pp975 = (-ALOG(q))**(-1.0_wp/Gamma)
+         q = .025_wp
+         pp025 = (-ALOG(q))**(-1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99007) Gamma , tau , N
 !
@@ -7664,17 +7653,17 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -7699,8 +7688,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine ev2ppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -7723,7 +7712,7 @@ END SUBROUTINE BETRAN
 !!    program demo_ev2ppf
 !!    use M_datapac, only : ev2ppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2ppf(x,y)
 !!    end program demo_ev2ppf
 !!
@@ -7741,7 +7730,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--EV2PPF5873
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , P , Ppf
+REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -7794,27 +7783,27 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV2PPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99003) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2PPF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) Gamma
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = (-ALOG(P))**(-1.0/Gamma)
+         Ppf = (-ALOG(P))**(-1.0_wp/Gamma)
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -7828,8 +7817,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine ev2ran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -7852,7 +7841,7 @@ END SUBROUTINE BETRAN
 !!    program demo_ev2ran
 !!    use M_datapac, only : ev2ran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2ran(x,y)
 !!    end program demo_ev2ran
 !!
@@ -7870,7 +7859,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--EV2RAN5956
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , X
+REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -7943,7 +7932,7 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2RAN SUBROU&
@@ -7962,7 +7951,7 @@ END SUBROUTINE BETRAN
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = (-ALOG(X(i)))**(-1.0/Gamma)
+            X(i) = (-ALOG(X(i)))**(-1.0_wp/Gamma)
          ENDDO
       ENDIF
 !
@@ -7976,8 +7965,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine expcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -8000,7 +7989,7 @@ END SUBROUTINE BETRAN
 !!    program demo_expcdf
 !!    use M_datapac, only : expcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expcdf(x,y)
 !!    end program demo_expcdf
 !!
@@ -8018,7 +8007,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--EXPCDF6072
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , X
+REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -8060,7 +8049,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<0.0 ) THEN
+      IF ( X<0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EXPC&
@@ -8068,13 +8057,13 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Cdf = 1.0 - EXP(-X)
+         Cdf = 1.0_wp - EXP(-X)
       ENDIF
 !
       END SUBROUTINE EXPCDF
@@ -8087,8 +8076,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine exppdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -8111,7 +8100,7 @@ END SUBROUTINE BETRAN
 !!    program demo_exppdf
 !!    use M_datapac, only : exppdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call exppdf(x,y)
 !!    end program demo_exppdf
 !!
@@ -8130,7 +8119,7 @@ END SUBROUTINE BETRAN
 !*--EXPPDF6137
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL Pdf , X
+REAL(kind=wp) :: Pdf , X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT EXPPDF
@@ -8171,7 +8160,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<0.0 ) THEN
+      IF ( X<0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EXPP&
@@ -8179,7 +8168,7 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Pdf = 0.0
+         Pdf = 0.0_wp
          RETURN
       ELSE
 !
@@ -8198,8 +8187,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine expplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -8222,7 +8211,7 @@ END SUBROUTINE BETRAN
 !!    program demo_expplt
 !!    use M_datapac, only : expplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expplt(x,y)
 !!    end program demo_expplt
 !!
@@ -8240,7 +8229,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--EXPPLT6202
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
+REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -8306,7 +8295,7 @@ END SUBROUTINE BETRAN
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/1.63473745/
+      DATA tau/1.63473745_wp/
 !
       ipr = 6
       iupper = 7500
@@ -8352,7 +8341,7 @@ END SUBROUTINE BETRAN
 !     COMPUTE EXPONENTIAL ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = -ALOG(1.0-W(i))
+            W(i) = -ALOG(1.0_wp-W(i))
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -8370,17 +8359,17 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -8405,8 +8394,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine expppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -8429,7 +8418,7 @@ END SUBROUTINE BETRAN
 !!    program demo_expppf
 !!    use M_datapac, only : expppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expppf(x,y)
 !!    end program demo_expppf
 !!
@@ -8448,7 +8437,7 @@ END SUBROUTINE BETRAN
 !*--EXPPPF6363
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Ppf
+REAL(kind=wp) :: P , Ppf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT EXPPPF
@@ -8500,7 +8489,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPPPF SUBROU&
@@ -8513,7 +8502,7 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = -ALOG(1.0-P)
+         Ppf = -ALOG(1.0_wp-P)
       ENDIF
 !
       END SUBROUTINE EXPPPF
@@ -8525,8 +8514,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine expran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -8549,7 +8538,7 @@ END SUBROUTINE BETRAN
 !!    program demo_expran
 !!    use M_datapac, only : expran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expran(x,y)
 !!    end program demo_expran
 !!
@@ -8568,7 +8557,7 @@ END SUBROUTINE BETRAN
 !*--EXPRAN6438
 !*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
-      REAL X
+REAL(kind=wp) :: X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT EXPRAN
@@ -8667,8 +8656,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine expsf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -8691,7 +8680,7 @@ END SUBROUTINE BETRAN
 !!    program demo_expsf
 !!    use M_datapac, only : expsf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expsf(x,y)
 !!    end program demo_expsf
 !!
@@ -8710,7 +8699,7 @@ END SUBROUTINE BETRAN
 !*--EXPSF6549
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Sf
+REAL(kind=wp) :: P , Sf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT EXPSF
@@ -8763,7 +8752,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPSF  SUBROU&
@@ -8776,7 +8765,7 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-         Sf = 1.0/(1.0-P)
+         Sf = 1.0_wp/(1.0_wp-P)
       ENDIF
 !
       END SUBROUTINE EXPSF
@@ -8789,8 +8778,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine extrem (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -8813,7 +8802,7 @@ END SUBROUTINE BETRAN
 !!    program demo_extrem
 !!    use M_datapac, only : extrem
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call extrem(x,y)
 !!    end program demo_extrem
 !!
@@ -8831,9 +8820,9 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--EXTREM6625
 !*** Start of declarations inserted by SPAG
-      REAL a , aindex , am , an , arg , cc , corr , corrmx , gamtab ,   &
+REAL(kind=wp) :: a , aindex , am , an , arg , cc , corr , corrmx , gamtab ,   &
      &     h , hold , p , r , scrat , sum1 , sum2 , sum3 , sy , t , w
-      REAL wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
+REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
      &     yslope , Z
       INTEGER i , idis , idismx , ipr , iupper , j , jskip , k , N ,    &
      &        numam , numdis , numdm1
@@ -8923,50 +8912,51 @@ END SUBROUTINE BETRAN
      &     gamtab(11) , gamtab(12) , gamtab(13) , gamtab(14) ,          &
      &     gamtab(15) , gamtab(16) , gamtab(17) , gamtab(18) ,          &
      &     gamtab(19) , gamtab(20) , gamtab(21) , gamtab(22) ,          &
-     &     gamtab(23) , gamtab(24) , gamtab(25)/1. , 2. , 3. , 4. , 5. ,&
-     &     6. , 7. , 8. , 9. , 10. , 11. , 12. , 13. , 14. , 15. , 16. ,&
-     &     17. , 18. , 19. , 20. , 21. , 22. , 23. , 24. , 25./
+     &     gamtab(23) , gamtab(24) , gamtab(25)/1.0_wp , 2.0_wp , 3.0_wp , 4.0_wp , 5.0_wp ,&
+     &     6.0_wp , 7.0_wp , 8.0_wp , 9.0_wp , 10.0_wp , 11.0_wp , 12.0_wp , 13.0_wp , 14.0_wp , 15.0_wp , 16.0_wp ,&
+     &     17.0_wp , 18.0_wp , 19.0_wp , 20.0_wp , 21.0_wp , 22.0_wp , 23.0_wp , 24.0_wp , 25.0_wp/
+
       DATA gamtab(26) , gamtab(27) , gamtab(28) , gamtab(29) ,          &
      &     gamtab(30) , gamtab(31) , gamtab(32) , gamtab(33) ,          &
      &     gamtab(34) , gamtab(35) , gamtab(36) , gamtab(37) ,          &
      &     gamtab(38) , gamtab(39) , gamtab(40) , gamtab(41) ,          &
-     &     gamtab(42)/30. , 35. , 40. , 45. , 50. , 60. , 70. , 80. ,   &
-     &     90. , 100. , 150. , 200. , 250. , 350. , 500. , 750. , 1000./
+     &     gamtab(42)/30.0_wp , 35.0_wp , 40.0_wp , 45.0_wp , 50.0_wp , 60.0_wp , 70.0_wp , 80.0_wp ,   &
+     &     90.0_wp , 100.0_wp , 150.0_wp , 200.0_wp , 250.0_wp , 350.0_wp , 500.0_wp , 750.0_wp , 1000.0_wp/
 !CCCC DATA C(1),C(2),C(3),C(4),C(5),C(6),C(7),C(8),C(9),C(10)
-!CCCC1/60.,75.,100.,150.,250.,500.,1000.,10000.,100000.,1000000./
+!CCCC1/60.0_wp,75.0_wp,100.0_wp,150.0_wp,250.0_wp,500.0_wp,1000.0_wp,10000.0_wp,100000.0_wp,1000000.0_wp/
 !CCCC DATA P0(1),P0(2),P0(3),P0(4),P0(5),P0(6),P0(7),P0(8),P0(9),P0(10)
-!CCCC1/.0,.5,.75,.9,.95,.975,.99,.999,.9999,.99999/
+!CCCC1/0.0_wp,0.5_wp,0.75_wp,0.9_wp,0.95_wp,0.975_wp,0.99_wp,0.999_wp,0.9999_wp,0.99999_wp/
       DATA t(1) , t(2) , t(3) , t(4) , t(5) , t(6) , t(7) , t(8) ,      &
      &     t(9) , t(10) , t(11) , t(12) , t(13) , t(14) , t(15) ,       &
      &     t(16) , t(17) , t(18) , t(19) , t(20) , t(21) , t(22) ,      &
-     &     t(23) , t(24) , t(25)/10.18011 , 3.39672 , 2.47043 ,         &
-     &     2.14609 , 1.98712 , 1.89429 , 1.83394 , 1.79175 , 1.76069 ,  &
-     &     1.73691 , 1.71814 , 1.70297 , 1.69045 , 1.67996 , 1.67103 ,  &
-     &     1.66335 , 1.65667 , 1.65082 , 1.64564 , 1.64102 , 1.63689 ,  &
-     &     1.63316 , 1.62979 , 1.62672 , 1.62391/
+     &     t(23) , t(24) , t(25)/10.18011_wp , 3.39672_wp , 2.47043_wp ,         &
+     &     2.14609_wp , 1.98712_wp , 1.89429_wp , 1.83394_wp , 1.79175_wp , 1.76069_wp ,  &
+     &     1.73691_wp , 1.71814_wp , 1.70297_wp , 1.69045_wp , 1.67996_wp , 1.67103_wp ,  &
+     &     1.66335_wp , 1.65667_wp , 1.65082_wp , 1.64564_wp , 1.64102_wp , 1.63689_wp ,  &
+     &     1.63316_wp , 1.62979_wp , 1.62672_wp , 1.62391_wp/
       DATA t(26) , t(27) , t(28) , t(29) , t(30) , t(31) , t(32) ,      &
      &     t(33) , t(34) , t(35) , t(36) , t(37) , t(38) , t(39) ,      &
      &     t(40) , t(41) , t(42) , t(43)/1.61287 , 1.60516 , 1.59947 ,  &
-     &     1.59510 , 1.59164 , 1.58651 , 1.58289 , 1.58019 , 1.57811 ,  &
-     &     1.57645 , 1.57152 , 1.56908 , 1.56763 , 1.56666 , 1.56546 ,  &
-     &     1.56377 , 1.56330 , 1.56187/
+     &     1.59510_wp , 1.59164_wp , 1.58651_wp , 1.58289_wp , 1.58019_wp , 1.57811_wp ,  &
+     &     1.57645_wp , 1.57152_wp , 1.56908_wp , 1.56763_wp , 1.56666_wp , 1.56546_wp ,  &
+     &     1.56377_wp , 1.56330_wp , 1.56187_wp/
       DATA aindex(1) , aindex(2) , aindex(3) , aindex(4) , aindex(5) ,  &
      &     aindex(6) , aindex(7) , aindex(8) , aindex(9) , aindex(10) , &
      &     aindex(11) , aindex(12) , aindex(13) , aindex(14) ,          &
      &     aindex(15) , aindex(16) , aindex(17) , aindex(18) ,          &
      &     aindex(19) , aindex(20) , aindex(21) , aindex(22) ,          &
-     &     aindex(23) , aindex(24) , aindex(25)/1. , 2. , 3. , 4. , 5. ,&
-     &     6. , 7. , 8. , 9. , 10. , 11. , 12. , 13. , 14. , 15. , 16. ,&
-     &     17. , 18. , 19. , 20. , 21. , 22. , 23. , 24. , 25./
+     &     aindex(23) , aindex(24) , aindex(25)/1.0_wp , 2.0_wp , 3.0_wp , 4.0_wp , 5.0_wp ,&
+     &     6.0_wp , 7.0_wp , 8.0_wp , 9.0_wp , 10.0_wp , 11.0_wp , 12.0_wp , 13.0_wp , 14.0_wp , 15.0_wp , 16.0_wp ,&
+     &     17.0_wp , 18.0_wp , 19.0_wp , 20.0_wp , 21.0_wp , 22.0_wp , 23.0_wp , 24.0_wp , 25.0_wp/
       DATA aindex(26) , aindex(27) , aindex(28) , aindex(29) ,          &
      &     aindex(30) , aindex(31) , aindex(32) , aindex(33) ,          &
      &     aindex(34) , aindex(35) , aindex(36) , aindex(37) ,          &
      &     aindex(38) , aindex(39) , aindex(40) , aindex(41) ,          &
      &     aindex(42) , aindex(43) , aindex(44) , aindex(45) ,          &
      &     aindex(46) , aindex(47) , aindex(48) , aindex(49) ,          &
-     &     aindex(50)/26. , 27. , 28. , 29. , 30. , 31. , 32. , 33. ,   &
-     &     34. , 35. , 36. , 37. , 38. , 39. , 40. , 41. , 42. , 43. ,  &
-     &     44. , 45. , 46. , 47. , 48. , 49. , 50./
+     &     aindex(50)/26.0_wp , 27.0_wp , 28.0_wp , 29.0_wp , 30.0_wp , 31.0_wp , 32.0_wp , 33.0_wp ,   &
+     &     34.0_wp , 35.0_wp , 36.0_wp , 37.0_wp , 38.0_wp , 39.0_wp , 40.0_wp , 41.0_wp , 42.0_wp , 43.0_wp ,  &
+     &     44.0_wp , 45.0_wp , 46.0_wp , 47.0_wp , 48.0_wp , 49.0_wp , 50.0_wp/
 !
       ipr = 6
       iupper = 7500
@@ -9023,32 +9013,32 @@ END SUBROUTINE BETRAN
          DO idis = 1 , numdis
             IF ( idis==numdis ) THEN
                DO i = 1 , N
-                  w(i) = -ALOG(ALOG(1.0/Z(i)))
+                  w(i) = -ALOG(ALOG(1.0_wp/Z(i)))
                ENDDO
             ELSE
                a = gamtab(idis)
                DO i = 1 , N
-                  w(i) = (-ALOG(Z(i)))**(-1.0/a)
+                  w(i) = (-ALOG(Z(i)))**(-1.0_wp/a)
                ENDDO
             ENDIF
 !
-            sum1 = 0.0
-            sum2 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
             DO i = 1 , N
                sum1 = sum1 + Y(i)
                sum2 = sum2 + w(i)
             ENDDO
             ybar = sum1/an
             wbar = sum2/an
-            sum1 = 0.0
-            sum2 = 0.0
-            sum3 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
+            sum3 = 0.0_wp
             DO i = 1 , N
                sum2 = sum2 + (Y(i)-ybar)*(w(i)-wbar)
                sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
                sum3 = sum3 + (w(i)-wbar)*(w(i)-wbar)
             ENDDO
-            sy = SQRT(sum1/(an-1.0))
+            sy = SQRT(sum1/(an-1.0_wp))
             cc = sum2/SQRT(sum3*sum1)
             yslope = sum2/sum3
             yint = ybar - yslope*wbar
@@ -9159,15 +9149,15 @@ END SUBROUTINE BETRAN
             ENDDO
          ENDDO
          k = k + 1
-         am(k) = 10000.
+         am(k) = 10000.0_wp
          k = k + 1
-         am(k) = 50000.
+         am(k) = 50000.0_wp
          k = k + 1
-         am(k) = 100000.
+         am(k) = 100000.0_wp
          k = k + 1
-         am(k) = 500000.
+         am(k) = 500000.0_wp
          k = k + 1
-         am(k) = 1000000.
+         am(k) = 1000000.0_wp
          k = k + 1
          am(k) = N
          numam = k
@@ -9185,10 +9175,10 @@ END SUBROUTINE BETRAN
             yint = yi(idismx)
             yslope = ys(idismx)
             DO i = 2 , numam
-               r = 1.0/am(i)
-               p = 1.0 - r
+               r = 1.0_wp/am(i)
+               p = 1.0_wp - r
                arg = -ALOG(p)
-               IF ( arg>0.0 ) h(i,1) = yint + yslope*(arg**(-1.0/a))
+               IF ( arg>0.0_wp ) h(i,1) = yint + yslope*(arg**(-1.0_wp/a))
             ENDDO
          ENDIF
 !
@@ -9198,10 +9188,10 @@ END SUBROUTINE BETRAN
          yint = yi(numdis)
          yslope = ys(numdis)
          DO i = 2 , numam
-            r = 1.0/am(i)
-            p = 1.0 - r
+            r = 1.0_wp/am(i)
+            p = 1.0_wp - r
             arg = -ALOG(p)
-            IF ( arg>0.0 ) h(i,2) = yint + yslope*(-ALOG(arg))
+            IF ( arg>0.0_wp ) h(i,2) = yint + yslope*(-ALOG(arg))
          ENDDO
 !
 !     WRITE OUT THE PAGE WITH THE RETURN PERIODS AND THE PREDICTED EXTREMES
@@ -9266,8 +9256,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine fcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -9290,7 +9280,7 @@ END SUBROUTINE BETRAN
 !!    program demo_fcdf
 !!    use M_datapac, only : fcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call fcdf(x,y)
 !!    end program demo_fcdf
 !!
@@ -9308,7 +9298,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--FCDF7056
 !*** Start of declarations inserted by SPAG
-      REAL amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
+REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
      &     zratio
       INTEGER i , ibran , ievodd , iflag1 , iflag2 , imax , imin , ipr ,&
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
@@ -9395,7 +9385,7 @@ END SUBROUTINE BETRAN
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FCDF   SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99006) Nu1
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
          IF ( Nu2<=0 ) THEN
@@ -9404,7 +9394,7 @@ END SUBROUTINE BETRAN
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FCDF   SUBROU&
      &TINE IS NON-POSITIVE *****')
             WRITE (ipr,99006) Nu2
-            Cdf = 0.0
+            Cdf = 0.0_wp
             RETURN
          ELSE
             IF ( X<0.0 ) THEN
@@ -9415,7 +9405,7 @@ END SUBROUTINE BETRAN
                WRITE (ipr,99004) X
 99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, &
      &                 ' *****')
-               Cdf = 0.0
+               Cdf = 0.0_wp
                RETURN
             ELSE
 !
@@ -9443,26 +9433,26 @@ END SUBROUTINE BETRAN
 !     STANDARD DEVIATIONS ABOVE THE MEAN,
 !     SET CDF = 1.0 AND RETURN.
 !
-               IF ( X>0.0 ) THEN
+               IF ( X>0.0_wp ) THEN
                   IF ( Nu2<=4 ) GOTO 50
-                  t1 = 2.0/anu1
-                  t2 = anu2/(anu2-2.0)
-                  t3 = (anu1+anu2-2.0)/(anu2-4.0)
+                  t1 = 2.0_wp/anu1
+                  t2 = anu2/(anu2-2.0_wp)
+                  t3 = (anu1+anu2-2.0_wp)/(anu2-4.0_wp)
                   amean = t2
                   sd = SQRT(t1*t2*t2*t3)
                   zratio = (X-amean)/sd
-                  IF ( Nu2>=10 .OR. zratio>=-3000.0 ) THEN
-                     IF ( Nu2<10 .OR. zratio>=-150.0 ) THEN
-                        IF ( Nu2<10 .AND. zratio>3000.0 ) GOTO 20
-                        IF ( Nu2<10 .OR. zratio<=150.0 ) GOTO 50
+                  IF ( Nu2>=10 .OR. zratio>=-3000.0_wp ) THEN
+                     IF ( Nu2<10 .OR. zratio>=-150.0_wp ) THEN
+                        IF ( Nu2<10 .AND. zratio>3000.0_wp ) GOTO 20
+                        IF ( Nu2<10 .OR. zratio<=150.0_wp ) GOTO 50
                         GOTO 20
                      ENDIF
                   ENDIF
                ENDIF
-               Cdf = 0.0
+               Cdf = 0.0_wp
                RETURN
             ENDIF
- 20         Cdf = 1.0
+ 20         Cdf = 1.0_wp
             RETURN
          ENDIF
 !
@@ -9622,7 +9612,7 @@ END SUBROUTINE BETRAN
                   term3 = -(dnu2/dnu1)*0.5D0
                   u = (term1+term2)/(dx-term3)
                   CALL CHSCDF(u,Nu2,ccdf)
-                  Cdf = 1.0 - ccdf
+                  Cdf = 1.0_wp - ccdf
                   GOTO 99999
                ELSEIF ( Nu1<nucut2 .OR. Nu2<nucut1 ) THEN
                   ibran = 5
@@ -9670,8 +9660,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine fourie (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -9694,7 +9684,7 @@ END SUBROUTINE BETRAN
 !!    program demo_fourie
 !!    use M_datapac, only : fourie
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call fourie(x,y)
 !!    end program demo_fourie
 !!
@@ -9712,10 +9702,10 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--FOURIE7415
 !*** Start of declarations inserted by SPAG
-      REAL A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
+REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
      &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
      &     suma , sumb , t
-      REAL vbias , WS , X , xbar
+REAL(kind=wp) :: vbias , WS , X , xbar
       INTEGER i , ievodd , ilower , ipage , ipr , iskip , iupper , j ,  &
      &        maxpag , N , nhalf , nnpage
 !*** End of declarations inserted by SPAG
@@ -9858,7 +9848,7 @@ END SUBROUTINE BETRAN
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (A(1),WS(1))
       EQUIVALENCE (B(1),WS(7501))
-      DATA pi/3.14159265358979/
+      DATA pi/3.14159265358979_wp/
       DATA alperc/'%'/
 !
       ipr = 6
@@ -9895,12 +9885,12 @@ END SUBROUTINE BETRAN
 !     DETERMINE IF N IS ODD OR EVEN
 !
       ievodd = N - 2*(N/2)
-      del = (an+1.0)/2.0
-      IF ( ievodd==0 ) del = (an+2.0)/2.0
+      del = (an+1.0_wp)/2.0_wp
+      IF ( ievodd==0 ) del = (an+2.0_wp)/2.0_wp
 !
 !     COMPUTE THE SAMPLE MEAN
 !
-      sum = 0.0
+      sum = 0.0_wp
       DO i = 1 , N
          sum = sum + X(i)
       ENDDO
@@ -9908,7 +9898,7 @@ END SUBROUTINE BETRAN
 !
 !     COMPUTE THE BIASED SAMPLE VARIANCE
 !
-      sum = 0.0
+      sum = 0.0_wp
       DO i = 1 , N
          sum = sum + (X(i)-xbar)**2
       ENDDO
@@ -9920,12 +9910,12 @@ END SUBROUTINE BETRAN
       nhalf = N/2
       DO i = 1 , nhalf
          ai = i
-         suma = 0.0
-         sumb = 0.0
+         suma = 0.0_wp
+         sumb = 0.0_wp
          DO j = 1 , N
             t = j
-            suma = suma + X(j)*COS(2.0*pi*(ai/an)*(t-del))
-            sumb = sumb + X(j)*SIN(2.0*pi*(ai/an)*(t-del))
+            suma = suma + X(j)*COS(2.0_wp*pi*(ai/an)*(t-del))
+            sumb = sumb + X(j)*SIN(2.0_wp*pi*(ai/an)*(t-del))
          ENDDO
          A(i) = suma/an
          B(i) = sumb/an
@@ -9992,15 +9982,15 @@ END SUBROUTINE BETRAN
             i = i + 1
             ai = i
             ffreq = ai/an
-            period = 1.0/ffreq
-            angrad = (ai/an)*2.0*pi
-            angdeg = (ai/an)*360.0
+            period = 1.0_wp/ffreq
+            angrad = (ai/an)*2.0_wp*pi
+            angdeg = (ai/an)*360.0_wp
             amp = SQRT(A(i)*A(i)+B(i)*B(i))
             phase1 = ATAN(-B(i)/A(i))
-            phase2 = phase1*360.0/(2.0*pi)
-            conmsq = 2.0*amp*amp
-            IF ( i==nhalf .AND. ievodd==0 ) conmsq = conmsq/2.0
-            percon = 100.0*(conmsq/vbias)
+            phase2 = phase1*360.0_wp/(2.0_wp*pi)
+            conmsq = 2.0_wp*amp*amp
+            IF ( i==nhalf .AND. ievodd==0 ) conmsq = conmsq/2.0_wp
+            percon = 100.0_wp*(conmsq/vbias)
             WRITE (ipr,99011) i , ffreq , period , A(i) , B(i) , amp ,  &
      &                        phase1 , phase2 , conmsq , percon , alperc
 99011       FORMAT (' ',I6,2X,F8.6,1X,F8.2,6(1X,E14.7),2X,F6.2,A1)
@@ -10035,8 +10025,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine fran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -10059,7 +10049,7 @@ END SUBROUTINE BETRAN
 !!    program demo_fran
 !!    use M_datapac, only : fran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call fran(x,y)
 !!    end program demo_fran
 !!
@@ -10077,7 +10067,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--FRAN7735
 !*** Start of declarations inserted by SPAG
-      REAL anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
+REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
      &     z
       INTEGER i , ipr , Istart , j , N , Nu1 , Nu2
 !*** End of declarations inserted by SPAG
@@ -10150,7 +10140,7 @@ END SUBROUTINE BETRAN
 !
       DIMENSION X(:)
       DIMENSION y(2) , z(2)
-      DATA pi/3.14159265358979/
+      DATA pi/3.14159265358979_wp/
 !
       ipr = 6
 !
@@ -10203,11 +10193,11 @@ END SUBROUTINE BETRAN
          anu2 = Nu2
          DO i = 1 , N
 !
-            sum = 0.0
+            sum = 0.0_wp
             DO j = 1 , Nu1 , 2
                CALL UNIRAN(2,1,y)
-               arg1 = -2.0*ALOG(y(1))
-               arg2 = 2.0*pi*y(2)
+               arg1 = -2.0_wp*ALOG(y(1))
+               arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
                sum = sum + z(1)*z(1)
@@ -10215,11 +10205,11 @@ END SUBROUTINE BETRAN
             ENDDO
             chs1 = sum
 !
-            sum = 0.0
+            sum = 0.0_wp
             DO j = 1 , Nu2 , 2
                CALL UNIRAN(2,1,y)
-               arg1 = -2.0*ALOG(y(1))
-               arg2 = 2.0*pi*y(2)
+               arg1 = -2.0_wp*ALOG(y(1))
+               arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
                sum = sum + z(1)*z(1)
@@ -10243,8 +10233,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine freq (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -10267,7 +10257,7 @@ END SUBROUTINE BETRAN
 !!    program demo_freq
 !!    use M_datapac, only : freq
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call freq(x,y)
 !!    end program demo_freq
 !!
@@ -10285,7 +10275,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--FREQ7897
 !*** Start of declarations inserted by SPAG
-      REAL an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
+REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
      &     WS , X , xbar , Y
       INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     &
      &        ndv , nm1 , numseq
@@ -10366,16 +10356,16 @@ END SUBROUTINE BETRAN
 !
 !     COMPUTE THE SAMPLE MEAN AND SAMPLE STANDARD DEVIATION
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xbar = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xbar)**2
          ENDDO
-         s = SQRT(sum/(an-1.0))
+         s = SQRT(sum/(an-1.0_wp))
 !
          WRITE (ipr,99005)
 99005    FORMAT ('1')
@@ -10421,8 +10411,8 @@ END SUBROUTINE BETRAN
                icfreq = icfreq + ifreq
                frq = ifreq
                cfreq = icfreq
-               pfreq = 100.0*frq/an
-               pcfreq = 100.0*cfreq/an
+               pfreq = 100.0_wp*frq/an
+               pcfreq = 100.0_wp*cfreq/an
                WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq ,&
      &                           pcfreq
                iflag = ndv - 10*(ndv/10)
@@ -10436,8 +10426,8 @@ END SUBROUTINE BETRAN
          icfreq = icfreq + ifreq
          frq = ifreq
          cfreq = icfreq
-         pfreq = 100.0*frq/an
-         pcfreq = 100.0*cfreq/an
+         pfreq = 100.0_wp*frq/an
+         pcfreq = 100.0_wp*cfreq/an
          WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq ,      &
      &                     pcfreq
          iflag = ndv - 10*(ndv/10)
@@ -10455,8 +10445,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine gamcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -10479,7 +10469,7 @@ END SUBROUTINE BETRAN
 !!    program demo_gamcdf
 !!    use M_datapac, only : gamcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamcdf(x,y)
 !!    end program demo_gamcdf
 !!
@@ -10497,7 +10487,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--GAMCDF8063
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , Gamma , X
+REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER i , ipr , maxit
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -10581,21 +10571,21 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<=0.0 ) THEN
+      IF ( X<=0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GAMC&
      &DF SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99007) X
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMCDF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99007) Gamma
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
@@ -10648,7 +10638,7 @@ END SUBROUTINE BETRAN
 99005    FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
          WRITE (ipr,99006)
 99006    FORMAT (' ','     THE OUTPUT VALUE OF CDF HAS BEEN SET TO 1.0')
-         Cdf = 1.0
+         Cdf = 1.0_wp
          RETURN
 !
  50      t = sum
@@ -10665,8 +10655,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine gamplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -10689,7 +10679,7 @@ END SUBROUTINE BETRAN
 !!    program demo_gamplt
 !!    use M_datapac, only : gamplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamplt(x,y)
 !!    end program demo_gamplt
 !!
@@ -10707,13 +10697,13 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--GAMPLT8228
 !*** Start of declarations inserted by SPAG
-      REAL acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
+REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
      &     dx , g , Gamma , hold , pcalc , pp0025 , pp025 , pp975 ,     &
      &     pp9975 , sum , sum1
-      REAL sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
+REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
      &     xlower , xmax , xmid , xmin , xmin0 , xupper , Y , ybar ,    &
      &     yint
-      REAL yslope
+REAL(kind=wp) :: yslope
       INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -10822,7 +10812,7 @@ END SUBROUTINE BETRAN
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
-         IF ( Gamma<=0.0 ) THEN
+         IF ( Gamma<=0.0_wp ) THEN
             WRITE (ipr,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE GAMPLT SUBROU&
@@ -10908,7 +10898,7 @@ END SUBROUTINE BETRAN
       ENDIF
  100  IF ( itail==0 ) u = W(i)
       dp = u
-      xmin0 = (u*Gamma*g)**(1.0/Gamma)
+      xmin0 = (u*Gamma*g)**(1.0_wp/Gamma)
       xmin = xmin0
       IF ( i==N .OR. itail>=1 ) THEN
          iloop = 1
@@ -10922,7 +10912,7 @@ END SUBROUTINE BETRAN
       xmax = acount*xmin0
       dx = xmax
       GOTO 600
- 300  xmid = (xmin+xmax)/2.0
+ 300  xmid = (xmin+xmax)/2.0_wp
 !
 !     AT THIS STAGE WE NOW HAVE LOWER AND UPPER LIMITS ON
 !     THE DESIRED I-TH GAMMA ORDER STATISITC MEDIAN W(I).
@@ -10954,22 +10944,22 @@ END SUBROUTINE BETRAN
 !     AND THE SAMPLE SIZE.
 !
       IF ( itail==0 ) THEN
-         u = .9975
+         u = 0.9975_wp
          itail = 1
          GOTO 100
       ELSEIF ( itail==1 ) THEN
          pp9975 = xmid
-         u = .0025
+         u = 0.0025_wp
          itail = 2
          GOTO 100
       ELSEIF ( itail==2 ) THEN
          pp0025 = xmid
-         u = .975
+         u = 0.975_wp
          itail = 3
          GOTO 100
       ELSEIF ( itail==3 ) THEN
          pp975 = xmid
-         u = .025
+         u = 0.025_wp
          itail = 4
          GOTO 100
       ELSE
@@ -10986,17 +10976,17 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -11022,10 +11012,10 @@ END SUBROUTINE BETRAN
 !     COMPUTE T-SUB-Q AS DEFINED ON PAGE 4 OF THE WILK, GNANADESIKAN,
 !     AND HUYETT REFERENCE
 !
- 600  sum = 1.0/dgamma
-      term = 1.0/dgamma
+ 600  sum = 1.0_wp/dgamma
+      term = 1.0_wp/dgamma
       cut1 = dx - dgamma
-      cut2 = dx*10000000.0
+      cut2 = dx*10000000.0_wp
       DO j = 1 , 1000
          aj = j
          term = dx*term/(dgamma+aj)
@@ -11050,14 +11040,14 @@ END SUBROUTINE BETRAN
          IF ( pcalc==dp ) GOTO 500
          IF ( pcalc>dp ) THEN
             xupper = xmid
-            xmid = (xmid+xlower)/2.0
+            xmid = (xmid+xlower)/2.0_wp
          ELSE
             xlower = xmid
-            xmid = (xmid+xupper)/2.0
+            xmid = (xmid+xupper)/2.0_wp
          ENDIF
          xdel = ABS(xmid-xlower)
          icount = icount + 1
-         IF ( xdel>=0.0000001 .AND. icount<=100 ) GOTO 400
+         IF ( xdel>=0.0000001_wp .AND. icount<=100 ) GOTO 400
          GOTO 500
       ENDIF
 !
@@ -11070,8 +11060,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine gamppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -11094,7 +11084,7 @@ END SUBROUTINE BETRAN
 !!    program demo_gamppf
 !!    use M_datapac, only : gamppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamppf(x,y)
 !!    end program demo_gamppf
 !!
@@ -11112,7 +11102,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--GAMPPF8588
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , P , Ppf
+REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -11208,21 +11198,21 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GAMPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99007) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99007) Gamma
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
@@ -11309,7 +11299,7 @@ END SUBROUTINE BETRAN
 99005 FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
       WRITE (ipr,99006)
 99006 FORMAT (' ','     THE OUTPUT VALUE OF PPF HAS BEEN SET TO 0.0')
-      Ppf = 0.0
+      Ppf = 0.0_wp
       RETURN
 !
  600  t = sum
@@ -11346,8 +11336,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine gamran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -11370,7 +11360,7 @@ END SUBROUTINE BETRAN
 !!    program demo_gamran
 !!    use M_datapac, only : gamran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamran(x,y)
 !!    end program demo_gamran
 !!
@@ -11388,7 +11378,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--GAMRAN8819
 !*** Start of declarations inserted by SPAG
-      REAL a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
+REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
      &     X , xg , xg0 , xn(1) , xn0
       INTEGER i , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
@@ -11476,8 +11466,8 @@ END SUBROUTINE BETRAN
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA athird/0.3333333/
-      DATA sqrt3/1.73205081/
+      DATA athird/0.3333333_wp/
+      DATA sqrt3/1.73205081_wp/
 !
       ipr = 6
 !
@@ -11493,14 +11483,14 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99006) Gamma
          RETURN
-      ELSEIF ( Gamma<=0.33333333 ) THEN
+      ELSEIF ( Gamma<=0.33333333_wp ) THEN
          WRITE (ipr,99004)
 99004    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMRAN SUBROU&
@@ -11531,17 +11521,17 @@ END SUBROUTINE BETRAN
 !        THE REJECTION FUNCTION VALUE, THEN REJECT
 !        THE PSEUDO-RANDOM NUMBER AS A GAMMA VARIATE.
 !
-         a1 = 1.0/(9.0*Gamma)
+         a1 = 1.0_wp/(9.0_wp*Gamma)
          b1 = SQRT(a1)
          xn0 = -sqrt3 + b1
-         xg0 = Gamma*(1.0-a1+b1*xn0)**3
+         xg0 = Gamma*(1.0_wp-a1+b1*xn0)**3
          DO i = 1 , N
             DO
                CALL NORRAN(1,Iseed,xn)
-               xg = Gamma*(1.0-a1+b1*xn(1))**3
-               IF ( xg>=0.0 ) THEN
+               xg = Gamma*(1.0_wp-a1+b1*xn(1))**3
+               IF ( xg>=0.0_wp ) THEN
                   term = (xg/xg0)**(Gamma-athird)
-                  arg = 0.5*xn(1)*xn(1) - xg - 0.5*xn0*xn0 + xg0
+                  arg = 0.5_wp*xn(1)*xn(1) - xg - 0.5_wp*xn0*xn0 + xg0
                   funct = term*EXP(arg)
                   CALL UNIRAN(1,Iseed,u(1))
                   IF ( u(1)<=funct ) THEN
@@ -11564,8 +11554,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine geocdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -11588,7 +11578,7 @@ END SUBROUTINE BETRAN
 !!    program demo_geocdf
 !!    use M_datapac, only : geocdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call geocdf(x,y)
 !!    end program demo_geocdf
 !!
@@ -11606,7 +11596,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--GEOCDF9005
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , del , fintx , P , X
+REAL(kind=wp) :: Cdf , del , fintx , P , X
       INTEGER intx , ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -11697,28 +11687,28 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOCDF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99004) P
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( X<0.0 ) THEN
+      ELSEIF ( X<0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOC&
      &DF SUBROUTINE IS NEGATIVE *****')
          WRITE (ipr,99004) X
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
-         intx = X + 0.0001
+         intx = X + 0.0001_wp
          fintx = intx
          del = X - fintx
-         IF ( del<0.0 ) del = -del
-         IF ( del>0.001 ) THEN
+         IF ( del<0.0_wp ) del = -del
+         IF ( del>0.001_wp ) THEN
             WRITE (ipr,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOC&
@@ -11728,7 +11718,7 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-         Cdf = 1.0 - (1.0-P)**(X+1.0)
+         Cdf = 1.0_wp - (1.0_wp-P)**(X+1.0_wp)
       ENDIF
 99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -11742,8 +11732,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine geoplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -11766,7 +11756,7 @@ END SUBROUTINE BETRAN
 !!    program demo_geoplt
 !!    use M_datapac, only : geoplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call geoplt(x,y)
 !!    end program demo_geoplt
 !!
@@ -11784,10 +11774,10 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--GEOPLT9137
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
+REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
      &     sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,    &
      &     yint
-      REAL yslope
+REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -11892,7 +11882,7 @@ END SUBROUTINE BETRAN
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
-         IF ( P<=0.0 .OR. P>=1.0 ) THEN
+         IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
             WRITE (ipr,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE GEOPLT SUBROU&
@@ -11937,13 +11927,13 @@ END SUBROUTINE BETRAN
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         q = .9975
+         q = 0.9975_wp
          CALL GEOPPF(q,P,pp9975)
-         q = .0025
+         q = 0.0025_wp
          CALL GEOPPF(q,P,pp0025)
-         q = .975
+         q = 0.975_wp
          CALL GEOPPF(q,P,pp975)
-         q = .025
+         q = 0.025_wp
          CALL GEOPPF(q,P,pp025)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99007) P , tau , N
@@ -11957,17 +11947,17 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -11992,8 +11982,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine geoppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -12016,7 +12006,7 @@ END SUBROUTINE BETRAN
 !!    program demo_geoppf
 !!    use M_datapac, only : geoppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call geoppf(x,y)
 !!    end program demo_geoppf
 !!
@@ -12034,7 +12024,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--GEOPPF9341
 !*** Start of declarations inserted by SPAG
-      REAL aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
+REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
       INTEGER ipr , iratio
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -12124,29 +12114,29 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GEOPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99003) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
-      ELSEIF ( Ppar<=0.0 .OR. Ppar>=1.0 ) THEN
+      ELSEIF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99003) Ppar
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
 !
 !-----START POINT-----------------------------------------------------
 !
       ELSEIF ( P/=0.0 ) THEN
 !
-         arg1 = 1.0 - P
-         arg2 = 1.0 - Ppar
+         arg1 = 1.0_wp - P
+         arg2 = 1.0_wp - Ppar
          anum = ALOG(arg1)
          aden = ALOG(arg2)
          ratio = anum/aden
@@ -12156,7 +12146,7 @@ END SUBROUTINE BETRAN
          IF ( aratio==ratio ) Ppf = iratio - 1
          GOTO 99999
       ENDIF
-      Ppf = 0.0
+      Ppf = 0.0_wp
       RETURN
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -12169,8 +12159,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine georan (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -12193,7 +12183,7 @@ END SUBROUTINE BETRAN
 !!    program demo_georan
 !!    use M_datapac, only : georan
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call georan(x,y)
 !!    end program demo_georan
 !!
@@ -12211,7 +12201,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--GEORAN9473
 !*** Start of declarations inserted by SPAG
-      REAL aden , anum , aratio , arg1 , arg2 , P , ratio , X
+REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
       INTEGER i , ipr , iratio , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -12321,7 +12311,7 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( P<=0.0 .OR. P>=1.0 ) THEN
+      ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEORAN SUBROU&
@@ -12340,9 +12330,9 @@ END SUBROUTINE BETRAN
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            IF ( X(i)/=0.0 ) THEN
-               arg1 = 1.0 - X(i)
-               arg2 = 1.0 - P
+            IF ( X(i)/=0.0_wp ) THEN
+               arg1 = 1.0_wp - X(i)
+               arg2 = 1.0_wp - P
                anum = ALOG(arg1)
                aden = ALOG(arg2)
                ratio = anum/aden
@@ -12364,8 +12354,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine hfncdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -12388,7 +12378,7 @@ END SUBROUTINE BETRAN
 !!    program demo_hfncdf
 !!    use M_datapac, only : hfncdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfncdf(x,y)
 !!    end program demo_hfncdf
 !!
@@ -12406,7 +12396,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--HFNCDF9636
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , X
+REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -12460,7 +12450,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<0.0 ) THEN
+      IF ( X<0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE HFNC&
@@ -12468,14 +12458,14 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
          CALL NORCDF(X,Cdf)
-         Cdf = 2.0*Cdf - 1.0
+         Cdf = 2.0_wp*Cdf - 1.0_wp
       ENDIF
 !
       END SUBROUTINE HFNCDF
@@ -12488,8 +12478,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine hfnplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -12512,7 +12502,7 @@ END SUBROUTINE BETRAN
 !!    program demo_hfnplt
 !!    use M_datapac, only : hfnplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfnplt(x,y)
 !!    end program demo_hfnplt
 !!
@@ -12530,7 +12520,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--HFNPLT9714
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
+REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -12602,7 +12592,7 @@ END SUBROUTINE BETRAN
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/1.41223913/
+      DATA tau/1.41223913_wp/
 !
       ipr = 6
       iupper = 7500
@@ -12649,7 +12639,7 @@ END SUBROUTINE BETRAN
 !
          DO i = 1 , N
             q = W(i)
-            q = (q+1.0)/2.0
+            q = (q+1.0_wp)/2.0_wp
             CALL NORPPF(q,W(i))
          ENDDO
 !
@@ -12668,17 +12658,17 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -12703,8 +12693,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine hfnppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -12727,7 +12717,7 @@ END SUBROUTINE BETRAN
 !!    program demo_hfnppf
 !!    use M_datapac, only : hfnppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfnppf(x,y)
 !!    end program demo_hfnppf
 !!
@@ -12745,7 +12735,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--HFNPPF9883
 !*** Start of declarations inserted by SPAG
-      REAL arg , P , Ppf
+REAL(kind=wp) :: arg , P , Ppf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -12804,7 +12794,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE HFNPPF SUBROU&
@@ -12812,15 +12802,15 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         arg = (1.0+P)/2.0
+         arg = (1.0_wp+P)/2.0_wp
          CALL NORPPF(arg,Ppf)
-         IF ( Ppf<=0.0 ) Ppf = 0.0
+         IF ( Ppf<=0.0_wp ) Ppf = 0.0_wp
       ENDIF
 !
       END SUBROUTINE HFNPPF
@@ -12832,8 +12822,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine hfnran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -12856,7 +12846,7 @@ END SUBROUTINE BETRAN
 !!    program demo_hfnran
 !!    use M_datapac, only : hfnran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfnran(x,y)
 !!    end program demo_hfnran
 !!
@@ -12874,7 +12864,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--HFNRAN9967
 !*** Start of declarations inserted by SPAG
-      REAL arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
+REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -12939,7 +12929,7 @@ END SUBROUTINE BETRAN
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA pi/3.14159265359/
+      DATA pi/3.14159265359_wp/
 !
       ipr = 6
 !
@@ -12977,8 +12967,8 @@ END SUBROUTINE BETRAN
             ELSE
                u2 = X(ip1)
             ENDIF
-            arg1 = -2.0*ALOG(u1)
-            arg2 = 2.0*pi*u2
+            arg1 = -2.0_wp*ALOG(u1)
+            arg2 = 2.0_wp*pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)
             z2 = sqrt1*SIN(arg2)
@@ -12992,7 +12982,7 @@ END SUBROUTINE BETRAN
 !     EQUALS THE ABSOLUTE VALUE OF A NORMAL VARIATE.
 !
          DO i = 1 , N
-            IF ( X(i)<0.0 ) X(i) = -X(i)
+            IF ( X(i)<0.0_wp ) X(i) = -X(i)
          ENDDO
       ENDIF
 !
@@ -13006,8 +12996,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine hist (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -13030,7 +13020,7 @@ END SUBROUTINE BETRAN
 !!    program demo_hist
 !!    use M_datapac, only : hist
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hist(x,y)
 !!    end program demo_hist
 !!
@@ -13048,7 +13038,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--HIST10109
 !*** Start of declarations inserted by SPAG
-      REAL acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
+REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
      &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
       INTEGER i , icoun2 , icount , ievodd , ihist , inc , ipr , irev , &
      &        itlabl , ixlabl , j , jmax , jp1 , jsum , maxfre , mt ,   &
@@ -13158,16 +13148,16 @@ END SUBROUTINE BETRAN
 !
 !     COMPUTE THE SAMPLE MEAN AND SAMPLE STANDARD DEVIATION
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xbar = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xbar)**2
          ENDDO
-         s = SQRT(sum/(an-1.0))
+         s = SQRT(sum/(an-1.0_wp))
 !
 !     FORM THE BASIC FREQUENCY TABLE (ICOUNT) WHICH CORRESPONDS TO A HISTOGRAM
 !     WITH 121 CLASSES AND A CLASS WIDTH OF ONE TENTH A SAMPLE STANDARD
@@ -13180,7 +13170,7 @@ END SUBROUTINE BETRAN
          numout = 0
          DO i = 1 , N
             z = (X(i)-xbar)/s
-            mt = 10.0*(z+6.0) + 2.5
+            mt = 10.0_wp*(z+6.0_wp) + 2.5_wp
             IF ( mt<2 .OR. mt>122 ) numout = numout + 1
             IF ( mt>=2 .AND. mt<=122 ) icount(mt) = icount(mt) + 1
          ENDDO
@@ -13248,14 +13238,14 @@ END SUBROUTINE BETRAN
 !     DETERMINE THE PLOT POSITIONS
 !
             amaxfr = maxfre
-            height = 20.0
+            height = 20.0_wp
             DO j = 1 , 121
                jp1 = j + 1
                IF ( maxfre<=20 ) mx = icoun2(j)
                IF ( maxfre>20 ) THEN
                   acount = icoun2(j)
                   prop = acount/amaxfr
-                  mx = prop*height + 0.999
+                  mx = prop*height + 0.999_wp
                ENDIF
                IF ( mx/=0 ) THEN
                   DO i = 1 , mx
@@ -13272,8 +13262,8 @@ END SUBROUTINE BETRAN
                DO i = 1 , 20
                   irev = 22 - i
                   ai = i
-                  prop = ai/20.0
-                  ixlabl(irev) = prop*amaxfr + 0.5
+                  prop = ai/20.0_wp
+                  ixlabl(irev) = prop*amaxfr + 0.5_wp
                ENDDO
             ELSE
                DO i = 1 , 20
@@ -13300,15 +13290,15 @@ END SUBROUTINE BETRAN
             WRITE (ipr,99013) (IGRaph(22,j),j=1,123)
             numcla = (120/inc) + 1
             tinc = inc
-            cwidsd = tinc*0.1
+            cwidsd = tinc*0.1_wp
             cwidth = cwidsd*s
             tlable(7) = xbar
             itlabl(7) = 0
             DO i = 1 , 6
                irev = 13 - i + 1
                ai = i
-               tlable(i) = xbar - (7.0-ai)*s
-               tlable(irev) = xbar + (7.0-ai)*s
+               tlable(i) = xbar - (7.0_wp-ai)*s
+               tlable(irev) = xbar + (7.0_wp-ai)*s
                itlabl(i) = i - 7
                itlabl(irev) = 7 - i
             ENDDO
@@ -13338,8 +13328,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine invxwx (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -13362,7 +13352,7 @@ END SUBROUTINE BETRAN
 !!    program demo_invxwx
 !!    use M_datapac, only : invxwx
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call invxwx(x,y)
 !!    end program demo_invxwx
 !!
@@ -13379,7 +13369,7 @@ END SUBROUTINE BETRAN
       SUBROUTINE INVXWX(N,K)
       IMPLICIT NONE
 
-      REAL anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
+REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
       INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
 
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE INVERSE OF X'WX
@@ -13422,7 +13412,7 @@ END SUBROUTINE BETRAN
          IF ( im1>=1 ) THEN
             DO j = 1 , im1
                irarg = (i-1)*K + j
-               R(irarg) = 0.0
+               R(irarg) = 0.0_wp
             ENDDO
          ENDIF
       ENDDO
@@ -13442,9 +13432,9 @@ END SUBROUTINE BETRAN
                   IF ( l>j ) DUM2(l) = R(irarg3)
                ENDDO
             ENDIF
-            ri = 0.0
+            ri = 0.0_wp
             irarg = (i-1)*K + i
-            IF ( i==j ) ri = 1.0/R(irarg)
+            IF ( i==j ) ri = 1.0_wp/R(irarg)
             anegri = -ri
 !
             CALL DOT(DUM1,DUM2,ip1,K,anegri,dotpro)
@@ -13490,8 +13480,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lamcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -13514,7 +13504,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lamcdf
 !!    use M_datapac, only : lamcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamcdf(x,y)
 !!    end program demo_lamcdf
 !!
@@ -13532,7 +13522,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LAMCDF10507
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
+REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
      &     X , xcalc , xmax , xmin
       INTEGER icount , ipr
 !*** End of declarations inserted by SPAG
@@ -13589,8 +13579,8 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0 ) THEN
-         xmax = 1.0/Alamba
+      IF ( Alamba>0.0_wp ) THEN
+         xmax = 1.0_wp/Alamba
          xmin = -xmax
          IF ( X<xmin .OR. X>xmax ) THEN
             WRITE (ipr,99001)
@@ -13600,48 +13590,48 @@ END SUBROUTINE BETRAN
             WRITE (ipr,99002) X
 99002       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
-            IF ( X<xmin ) Cdf = 0.0
-            IF ( X>xmax ) Cdf = 1.0
+            IF ( X<xmin ) Cdf = 0.0_wp
+            IF ( X>xmax ) Cdf = 1.0_wp
             RETURN
          ENDIF
       ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( Alamba>0.0 ) THEN
+      IF ( Alamba>0.0_wp ) THEN
 !
-         xmax = 1.0/Alamba
+         xmax = 1.0_wp/Alamba
          xmin = -xmax
-         IF ( X<=xmin ) Cdf = 0.0
-         IF ( X>=xmax ) Cdf = 1.0
+         IF ( X<=xmin ) Cdf = 0.0_wp
+         IF ( X>=xmax ) Cdf = 1.0_wp
          IF ( X<=xmin .OR. X>=xmax ) RETURN
       ENDIF
 !
-      IF ( -0.001>=Alamba .OR. Alamba>=0.001 ) THEN
+      IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
 !
-         IF ( -0.001>=Alamba .OR. Alamba>=0.001 ) THEN
-            pmin = 0.0
-            pmid = 0.5
-            pmax = 1.0
+         IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
+            pmin = 0.0_wp
+            pmid = 0.5_wp
+            pmax = 1.0_wp
             plower = pmin
             pupper = pmax
             icount = 0
             DO
-               xcalc = (pmid**Alamba-(1.0-pmid)**Alamba)/Alamba
+               xcalc = (pmid**Alamba-(1.0_wp-pmid)**Alamba)/Alamba
                IF ( xcalc==X ) THEN
                   Cdf = pmid
                   GOTO 99999
                ELSE
                   IF ( xcalc>X ) THEN
                      pupper = pmid
-                     pmid = (pmid+plower)/2.0
+                     pmid = (pmid+plower)/2.0_wp
                   ELSE
                      plower = pmid
-                     pmid = (pmid+pupper)/2.0
+                     pmid = (pmid+pupper)/2.0_wp
                   ENDIF
                   pdel = ABS(pmid-plower)
                   icount = icount + 1
-                  IF ( pdel<0.000001 .OR. icount>30 ) THEN
+                  IF ( pdel<0.000001_wp .OR. icount>30 ) THEN
                      Cdf = pmid
                      GOTO 99999
                   ENDIF
@@ -13649,11 +13639,11 @@ END SUBROUTINE BETRAN
             ENDDO
          ENDIF
       ENDIF
-      IF ( X>=0.0 ) THEN
-         Cdf = 1.0/(1.0+EXP(-X))
+      IF ( X>=0.0_wp ) THEN
+         Cdf = 1.0_wp/(1.0_wp+EXP(-X))
          RETURN
       ELSE
-         Cdf = EXP(X)/(1.0+EXP(X))
+         Cdf = EXP(X)/(1.0_wp+EXP(X))
          RETURN
       ENDIF
 !
@@ -13667,8 +13657,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lampdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -13691,7 +13681,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lampdf
 !!    use M_datapac, only : lampdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lampdf(x,y)
 !!    end program demo_lampdf
 !!
@@ -13709,7 +13699,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LAMPDF10638
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , cdf , Pdf , sf , X , xmax , xmin
+REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -13765,8 +13755,8 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0 ) THEN
-         xmax = 1.0/Alamba
+      IF ( Alamba>0.0_wp ) THEN
+         xmax = 1.0_wp/Alamba
          xmin = -xmax
          IF ( X<xmin .OR. X>xmax ) THEN
             WRITE (ipr,99001)
@@ -13776,32 +13766,32 @@ END SUBROUTINE BETRAN
             WRITE (ipr,99002) X
 99002       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
-            IF ( X<xmin ) Pdf = 0.0
-            IF ( X>xmax ) Pdf = 1.0
+            IF ( X<xmin ) Pdf = 0.0_wp
+            IF ( X>xmax ) Pdf = 1.0_wp
             RETURN
          ENDIF
       ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( Alamba>0.0 ) THEN
-         xmax = 1.0/Alamba
+      IF ( Alamba>0.0_wp ) THEN
+         xmax = 1.0_wp/Alamba
          xmin = -xmax
          IF ( X<=xmin .OR. X>=xmax ) THEN
-            IF ( X<xmin .OR. X>xmax ) Pdf = 0.0
-            IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0
-            IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0
-            IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5
-            IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5
-            IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0
-            IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0
+            IF ( X<xmin .OR. X>xmax ) Pdf = 0.0_wp
+            IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0_wp
+            IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0_wp
+            IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5_wp
+            IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5_wp
+            IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0_wp
+            IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0_wp
             RETURN
          ENDIF
       ENDIF
 !
       CALL LAMCDF(X,Alamba,cdf)
-      sf = cdf**(Alamba-1.0) + (1.0-cdf)**(Alamba-1.0)
-      Pdf = 1.0/sf
+      sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
+      Pdf = 1.0_wp/sf
 !
       END SUBROUTINE LAMPDF
 !>
@@ -13813,8 +13803,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lamplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -13837,7 +13827,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lamplt
 !!    use M_datapac, only : lamplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamplt(x,y)
 !!    end program demo_lamplt
 !!
@@ -13855,10 +13845,10 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LAMPLT10738
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
+REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
-      REAL yslope
+REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -13979,10 +13969,10 @@ END SUBROUTINE BETRAN
 !
          DO i = 1 , N
             q = W(i)
-            IF ( -0.001<Alamba .AND. Alamba<0.001 ) W(i)                &
-     &           = ALOG(q/(1.0-q))
-            IF ( -0.001>=Alamba .OR. Alamba>=0.001 ) W(i)               &
-     &           = (q**Alamba-(1.0-q)**Alamba)/Alamba
+            IF ( -0.001_wp<Alamba .AND. Alamba<0.001_wp ) W(i)                &
+     &           = ALOG(q/(1.0_wp-q))
+            IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) W(i)               &
+     &           = (q**Alamba-(1.0_wp-q)**Alamba)/Alamba
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -13991,16 +13981,16 @@ END SUBROUTINE BETRAN
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         IF ( -0.001<Alamba .AND. Alamba<0.001 ) tau = 1.63473745
-         IF ( -0.001>=Alamba .OR. Alamba>=0.001 ) THEN
-            q = .9975
-            pp9975 = (q**Alamba-(1.0-q)**Alamba)/Alamba
-            q = .0025
-            pp0025 = (q**Alamba-(1.0-q)**Alamba)/Alamba
-            q = .975
-            pp975 = (q**Alamba-(1.0-q)**Alamba)/Alamba
-            q = .025
-            pp025 = (q**Alamba-(1.0-q)**Alamba)/Alamba
+         IF ( -0.001_wp<Alamba .AND. Alamba<0.001_wp ) tau = 1.63473745_wp
+         IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
+            q = .9975_wp
+            pp9975 = (q**Alamba-(1.0_wp-q)**Alamba)/Alamba
+            q = .0025_wp
+            pp0025 = (q**Alamba-(1.0_wp-q)**Alamba)/Alamba
+            q = .975_wp
+            pp975 = (q**Alamba-(1.0_wp-q)**Alamba)/Alamba
+            q = .025_wp
+            pp025 = (q**Alamba-(1.0_wp-q)**Alamba)/Alamba
             tau = (pp9975-pp0025)/(pp975-pp025)
          ENDIF
          WRITE (ipr,99005) Alamba , tau , N
@@ -14013,15 +14003,15 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
+         sum1 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
          ENDDO
          ybar = sum1/an
-         wbar = 0.0
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         wbar = 0.0_wp
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + W(i)*Y(i)
@@ -14046,8 +14036,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lamppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -14070,7 +14060,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lamppf
 !!    use M_datapac, only : lamppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamppf(x,y)
 !!    end program demo_lamppf
 !!
@@ -14088,7 +14078,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LAMPPF10925
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , P , Ppf
+REAL(kind=wp) :: Alamba , P , Ppf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -14151,19 +14141,19 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0 .OR. P>0.0 ) THEN
-         IF ( Alamba>0.0 .OR. P<1.0 ) THEN
-            IF ( Alamba<=0.0 .OR. P>=0.0 ) THEN
-               IF ( Alamba<=0.0 .OR. P<=1.0 ) THEN
+      IF ( Alamba>0.0_wp .OR. P>0.0_wp ) THEN
+         IF ( Alamba>0.0_wp .OR. P<1.0_wp ) THEN
+            IF ( Alamba<=0.0_wp .OR. P>=0.0_wp ) THEN
+               IF ( Alamba<=0.0_wp .OR. P<=1.0_wp ) THEN
 !
 !-----START POINT-----------------------------------------------------
 !
-                  IF ( -0.001<Alamba .AND. Alamba<0.001 ) THEN
-                     Ppf = ALOG(P/(1.0-P))
+                  IF ( -0.001_wp<Alamba .AND. Alamba<0.001_wp ) THEN
+                     Ppf = ALOG(P/(1.0_wp-P))
                      RETURN
                   ELSE
 !
-                     Ppf = (P**Alamba-(1.0-P)**Alamba)/Alamba
+                     Ppf = (P**Alamba-(1.0_wp-P)**Alamba)/Alamba
                      GOTO 99999
                   ENDIF
                ENDIF
@@ -14187,8 +14177,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lamran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -14211,7 +14201,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lamran
 !!    use M_datapac, only : lamran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamran(x,y)
 !!    end program demo_lamran
 !!
@@ -14229,7 +14219,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LAMRAN11021
 !*** Start of declarations inserted by SPAG
-      REAL alamb2 , Alamba , q , X
+REAL(kind=wp) :: alamb2 , Alamba , q , X
       INTEGER i , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -14318,10 +14308,10 @@ END SUBROUTINE BETRAN
 !
          DO i = 1 , N
             q = X(i)
-            IF ( -0.001<alamb2 .AND. alamb2<0.001 ) X(i)                &
+            IF ( -0.001_wp<alamb2 .AND. alamb2<0.001_wp ) X(i)                &
      &           = ALOG(q/(1.0-q))
-            IF ( -0.001>=alamb2 .OR. alamb2>=0.001 ) X(i)               &
-     &           = (q**alamb2-(1.0-q)**alamb2)/alamb2
+            IF ( -0.001_wp>=alamb2 .OR. alamb2>=0.001_wp ) X(i)               &
+     &           = (q**alamb2-(1.0_wp-q)**alamb2)/alamb2
          ENDDO
       ENDIF
 !
@@ -14334,8 +14324,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lamsf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -14358,7 +14348,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lamsf
 !!    use M_datapac, only : lamsf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamsf(x,y)
 !!    end program demo_lamsf
 !!
@@ -14376,7 +14366,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LAMSF11137
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , P , Sf
+REAL(kind=wp) :: Alamba , P , Sf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -14440,14 +14430,14 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0 .OR. P>0.0 ) THEN
-         IF ( Alamba>0.0 .OR. P<1.0 ) THEN
-            IF ( Alamba<=0.0 .OR. P>=0.0 ) THEN
-               IF ( Alamba<=0.0 .OR. P<=1.0 ) THEN
+      IF ( Alamba>0.0_wp .OR. P>0.0_wp ) THEN
+         IF ( Alamba>0.0_wp .OR. P<1.0_wp ) THEN
+            IF ( Alamba<=0.0_wp .OR. P>=0.0_wp ) THEN
+               IF ( Alamba<=0.0_wp .OR. P<=1.0_wp ) THEN
 !
 !-----START POINT-----------------------------------------------------
 !
-                  Sf = P**(Alamba-1.0) + (1.0-P)**(Alamba-1.0)
+                  Sf = P**(Alamba-1.0_wp) + (1.0-P)**(Alamba-1.0_wp)
                   GOTO 99999
                ENDIF
             ENDIF
@@ -14471,8 +14461,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lgncdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -14495,7 +14485,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lgncdf
 !!    use M_datapac, only : lgncdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgncdf(x,y)
 !!    end program demo_lgncdf
 !!
@@ -14513,7 +14503,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LGNCDF11228
 !*** Start of declarations inserted by SPAG
-      REAL arg , Cdf , X
+REAL(kind=wp) :: arg , Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -14565,7 +14555,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<=0.0 ) THEN
+      IF ( X<=0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE LGNC&
@@ -14573,7 +14563,7 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
@@ -14592,8 +14582,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lgnplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -14616,7 +14606,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lgnplt
 !!    use M_datapac, only : lgnplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgnplt(x,y)
 !!    end program demo_lgnplt
 !!
@@ -14634,7 +14624,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LGNPLT11304
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
+REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -14707,7 +14697,7 @@ END SUBROUTINE BETRAN
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/2.37134890/
+      DATA tau/2.37134890_wp/
 !
       ipr = 6
       iupper = 7500
@@ -14773,17 +14763,17 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -14808,8 +14798,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lgnppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -14832,7 +14822,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lgnppf
 !!    use M_datapac, only : lgnppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgnppf(x,y)
 !!    end program demo_lgnppf
 !!
@@ -14851,7 +14841,7 @@ END SUBROUTINE BETRAN
 !*--LGNPPF11474
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Ppf
+REAL(kind=wp) :: P , Ppf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT LGNPPF
@@ -14907,7 +14897,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LGNPPF SUBROU&
@@ -14915,7 +14905,7 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
@@ -14934,8 +14924,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine lgnran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -14958,7 +14948,7 @@ END SUBROUTINE BETRAN
 !!    program demo_lgnran
 !!    use M_datapac, only : lgnran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgnran(x,y)
 !!    end program demo_lgnran
 !!
@@ -14976,7 +14966,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LGNRAN11555
 !*** Start of declarations inserted by SPAG
-      REAL arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
+REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -15049,7 +15039,7 @@ END SUBROUTINE BETRAN
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA pi/3.14159265359/
+      DATA pi/3.14159265359_wp/
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -15085,8 +15075,8 @@ END SUBROUTINE BETRAN
             ELSE
                u2 = X(ip1)
             ENDIF
-            arg1 = -2.0*ALOG(u1)
-            arg2 = 2.0*pi*u2
+            arg1 = -2.0_wp*ALOG(u1)
+            arg2 = 2.0_wp*pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)
             z2 = sqrt1*SIN(arg2)
@@ -15114,8 +15104,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine loc (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -15138,7 +15128,7 @@ END SUBROUTINE BETRAN
 !!    program demo_loc
 !!    use M_datapac, only : loc
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call loc(x,y)
 !!    end program demo_loc
 !!
@@ -15156,7 +15146,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LOC11703
 !*** Start of declarations inserted by SPAG
-      REAL aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
+REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
      &     xmidm , Y
       INTEGER i , iflag , imax , imaxm1 , imin , iminp1 , ipr , iupper ,&
      &        N , nmid , nmidp1
@@ -15224,10 +15214,10 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      xmid = 0.0
-      xmean = 0.0
-      xmidm = 0.0
-      xmed = 0.0
+      xmid = 0.0_wp
+      xmean = 0.0_wp
+      xmidm = 0.0_wp
+      xmed = 0.0_wp
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (ipr,99001) iupper
 99001    FORMAT (' ',                                                   &
@@ -15264,11 +15254,11 @@ END SUBROUTINE BETRAN
 !     THEN COMPUTE THE SAMPLE MIDRANGE.
 !
             CALL SORT(X,N,Y)
-            xmid = (Y(1)+Y(N))/2.0
+            xmid = (Y(1)+Y(N))/2.0_wp
 !
 !     COMPUTE THE SAMPLE MEAN
 !
-            sum = 0.0
+            sum = 0.0_wp
             DO i = 1 , N
                sum = sum + Y(i)
             ENDDO
@@ -15280,9 +15270,9 @@ END SUBROUTINE BETRAN
             aiflag = iflag
             imin = N/4 + 1
             imax = N - imin + 1
-            sum = 0.0
-            sum = sum + Y(imin)*(4.0-aiflag)/4.0
-            sum = sum + Y(imax)*(4.0-aiflag)/4.0
+            sum = 0.0_wp
+            sum = sum + Y(imin)*(4.0_wp-aiflag)/4.0_wp
+            sum = sum + Y(imax)*(4.0_wp-aiflag)/4.0_wp
             iminp1 = imin + 1
             imaxm1 = imax - 1
             IF ( iminp1<=imaxm1 ) THEN
@@ -15290,14 +15280,14 @@ END SUBROUTINE BETRAN
                   sum = sum + Y(i)
                ENDDO
             ENDIF
-            xmidm = sum/(an/2.0)
+            xmidm = sum/(an/2.0_wp)
 !
 !     COMPUTE THE SAMPLE MEDIAN
 !
             iflag = N - (N/2)*2
             nmid = N/2
             nmidp1 = nmid + 1
-            IF ( iflag==0 ) xmed = (Y(nmid)+Y(nmidp1))/2.0
+            IF ( iflag==0 ) xmed = (Y(nmid)+Y(nmidp1))/2.0_wp
             IF ( iflag==1 ) xmed = Y(nmidp1)
          ENDIF
 !
@@ -15335,8 +15325,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine logcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -15359,7 +15349,7 @@ END SUBROUTINE BETRAN
 !!    program demo_logcdf
 !!    use M_datapac, only : logcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logcdf(x,y)
 !!    end program demo_logcdf
 !!
@@ -15377,7 +15367,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LOGCDF11878
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , X
+REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -15419,19 +15409,17 @@ END SUBROUTINE BETRAN
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
+!     NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( X>=0.0 ) THEN
-         Cdf = 1.0/(1.0+EXP(-X))
-         GOTO 99999
+      IF ( X>=0.0_wp ) THEN
+         Cdf = 1.0_wp/(1.0_wp+EXP(-X))
+      ELSE
+         Cdf = EXP(X)/(1.0_wp+EXP(X))
       ENDIF
-      Cdf = EXP(X)/(1.0+EXP(X))
-      RETURN
 !
-99999 END SUBROUTINE LOGCDF
+END SUBROUTINE LOGCDF
 !>
 !!##NAME
 !!    logpdf(3f) - [M_datapac:STATISTICS] compute the logistic probability
@@ -15441,8 +15429,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine logpdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -15465,7 +15453,7 @@ END SUBROUTINE BETRAN
 !!    program demo_logpdf
 !!    use M_datapac, only : logpdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logpdf(x,y)
 !!    end program demo_logpdf
 !!
@@ -15484,7 +15472,7 @@ END SUBROUTINE BETRAN
 !*--LOGPDF11938
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL Pdf , X
+REAL(kind=wp) :: Pdf , X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT LOGPDF
@@ -15529,7 +15517,7 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-      Pdf = EXP(X)/((1.0+EXP(X))**2)
+      Pdf = EXP(X)/((1.0_wp+EXP(X))**2)
 !
       END SUBROUTINE LOGPDF
 !>
@@ -15541,8 +15529,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine logplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -15565,7 +15553,7 @@ END SUBROUTINE BETRAN
 !!    program demo_logplt
 !!    use M_datapac, only : logplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logplt(x,y)
 !!    end program demo_logplt
 !!
@@ -15583,7 +15571,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--LOGPLT11992
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
+REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -15649,7 +15637,7 @@ END SUBROUTINE BETRAN
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/1.63473745/
+      DATA tau/1.63473745_wp/
 !
       ipr = 6
       iupper = 7500
@@ -15695,7 +15683,7 @@ END SUBROUTINE BETRAN
 !     COMPUTE LOGISTIC ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = ALOG(W(i)/(1.0-W(i)))
+            W(i) = ALOG(W(i)/(1.0_wp-W(i)))
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -15713,15 +15701,15 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
+         sum1 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
          ENDDO
          ybar = sum1/an
-         wbar = 0.0
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         wbar = 0.0_wp
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + W(i)*Y(i)
@@ -15746,8 +15734,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine logppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -15770,7 +15758,7 @@ END SUBROUTINE BETRAN
 !!    program demo_logppf
 !!    use M_datapac, only : logppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logppf(x,y)
 !!    end program demo_logppf
 !!
@@ -15789,7 +15777,7 @@ END SUBROUTINE BETRAN
 !*--LOGPPF12151
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Ppf
+REAL(kind=wp) :: P , Ppf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT LOGPPF
@@ -15840,7 +15828,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGPPF SUBROU&
@@ -15855,7 +15843,7 @@ END SUBROUTINE BETRAN
 !
 !CCCC CALL QCORR(P,Q)
 !CCCC PPF=ALOG(P/Q)
-         Ppf = ALOG(P/(1.0-P))
+         Ppf = ALOG(P/(1.0_wp-P))
       ENDIF
 !
       END SUBROUTINE LOGPPF
@@ -15867,8 +15855,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine logran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -15891,7 +15879,7 @@ END SUBROUTINE BETRAN
 !!    program demo_logran
 !!    use M_datapac, only : logran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logran(x,y)
 !!    end program demo_logran
 !!
@@ -15910,7 +15898,7 @@ END SUBROUTINE BETRAN
 !*--LOGRAN12227
 !*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
-      REAL X
+REAL(kind=wp) :: X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT LOGRAN
@@ -15995,7 +15983,7 @@ END SUBROUTINE BETRAN
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = ALOG(X(i)/(1.0-X(i)))
+            X(i) = ALOG(X(i)/(1.0_wp-X(i)))
          ENDDO
       ENDIF
 !
@@ -16008,8 +15996,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine logsf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -16032,7 +16020,7 @@ END SUBROUTINE BETRAN
 !!    program demo_logsf
 !!    use M_datapac, only : logsf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logsf(x,y)
 !!    end program demo_logsf
 !!
@@ -16051,7 +16039,7 @@ END SUBROUTINE BETRAN
 !*--LOGSF12337
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Sf
+REAL(kind=wp) :: P , Sf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT LOGSF
@@ -16103,7 +16091,7 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGSF  SUBROU&
@@ -16116,7 +16104,7 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-         Sf = 1.0/(P-P*P)
+         Sf = 1.0_wp/(P-P*P)
       ENDIF
 !
       END SUBROUTINE LOGSF
@@ -16128,8 +16116,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine max (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -16152,7 +16140,7 @@ END SUBROUTINE BETRAN
 !!    program demo_max
 !!    use M_datapac, only : max
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call max(x,y)
 !!    end program demo_max
 !!
@@ -16170,7 +16158,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--MAX12412
 !*** Start of declarations inserted by SPAG
-      REAL hold , X , Xmax
+REAL(kind=wp) :: hold , X , Xmax
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -16276,8 +16264,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine mean (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -16300,7 +16288,7 @@ END SUBROUTINE BETRAN
 !!    program demo_mean
 !!    use M_datapac, only : mean
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call mean(x,y)
 !!    end program demo_mean
 !!
@@ -16318,7 +16306,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--MEAN12515
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , X , Xmean
+REAL(kind=wp) :: an , hold , sum , X , Xmean
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -16411,7 +16399,7 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      sum = 0.0
+ 50      sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
@@ -16433,8 +16421,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine median (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -16457,7 +16445,7 @@ END SUBROUTINE BETRAN
 !!    program demo_median
 !!    use M_datapac, only : median
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call median(x,y)
 !!    end program demo_median
 !!
@@ -16475,7 +16463,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--MEDIAN12627
 !*** Start of declarations inserted by SPAG
-      REAL hold , WS , X , Xmed , Y
+REAL(kind=wp) :: hold , WS , X , Xmed , Y
       INTEGER i , iflag , ipr , iupper , Iwrite , N , nmid , nmidp1
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -16579,7 +16567,7 @@ END SUBROUTINE BETRAN
          iflag = N - (N/2)*2
          nmid = N/2
          nmidp1 = nmid + 1
-         IF ( iflag==0 ) Xmed = (Y(nmid)+Y(nmidp1))/2.0
+         IF ( iflag==0 ) Xmed = (Y(nmid)+Y(nmidp1))/2.0_wp
          IF ( iflag==1 ) Xmed = Y(nmidp1)
       ENDIF
 !
@@ -16598,8 +16586,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine midm (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -16622,7 +16610,7 @@ END SUBROUTINE BETRAN
 !!    program demo_midm
 !!    use M_datapac, only : midm
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call midm(x,y)
 !!    end program demo_midm
 !!
@@ -16640,7 +16628,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--MIDM12747
 !*** Start of declarations inserted by SPAG
-      REAL ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
+REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
      &     X , Xmidm , Y
       INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
@@ -16704,8 +16692,8 @@ END SUBROUTINE BETRAN
       DIMENSION Y(15000)
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
-      DATA p1 , p2 , perp1 , perp2 , perp3/0.25 , 0.25 , 25.0 , 25.0 ,  &
-     &     50.0/
+      DATA p1 , p2 , perp1 , perp2 , perp3/0.25_wp , 0.25_wp , 25.0_wp , 25.0_wp ,  &
+     &     50.0_wp/
 !
       ipr = 6
       iupper = 15000
@@ -16746,17 +16734,17 @@ END SUBROUTINE BETRAN
  50      CALL SORT(X,N,Y)
 !
          an = N
-         np1 = p1*an + 0.0001
+         np1 = p1*an + 0.0001_wp
          istart = np1 + 1
-         np2 = p2*an + 0.0001
+         np2 = p2*an + 0.0001_wp
          istop = N - np2
-         sum = 0.0
+         sum = 0.0_wp
          k = 0
          IF ( istart>istop ) THEN
             WRITE (ipr,99005)
 99005       FORMAT (' ','INTERNAL ERROR IN MIDM   SUBROUTINE--',        &
      &              'THE START INDEX IS HIGHER THAN THE STOP INDEX')
-            Xmidm = 0.0
+            Xmidm = 0.0_wp
             RETURN
          ELSE
             DO i = istart , istop
@@ -16794,8 +16782,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine midr (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -16818,7 +16806,7 @@ END SUBROUTINE BETRAN
 !!    program demo_midr
 !!    use M_datapac, only : midr
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call midr(x,y)
 !!    end program demo_midr
 !!
@@ -16836,7 +16824,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--MIDR12898
 !*** Start of declarations inserted by SPAG
-      REAL hold , X , xmax , Xmidr , xmin
+REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -16934,7 +16922,7 @@ END SUBROUTINE BETRAN
             IF ( X(i)<xmin ) xmin = X(i)
             IF ( X(i)>xmax ) xmax = X(i)
          ENDDO
-         Xmidr = (xmin+xmax)/2.0
+         Xmidr = (xmin+xmax)/2.0_wp
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
@@ -16952,8 +16940,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine min (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -16976,7 +16964,7 @@ END SUBROUTINE BETRAN
 !!    program demo_min
 !!    use M_datapac, only : min
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call min(x,y)
 !!    end program demo_min
 !!
@@ -16994,7 +16982,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--MIN13011
 !*** Start of declarations inserted by SPAG
-      REAL hold , X , Xmin
+REAL(kind=wp) :: hold , X , Xmin
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -17101,8 +17089,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine move (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -17125,7 +17113,7 @@ END SUBROUTINE BETRAN
 !!    program demo_move
 !!    use M_datapac, only : move
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call move(x,y)
 !!    end program demo_move
 !!
@@ -17143,7 +17131,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--MOVE13114
 !*** Start of declarations inserted by SPAG
-      REAL hold , X , Y
+REAL(kind=wp) :: hold , X , Y
       INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -17272,8 +17260,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine nbcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -17296,7 +17284,7 @@ END SUBROUTINE BETRAN
 !!    program demo_nbcdf
 !!    use M_datapac, only : nbcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call nbcdf(x,y)
 !!    end program demo_nbcdf
 !!
@@ -17314,7 +17302,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NBCDF13239
 !*** Start of declarations inserted by SPAG
-      REAL ak , an , an2 , Cdf , del , fintx , P , X
+REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
       INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
      &        k , N , n2 , nu1 , nu2
 !*** End of declarations inserted by SPAG
@@ -17441,13 +17429,13 @@ END SUBROUTINE BETRAN
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NBCDF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99006) P
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSEIF ( N<1 ) THEN
          WRITE (ipr,99002)
@@ -17456,22 +17444,22 @@ END SUBROUTINE BETRAN
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) N
 99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( X<0.0 ) THEN
+      ELSEIF ( X<0.0_wp ) THEN
          WRITE (ipr,99004)
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE NBCD&
      &F  SUBROUTINE IS NEGATIVE *****')
          WRITE (ipr,99006) X
-         IF ( X<0.0 ) Cdf = 0.0
+         IF ( X<0.0_wp ) Cdf = 0.0_wp
          RETURN
       ELSE
-         intx = X + 0.0001
+         intx = X + 0.0001_wp
          fintx = intx
          del = X - fintx
-         IF ( del<0.0 ) del = -del
-         IF ( del>0.001 ) THEN
+         IF ( del<0.0_wp ) del = -del
+         IF ( del>0.001_wp ) THEN
             WRITE (ipr,99005)
 99005       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE NBCD&
@@ -17486,7 +17474,7 @@ END SUBROUTINE BETRAN
 !     CUMULATIVE DISTRIBUTION FUNCTION,
 !     AND THEN OPERATE ON THE LATTER.
 !
-         intx = X + 0.0001
+         intx = X + 0.0001_wp
          k = N - 1
          n2 = N + intx
 !
@@ -17497,7 +17485,7 @@ END SUBROUTINE BETRAN
 !
          ak = k
          an2 = n2
-         dx2 = (P/(1.0-P))*((an2-ak)/(ak+1.0))
+         dx2 = (P/(1.0_wp-P))*((an2-ak)/(ak+1.0_wp))
          nu1 = 2*(k+1)
          nu2 = 2*(n2-k)
          anu1 = nu1
@@ -17625,8 +17613,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine nbppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -17649,7 +17637,7 @@ END SUBROUTINE BETRAN
 !!    program demo_nbppf
 !!    use M_datapac, only : nbppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call nbppf(x,y)
 !!    end program demo_nbppf
 !!
@@ -17667,9 +17655,9 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NBPPF13546
 !*** Start of declarations inserted by SPAG
-      REAL amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
+REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
      &     Ppar , Ppf , sd , sinh , x0 , x1 , x2 , ymean , yppf , ysd
-      REAL zppf
+REAL(kind=wp) :: zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -17789,22 +17777,22 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NBPPF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99019) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
-         IF ( Ppar<=0.0 .OR. Ppar>=1.0 ) THEN
+         IF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
             WRITE (ipr,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NBPPF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
             WRITE (ipr,99019) Ppar
-            Ppf = 0.0
+            Ppf = 0.0_wp
             RETURN
          ELSE
             IF ( N<1 ) THEN
@@ -17815,7 +17803,7 @@ END SUBROUTINE BETRAN
                WRITE (ipr,99004) N
 99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
      &                 ' *****')
-               Ppf = 0.0
+               Ppf = 0.0_wp
                RETURN
             ELSE
 !
@@ -17823,21 +17811,21 @@ END SUBROUTINE BETRAN
 !
                an = N
                dppar = Ppar
-               Ppf = 0.0
+               Ppf = 0.0_wp
                ix0 = 0
                ix1 = 0
                ix2 = 0
-               p0 = 0.0
-               p1 = 0.0
-               p2 = 0.0
+               p0 = 0.0_wp
+               p1 = 0.0_wp
+               p2 = 0.0_wp
 !
 !     TREAT CERTAIN SPECIAL CASES IMMEDIATELY--
 !     1) P = 0.0
 !     2) P = 0.5 AND PPAR = 0.5
 !     3) PPF = 0
 !
-               IF ( P/=0.0 ) THEN
-                  IF ( P==0.5 .AND. Ppar==0.5 ) THEN
+               IF ( P/=0.0_wp ) THEN
+                  IF ( P==0.5_wp .AND. Ppar==0.5_wp ) THEN
                      Ppf = N - 1
                      RETURN
                   ELSE
@@ -17851,19 +17839,19 @@ END SUBROUTINE BETRAN
 !     (SEE JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS,
 !     PAGE 127, FORMULA 22).
 !
-                        amean = an*(1.0-Ppar)/Ppar
-                        sd = SQRT(an*(1.0-Ppar)/(Ppar*Ppar))
-                        arg = SQRT((amean+0.375)/(an-0.75))
-                        arcsh = ALOG(arg+SQRT(arg*arg+1.0))
-                        ymean = (SQRT(an-0.5))*arcsh
-                        ysd = 0.5
+                        amean = an*(1.0_wp-Ppar)/Ppar
+                        sd = SQRT(an*(1.0_wp-Ppar)/(Ppar*Ppar))
+                        arg = SQRT((amean+0.375_wp)/(an-0.75_wp))
+                        arcsh = ALOG(arg+SQRT(arg*arg+1.0_wp))
+                        ymean = (SQRT(an-0.5_wp))*arcsh
+                        ysd = 0.5_wp
                         CALL NORPPF(P,zppf)
                         yppf = ymean + zppf*ysd
-                        arg = yppf/SQRT(an-0.5)
+                        arg = yppf/SQRT(an-0.5_wp)
                         e = EXP(arg)
-                        sinh = (e-1.0/e)/2.0
-                        x2 = -0.375 + (an-0.75)*sinh*sinh
-                        x2 = x2 + 0.5
+                        sinh = (e-1.0_wp/e)/2.0_wp
+                        x2 = -0.375_wp + (an-0.75_wp)*sinh*sinh
+                        x2 = x2 + 0.5_wp
                         ix2 = x2
 !
 !     CHECK AND MODIFY (IF NECESSARY) THIS INITIAL
@@ -17881,7 +17869,7 @@ END SUBROUTINE BETRAN
 !
                         ix0 = 0
                         ix1 = huge(0) ! = 10**10
-                        isd = sd + 1.0
+                        isd = sd + 1.0_wp
                         x2 = ix2
                         CALL NBCDF(x2,Ppar,N,p2)
 !
@@ -17923,7 +17911,7 @@ END SUBROUTINE BETRAN
                      ENDIF
                   ENDIF
                ENDIF
-               Ppf = 0.0
+               Ppf = 0.0_wp
                RETURN
             ENDIF
  20         ix1 = ix2
@@ -18064,8 +18052,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine nbran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -18088,7 +18076,7 @@ END SUBROUTINE BETRAN
 !!    program demo_nbran
 !!    use M_datapac, only : nbran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call nbran(x,y)
 !!    end program demo_nbran
 !!
@@ -18106,7 +18094,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NBRAN13940
 !*** Start of declarations inserted by SPAG
-      REAL b(1) , g(1) , P , X
+REAL(kind=wp) :: b(1) , g(1) , P , X
       INTEGER i , ib , ig , ipr , Istart , isum , j , N , Npar
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -18237,7 +18225,7 @@ END SUBROUTINE BETRAN
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99005) N
          RETURN
-      ELSEIF ( P<=0.0 .OR. P>=1.0 ) THEN
+      ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROU&
@@ -18263,7 +18251,7 @@ END SUBROUTINE BETRAN
 !     AND BRANCH TO THE FASTER
 !     GENERATION METHOD ACCORDINGLY.
 !
-         IF ( P<0.1 ) THEN
+         IF ( P<0.1_wp ) THEN
 !
 !     IF P IS SMALL,
 !     GENERATE N NEGATIVE BINOMIAL NUMBERS
@@ -18275,7 +18263,7 @@ END SUBROUTINE BETRAN
                isum = 0
                DO j = 1 , Npar
                   CALL GEORAN(1,P,1,g)
-                  ig = g(1) + 0.5
+                  ig = g(1) + 0.5_wp
                   isum = isum + ig
                ENDDO
                X(i) = isum
@@ -18296,7 +18284,7 @@ END SUBROUTINE BETRAN
          j = 1
          DO
             CALL BINRAN(1,P,1,1,b)
-            ib = b(1) + 0.5
+            ib = b(1) + 0.5_wp
             isum = isum + ib
             IF ( isum==Npar ) THEN
                X(i) = j
@@ -18319,8 +18307,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine norcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -18343,7 +18331,7 @@ END SUBROUTINE BETRAN
 !!    program demo_norcdf
 !!    use M_datapac, only : norcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norcdf(x,y)
 !!    end program demo_norcdf
 !!
@@ -18361,7 +18349,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NORCDF14149
 !*** Start of declarations inserted by SPAG
-      REAL b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
+REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -18401,8 +18389,8 @@ END SUBROUTINE BETRAN
 !
 !---------------------------------------------------------------------
 !
-      DATA b1 , b2 , b3 , b4 , b5 , p/.319381530 , -0.356563782 ,       &
-     &     1.781477937 , -1.821255978 , 1.330274429 , .2316419/
+      DATA b1 , b2 , b3 , b4 , b5 , p/.319381530_wp , -0.356563782_wp ,       &
+     &     1.781477937_wp , -1.821255978_wp , 1.330274429_wp , .2316419_wp/
 !
       ipr = 6
 !
@@ -18413,11 +18401,11 @@ END SUBROUTINE BETRAN
 !-----START POINT-----------------------------------------------------
 !
       z = X
-      IF ( X<0.0 ) z = -z
-      t = 1.0/(1.0+p*z)
-      Cdf = 1.0 - ((0.39894228040143)*EXP(-0.5*z*z))                    &
+      IF ( X<0.0_wp ) z = -z
+      t = 1.0_wp/(1.0_wp+p*z)
+      Cdf = 1.0_wp - ((0.39894228040143_wp)*EXP(-0.5_wp*z*z))                    &
      &      *(b1*t+b2*t**2+b3*t**3+b4*t**4+b5*t**5)
-      IF ( X<0.0 ) Cdf = 1.0 - Cdf
+      IF ( X<0.0_wp ) Cdf = 1.0_wp - Cdf
 !
       END SUBROUTINE NORCDF
 !>
@@ -18429,8 +18417,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine norout (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -18453,7 +18441,7 @@ END SUBROUTINE BETRAN
 !!    program demo_norout
 !!    use M_datapac, only : norout
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norout(x,y)
 !!    end program demo_norout
 !!
@@ -18471,12 +18459,12 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NOROUT14213
 !*** Start of declarations inserted by SPAG
-      REAL ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
+REAL(kind=wp) :: ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
      &     res , s , s1 , s13 , s14 , s2 , s23 , s24 , s3 , s4 , ssq
-      REAL ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
+REAL(kind=wp) :: ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
      &     st1 , st2 , st3 , st4 , st5 , st6 , st7 , st8 , st9 , stres ,&
      &     sum , sum4
-      REAL WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
+REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
      &     xb4 , xline , XPOs , Y
       INTEGER i , icount , iflag , ipr , irev , iupper , j , mx , N ,   &
      &        nm1 , nm2 , nm3 , nm4 , nm5
@@ -18612,7 +18600,7 @@ END SUBROUTINE BETRAN
 !
 !     COMPUTE PARTIAL SAMPLE MEANS
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 3 , nm2
             sum = sum + Y(i)
          ENDDO
@@ -18629,15 +18617,15 @@ END SUBROUTINE BETRAN
 !     COMPUTE PARTIAL SUMS OF SQUARED DEVIATIONS
 !     ABOUT THE PARTIAL SAMPLE MEANS
 !
-         ssq = 0.0
-         ssq1 = 0.0
-         ssq4 = 0.0
-         ssq14 = 0.0
-         ssq2 = 0.0
-         ssq3 = 0.0
-         ssq24 = 0.0
-         ssq13 = 0.0
-         ssq23 = 0.0
+         ssq = 0.0_wp
+         ssq1 = 0.0_wp
+         ssq4 = 0.0_wp
+         ssq14 = 0.0_wp
+         ssq2 = 0.0_wp
+         ssq3 = 0.0_wp
+         ssq24 = 0.0_wp
+         ssq13 = 0.0_wp
+         ssq23 = 0.0_wp
          DO i = 1 , N
             ssq = ssq + (Y(i)-xb)**2
          ENDDO
@@ -18695,12 +18683,12 @@ END SUBROUTINE BETRAN
          st7 = (Y(nm1)-xb14)/s14
 !     OMIT X(1) AND X(N), TEST FOR X(2) AND X(N-1)
          st8 = (Y(nm1)-Y(2))/s14
-         sum4 = 0.0
+         sum4 = 0.0_wp
          DO i = 2 , nm2
             sum4 = sum4 + (Y(i)-xb14)**4
          ENDDO
-         st9 = (an-2.0)*sum4/(ssq14**2)
-         st9 = st9 + 3.0
+         st9 = (an-2.0_wp)*sum4/(ssq14**2)
+         st9 = st9 + 3.0_wp
 !
 !     COMPUTE THE LINE PLOT WHICH SHOWS THE DISTRIBUTION OF THE OBSERVED
 !     VALUES IN TERMS OF MULTIPLES OF SAMPLE STANDARD DEVIATIONS AWAY FROM
@@ -18712,7 +18700,7 @@ END SUBROUTINE BETRAN
          ENDDO
          icount = 0
          DO i = 1 , N
-            mx = 10.0*(((X(i)-xb)/s)+6.0) + 0.5
+            mx = 10.0_wp*(((X(i)-xb)/s)+6.0_wp) + 0.5_wp
             mx = mx + 7
             IF ( mx<7 .OR. mx>127 ) icount = icount + 1
             IF ( mx>=7 .AND. mx<=127 ) iline1(mx) = alphax
@@ -18727,8 +18715,8 @@ END SUBROUTINE BETRAN
          DO i = 1 , 6
             irev = 13 - i + 1
             ai = i
-            xline(i) = xb - (7.0-ai)*s
-            xline(irev) = xb + (7.0-ai)*s
+            xline(i) = xb - (7.0_wp-ai)*s
+            xline(irev) = xb + (7.0_wp-ai)*s
          ENDDO
 !
 !     WRITE EVERYTHING OUT
@@ -18941,8 +18929,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine norpdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -18965,7 +18953,7 @@ END SUBROUTINE BETRAN
 !!    program demo_norpdf
 !!    use M_datapac, only : norpdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norpdf(x,y)
 !!    end program demo_norpdf
 !!
@@ -18983,7 +18971,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NORPDF14679
 !*** Start of declarations inserted by SPAG
-      REAL c , Pdf , X
+REAL(kind=wp) :: c , Pdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -19021,7 +19009,7 @@ END SUBROUTINE BETRAN
 !
 !---------------------------------------------------------------------
 !
-      DATA c/.3989422804/
+      DATA c/.3989422804_wp/
 !
       ipr = 6
 !
@@ -19031,7 +19019,7 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-      Pdf = c*EXP(-(X*X)/2.0)
+      Pdf = c*EXP(-(X*X)/2.0_wp)
 !
       END SUBROUTINE NORPDF
 !>
@@ -19042,8 +19030,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine norplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -19066,7 +19054,7 @@ END SUBROUTINE BETRAN
 !!    program demo_norplt
 !!    use M_datapac, only : norplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norplt(x,y)
 !!    end program demo_norplt
 !!
@@ -19084,7 +19072,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NORPLT14735
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
+REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -19155,7 +19143,7 @@ END SUBROUTINE BETRAN
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/1.43218641/
+      DATA tau/1.43218641_wp/
 !
       ipr = 6
       iupper = 7500
@@ -19219,15 +19207,15 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
+         sum1 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
          ENDDO
          ybar = sum1/an
-         wbar = 0.0
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         wbar = 0.0_wp
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + W(i)*Y(i)
@@ -19251,8 +19239,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine norppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -19275,7 +19263,7 @@ END SUBROUTINE BETRAN
 !!    program demo_norppf
 !!    use M_datapac, only : norppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norppf(x,y)
 !!    end program demo_norppf
 !!
@@ -19293,7 +19281,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NORPPF14899
 !*** Start of declarations inserted by SPAG
-      REAL aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
+REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
      &     q2 , q3 , q4 , r , t
       INTEGER ipr
 !*** End of declarations inserted by SPAG
@@ -19377,16 +19365,16 @@ END SUBROUTINE BETRAN
 !
 !---------------------------------------------------------------------
 !
-      DATA p0 , p1 , p2 , p3 , p4/ - .322232431088 , -1.0 ,             &
-     &     -.342242088547 , -.204231210245E-1 , -.453642210148E-4/
-      DATA q0 , q1 , q2 , q3 , q4/.993484626060E-1 , .588581570495 ,    &
-     &     .531103462366 , .103537752850 , .38560700634E-2/
+      DATA p0 , p1 , p2 , p3 , p4/ - .322232431088_wp , -1.0_wp ,             &
+     &     -.342242088547_wp , -.204231210245E-1_wp , -.453642210148E-4_wp/
+      DATA q0 , q1 , q2 , q3 , q4/.993484626060E-1_wp , .588581570495_wp ,    &
+     &     .531103462366_wp , .103537752850_wp , .38560700634E-2_wp/
 !
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NORPPF SUBROU&
@@ -19398,18 +19386,18 @@ END SUBROUTINE BETRAN
 !
 !-----START POINT-----------------------------------------------------
 !
-      ELSEIF ( P/=0.5 ) THEN
+      ELSEIF ( P/=0.5_wp ) THEN
 !
          r = P
-         IF ( P>0.5 ) r = 1.0 - r
-         t = SQRT(-2.0*ALOG(r))
+         IF ( P>0.5_wp ) r = 1.0_wp - r
+         t = SQRT(-2.0_wp*ALOG(r))
          anum = ((((t*p4+p3)*t+p2)*t+p1)*t+p0)
          aden = ((((t*q4+q3)*t+q2)*t+q1)*t+q0)
          Ppf = t + (anum/aden)
-         IF ( P<0.5 ) Ppf = -Ppf
+         IF ( P<0.5_wp ) Ppf = -Ppf
          GOTO 99999
       ENDIF
-      Ppf = 0.0
+      Ppf = 0.0_wp
       RETURN
 !
 99999 END SUBROUTINE NORPPF
@@ -19421,8 +19409,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine norran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -19445,7 +19433,7 @@ END SUBROUTINE BETRAN
 !!    program demo_norran
 !!    use M_datapac, only : norran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norran(x,y)
 !!    end program demo_norran
 !!
@@ -19463,7 +19451,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NORRAN15024
 !*** Start of declarations inserted by SPAG
-      REAL arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
+REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -19530,7 +19518,7 @@ END SUBROUTINE BETRAN
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA pi/3.14159265359/
+      DATA pi/3.14159265359_wp/
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -19566,8 +19554,8 @@ END SUBROUTINE BETRAN
             ELSE
                u2 = X(ip1)
             ENDIF
-            arg1 = -2.0*ALOG(u1)
-            arg2 = 2.0*pi*u2
+            arg1 = -2.0_wp*ALOG(u1)
+            arg2 = 2.0_wp*pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)
             z2 = sqrt1*SIN(arg2)
@@ -19585,8 +19573,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine norsf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -19609,7 +19597,7 @@ END SUBROUTINE BETRAN
 !!    program demo_norsf
 !!    use M_datapac, only : norsf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norsf(x,y)
 !!    end program demo_norsf
 !!
@@ -19627,7 +19615,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--NORSF15157
 !*** Start of declarations inserted by SPAG
-      REAL c , P , pdf , ppf , Sf
+REAL(kind=wp) :: c , P , pdf , ppf , Sf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -19676,13 +19664,13 @@ END SUBROUTINE BETRAN
 !
 !---------------------------------------------------------------------
 !
-      DATA c/.3989422804/
+      DATA c/0.3989422804_wp/
 !
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NORSF  SUBROU&
@@ -19696,8 +19684,8 @@ END SUBROUTINE BETRAN
 !-----START POINT-----------------------------------------------------
 !
          CALL NORPPF(P,ppf)
-         pdf = c*EXP(-(ppf*ppf)/2.0)
-         Sf = 1.0/pdf
+         pdf = c*EXP(-(ppf*ppf)/2.0_wp)
+         Sf = 1.0_wp/pdf
       ENDIF
 !
       END SUBROUTINE NORSF
@@ -19710,8 +19698,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine parcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -19734,7 +19722,7 @@ END SUBROUTINE BETRAN
 !!    program demo_parcdf
 !!    use M_datapac, only : parcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parcdf(x,y)
 !!    end program demo_parcdf
 !!
@@ -19752,7 +19740,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PARCDF15236
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , Gamma , X
+REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -19807,27 +19795,27 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<1.0 ) THEN
+      IF ( X<1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE PARC&
      &DF SUBROUTINE IS LESS THAN 1.0 *****')
          WRITE (ipr,99003) X
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARCDF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) Gamma
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Cdf = 1.0 - (X**(-Gamma))
+         Cdf = 1.0_wp - (X**(-Gamma))
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -19840,8 +19828,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine parplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -19864,7 +19852,7 @@ END SUBROUTINE BETRAN
 !!    program demo_parplt
 !!    use M_datapac, only : parplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parplt(x,y)
 !!    end program demo_parplt
 !!
@@ -19882,10 +19870,10 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PARPLT15321
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
+REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
-      REAL yslope
+REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -19974,7 +19962,7 @@ END SUBROUTINE BETRAN
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
-         IF ( Gamma<=0.0 ) THEN
+         IF ( Gamma<=0.0_wp ) THEN
             WRITE (ipr,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE PARPLT SUBROU&
@@ -20010,7 +19998,7 @@ END SUBROUTINE BETRAN
 !     COMPUTE PARETO DISTRIBUTION ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = (1.0-W(i))**(-1.0/Gamma)
+            W(i) = (1.0_wp-W(i))**(-1.0_wp/Gamma)
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -20019,14 +20007,14 @@ END SUBROUTINE BETRAN
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         q = .9975
-         pp9975 = (1.0-q)**(-1.0/Gamma)
-         q = .0025
-         pp0025 = (1.0-q)**(-1.0/Gamma)
-         q = .975
-         pp975 = (1.0-q)**(-1.0/Gamma)
-         q = .025
-         pp025 = (1.0-q)**(-1.0/Gamma)
+         q = 0.9975_wp
+         pp9975 = (1.0_wp-q)**(-1.0_wp/Gamma)
+         q = 0.0025_wp
+         pp0025 = (1.0_wp-q)**(-1.0_wp/Gamma)
+         q = 0.975_wp
+         pp975 = (1.0_wp-q)**(-1.0_wp/Gamma)
+         q = 0.025_wp
+         pp025 = (1.0_wp-q)**(-1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99007) Gamma , tau , N
 !
@@ -20040,17 +20028,17 @@ END SUBROUTINE BETRAN
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -20074,8 +20062,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine parppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -20098,7 +20086,7 @@ END SUBROUTINE BETRAN
 !!    program demo_parppf
 !!    use M_datapac, only : parppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parppf(x,y)
 !!    end program demo_parppf
 !!
@@ -20116,7 +20104,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PARPPF15510
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , P , Ppf
+REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -20174,27 +20162,27 @@ END SUBROUTINE BETRAN
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE PARPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99003) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) Gamma
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = (1.0-P)**(-1.0/Gamma)
+         Ppf = (1.0_wp-P)**(-1.0_wp/Gamma)
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -20207,8 +20195,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine parran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -20231,7 +20219,7 @@ END SUBROUTINE BETRAN
 !!    program demo_parran
 !!    use M_datapac, only : parran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parran(x,y)
 !!    end program demo_parran
 !!
@@ -20249,7 +20237,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PARRAN15598
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , X
+REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -20327,7 +20315,7 @@ END SUBROUTINE BETRAN
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARRAN SUBROU&
@@ -20346,7 +20334,7 @@ END SUBROUTINE BETRAN
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = (1.0-X(i))**(-1.0/Gamma)
+            X(i) = (1.0_wp-X(i))**(-1.0_wp/Gamma)
          ENDDO
       ENDIF
 !
@@ -20360,8 +20348,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine plot10 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -20384,7 +20372,7 @@ END SUBROUTINE BETRAN
 !!    program demo_plot10
 !!    use M_datapac, only : plot10
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot10(x,y)
 !!    end program demo_plot10
 !!
@@ -20404,10 +20392,10 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PLOT1016034
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
+REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
      &     ratiox , ratioy , X , x25 , x75 , Xaxid , Xmax , xmid ,      &
      &     Xmin , Y , Yaxid , ylable
-      REAL Ymax , Ymin
+REAL(kind=wp) :: Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !*** End of declarations inserted by SPAG
 !      DLL_EXPORT PLOT10
@@ -20421,7 +20409,7 @@ END SUBROUTINE BETRAN
 !              3) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
 !                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
 !                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX; AND
-!              3) WITH HOLLARITH LABELS (AT MOST 6 CHARACTERS)
+!              3) WITH HOLLERITH LABELS (AT MOST 6 CHARACTERS)
 !                 FOR THE VERTICAL AXIS VARIABLE,
 !                 THE HORIZONTAL AXIS VARIABLE, AND
 !                 THE PLOTTING CHARACTER VARIABLE
@@ -20466,7 +20454,7 @@ END SUBROUTINE BETRAN
 !              WHERE THE SUBSET IS DEFINED
 !              BY VALUES IN THE VECTOR D.
 !
-!              THE USE OF HOLLARITH IDENTIFYING LABELS
+!              THE USE OF HOLLERITH IDENTIFYING LABELS
 !              ALLOWS THE DATA ANALYST TO AUTOMATICALLY
 !              HAVE THE PLOTS LABELED.  THIS IS PARTICULARLY
 !              USEFUL IN A LARGE ANALYSIS WHEN MANY
@@ -20503,15 +20491,15 @@ END SUBROUTINE BETRAN
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --YAXID  = THE HOLLARITH VALUE
+!                    --YAXID  = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               VERTICAL AXIS VARIABLE.
-!                    --XAXID  = THE HOLLARITH VALUE
+!                    --XAXID  = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               HORIZONTAL AXIS VARIABLE.
-!                    --PLCHID = THE HOLLARITH VALUE
+!                    --PLCHID = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               PLOTTING CHARACTER VARIABLE.
@@ -20615,7 +20603,7 @@ END SUBROUTINE BETRAN
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -20773,9 +20761,9 @@ END SUBROUTINE BETRAN
 !     DETERMINE XMID, X25 (=THE 25% POINT), AND
 !     X75 (=THE 75% POINT)
 !
-      xmid = (Xmin+Xmax)/2.0
-      x25 = 0.75*Xmin + 0.25*Xmax
-      x75 = 0.25*Xmin + 0.75*Xmax
+      xmid = (Xmin+Xmax)/2.0_wp
+      x25 = 0.75_wp*Xmin + 0.25_wp*Xmax
+      x75 = 0.25_wp*Xmin + 0.75_wp*Xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -20825,8 +20813,8 @@ END SUBROUTINE BETRAN
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(Ymax-Ymin)
-      ratiox = 100.0/(Xmax-Xmin)
+      ratioy = 40.0_wp/(Ymax-Ymin)
+      ratiox = 100.0_wp/(Xmax-Xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
@@ -20835,13 +20823,13 @@ END SUBROUTINE BETRAN
                      IF ( X(i)>=Xmin .AND. X(i)<=Xmax ) THEN
                         IF ( D(i)>=Dmin ) THEN
                            IF ( D(i)<=Dmax ) THEN
-                              mx = ratiox*(X(i)-Xmin) + 0.5
+                              mx = ratiox*(X(i)-Xmin) + 0.5_wp
                               mx = mx + 7
-                              my = ratioy*(Y(i)-Ymin) + 0.5
+                              my = ratioy*(Y(i)-Ymin) + 0.5_wp
                               my = 43 - my
                               iarg = 37
-                              IF ( 0.5<Char(i) .AND. Char(i)<36.5 )     &
-     &                             iarg = Char(i) + 0.5
+                              IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp )     &
+     &                             iarg = Char(i) + 0.5_wp
                               IGRaph(my,mx) = iplotc(iarg)
                            ENDIF
                         ENDIF
@@ -20893,8 +20881,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine plot6 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -20917,7 +20905,7 @@ END SUBROUTINE BETRAN
 !!    program demo_plot6
 !!    use M_datapac, only : plot6
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot6(x,y)
 !!    end program demo_plot6
 !!
@@ -20935,7 +20923,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PLOT616520
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
+REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
       INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !*** End of declarations inserted by SPAG
@@ -21035,7 +21023,7 @@ END SUBROUTINE BETRAN
      &     'N' , '='/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -21131,16 +21119,16 @@ END SUBROUTINE BETRAN
 !
  400  DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = Ymax - (aim1/8.0)*(Ymax-Ymin)
+         ylable(i) = Ymax - (aim1/8.0_wp)*(Ymax-Ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS
 !     DETERMINE XMID, X25 (=THE 25% POINT), AND
 !     X75 (=THE 75% POINT)
 !
-      xmid = (Xmin+Xmax)/2.0
-      x25 = 0.75*Xmin + 0.25*Xmax
-      x75 = 0.25*Xmin + 0.75*Xmax
+      xmid = (Xmin+Xmax)/2.0_wp
+      x25 = 0.75_wp*Xmin + 0.25_wp*Xmax
+      x75 = 0.25_wp*Xmin + 0.75_wp*Xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -21190,16 +21178,16 @@ END SUBROUTINE BETRAN
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(Ymax-Ymin)
-      ratiox = 100.0/(Xmax-Xmin)
+      ratioy = 40.0_wp/(Ymax-Ymin)
+      ratiox = 100.0_wp/(Xmax-Xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
                IF ( Y(i)>=Ymin .AND. Y(i)<=Ymax ) THEN
                   IF ( X(i)>=Xmin .AND. X(i)<=Xmax ) THEN
-                     mx = ratiox*(X(i)-Xmin) + 0.5
+                     mx = ratiox*(X(i)-Xmin) + 0.5_wp
                      mx = mx + 7
-                     my = ratioy*(Y(i)-Ymin) + 0.5
+                     my = ratioy*(Y(i)-Ymin) + 0.5_wp
                      my = 43 - my
                      IGRaph(my,mx) = alphax
                   ENDIF
@@ -21243,8 +21231,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine plot7 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -21267,7 +21255,7 @@ END SUBROUTINE BETRAN
 !!    program demo_plot7
 !!    use M_datapac, only : plot7
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot7(x,y)
 !!    end program demo_plot7
 !!
@@ -21285,7 +21273,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PLOT716824
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
+REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !*** End of declarations inserted by SPAG
@@ -21445,7 +21433,7 @@ END SUBROUTINE BETRAN
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -21562,16 +21550,16 @@ END SUBROUTINE BETRAN
 !
  600  DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = Ymax - (aim1/8.0)*(Ymax-Ymin)
+         ylable(i) = Ymax - (aim1/8.0_wp)*(Ymax-Ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS
 !     DETERMINE XMID, X25 (=THE 25% POINT), AND
 !     X75 (=THE 75% POINT)
 !
-      xmid = (Xmin+Xmax)/2.0
-      x25 = 0.75*Xmin + 0.25*Xmax
-      x75 = 0.25*Xmin + 0.75*Xmax
+      xmid = (Xmin+Xmax)/2.0_wp
+      x25 = 0.75_wp*Xmin + 0.25_wp*Xmax
+      x75 = 0.25_wp*Xmin + 0.75_wp*Xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -21621,21 +21609,21 @@ END SUBROUTINE BETRAN
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(Ymax-Ymin)
-      ratiox = 100.0/(Xmax-Xmin)
+      ratioy = 40.0_wp/(Ymax-Ymin)
+      ratiox = 100.0_wp/(Xmax-Xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
                IF ( Char(i)<cutoff ) THEN
                   IF ( Y(i)>=Ymin .AND. Y(i)<=Ymax ) THEN
                      IF ( X(i)>=Xmin .AND. X(i)<=Xmax ) THEN
-                        mx = ratiox*(X(i)-Xmin) + 0.5
+                        mx = ratiox*(X(i)-Xmin) + 0.5_wp
                         mx = mx + 7
-                        my = ratioy*(Y(i)-Ymin) + 0.5
+                        my = ratioy*(Y(i)-Ymin) + 0.5_wp
                         my = 43 - my
                         iarg = 37
-                        IF ( 0.5<Char(i) .AND. Char(i)<36.5 )           &
-     &                       iarg = Char(i) + 0.5
+                        IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp )           &
+     &                       iarg = Char(i) + 0.5_wp
                         IGRaph(my,mx) = iplotc(iarg)
                      ENDIF
                   ENDIF
@@ -21679,8 +21667,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine plot8 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -21703,7 +21691,7 @@ END SUBROUTINE BETRAN
 !!    program demo_plot8
 !!    use M_datapac, only : plot8
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot8(x,y)
 !!    end program demo_plot8
 !!
@@ -21721,7 +21709,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PLOT817214
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
+REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable ,   &
      &     Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
@@ -21908,7 +21896,7 @@ END SUBROUTINE BETRAN
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -22059,16 +22047,16 @@ END SUBROUTINE BETRAN
 !
  900  DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = Ymax - (aim1/8.0)*(Ymax-Ymin)
+         ylable(i) = Ymax - (aim1/8.0_wp)*(Ymax-Ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS
 !     DETERMINE XMID, X25 (=THE 25% POINT), AND
 !     X75 (=THE 75% POINT)
 !
-      xmid = (Xmin+Xmax)/2.0
-      x25 = 0.75*Xmin + 0.25*Xmax
-      x75 = 0.25*Xmin + 0.75*Xmax
+      xmid = (Xmin+Xmax)/2.0_wp
+      x25 = 0.75_wp*Xmin + 0.25_wp*Xmax
+      x75 = 0.25_wp*Xmin + 0.75_wp*Xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -22118,8 +22106,8 @@ END SUBROUTINE BETRAN
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(Ymax-Ymin)
-      ratiox = 100.0/(Xmax-Xmin)
+      ratioy = 40.0_wp/(Ymax-Ymin)
+      ratiox = 100.0_wp/(Xmax-Xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
@@ -22128,13 +22116,13 @@ END SUBROUTINE BETRAN
                      IF ( X(i)>=Xmin .AND. X(i)<=Xmax ) THEN
                         IF ( D(i)>=Dmin ) THEN
                            IF ( D(i)<=Dmax ) THEN
-                              mx = ratiox*(X(i)-Xmin) + 0.5
+                              mx = ratiox*(X(i)-Xmin) + 0.5_wp
                               mx = mx + 7
-                              my = ratioy*(Y(i)-Ymin) + 0.5
+                              my = ratioy*(Y(i)-Ymin) + 0.5_wp
                               my = 43 - my
                               iarg = 37
-                              IF ( 0.5<Char(i) .AND. Char(i)<36.5 )     &
-     &                             iarg = Char(i) + 0.5
+                              IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp )     &
+     &                             iarg = Char(i) + 0.5_wp
                               IGRaph(my,mx) = iplotc(iarg)
                            ENDIF
                         ENDIF
@@ -22181,8 +22169,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine plot9 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -22205,7 +22193,7 @@ END SUBROUTINE BETRAN
 !!    program demo_plot9
 !!    use M_datapac, only : plot9
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot9(x,y)
 !!    end program demo_plot9
 !!
@@ -22224,7 +22212,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PLOT917671
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
+REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
      &     x25 , x75 , Xaxid , Xmax , xmid , Xmin , Y , Yaxid , ylable ,&
      &     Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
@@ -22238,7 +22226,7 @@ END SUBROUTINE BETRAN
 !              2) WITH THE VERTICAL (Y) AXIS MIN AND MAX
 !                 AND THE HORIZONTAL (X) AXIS MIN AND MAX
 !                 VALUES SPECIFIED BY THE DATA ANALYST; AND
-!              3) WITH HOLLARITH LABELS (AT MOST 6 CHARACTERS)
+!              3) WITH HOLLERITH LABELS (AT MOST 6 CHARACTERS)
 !                 FOR THE VERTICAL AXIS VARIABLE,
 !                 THE HORIZONTAL AXIS VARIABLE, AND
 !                 THE PLOTTING CHARACTER VARIABLE
@@ -22277,7 +22265,7 @@ END SUBROUTINE BETRAN
 !              SO AS, FOR EXAMPLE, TO ZERO-IN ON AN
 !              INTERESTING SUB-REGION OF A PREVIOUS PLOT.
 !
-!              THE USE OF HOLLARITH IDENTIFYING LABELS
+!              THE USE OF HOLLERITH IDENTIFYING LABELS
 !              ALLOWS THE DATA ANALYST TO AUTOMATICALLY
 !              HAVE THE PLOTS LABELED.  THIS IS PARTICULARLY
 !              USEFUL IN A LARGE ANALYSIS WHEN MANY
@@ -22303,15 +22291,15 @@ END SUBROUTINE BETRAN
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
 !                    --XMAX   = THE SINGLE PRECISION VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!                    --YAXID  = THE HOLLARITH VALUE
+!                    --YAXID  = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               VERTICAL AXIS VARIABLE.
-!                    --XAXID  = THE HOLLARITH VALUE
+!                    --XAXID  = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               HORIZONTAL AXIS VARIABLE.
-!                    --PLCHID = THE HOLLARITH VALUE
+!                    --PLCHID = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               PLOTTING CHARACTER VARIABLE.
@@ -22409,7 +22397,7 @@ END SUBROUTINE BETRAN
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -22533,9 +22521,9 @@ END SUBROUTINE BETRAN
 !     DETERMINE XMID, X25 (=THE 25% POINT), AND
 !     X75 (=THE 75% POINT)
 !
-      xmid = (Xmin+Xmax)/2.0
-      x25 = 0.75*Xmin + 0.25*Xmax
-      x75 = 0.25*Xmin + 0.75*Xmax
+      xmid = (Xmin+Xmax)/2.0_wp
+      x25 = 0.75_wp*Xmin + 0.25_wp*Xmax
+      x75 = 0.25_wp*Xmin + 0.75_wp*Xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -22585,21 +22573,21 @@ END SUBROUTINE BETRAN
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(Ymax-Ymin)
-      ratiox = 100.0/(Xmax-Xmin)
+      ratioy = 40.0_wp/(Ymax-Ymin)
+      ratiox = 100.0_wp/(Xmax-Xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
                IF ( Char(i)<cutoff ) THEN
                   IF ( Y(i)>=Ymin .AND. Y(i)<=Ymax ) THEN
                      IF ( X(i)>=Xmin .AND. X(i)<=Xmax ) THEN
-                        mx = ratiox*(X(i)-Xmin) + 0.5
+                        mx = ratiox*(X(i)-Xmin) + 0.5_wp
                         mx = mx + 7
-                        my = ratioy*(Y(i)-Ymin) + 0.5
+                        my = ratioy*(Y(i)-Ymin) + 0.5_wp
                         my = 43 - my
                         iarg = 37
-                        IF ( 0.5<Char(i) .AND. Char(i)<36.5 )           &
-     &                       iarg = Char(i) + 0.5
+                        IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp )           &
+     &                       iarg = Char(i) + 0.5_wp
                         IGRaph(my,mx) = iplotc(iarg)
                      ENDIF
                   ENDIF
@@ -22649,8 +22637,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine plotc (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -22673,7 +22661,7 @@ END SUBROUTINE BETRAN
 !!    program demo_plotc
 !!    use M_datapac, only : plotc
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotc(x,y)
 !!    end program demo_plotc
 !!
@@ -22691,7 +22679,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PLOTC18092
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
+REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !*** End of declarations inserted by SPAG
@@ -22828,7 +22816,7 @@ END SUBROUTINE BETRAN
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -22966,7 +22954,7 @@ END SUBROUTINE BETRAN
       ENDDO
       DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = ymax - (aim1/8.0)*(ymax-ymin)
+         ylable(i) = ymax - (aim1/8.0_wp)*(ymax-ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS
@@ -22994,9 +22982,9 @@ END SUBROUTINE BETRAN
             ENDIF
          ENDIF
       ENDDO
-      xmid = (xmin+xmax)/2.0
-      x25 = 0.75*xmin + 0.25*xmax
-      x75 = 0.25*xmin + 0.75*xmax
+      xmid = (xmin+xmax)/2.0_wp
+      x25 = 0.75_wp*xmin + 0.25_wp*xmax
+      x75 = 0.25_wp*xmin + 0.75_wp*xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -23046,19 +23034,19 @@ END SUBROUTINE BETRAN
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(ymax-ymin)
-      ratiox = 100.0/(xmax-xmin)
+      ratioy = 40.0_wp/(ymax-ymin)
+      ratiox = 100.0_wp/(xmax-xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
                IF ( Char(i)<cutoff ) THEN
-                  mx = ratiox*(X(i)-xmin) + 0.5
+                  mx = ratiox*(X(i)-xmin) + 0.5_wp
                   mx = mx + 7
-                  my = ratioy*(Y(i)-ymin) + 0.5
+                  my = ratioy*(Y(i)-ymin) + 0.5_wp
                   my = 43 - my
                   iarg = 37
-                  IF ( 0.5<Char(i) .AND. Char(i)<36.5 ) iarg = Char(i)  &
-     &                 + 0.5
+                  IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp ) iarg = Char(i)  &
+     &                 + 0.5_wp
                   IGRaph(my,mx) = iplotc(iarg)
                ENDIF
             ENDIF
@@ -23100,8 +23088,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine plotco (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -23124,7 +23112,7 @@ END SUBROUTINE BETRAN
 !!    program demo_plotco
 !!    use M_datapac, only : plotco
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotco(x,y)
 !!    end program demo_plotco
 !!
@@ -23142,7 +23130,7 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PLOTCO18497
 !*** Start of declarations inserted by SPAG
-      REAL hold , ratioy , Y , ylable , ymax , ymin
+REAL(kind=wp) :: hold , ratioy , Y , ylable , ymax , ymin
       INTEGER i , iaxdel , idel , iflag , imax , imin , ipr , ix ,      &
      &        ixmax , ixmin , iz , j , jmax , jmin , k , mx , my , N ,  &
      &        numpag
@@ -23204,10 +23192,10 @@ END SUBROUTINE BETRAN
 !
 !     DETERMINE THE Y VALUES TO BE LISTED ON THE LEFT VERTICAL AXIS
 !
- 50      ymin = -1.0
-         ymax = 1.0
+ 50      ymin = -1.0_wp
+         ymax = 1.0_wp
          DO i = 1 , 11
-            ylable(i) = FLOAT(6-i)/5.0
+            ylable(i) = FLOAT(6-i)/5.0_wp
          ENDDO
 !
 !     DETERMINE DISTANCES BETWEEN HORIZONTAL PLOT POINTS AND DISTANCES BETWEEN
@@ -23292,13 +23280,13 @@ END SUBROUTINE BETRAN
             imin = ixmin + 1
             imax = ixmax
             IF ( imax>N ) imax = N
-            ratioy = 50.0/(ymax-ymin)
+            ratioy = 50.0_wp/(ymax-ymin)
             DO i = imin , imax
                mx = MOD(i,120)
                mx = mx*idel
                IF ( mx==0 ) mx = 120
                mx = mx + 10
-               my = ratioy*(Y(i)-ymin) + 0.5
+               my = ratioy*(Y(i)-ymin) + 0.5_wp
                my = 55 - my
                IGRaph(my,mx) = star
                jmax = MAX0(my,30)
@@ -23352,8 +23340,8 @@ END SUBROUTINE BETRAN
 !!
 !!     Subroutine plotct (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -23376,7 +23364,7 @@ END SUBROUTINE BETRAN
 !!    program demo_plotct
 !!    use M_datapac, only : plotct
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotct(x,y)
 !!    end program demo_plotct
 !!
@@ -23394,10 +23382,10 @@ END SUBROUTINE BETRAN
       IMPLICIT NONE
 !*--PLOTCT18703
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
+REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , delx , dely , hold , X , xlable , xmax , xmin ,     &
      &     xwidth , Y , ylable , ylower , ymax
-      REAL ymin , yupper , ywidth
+REAL(kind=wp) :: ymin , yupper , ywidth
       INTEGER i , ia , icol , icolmx , ipr , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !*** End of declarations inserted by SPAG
@@ -23538,7 +23526,7 @@ END SUBROUTINE BETRAN
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -23722,17 +23710,17 @@ END SUBROUTINE BETRAN
             iline(icol) = blank
          ENDDO
          airow = irow
-         yupper = ymax + (1.5-airow)*ywidth
-         ylable = ymax + (1.0-airow)*ywidth
-         ylower = ymax + (0.5-airow)*ywidth
+         yupper = ymax + (1.5_wp-airow)*ywidth
+         ylable = ymax + (1.0_wp-airow)*ywidth
+         ylower = ymax + (0.5_wp-airow)*ywidth
          IF ( irow==numrow ) ylable = ymin
          DO i = 1 , N
             IF ( Y(i)<cutoff ) THEN
                IF ( X(i)<cutoff ) THEN
                   IF ( Char(i)<cutoff ) THEN
                      IF ( ylower<=Y(i) .AND. Y(i)<yupper ) THEN
-                        icol = ((X(i)-xmin)/xwidth) + 1.5
-                        ia = Char(i) + 0.5
+                        icol = ((X(i)-xmin)/xwidth) + 1.5_wp
+                        ia = Char(i) + 0.5_wp
                         IF ( 1<=ia .AND. ia<=36 ) THEN
                            jplotc = iplotc(ia)
                         ELSE
@@ -23757,7 +23745,7 @@ END SUBROUTINE BETRAN
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABLES.
+!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
       WRITE (ipr,99019) blank
       DO icol = 1 , numcol
@@ -23788,16 +23776,16 @@ END SUBROUTINE BETRAN
       END SUBROUTINE PLOTCT
 !>
 !!##NAME
-!!    plot(3f) - [M_datapac:STATISTICS] yields a one-page printer plot of
-!!    y(i) versus x(i)
+!!    plot(3f) - [M_datapac:STATISTICS:LINE PLOT] yields a one-page printer
+!!    plot of y(i) versus x(i)
 !!
 !!##SYNOPSIS
 !!
 !!     Subroutine plot (X, Y, N)
 !!
-!!      Real, Intent (In) :: X(:)
-!!      Real, Intent (In) :: Y(:)
-!!      Integer, Intent (In) :: N
+!!    Real(kind=wp) :: (In) ::  X(:)
+!!    Real(kind=wp) :: (In) ::  Y(:)
+!!      Integer, Intent (In) ::  N
 !!
 !!##DESCRIPTION
 !!    This subroutine yields a one-page printer plot of Y(I) versus X(I).
@@ -23828,9 +23816,9 @@ END SUBROUTINE BETRAN
 !!    program demo_plot
 !!    use M_datapac, only : plot
 !!    implicit none
-!!    integer :: i
-!!    real, allocatable :: x(:), y(:)
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    integer ::  i
+!!    real, allocatable ::  x(:), y(:)
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!      x=[(real(i),i=1,30)]
 !!      y=0.075*(x**4)-0.525*(x**3)+0.75*(x**2)+2.40
 !!      call plot(x,y,size(x))
@@ -23851,10 +23839,10 @@ END SUBROUTINE BETRAN
 !*==plot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOT(Y,X,N)
 IMPLICIT NONE
-REAL,intent(in) ::  X(:),  Y(:)
-integer,intent(in) :: n
-REAL aim1, cutoff, hold, ratiox, ratioy, x25, x75, xmax, xmid, xmin, ymax, ymin
-REAL ylable(11)
+REAL(kind=wp),intent(in) ::   X(:),  Y(:)
+integer,intent(in) ::  n
+REAL(kind=wp) :: aim1, cutoff, hold, ratiox, ratioy, x25, x75, xmax, xmid, xmin, ymax, ymin
+REAL(kind=wp) :: ylable(11)
 INTEGER i, iflag, ip2, ipr, j, k, mx, my, n2
 !
 !     ORIGINAL VERSION--JUNE      1972.
@@ -23869,11 +23857,11 @@ INTEGER i, iflag, ip2, ipr, j, k, mx, my, n2
 !     UPDATED         --FEBRUARY  1977.
 !---------------------------------------------------------------------
 !
-CHARACTER(len=4) ::  IGRaph
-CHARACTER(len=4) ::  sbnam1 , sbnam2
-CHARACTER(len=4) ::  alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-CHARACTER(len=4) ::  blank , hyphen , alphai , alphax
-CHARACTER(len=4) ::  alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) ::   IGRaph
+CHARACTER(len=4) ::   sbnam1 , sbnam2
+CHARACTER(len=4) ::   alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) ::   blank , hyphen , alphai , alphax
+CHARACTER(len=4) ::   alpham , alphaa , alphad , alphan , equal
 COMMON /BLOCK1/ IGRaph(55,130)
 !
 DATA sbnam1 , sbnam2/'PLOT' , '    '/
@@ -23884,7 +23872,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -23996,7 +23984,7 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
       ENDDO
       DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = ymax - (aim1/8.0)*(ymax-ymin)
+         ylable(i) = ymax - (aim1/8.0_wp)*(ymax-ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS
@@ -24020,9 +24008,9 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
             ENDIF
          ENDIF
       ENDDO
-      xmid = (xmin+xmax)/2.0
-      x25 = 0.75*xmin + 0.25*xmax
-      x75 = 0.25*xmin + 0.75*xmax
+      xmid = (xmin+xmax)/2.0_wp
+      x25 = 0.75_wp*xmin + 0.25_wp*xmax
+      x75 = 0.25_wp*xmin + 0.75_wp*xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -24072,14 +24060,14 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(ymax-ymin)
-      ratiox = 100.0/(xmax-xmin)
+      ratioy = 40.0_wp/(ymax-ymin)
+      ratiox = 100.0_wp/(xmax-xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
-               mx = ratiox*(X(i)-xmin) + 0.5
+               mx = ratiox*(X(i)-xmin) + 0.5_wp
                mx = mx + 7
-               my = ratioy*(Y(i)-ymin) + 0.5
+               my = ratioy*(Y(i)-ymin) + 0.5_wp
                my = 43 - my
                IGRaph(my,mx) = alphax
             ENDIF
@@ -24118,8 +24106,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plotsc (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -24142,7 +24130,7 @@ END SUBROUTINE PLOT
 !!    program demo_plotsc
 !!    use M_datapac, only : plotsc
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotsc(x,y)
 !!    end program demo_plotsc
 !!
@@ -24160,7 +24148,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLOTSC19492
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
+REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , xmax , xmid , xmin , Y , ylable ,   &
      &     ymax , ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
@@ -24321,7 +24309,7 @@ END SUBROUTINE PLOT
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -24501,7 +24489,7 @@ END SUBROUTINE PLOT
       ENDDO
       DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = ymax - (aim1/8.0)*(ymax-ymin)
+         ylable(i) = ymax - (aim1/8.0_wp)*(ymax-ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS
@@ -24537,9 +24525,9 @@ END SUBROUTINE PLOT
             ENDIF
          ENDIF
       ENDDO
-      xmid = (xmin+xmax)/2.0
-      x25 = 0.75*xmin + 0.25*xmax
-      x75 = 0.25*xmin + 0.75*xmax
+      xmid = (xmin+xmax)/2.0_wp
+      x25 = 0.75_wp*xmin + 0.25_wp*xmax
+      x75 = 0.25_wp*xmin + 0.75_wp*xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -24589,21 +24577,21 @@ END SUBROUTINE PLOT
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(ymax-ymin)
-      ratiox = 100.0/(xmax-xmin)
+      ratioy = 40.0_wp/(ymax-ymin)
+      ratiox = 100.0_wp/(xmax-xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
                IF ( Char(i)<cutoff ) THEN
                   IF ( D(i)>=Dmin ) THEN
                      IF ( D(i)<=Dmax ) THEN
-                        mx = ratiox*(X(i)-xmin) + 0.5
+                        mx = ratiox*(X(i)-xmin) + 0.5_wp
                         mx = mx + 7
-                        my = ratioy*(Y(i)-ymin) + 0.5
+                        my = ratioy*(Y(i)-ymin) + 0.5_wp
                         my = 43 - my
                         iarg = 37
-                        IF ( 0.5<Char(i) .AND. Char(i)<36.5 )           &
-     &                       iarg = Char(i) + 0.5
+                        IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp )           &
+     &                       iarg = Char(i) + 0.5_wp
                         IGRaph(my,mx) = iplotc(iarg)
                      ENDIF
                   ENDIF
@@ -24647,8 +24635,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plots (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -24671,7 +24659,7 @@ END SUBROUTINE PLOT
 !!    program demo_plots
 !!    use M_datapac, only : plots
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plots(x,y)
 !!    end program demo_plots
 !!
@@ -24689,7 +24677,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLOTS19100
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
+REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
      &     X , x25 , x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
       INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !*** End of declarations inserted by SPAG
@@ -24791,7 +24779,7 @@ END SUBROUTINE PLOT
      &     'N' , '='/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -24948,7 +24936,7 @@ END SUBROUTINE PLOT
       ENDDO
       DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = ymax - (aim1/8.0)*(ymax-ymin)
+         ylable(i) = ymax - (aim1/8.0_wp)*(ymax-ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS
@@ -24980,9 +24968,9 @@ END SUBROUTINE PLOT
             ENDIF
          ENDIF
       ENDDO
-      xmid = (xmin+xmax)/2.0
-      x25 = 0.75*xmin + 0.25*xmax
-      x75 = 0.25*xmin + 0.75*xmax
+      xmid = (xmin+xmax)/2.0_wp
+      x25 = 0.75_wp*xmin + 0.25_wp*xmax
+      x75 = 0.25_wp*xmin + 0.75_wp*xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -25032,16 +25020,16 @@ END SUBROUTINE PLOT
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(ymax-ymin)
-      ratiox = 100.0/(xmax-xmin)
+      ratioy = 40.0_wp/(ymax-ymin)
+      ratiox = 100.0_wp/(xmax-xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
                IF ( D(i)>=Dmin ) THEN
                   IF ( D(i)<=Dmax ) THEN
-                     mx = ratiox*(X(i)-xmin) + 0.5
+                     mx = ratiox*(X(i)-xmin) + 0.5_wp
                      mx = mx + 7
-                     my = ratioy*(Y(i)-ymin) + 0.5
+                     my = ratioy*(Y(i)-ymin) + 0.5_wp
                      my = 43 - my
                      IGRaph(my,mx) = alphax
                   ENDIF
@@ -25084,8 +25072,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plotsp (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -25108,7 +25096,7 @@ END SUBROUTINE PLOT
 !!    program demo_plotsp
 !!    use M_datapac, only : plotsp
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotsp(x,y)
 !!    end program demo_plotsp
 !!
@@ -25126,7 +25114,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLOTSP19976
 !*** Start of declarations inserted by SPAG
-      REAL ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
+REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
      &     slower , spmax , spmin , supper , xi , Y , ylable , ymax ,   &
      &     ymin
       INTEGER i , Idf , iflag , ipr , j , k , mx , my , N
@@ -25214,8 +25202,8 @@ END SUBROUTINE PLOT
             ymax = spmax
          ELSE
             df = Idf
-            CALL CHSPPF(.975,Idf,pp975)
-            CALL CHSPPF(.025,Idf,pp025)
+            CALL CHSPPF(0.975_wp,Idf,pp975)
+            CALL CHSPPF(0.025_wp,Idf,pp025)
             ymax = df*spmax/pp025
             ymin = df*spmin/pp975
          ENDIF
@@ -25223,7 +25211,7 @@ END SUBROUTINE PLOT
 !     DETERMINE THE 11 VALUES TO BE LISTED ON THE LEFT VERTICAL AXIS
 !
          DO i = 1 , 11
-            ylable(i) = ymax - ((FLOAT(i-1))/10.0)*(ymax-ymin)
+            ylable(i) = ymax - ((FLOAT(i-1))/10.0_wp)*(ymax-ymin)
          ENDDO
 !
 !     BLANK OUT THE GRAPH
@@ -25254,24 +25242,24 @@ END SUBROUTINE PLOT
          ENDDO
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
-         ratioy = 50.0/(ymax-ymin)
-         ratiox = 240.0
+         ratioy = 50.0_wp/(ymax-ymin)
+         ratiox = 240.0_wp
          DO i = 1 , N
             ai = i
-            xi = (ai-1.0)/(2.0*(an-1.0))
-            mx = ratiox*xi + 0.5
+            xi = (ai-1.0_wp)/(2.0_wp*(an-1.0_wp))
+            mx = ratiox*xi + 0.5_wp
             mx = mx + 10
             IF ( Idf/=0 ) THEN
                supper = df*Y(i)/pp025
                slower = df*Y(i)/pp975
-               my = ratioy*(supper-ymin) + 0.5
+               my = ratioy*(supper-ymin) + 0.5_wp
                my = 55 - my
                IGRaph(my,mx) = dot
-               my = ratioy*(slower-ymin) + 0.5
+               my = ratioy*(slower-ymin) + 0.5_wp
                my = 55 - my
                IGRaph(my,mx) = dot
             ENDIF
-            my = ratioy*(Y(i)-ymin) + 0.5
+            my = ratioy*(Y(i)-ymin) + 0.5_wp
             my = 55 - my
             IGRaph(my,mx) = alphax
          ENDDO
@@ -25309,8 +25297,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plotst (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -25333,7 +25321,7 @@ END SUBROUTINE PLOT
 !!    program demo_plotst
 !!    use M_datapac, only : plotst
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotst(x,y)
 !!    end program demo_plotst
 !!
@@ -25351,10 +25339,10 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLOTST20155
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
+REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     D , delx , dely , Dmax , Dmin , hold , X , xlable , xmax ,   &
      &     xmin , xwidth , Y , ylable
-      REAL ylower , ymax , ymin , yupper , ywidth
+REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
       INTEGER i , icol , icolmx , ipr , irow , ixdel , N , n2 , numcol ,&
      &        numlab , numr25 , numr50 , numr75 , numrow
 !*** End of declarations inserted by SPAG
@@ -25464,7 +25452,7 @@ END SUBROUTINE PLOT
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -25668,9 +25656,9 @@ END SUBROUTINE PLOT
             iline(icol) = blank
          ENDDO
          airow = irow
-         yupper = ymax + (1.5-airow)*ywidth
-         ylable = ymax + (1.0-airow)*ywidth
-         ylower = ymax + (0.5-airow)*ywidth
+         yupper = ymax + (1.5_wp-airow)*ywidth
+         ylable = ymax + (1.0_wp-airow)*ywidth
+         ylower = ymax + (0.5_wp-airow)*ywidth
          IF ( irow==numrow ) ylable = ymin
          DO i = 1 , N
             IF ( Y(i)<cutoff ) THEN
@@ -25678,7 +25666,7 @@ END SUBROUTINE PLOT
                   IF ( D(i)>=Dmin ) THEN
                      IF ( D(i)<=Dmax ) THEN
                         IF ( ylower<=Y(i) .AND. Y(i)<yupper ) THEN
-                           icol = ((X(i)-xmin)/xwidth) + 1.5
+                           icol = ((X(i)-xmin)/xwidth) + 1.5_wp
                            iline(icol) = alphax
                         ENDIF
                      ENDIF
@@ -25699,7 +25687,7 @@ END SUBROUTINE PLOT
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABLES.
+!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
       WRITE (ipr,99022) blank
       DO icol = 1 , numcol
@@ -25737,8 +25725,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plott (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -25761,7 +25749,7 @@ END SUBROUTINE PLOT
 !!    program demo_plott
 !!    use M_datapac, only : plott
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plott(x,y)
 !!    end program demo_plott
 !!
@@ -25779,10 +25767,10 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLOTT20537
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
+REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , dely , hold , X , xlable , xmax , xmin , xwidth , Y , &
      &     ylable , ylower , ymax , ymin
-      REAL yupper , ywidth
+REAL(kind=wp) :: yupper , ywidth
       INTEGER i , icol , icolmx , ipr , irow , ixdel , N , n2 , numcol ,&
      &        numlab , numr25 , numr50 , numr75 , numrow
 !*** End of declarations inserted by SPAG
@@ -25864,7 +25852,7 @@ END SUBROUTINE PLOT
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -26024,15 +26012,15 @@ END SUBROUTINE PLOT
             iline(icol) = blank
          ENDDO
          airow = irow
-         yupper = ymax + (1.5-airow)*ywidth
-         ylable = ymax + (1.0-airow)*ywidth
-         ylower = ymax + (0.5-airow)*ywidth
+         yupper = ymax + (1.5_wp-airow)*ywidth
+         ylable = ymax + (1.0_wp-airow)*ywidth
+         ylower = ymax + (0.5_wp-airow)*ywidth
          IF ( irow==numrow ) ylable = ymin
          DO i = 1 , N
             IF ( Y(i)<cutoff ) THEN
                IF ( X(i)<cutoff ) THEN
                   IF ( ylower<=Y(i) .AND. Y(i)<yupper ) THEN
-                     icol = ((X(i)-xmin)/xwidth) + 1.5
+                     icol = ((X(i)-xmin)/xwidth) + 1.5_wp
                      iline(icol) = alphax
                   ENDIF
                ENDIF
@@ -26051,7 +26039,7 @@ END SUBROUTINE PLOT
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABLES.
+!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
       WRITE (ipr,99018) blank
       DO icol = 1 , numcol
@@ -26088,8 +26076,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plotu (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -26112,7 +26100,7 @@ END SUBROUTINE PLOT
 !!    program demo_plotu
 !!    use M_datapac, only : plotu
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotu(x,y)
 !!    end program demo_plotu
 !!
@@ -26130,13 +26118,13 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLOTU20843
 !*** Start of declarations inserted by SPAG
-      REAL ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
+REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
      &     promin , ratiox , ratioy , s , sum , sum1 , sum2 , sum23 ,   &
      &     sum3 , width , WS , X
-      REAL X2 , x25 , x75 , xmax , xmax2 , xmean , xmid , xmin , xmin2 ,&
+REAL(kind=wp) :: X2 , x25 , x75 , xmax , xmax2 , xmean , xmid , xmin , xmin2 ,&
      &     Y2 , ylable , ymax , ymin , z , zautoc , zdeva , zdevb ,     &
      &     zmax , zmean , zmean1
-      REAL zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
+REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
       INTEGER i , ibax , ibaxis , ibaxm1 , ibaxm2 , ievodd , ilax ,     &
      &        ilaxis , ilaxm1 , ilaxm2 , ilaxm3 , ilaxm4 , ilaxp2 ,     &
      &        ilower , inc , ip1 , iplot , ipr , irax , iraxis
@@ -26350,7 +26338,7 @@ END SUBROUTINE PLOT
          IF ( Y2(i)<ymin ) ymin = Y2(i)
          IF ( Y2(i)>ymax ) ymax = Y2(i)
       ENDDO
-      IF ( iplot==3 ) ymin = 1.0
+      IF ( iplot==3 ) ymin = 1.0_wp
       DO i = itaxp2 , ibaxm2
          anum = i - itaxp2
          ylable(i,iplot) = ymax - (anum/height)*(ymax-ymin)
@@ -26367,24 +26355,24 @@ END SUBROUTINE PLOT
       ENDDO
       xmin(iplot) = xmin2
       xmax(iplot) = xmax2
-      xmid(iplot) = (xmin2+xmax2)/2.0
-      x25(iplot) = 0.75*xmin2 + 0.25*xmax2
-      x75(iplot) = 0.25*xmin2 + 0.75*xmax2
+      xmid(iplot) = (xmin2+xmax2)/2.0_wp
+      x25(iplot) = 0.75_wp*xmin2 + 0.25_wp*xmax2
+      x75(iplot) = 0.25_wp*xmin2 + 0.75_wp*xmax2
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 0.0
-      ratiox = 0.0
+      ratioy = 0.0_wp
+      ratiox = 0.0_wp
       IF ( ymax>ymin ) ratioy = height/(ymax-ymin)
       IF ( xmax(iplot)>xmin(iplot) )                                    &
      &     ratiox = width/(xmax(iplot)-xmin(iplot))
       IF ( iplot==3 ) THEN
 !
          DO i = 1 , n2
-            IF ( Y2(i)>0.5 ) THEN
-               mx = ratiox*(X2(i)-xmin(iplot)) + 0.5
+            IF ( Y2(i)>0.5_wp ) THEN
+               mx = ratiox*(X2(i)-xmin(iplot)) + 0.5_wp
                mx = mx + ilaxp2
-               my = ratioy*(Y2(i)-ymin) + 0.5
+               my = ratioy*(Y2(i)-ymin) + 0.5_wp
                my = ibaxm2 - my
                IGRaph(my,mx) = alphax
                DO iy = my , ibaxm2
@@ -26394,9 +26382,9 @@ END SUBROUTINE PLOT
          ENDDO
       ELSE
          DO i = 1 , n2
-            mx = ratiox*(X2(i)-xmin(iplot)) + 0.5
+            mx = ratiox*(X2(i)-xmin(iplot)) + 0.5_wp
             mx = mx + ilaxp2
-            my = ratioy*(Y2(i)-ymin) + 0.5
+            my = ratioy*(Y2(i)-ymin) + 0.5_wp
             my = ibaxm2 - my
             IGRaph(my,mx) = alphax
          ENDDO
@@ -26433,31 +26421,31 @@ END SUBROUTINE PLOT
 !     COMPUTE THE SAMPLE MEAN AND SAMPLE STANDARD DEVIATION
 !
          an = N
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xmean)**2
          ENDDO
-         s = SQRT(sum/(an-1.0))
+         s = SQRT(sum/(an-1.0_wp))
 !
 !     FORM THE FREQUENCY TABLE (Y2) WHICH CORRESPONDS TO A HISTOGRAM
 !     WITH 41 CLASSES AND A CLASS WIDTH OF THREE TENTHS OF A SAMPLE STANDARD
 !     DEVIATION.
 !
          DO i = 1 , 41
-            Y2(i) = 0.0
+            Y2(i) = 0.0_wp
          ENDDO
 !
          numout = 0
          DO i = 1 , N
             z = (X(i)-xmean)/s
-            IF ( -6.0<=z .AND. z<=6.0 ) THEN
-               mt = ((z+6.0)/0.3) + 1.5
-               Y2(mt) = Y2(mt) + 1.0
+            IF ( -6.0_wp<=z .AND. z<=6.0_wp ) THEN
+               mt = ((z+6.0_wp)/0.3_wp) + 1.5_wp
+               Y2(mt) = Y2(mt) + 1.0_wp
             ELSE
                numout = numout + 1
             ENDIF
@@ -26465,11 +26453,11 @@ END SUBROUTINE PLOT
 !
          DO i = 1 , 41
             ai = i
-            X2(i) = xmean + ((ai-21.0)*0.3)*s
+            X2(i) = xmean + ((ai-21.0_wp)*0.3_wp)*s
          ENDDO
 !
          numcla = 41
-         cwidsd = 0.3
+         cwidsd = 0.3_wp
          cwidth = cwidsd*s
 !
          iplot = 3
@@ -26505,13 +26493,13 @@ END SUBROUTINE PLOT
          zmean = xmean
          zsd = s
          zdevb = zmean - zmin
-         zrdevb = 0.0
-         IF ( zmean/=0.0 ) zrdevb = 100.0*zdevb/zmean
-         IF ( zrdevb<0.0 ) zrdevb = -zrdevb
+         zrdevb = 0.0_wp
+         IF ( zmean/=0.0_wp ) zrdevb = 100.0_wp*zdevb/zmean
+         IF ( zrdevb<0.0_wp ) zrdevb = -zrdevb
          zdeva = zmax - zmean
-         zrdeva = 0.0
-         IF ( zmean/=0.0 ) zrdeva = 100.0*zdeva/zmean
-         IF ( zrdeva<0.0 ) zrdeva = -zrdeva
+         zrdeva = 0.0_wp
+         IF ( zmean/=0.0_wp ) zrdeva = 100.0_wp*zdeva/zmean
+         IF ( zrdeva<0.0_wp ) zrdeva = -zrdeva
 !
 !     DETERMINE THE NUMBER OF DISTINCT POINTS
 !
@@ -26528,7 +26516,7 @@ END SUBROUTINE PLOT
          ievodd = N - 2*(N/2)
          IF ( ievodd==0 ) THEN
             nhalfp = nhalf + 1
-            zmed = (Y2(nhalf)+Y2(nhalfp))/2.0
+            zmed = (Y2(nhalf)+Y2(nhalfp))/2.0_wp
          ELSE
             zmed = Y2(nhalf)
          ENDIF
@@ -26550,17 +26538,17 @@ END SUBROUTINE PLOT
             IF ( Y2(irev)/=Y2(nmi) ) EXIT
          ENDDO
          promin = nummin
-         promin = 100.0*promin/an
+         promin = 100.0_wp*promin/an
          promax = nummax
-         promax = 100.0*promax/an
+         promax = 100.0_wp*promax/an
 !
 !     COMPUTE THE AUTOCORRELATION
 !
-         zmean1 = (an*zmean-X(N))/(an-1.0)
-         zmean2 = (an*zmean-X(1))/(an-1.0)
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         zmean1 = (an*zmean-X(N))/(an-1.0_wp)
+         zmean2 = (an*zmean-X(1))/(an-1.0_wp)
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          nm1 = N - 1
          DO i = 1 , nm1
             ip1 = i + 1
@@ -26569,9 +26557,9 @@ END SUBROUTINE PLOT
             sum3 = sum3 + (X(ip1)-zmean2)**2
          ENDDO
          sum23 = sum2*sum3
-         zautoc = 9999.99
-         IF ( sum23>0.0 ) zautoc = sum1/(SQRT(sum23))
-         zautoc = 100.0*zautoc
+         zautoc = 9999.99_wp
+         IF ( sum23>0.0_wp ) zautoc = sum1/(SQRT(sum23))
+         zautoc = 100.0_wp*zautoc
 !
 !     WRITE EVERYTHING OUT
 !
@@ -26679,8 +26667,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plotx (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -26703,7 +26691,7 @@ END SUBROUTINE PLOT
 !!    program demo_plotx
 !!    use M_datapac, only : plotx
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotx(x,y)
 !!    end program demo_plotx
 !!
@@ -26721,7 +26709,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLOTX21389
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
+REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
      &     xmax , xmid , xmin , ylable , ymax , ymin
       INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
 !*** End of declarations inserted by SPAG
@@ -26793,7 +26781,7 @@ END SUBROUTINE PLOT
      &     'N' , '='/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -26864,18 +26852,18 @@ END SUBROUTINE PLOT
       ENDDO
       DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = ymax - (aim1/8.0)*(ymax-ymin)
+         ylable(i) = ymax - (aim1/8.0_wp)*(ymax-ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS.
 !     DETERMINE XMIN, XMAX, XMID, X25 (=THE 25% POINT), AND
 !     X75 (=THE 75% POINT).
 !
-      xmin = 1.0
+      xmin = 1.0_wp
       xmax = N
-      xmid = (xmin+xmax)/2.0
-      x25 = 0.75*xmin + 0.25*xmax
-      x75 = 0.25*xmin + 0.75*xmax
+      xmid = (xmin+xmax)/2.0_wp
+      x25 = 0.75_wp*xmin + 0.25_wp*xmax
+      x75 = 0.25_wp*xmin + 0.75_wp*xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -26925,14 +26913,14 @@ END SUBROUTINE PLOT
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(ymax-ymin)
-      ratiox = 100.0/(xmax-xmin)
+      ratioy = 40.0_wp/(ymax-ymin)
+      ratiox = 100.0_wp/(xmax-xmin)
       DO i = 1 , N
          IF ( X(i)<cutoff ) THEN
             xi = i
-            mx = ratiox*(xi-xmin) + 0.5
+            mx = ratiox*(xi-xmin) + 0.5_wp
             mx = mx + 7
-            my = ratioy*(X(i)-ymin) + 0.5
+            my = ratioy*(X(i)-ymin) + 0.5_wp
             my = 43 - my
             IGRaph(my,mx) = alphax
          ENDIF
@@ -26974,8 +26962,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plotxt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -26998,7 +26986,7 @@ END SUBROUTINE PLOT
 !!    program demo_plotxt
 !!    use M_datapac, only : plotxt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotxt(x,y)
 !!    end program demo_plotxt
 !!
@@ -27016,10 +27004,10 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLOTXT21638
 !*** Start of declarations inserted by SPAG
-      REAL ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
+REAL(kind=wp) :: ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
      &     anumcm , anumlm , anumr , anumrm , cutoff , delai , delx ,   &
      &     hold , X , xlable , xlower , xmax , xmin
-      REAL xupper , xwidth
+REAL(kind=wp) :: xupper , xwidth
       INTEGER i , icol , icolmx , ipr , irow , ixdel , N , numcol ,     &
      &        numlab , numr25 , numr50 , numr75 , numrow
 !*** End of declarations inserted by SPAG
@@ -27095,7 +27083,7 @@ END SUBROUTINE PLOT
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -27204,15 +27192,15 @@ END SUBROUTINE PLOT
             iline(icol) = blank
          ENDDO
          airow = irow
-         xupper = xmax + (1.5-airow)*xwidth
-         xlable = xmax + (1.0-airow)*xwidth
-         xlower = xmax + (0.5-airow)*xwidth
+         xupper = xmax + (1.5_wp-airow)*xwidth
+         xlable = xmax + (1.0_wp-airow)*xwidth
+         xlower = xmax + (0.5_wp-airow)*xwidth
          IF ( irow==numrow ) xlable = xmin
          DO i = 1 , N
             ai = i
             IF ( X(i)<cutoff ) THEN
                IF ( xlower<=X(i) .AND. X(i)<xupper ) THEN
-                  icol = ((ai-aimin)/aiwidt) + 1.5
+                  icol = ((ai-aimin)/aiwidt) + 1.5_wp
                   iline(icol) = alphax
                ENDIF
             ENDIF
@@ -27230,7 +27218,7 @@ END SUBROUTINE PLOT
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABLES.
+!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
       WRITE (ipr,99014) blank
       DO icol = 1 , numcol
@@ -27264,8 +27252,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plotxx (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -27288,7 +27276,7 @@ END SUBROUTINE PLOT
 !!    program demo_plotxx
 !!    use M_datapac, only : plotxx
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotxx(x,y)
 !!    end program demo_plotxx
 !!
@@ -27306,7 +27294,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLOTXX21883
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
+REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     xmax , xmid , xmin , ylable , ymax , ymin
       INTEGER i , iflag , im1 , ip2 , ipr , j , k , mx , my , N
 !*** End of declarations inserted by SPAG
@@ -27402,7 +27390,7 @@ END SUBROUTINE PLOT
      &     'N' , '='/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -27473,7 +27461,7 @@ END SUBROUTINE PLOT
       ENDDO
       DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = ymax - (aim1/8.0)*(ymax-ymin)
+         ylable(i) = ymax - (aim1/8.0_wp)*(ymax-ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS.
@@ -27482,9 +27470,9 @@ END SUBROUTINE PLOT
 !
       xmin = ymin
       xmax = ymax
-      xmid = (xmin+xmax)/2.0
-      x25 = 0.75*xmin + 0.25*xmax
-      x75 = 0.25*xmin + 0.75*xmax
+      xmid = (xmin+xmax)/2.0_wp
+      x25 = 0.75_wp*xmin + 0.25_wp*xmax
+      x75 = 0.25_wp*xmin + 0.75_wp*xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -27534,15 +27522,15 @@ END SUBROUTINE PLOT
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(ymax-ymin)
-      ratiox = 100.0/(xmax-xmin)
+      ratioy = 40.0_wp/(ymax-ymin)
+      ratiox = 100.0_wp/(xmax-xmin)
       DO i = 2 , N
          im1 = i - 1
          IF ( X(i)<cutoff ) THEN
             IF ( X(im1)<cutoff ) THEN
-               mx = ratiox*(X(im1)-xmin) + 0.5
+               mx = ratiox*(X(im1)-xmin) + 0.5_wp
                mx = mx + 7
-               my = ratioy*(X(i)-ymin) + 0.5
+               my = ratioy*(X(i)-ymin) + 0.5_wp
                my = 43 - my
                IGRaph(my,mx) = alphax
             ENDIF
@@ -27585,8 +27573,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine pltsct (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -27609,7 +27597,7 @@ END SUBROUTINE PLOT
 !!    program demo_pltsct
 !!    use M_datapac, only : pltsct
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call pltsct(x,y)
 !!    end program demo_pltsct
 !!
@@ -27627,10 +27615,10 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLTSCT22158
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
+REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , D , delx , dely , Dmax , Dmin , hold , X , xlable , &
      &     xmax , xmin , xwidth , Y
-      REAL ylable , ylower , ymax , ymin , yupper , ywidth
+REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
       INTEGER i , ia , icol , icolmx , ipr , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !*** End of declarations inserted by SPAG
@@ -27790,7 +27778,7 @@ END SUBROUTINE PLOT
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -28016,9 +28004,9 @@ END SUBROUTINE PLOT
             iline(icol) = blank
          ENDDO
          airow = irow
-         yupper = ymax + (1.5-airow)*ywidth
-         ylable = ymax + (1.0-airow)*ywidth
-         ylower = ymax + (0.5-airow)*ywidth
+         yupper = ymax + (1.5_wp-airow)*ywidth
+         ylable = ymax + (1.0_wp-airow)*ywidth
+         ylower = ymax + (0.5_wp-airow)*ywidth
          IF ( irow==numrow ) ylable = ymin
          DO i = 1 , N
             IF ( Y(i)<cutoff ) THEN
@@ -28027,8 +28015,8 @@ END SUBROUTINE PLOT
                      IF ( D(i)>=Dmin ) THEN
                         IF ( D(i)<=Dmax ) THEN
                            IF ( ylower<=Y(i) .AND. Y(i)<yupper ) THEN
-                              icol = ((X(i)-xmin)/xwidth) + 1.5
-                              ia = Char(i) + 0.5
+                              icol = ((X(i)-xmin)/xwidth) + 1.5_wp
+                              ia = Char(i) + 0.5_wp
                               IF ( 1<=ia .AND. ia<=36 ) THEN
                                  jplotc = iplotc(ia)
                               ELSE
@@ -28055,7 +28043,7 @@ END SUBROUTINE PLOT
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABLES.
+!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
       WRITE (ipr,99022) blank
       DO icol = 1 , numcol
@@ -28094,8 +28082,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine pltxxt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28118,7 +28106,7 @@ END SUBROUTINE PLOT
 !!    program demo_pltxxt
 !!    use M_datapac, only : pltxxt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call pltxxt(x,y)
 !!    end program demo_pltxxt
 !!
@@ -28136,7 +28124,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PLTXXT22621
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
+REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , hold , X , x2labl , xcwidt , xlable , xlower , xmax , &
      &     xmin , xrwidt , xupper
       INTEGER i , icol , icolmx , im1 , ipr , irow , ixdel , N ,        &
@@ -28236,7 +28224,7 @@ END SUBROUTINE PLOT
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -28343,16 +28331,16 @@ END SUBROUTINE PLOT
             iline(icol) = blank
          ENDDO
          airow = irow
-         xupper = xmax + (1.5-airow)*xrwidt
-         xlable = xmax + (1.0-airow)*xrwidt
-         xlower = xmax + (0.5-airow)*xrwidt
+         xupper = xmax + (1.5_wp-airow)*xrwidt
+         xlable = xmax + (1.0_wp-airow)*xrwidt
+         xlower = xmax + (0.5_wp-airow)*xrwidt
          IF ( irow==numrow ) xlable = xmin
          DO i = 2 , N
             im1 = i - 1
             IF ( X(im1)<cutoff ) THEN
                IF ( X(i)<cutoff ) THEN
                   IF ( xlower<=X(i) .AND. X(i)<xupper ) THEN
-                     icol = ((X(im1)-xmin)/xcwidt) + 1.5
+                     icol = ((X(im1)-xmin)/xcwidt) + 1.5_wp
                      iline(icol) = alphax
                   ENDIF
                ENDIF
@@ -28371,7 +28359,7 @@ END SUBROUTINE PLOT
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABLES.
+!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
       WRITE (ipr,99014) blank
       DO icol = 1 , numcol
@@ -28388,15 +28376,13 @@ END SUBROUTINE PLOT
       WRITE (ipr,99009) (x2labl(i),i=1,numlab)
 99009 FORMAT (' ',9X,5E12.4)
 !
-99010 FORMAT (' ','**************************************************', &
-     &        '********************')
+99010 FORMAT (' ','**********************************************************************')
 99011 FORMAT (' ','                   FATAL ERROR                    ')
-99012 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
-     &        ' SUBROUTINE')
+99012 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4, ' SUBROUTINE')
 99013 FORMAT (' ',18X,54A1)
 99014 FORMAT (' ',15X,A1)
 !
-      END SUBROUTINE PLTXXT
+END SUBROUTINE PLTXXT
 !>
 !!##NAME
 !!    poicdf(3f) - [M_datapac:STATISTICS] compute the Poisson cumulative
@@ -28406,8 +28392,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine poicdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28430,7 +28416,7 @@ END SUBROUTINE PLOT
 !!    program demo_poicdf
 !!    use M_datapac, only : poicdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poicdf(x,y)
 !!    end program demo_poicdf
 !!
@@ -28448,7 +28434,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--POICDF22887
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , Cdf , del , fintx , gcdf , spchi , X
+REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
       INTEGER i , ievodd , imax , imin , intx , ipr , nu
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -28558,28 +28544,28 @@ END SUBROUTINE PLOT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba<=0.0 ) THEN
+      IF ( Alamba<=0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POICDF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99005) Alamba
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( X<0.0 ) THEN
+      ELSEIF ( X<0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE POIC&
      &DF SUBROUTINE IS NEGATIVE *****')
          WRITE (ipr,99005) X
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
-         intx = X + 0.0001
+         intx = X + 0.0001_wp
          fintx = intx
          del = X - fintx
-         IF ( del<0.0 ) del = -del
-         IF ( del>0.001 ) THEN
+         IF ( del<0.0_wp ) del = -del
+         IF ( del>0.001_wp ) THEN
             WRITE (ipr,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE POIC&
@@ -28598,7 +28584,7 @@ END SUBROUTINE PLOT
 !
          dx = Alamba
          dx = 2.0D0*dx
-         nu = X + 0.0001
+         nu = X + 0.0001_wp
          nu = 2*(1+nu)
 !
          chi = DSQRT(dx)
@@ -28612,7 +28598,7 @@ END SUBROUTINE PLOT
          ELSE
 !
             sum = 0.0D0
-            term = 1.0/chi
+            term = 1.0_wp/chi
             imin = 1
             imax = nu - 1
          ENDIF
@@ -28647,8 +28633,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine poiplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28671,7 +28657,7 @@ END SUBROUTINE PLOT
 !!    program demo_poiplt
 !!    use M_datapac, only : poiplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poiplt(x,y)
 !!    end program demo_poiplt
 !!
@@ -28689,7 +28675,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--POIPLT23082
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
+REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
      &     sum1 , sum2 , sum3 , W , wbar , WS , X , Y , ybar , yint ,   &
      &     yslope , Z
       INTEGER i , iarg2 , ilamba , imax , ipr , irev , iupper , j ,     &
@@ -28807,7 +28793,7 @@ END SUBROUTINE PLOT
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
-         IF ( Alamba<=0.0 ) THEN
+         IF ( Alamba<=0.0_wp ) THEN
             WRITE (ipr,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE POIPLT SUBROU&
@@ -28831,7 +28817,7 @@ END SUBROUTINE PLOT
 !-----START POINT-----------------------------------------------------
 !
  50      an = N
-         cutoff = 500.0
+         cutoff = 500.0_wp
 !
 !     SORT THE DATA
 !
@@ -28852,14 +28838,14 @@ END SUBROUTINE PLOT
 !     THE CLOSEST INTEGER TO ALAMBA.
 !
             DO i = 1 , N
-               Z(i) = -1.0
+               Z(i) = -1.0_wp
             ENDDO
 !
-            ilamba = Alamba + 0.5
-            arg1 = 2.0*Alamba
+            ilamba = Alamba + 0.5_wp
+            arg1 = 2.0_wp*Alamba
             iarg2 = 2*(ilamba+1)
             CALL CHSCDF(arg1,iarg2,cdf)
-            cdf = 1.0 - cdf
+            cdf = 1.0_wp - cdf
             DO j = 1 , N
                IF ( W(j)>cdf ) EXIT
             ENDDO
@@ -28868,19 +28854,19 @@ END SUBROUTINE PLOT
 !
 !     FILL IN THE POISSON ORDER STATISTIC MEDIANS BELOW ALAMBA
 !
-            imax = 6.0*SQRT(Alamba)
+            imax = 6.0_wp*SQRT(Alamba)
             DO i = 1 , imax
                k = ilamba - i
                IF ( k<0 ) EXIT
                iarg2 = 2*(k+1)
                CALL CHSCDF(arg1,iarg2,cdf)
-               cdf = 1.0 - cdf
+               cdf = 1.0_wp - cdf
                DO j = 1 , N
                   IF ( W(j)>cdf ) EXIT
                ENDDO
                jm1 = j - 1
                IF ( jm1<=0 ) EXIT
-               IF ( Z(jm1)<-0.5 ) Z(jm1) = k
+               IF ( Z(jm1)<-0.5_wp ) Z(jm1) = k
             ENDDO
 !
 !     FILL IN THE POISSON ORDER STATISTIC MEDIANS ABOVE ALAMBA
@@ -28889,14 +28875,14 @@ END SUBROUTINE PLOT
                k = ilamba + i
                iarg2 = 2*(k+1)
                CALL CHSCDF(arg1,iarg2,cdf)
-               cdf = 1.0 - cdf
+               cdf = 1.0_wp - cdf
                DO j = 1 , N
                   IF ( W(j)>cdf ) GOTO 60
                ENDDO
                Z(N) = k
                EXIT
  60            jm1 = j - 1
-               IF ( Z(jm1)<-0.5 ) Z(jm1) = k
+               IF ( Z(jm1)<-0.5_wp ) Z(jm1) = k
             ENDDO
 !
 !     FILL IN THE EMPTY HOLES IN THE POISSON ORDER STATISTIC MEDIAN
@@ -28908,8 +28894,8 @@ END SUBROUTINE PLOT
             hold = Z(N)
             DO irev = 1 , N
                i = N - irev + 1
-               IF ( Z(i)>=-0.5 ) hold = Z(i)
-               IF ( Z(i)<-0.5 ) Z(i) = hold
+               IF ( Z(i)>=-0.5_wp ) hold = Z(i)
+               IF ( Z(i)<-0.5_wp ) Z(i) = hold
             ENDDO
             DO i = 1 , N
                W(i) = Z(i)
@@ -28936,17 +28922,17 @@ END SUBROUTINE PLOT
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -28971,8 +28957,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine poippf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28995,7 +28981,7 @@ END SUBROUTINE PLOT
 !!    program demo_poippf
 !!    use M_datapac, only : poippf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poippf(x,y)
 !!    end program demo_poippf
 !!
@@ -29013,7 +28999,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--POIPPF23360
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
+REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2
 !*** End of declarations inserted by SPAG
@@ -29122,41 +29108,41 @@ END SUBROUTINE PLOT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE POIPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99017) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
-         IF ( Alamba<=0.0 ) THEN
+         IF ( Alamba<=0.0_wp ) THEN
             WRITE (ipr,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
             WRITE (ipr,99017) Alamba
-            Ppf = 0.0
+            Ppf = 0.0_wp
             RETURN
          ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
             dlamba = Alamba
-            Ppf = 0.0
+            Ppf = 0.0_wp
             ix0 = 0
             ix1 = 0
             ix2 = 0
-            p0 = 0.0
-            p1 = 0.0
-            p2 = 0.0
+            p0 = 0.0_wp
+            p1 = 0.0_wp
+            p2 = 0.0_wp
 !
 !     TREAT CERTAIN SPECIAL CASES IMMEDIATELY--
-!     1) P = 0.0
+!     1) P = 0.0_wp
 !     2) PPF = 0
 !
-            IF ( P/=0.0 ) THEN
+            IF ( P/=0.0_wp ) THEN
                pf0 = DEXP(-dlamba)
                IF ( P>pf0 ) THEN
 !
@@ -29169,7 +29155,7 @@ END SUBROUTINE PLOT
                   amean = Alamba
                   sd = SQRT(Alamba)
                   CALL NORPPF(P,zppf)
-                  x2 = amean - 1.0 + zppf*sd
+                  x2 = amean - 1.0_wp + zppf*sd
                   ix2 = x2
 !
 !     CHECK AND MODIFY (IF NECESSARY) THIS INITIAL
@@ -29187,7 +29173,7 @@ END SUBROUTINE PLOT
 !
                   ix0 = 0
                   ix1 = huge(0) ! = 10**10
-                  isd = sd + 1.0
+                  isd = sd + 1.0_wp
                   x2 = ix2
                   CALL POICDF(x2,Alamba,p2)
 !
@@ -29228,7 +29214,7 @@ END SUBROUTINE PLOT
                   GOTO 400
                ENDIF
             ENDIF
-            Ppf = 0.0
+            Ppf = 0.0_wp
             RETURN
          ENDIF
  50      ix1 = ix2
@@ -29369,8 +29355,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine poiran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -29393,7 +29379,7 @@ END SUBROUTINE PLOT
 !!    program demo_poiran
 !!    use M_datapac, only : poiran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poiran(x,y)
 !!    end program demo_poiran
 !!
@@ -29411,7 +29397,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--POIRAN23713
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , e , sum , u(1) , X
+REAL(kind=wp) :: Alamba , e , sum , u(1) , X
       INTEGER i , ipr , Iseed , j , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -29527,7 +29513,7 @@ END SUBROUTINE PLOT
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( Alamba<=0.0 ) THEN
+      ELSEIF ( Alamba<=0.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIRAN SUBROU&
@@ -29543,11 +29529,11 @@ END SUBROUTINE PLOT
 !     OF EXPONENTIAL WAITING TIMES IS POISSON.
 !
          DO i = 1 , N
-            sum = 0.0
+            sum = 0.0_wp
             j = 1
             DO
                CALL UNIRAN(1,Iseed,u)
-               e = -ALOG(1.0-u(1))
+               e = -ALOG(1.0_wp-u(1))
                sum = sum + e
                IF ( sum>Alamba ) THEN
                   X(i) = j - 1
@@ -29568,8 +29554,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine poly (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -29592,7 +29578,7 @@ END SUBROUTINE PLOT
 !!    program demo_poly
 !!    use M_datapac, only : poly
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poly(x,y)
 !!    end program demo_poly
 !!
@@ -29610,13 +29596,13 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--POLY23881
 !*** Start of declarations inserted by SPAG
-      REAL ak , amb , amdb1 , amdb2 , amdr1 , amdr2 , amr , an ,        &
+REAL(kind=wp) :: ak , amb , amdb1 , amdb2 , amdr1 , amdr2 , amr , an ,        &
      &     aneggi , aneggj , ani , B , b2 , cdf , cdf2 , D , Df , DUM1 ,&
      &     DUM2 , e
-      REAL eta , eta2 , etap1 , f , fitdf , fitms , fitss , fstat , g , &
+REAL(kind=wp) :: eta , eta2 , etap1 , f , fitdf , fitms , fitss , fstat , g , &
      &     h , Pred , Q , R , repdf , repsd , repss , repv , Res ,      &
      &     resdf , resms
-      REAL resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
+REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
      &     WS , X , Y , ymean
       INTEGER i , iconv , Ideg , ifitdf , insing , IPIvot , ipr ,       &
      &        iqarg , iqarg1 , iqarg2 , iramax , iramin , irank ,       &
@@ -29729,7 +29715,7 @@ END SUBROUTINE PLOT
 !     TO A LARGE VALUE
 !     IN CASE A PREMATURE EXIT OCCURS DUE TO NUMERICAL INSTABILITY.
 !
-      value = (10.0**10) + 1000.0
+      value = (10.0_wp**10) + 1000.0_wp
       S = value
       IF ( k>0 ) THEN
          DO i = 1 , k
@@ -29789,7 +29775,7 @@ END SUBROUTINE PLOT
          IF ( j==1 ) THEN
             DO i = 1 , N
                iqarg = (i-1)*k + 1
-               Q(iqarg) = 1.0
+               Q(iqarg) = 1.0_wp
             ENDDO
          ELSEIF ( j==2 ) THEN
             DO i = 1 , N
@@ -29817,11 +29803,11 @@ END SUBROUTINE PLOT
 !     COMPUTE ETA AND TOL (FOR THE UNIVAC 1108, ETA = 2**-27)
 !     WHICH WILL BE USED IN THE DECOMP SUBROUTINE
 !
-      eta = 1.0
+      eta = 1.0_wp
       DO
-         eta = 0.5*eta
-         etap1 = eta + 1.0
-         IF ( etap1<=1.0 ) THEN
+         eta = 0.5_wp*eta
+         etap1 = eta + 1.0_wp
+         IF ( etap1<=1.0_wp ) THEN
             tol = eta*ak
             nm5 = N - 5
             nkm5 = nk - 5
@@ -29861,20 +29847,20 @@ END SUBROUTINE PLOT
 !
 !
                eta2 = eta*eta
-               b2(kp1) = -1.0
+               b2(kp1) = -1.0_wp
                DO i = 1 , N
                   f(i) = Y(i)
-                  wres(i) = 0.0
-                  Res(i) = 0.0
+                  wres(i) = 0.0_wp
+                  Res(i) = 0.0_wp
                ENDDO
                DO j = 1 , k
-                  b2(j) = 0.0
-                  g(j) = 0.0
-                  h(j) = 0.0
+                  b2(j) = 0.0_wp
+                  g(j) = 0.0_wp
+                  h(j) = 0.0_wp
                ENDDO
                m = 0
-               amdb2 = 0.0
-               amdr2 = 0.0
+               amdb2 = 0.0_wp
+               amdr2 = 0.0_wp
                EXIT
             ELSE
                WRITE (ipr,99009) irank , k
@@ -29891,9 +29877,9 @@ END SUBROUTINE PLOT
 !     BEGIN THE M-TH ITERATION STEP IN THE ITERATIVE REFINEMENT
 !
  200  IF ( m>=2 ) THEN
-         IF ( .NOT.(((64.*amdb2<amdb1) .AND. (amdb2>eta2*amb)) .OR.     &
-     &        ((64.*amdr2<amdr1) .AND. (amdr2>eta2*amr))) ) THEN
-            IF ( (amdr2>4.*eta2*amr) .AND. (amdb2>4.*eta2*amb) ) THEN
+         IF ( .NOT.(((64.0_wp*amdb2<amdb1) .AND. (amdb2>eta2*amb)) .OR.     &
+     &        ((64.0_wp*amdr2<amdr1) .AND. (amdr2>eta2*amr))) ) THEN
+            IF ( (amdr2>4.0_wp*eta2*amr) .AND. (amdb2>4.0_wp*eta2*amb) ) THEN
                iconv = 0
             ELSE
                iconv = 1
@@ -29932,12 +29918,12 @@ END SUBROUTINE PLOT
                   B(i) = b2(i)
                ENDDO
                DO i = 1 , N
-                  IF ( Res(i)/=0.0 ) GOTO 210
+                  IF ( Res(i)/=0.0_wp ) GOTO 210
                ENDDO
                WRITE (ipr,99010)
 99010          FORMAT (' ',10X,                                         &
      &                 'NOTE THAT AN EXACT FIT HAS BEEN OBTAINED')
- 210           sum = 0.0
+ 210           sum = 0.0_wp
                IF ( iwflag==0 ) THEN
                   DO i = 1 , N
                      sum = sum + Res(i)*Res(i)*W(i)
@@ -29955,7 +29941,7 @@ END SUBROUTINE PLOT
                IF ( k/=N ) THEN
                   resdf = an - ak
                   Df = resdf
-                  iresdf = an - ak + 0.5
+                  iresdf = an - ak + 0.5_wp
                   resms = resss/resdf
                   S = SQRT(resms)
                ENDIF
@@ -30012,7 +29998,7 @@ END SUBROUTINE PLOT
                   ENDDO
                   DO j = 1 , k
                      irarg = (j-1)*k + j
-                     R(irarg) = 1.0
+                     R(irarg) = 1.0_wp
                   ENDDO
 !CCCC WRITE(IPR,2405)
                   DO i = 1 , k
@@ -30045,7 +30031,7 @@ END SUBROUTINE PLOT
 !     AND ANALYZE IT THEREIN
 !
                   irepdf = 0
-                  repss = 0.0
+                  repss = 0.0_wp
                   DO iset = 1 , numset
                      ni = 0
                      DO i = 1 , N
@@ -30053,12 +30039,12 @@ END SUBROUTINE PLOT
                         IF ( X(i)==DUM1(iset) ) DUM2(ni) = Y(i)
                      ENDDO
                      ani = ni
-                     sum = 0.0
+                     sum = 0.0_wp
                      DO i = 1 , ni
                         sum = sum + DUM2(i)
                      ENDDO
                      ymean = sum/ani
-                     sum = 0.0
+                     sum = 0.0_wp
                      DO i = 1 , ni
                         sum = sum + (DUM2(i)-ymean)**2
                      ENDDO
@@ -30118,8 +30104,8 @@ END SUBROUTINE PLOT
       ENDIF
       amdb1 = amdb2
       amdr1 = amdr2
-      amdb2 = 0.0
-      amdr2 = 0.0
+      amdb2 = 0.0_wp
+      amdr2 = 0.0_wp
       IF ( m/=0 ) THEN
 !
 !     BEGIN FORMING NEW RESIDUALS
@@ -30142,11 +30128,11 @@ END SUBROUTINE PLOT
                IF ( j>=2 ) THEN
                   DUM1(l) = X(l)**(j-1)
                ELSE
-                  DUM1(l) = 1.0
+                  DUM1(l) = 1.0_wp
                ENDIF
             ENDDO
 !
-            CALL DOT(DUM1,wres,1,N,0.0,g(is))
+            CALL DOT(DUM1,wres,1,N,0.0_wp,g(is))
             g(is) = -g(is)
          ENDDO
 !
@@ -30156,7 +30142,7 @@ END SUBROUTINE PLOT
                IF ( l>=2 ) THEN
                   DUM1(l) = X(i)**(l-1)
                ELSE
-                  DUM1(l) = 1.0
+                  DUM1(l) = 1.0_wp
                ENDIF
             ENDDO
             DUM1(kp1) = Y(i)
@@ -30259,8 +30245,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine propor (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -30283,7 +30269,7 @@ END SUBROUTINE PLOT
 !!    program demo_propor
 !!    use M_datapac, only : propor
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call propor(x,y)
 !!    end program demo_propor
 !!
@@ -30301,7 +30287,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--PROPOR24531
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , X , Xmax , Xmin , Xprop
+REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
       INTEGER i , ipr , isum , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -30387,7 +30373,7 @@ END SUBROUTINE PLOT
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PROP&
      &OR SUBROUTINE HAS THE VALUE 1 *****')
-         Xprop = 0.0
+         Xprop = 0.0_wp
          RETURN
       ELSE
          IF ( Xmin==Xmax ) THEN
@@ -30397,7 +30383,7 @@ END SUBROUTINE PLOT
             WRITE (ipr,99005) Xmin
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENTS ARE ',E15.7,  &
      &              ' *****')
-            Xprop = 0.0
+            Xprop = 0.0_wp
             RETURN
          ELSE
             hold = X(1)
@@ -30408,14 +30394,14 @@ END SUBROUTINE PLOT
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE PROPOR SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
-            Xprop = 0.0
+            Xprop = 0.0_wp
             RETURN
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
  50      an = N
-         Xprop = 0.0
+         Xprop = 0.0_wp
          isum = 0
          DO i = 1 , N
             IF ( X(i)>=Xmin .AND. Xmax>=X(i) ) isum = isum + 1
@@ -30440,8 +30426,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine range (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -30464,7 +30450,7 @@ END SUBROUTINE PLOT
 !!    program demo_range
 !!    use M_datapac, only : range
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call range(x,y)
 !!    end program demo_range
 !!
@@ -30482,7 +30468,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--RANGE24667
 !*** Start of declarations inserted by SPAG
-      REAL hold , X , xmax , xmin , xramge , Xrange
+REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -30560,7 +30546,7 @@ END SUBROUTINE PLOT
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RANG&
      &E  SUBROUTINE HAS THE VALUE 1 *****')
-            xramge = 0.0
+            xramge = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -30570,7 +30556,7 @@ END SUBROUTINE PLOT
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE RANGE  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xrange = 0.0
+            Xrange = 0.0_wp
          ENDIF
          GOTO 100
 !
@@ -30600,8 +30586,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine rank (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -30624,7 +30610,7 @@ END SUBROUTINE PLOT
 !!    program demo_rank
 !!    use M_datapac, only : rank
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call rank(x,y)
 !!    end program demo_rank
 !!
@@ -30642,7 +30628,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--RANK24782
 !*** Start of declarations inserted by SPAG
-      REAL an , avrank , hold , rprev , X , xprev , Xr , XS
+REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
       INTEGER i , ibran , ipr , iupper , j , jmin , jp1 , k , N , nm1
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -30774,7 +30760,7 @@ END SUBROUTINE PLOT
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RANK&
      &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xr(1) = 1.0
+            Xr(1) = 1.0_wp
             RETURN
          ELSE
             hold = X(1)
@@ -30785,7 +30771,7 @@ END SUBROUTINE PLOT
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE RANK   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            avrank = (an+1.0)/2.0
+            avrank = (an+1.0_wp)/2.0_wp
             DO i = 1 , N
                Xr(i) = avrank
             ENDDO
@@ -30842,7 +30828,7 @@ END SUBROUTINE PLOT
                   ENDDO
                   k = N + 1
  55               avrank = j + k - 1
-                  avrank = avrank/2.0
+                  avrank = avrank/2.0_wp
                   Xr(i) = avrank
                   GOTO 80
                ENDIF
@@ -30874,8 +30860,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine ranper (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -30898,7 +30884,7 @@ END SUBROUTINE PLOT
 !!    program demo_ranper
 !!    use M_datapac, only : ranper
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ranper(x,y)
 !!    end program demo_ranper
 !!
@@ -30916,7 +30902,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--RANPER25011
 !*** Start of declarations inserted by SPAG
-      REAL add , an , hold , u , X
+REAL(kind=wp) :: add , an , hold , u , X
       INTEGER i , iadd , ipr , Istart , j , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -31005,7 +30991,7 @@ END SUBROUTINE PLOT
 !
          DO i = 1 , N
             CALL UNIRAN(1,1,u)
-            add = an*u(1) + 1.0
+            add = an*u(1) + 1.0_wp
             iadd = add
             IF ( iadd<1 ) iadd = 1
             IF ( iadd>N ) iadd = N
@@ -31026,8 +31012,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine read (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -31050,7 +31036,7 @@ END SUBROUTINE PLOT
 !!    program demo_read
 !!    use M_datapac, only : read
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call read(x,y)
 !!    end program demo_read
 !!
@@ -31072,7 +31058,7 @@ END SUBROUTINE PLOT
      &        istart , istop , j , jp1 , jp2 , jrev , k , l , locpt ,   &
      &        maxcol , mincol , N
       INTEGER nc , ncp1 , ndp , numcrd , numdec , numint
-      REAL sum , X , y
+REAL(kind=wp) :: sum , X , y
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT READ
@@ -31465,7 +31451,7 @@ END SUBROUTINE PLOT
  600  locpt = j
       numint = j - 2
       numdec = nc - j
-      sum = 0.0
+      sum = 0.0_wp
       IF ( numint/=0 ) THEN
          istart = 2
          istop = numint + 1
@@ -31488,7 +31474,7 @@ END SUBROUTINE PLOT
 !
  620        y = k - 1
             ipower = ipower + 1
-            sum = sum + y*(10.0**ipower)
+            sum = sum + y*(10.0_wp**ipower)
          ENDDO
       ENDIF
 !
@@ -31513,7 +31499,7 @@ END SUBROUTINE PLOT
 !
  640        y = k - 1
             ipower = ipower + 1
-            sum = sum + y/(10.0**ipower)
+            sum = sum + y/(10.0_wp**ipower)
          ENDDO
       ENDIF
 !
@@ -31565,8 +31551,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine readg (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -31589,7 +31575,7 @@ END SUBROUTINE PLOT
 !!    program demo_readg
 !!    use M_datapac, only : readg
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call readg(x,y)
 !!    end program demo_readg
 !!
@@ -31611,7 +31597,7 @@ END SUBROUTINE PLOT
      &        istop , j , jp1 , jp2 , jrev , k , l , locpt , maxcol ,   &
      &        mincol , N , nc
       INTEGER ncp1 , ndp , numcrd , numdec , numint
-      REAL sum , X , y
+REAL(kind=wp) :: sum , X , y
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT READG
@@ -32013,7 +31999,7 @@ END SUBROUTINE PLOT
  600  locpt = j
       numint = j - 2
       numdec = nc - j
-      sum = 0.0
+      sum = 0.0_wp
       IF ( numint/=0 ) THEN
          istart = 2
          istop = numint + 1
@@ -32036,7 +32022,7 @@ END SUBROUTINE PLOT
 !
  620        y = k - 1
             ipower = ipower + 1
-            sum = sum + y*(10.0**ipower)
+            sum = sum + y*(10.0_wp**ipower)
          ENDDO
       ENDIF
 !
@@ -32061,7 +32047,7 @@ END SUBROUTINE PLOT
 !
  640        y = k - 1
             ipower = ipower + 1
-            sum = sum + y/(10.0**ipower)
+            sum = sum + y/(10.0_wp**ipower)
          ENDDO
       ENDIF
 !
@@ -32116,8 +32102,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine relsd (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -32140,7 +32126,7 @@ END SUBROUTINE PLOT
 !!    program demo_relsd
 !!    use M_datapac, only : relsd
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call relsd(x,y)
 !!    end program demo_relsd
 !!
@@ -32158,7 +32144,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--RELSD26115
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sd , sum , var , X , xmean , Xrelsd
+REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -32239,7 +32225,7 @@ END SUBROUTINE PLOT
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RELS&
      &D  SUBROUTINE HAS THE VALUE 1 *****')
-            Xrelsd = 0.0
+            Xrelsd = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -32249,24 +32235,24 @@ END SUBROUTINE PLOT
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE RELSD  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xrelsd = 0.0
+            Xrelsd = 0.0_wp
          ENDIF
          GOTO 100
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      sum = 0.0
+ 50      sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xmean)**2
          ENDDO
-         var = sum/(an-1.0)
+         var = sum/(an-1.0_wp)
          sd = SQRT(var)
-         Xrelsd = 100.0*sd/xmean
+         Xrelsd = 100.0_wp*sd/xmean
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
@@ -32286,8 +32272,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine replac (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -32310,7 +32296,7 @@ END SUBROUTINE PLOT
 !!    program demo_replac
 !!    use M_datapac, only : replac
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call replac(x,y)
 !!    end program demo_replac
 !!
@@ -32328,7 +32314,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--REPLAC26239
 !*** Start of declarations inserted by SPAG
-      REAL hold , pointl , pointu , X , Xmax , Xmin , Xnew
+REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
       INTEGER i , ipr , k , N , ndel
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -32508,8 +32494,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine retain (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -32532,7 +32518,7 @@ END SUBROUTINE PLOT
 !!    program demo_retain
 !!    use M_datapac, only : retain
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call retain(x,y)
 !!    end program demo_retain
 !!
@@ -32550,7 +32536,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--RETAIN26415
 !*** Start of declarations inserted by SPAG
-      REAL hold , pointl , pointu , X , Xmax , Xmin
+REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -32695,7 +32681,7 @@ END SUBROUTINE PLOT
          newnp1 = Newn + 1
          IF ( newnp1<=nold ) THEN
             DO i = newnp1 , nold
-               X(i) = 0.0
+               X(i) = 0.0_wp
             ENDDO
          ENDIF
 !
@@ -32734,8 +32720,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine runs (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -32758,7 +32744,7 @@ END SUBROUTINE PLOT
 !!    program demo_runs
 !!    use M_datapac, only : runs
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call runs(x,y)
 !!    end program demo_runs
 !!
@@ -32776,10 +32762,10 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--RUNS26596
 !*** Start of declarations inserted by SPAG
-      REAL ai , an , anrdl , anrdlg , anrtl , anrtlg , anrul , anrulg , &
+REAL(kind=wp) :: ai , an , anrdl , anrdlg , anrtl , anrtlg , anrul , anrulg , &
      &     c1 , c2 , c3 , c4 , den , enrtl , enrtlg , enrul , enrulg ,  &
      &     hold , snrtl , snrtlg
-      REAL snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
+REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
      &     znrtlg , znrul , znrulg
       INTEGER i , imax , ip1 , ipr , iupper , j , jp1 , lendn , lenup , &
      &        maxlnd , maxlnt , maxlnu , N , nm1 , nneg , npos , nrdl , &
@@ -32853,34 +32839,34 @@ END SUBROUTINE PLOT
 !
       DATA c1(1) , c1(2) , c1(3) , c1(4) , c1(5) , c1(6) , c1(7) ,      &
      &     c1(8) , c1(9) , c1(10) , c1(11) , c1(12) , c1(13) , c1(14) , &
-     &     c1(15)/.4236111111E+00 , .1126675485E+00 , .4191688713E-01 , &
-     &     .1076912487E-01 , .2003959238E-02 , .3023235799E-03 ,        &
-     &     .3911555473E-04 , .4459038843E-05 , .4551105210E-06 ,        &
-     &     .4207466837E-07 , .3555930927E-08 , .2768273257E-09 ,        &
-     &     .1997821524E-10 , .1343876568E-11 , .8465610177E-13/
+     &     c1(15)/0.4236111111E+00_wp , .1126675485E+00_wp , .4191688713E-01_wp , &
+     &     .1076912487E-01_wp , .2003959238E-02_wp , .3023235799E-03_wp ,        &
+     &     .3911555473E-04_wp , .4459038843E-05_wp , .4551105210E-06_wp ,        &
+     &     .4207466837E-07_wp , .3555930927E-08_wp , .2768273257E-09_wp ,        &
+     &     .1997821524E-10_wp , .1343876568E-11_wp , .8465610177E-13_wp/
       DATA c2(1) , c2(2) , c2(3) , c2(4) , c2(5) , c2(6) , c2(7) ,      &
      &     c2(8) , c2(9) , c2(10) , c2(11) , c2(12) , c2(13) , c2(14) , &
-     &     c2(15)/ - .4819444444E+00 , -.1628284832E+00 ,               &
-     &     -.9690696649E-01 , -.3778106786E-01 , -.9289228716E-02 ,     &
-     &     -.1724429252E-02 , -.2638557888E-03 , -.3466965096E-04 ,     &
-     &     -.4004129153E-05 , -.4130382587E-06 , -.3851876069E-07 ,     &
-     &     -.3279103786E-08 , -.2568491117E-09 , -.1863433868E-10 ,     &
-     &     -.1259220466E-11/
+     &     c2(15)/ - .4819444444E+00_wp , -.1628284832E+00_wp ,               &
+     &     -.9690696649E-01_wp , -.3778106786E-01_wp , -.9289228716E-02_wp ,     &
+     &     -.1724429252E-02_wp , -.2638557888E-03_wp , -.3466965096E-04_wp ,     &
+     &     -.4004129153E-05_wp , -.4130382587E-06_wp , -.3851876069E-07_wp ,     &
+     &     -.3279103786E-08_wp , -.2568491117E-09_wp , -.1863433868E-10_wp ,     &
+     &     -.1259220466E-11_wp/
       DATA c3(1) , c3(2) , c3(3) , c3(4) , c3(5) , c3(6) , c3(7) ,      &
      &     c3(8) , c3(9) , c3(10) , c3(11) , c3(12) , c3(13) , c3(14) , &
-     &     c3(15)/.1777777778E+00 , .7916666667E-01 , .4738977072E-01 , &
-     &     .1274801587E-01 , .2338606059E-02 , .3461358734E-03 ,        &
-     &     .4407121770E-04 , .4960020603E-05 , .5010387575E-06 ,        &
-     &     .4592883352E-07 , .3854170274E-08 , .2982393839E-09 ,        &
-     &     .2141205844E-10 , .1433843200E-11 , .8996663214E-13/
+     &     c3(15)/.1777777778E+00_wp , .7916666667E-01_wp , .4738977072E-01_wp , &
+     &     .1274801587E-01_wp , .2338606059E-02_wp , .3461358734E-03_wp ,        &
+     &     .4407121770E-04_wp , .4960020603E-05_wp , .5010387575E-06_wp ,        &
+     &     .4592883352E-07_wp , .3854170274E-08_wp , .2982393839E-09_wp ,        &
+     &     .2141205844E-10_wp , .1433843200E-11_wp , .8996663214E-13_wp/
       DATA c4(1) , c4(2) , c4(3) , c4(4) , c4(5) , c4(6) , c4(7) ,      &
      &     c4(8) , c4(9) , c4(10) , c4(11) , c4(12) , c4(13) , c4(14) , &
-     &     c4(15)/ - .3222222222E+00 , -.5972222222E-01 ,               &
-     &     -.1130268959E+00 , -.4696428571E-01 , -.1123273065E-01 ,     &
-     &     -.2025170849E-02 , -.3029410411E-03 , -.3912824548E-04 ,     &
-     &     -.4459234519E-05 , -.4551128785E-06 , -.4207469124E-07 ,     &
-     &     -.3555931110E-08 , -.2768273269E-09 , -.1997821525E-10 ,     &
-     &     -.1343876568E-11/
+     &     c4(15)/ - .3222222222E+00_wp , -.5972222222E-01_wp ,               &
+     &     -.1130268959E+00_wp , -.4696428571E-01_wp , -.1123273065E-01_wp ,     &
+     &     -.2025170849E-02_wp , -.3029410411E-03_wp , -.3912824548E-04_wp ,     &
+     &     -.4459234519E-05_wp , -.4551128785E-06_wp , -.4207469124E-07_wp ,     &
+     &     -.3555931110E-08_wp , -.2768273269E-09_wp , -.1997821525E-10_wp ,     &
+     &     -.1343876568E-11_wp/
 !
       ipr = 6
       iupper = 15000
@@ -32944,17 +32930,17 @@ END SUBROUTINE PLOT
          maxlnu = 0
          maxlnd = 0
          DO i = 1 , nm1
-            IF ( Y(i)==0.0 .AND. lenup>=1 ) lenup = lenup + 1
-            IF ( Y(i)==0.0 .AND. lendn>=1 ) lendn = lendn + 1
-            IF ( Y(i)==0.0 .AND. lenup==0 .AND. lendn==0 )              &
+            IF ( Y(i)==0.0_wp .AND. lenup>=1 ) lenup = lenup + 1
+            IF ( Y(i)==0.0_wp .AND. lendn>=1 ) lendn = lendn + 1
+            IF ( Y(i)==0.0_wp .AND. lenup==0 .AND. lendn==0 )              &
      &           lenup = lenup + 1
-            IF ( Y(i)>0.0 .AND. lendn>=1 .AND. lendn<=15 ) nrdl(lendn)  &
+            IF ( Y(i)>0.0_wp .AND. lendn>=1 .AND. lendn<=15 ) nrdl(lendn)  &
      &           = nrdl(lendn) + 1
-            IF ( Y(i)>0.0 .AND. lendn>=1 .AND. lendn>=16 ) nrdl(16)     &
+            IF ( Y(i)>0.0_wp .AND. lendn>=1 .AND. lendn>=16 ) nrdl(16)     &
      &           = nrdl(16) + 1
-            IF ( Y(i)>0.0 ) lendn = 0
-            IF ( Y(i)>0.0 ) lenup = lenup + 1
-            IF ( Y(i)<0.0 .AND. lenup>=1 .AND. lenup<=15 ) nrul(lenup)  &
+            IF ( Y(i)>0.0_wp ) lendn = 0
+            IF ( Y(i)>0.0_wp ) lenup = lenup + 1
+            IF ( Y(i)<0.0_wp .AND. lenup>=1 .AND. lenup<=15 ) nrul(lenup)  &
      &           = nrul(lenup) + 1
             IF ( Y(i)<0.0 .AND. lenup>=1 .AND. lenup>=16 ) nrul(16)     &
      &           = nrul(16) + 1
@@ -33004,36 +32990,36 @@ END SUBROUTINE PLOT
          nzer = 0
          npos = 0
          DO i = 1 , nm1
-            IF ( Y(i)<0.0 ) nneg = nneg + 1
-            IF ( Y(i)==0.0 ) nzer = nzer + 1
-            IF ( Y(i)>0.0 ) npos = npos + 1
+            IF ( Y(i)<0.0_wp ) nneg = nneg + 1
+            IF ( Y(i)==0.0_wp ) nzer = nzer + 1
+            IF ( Y(i)>0.0_wp ) npos = npos + 1
          ENDDO
 !
 !     COMPUTE THE EXPECTED NUMBER OF RUNS UP OF LENGTH EXACTLY I =
 !     THE EXPECTED NUMBER OF RUNS DOWN OF LENGTH EXACTLY I =
 !     ONE HALF THE EXPECTED NUMBER OF RUNS TOTAL OF LENGTH EXACTLY I
 !
-         den = 6.0
+         den = 6.0_wp
          DO i = 1 , 15
             ai = i
-            enrul(i) = an*(ai*ai+3.0*ai+1.0)                            &
-     &                 - (ai*ai*ai+3.0*ai*ai-ai-4.0)
-            den = den*(ai+3.0)
+            enrul(i) = an*(ai*ai+3.0_wp*ai+1.0_wp)                            &
+     &                 - (ai*ai*ai+3.0_wp*ai*ai-ai-4.0_wp)
+            den = den*(ai+3.0_wp)
             enrul(i) = enrul(i)/den
-            enrtl(i) = 2.0*enrul(i)
+            enrtl(i) = 2.0_wp*enrul(i)
          ENDDO
 !
 !     COMPUTE THE EXPECTED NUMBER OF RUNS UP OF LENGTH I OR MORE =
 !     THE EXPECTED NUMBER OF RUNS DOWN OF LENGTH I OR MORE =
 !     ONE HALF THE EXPECTED NUMBER OF RUNS TOTAL OF LENGTH I OR MORE
 !
-         den = 2.0
+         den = 2.0_wp
          DO i = 1 , 15
             ai = i
-            enrulg(i) = an*(ai+1.0) - (ai*ai+ai-1.0)
-            den = den*(ai+2.0)
+            enrulg(i) = an*(ai+1.0_wp) - (ai*ai+ai-1.0_wp)
+            den = den*(ai+2.0_wp)
             enrulg(i) = enrulg(i)/den
-            enrtlg(i) = 2.0*enrulg(i)
+            enrtlg(i) = 2.0_wp*enrulg(i)
          ENDDO
 !
 !     COMPUTE THE STANDARD DEV. OF THE NUMBER OF RUNS UP OF LENGTH EXACTLY I =
@@ -33042,7 +33028,7 @@ END SUBROUTINE PLOT
 !
          DO i = 1 , 15
             snrtl(i) = SQRT(c1(i)*an+c2(i))
-            snrul(i) = SQRT(0.5)*snrtl(i)
+            snrul(i) = SQRT(0.5_wp)*snrtl(i)
          ENDDO
 !
 !     COMPUTE THE STAND. DEV. OF THE NUMBER OF RUNS UP OF LENGTH I OR MORE =
@@ -33051,7 +33037,7 @@ END SUBROUTINE PLOT
 !
          DO i = 1 , 15
             snrtlg(i) = SQRT(c3(i)*an+c4(i))
-            snrulg(i) = SQRT(0.5)*snrtlg(i)
+            snrulg(i) = SQRT(0.5_wp)*snrtlg(i)
          ENDDO
 !
 !     FORM Z STATISTICS
@@ -33221,8 +33207,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine sampp (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -33245,7 +33231,7 @@ END SUBROUTINE PLOT
 !!    program demo_sampp
 !!    use M_datapac, only : sampp
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sampp(x,y)
 !!    end program demo_sampp
 !!
@@ -33263,7 +33249,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--SAMPP27037
 !*** Start of declarations inserted by SPAG
-      REAL aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
+REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
       INTEGER i , ipr , iupper , Iwrite , j , jp1 , N
 !*** End of declarations inserted by SPAG
@@ -33373,7 +33359,7 @@ END SUBROUTINE PLOT
 99004    FORMAT (' ','THE THIRD INPUT ARGUMENT IS SMALLER THAN 1/(N+1)',&
      &           ' = 1/(SECOND INPUT ARGUMENT + 1)')
          WRITE (ipr,99008) N , P
-         Pp = -999999999.0
+         Pp = -999999999.0_wp
          RETURN
       ELSEIF ( jp1>N ) THEN
          WRITE (ipr,99005)
@@ -33381,7 +33367,7 @@ END SUBROUTINE PLOT
      &          ' = (SECOND INPUT ARGUMENT)/(SECOND INPUT ARGUMENT + 1)'&
      &          )
          WRITE (ipr,99008) N , P
-         Pp = 999999999.0
+         Pp = 999999999.0_wp
          RETURN
       ELSE
          hold = X(1)
@@ -33398,8 +33384,8 @@ END SUBROUTINE PLOT
  50      CALL SORT(X,N,Y)
 !
          ajint = j
-         w = 1.0 - (aj-ajint)
-         Pp = w*Y(j) + (1.0-w)*Y(jp1)
+         w = 1.0_wp - (aj-ajint)
+         Pp = w*Y(j) + (1.0_wp-w)*Y(jp1)
 !
          hunp = 100.0*P
          IF ( Iwrite==0 ) RETURN
@@ -33422,8 +33408,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine scale (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -33446,7 +33432,7 @@ END SUBROUTINE PLOT
 !!    program demo_scale
 !!    use M_datapac, only : scale
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call scale(x,y)
 !!    end program demo_scale
 !!
@@ -33464,7 +33450,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--SCALE27191
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
+REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
      &     xsd , xvar
       INTEGER i , ipr , N
 !*** End of declarations inserted by SPAG
@@ -33535,10 +33521,10 @@ END SUBROUTINE PLOT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      xrange = 0.0
-      xsd = 0.0
-      xrelsd = 0.0
-      xvar = 0.0
+      xrange = 0.0_wp
+      xsd = 0.0_wp
+      xrelsd = 0.0_wp
+      xvar = 0.0_wp
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
@@ -33553,9 +33539,9 @@ END SUBROUTINE PLOT
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SCAL&
      &E  SUBROUTINE HAS THE VALUE 1 *****')
-            xrange = 0.0
-            xsd = 0.0
-            xrelsd = 0.0
+            xrange = 0.0_wp
+            xsd = 0.0_wp
+            xrelsd = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -33584,16 +33570,16 @@ END SUBROUTINE PLOT
 !     COMPUTE THE SAMPLE VARIANCE,
 !     AND THEN THE SAMPLE STANDARDD DEVIATION.
 !
-            sum = 0.0
+            sum = 0.0_wp
             DO i = 1 , N
                sum = sum + X(i)
             ENDDO
             xmean = sum/an
-            sum = 0.0
+            sum = 0.0_wp
             DO i = 1 , N
                sum = sum + (X(i)-xmean)**2
             ENDDO
-            xvar = sum/(an-1.0)
+            xvar = sum/(an-1.0_wp)
             xsd = SQRT(xvar)
 !
 !     COMPUTE THE SAMPLE RELATIVE STANDARD DEVIATION;
@@ -33602,8 +33588,8 @@ END SUBROUTINE PLOT
 !     THE RESULTING SAMPLE STANDARD DEVIATION IS EXPRESSED
 !     AS A PERCENT.
 !
-            xrelsd = 100.0*xsd/xmean
-            IF ( xrelsd<0.0 ) xrelsd = -xrelsd
+            xrelsd = 100.0_wp*xsd/xmean
+            IF ( xrelsd<0.0_wp ) xrelsd = -xrelsd
          ENDIF
 !
 !     WRITE EVERYTHING OUT
@@ -33641,8 +33627,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine sd (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -33665,7 +33651,7 @@ END SUBROUTINE PLOT
 !!    program demo_sd
 !!    use M_datapac, only : sd
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sd(x,y)
 !!    end program demo_sd
 !!
@@ -33683,7 +33669,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--SD27364
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , var , X , xmean , Xsd
+REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -33758,7 +33744,7 @@ END SUBROUTINE PLOT
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SD  &
      &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xsd = 0.0
+            Xsd = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -33768,22 +33754,22 @@ END SUBROUTINE PLOT
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE SD     SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xsd = 0.0
+            Xsd = 0.0_wp
          ENDIF
          GOTO 100
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      sum = 0.0
+ 50      sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xmean)**2
          ENDDO
-         var = sum/(an-1.0)
+         var = sum/(an-1.0_wp)
          Xsd = SQRT(var)
       ENDIF
 !
@@ -33803,8 +33789,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine skipr (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -33827,7 +33813,7 @@ END SUBROUTINE PLOT
 !!    program demo_skipr
 !!    use M_datapac, only : skipr
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call skipr(x,y)
 !!    end program demo_skipr
 !!
@@ -33915,8 +33901,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine sortc (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -33939,7 +33925,7 @@ END SUBROUTINE PLOT
 !!    program demo_sortc
 !!    use M_datapac, only : sortc
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sortc(x,y)
 !!    end program demo_sortc
 !!
@@ -33957,7 +33943,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--SORTC27777
 !*** Start of declarations inserted by SPAG
-      REAL amed , bmed , hold , tx , ty , X , Xs , Y , Yc
+REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
       INTEGER i , il , ip1 , ipr , iu , j , jmi , jmk , k , l , lmi ,   &
      &        m , mid , N , nm1
 !*** End of declarations inserted by SPAG
@@ -34246,8 +34232,8 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine sort (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -34270,7 +34256,7 @@ END SUBROUTINE PLOT
 !!    program demo_sort
 !!    use M_datapac, only : sort
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sort(x,y)
 !!    end program demo_sort
 !!
@@ -34288,7 +34274,7 @@ END SUBROUTINE PLOT
       IMPLICIT NONE
 !*--SORT27546
 !*** Start of declarations inserted by SPAG
-      REAL amed , hold , tt , X , Y
+REAL(kind=wp) :: amed , hold , tt , X , Y
       INTEGER i , il , ip1 , ipr , iu , j , jmi , jmk , k , l , lmi ,   &
      &        m , mid , N , nm1
 !*** End of declarations inserted by SPAG
@@ -34523,10 +34509,10 @@ END SUBROUTINE PLOT
 !!     SUBROUTINE SORTP(X,N,Y,Xpos)
 !!     Subroutine sortp (X, Y)
 !!
-!!      Integer, Intent (In) :: N
-!!      Real, Intent (In)    :: X(N)
-!!      Real, Intent (Out)   :: Y(N)
-!!      Real, Intent (Out)   :: XPOS(N)
+!!      Integer, Intent (In) ::  N
+!!    Real(kind=wp) :: (In)    ::  X(N)
+!!    Real(kind=wp) :: (Out)   ::  Y(N)
+!!    Real(kind=wp) :: (Out)   ::  XPOS(N)
 !!
 !!##DESCRIPTION
 !!
@@ -34552,7 +34538,7 @@ END SUBROUTINE PLOT
 !!    program demo_sortp
 !!    use M_datapac, only : sortp
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sortp(x,y)
 !!    end program demo_sortp
 !!
@@ -34568,7 +34554,7 @@ END SUBROUTINE PLOT
 !*==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTP(X,N,Y,Xpos)
 IMPLICIT NONE
-      REAL amed , bmed , hold , tt , X , Xpos , Y
+REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
       INTEGER i , il , ip1 , ipr , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -34697,7 +34683,7 @@ IMPLICIT NONE
             WRITE (ipr,99003)
 99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORTP SUBROUTINE HAS THE VALUE 1 *****')
             Y(1) = X(1)
-            Xpos(1) = 1.0
+            Xpos(1) = 1.0_wp
             RETURN
          ELSE
             hold = X(1)
@@ -34843,8 +34829,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine spcorr (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -34867,7 +34853,7 @@ END SUBROUTINE SORTP
 !!    program demo_spcorr
 !!    use M_datapac, only : spcorr
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call spcorr(x,y)
 !!    end program demo_spcorr
 !!
@@ -34885,7 +34871,7 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--SPCORR28356
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , Spc , sum , WS , X , XR , Y , YR
+REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
       INTEGER i , iflag , ipr , iupper , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -34973,7 +34959,7 @@ END SUBROUTINE SORTP
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
-      Spc = 0.0
+      Spc = 0.0_wp
       iflag = 0
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (ipr,99001) iupper
@@ -35016,11 +35002,11 @@ END SUBROUTINE SORTP
 !
          CALL RANK(X,N,XR)
          CALL RANK(Y,N,YR)
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (XR(i)-YR(i))**2
          ENDDO
-         Spc = 1.0 - (6.0*sum/((an-1.0)*an*(an+1.0)))
+         Spc = 1.0_wp - (6.0_wp*sum/((an-1.0_wp)*an*(an+1.0_wp)))
 !
          IF ( Iwrite/=0 ) WRITE (ipr,99006) N , Spc
 99006    FORMAT (' ',                                                   &
@@ -35037,8 +35023,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine stmom3 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -35061,7 +35047,7 @@ END SUBROUTINE SORTP
 !!    program demo_stmom3
 !!    use M_datapac, only : stmom3
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call stmom3(x,y)
 !!    end program demo_stmom3
 !!
@@ -35079,7 +35065,7 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--STMOM328504
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
+REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -35159,7 +35145,7 @@ END SUBROUTINE SORTP
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE STMO&
      &M3 SUBROUTINE HAS THE VALUE 1 *****')
-            Xsmom3 = 0.0
+            Xsmom3 = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -35169,26 +35155,26 @@ END SUBROUTINE SORTP
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE STMOM3 SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xsmom3 = 0.0
+            Xsmom3 = 0.0_wp
          ENDIF
          GOTO 100
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      sum = 0.0
+ 50      sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum2 = 0.0
-         sum3 = 0.0
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum2 = sum2 + (X(i)-xmean)**2
             sum3 = sum3 + (X(i)-xmean)**3
          ENDDO
          sum3 = sum3/an
          vb = sum2/an
-         Xsmom3 = sum3/(vb**1.5)
+         Xsmom3 = sum3/(vb**1.5_wp)
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
@@ -35198,7 +35184,7 @@ END SUBROUTINE SORTP
 99006 FORMAT (' ',                                                      &
      &        'THE SAMPLE STANDARDIZED THIRD  CENTRAL MOMENT FOR THE ', &
      &        I6,' OBSERVATIONS IS ',E15.8)
-      END SUBROUTINE STMOM3
+END SUBROUTINE STMOM3
 !>
 !!##NAME
 !!    stmom4(3f) - [M_datapac:STATISTICS] compute the fourth central moment
@@ -35208,8 +35194,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine stmom4 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -35232,7 +35218,7 @@ END SUBROUTINE SORTP
 !!    program demo_stmom4
 !!    use M_datapac, only : stmom4
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call stmom4(x,y)
 !!    end program demo_stmom4
 !!
@@ -35250,7 +35236,7 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--STMOM428629
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
+REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -35330,7 +35316,7 @@ END SUBROUTINE SORTP
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE STMO&
      &M4 SUBROUTINE HAS THE VALUE 1 *****')
-            Xsmom4 = 0.0
+            Xsmom4 = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -35340,19 +35326,19 @@ END SUBROUTINE SORTP
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE STMOM4 SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xsmom4 = 0.0
+            Xsmom4 = 0.0_wp
          ENDIF
          GOTO 100
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      sum = 0.0
+ 50      sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum2 = 0.0
-         sum4 = 0.0
+         sum2 = 0.0_wp
+         sum4 = 0.0_wp
          DO i = 1 , N
             sum2 = sum2 + (X(i)-xmean)**2
             sum4 = sum4 + (X(i)-xmean)**4
@@ -35369,7 +35355,7 @@ END SUBROUTINE SORTP
 99006 FORMAT (' ',                                                      &
      &        'THE SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT FOR THE ', &
      &        I6,' OBSERVATIONS IS ',E15.8)
-      END SUBROUTINE STMOM4
+END SUBROUTINE STMOM4
 !>
 !!##NAME
 !!    subse1(3f) - [M_datapac:STATISTICS] extract the elements of a vector
@@ -35379,8 +35365,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine subse1 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -35403,7 +35389,7 @@ END SUBROUTINE SORTP
 !!    program demo_subse1
 !!    use M_datapac, only : subse1
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call subse1(x,y)
 !!    end program demo_subse1
 !!
@@ -35421,7 +35407,7 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--SUBSE128754
 !*** Start of declarations inserted by SPAG
-      REAL D , Dmax , Dmin , hold , pointl , pointu , X , Y
+REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
       INTEGER i , ipr , k , N , ndel , Ny
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -35635,8 +35621,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine subse2 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -35659,7 +35645,7 @@ END SUBROUTINE SORTP
 !!    program demo_subse2
 !!    use M_datapac, only : subse2
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call subse2(x,y)
 !!    end program demo_subse2
 !!
@@ -35677,7 +35663,7 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--SUBSE228964
 !*** Start of declarations inserted by SPAG
-      REAL D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
+REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
      &     poin1u , poin2l , poin2u , X , Y
       INTEGER i , ipr , k , N , ndel , Ny
 !*** End of declarations inserted by SPAG
@@ -35918,8 +35904,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine subset (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -35942,7 +35928,7 @@ END SUBROUTINE SORTP
 !!    program demo_subset
 !!    use M_datapac, only : subset
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call subset(x,y)
 !!    end program demo_subset
 !!
@@ -35960,7 +35946,7 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--SUBSET29201
 !*** Start of declarations inserted by SPAG
-      REAL D , Dmax , Dmin , hold , pointl , pointu , X
+REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -36135,7 +36121,7 @@ END SUBROUTINE SORTP
          newnp1 = Newn + 1
          IF ( newnp1<=nold ) THEN
             DO i = newnp1 , nold
-               X(i) = 0.0
+               X(i) = 0.0_wp
             ENDDO
          ENDIF
 !
@@ -36183,8 +36169,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine tail (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -36207,7 +36193,7 @@ END SUBROUTINE SORTP
 !!    program demo_tail
 !!    use M_datapac, only : tail
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tail(x,y)
 !!    end program demo_tail
 !!
@@ -36224,14 +36210,15 @@ END SUBROUTINE SORTP
       SUBROUTINE TAIL(X,N)
       IMPLICIT NONE
 !*--TAIL29420
-!*** Start of declarations inserted by SPAG
-      REAL a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
-      REAL coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
-      REAL ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
-      REAL s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS, X, xbar
-      REAL xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
-      INTEGER i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
-!*** End of declarations inserted by SPAG
+
+REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
+REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
+REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
+REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS, X
+REAL(kind=wp) :: xbar
+REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
+INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
+
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT TAIL
 !
@@ -36330,8 +36317,8 @@ END SUBROUTINE SORTP
 !
       DATA alpham , alphaa/'M' , 'A'/
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-      DATA picons/3.14159265358979/
-      DATA constn/.3989422804/
+      DATA picons/3.14159265358979_wp/
+      DATA constn/.3989422804_wp/
 !
       ipr = 6
       iupper = 3000
@@ -36371,7 +36358,7 @@ END SUBROUTINE SORTP
 !
 !     COMPUTE THE SAMPLE MEAN
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
@@ -36379,9 +36366,9 @@ END SUBROUTINE SORTP
 !
 !     COMPUTE S, BIASED S, B1, AND B2
 !
-         sum2 = 0.0
-         sum3 = 0.0
-         sum4 = 0.0
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
+         sum4 = 0.0_wp
          DO i = 1 , N
             del = X(i) - xbar
             a2 = del*del
@@ -36394,7 +36381,7 @@ END SUBROUTINE SORTP
          am2 = sum2/an
          am3 = sum3/an
          am4 = sum4/an
-         s = SQRT(sum2/(an-1.0))
+         s = SQRT(sum2/(an-1.0_wp))
          bs = SQRT(am2)
          b1 = am3/(bs**3)
          b2 = am4/(bs**4)
@@ -36403,18 +36390,18 @@ END SUBROUTINE SORTP
 !     UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--CRAMER, PAGE 386
 !
-         eb1 = 0.0
-         sdb1 = 6.0*(an-2.0)/((an+1.0)*(an+3.0))
+         eb1 = 0.0_wp
+         sdb1 = 6.0_wp*(an-2.0_wp)/((an+1.0_wp)*(an+3.0_wp))
          sdb1 = SQRT(sdb1)
          zb1 = (b1-eb1)/sdb1
-         eb2 = 3.0 - 6.0/(an+1.0)
-         sdb2 = 24.0*an*(an-2.0)*(an-3.0)                               &
-     &          /((an+1.0)*(an+1.0)*(an+3.0)*(an+5.0))
+         eb2 = 3.0_wp - 6.0_wp/(an+1.0_wp)
+         sdb2 = 24.0_wp*an*(an-2.0_wp)*(an-3.0_wp)                               &
+     &          /((an+1.0_wp)*(an+1.0_wp)*(an+3.0_wp)*(an+5.0_wp))
          zb2 = (b2-eb2)/sdb2
 !
 !     COMPUTE GEARY'S STATISTIC
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + ABS(X(i)-xbar)
          ENDDO
@@ -36425,11 +36412,11 @@ END SUBROUTINE SORTP
 !     OF GEARY'S STATISTIC UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--BIOMETRIKA, 1936, PAGE 296
 !
-         aa = SQRT(2.0/picons)
-         bb = SQRT(2.0/(an-1.0))
-         IF ( N>=100 ) cc = SQRT(an/2.0)                                &
-     &                      *(1.0-(1.0/(8.0*an/2.0))+(1.0/(128.0*an*an/ &
-     &                      4.0)))
+         aa = SQRT(2.0_wp/picons)
+         bb = SQRT(2.0_wp/(an-1.0))
+         IF ( N>=100 ) cc = SQRT(an/2.0_wp)                                &
+     &                      *(1.0_wp-(1.0_wp/(8.0_wp*an/2.0_wp))+(1.0_wp/(128.0_wp*an*an/ &
+     &                      4.0_wp)))
          IF ( N<100 ) THEN
             coef = 1.0
             imax = N - 1
@@ -36439,23 +36426,23 @@ END SUBROUTINE SORTP
             IF ( imin<=imax ) THEN
                DO i = imin , imax , 2
                   ai = i
-                  coef = ((ai-1.0)/ai)*coef
+                  coef = ((ai-1.0_wp)/ai)*coef
                ENDDO
             ENDIF
-            coef = coef*(an-1.0)
+            coef = coef*(an-1.0_wp)
             IF ( ievodd==0 ) THEN
                coef = coef/SQRT(picons)
             ELSE
-               coef = coef*(SQRT(picons)/2.0)
+               coef = coef*(SQRT(picons)/2.0_wp)
             ENDIF
             cc = coef
          ENDIF
          egeary = aa/(bb*cc)
-         dd = (2.0/picons)*SQRT(an*(an-2.0))
-         arg = 1.0/(an-1.0)
-         arg = arg/SQRT(1.0-arg*arg)
+         dd = (2.0_wp/picons)*SQRT(an*(an-2.0_wp))
+         arg = 1.0_wp/(an-1.0_wp)
+         arg = arg/SQRT(1.0_wp-arg*arg)
          ee = ATAN(arg)
-         sdgear = (1.0/an)*(1.0+dd+ee)
+         sdgear = (1.0_wp/an)*(1.0_wp+dd+ee)
          sdgear = sdgear - egeary*egeary
          sdgear = SQRT(sdgear)
          zgeary = (geary-egeary)/sdgear
@@ -36470,25 +36457,25 @@ END SUBROUTINE SORTP
 !     UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--BIOMETRIKA, 1954, PAGE 483
 !
-         g = .33000598 + ((an-2.0)**.16)/41.785
-         pn = (an-g)/(an-2.0*g+1.0)
-         p1 = 1.0 - pn
+         g = .33000598_wp + ((an-2.0_wp)**.16_wp)/41.785_wp
+         pn = (an-g)/(an-2.0_wp*g+1.0_wp)
+         p1 = 1.0_wp - pn
          CALL NORPPF(pn,rpn)
          CALL NORPPF(p1,rp1)
          exn = rpn
          ex1 = rp1
          er = exn - ex1
          CALL NORPPF(p1,ppfnor)
-         sfp1 = 1.0/(constn*EXP(-(ppfnor*ppfnor)/2.0))
+         sfp1 = 1.0_wp/(constn*EXP(-(ppfnor*ppfnor)/2.0_wp))
          CALL NORPPF(pn,ppfnor)
-         sfpn = 1.0/(constn*EXP(-(ppfnor*ppfnor)/2.0))
-         varxn = pn*(1.0-pn)*sfpn*sfpn/(an+2.0)
+         sfpn = 1.0_wp/(constn*EXP(-(ppfnor*ppfnor)/2.0_wp))
+         varxn = pn*(1.0_wp-pn)*sfpn*sfpn/(an+2.0_wp)
          exnsq = varxn + exn*exn
-         cox1xn = p1*p1*sfp1*sfpn/(an+2.0)
+         cox1xn = p1*p1*sfp1*sfpn/(an+2.0_wp)
          ex1xn = cox1xn + ex1*exn
-         ersq = 2.0*(exnsq-ex1xn)
+         ersq = 2.0_wp*(exnsq-ex1xn)
          es = bb*cc
-         essq = 1.0
+         essq = 1.0_wp
          ers = er/es
          erssq = ersq/essq
          varrs = erssq - ers*ers
@@ -36498,20 +36485,20 @@ END SUBROUTINE SORTP
 !     COMPUTE THE WILK-SHAPIRO STATISTIC
 !
          al = ALOG10(an)
-         gamma = .327511 + .058212*al - .009776*al*al
-         sum = 0.0
+         gamma = .327511_wp + .058212_wp*al - .009776_wp*al*al
+         sum = 0.0_wp
          IF ( N<=20 ) arg = N
          IF ( N>20 ) arg = N + 1
-         asubn = SQRT((1.0+(1.0/(4.0*arg)))/SQRT(arg))
+         asubn = SQRT((1.0_wp+(1.0_wp/(4.0_wp*arg)))/SQRT(arg))
          asub1 = -asubn
          sum = sum + asub1*Y(1) + asubn*Y(N)
          IF ( N>2 ) THEN
             nm1 = N - 1
             DO i = 2 , nm1
                ai = i
-               pi = (ai-gamma)/(an-2.0*gamma+1.0)
+               pi = (ai-gamma)/(an-2.0_wp*gamma+1.0_wp)
                CALL NORPPF(pi,ei)
-               coefi = 2.0*ei/SQRT(-2.722+4.083*an)
+               coefi = 2.0_wp*ei/SQRT(-2.722_wp+4.083_wp*an)
                sum = sum + coefi*Y(i)
             ENDDO
          ENDIF
@@ -36521,14 +36508,14 @@ END SUBROUTINE SORTP
 !     STATISTIC UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--JJF APPROXIMATION TO MOMENTS ON PAGE 601 OF BIOMETRIKA (1965)
 !
-         IF ( N==3 ) ewilks = .9135
-         IF ( N==4 ) ewilks = .9012
-         IF ( N>=5 ) ewilks = .9026 + (an-5.0)                          &
-     &                        /(44.608+13.593*SQRT(an)+10.267*an)
-         IF ( N==3 ) sdwilk = .0755
-         IF ( N==4 ) sdwilk = .0719
-         IF ( N>=5 ) sdwilk = .0670 + (an-5.0)                          &
-     &                        /(-42.368-5.026*SQRT(an)-14.925*an)
+         IF ( N==3 ) ewilks = .9135_wp
+         IF ( N==4 ) ewilks = .9012_wp
+         IF ( N>=5 ) ewilks = .9026_wp + (an-5.0_wp)                          &
+     &                        /(44.608_wp+13.593_wp*SQRT(an)+10.267_wp*an)
+         IF ( N==3 ) sdwilk = .0755_wp
+         IF ( N==4 ) sdwilk = .0719_wp
+         IF ( N>=5 ) sdwilk = .0670_wp + (an-5.0_wp)                          &
+     &                        /(-42.368_wp-5.026_wp*SQRT(an)-14.925_wp*an)
          zwilks = (wilksh-ewilks)/sdwilk
 !
 !     COMPUTE THE CORRELATION COEFFICIENT BETWEEN THE ORDERED OBSERVATIONS
@@ -36540,7 +36527,7 @@ END SUBROUTINE SORTP
          ievodd = N - 2*(N/2)
          CALL UNIMED(N,Z)
          DO i = 1 , N
-            PTEnth(i) = Z(i)**(0.1)
+            PTEnth(i) = Z(i)**(0.1_wp)
          ENDDO
          DO idis = 1 , numdis
             IF ( idis==20 ) THEN
@@ -36549,22 +36536,22 @@ END SUBROUTINE SORTP
                   CALL NORPPF(Z(i),YM(i))
                   YM(irev) = -YM(i)
                ENDDO
-               IF ( ievodd==1 ) YM(nhalfp) = 0.0
+               IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSEIF ( idis==22 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
-                  YM(i) = ALOG(Z(i)/(1.0-Z(i)))
+                  YM(i) = ALOG(Z(i)/(1.0_wp-Z(i)))
                   YM(irev) = -YM(i)
                ENDDO
-               IF ( ievodd==1 ) YM(nhalfp) = 0.0
+               IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSEIF ( idis==23 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
-                  IF ( Z(i)<=0.5 ) YM(i) = ALOG(2.0*Z(i))
-                  IF ( Z(i)>0.5 ) YM(i) = -ALOG(2.0*(1.0-Z(i)))
+                  IF ( Z(i)<=0.5_wp ) YM(i) = ALOG(2.0_wp*Z(i))
+                  IF ( Z(i)>0.5_wp ) YM(i) = -ALOG(2.0_wp*(1.0_wp-Z(i)))
                   YM(irev) = -YM(i)
                ENDDO
-               IF ( ievodd==1 ) YM(nhalfp) = 0.0
+               IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSEIF ( idis==33 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
@@ -36572,13 +36559,13 @@ END SUBROUTINE SORTP
                   YM(i) = -COS(arg)/SIN(arg)
                   YM(irev) = -YM(i)
                ENDDO
-               IF ( ievodd==1 ) YM(nhalfp) = 0.0
+               IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSE
                IF ( idis<20 ) idis2 = idis
                IF ( idis==21 ) idis2 = idis - 1
                IF ( 23<idis .AND. idis<33 ) idis2 = idis - 2
                IF ( 33<idis ) idis2 = idis - 3
-               alamba = -(0.1)*FLOAT(idis2) + 2.1
+               alamba = -(0.1_wp)*FLOAT(idis2) + 2.1_wp
                IF ( idis==1 ) THEN
                   DO i = 1 , nhalf
                      irev = N - i + 1
@@ -36587,7 +36574,7 @@ END SUBROUTINE SORTP
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSEIF ( idis==11 ) THEN
                   DO i = 1 , nhalf
                      irev = N - i + 1
@@ -36596,34 +36583,34 @@ END SUBROUTINE SORTP
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSEIF ( idis==24 ) THEN
                   DO i = 1 , nhalf
                      irev = N - i + 1
-                     P(i) = Z(i)**(-0.1)
-                     P(irev) = Z(irev)**(-0.1)
+                     P(i) = Z(i)**(-0.1_wp)
+                     P(irev) = Z(irev)**(-0.1_wp)
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSEIF ( idis==34 ) THEN
                   DO i = 1 , nhalf
-                     P(irev) = 1.0/Z(irev)
-                     P(i) = 1.0/Z(i)
+                     P(irev) = 1.0_wp/Z(irev)
+                     P(i) = 1.0_wp/Z(i)
                      irev = N - i + 1
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSEIF ( idis==44 ) THEN
                   DO i = 1 , nhalf
                      irev = N - i + 1
-                     P(i) = 1.0/(Z(i)*Z(i))
-                     P(irev) = 1.0/(Z(irev)*Z(irev))
+                     P(i) = 1.0_wp/(Z(i)*Z(i))
+                     P(irev) = 1.0_wp/(Z(irev)*Z(irev))
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSE
                   DO i = 1 , nhalf
                      irev = N - i + 1
@@ -36632,17 +36619,17 @@ END SUBROUTINE SORTP
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ENDIF
             ENDIF
-            sum1 = 0.0
-            sum2 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
             DO i = 1 , N
                sum1 = sum1 + Y(i)*YM(i)
                sum2 = sum2 + YM(i)*YM(i)
             ENDDO
             sum2 = SQRT(sum2)
-            sum3 = s*SQRT(an-1.0)
+            sum3 = s*SQRT(an-1.0_wp)
             corr(idis) = sum1/(sum2*sum3)
          ENDDO
 !
@@ -36670,13 +36657,13 @@ END SUBROUTINE SORTP
 !     CORRELATION COEFFICIENT UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--JJF UNPUBLISHED MANUSCRIPT
 !
-         IF ( N==2 ) ecc = 1.0
-         IF ( N==3 ) ecc = .95492958
-         IF ( N>=4 ) ecc = .94947355 + (an-4.0)                         &
-     &                     /(196.815-2.9418*SQRT(an)+19.7916*an)
-         IF ( N==2 ) sdcc = 99999999.9999
-         IF ( N==3 ) sdcc = .04007697
-         IF ( N>=4 ) sdcc = .039492 + (an-4.0)/(-127.0-25.3*an)
+         IF ( N==2 ) ecc = 1.0_wp
+         IF ( N==3 ) ecc = .95492958_wp
+         IF ( N>=4 ) ecc = .94947355_wp + (an-4.0_wp)                         &
+     &                     /(196.815_wp-2.9418_wp*SQRT(an)+19.7916_wp*an)
+         IF ( N==2 ) sdcc = 99999999.9999_wp
+         IF ( N==3 ) sdcc = .04007697_wp
+         IF ( N>=4 ) sdcc = .039492_wp + (an-4.0_wp)/(-127.0_wp-25.3_wp*an)
          zcc = (cc-ecc)/sdcc
 !
 !     WRITE OUT THE NORMAL TAIL LENGTH STATISTICS PAGE
@@ -36767,7 +36754,7 @@ END SUBROUTINE SORTP
          ENDDO
          icount = 0
          DO i = 1 , N
-            mx = 10.0*(((X(i)-xbar)/s)+6.0) + 0.5
+            mx = 10.0_wp*(((X(i)-xbar)/s)+6.0_wp) + 0.5_wp
             mx = mx + 7
             IF ( mx<7 .OR. mx>127 ) icount = icount + 1
             IF ( mx>=7 .AND. mx<=127 ) iline1(mx) = alphax
@@ -36782,8 +36769,8 @@ END SUBROUTINE SORTP
          DO i = 1 , 6
             irev = 13 - i + 1
             ai = i
-            xline(i) = xbar - (7.0-ai)*s
-            xline(irev) = xbar + (7.0-ai)*s
+            xline(i) = xbar - (7.0_wp-ai)*s
+            xline(irev) = xbar + (7.0_wp-ai)*s
          ENDDO
 !
 !     WRITE OUT THE LINE PLOT SHOWING THE DEVIATIONS OF THE OBSERVATIONS
@@ -36834,11 +36821,11 @@ END SUBROUTINE SORTP
      &           'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,   &
      &           ')')
          WRITE (ipr,99043) corr(20)
-         alamba = -0.5
+         alamba = -0.5_wp
          DO i = 1 , nhalf
             irev = N - i + 1
             q = Z(i)
-            YM(i) = (q**alamba-(1.0-q)**alamba)/alamba
+            YM(i) = (q**alamba-(1.0_wp-q)**alamba)/alamba
             YM(irev) = -YM(i)
          ENDDO
          CALL PLOT(Y,YM,N)
@@ -36918,8 +36905,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine tcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -36942,7 +36929,7 @@ END SUBROUTINE SORTP
 !!    program demo_tcdf
 !!    use M_datapac, only : tcdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tcdf(x,y)
 !!    end program demo_tcdf
 !!
@@ -36960,7 +36947,7 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--TCDF30117
 !*** Start of declarations inserted by SPAG
-      REAL anu , Cdf , cdfn , sd , X , z
+REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
       INTEGER i , ievodd , imax , imin , ipr , Nu , nucut
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -37048,7 +37035,7 @@ END SUBROUTINE SORTP
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) Nu
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
@@ -37072,18 +37059,18 @@ END SUBROUTINE SORTP
 !     SET CDF = 1.0 AND RETURN.
 !
          IF ( Nu<=2 ) GOTO 100
-         sd = SQRT(anu/(anu-2.0))
+         sd = SQRT(anu/(anu-2.0_wp))
          z = X/sd
-         IF ( Nu>=10 .OR. z>=-3000.0 ) THEN
-            IF ( Nu<10 .OR. z>=-150.0 ) THEN
-               IF ( Nu<10 .AND. z>3000.0 ) GOTO 50
-               IF ( Nu<10 .OR. z<=150.0 ) GOTO 100
+         IF ( Nu>=10 .OR. z>=-3000.0_wp ) THEN
+            IF ( Nu<10 .OR. z>=-150.0_wp ) THEN
+               IF ( Nu<10 .AND. z>3000.0_wp ) GOTO 50
+               IF ( Nu<10 .OR. z<=150.0_wp ) GOTO 100
                GOTO 50
             ENDIF
          ENDIF
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
- 50      Cdf = 1.0
+ 50      Cdf = 1.0_wp
          RETURN
       ENDIF
 !
@@ -37162,8 +37149,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine time (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -37186,7 +37173,7 @@ END SUBROUTINE SORTP
 !!    program demo_time
 !!    use M_datapac, only : time
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call time(x,y)
 !!    end program demo_time
 !!
@@ -37204,9 +37191,9 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--TIME30314
 !*** Start of declarations inserted by SPAG
-      REAL absr , ak , al , all , almax , an , an2 , arg1 , arg2 , bw , &
+REAL(kind=wp) :: absr , ak , al , all , almax , an , an2 , arg1 , arg2 , bw , &
      &     df , dfroun , hold , p , perout , pi , pmsq , ps , pssq , r
-      REAL r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
+REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
      &     sum2 , var , varb , wk , X , xbar
       INTEGER i , i2 , iarg1 , iarg2 , idf , ilower , imin , ipr ,      &
      &        irev , j , jmax , jmin , k , kmax , krev , l , ll , llp1 ,&
@@ -37325,7 +37312,7 @@ END SUBROUTINE SORTP
       DIMENSION r(500)
       DIMENSION s(125)
       DIMENSION pssq(6) , pmsq(6) , ps(6) , p(5) , l(4)
-      DATA pi/3.14159265358979/
+      DATA pi/3.14159265358979_wp/
 !
       ipr = 6
       ilower = 3
@@ -37360,7 +37347,7 @@ END SUBROUTINE SORTP
 !
 !     COMPUTE THE SAMPLE MEAN
 !
-      sum = 0.0
+      sum = 0.0_wp
       DO i = 1 , N
          sum = sum + X(i)
       ENDDO
@@ -37368,13 +37355,13 @@ END SUBROUTINE SORTP
 !
 !     COMPUTE THE SAMPLE VARIANCE AND THE SUM OF SQUARED DEVIATIONS
 !
-      sum = 0.0
+      sum = 0.0_wp
       DO i = 1 , N
          sum = sum + (X(i)-xbar)*(X(i)-xbar)
       ENDDO
       ssq = sum
       varb = ssq/an
-      var = ssq/(an-1.0)
+      var = ssq/(an-1.0_wp)
       sd = SQRT(var)
 !
 !     COMPUTE THE SAMPLE AUTOCORRELATIONS
@@ -37385,7 +37372,7 @@ END SUBROUTINE SORTP
       IF ( N<=16 ) kmax = N
       IF ( kmax>maxlag ) kmax = maxlag
       DO k = 1 , kmax
-         sum = 0.0
+         sum = 0.0_wp
          nmk = N - k
          DO i = 1 , nmk
             j = i + k
@@ -37408,18 +37395,18 @@ END SUBROUTINE SORTP
 !
 !     DO A WHITE NOISE ANALYSIS
 !
-      sdr = 1.0/SQRT(an)
-      r975 = 1.96*sdr
-      IF ( r975>1.0 ) r975 = 1.0
+      sdr = 1.0_wp/SQRT(an)
+      r975 = 1.96_wp*sdr
+      IF ( r975>1.0_wp ) r975 = 1.0_wp
       r025 = -r975
       numout = 0
       DO k = 1 , kmax
          absr = r(k)
-         IF ( absr<0.0 ) absr = -absr
+         IF ( absr<0.0_wp ) absr = -absr
          IF ( absr>r975 ) numout = numout + 1
       ENDDO
       perout = FLOAT(numout)/FLOAT(kmax)
-      perout = 100.0*perout
+      perout = 100.0_wp*perout
       WRITE (ipr,99017)
       WRITE (ipr,99006) r025 , r975
 !
@@ -37461,12 +37448,12 @@ END SUBROUTINE SORTP
       n2 = 2**i2
       an2 = n2
       DO k = 1 , i2
-         sum = 0.0
+         sum = 0.0_wp
          imin = 2**k
          jmax = imin/2
          DO i = imin , n2 , imin
-            sum1 = 0.0
-            sum2 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
             DO j = 1 , jmax
                iarg1 = i + j - jmax
                iarg2 = iarg1 - jmax
@@ -37500,17 +37487,17 @@ END SUBROUTINE SORTP
 !     DEFINE 4 LAG WINDOW TRUNCATION POINTS
 !     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 260
 !
-      p(1) = .2
-      p(2) = .1
-      p(3) = .05
-      p(4) = .025
-      p(5) = .01
+      p(1) = 0.2_wp
+      p(2) = 0.1_wp
+      p(3) = 0.05_wp
+      p(4) = 0.025_wp
+      p(5) = 0.01_wp
       lmax = 0
       DO i = 1 , 5
          DO k = 1 , kmax
             krev = kmax - k + 1
             rk = r(krev)
-            IF ( rk<0.0 ) rk = -rk
+            IF ( rk<0.0_wp ) rk = -rk
             IF ( rk>=p(i) ) lmax = krev
             IF ( rk>=p(i) ) GOTO 200
          ENDDO
@@ -37519,22 +37506,22 @@ END SUBROUTINE SORTP
          rmax = ABS(r(1))
          DO k = 1 , kmax
             rk = r(k)
-            IF ( rk<0.0 ) rk = -rk
+            IF ( rk<0.0_wp ) rk = -rk
             IF ( rk>=rmax ) lmax = k
             IF ( rk>=rmax ) rmax = rk
          ENDDO
       ENDIF
  200  almax = lmax
-      l(1) = (3.0/2.0)*almax
+      l(1) = (3.0_wp/2.0_wp)*almax
       IF ( l(1)<=32 ) lmax = 32
-      IF ( l(1)<=32 ) almax = 32.0
+      IF ( l(1)<=32 ) almax = 32.0_wp
       IF ( l(1)<=32 ) l(1) = 32
       IF ( l(1)>=kmax ) lmax = kmax
       IF ( l(1)>=kmax ) almax = kmax
       IF ( l(1)>=kmax ) l(1) = kmax
-      l(2) = (almax/2.0) + 0.1
-      l(3) = (almax/4.0) + 0.1
-      l(4) = (almax/8.0) + 0.1
+      l(2) = (almax/2.0_wp) + 0.1_wp
+      l(3) = (almax/4.0_wp) + 0.1_wp
+      l(4) = (almax/8.0_wp) + 0.1_wp
       IF ( l(4)>=3 ) numsp = 4
       IF ( l(4)<3 ) THEN
          IF ( l(3)>=3 ) numsp = 3
@@ -37577,20 +37564,20 @@ END SUBROUTINE SORTP
          DO llp1 = 1 , 121
             ll = llp1 - 1
             all = ll
-            sum = 0.0
+            sum = 0.0_wp
             DO k = 1 , lm1
                ak = k
                arg1 = pi*ak/al
-               arg2 = pi*ak*all/120.0
-               wk = 0.0
-               IF ( k<=l(i) ) wk = 0.5*(1.0+COS(arg1))
+               arg2 = pi*ak*all/120.0_wp
+               wk = 0.0_wp
+               IF ( k<=l(i) ) wk = 0.5_wp*(1.0_wp+COS(arg1))
                sum = sum + r(k)*wk*COS(arg2)
             ENDDO
-            sum = 2.0 + 4.0*sum
+            sum = 2.0_wp + 4.0_wp*sum
             s(llp1) = sum
          ENDDO
-         bw = (4.0/3.0)/FLOAT(l(i))
-         df = (8.0/3.0)*an/FLOAT(l(i))
+         bw = (4.0_wp/3.0_wp)/FLOAT(l(i))
+         df = (8.0_wp/3.0_wp)*an/FLOAT(l(i))
          idf = df + 0.5
          CALL PLOTSP(s,121,idf)
          dfroun = idf
@@ -37611,8 +37598,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine tol (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -37635,7 +37622,7 @@ END SUBROUTINE SORTP
 !!    program demo_tol
 !!    use M_datapac, only : tol
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tol(x,y)
 !!    end program demo_tol
 !!
@@ -37653,11 +37640,11 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--TOL30717
 !*** Start of declarations inserted by SPAG
-      REAL a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
+REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
      &     an4 , an5 , an6 , b , c , c1 , c2 , c3
-      REAL d , d1 , d2 , d3 , d4 , d5 , d6 , d7 , f , hold , p , pa ,   &
+REAL(kind=wp) :: d , d1 , d2 , d3 , d4 , d5 , d6 , d7 , f , hold , p , pa ,   &
      &     pc , q , r , rsmall , sd , t , tmax , tmin
-      REAL u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
+REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
      &     xmin , xmin2 , xmin3 , z , z1
       INTEGER i , ipr , j , k , locmax , locmin , locmn2 , locmn3 ,     &
      &        locmx2 , locmx3 , N , numsec
@@ -37698,51 +37685,49 @@ END SUBROUTINE SORTP
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)
-      DIMENSION pa(6) , pc(6) , z1(3) , a(6) , b(6) , c(6) , rsmall(5,6)&
-     &          , usmall(6,6)
+      DIMENSION pa(6) , pc(6) , z1(3) , a(6) , b(6) , c(6) , rsmall(5,6), usmall(6,6)
       DIMENSION tmin(3,6) , tmax(3,6)
       DIMENSION p(10) , c1(10) , c2(10) , c3(10)
 !
-      DATA pa(1) , pa(2) , pa(3) , pa(4) , pa(5) , pa(6)/50. , 75. ,    &
-     &     90. , 95. , 99. , 99.9/
-      DATA pc(1) , pc(2) , pc(3)/90. , 95. , 99./
-      DATA z1(1) , z1(2) , z1(3)/ - 1.28155157 , -1.64485363 ,          &
-     &     -2.32634787/
-      DATA a(1) , a(2) , a(3) , a(4) , a(5) , a(6)/.6745 , 1.1504 ,     &
-     &     1.6449 , 1.9600 , 2.5758 , 3.2905/
-      DATA b(1) , b(2) , b(3) , b(4) , b(5) , b(6)/.33734 , .57335 ,    &
-     &     .82140 , .97910 , 1.2889 , 1.64038/
-      DATA c(1) , c(2) , c(3) , c(4) , c(5) , c(6)/ - 0.15460 ,         &
-     &     -0.02991 , .22044 , .40675 , .85514 , 1.42601/
+      DATA pa(1) , pa(2) , pa(3) , pa(4) , pa(5) , pa(6)/50.0_wp , 75.0_wp , 90.0_wp , 95.0_wp , 99.0_wp , 99.9_wp/
+      DATA pc(1) , pc(2) , pc(3)/90.0_wp , 95.0_wp , 99.0_wp/
+      DATA z1(1) , z1(2) , z1(3)/ - 1.28155157_wp , -1.64485363_wp ,          &
+     &     -2.32634787_wp/
+      DATA a(1) , a(2) , a(3) , a(4) , a(5) , a(6)/.6745_wp , 1.1504_wp ,     &
+     &     1.6449_wp , 1.9600_wp , 2.5758_wp , 3.2905_wp/
+      DATA b(1) , b(2) , b(3) , b(4) , b(5) , b(6)/.33734_wp , .57335_wp ,    &
+     &     .82140_wp , .97910_wp , 1.2889_wp , 1.64038_wp/
+      DATA c(1) , c(2) , c(3) , c(4) , c(5) , c(6)/ - 0.15460_wp ,         &
+     &     -0.02991_wp , .22044_wp , .40675_wp , .85514_wp , 1.42601_wp/
       DATA rsmall(1,1) , rsmall(1,2) , rsmall(1,3) , rsmall(1,4) ,      &
-     &     rsmall(1,5) , rsmall(1,6)/1.0505 , 1.6859 , 2.2844 , 2.6463 ,&
-     &     3.3266 , 4.0903/
+     &     rsmall(1,5) , rsmall(1,6)/1.0505_wp , 1.6859_wp , 2.2844_wp , 2.6463_wp ,&
+     &     3.3266_wp , 4.0903_wp/
       DATA rsmall(2,1) , rsmall(2,2) , rsmall(2,3) , rsmall(2,4) ,      &
-     &     rsmall(2,5) , rsmall(2,6)/0.8557 , 1.4333 , 2.0078 , 2.3624 ,&
-     &     3.0368 , 3.7983/
+     &     rsmall(2,5) , rsmall(2,6)/0.8557_wp , 1.4333_wp , 2.0078_wp , 2.3624_wp ,&
+     &     3.0368_wp , 3.7983_wp/
       DATA rsmall(3,1) , rsmall(3,2) , rsmall(3,3) , rsmall(3,4) ,      &
-     &     rsmall(3,5) , rsmall(3,6)/0.7929 , 1.3412 , 1.8979 , 2.2457 ,&
-     &     2.9128 , 3.6708/
+     &     rsmall(3,5) , rsmall(3,6)/0.7929_wp , 1.3412_wp , 1.8979_wp , 2.2457_wp ,&
+     &     2.9128_wp , 3.6708_wp/
       DATA rsmall(4,1) , rsmall(4,2) , rsmall(4,3) , rsmall(4,4) ,      &
-     &     rsmall(4,5) , rsmall(4,6)/0.7622 , 1.2940 , 1.8388 , 2.1815 ,&
-     &     2.8422 , 3.5965/
+     &     rsmall(4,5) , rsmall(4,6)/0.7622_wp , 1.2940_wp , 1.8388_wp , 2.1815_wp ,&
+     &     2.8422_wp , 3.5965_wp/
       DATA rsmall(5,1) , rsmall(5,2) , rsmall(5,3) , rsmall(5,4) ,      &
-     &     rsmall(5,5) , rsmall(5,6)/0.7442 , 1.2654 , 1.8019 , 2.1408 ,&
-     &     2.7963 , 3.5472/
-      DATA usmall(1,1) , usmall(1,2) , usmall(1,3)/0. , 0. , 0./
-      DATA usmall(2,1) , usmall(2,2) , usmall(2,3)/7.9579 , 15.9472 ,   &
-     &     79.7863/
-      DATA usmall(3,1) , usmall(3,2) , usmall(3,3)/3.0808 , 4.4154 ,    &
-     &     9.9749/
-      DATA usmall(4,1) , usmall(4,2) , usmall(4,3)/2.2658 , 2.9200 ,    &
-     &     5.1113/
-      DATA usmall(5,1) , usmall(5,2) , usmall(5,3)/1.9393 , 2.3724 ,    &
-     &     3.6692/
-      DATA usmall(6,1) , usmall(6,2) , usmall(6,3)/1.7621 , 2.0893 ,    &
-     &     3.0034/
+     &     rsmall(5,5) , rsmall(5,6)/0.7442_wp , 1.2654_wp , 1.8019_wp , 2.1408_wp ,&
+     &     2.7963_wp , 3.5472_wp/
+      DATA usmall(1,1) , usmall(1,2) , usmall(1,3)/0.0_wp , 0.0_wp , 0._wp/
+      DATA usmall(2,1) , usmall(2,2) , usmall(2,3)/7.9579_wp , 15.9472_wp ,   &
+     &     79.7863_wp/
+      DATA usmall(3,1) , usmall(3,2) , usmall(3,3)/3.0808_wp , 4.4154_wp ,    &
+     &     9.9749_wp/
+      DATA usmall(4,1) , usmall(4,2) , usmall(4,3)/2.2658_wp , 2.9200_wp ,    &
+     &     5.1113_wp/
+      DATA usmall(5,1) , usmall(5,2) , usmall(5,3)/1.9393_wp , 2.3724_wp ,    &
+     &     3.6692_wp/
+      DATA usmall(6,1) , usmall(6,2) , usmall(6,3)/1.7621_wp , 2.0893_wp ,    &
+     &     3.0034_wp/
       DATA p(1) , p(2) , p(3) , p(4) , p(5) , p(6) , p(7) , p(8) ,      &
-     &     p(9) , p(10)/50. , 75. , 90. , 95. , 97.5 , 99. , 99.5 ,     &
-     &     99.9 , 99.95 , 99.99/
+     &     p(9) , p(10)/50.0_wp , 75.0_wp , 90.0_wp , 95.0_wp , 97.5 , 99.0_wp , 99.5_wp ,     &
+     &     99.9_wp , 99.95_wp , 99.99_wp/
 !
       ipr = 6
 !
@@ -37783,7 +37768,7 @@ END SUBROUTINE SORTP
 !
 !     COMPUTE THE SAMPLE MEAN
 !
-         xbar = 0.0
+         xbar = 0.0_wp
          DO i = 1 , N
             xbar = xbar + X(i)
          ENDDO
@@ -37791,11 +37776,11 @@ END SUBROUTINE SORTP
 !
 !     COMPUTE THE SAMPLE STANDARD DEVIATION
 !
-         var = 0.0
+         var = 0.0_wp
          DO i = 1 , N
             var = var + (X(i)-xbar)**2
          ENDDO
-         var = var/(an-1.0)
+         var = var/(an-1.0_wp)
          sd = SQRT(var)
 !
 !     COMPUTE THE NORMAL TOLERANCE LIMITS
@@ -37805,18 +37790,18 @@ END SUBROUTINE SORTP
             f = N - 1
             IF ( N<=6 ) u = usmall(N,i)
             IF ( N>6 ) THEN
-               d1 = 1.0 + z*SQRT(2.0)/SQRT(f)
-               d2 = 2.0*(z**2-1.0)/(3.0*f)
-               d3 = (z**3-7.0*z)/(9.0*SQRT(2.0)*f**1.5)
-               d4 = (6.0*z**4+14.0*z**2-32.0)/(405.0*f**2.0)
-               d5 = (9.0*z**5+256.0*z**3-433.0*z)                       &
-     &              /(4860.0*SQRT(2.0)*f**2.5)
-               d6 = (12.0*z**6-243.0*z**4-923.0*z**2+1472.0)            &
-     &              /(25515.0*f**3.0)
-               d7 = (3753.0*z**7+4353.0*z**5-289517.0*z**3-289717.0*z)  &
-     &              /(9185400.0*SQRT(2.0)*f**3.5)
+               d1 = 1.0_wp + z*SQRT(2.0_wp)/SQRT(f)
+               d2 = 2.0_wp*(z**2-1.0_wp)/(3.0_wp*f)
+               d3 = (z**3-7.0_wp*z)/(9.0_wp*SQRT(2.0_wp)*f**1.5_wp)
+               d4 = (6.0_wp*z**4+14.0_wp*z**2-32.0_wp)/(405.0_wp*f**2.0_wp)
+               d5 = (9.0_wp*z**5+256.0_wp*z**3-433.0_wp*z)                       &
+     &              /(4860.0_wp*SQRT(2.0_wp)*f**2.5_wp)
+               d6 = (12.0_wp*z**6-243.0_wp*z**4-923.0_wp*z**2+1472.0_wp)            &
+     &              /(25515.0_wp*f**3.0_wp)
+               d7 = (3753.0_wp*z**7+4353.0_wp*z**5-289517.0_wp*z**3-289717.0_wp*z)  &
+     &              /(9185400.0_wp*SQRT(2.0_wp)*f**3.5_wp)
                univ = d1 + d2 + d3 - d4 + d5 + d6 - d7
-               u = 1.0/univ
+               u = 1.0_wp/univ
                u = SQRT(u)
             ENDIF
             DO j = 1 , 6
@@ -37927,41 +37912,41 @@ END SUBROUTINE SORTP
                IF ( X(i)>=xmax3 ) xmax3 = X(i)
             ENDIF
          ENDDO
-         an1 = an - 1.0
-         an2 = an - 2.0
-         an3 = an - 3.0
-         an4 = an - 4.0
-         an5 = an - 5.0
-         an6 = an - 6.0
+         an1 = an - 1.0_wp
+         an2 = an - 2.0_wp
+         an3 = an - 3.0_wp
+         an4 = an - 4.0_wp
+         an5 = an - 5.0_wp
+         an6 = an - 6.0_wp
          DO i = 1 , 10
-            d = p(i)/100.0
+            d = p(i)/100.0_wp
             c1(i) = (d**an1)*(-an+an1*d)
-            c1(i) = 1.0 - c1(i)
-            q = 1.0 - d
+            c1(i) = 1.0_wp - c1(i)
+            q = 1.0_wp - d
             t = q*an
-            c1(i) = 1.0 + an1*q
-            c1(i) = 1.0 - (d**an1)*c1(i)
-            c1(i) = c1(i)*100.0
+            c1(i) = 1.0_wp + an1*q
+            c1(i) = 1.0_wp - (d**an1)*c1(i)
+            c1(i) = c1(i)*100.0_wp
             IF ( numsec/=1 ) THEN
-               a0 = 6.0*d*d*d
-               a1 = 2.0 - 7.0*d + 11.0*d*d
-               a2 = -3.0 + 6.0*d
-               a3 = 1.0
+               a0 = 6.0_wp*d*d*d
+               a1 = 2.0_wp - 7.0_wp*d + 11.0_wp*d*d
+               a2 = -3.0_wp + 6.0_wp*d
+               a3 = 1.0_wp
                c2(i) = a0 + a1*t + a2*t*t + a3*t*t*t
-               c2(i) = 1.0 - (d**an3)*c2(i)/6.0
-               c2(i) = c2(i)*100.0
+               c2(i) = 1.0_wp - (d**an3)*c2(i)/6.0_wp
+               c2(i) = c2(i)*100.0_wp
                IF ( numsec/=2 ) THEN
-                  a0 = 120.0*d*d*d*d*d
-                  a1 = 24.0 - 126.0*d + 274.0*d*d - 326.0*d*d*d +       &
-     &                 274.0*d*d*d*d
-                  a2 = -50.0 + 205.0*d - 320.0*d*d + 225.0*d*d*d
-                  a3 = 35.0 - 100.0*d + 85.0*d*d
-                  a4 = -10.0 + 15.0*d
+                  a0 = 120.0_wp*d*d*d*d*d
+                  a1 = 24.0_wp - 126.0_wp*d + 274.0_wp*d*d - 326.0_wp*d*d*d +       &
+     &                 274.0_wp*d*d*d*d
+                  a2 = -50.0_wp + 205.0_wp*d - 320.0_wp*d*d + 225.0_wp*d*d*d
+                  a3 = 35.0_wp - 100.0_wp*d + 85.0_wp*d*d
+                  a4 = -10.0_wp + 15.0_wp*d
                   a5 = 1.0D0
                   c3(i) = a0 + a1*t + a2*t*t + a3*t*t*t + a4*t*t*t*t +  &
      &                    a5*t*t*t*t*t
-                  c3(i) = 1.0 - (d**an5)*c3(i)/120.0
-                  c3(i) = c3(i)*100.0
+                  c3(i) = 1.0_wp - (d**an5)*c3(i)/120.0_wp
+                  c3(i) = c3(i)*100.0_wp
                ENDIF
             ENDIF
          ENDDO
@@ -38024,8 +38009,8 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine tplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -38048,7 +38033,7 @@ END SUBROUTINE SORTP
 !!    program demo_tplt
 !!    use M_datapac, only : tplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tplt(x,y)
 !!    end program demo_tplt
 !!
@@ -38066,7 +38051,7 @@ END SUBROUTINE SORTP
       IMPLICIT NONE
 !*--TPLT31083
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
+REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope
       INTEGER i , ipr , iupper , N , Nu
@@ -38212,13 +38197,13 @@ END SUBROUTINE SORTP
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         q = .9975
+         q = .9975_wp
          CALL TPPF(q,Nu,pp9975)
-         q = .0025
+         q = .0025_wp
          CALL TPPF(q,Nu,pp0025)
-         q = .975
+         q = .975_wp
          CALL TPPF(q,Nu,pp975)
-         q = .025
+         q = .025_wp
          CALL TPPF(q,Nu,pp025)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99005) Nu , tau , N
@@ -38232,17 +38217,17 @@ END SUBROUTINE SORTP
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -38269,8 +38254,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine tppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -38293,7 +38278,7 @@ END SUBROUTINE TPLT
 !!    program demo_tppf
 !!    use M_datapac, only : tppf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tppf(x,y)
 !!    end program demo_tppf
 !!
@@ -38312,7 +38297,7 @@ END SUBROUTINE TPLT
 !*--TPPF31281
 !*** Start of declarations inserted by SPAG
       INTEGER ipass , ipr , maxit , Nu
-      REAL P , Ppf , ppfn
+REAL(kind=wp) :: P , Ppf , ppfn
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT TPPF
@@ -38409,7 +38394,7 @@ END SUBROUTINE TPLT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE TPPF   SUBROU&
@@ -38523,7 +38508,7 @@ END SUBROUTINE TPLT
          ELSE
             WRITE (ipr,99003)
 99003       FORMAT (' ','INTERNAL ERROR IN TPPF SUBROUTINE')
-            Ppf = 0.0
+            Ppf = 0.0_wp
             RETURN
          ENDIF
       ENDIF
@@ -38539,8 +38524,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine tran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -38563,7 +38548,7 @@ END SUBROUTINE TPLT
 !!    program demo_tran
 !!    use M_datapac, only : tran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tran(x,y)
 !!    end program demo_tran
 !!
@@ -38581,7 +38566,7 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--TRAN31505
 !*** Start of declarations inserted by SPAG
-      REAL anu , arg1 , arg2 , pi , sum , X , y , z , znorm
+REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
       INTEGER i , ipr , Iseed , j , N , Nu
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -38641,7 +38626,7 @@ END SUBROUTINE TPLT
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA pi/3.14159265359/
+      DATA pi/3.14159265359_wp/
 !
       ipr = 6
 !
@@ -38680,15 +38665,15 @@ END SUBROUTINE TPLT
          DO i = 1 , N
 !
             CALL UNIRAN(2,Iseed,y)
-            arg1 = -2.0*ALOG(y(1))
-            arg2 = 2.0*pi*y(2)
+            arg1 = -2.0_wp*ALOG(y(1))
+            arg2 = 2.0_wp*pi*y(2)
             znorm = (SQRT(arg1))*(COS(arg2))
 !
-            sum = 0.0
+            sum = 0.0_wp
             DO j = 1 , Nu , 2
                CALL UNIRAN(2,Iseed,y)
-               arg1 = -2.0*ALOG(y(1))
-               arg2 = 2.0*pi*y(2)
+               arg1 = -2.0_wp*ALOG(y(1))
+               arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
                sum = sum + z(1)*z(1)
@@ -38711,8 +38696,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine trim (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -38735,7 +38720,7 @@ END SUBROUTINE TPLT
 !!    program demo_trim
 !!    use M_datapac, only : trim
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call trim(x,y)
 !!    end program demo_trim
 !!
@@ -38752,7 +38737,7 @@ END SUBROUTINE TPLT
       SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
       IMPLICIT NONE
 
-      REAL ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
+REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
       INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
 
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE
@@ -38872,25 +38857,25 @@ END SUBROUTINE TPLT
             Xtrim = X(1)
          ENDIF
          GOTO 100
- 50      IF ( P1<0.0 .OR. P1>=1.0 ) THEN
+ 50      IF ( P1<0.0_wp .OR. P1>=1.0_wp ) THEN
             WRITE (ipr,99005)
 99005       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE TRIM   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
             WRITE (ipr,99017) P1
-            Xtrim = 0.0
+            Xtrim = 0.0_wp
             RETURN
-         ELSEIF ( P2<0.0 .OR. P2>=1.0 ) THEN
+         ELSEIF ( P2<0.0_wp .OR. P2>=1.0_wp ) THEN
             WRITE (ipr,99006)
 99006       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE TRIM   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
             WRITE (ipr,99017) P2
-            Xtrim = 0.0
+            Xtrim = 0.0_wp
             RETURN
          ELSE
             psum = P1 + P2
-            IF ( psum<0.0 .OR. psum>=1.0 ) THEN
+            IF ( psum<0.0_wp .OR. psum>=1.0_wp ) THEN
                WRITE (ipr,99007)
 99007          FORMAT (' ',                                             &
      &                 '***** FATAL ERROR--THE SUM OF INPUT ARGUMENTS ',&
@@ -38905,7 +38890,7 @@ END SUBROUTINE TPLT
                WRITE (ipr,99010) psum
 99010          FORMAT (' ','                  INPUT ARGUMENT 3 + ',     &
      &                 'INPUT ARGUMENT 4 = ',E15.8)
-               Xtrim = 0.0
+               Xtrim = 0.0_wp
                RETURN
             ELSE
 !
@@ -38914,18 +38899,18 @@ END SUBROUTINE TPLT
                CALL SORT(X,N,Y)
 !
                an = N
-               np1 = P1*an + 0.0001
+               np1 = P1*an + 0.0001_wp
                istart = np1 + 1
-               np2 = P2*an + 0.0001
+               np2 = P2*an + 0.0001_wp
                istop = N - np2
-               sum = 0.0
+               sum = 0.0_wp
                k = 0
                IF ( istart>istop ) THEN
                   WRITE (ipr,99011)
 99011             FORMAT (' ','INTERNAL ERROR IN TRIM   SUBROUTINE--',  &
      &                   'THE START INDEX IS HIGHER THAN THE STOP INDEX'&
      &                   )
-                  Xtrim = 0.0
+                  Xtrim = 0.0_wp
                   RETURN
                ELSE
                   DO i = istart , istop
@@ -38940,9 +38925,9 @@ END SUBROUTINE TPLT
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      perp1 = 100.0*P1
-      perp2 = 100.0*P2
-      perp3 = 100.0 - perp1 - perp2
+      perp1 = 100.0_wp*P1
+      perp2 = 100.0_wp*P2
+      perp3 = 100.0_wp - perp1 - perp2
       WRITE (ipr,99012)
 99012 FORMAT (' ')
       WRITE (ipr,99013) N , Xtrim
@@ -38969,8 +38954,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine unicdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -38993,7 +38978,7 @@ END SUBROUTINE TPLT
 !!    program demo_unicdf
 !!    use M_datapac, only : unicdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unicdf(x,y)
 !!    end program demo_unicdf
 !!
@@ -39011,7 +38996,7 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--UNICDF31863
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , X
+REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -39054,7 +39039,7 @@ END SUBROUTINE TPLT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<0.0 .OR. X>1.0 ) THEN
+      IF ( X<0.0_wp .OR. X>1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE UNIC&
@@ -39062,8 +39047,8 @@ END SUBROUTINE TPLT
          WRITE (ipr,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         IF ( X<0.0 ) Cdf = 0.0
-         IF ( X>1.0 ) Cdf = 1.0
+         IF ( X<0.0_wp ) Cdf = 0.0_wp
+         IF ( X>1.0_wp ) Cdf = 1.0_wp
          RETURN
       ELSE
 !
@@ -39083,8 +39068,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine unimed (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -39107,7 +39092,7 @@ END SUBROUTINE TPLT
 !!    program demo_unimed
 !!    use M_datapac, only : unimed
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unimed(x,y)
 !!    end program demo_unimed
 !!
@@ -39125,7 +39110,7 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--UNIMED31930
 !*** Start of declarations inserted by SPAG
-      REAL ai , an , gam , X
+REAL(kind=wp) :: ai , an , gam , X
       INTEGER i , imax , ipr , irev , N , nevodd , nhalf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -39214,25 +39199,25 @@ END SUBROUTINE TPLT
 !
 !     COMPUTE THE MEDIANS FOR THE FIRST AND LAST ORDER STATISTICS
 !
-         X(N) = 0.5**(1.0/an)
-         X(1) = 1.0 - X(N)
+         X(N) = 0.5_wp**(1.0_wp/an)
+         X(1) = 1.0_wp - X(N)
 !
 !     DETERMINE IF AN ODD OR EVEN SAMPLE SIZE
 !
          nhalf = (N/2) + 1
          nevodd = 2*(N/2)
-         IF ( N/=nevodd ) X(nhalf) = 0.5
+         IF ( N/=nevodd ) X(nhalf) = 0.5_wp
          IF ( N<=3 ) RETURN
 !
 !     COMPUTE THE MEDIANS FOR THE OTHER ORDER STATISTICS
 !
-         gam = 0.3175
+         gam = 0.3175_wp
          imax = N/2
          DO i = 2 , imax
             ai = i
             irev = N - i + 1
-            X(i) = (ai-gam)/(an-2.0*gam+1.0)
-            X(irev) = 1.0 - X(i)
+            X(i) = (ai-gam)/(an-2.0_wp*gam+1.0_wp)
+            X(irev) = 1.0_wp - X(i)
          ENDDO
       ENDIF
 !
@@ -39246,8 +39231,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine unipdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -39270,7 +39255,7 @@ END SUBROUTINE TPLT
 !!    program demo_unipdf
 !!    use M_datapac, only : unipdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unipdf(x,y)
 !!    end program demo_unipdf
 !!
@@ -39289,7 +39274,7 @@ END SUBROUTINE TPLT
 !*--UNIPDF32047
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL Pdf , X
+REAL(kind=wp) :: Pdf , X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT UNIPDF
@@ -39331,7 +39316,7 @@ END SUBROUTINE TPLT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<0.0 .OR. X>1.0 ) THEN
+      IF ( X<0.0_wp .OR. X>1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE UNIP&
@@ -39339,13 +39324,13 @@ END SUBROUTINE TPLT
          WRITE (ipr,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Pdf = 0.0
+         Pdf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Pdf = 1.0
+         Pdf = 1.0_wp
       ENDIF
 !
       END SUBROUTINE UNIPDF
@@ -39358,8 +39343,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine uniplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -39382,7 +39367,7 @@ END SUBROUTINE TPLT
 !!    program demo_uniplt
 !!    use M_datapac, only : uniplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call uniplt(x,y)
 !!    end program demo_uniplt
 !!
@@ -39400,7 +39385,7 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--UNIPLT32113
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
+REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -39468,7 +39453,7 @@ END SUBROUTINE TPLT
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/1.04736842/
+      DATA tau/1.04736842_wp/
 !
       ipr = 6
       iupper = 7500
@@ -39526,19 +39511,19 @@ END SUBROUTINE TPLT
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
+         sum1 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
          ENDDO
          ybar = sum1/an
-         wbar = 0.5
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         wbar = 0.5_wp
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
-            sum2 = sum2 + (W(i)-0.5)*(Y(i)-ybar)
-            sum3 = sum3 + (W(i)-0.5)*(W(i)-0.5)
+            sum2 = sum2 + (W(i)-0.5_wp)*(Y(i)-ybar)
+            sum3 = sum3 + (W(i)-0.5_wp)*(W(i)-0.5_wp)
          ENDDO
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
@@ -39559,8 +39544,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine unippf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -39583,7 +39568,7 @@ END SUBROUTINE TPLT
 !!    program demo_unippf
 !!    use M_datapac, only : unippf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unippf(x,y)
 !!    end program demo_unippf
 !!
@@ -39602,7 +39587,7 @@ END SUBROUTINE TPLT
 !*--UNIPPF32268
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Ppf
+REAL(kind=wp) :: P , Ppf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT UNIPPF
@@ -39654,7 +39639,7 @@ END SUBROUTINE TPLT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNIPPF SUBROU&
@@ -39679,8 +39664,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine uniran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -39703,7 +39688,7 @@ END SUBROUTINE TPLT
 !!    program demo_uniran
 !!    use M_datapac, only : uniran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call uniran(x,y)
 !!    end program demo_uniran
 !!
@@ -39721,7 +39706,7 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--UNIRAN32343
 !*** Start of declarations inserted by SPAG
-      REAL ak , am1 , X
+REAL(kind=wp) :: ak , am1 , X
       INTEGER i , ipr , Iseed , iseed3 , j , j0 , j1 , k , k0 , k1 , l ,&
      &        m , m1 , m2 , mdig , N
 !*** End of declarations inserted by SPAG
@@ -39995,8 +39980,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine unisf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -40019,7 +40004,7 @@ END SUBROUTINE TPLT
 !!    program demo_unisf
 !!    use M_datapac, only : unisf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unisf(x,y)
 !!    end program demo_unisf
 !!
@@ -40038,7 +40023,7 @@ END SUBROUTINE TPLT
 !*--UNISF32614
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Sf
+REAL(kind=wp) :: P , Sf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT UNISF
@@ -40091,7 +40076,7 @@ END SUBROUTINE TPLT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNISF  SUBROU&
@@ -40104,7 +40089,7 @@ END SUBROUTINE TPLT
 !
 !-----START POINT-----------------------------------------------------
 !
-         Sf = 1.0
+         Sf = 1.0_wp
       ENDIF
 !
       END SUBROUTINE UNISF
@@ -40117,8 +40102,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine var (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -40141,7 +40126,7 @@ END SUBROUTINE TPLT
 !!    program demo_var
 !!    use M_datapac, only : var
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call var(x,y)
 !!    end program demo_var
 !!
@@ -40159,7 +40144,7 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--VAR32690
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , X , xmean , Xvar
+REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -40236,7 +40221,7 @@ END SUBROUTINE TPLT
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE VAR &
      &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xvar = 0.0
+            Xvar = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -40246,22 +40231,22 @@ END SUBROUTINE TPLT
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE VAR    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xvar = 0.0
+            Xvar = 0.0_wp
          ENDIF
          GOTO 100
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      sum = 0.0
+ 50      sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xmean)**2
          ENDDO
-         Xvar = sum/(an-1.0)
+         Xvar = sum/(an-1.0_wp)
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
@@ -40280,8 +40265,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine weib (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -40304,7 +40289,7 @@ END SUBROUTINE TPLT
 !!    program demo_weib
 !!    use M_datapac, only : weib
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weib(x,y)
 !!    end program demo_weib
 !!
@@ -40322,9 +40307,9 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--WEIB32807
 !*** Start of declarations inserted by SPAG
-      REAL a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
+REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
      &     sum2 , sum3 , sy , t , w , wbar , WS , X , xmax , xmin , Y
-      REAL ybar , yi , yint , ys , yslope , Z
+REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
       INTEGER i , idis , idismx , ipr , iupper , N , numdis , numdm1
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -40414,46 +40399,46 @@ END SUBROUTINE TPLT
      &     gamtab(11) , gamtab(12) , gamtab(13) , gamtab(14) ,          &
      &     gamtab(15) , gamtab(16) , gamtab(17) , gamtab(18) ,          &
      &     gamtab(19) , gamtab(20) , gamtab(21) , gamtab(22) ,          &
-     &     gamtab(23) , gamtab(24) , gamtab(25)/1. , 2. , 3. , 4. , 5. ,&
-     &     6. , 7. , 8. , 9. , 10. , 11. , 12. , 13. , 14. , 15. , 16. ,&
-     &     17. , 18. , 19. , 20. , 21. , 22. , 23. , 24. , 25./
+     &     gamtab(23), gamtab(24), gamtab(25)/1.0_wp, 2.0_wp, 3.0_wp, 4.0_wp, 5.0_wp,&
+     &     6.0_wp, 7.0_wp, 8.0_wp, 9.0_wp, 10.0_wp, 11.0_wp, 12.0_wp, 13.0_wp, 14.0_wp, 15.0_wp, 16.0_wp,&
+     &     17.0_wp, 18.0_wp, 19.0_wp, 20.0_wp, 21.0_wp, 22.0_wp, 23.0_wp, 24.0_wp, 25.0_wp/
       DATA gamtab(26) , gamtab(27) , gamtab(28) , gamtab(29) ,          &
      &     gamtab(30) , gamtab(31) , gamtab(32) , gamtab(33) ,          &
      &     gamtab(34) , gamtab(35) , gamtab(36) , gamtab(37) ,          &
      &     gamtab(38) , gamtab(39) , gamtab(40) , gamtab(41) ,          &
-     &     gamtab(42)/30. , 35. , 40. , 45. , 50. , 60. , 70. , 80. ,   &
-     &     90. , 100. , 150. , 200. , 250. , 350. , 500. , 750. , 1000./
+     &     gamtab(42)/30.0_wp, 35.0_wp, 40.0_wp, 45.0_wp, 50.0_wp, 60.0_wp, 70.0_wp, 80.0_wp,   &
+     &     90.0_wp, 100.0_wp, 150.0_wp, 200.0_wp, 250.0_wp, 350.0_wp, 500.0_wp, 750.0_wp, 1000.0_wp/
       DATA t(1) , t(2) , t(3) , t(4) , t(5) , t(6) , t(7) , t(8) ,      &
      &     t(9) , t(10) , t(11) , t(12) , t(13) , t(14) , t(15) ,       &
      &     t(16) , t(17) , t(18) , t(19) , t(20)/1.63474 , 1.36116 ,    &
-     &     1.34278 , 1.35854 , 1.37836 , 1.39657 , 1.41225 , 1.42557 ,  &
-     &     1.43690 , 1.44660 , 1.45496 , 1.46223 , 1.46860 , 1.47422 ,  &
-     &     1.47921 , 1.48368 , 1.48769 , 1.49132 , 1.49461 , 1.49761/
+     &     1.34278_wp , 1.35854_wp , 1.37836_wp , 1.39657_wp , 1.41225_wp , 1.42557_wp ,  &
+     &     1.43690_wp , 1.44660_wp , 1.45496_wp , 1.46223_wp , 1.46860_wp , 1.47422_wp ,  &
+     &     1.47921_wp , 1.48368_wp , 1.48769_wp , 1.49132_wp , 1.49461_wp , 1.49761_wp/
       DATA t(21) , t(22) , t(23) , t(24) , t(25) , t(26) , t(27) ,      &
      &     t(28) , t(29) , t(30) , t(31) , t(32) , t(33) , t(34) ,      &
      &     t(35) , t(36) , t(37) , t(38) , t(39) , t(40) , t(41) ,      &
-     &     t(42) , t(43)/1.50036 , 1.50288 , 1.50521 , 1.50736 ,        &
-     &     1.50935 , 1.51748 , 1.52344 , 1.52798 , 1.53157 , 1.53447 ,  &
-     &     1.53888 , 1.54206 , 1.54447 , 1.54636 , 1.54788 , 1.55248 ,  &
-     &     1.55480 , 1.55620 , 1.55781 , 1.55902 , 1.55997 , 1.56044 ,  &
-     &     1.62391/
+     &     t(42) , t(43)/1.50036_wp , 1.50288_wp , 1.50521_wp , 1.50736_wp ,        &
+     &     1.50935_wp , 1.51748_wp , 1.52344_wp , 1.52798_wp , 1.53157_wp , 1.53447_wp ,  &
+     &     1.53888_wp , 1.54206_wp , 1.54447_wp , 1.54636_wp , 1.54788_wp , 1.55248_wp ,  &
+     &     1.55480_wp , 1.55620_wp , 1.55781_wp , 1.55902_wp , 1.55997_wp , 1.56044_wp ,  &
+     &     1.62391_wp/
       DATA aindex(1) , aindex(2) , aindex(3) , aindex(4) , aindex(5) ,  &
      &     aindex(6) , aindex(7) , aindex(8) , aindex(9) , aindex(10) , &
      &     aindex(11) , aindex(12) , aindex(13) , aindex(14) ,          &
      &     aindex(15) , aindex(16) , aindex(17) , aindex(18) ,          &
      &     aindex(19) , aindex(20) , aindex(21) , aindex(22) ,          &
-     &     aindex(23) , aindex(24) , aindex(25)/1. , 2. , 3. , 4. , 5. ,&
-     &     6. , 7. , 8. , 9. , 10. , 11. , 12. , 13. , 14. , 15. , 16. ,&
-     &     17. , 18. , 19. , 20. , 21. , 22. , 23. , 24. , 25./
+     &     aindex(23), aindex(24), aindex(25)/1.0_wp, 2.0_wp, 3.0_wp, 4.0_wp, 5.0_wp,&
+     &     6.0_wp, 7.0_wp, 8.0_wp, 9.0_wp, 10.0_wp, 11.0_wp, 12.0_wp, 13.0_wp, 14.0_wp, 15.0_wp, 16.0_wp,&
+     &     17.0_wp, 18.0_wp, 19.0_wp, 20.0_wp, 21.0_wp, 22.0_wp, 23.0_wp, 24.0_wp, 25.0_wp/
       DATA aindex(26) , aindex(27) , aindex(28) , aindex(29) ,          &
      &     aindex(30) , aindex(31) , aindex(32) , aindex(33) ,          &
      &     aindex(34) , aindex(35) , aindex(36) , aindex(37) ,          &
      &     aindex(38) , aindex(39) , aindex(40) , aindex(41) ,          &
      &     aindex(42) , aindex(43) , aindex(44) , aindex(45) ,          &
      &     aindex(46) , aindex(47) , aindex(48) , aindex(49) ,          &
-     &     aindex(50)/26. , 27. , 28. , 29. , 30. , 31. , 32. , 33. ,   &
-     &     34. , 35. , 36. , 37. , 38. , 39. , 40. , 41. , 42. , 43. ,  &
-     &     44. , 45. , 46. , 47. , 48. , 49. , 50./
+     &     aindex(50)/26.0_wp, 27.0_wp, 28.0_wp, 29.0_wp, 30.0_wp, 31.0_wp, 32.0_wp, 33.0_wp,   &
+     &     34.0_wp, 35.0_wp, 36.0_wp, 37.0_wp, 38.0_wp, 39.0_wp, 40.0_wp, 41.0_wp, 42.0_wp, 43.0_wp,  &
+     &     44.0_wp, 45.0_wp, 46.0_wp, 47.0_wp, 48.0_wp, 49.0_wp, 50.0_wp/
 !
       ipr = 6
       iupper = 7500
@@ -40510,32 +40495,32 @@ END SUBROUTINE TPLT
          DO idis = 1 , numdis
             IF ( idis==numdis ) THEN
                DO i = 1 , N
-                  w(i) = -ALOG(ALOG(1.0/Z(i)))
+                  w(i) = -ALOG(ALOG(1.0_wp/Z(i)))
                ENDDO
             ELSE
                a = gamtab(idis)
                DO i = 1 , N
-                  w(i) = (-ALOG(1.0-Z(i)))**(1.0/a)
+                  w(i) = (-ALOG(1.0_wp-Z(i)))**(1.0_wp/a)
                ENDDO
             ENDIF
 !
-            sum1 = 0.0
-            sum2 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
             DO i = 1 , N
                sum1 = sum1 + Y(i)
                sum2 = sum2 + w(i)
             ENDDO
             ybar = sum1/an
             wbar = sum2/an
-            sum1 = 0.0
-            sum2 = 0.0
-            sum3 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
+            sum3 = 0.0_wp
             DO i = 1 , N
                sum2 = sum2 + (Y(i)-ybar)*(w(i)-wbar)
                sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
                sum3 = sum3 + (w(i)-wbar)*(w(i)-wbar)
             ENDDO
-            sy = SQRT(sum1/(an-1.0))
+            sy = SQRT(sum1/(an-1.0_wp))
             cc = sum2/SQRT(sum3*sum1)
             yslope = sum2/sum3
             yint = ybar - yslope*wbar
@@ -40652,8 +40637,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine weicdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -40676,7 +40661,7 @@ END SUBROUTINE TPLT
 !!    program demo_weicdf
 !!    use M_datapac, only : weicdf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weicdf(x,y)
 !!    end program demo_weicdf
 !!
@@ -40694,7 +40679,7 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--WEICDF33133
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , Gamma , X
+REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -40746,27 +40731,27 @@ END SUBROUTINE TPLT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<=0.0 ) THEN
+      IF ( X<=0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE WEIC&
      &DF SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) X
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEICDF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) Gamma
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Cdf = 1.0 - (EXP(-(X**Gamma)))
+         Cdf = 1.0_wp - (EXP(-(X**Gamma)))
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -40780,8 +40765,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine weiplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -40804,7 +40789,7 @@ END SUBROUTINE TPLT
 !!    program demo_weiplt
 !!    use M_datapac, only : weiplt
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weiplt(x,y)
 !!    end program demo_weiplt
 !!
@@ -40822,10 +40807,10 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--WEIPLT33215
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
+REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
-      REAL yslope
+REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -40916,7 +40901,7 @@ END SUBROUTINE TPLT
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
-         IF ( Gamma<=0.0 ) THEN
+         IF ( Gamma<=0.0_wp ) THEN
             WRITE (ipr,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WEIPLT SUBROU&
@@ -40952,7 +40937,7 @@ END SUBROUTINE TPLT
 !     COMPUTE WEIBULL DISTRIBUTION ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = (-ALOG(1.0-W(i)))**(1.0/Gamma)
+            W(i) = (-ALOG(1.0_wp-W(i)))**(1.0_wp/Gamma)
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -40961,14 +40946,14 @@ END SUBROUTINE TPLT
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         q = .9975
-         pp9975 = (-ALOG(1.0-q))**(1.0/Gamma)
-         q = .0025
-         pp0025 = (-ALOG(1.0-q))**(1.0/Gamma)
-         q = .975
-         pp975 = (-ALOG(1.0-q))**(1.0/Gamma)
-         q = .025
-         pp025 = (-ALOG(1.0-q))**(1.0/Gamma)
+         q = 0.9975_wp
+         pp9975 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         q = 0.0025_wp
+         pp0025 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         q = 0.975_wp
+         pp975 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         q = 0.025_wp
+         pp025 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99007) Gamma , tau , N
 !
@@ -40982,17 +40967,17 @@ END SUBROUTINE TPLT
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
@@ -41017,8 +41002,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine weippf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -41041,7 +41026,7 @@ END SUBROUTINE TPLT
 !!    program demo_weippf
 !!    use M_datapac, only : weippf
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weippf(x,y)
 !!    end program demo_weippf
 !!
@@ -41059,7 +41044,7 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--WEIPPF33406
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , P , Ppf
+REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -41116,27 +41101,27 @@ END SUBROUTINE TPLT
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>=1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE WEIPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99003) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99003) Gamma
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = (-ALOG(1.0-P))**(1.0/Gamma)
+         Ppf = (-ALOG(1.0_wp-P))**(1.0_wp/Gamma)
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -41149,8 +41134,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine weiran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -41173,7 +41158,7 @@ END SUBROUTINE TPLT
 !!    program demo_weiran
 !!    use M_datapac, only : weiran
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weiran(x,y)
 !!    end program demo_weiran
 !!
@@ -41191,7 +41176,7 @@ END SUBROUTINE TPLT
       IMPLICIT NONE
 !*--WEIRAN33493
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , X
+REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -41268,7 +41253,7 @@ END SUBROUTINE TPLT
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIRAN SUBROU&
@@ -41287,7 +41272,7 @@ END SUBROUTINE TPLT
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = (-ALOG(1.0-X(i)))**(1.0/Gamma)
+            X(i) = (-ALOG(1.0_wp-X(i)))**(1.0_wp/Gamma)
          ENDDO
       ENDIF
 !
@@ -41301,8 +41286,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine wind (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -41325,7 +41310,7 @@ END SUBROUTINE TPLT
 !!    program demo_wind
 !!    use M_datapac, only : wind
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call wind(x,y)
 !!    end program demo_wind
 !!
@@ -41339,17 +41324,13 @@ END SUBROUTINE TPLT
 !!##LICENSE
 !!    CC0-1.0
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
+SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
       IMPLICIT NONE
-!*--WIND33613
-!*** Start of declarations inserted by SPAG
-      REAL ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
+
+REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
      &     perp3 , psum , sum , WS , X , Xwind , Y
       INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT WIND
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE
 !              SAMPLE WINDSORIZED MEAN
@@ -41469,25 +41450,25 @@ END SUBROUTINE TPLT
             Xwind = X(1)
          ENDIF
          GOTO 100
- 50      IF ( P1<0.0 .OR. P1>=1.0 ) THEN
+ 50      IF ( P1<0.0_wp .OR. P1>=1.0_wp ) THEN
             WRITE (ipr,99005)
 99005       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WIND   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
             WRITE (ipr,99017) P1
-            Xwind = 0.0
+            Xwind = 0.0_wp
             RETURN
-         ELSEIF ( P2<0.0 .OR. P2>=1.0 ) THEN
+         ELSEIF ( P2<0.0_wp .OR. P2>=1.0_wp ) THEN
             WRITE (ipr,99006)
 99006       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE WIND   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
             WRITE (ipr,99017) P2
-            Xwind = 0.0
+            Xwind = 0.0_wp
             RETURN
          ELSE
             psum = P1 + P2
-            IF ( psum<0.0 .OR. psum>=1.0 ) THEN
+            IF ( psum<0.0_wp .OR. psum>=1.0_wp ) THEN
                WRITE (ipr,99007)
 99007          FORMAT (' ',                                             &
      &                 '***** FATAL ERROR--THE SUM OF INPUT ARGUMENTS ',&
@@ -41502,7 +41483,7 @@ END SUBROUTINE TPLT
                WRITE (ipr,99010) psum
 99010          FORMAT (' ','                  INPUT ARGUMENT 3 + ',     &
      &                 'INPUT ARGUMENT 4 = ',E15.8)
-               Xwind = 0.0
+               Xwind = 0.0_wp
                RETURN
             ELSE
 !
@@ -41511,18 +41492,18 @@ END SUBROUTINE TPLT
                CALL SORT(X,N,Y)
 !
                an = N
-               np1 = P1*an + 0.0001
+               np1 = P1*an + 0.0001_wp
                istart = np1 + 1
-               np2 = P2*an + 0.0001
+               np2 = P2*an + 0.0001_wp
                istop = N - np2
-               sum = 0.0
+               sum = 0.0_wp
                k = 0
                IF ( istart>istop ) THEN
                   WRITE (ipr,99011)
 99011             FORMAT (' ','INTERNAL ERROR IN WIND   SUBROUTINE--',  &
      &                   'THE START INDEX IS HIGHER THAN THE STOP INDEX'&
      &                   )
-                  Xwind = 0.0
+                  Xwind = 0.0_wp
                   RETURN
                ELSE
                   DO i = istart , istop
@@ -41541,9 +41522,9 @@ END SUBROUTINE TPLT
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      perp1 = 100.0*P1
-      perp2 = 100.0*P2
-      perp3 = 100.0 - perp1 - perp2
+      perp1 = 100.0_wp*P1
+      perp2 = 100.0_wp*P2
+      perp3 = 100.0_wp - perp1 - perp2
       WRITE (ipr,99012)
 99012 FORMAT (' ')
       WRITE (ipr,99013) N , Xwind
@@ -41560,7 +41541,7 @@ END SUBROUTINE TPLT
      &        ' OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE WIND
+END SUBROUTINE WIND
 !>
 !!##NAME
 !!    write(3f) - [M_datapac:STATISTICS] write a vector of observations in a
@@ -41570,8 +41551,8 @@ END SUBROUTINE TPLT
 !!
 !!     Subroutine write (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-!!      Real, Intent (In)                      :: Y
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+!!    Real(kind=wp) :: (In)                      ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -41594,7 +41575,7 @@ END SUBROUTINE TPLT
 !!    program demo_write
 !!    use M_datapac, only : write
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call write(x,y)
 !!    end program demo_write
 !!
@@ -41615,7 +41596,7 @@ END SUBROUTINE TPLT
       INTEGER i , i10 , i50 , Idec , idecp1 , ipr , iwidm2 , iwidp1 ,   &
      &        Iwidth , j , jmax , jmin , maxcha , maxwid , N , nlines , &
      &        Nnline , numcha
-      REAL X
+REAL(kind=wp) :: X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT WRITE

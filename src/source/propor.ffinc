@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine propor (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_propor
    use M_datapac, only : propor
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call propor(x,y)
    end program demo_propor
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PROPOR24531
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , X , Xmax , Xmin , Xprop
+REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
       INTEGER i , ipr , isum , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -135,7 +135,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PROP&
      &OR SUBROUTINE HAS THE VALUE 1 *****')
-         Xprop = 0.0
+         Xprop = 0.0_wp
          RETURN
       ELSE
          IF ( Xmin==Xmax ) THEN
@@ -145,7 +145,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             WRITE (ipr,99005) Xmin
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENTS ARE ',E15.7,  &
      &              ' *****')
-            Xprop = 0.0
+            Xprop = 0.0_wp
             RETURN
          ELSE
             hold = X(1)
@@ -156,14 +156,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE PROPOR SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
-            Xprop = 0.0
+            Xprop = 0.0_wp
             RETURN
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
  50      an = N
-         Xprop = 0.0
+         Xprop = 0.0_wp
          isum = 0
          DO i = 1 , N
             IF ( X(i)>=Xmin .AND. Xmax>=X(i) ) isum = isum + 1

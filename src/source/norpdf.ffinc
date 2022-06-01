@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine norpdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_norpdf
    use M_datapac, only : norpdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call norpdf(x,y)
    end program demo_norpdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--NORPDF14679
 !*** Start of declarations inserted by SPAG
-      REAL c , Pdf , X
+REAL(kind=wp) :: c , Pdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -88,7 +88,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !---------------------------------------------------------------------
 !
-      DATA c/.3989422804/
+      DATA c/.3989422804_wp/
 !
       ipr = 6
 !
@@ -98,6 +98,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----START POINT-----------------------------------------------------
 !
-      Pdf = c*EXP(-(X*X)/2.0)
+      Pdf = c*EXP(-(X*X)/2.0_wp)
 !
       END SUBROUTINE NORPDF

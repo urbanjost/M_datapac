@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine lgnran (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_lgnran
    use M_datapac, only : lgnran
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call lgnran(x,y)
    end program demo_lgnran
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--LGNRAN11555
 !*** Start of declarations inserted by SPAG
-      REAL arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
+REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -122,7 +122,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA pi/3.14159265359/
+      DATA pi/3.14159265359_wp/
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -158,8 +158,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             ELSE
                u2 = X(ip1)
             ENDIF
-            arg1 = -2.0*ALOG(u1)
-            arg2 = 2.0*pi*u2
+            arg1 = -2.0_wp*ALOG(u1)
+            arg2 = 2.0_wp*pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)
             z2 = sqrt1*SIN(arg2)

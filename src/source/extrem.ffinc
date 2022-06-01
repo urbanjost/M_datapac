@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine extrem (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_extrem
    use M_datapac, only : extrem
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call extrem(x,y)
    end program demo_extrem
 
@@ -50,9 +50,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--EXTREM6625
 !*** Start of declarations inserted by SPAG
-      REAL a , aindex , am , an , arg , cc , corr , corrmx , gamtab ,   &
+REAL(kind=wp) :: a , aindex , am , an , arg , cc , corr , corrmx , gamtab ,   &
      &     h , hold , p , r , scrat , sum1 , sum2 , sum3 , sy , t , w
-      REAL wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
+REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
      &     yslope , Z
       INTEGER i , idis , idismx , ipr , iupper , j , jskip , k , N ,    &
      &        numam , numdis , numdm1
@@ -142,50 +142,51 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &     gamtab(11) , gamtab(12) , gamtab(13) , gamtab(14) ,          &
      &     gamtab(15) , gamtab(16) , gamtab(17) , gamtab(18) ,          &
      &     gamtab(19) , gamtab(20) , gamtab(21) , gamtab(22) ,          &
-     &     gamtab(23) , gamtab(24) , gamtab(25)/1. , 2. , 3. , 4. , 5. ,&
-     &     6. , 7. , 8. , 9. , 10. , 11. , 12. , 13. , 14. , 15. , 16. ,&
-     &     17. , 18. , 19. , 20. , 21. , 22. , 23. , 24. , 25./
+     &     gamtab(23) , gamtab(24) , gamtab(25)/1.0_wp , 2.0_wp , 3.0_wp , 4.0_wp , 5.0_wp ,&
+     &     6.0_wp , 7.0_wp , 8.0_wp , 9.0_wp , 10.0_wp , 11.0_wp , 12.0_wp , 13.0_wp , 14.0_wp , 15.0_wp , 16.0_wp ,&
+     &     17.0_wp , 18.0_wp , 19.0_wp , 20.0_wp , 21.0_wp , 22.0_wp , 23.0_wp , 24.0_wp , 25.0_wp/
+
       DATA gamtab(26) , gamtab(27) , gamtab(28) , gamtab(29) ,          &
      &     gamtab(30) , gamtab(31) , gamtab(32) , gamtab(33) ,          &
      &     gamtab(34) , gamtab(35) , gamtab(36) , gamtab(37) ,          &
      &     gamtab(38) , gamtab(39) , gamtab(40) , gamtab(41) ,          &
-     &     gamtab(42)/30. , 35. , 40. , 45. , 50. , 60. , 70. , 80. ,   &
-     &     90. , 100. , 150. , 200. , 250. , 350. , 500. , 750. , 1000./
+     &     gamtab(42)/30.0_wp , 35.0_wp , 40.0_wp , 45.0_wp , 50.0_wp , 60.0_wp , 70.0_wp , 80.0_wp ,   &
+     &     90.0_wp , 100.0_wp , 150.0_wp , 200.0_wp , 250.0_wp , 350.0_wp , 500.0_wp , 750.0_wp , 1000.0_wp/
 !CCCC DATA C(1),C(2),C(3),C(4),C(5),C(6),C(7),C(8),C(9),C(10)
-!CCCC1/60.,75.,100.,150.,250.,500.,1000.,10000.,100000.,1000000./
+!CCCC1/60.0_wp,75.0_wp,100.0_wp,150.0_wp,250.0_wp,500.0_wp,1000.0_wp,10000.0_wp,100000.0_wp,1000000.0_wp/
 !CCCC DATA P0(1),P0(2),P0(3),P0(4),P0(5),P0(6),P0(7),P0(8),P0(9),P0(10)
-!CCCC1/.0,.5,.75,.9,.95,.975,.99,.999,.9999,.99999/
+!CCCC1/0.0_wp,0.5_wp,0.75_wp,0.9_wp,0.95_wp,0.975_wp,0.99_wp,0.999_wp,0.9999_wp,0.99999_wp/
       DATA t(1) , t(2) , t(3) , t(4) , t(5) , t(6) , t(7) , t(8) ,      &
      &     t(9) , t(10) , t(11) , t(12) , t(13) , t(14) , t(15) ,       &
      &     t(16) , t(17) , t(18) , t(19) , t(20) , t(21) , t(22) ,      &
-     &     t(23) , t(24) , t(25)/10.18011 , 3.39672 , 2.47043 ,         &
-     &     2.14609 , 1.98712 , 1.89429 , 1.83394 , 1.79175 , 1.76069 ,  &
-     &     1.73691 , 1.71814 , 1.70297 , 1.69045 , 1.67996 , 1.67103 ,  &
-     &     1.66335 , 1.65667 , 1.65082 , 1.64564 , 1.64102 , 1.63689 ,  &
-     &     1.63316 , 1.62979 , 1.62672 , 1.62391/
+     &     t(23) , t(24) , t(25)/10.18011_wp , 3.39672_wp , 2.47043_wp ,         &
+     &     2.14609_wp , 1.98712_wp , 1.89429_wp , 1.83394_wp , 1.79175_wp , 1.76069_wp ,  &
+     &     1.73691_wp , 1.71814_wp , 1.70297_wp , 1.69045_wp , 1.67996_wp , 1.67103_wp ,  &
+     &     1.66335_wp , 1.65667_wp , 1.65082_wp , 1.64564_wp , 1.64102_wp , 1.63689_wp ,  &
+     &     1.63316_wp , 1.62979_wp , 1.62672_wp , 1.62391_wp/
       DATA t(26) , t(27) , t(28) , t(29) , t(30) , t(31) , t(32) ,      &
      &     t(33) , t(34) , t(35) , t(36) , t(37) , t(38) , t(39) ,      &
      &     t(40) , t(41) , t(42) , t(43)/1.61287 , 1.60516 , 1.59947 ,  &
-     &     1.59510 , 1.59164 , 1.58651 , 1.58289 , 1.58019 , 1.57811 ,  &
-     &     1.57645 , 1.57152 , 1.56908 , 1.56763 , 1.56666 , 1.56546 ,  &
-     &     1.56377 , 1.56330 , 1.56187/
+     &     1.59510_wp , 1.59164_wp , 1.58651_wp , 1.58289_wp , 1.58019_wp , 1.57811_wp ,  &
+     &     1.57645_wp , 1.57152_wp , 1.56908_wp , 1.56763_wp , 1.56666_wp , 1.56546_wp ,  &
+     &     1.56377_wp , 1.56330_wp , 1.56187_wp/
       DATA aindex(1) , aindex(2) , aindex(3) , aindex(4) , aindex(5) ,  &
      &     aindex(6) , aindex(7) , aindex(8) , aindex(9) , aindex(10) , &
      &     aindex(11) , aindex(12) , aindex(13) , aindex(14) ,          &
      &     aindex(15) , aindex(16) , aindex(17) , aindex(18) ,          &
      &     aindex(19) , aindex(20) , aindex(21) , aindex(22) ,          &
-     &     aindex(23) , aindex(24) , aindex(25)/1. , 2. , 3. , 4. , 5. ,&
-     &     6. , 7. , 8. , 9. , 10. , 11. , 12. , 13. , 14. , 15. , 16. ,&
-     &     17. , 18. , 19. , 20. , 21. , 22. , 23. , 24. , 25./
+     &     aindex(23) , aindex(24) , aindex(25)/1.0_wp , 2.0_wp , 3.0_wp , 4.0_wp , 5.0_wp ,&
+     &     6.0_wp , 7.0_wp , 8.0_wp , 9.0_wp , 10.0_wp , 11.0_wp , 12.0_wp , 13.0_wp , 14.0_wp , 15.0_wp , 16.0_wp ,&
+     &     17.0_wp , 18.0_wp , 19.0_wp , 20.0_wp , 21.0_wp , 22.0_wp , 23.0_wp , 24.0_wp , 25.0_wp/
       DATA aindex(26) , aindex(27) , aindex(28) , aindex(29) ,          &
      &     aindex(30) , aindex(31) , aindex(32) , aindex(33) ,          &
      &     aindex(34) , aindex(35) , aindex(36) , aindex(37) ,          &
      &     aindex(38) , aindex(39) , aindex(40) , aindex(41) ,          &
      &     aindex(42) , aindex(43) , aindex(44) , aindex(45) ,          &
      &     aindex(46) , aindex(47) , aindex(48) , aindex(49) ,          &
-     &     aindex(50)/26. , 27. , 28. , 29. , 30. , 31. , 32. , 33. ,   &
-     &     34. , 35. , 36. , 37. , 38. , 39. , 40. , 41. , 42. , 43. ,  &
-     &     44. , 45. , 46. , 47. , 48. , 49. , 50./
+     &     aindex(50)/26.0_wp , 27.0_wp , 28.0_wp , 29.0_wp , 30.0_wp , 31.0_wp , 32.0_wp , 33.0_wp ,   &
+     &     34.0_wp , 35.0_wp , 36.0_wp , 37.0_wp , 38.0_wp , 39.0_wp , 40.0_wp , 41.0_wp , 42.0_wp , 43.0_wp ,  &
+     &     44.0_wp , 45.0_wp , 46.0_wp , 47.0_wp , 48.0_wp , 49.0_wp , 50.0_wp/
 !
       ipr = 6
       iupper = 7500
@@ -242,32 +243,32 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          DO idis = 1 , numdis
             IF ( idis==numdis ) THEN
                DO i = 1 , N
-                  w(i) = -ALOG(ALOG(1.0/Z(i)))
+                  w(i) = -ALOG(ALOG(1.0_wp/Z(i)))
                ENDDO
             ELSE
                a = gamtab(idis)
                DO i = 1 , N
-                  w(i) = (-ALOG(Z(i)))**(-1.0/a)
+                  w(i) = (-ALOG(Z(i)))**(-1.0_wp/a)
                ENDDO
             ENDIF
 !
-            sum1 = 0.0
-            sum2 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
             DO i = 1 , N
                sum1 = sum1 + Y(i)
                sum2 = sum2 + w(i)
             ENDDO
             ybar = sum1/an
             wbar = sum2/an
-            sum1 = 0.0
-            sum2 = 0.0
-            sum3 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
+            sum3 = 0.0_wp
             DO i = 1 , N
                sum2 = sum2 + (Y(i)-ybar)*(w(i)-wbar)
                sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
                sum3 = sum3 + (w(i)-wbar)*(w(i)-wbar)
             ENDDO
-            sy = SQRT(sum1/(an-1.0))
+            sy = SQRT(sum1/(an-1.0_wp))
             cc = sum2/SQRT(sum3*sum1)
             yslope = sum2/sum3
             yint = ybar - yslope*wbar
@@ -378,15 +379,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             ENDDO
          ENDDO
          k = k + 1
-         am(k) = 10000.
+         am(k) = 10000.0_wp
          k = k + 1
-         am(k) = 50000.
+         am(k) = 50000.0_wp
          k = k + 1
-         am(k) = 100000.
+         am(k) = 100000.0_wp
          k = k + 1
-         am(k) = 500000.
+         am(k) = 500000.0_wp
          k = k + 1
-         am(k) = 1000000.
+         am(k) = 1000000.0_wp
          k = k + 1
          am(k) = N
          numam = k
@@ -404,10 +405,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             yint = yi(idismx)
             yslope = ys(idismx)
             DO i = 2 , numam
-               r = 1.0/am(i)
-               p = 1.0 - r
+               r = 1.0_wp/am(i)
+               p = 1.0_wp - r
                arg = -ALOG(p)
-               IF ( arg>0.0 ) h(i,1) = yint + yslope*(arg**(-1.0/a))
+               IF ( arg>0.0_wp ) h(i,1) = yint + yslope*(arg**(-1.0_wp/a))
             ENDDO
          ENDIF
 !
@@ -417,10 +418,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          yint = yi(numdis)
          yslope = ys(numdis)
          DO i = 2 , numam
-            r = 1.0/am(i)
-            p = 1.0 - r
+            r = 1.0_wp/am(i)
+            p = 1.0_wp - r
             arg = -ALOG(p)
-            IF ( arg>0.0 ) h(i,2) = yint + yslope*(-ALOG(arg))
+            IF ( arg>0.0_wp ) h(i,2) = yint + yslope*(-ALOG(arg))
          ENDDO
 !
 !     WRITE OUT THE PAGE WITH THE RETURN PERIODS AND THE PREDICTED EXTREMES

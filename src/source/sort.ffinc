@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine sort (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_sort
    use M_datapac, only : sort
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call sort(x,y)
    end program demo_sort
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--SORT27546
 !*** Start of declarations inserted by SPAG
-      REAL amed , hold , tt , X , Y
+REAL(kind=wp) :: amed , hold , tt , X , Y
       INTEGER i , il , ip1 , ipr , iu , j , jmi , jmk , k , l , lmi ,   &
      &        m , mid , N , nm1
 !*** End of declarations inserted by SPAG

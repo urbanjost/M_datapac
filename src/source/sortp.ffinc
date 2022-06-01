@@ -7,10 +7,10 @@ SYNOPSIS
     SUBROUTINE SORTP(X,N,Y,Xpos)
     Subroutine sortp (X, Y)
 
-     Integer, Intent (In) :: N
-     Real, Intent (In)    :: X(N)
-     Real, Intent (Out)   :: Y(N)
-     Real, Intent (Out)   :: XPOS(N)
+     Integer, Intent (In) ::  N
+   Real(kind=wp) :: (In)    ::  X(N)
+   Real(kind=wp) :: (Out)   ::  Y(N)
+   Real(kind=wp) :: (Out)   ::  XPOS(N)
 
 DESCRIPTION
 
@@ -35,7 +35,7 @@ EXAMPLES
    program demo_sortp
    use M_datapac, only : sortp
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call sortp(x,y)
    end program demo_sortp
 
@@ -53,7 +53,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTP(X,N,Y,Xpos)
 IMPLICIT NONE
-      REAL amed , bmed , hold , tt , X , Xpos , Y
+REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
       INTEGER i , il , ip1 , ipr , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -182,7 +182,7 @@ IMPLICIT NONE
             WRITE (ipr,99003)
 99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORTP SUBROUTINE HAS THE VALUE 1 *****')
             Y(1) = X(1)
-            Xpos(1) = 1.0
+            Xpos(1) = 1.0_wp
             RETURN
          ELSE
             hold = X(1)

@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine norout (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_norout
    use M_datapac, only : norout
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call norout(x,y)
    end program demo_norout
 
@@ -50,12 +50,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--NOROUT14213
 !*** Start of declarations inserted by SPAG
-      REAL ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
+REAL(kind=wp) :: ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
      &     res , s , s1 , s13 , s14 , s2 , s23 , s24 , s3 , s4 , ssq
-      REAL ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
+REAL(kind=wp) :: ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
      &     st1 , st2 , st3 , st4 , st5 , st6 , st7 , st8 , st9 , stres ,&
      &     sum , sum4
-      REAL WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
+REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
      &     xb4 , xline , XPOs , Y
       INTEGER i , icount , iflag , ipr , irev , iupper , j , mx , N ,   &
      &        nm1 , nm2 , nm3 , nm4 , nm5
@@ -191,7 +191,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     COMPUTE PARTIAL SAMPLE MEANS
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 3 , nm2
             sum = sum + Y(i)
          ENDDO
@@ -208,15 +208,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     COMPUTE PARTIAL SUMS OF SQUARED DEVIATIONS
 !     ABOUT THE PARTIAL SAMPLE MEANS
 !
-         ssq = 0.0
-         ssq1 = 0.0
-         ssq4 = 0.0
-         ssq14 = 0.0
-         ssq2 = 0.0
-         ssq3 = 0.0
-         ssq24 = 0.0
-         ssq13 = 0.0
-         ssq23 = 0.0
+         ssq = 0.0_wp
+         ssq1 = 0.0_wp
+         ssq4 = 0.0_wp
+         ssq14 = 0.0_wp
+         ssq2 = 0.0_wp
+         ssq3 = 0.0_wp
+         ssq24 = 0.0_wp
+         ssq13 = 0.0_wp
+         ssq23 = 0.0_wp
          DO i = 1 , N
             ssq = ssq + (Y(i)-xb)**2
          ENDDO
@@ -274,12 +274,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          st7 = (Y(nm1)-xb14)/s14
 !     OMIT X(1) AND X(N), TEST FOR X(2) AND X(N-1)
          st8 = (Y(nm1)-Y(2))/s14
-         sum4 = 0.0
+         sum4 = 0.0_wp
          DO i = 2 , nm2
             sum4 = sum4 + (Y(i)-xb14)**4
          ENDDO
-         st9 = (an-2.0)*sum4/(ssq14**2)
-         st9 = st9 + 3.0
+         st9 = (an-2.0_wp)*sum4/(ssq14**2)
+         st9 = st9 + 3.0_wp
 !
 !     COMPUTE THE LINE PLOT WHICH SHOWS THE DISTRIBUTION OF THE OBSERVED
 !     VALUES IN TERMS OF MULTIPLES OF SAMPLE STANDARD DEVIATIONS AWAY FROM
@@ -291,7 +291,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          ENDDO
          icount = 0
          DO i = 1 , N
-            mx = 10.0*(((X(i)-xb)/s)+6.0) + 0.5
+            mx = 10.0_wp*(((X(i)-xb)/s)+6.0_wp) + 0.5_wp
             mx = mx + 7
             IF ( mx<7 .OR. mx>127 ) icount = icount + 1
             IF ( mx>=7 .AND. mx<=127 ) iline1(mx) = alphax
@@ -306,8 +306,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          DO i = 1 , 6
             irev = 13 - i + 1
             ai = i
-            xline(i) = xb - (7.0-ai)*s
-            xline(irev) = xb + (7.0-ai)*s
+            xline(i) = xb - (7.0_wp-ai)*s
+            xline(irev) = xb + (7.0_wp-ai)*s
          ENDDO
 !
 !     WRITE EVERYTHING OUT

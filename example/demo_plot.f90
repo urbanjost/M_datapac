@@ -1,9 +1,9 @@
      program demo_plot
      use M_datapac, only : plot
      implicit none
-     integer :: i
-     real, allocatable :: x(:), y(:)
-     character(len=*),parameter :: g='(*(g0,1x))'
+     integer ::  i
+     real, allocatable ::  x(:), y(:)
+     character(len=*),parameter ::  g='(*(g0,1x))'
        x=[(real(i),i=1,30)]
        y=0.075*(x**4)-0.525*(x**3)+0.75*(x**2)+2.40
        call plot(x,y,size(x))

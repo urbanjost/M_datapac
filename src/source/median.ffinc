@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine median (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_median
    use M_datapac, only : median
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call median(x,y)
    end program demo_median
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--MEDIAN12627
 !*** Start of declarations inserted by SPAG
-      REAL hold , WS , X , Xmed , Y
+REAL(kind=wp) :: hold , WS , X , Xmed , Y
       INTEGER i , iflag , ipr , iupper , Iwrite , N , nmid , nmidp1
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -153,7 +153,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          iflag = N - (N/2)*2
          nmid = N/2
          nmidp1 = nmid + 1
-         IF ( iflag==0 ) Xmed = (Y(nmid)+Y(nmidp1))/2.0
+         IF ( iflag==0 ) Xmed = (Y(nmid)+Y(nmidp1))/2.0_wp
          IF ( iflag==1 ) Xmed = Y(nmidp1)
       ENDIF
 !

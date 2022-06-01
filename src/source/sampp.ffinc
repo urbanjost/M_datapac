@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine sampp (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_sampp
    use M_datapac, only : sampp
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call sampp(x,y)
    end program demo_sampp
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--SAMPP27037
 !*** Start of declarations inserted by SPAG
-      REAL aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
+REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
       INTEGER i , ipr , iupper , Iwrite , j , jp1 , N
 !*** End of declarations inserted by SPAG
@@ -160,7 +160,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99004    FORMAT (' ','THE THIRD INPUT ARGUMENT IS SMALLER THAN 1/(N+1)',&
      &           ' = 1/(SECOND INPUT ARGUMENT + 1)')
          WRITE (ipr,99008) N , P
-         Pp = -999999999.0
+         Pp = -999999999.0_wp
          RETURN
       ELSEIF ( jp1>N ) THEN
          WRITE (ipr,99005)
@@ -168,7 +168,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &          ' = (SECOND INPUT ARGUMENT)/(SECOND INPUT ARGUMENT + 1)'&
      &          )
          WRITE (ipr,99008) N , P
-         Pp = 999999999.0
+         Pp = 999999999.0_wp
          RETURN
       ELSE
          hold = X(1)
@@ -185,8 +185,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
  50      CALL SORT(X,N,Y)
 !
          ajint = j
-         w = 1.0 - (aj-ajint)
-         Pp = w*Y(j) + (1.0-w)*Y(jp1)
+         w = 1.0_wp - (aj-ajint)
+         Pp = w*Y(j) + (1.0_wp-w)*Y(jp1)
 !
          hunp = 100.0*P
          IF ( Iwrite==0 ) RETURN

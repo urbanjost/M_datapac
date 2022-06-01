@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine poiran (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_poiran
    use M_datapac, only : poiran
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call poiran(x,y)
    end program demo_poiran
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--POIRAN23713
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , e , sum , u(1) , X
+REAL(kind=wp) :: Alamba , e , sum , u(1) , X
       INTEGER i , ipr , Iseed , j , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -165,7 +165,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( Alamba<=0.0 ) THEN
+      ELSEIF ( Alamba<=0.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIRAN SUBROU&
@@ -181,11 +181,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     OF EXPONENTIAL WAITING TIMES IS POISSON.
 !
          DO i = 1 , N
-            sum = 0.0
+            sum = 0.0_wp
             j = 1
             DO
                CALL UNIRAN(1,Iseed,u)
-               e = -ALOG(1.0-u(1))
+               e = -ALOG(1.0_wp-u(1))
                sum = sum + e
                IF ( sum>Alamba ) THEN
                   X(i) = j - 1

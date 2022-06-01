@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine pltsct (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_pltsct
    use M_datapac, only : pltsct
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call pltsct(x,y)
    end program demo_pltsct
 
@@ -50,10 +50,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PLTSCT22158
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
+REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , D , delx , dely , Dmax , Dmin , hold , X , xlable , &
      &     xmax , xmin , xwidth , Y
-      REAL ylable , ylower , ymax , ymin , yupper , ywidth
+REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
       INTEGER i , ia , icol , icolmx , ipr , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !*** End of declarations inserted by SPAG
@@ -213,7 +213,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -439,9 +439,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             iline(icol) = blank
          ENDDO
          airow = irow
-         yupper = ymax + (1.5-airow)*ywidth
-         ylable = ymax + (1.0-airow)*ywidth
-         ylower = ymax + (0.5-airow)*ywidth
+         yupper = ymax + (1.5_wp-airow)*ywidth
+         ylable = ymax + (1.0_wp-airow)*ywidth
+         ylower = ymax + (0.5_wp-airow)*ywidth
          IF ( irow==numrow ) ylable = ymin
          DO i = 1 , N
             IF ( Y(i)<cutoff ) THEN
@@ -450,8 +450,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                      IF ( D(i)>=Dmin ) THEN
                         IF ( D(i)<=Dmax ) THEN
                            IF ( ylower<=Y(i) .AND. Y(i)<yupper ) THEN
-                              icol = ((X(i)-xmin)/xwidth) + 1.5
-                              ia = Char(i) + 0.5
+                              icol = ((X(i)-xmin)/xwidth) + 1.5_wp
+                              ia = Char(i) + 0.5_wp
                               IF ( 1<=ia .AND. ia<=36 ) THEN
                                  jplotc = iplotc(ia)
                               ELSE
@@ -478,7 +478,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABLES.
+!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
       WRITE (ipr,99022) blank
       DO icol = 1 , numcol

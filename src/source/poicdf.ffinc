@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine poicdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_poicdf
    use M_datapac, only : poicdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call poicdf(x,y)
    end program demo_poicdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--POICDF22887
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , Cdf , del , fintx , gcdf , spchi , X
+REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
       INTEGER i , ievodd , imax , imin , intx , ipr , nu
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -160,28 +160,28 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba<=0.0 ) THEN
+      IF ( Alamba<=0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POICDF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99005) Alamba
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
-      ELSEIF ( X<0.0 ) THEN
+      ELSEIF ( X<0.0_wp ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE POIC&
      &DF SUBROUTINE IS NEGATIVE *****')
          WRITE (ipr,99005) X
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
-         intx = X + 0.0001
+         intx = X + 0.0001_wp
          fintx = intx
          del = X - fintx
-         IF ( del<0.0 ) del = -del
-         IF ( del>0.001 ) THEN
+         IF ( del<0.0_wp ) del = -del
+         IF ( del>0.001_wp ) THEN
             WRITE (ipr,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE POIC&
@@ -200,7 +200,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
          dx = Alamba
          dx = 2.0D0*dx
-         nu = X + 0.0001
+         nu = X + 0.0001_wp
          nu = 2*(1+nu)
 !
          chi = DSQRT(dx)
@@ -214,7 +214,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          ELSE
 !
             sum = 0.0D0
-            term = 1.0/chi
+            term = 1.0_wp/chi
             imin = 1
             imax = nu - 1
          ENDIF

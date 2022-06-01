@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine discre (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_discre
    use M_datapac, only : discre
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call discre(x,y)
    end program demo_discre
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--DISCRE4903
 !*** Start of declarations inserted by SPAG
-      REAL ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
+REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
       INTEGER i , icounl , icount , icounu , ip , ipr , N , numcla
 !*** End of declarations inserted by SPAG
@@ -179,7 +179,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &RE SUBROUTINE HAS THE VALUE 1 *****')
          Y(1) = X(1)
          RETURN
-      ELSEIF ( Xdel<=0.0 ) THEN
+      ELSEIF ( Xdel<=0.0_wp ) THEN
          WRITE (ipr,99004)
 99004    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE DISCRE SUBROU&
@@ -188,7 +188,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99005    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.7,       &
      &           ' *****')
          DO i = 1 , N
-            Y(i) = 0.0
+            Y(i) = 0.0_wp
          ENDDO
          RETURN
       ELSE
@@ -200,7 +200,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99007       FORMAT (' ','***** THE VALUE OF THE ARGUMENTS ARE ',E15.7,  &
      &              ' *****')
             DO i = 1 , N
-               Y(i) = 0.0
+               Y(i) = 0.0_wp
             ENDDO
             RETURN
          ELSE
@@ -229,7 +229,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          IF ( Xmin>Xmax ) pointl = Xmax
          IF ( Xmin>Xmax ) pointu = Xmin
          totdel = pointu - pointl
-         numcla = (totdel/Xdel) + 0.999
+         numcla = (totdel/Xdel) + 0.999_wp
 !
 !     ZERO OUT THE COUNT VECTOR (ICOUNT)
 !     AND THE LOWER AND UPPER COUNT VARIABLES.
@@ -246,10 +246,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             ai = i
             cmin = Xmin + (ai-1.0)*Xdel
             cmax = Xmin + ai*Xdel
-            classm(i) = (cmin+cmax)/2.0
+            classm(i) = (cmin+cmax)/2.0_wp
          ENDDO
          cmax = pointu
-         classm(numcla) = (cmin+cmax)/2.0
+         classm(numcla) = (cmin+cmax)/2.0_wp
 !
 !     PERFORM THE DISCRETIZING TRANSFORMATION.
 !
@@ -261,11 +261,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                Y(i) = classm(ip)
                icount(ip) = icount(ip) + 1
             ELSEIF ( X(i)<pointl ) THEN
-               clasml = pointl - (Xdel/2.0)
+               clasml = pointl - (Xdel/2.0_wp)
                Y(i) = clasml
                icounl = icounl + 1
             ELSEIF ( X(i)>pointu ) THEN
-               clasmu = pointu + (Xdel/2.0)
+               clasmu = pointu + (Xdel/2.0_wp)
                Y(i) = clasmu
                icounu = icounu + 1
             ENDIF
@@ -301,7 +301,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99017    FORMAT (' ',4X,'   BELOW     -INFINITY',2F14.7,I8)
          DO i = 1 , numcla
             ai = i
-            cmin = pointl + (ai-1.0)*Xdel
+            cmin = pointl + (ai-1.0_wp)*Xdel
             cmax = pointl + ai*Xdel
             IF ( cmax>pointu ) cmax = pointu
             WRITE (ipr,99018) i , cmin , classm(i) , cmax , icount(i)

@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine logpdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_logpdf
    use M_datapac, only : logpdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call logpdf(x,y)
    end program demo_logpdf
 
@@ -51,7 +51,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*--LOGPDF11938
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL Pdf , X
+REAL(kind=wp) :: Pdf , X
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT LOGPDF
@@ -96,6 +96,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----START POINT-----------------------------------------------------
 !
-      Pdf = EXP(X)/((1.0+EXP(X))**2)
+      Pdf = EXP(X)/((1.0_wp+EXP(X))**2)
 !
       END SUBROUTINE LOGPDF

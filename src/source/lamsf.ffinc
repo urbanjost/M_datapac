@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine lamsf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_lamsf
    use M_datapac, only : lamsf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call lamsf(x,y)
    end program demo_lamsf
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--LAMSF11137
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , P , Sf
+REAL(kind=wp) :: Alamba , P , Sf
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -113,14 +113,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0 .OR. P>0.0 ) THEN
-         IF ( Alamba>0.0 .OR. P<1.0 ) THEN
-            IF ( Alamba<=0.0 .OR. P>=0.0 ) THEN
-               IF ( Alamba<=0.0 .OR. P<=1.0 ) THEN
+      IF ( Alamba>0.0_wp .OR. P>0.0_wp ) THEN
+         IF ( Alamba>0.0_wp .OR. P<1.0_wp ) THEN
+            IF ( Alamba<=0.0_wp .OR. P>=0.0_wp ) THEN
+               IF ( Alamba<=0.0_wp .OR. P<=1.0_wp ) THEN
 !
 !-----START POINT-----------------------------------------------------
 !
-                  Sf = P**(Alamba-1.0) + (1.0-P)**(Alamba-1.0)
+                  Sf = P**(Alamba-1.0_wp) + (1.0-P)**(Alamba-1.0_wp)
                   GOTO 99999
                ENDIF
             ENDIF

@@ -8,8 +8,8 @@ NAME
 SYNOPSIS
     Subroutine tcdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -31,7 +31,7 @@ EXAMPLES
    program demo_tcdf
    use M_datapac, only : tcdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call tcdf(x,y)
    end program demo_tcdf
 
@@ -51,7 +51,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--TCDF30117
 !*** Start of declarations inserted by SPAG
-      REAL anu , Cdf , cdfn , sd , X , z
+REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
       INTEGER i , ievodd , imax , imin , ipr , Nu , nucut
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -139,7 +139,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) Nu
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
@@ -163,18 +163,18 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     SET CDF = 1.0 AND RETURN.
 !
          IF ( Nu<=2 ) GOTO 100
-         sd = SQRT(anu/(anu-2.0))
+         sd = SQRT(anu/(anu-2.0_wp))
          z = X/sd
-         IF ( Nu>=10 .OR. z>=-3000.0 ) THEN
-            IF ( Nu<10 .OR. z>=-150.0 ) THEN
-               IF ( Nu<10 .AND. z>3000.0 ) GOTO 50
-               IF ( Nu<10 .OR. z<=150.0 ) GOTO 100
+         IF ( Nu>=10 .OR. z>=-3000.0_wp ) THEN
+            IF ( Nu<10 .OR. z>=-150.0_wp ) THEN
+               IF ( Nu<10 .AND. z>3000.0_wp ) GOTO 50
+               IF ( Nu<10 .OR. z<=150.0_wp ) GOTO 100
                GOTO 50
             ENDIF
          ENDIF
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
- 50      Cdf = 1.0
+ 50      Cdf = 1.0_wp
          RETURN
       ENDIF
 !

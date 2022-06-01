@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine spcorr (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_spcorr
    use M_datapac, only : spcorr
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call spcorr(x,y)
    end program demo_spcorr
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--SPCORR28356
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , Spc , sum , WS , X , XR , Y , YR
+REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
       INTEGER i , iflag , ipr , iupper , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -138,7 +138,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
-      Spc = 0.0
+      Spc = 0.0_wp
       iflag = 0
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (ipr,99001) iupper
@@ -181,11 +181,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
          CALL RANK(X,N,XR)
          CALL RANK(Y,N,YR)
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (XR(i)-YR(i))**2
          ENDDO
-         Spc = 1.0 - (6.0*sum/((an-1.0)*an*(an+1.0)))
+         Spc = 1.0_wp - (6.0_wp*sum/((an-1.0_wp)*an*(an+1.0_wp)))
 !
          IF ( Iwrite/=0 ) WRITE (ipr,99006) N , Spc
 99006    FORMAT (' ',                                                   &

@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine hfnplt (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_hfnplt
    use M_datapac, only : hfnplt
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call hfnplt(x,y)
    end program demo_hfnplt
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--HFNPLT9714
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
+REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -122,7 +122,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/1.41223913/
+      DATA tau/1.41223913_wp/
 !
       ipr = 6
       iupper = 7500
@@ -169,7 +169,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
          DO i = 1 , N
             q = W(i)
-            q = (q+1.0)/2.0
+            q = (q+1.0_wp)/2.0_wp
             CALL NORPPF(q,W(i))
          ENDDO
 !
@@ -188,17 +188,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)

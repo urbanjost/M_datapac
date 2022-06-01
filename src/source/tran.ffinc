@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine tran (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_tran
    use M_datapac, only : tran
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call tran(x,y)
    end program demo_tran
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--TRAN31505
 !*** Start of declarations inserted by SPAG
-      REAL anu , arg1 , arg2 , pi , sum , X , y , z , znorm
+REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
       INTEGER i , ipr , Iseed , j , N , Nu
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -110,7 +110,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA pi/3.14159265359/
+      DATA pi/3.14159265359_wp/
 !
       ipr = 6
 !
@@ -149,15 +149,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          DO i = 1 , N
 !
             CALL UNIRAN(2,Iseed,y)
-            arg1 = -2.0*ALOG(y(1))
-            arg2 = 2.0*pi*y(2)
+            arg1 = -2.0_wp*ALOG(y(1))
+            arg2 = 2.0_wp*pi*y(2)
             znorm = (SQRT(arg1))*(COS(arg2))
 !
-            sum = 0.0
+            sum = 0.0_wp
             DO j = 1 , Nu , 2
                CALL UNIRAN(2,Iseed,y)
-               arg1 = -2.0*ALOG(y(1))
-               arg2 = 2.0*pi*y(2)
+               arg1 = -2.0_wp*ALOG(y(1))
+               arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
                sum = sum + z(1)*z(1)

@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine ev1ppf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_ev1ppf
    use M_datapac, only : ev1ppf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call ev1ppf(x,y)
    end program demo_ev1ppf
 
@@ -51,7 +51,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*--EV1PPF5425
 !*** Start of declarations inserted by SPAG
       INTEGER ipr
-      REAL P , Ppf
+REAL(kind=wp) :: P , Ppf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT EV1PPF
@@ -101,7 +101,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1PPF SUBROU&
@@ -109,13 +109,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          WRITE (ipr,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = -ALOG(ALOG(1.0/P))
+         Ppf = -ALOG(ALOG(1.0_wp/P))
       ENDIF
 !
       END SUBROUTINE EV1PPF

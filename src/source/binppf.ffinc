@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine binppf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_binppf
    use M_datapac, only : binppf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call binppf(x,y)
    end program demo_binppf
 
@@ -46,16 +46,12 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==binppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE BINPPF(P,Ppar,N,Ppf)
-      IMPLICIT NONE
-!*--BINPPF673
+SUBROUTINE BINPPF(P,Ppar,N,Ppf)
+
 !*** Start of declarations inserted by SPAG
-      REAL amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
+REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
      &     x0 , x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT BINPPF
 
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
@@ -170,22 +166,22 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0 .OR. P>1.0 ) THEN
+      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99019) P
-         Ppf = 0.0
+         Ppf = 0.0_wp
          RETURN
       ELSE
-         IF ( Ppar<=0.0 .OR. Ppar>=1.0 ) THEN
+         IF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
             WRITE (ipr,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
             WRITE (ipr,99019) Ppar
-            Ppf = 0.0
+            Ppf = 0.0_wp
             RETURN
          ELSE
             IF ( N<1 ) THEN
@@ -196,7 +192,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                WRITE (ipr,99004) N
 99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
      &                 ' *****')
-               Ppf = 0.0
+               Ppf = 0.0_wp
                RETURN
             ELSE
 !
@@ -204,22 +200,22 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
                an = N
                dppar = Ppar
-               Ppf = 0.0
+               Ppf = 0.0_wp
                ix0 = 0
                ix1 = 0
                ix2 = 0
-               p0 = 0.0
-               p1 = 0.0
-               p2 = 0.0
+               p0 = 0.0_wp
+               p1 = 0.0_wp
+               p2 = 0.0_wp
 !
 !     TREAT CERTAIN SPECIAL CASES IMMEDIATELY--
 !     1) P = 0.0 OR 1.0
 !     2) P = 0.5 AND PPAR = 0.5
 !     3) PPF = 0 OR N
 !
-               IF ( P/=0.0 ) THEN
-                  IF ( P==1.0 ) GOTO 20
-                  IF ( P==0.5 .AND. Ppar==0.5 ) THEN
+               IF ( P/=0.0_wp ) THEN
+                  IF ( P==1.0_wp ) GOTO 20
+                  IF ( P==0.5_wp .AND. Ppar==0.5_wp ) THEN
                      Ppf = N/2
                      RETURN
                   ELSE
@@ -235,9 +231,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     PAGE 64, FORMULA 36).
 !
                         amean = an*Ppar
-                        sd = SQRT(an*Ppar*(1.0-Ppar))
+                        sd = SQRT(an*Ppar*(1.0_wp-Ppar))
                         CALL NORPPF(P,zppf)
-                        x2 = amean - 0.5 + zppf*sd
+                        x2 = amean - 0.5_wp + zppf*sd
                         ix2 = x2
 !
 !     CHECK AND MODIFY (IF NECESSARY) THIS INITIAL
@@ -256,7 +252,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
                         ix0 = 0
                         ix1 = N
-                        isd = sd + 1.0
+                        isd = sd + 1.0_wp
                         x2 = ix2
                         CALL BINCDF(x2,Ppar,N,p2)
 !
@@ -298,7 +294,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                      ENDIF
                   ENDIF
                ENDIF
-               Ppf = 0.0
+               Ppf = 0.0_wp
                RETURN
             ENDIF
  20         Ppf = N
@@ -432,4 +428,4 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
 99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
-      END SUBROUTINE BINPPF
+END SUBROUTINE BINPPF

@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine hfncdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_hfncdf
    use M_datapac, only : hfncdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call hfncdf(x,y)
    end program demo_hfncdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--HFNCDF9636
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , X
+REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -104,7 +104,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<0.0 ) THEN
+      IF ( X<0.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE HFNC&
@@ -112,14 +112,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          WRITE (ipr,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
          CALL NORCDF(X,Cdf)
-         Cdf = 2.0*Cdf - 1.0
+         Cdf = 2.0_wp*Cdf - 1.0_wp
       ENDIF
 !
       END SUBROUTINE HFNCDF

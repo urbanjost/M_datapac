@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine plotxx (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_plotxx
    use M_datapac, only : plotxx
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call plotxx(x,y)
    end program demo_plotxx
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PLOTXX21883
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
+REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     xmax , xmid , xmin , ylable , ymax , ymin
       INTEGER i , iflag , im1 , ip2 , ipr , j , k , mx , my , N
 !*** End of declarations inserted by SPAG
@@ -145,7 +145,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &     'N' , '='/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -216,7 +216,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDDO
       DO i = 1 , 9
          aim1 = i - 1
-         ylable(i) = ymax - (aim1/8.0)*(ymax-ymin)
+         ylable(i) = ymax - (aim1/8.0_wp)*(ymax-ymin)
       ENDDO
 !
 !     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS.
@@ -225,9 +225,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
       xmin = ymin
       xmax = ymax
-      xmid = (xmin+xmax)/2.0
-      x25 = 0.75*xmin + 0.25*xmax
-      x75 = 0.25*xmin + 0.75*xmax
+      xmid = (xmin+xmax)/2.0_wp
+      x25 = 0.75_wp*xmin + 0.25_wp*xmax
+      x75 = 0.25_wp*xmin + 0.75_wp*xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -277,15 +277,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(ymax-ymin)
-      ratiox = 100.0/(xmax-xmin)
+      ratioy = 40.0_wp/(ymax-ymin)
+      ratiox = 100.0_wp/(xmax-xmin)
       DO i = 2 , N
          im1 = i - 1
          IF ( X(i)<cutoff ) THEN
             IF ( X(im1)<cutoff ) THEN
-               mx = ratiox*(X(im1)-xmin) + 0.5
+               mx = ratiox*(X(im1)-xmin) + 0.5_wp
                mx = mx + 7
-               my = ratioy*(X(i)-ymin) + 0.5
+               my = ratioy*(X(i)-ymin) + 0.5_wp
                my = 43 - my
                IGRaph(my,mx) = alphax
             ENDIF

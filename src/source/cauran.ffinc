@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine cauran (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_cauran
    use M_datapac, only : cauran
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call cauran(x,y)
    end program demo_cauran
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--CAURAN1622
 !*** Start of declarations inserted by SPAG
-      REAL arg , pi , X
+REAL(kind=wp) :: arg , pi , X
       INTEGER i , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -113,7 +113,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA pi/3.14159265359/
+      DATA pi/3.14159265359_wp/
 !
       ipr = 6
 !

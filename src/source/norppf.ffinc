@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine norppf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_norppf
    use M_datapac, only : norppf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call norppf(x,y)
    end program demo_norppf
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--NORPPF14899
 !*** Start of declarations inserted by SPAG
-      REAL aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
+REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
      &     q2 , q3 , q4 , r , t
       INTEGER ipr
 !*** End of declarations inserted by SPAG
@@ -133,16 +133,16 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !---------------------------------------------------------------------
 !
-      DATA p0 , p1 , p2 , p3 , p4/ - .322232431088 , -1.0 ,             &
-     &     -.342242088547 , -.204231210245E-1 , -.453642210148E-4/
-      DATA q0 , q1 , q2 , q3 , q4/.993484626060E-1 , .588581570495 ,    &
-     &     .531103462366 , .103537752850 , .38560700634E-2/
+      DATA p0 , p1 , p2 , p3 , p4/ - .322232431088_wp , -1.0_wp ,             &
+     &     -.342242088547_wp , -.204231210245E-1_wp , -.453642210148E-4_wp/
+      DATA q0 , q1 , q2 , q3 , q4/.993484626060E-1_wp , .588581570495_wp ,    &
+     &     .531103462366_wp , .103537752850_wp , .38560700634E-2_wp/
 !
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0 .OR. P>=1.0 ) THEN
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NORPPF SUBROU&
@@ -154,18 +154,18 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----START POINT-----------------------------------------------------
 !
-      ELSEIF ( P/=0.5 ) THEN
+      ELSEIF ( P/=0.5_wp ) THEN
 !
          r = P
-         IF ( P>0.5 ) r = 1.0 - r
-         t = SQRT(-2.0*ALOG(r))
+         IF ( P>0.5_wp ) r = 1.0_wp - r
+         t = SQRT(-2.0_wp*ALOG(r))
          anum = ((((t*p4+p3)*t+p2)*t+p1)*t+p0)
          aden = ((((t*q4+q3)*t+q2)*t+q1)*t+q0)
          Ppf = t + (anum/aden)
-         IF ( P<0.5 ) Ppf = -Ppf
+         IF ( P<0.5_wp ) Ppf = -Ppf
          GOTO 99999
       ENDIF
-      Ppf = 0.0
+      Ppf = 0.0_wp
       RETURN
 !
 99999 END SUBROUTINE NORPPF

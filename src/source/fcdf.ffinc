@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine fcdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_fcdf
    use M_datapac, only : fcdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call fcdf(x,y)
    end program demo_fcdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--FCDF7056
 !*** Start of declarations inserted by SPAG
-      REAL amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
+REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
      &     zratio
       INTEGER i , ibran , ievodd , iflag1 , iflag2 , imax , imin , ipr ,&
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
@@ -137,7 +137,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FCDF   SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99006) Nu1
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
          IF ( Nu2<=0 ) THEN
@@ -146,7 +146,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FCDF   SUBROU&
      &TINE IS NON-POSITIVE *****')
             WRITE (ipr,99006) Nu2
-            Cdf = 0.0
+            Cdf = 0.0_wp
             RETURN
          ELSE
             IF ( X<0.0 ) THEN
@@ -157,7 +157,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                WRITE (ipr,99004) X
 99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, &
      &                 ' *****')
-               Cdf = 0.0
+               Cdf = 0.0_wp
                RETURN
             ELSE
 !
@@ -185,26 +185,26 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     STANDARD DEVIATIONS ABOVE THE MEAN,
 !     SET CDF = 1.0 AND RETURN.
 !
-               IF ( X>0.0 ) THEN
+               IF ( X>0.0_wp ) THEN
                   IF ( Nu2<=4 ) GOTO 50
-                  t1 = 2.0/anu1
-                  t2 = anu2/(anu2-2.0)
-                  t3 = (anu1+anu2-2.0)/(anu2-4.0)
+                  t1 = 2.0_wp/anu1
+                  t2 = anu2/(anu2-2.0_wp)
+                  t3 = (anu1+anu2-2.0_wp)/(anu2-4.0_wp)
                   amean = t2
                   sd = SQRT(t1*t2*t2*t3)
                   zratio = (X-amean)/sd
-                  IF ( Nu2>=10 .OR. zratio>=-3000.0 ) THEN
-                     IF ( Nu2<10 .OR. zratio>=-150.0 ) THEN
-                        IF ( Nu2<10 .AND. zratio>3000.0 ) GOTO 20
-                        IF ( Nu2<10 .OR. zratio<=150.0 ) GOTO 50
+                  IF ( Nu2>=10 .OR. zratio>=-3000.0_wp ) THEN
+                     IF ( Nu2<10 .OR. zratio>=-150.0_wp ) THEN
+                        IF ( Nu2<10 .AND. zratio>3000.0_wp ) GOTO 20
+                        IF ( Nu2<10 .OR. zratio<=150.0_wp ) GOTO 50
                         GOTO 20
                      ENDIF
                   ENDIF
                ENDIF
-               Cdf = 0.0
+               Cdf = 0.0_wp
                RETURN
             ENDIF
- 20         Cdf = 1.0
+ 20         Cdf = 1.0_wp
             RETURN
          ENDIF
 !
@@ -364,7 +364,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   term3 = -(dnu2/dnu1)*0.5D0
                   u = (term1+term2)/(dx-term3)
                   CALL CHSCDF(u,Nu2,ccdf)
-                  Cdf = 1.0 - ccdf
+                  Cdf = 1.0_wp - ccdf
                   GOTO 99999
                ELSEIF ( Nu1<nucut2 .OR. Nu2<nucut1 ) THEN
                   ibran = 5

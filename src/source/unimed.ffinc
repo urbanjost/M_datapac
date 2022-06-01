@@ -8,8 +8,8 @@ NAME
 SYNOPSIS
     Subroutine unimed (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -31,7 +31,7 @@ EXAMPLES
    program demo_unimed
    use M_datapac, only : unimed
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call unimed(x,y)
    end program demo_unimed
 
@@ -51,7 +51,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--UNIMED31930
 !*** Start of declarations inserted by SPAG
-      REAL ai , an , gam , X
+REAL(kind=wp) :: ai , an , gam , X
       INTEGER i , imax , ipr , irev , N , nevodd , nhalf
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -140,25 +140,25 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     COMPUTE THE MEDIANS FOR THE FIRST AND LAST ORDER STATISTICS
 !
-         X(N) = 0.5**(1.0/an)
-         X(1) = 1.0 - X(N)
+         X(N) = 0.5_wp**(1.0_wp/an)
+         X(1) = 1.0_wp - X(N)
 !
 !     DETERMINE IF AN ODD OR EVEN SAMPLE SIZE
 !
          nhalf = (N/2) + 1
          nevodd = 2*(N/2)
-         IF ( N/=nevodd ) X(nhalf) = 0.5
+         IF ( N/=nevodd ) X(nhalf) = 0.5_wp
          IF ( N<=3 ) RETURN
 !
 !     COMPUTE THE MEDIANS FOR THE OTHER ORDER STATISTICS
 !
-         gam = 0.3175
+         gam = 0.3175_wp
          imax = N/2
          DO i = 2 , imax
             ai = i
             irev = N - i + 1
-            X(i) = (ai-gam)/(an-2.0*gam+1.0)
-            X(irev) = 1.0 - X(i)
+            X(i) = (ai-gam)/(an-2.0_wp*gam+1.0_wp)
+            X(irev) = 1.0_wp - X(i)
          ENDDO
       ENDIF
 !

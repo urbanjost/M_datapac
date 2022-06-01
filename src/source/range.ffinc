@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine range (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_range
    use M_datapac, only : range
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call range(x,y)
    end program demo_range
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--RANGE24667
 !*** Start of declarations inserted by SPAG
-      REAL hold , X , xmax , xmin , xramge , Xrange
+REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -127,7 +127,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RANG&
      &E  SUBROUTINE HAS THE VALUE 1 *****')
-            xramge = 0.0
+            xramge = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -137,7 +137,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE RANGE  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xrange = 0.0
+            Xrange = 0.0_wp
          ENDIF
          GOTO 100
 !

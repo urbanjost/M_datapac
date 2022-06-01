@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine hist (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_hist
    use M_datapac, only : hist
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call hist(x,y)
    end program demo_hist
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--HIST10109
 !*** Start of declarations inserted by SPAG
-      REAL acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
+REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
      &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
       INTEGER i , icoun2 , icount , ievodd , ihist , inc , ipr , irev , &
      &        itlabl , ixlabl , j , jmax , jp1 , jsum , maxfre , mt ,   &
@@ -160,16 +160,16 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     COMPUTE THE SAMPLE MEAN AND SAMPLE STANDARD DEVIATION
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xbar = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xbar)**2
          ENDDO
-         s = SQRT(sum/(an-1.0))
+         s = SQRT(sum/(an-1.0_wp))
 !
 !     FORM THE BASIC FREQUENCY TABLE (ICOUNT) WHICH CORRESPONDS TO A HISTOGRAM
 !     WITH 121 CLASSES AND A CLASS WIDTH OF ONE TENTH A SAMPLE STANDARD
@@ -182,7 +182,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          numout = 0
          DO i = 1 , N
             z = (X(i)-xbar)/s
-            mt = 10.0*(z+6.0) + 2.5
+            mt = 10.0_wp*(z+6.0_wp) + 2.5_wp
             IF ( mt<2 .OR. mt>122 ) numout = numout + 1
             IF ( mt>=2 .AND. mt<=122 ) icount(mt) = icount(mt) + 1
          ENDDO
@@ -250,14 +250,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     DETERMINE THE PLOT POSITIONS
 !
             amaxfr = maxfre
-            height = 20.0
+            height = 20.0_wp
             DO j = 1 , 121
                jp1 = j + 1
                IF ( maxfre<=20 ) mx = icoun2(j)
                IF ( maxfre>20 ) THEN
                   acount = icoun2(j)
                   prop = acount/amaxfr
-                  mx = prop*height + 0.999
+                  mx = prop*height + 0.999_wp
                ENDIF
                IF ( mx/=0 ) THEN
                   DO i = 1 , mx
@@ -274,8 +274,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                DO i = 1 , 20
                   irev = 22 - i
                   ai = i
-                  prop = ai/20.0
-                  ixlabl(irev) = prop*amaxfr + 0.5
+                  prop = ai/20.0_wp
+                  ixlabl(irev) = prop*amaxfr + 0.5_wp
                ENDDO
             ELSE
                DO i = 1 , 20
@@ -302,15 +302,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             WRITE (ipr,99013) (IGRaph(22,j),j=1,123)
             numcla = (120/inc) + 1
             tinc = inc
-            cwidsd = tinc*0.1
+            cwidsd = tinc*0.1_wp
             cwidth = cwidsd*s
             tlable(7) = xbar
             itlabl(7) = 0
             DO i = 1 , 6
                irev = 13 - i + 1
                ai = i
-               tlable(i) = xbar - (7.0-ai)*s
-               tlable(irev) = xbar + (7.0-ai)*s
+               tlable(i) = xbar - (7.0_wp-ai)*s
+               tlable(irev) = xbar + (7.0_wp-ai)*s
                itlabl(i) = i - 7
                itlabl(irev) = 7 - i
             ENDDO

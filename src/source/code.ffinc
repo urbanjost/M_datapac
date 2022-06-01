@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine code (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_code
    use M_datapac, only : code
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call code(x,y)
    end program demo_code
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--CODE2619
 !*** Start of declarations inserted by SPAG
-      REAL ai , DISt , hold , WS , X , Y
+REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
       INTEGER i , ipr , iupper , j , N , numdis
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -124,7 +124,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE CODE&
      &   SUBROUTINE HAS THE VALUE 1 *****')
-            Y(1) = 1.0
+            Y(1) = 1.0_wp
             RETURN
          ELSE
             hold = X(1)

@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine invxwx (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_invxwx
    use M_datapac, only : invxwx
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call invxwx(x,y)
    end program demo_invxwx
 
@@ -48,7 +48,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       SUBROUTINE INVXWX(N,K)
       IMPLICIT NONE
 
-      REAL anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
+REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
       INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
 
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE INVERSE OF X'WX
@@ -91,7 +91,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          IF ( im1>=1 ) THEN
             DO j = 1 , im1
                irarg = (i-1)*K + j
-               R(irarg) = 0.0
+               R(irarg) = 0.0_wp
             ENDDO
          ENDIF
       ENDDO
@@ -111,9 +111,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   IF ( l>j ) DUM2(l) = R(irarg3)
                ENDDO
             ENDIF
-            ri = 0.0
+            ri = 0.0_wp
             irarg = (i-1)*K + i
-            IF ( i==j ) ri = 1.0/R(irarg)
+            IF ( i==j ) ri = 1.0_wp/R(irarg)
             anegri = -ri
 !
             CALL DOT(DUM1,DUM2,ip1,K,anegri,dotpro)

@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine midm (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_midm
    use M_datapac, only : midm
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call midm(x,y)
    end program demo_midm
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--MIDM12747
 !*** Start of declarations inserted by SPAG
-      REAL ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
+REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
      &     X , Xmidm , Y
       INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
@@ -113,8 +113,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       DIMENSION Y(15000)
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
-      DATA p1 , p2 , perp1 , perp2 , perp3/0.25 , 0.25 , 25.0 , 25.0 ,  &
-     &     50.0/
+      DATA p1 , p2 , perp1 , perp2 , perp3/0.25_wp , 0.25_wp , 25.0_wp , 25.0_wp ,  &
+     &     50.0_wp/
 !
       ipr = 6
       iupper = 15000
@@ -155,17 +155,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
  50      CALL SORT(X,N,Y)
 !
          an = N
-         np1 = p1*an + 0.0001
+         np1 = p1*an + 0.0001_wp
          istart = np1 + 1
-         np2 = p2*an + 0.0001
+         np2 = p2*an + 0.0001_wp
          istop = N - np2
-         sum = 0.0
+         sum = 0.0_wp
          k = 0
          IF ( istart>istop ) THEN
             WRITE (ipr,99005)
 99005       FORMAT (' ','INTERNAL ERROR IN MIDM   SUBROUTINE--',        &
      &              'THE START INDEX IS HIGHER THAN THE STOP INDEX')
-            Xmidm = 0.0
+            Xmidm = 0.0_wp
             RETURN
          ELSE
             DO i = istart , istop

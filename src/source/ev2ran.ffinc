@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine ev2ran (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_ev2ran
    use M_datapac, only : ev2ran
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call ev2ran(x,y)
    end program demo_ev2ran
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--EV2RAN5956
 !*** Start of declarations inserted by SPAG
-      REAL Gamma , X
+REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -123,7 +123,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
-      ELSEIF ( Gamma<=0.0 ) THEN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (ipr,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2RAN SUBROU&
@@ -142,7 +142,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = (-ALOG(X(i)))**(-1.0/Gamma)
+            X(i) = (-ALOG(X(i)))**(-1.0_wp/Gamma)
          ENDDO
       ENDIF
 !

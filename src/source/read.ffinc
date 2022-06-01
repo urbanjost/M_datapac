@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine read (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_read
    use M_datapac, only : read
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call read(x,y)
    end program demo_read
 
@@ -54,7 +54,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &        istart , istop , j , jp1 , jp2 , jrev , k , l , locpt ,   &
      &        maxcol , mincol , N
       INTEGER nc , ncp1 , ndp , numcrd , numdec , numint
-      REAL sum , X , y
+REAL(kind=wp) :: sum , X , y
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT READ
@@ -447,7 +447,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
  600  locpt = j
       numint = j - 2
       numdec = nc - j
-      sum = 0.0
+      sum = 0.0_wp
       IF ( numint/=0 ) THEN
          istart = 2
          istop = numint + 1
@@ -470,7 +470,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
  620        y = k - 1
             ipower = ipower + 1
-            sum = sum + y*(10.0**ipower)
+            sum = sum + y*(10.0_wp**ipower)
          ENDDO
       ENDIF
 !
@@ -495,7 +495,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
  640        y = k - 1
             ipower = ipower + 1
-            sum = sum + y/(10.0**ipower)
+            sum = sum + y/(10.0_wp**ipower)
          ENDDO
       ENDIF
 !

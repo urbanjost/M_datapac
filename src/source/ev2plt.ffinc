@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine ev2plt (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_ev2plt
    use M_datapac, only : ev2plt
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call ev2plt(x,y)
    end program demo_ev2plt
 
@@ -50,10 +50,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--EV2PLT5684
 !*** Start of declarations inserted by SPAG
-      REAL an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
+REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
-      REAL yslope
+REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -143,7 +143,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
-         IF ( Gamma<=0.0 ) THEN
+         IF ( Gamma<=0.0_wp ) THEN
             WRITE (ipr,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE EV2PLT SUBROU&
@@ -179,7 +179,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     COMPUTE EXREME VALUE TYPE 2 DISTRIBUTION ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = (-ALOG(W(i)))**(-1.0/Gamma)
+            W(i) = (-ALOG(W(i)))**(-1.0_wp/Gamma)
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -188,14 +188,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         q = .9975
-         pp9975 = (-ALOG(q))**(-1.0/Gamma)
-         q = .0025
-         pp0025 = (-ALOG(q))**(-1.0/Gamma)
-         q = .975
-         pp975 = (-ALOG(q))**(-1.0/Gamma)
-         q = .025
-         pp025 = (-ALOG(q))**(-1.0/Gamma)
+         q = .9975_wp
+         pp9975 = (-ALOG(q))**(-1.0_wp/Gamma)
+         q = .0025_wp
+         pp0025 = (-ALOG(q))**(-1.0_wp/Gamma)
+         q = .975_wp
+         pp975 = (-ALOG(q))**(-1.0_wp/Gamma)
+         q = .025_wp
+         pp025 = (-ALOG(q))**(-1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99007) Gamma , tau , N
 !
@@ -208,17 +208,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
-         sum2 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
             sum2 = sum2 + W(i)
          ENDDO
          ybar = sum1/an
          wbar = sum2/an
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)

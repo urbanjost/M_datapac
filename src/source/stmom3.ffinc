@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine stmom3 (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_stmom3
    use M_datapac, only : stmom3
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call stmom3(x,y)
    end program demo_stmom3
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--STMOM328504
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
+REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -130,7 +130,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE STMO&
      &M3 SUBROUTINE HAS THE VALUE 1 *****')
-            Xsmom3 = 0.0
+            Xsmom3 = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -140,26 +140,26 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE STMOM3 SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xsmom3 = 0.0
+            Xsmom3 = 0.0_wp
          ENDIF
          GOTO 100
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      sum = 0.0
+ 50      sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum2 = 0.0
-         sum3 = 0.0
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum2 = sum2 + (X(i)-xmean)**2
             sum3 = sum3 + (X(i)-xmean)**3
          ENDDO
          sum3 = sum3/an
          vb = sum2/an
-         Xsmom3 = sum3/(vb**1.5)
+         Xsmom3 = sum3/(vb**1.5_wp)
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
@@ -169,4 +169,4 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99006 FORMAT (' ',                                                      &
      &        'THE SAMPLE STANDARDIZED THIRD  CENTRAL MOMENT FOR THE ', &
      &        I6,' OBSERVATIONS IS ',E15.8)
-      END SUBROUTINE STMOM3
+END SUBROUTINE STMOM3

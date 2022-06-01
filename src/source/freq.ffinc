@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine freq (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_freq
    use M_datapac, only : freq
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call freq(x,y)
    end program demo_freq
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--FREQ7897
 !*** Start of declarations inserted by SPAG
-      REAL an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
+REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
      &     WS , X , xbar , Y
       INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     &
      &        ndv , nm1 , numseq
@@ -131,16 +131,16 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     COMPUTE THE SAMPLE MEAN AND SAMPLE STANDARD DEVIATION
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xbar = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xbar)**2
          ENDDO
-         s = SQRT(sum/(an-1.0))
+         s = SQRT(sum/(an-1.0_wp))
 !
          WRITE (ipr,99005)
 99005    FORMAT ('1')
@@ -186,8 +186,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                icfreq = icfreq + ifreq
                frq = ifreq
                cfreq = icfreq
-               pfreq = 100.0*frq/an
-               pcfreq = 100.0*cfreq/an
+               pfreq = 100.0_wp*frq/an
+               pcfreq = 100.0_wp*cfreq/an
                WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq ,&
      &                           pcfreq
                iflag = ndv - 10*(ndv/10)
@@ -201,8 +201,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          icfreq = icfreq + ifreq
          frq = ifreq
          cfreq = icfreq
-         pfreq = 100.0*frq/an
-         pcfreq = 100.0*cfreq/an
+         pfreq = 100.0_wp*frq/an
+         pcfreq = 100.0_wp*cfreq/an
          WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq ,      &
      &                     pcfreq
          iflag = ndv - 10*(ndv/10)

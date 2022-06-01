@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine tail (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_tail
    use M_datapac, only : tail
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call tail(x,y)
    end program demo_tail
 
@@ -49,14 +49,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       SUBROUTINE TAIL(X,N)
       IMPLICIT NONE
 !*--TAIL29420
-!*** Start of declarations inserted by SPAG
-      REAL a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
-      REAL coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
-      REAL ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
-      REAL s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS, X, xbar
-      REAL xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
-      INTEGER i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
-!*** End of declarations inserted by SPAG
+
+REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
+REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
+REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
+REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS, X 
+REAL(kind=wp) :: xbar
+REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
+INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
+
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
 !      DLL_EXPORT TAIL
 !
@@ -155,8 +156,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
       DATA alpham , alphaa/'M' , 'A'/
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-      DATA picons/3.14159265358979/
-      DATA constn/.3989422804/
+      DATA picons/3.14159265358979_wp/
+      DATA constn/.3989422804_wp/
 !
       ipr = 6
       iupper = 3000
@@ -196,7 +197,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     COMPUTE THE SAMPLE MEAN
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
@@ -204,9 +205,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     COMPUTE S, BIASED S, B1, AND B2
 !
-         sum2 = 0.0
-         sum3 = 0.0
-         sum4 = 0.0
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
+         sum4 = 0.0_wp
          DO i = 1 , N
             del = X(i) - xbar
             a2 = del*del
@@ -219,7 +220,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          am2 = sum2/an
          am3 = sum3/an
          am4 = sum4/an
-         s = SQRT(sum2/(an-1.0))
+         s = SQRT(sum2/(an-1.0_wp))
          bs = SQRT(am2)
          b1 = am3/(bs**3)
          b2 = am4/(bs**4)
@@ -228,18 +229,18 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--CRAMER, PAGE 386
 !
-         eb1 = 0.0
-         sdb1 = 6.0*(an-2.0)/((an+1.0)*(an+3.0))
+         eb1 = 0.0_wp
+         sdb1 = 6.0_wp*(an-2.0_wp)/((an+1.0_wp)*(an+3.0_wp))
          sdb1 = SQRT(sdb1)
          zb1 = (b1-eb1)/sdb1
-         eb2 = 3.0 - 6.0/(an+1.0)
-         sdb2 = 24.0*an*(an-2.0)*(an-3.0)                               &
-     &          /((an+1.0)*(an+1.0)*(an+3.0)*(an+5.0))
+         eb2 = 3.0_wp - 6.0_wp/(an+1.0_wp)
+         sdb2 = 24.0_wp*an*(an-2.0_wp)*(an-3.0_wp)                               &
+     &          /((an+1.0_wp)*(an+1.0_wp)*(an+3.0_wp)*(an+5.0_wp))
          zb2 = (b2-eb2)/sdb2
 !
 !     COMPUTE GEARY'S STATISTIC
 !
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + ABS(X(i)-xbar)
          ENDDO
@@ -250,11 +251,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     OF GEARY'S STATISTIC UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--BIOMETRIKA, 1936, PAGE 296
 !
-         aa = SQRT(2.0/picons)
-         bb = SQRT(2.0/(an-1.0))
-         IF ( N>=100 ) cc = SQRT(an/2.0)                                &
-     &                      *(1.0-(1.0/(8.0*an/2.0))+(1.0/(128.0*an*an/ &
-     &                      4.0)))
+         aa = SQRT(2.0_wp/picons)
+         bb = SQRT(2.0_wp/(an-1.0))
+         IF ( N>=100 ) cc = SQRT(an/2.0_wp)                                &
+     &                      *(1.0_wp-(1.0_wp/(8.0_wp*an/2.0_wp))+(1.0_wp/(128.0_wp*an*an/ &
+     &                      4.0_wp)))
          IF ( N<100 ) THEN
             coef = 1.0
             imax = N - 1
@@ -264,23 +265,23 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             IF ( imin<=imax ) THEN
                DO i = imin , imax , 2
                   ai = i
-                  coef = ((ai-1.0)/ai)*coef
+                  coef = ((ai-1.0_wp)/ai)*coef
                ENDDO
             ENDIF
-            coef = coef*(an-1.0)
+            coef = coef*(an-1.0_wp)
             IF ( ievodd==0 ) THEN
                coef = coef/SQRT(picons)
             ELSE
-               coef = coef*(SQRT(picons)/2.0)
+               coef = coef*(SQRT(picons)/2.0_wp)
             ENDIF
             cc = coef
          ENDIF
          egeary = aa/(bb*cc)
-         dd = (2.0/picons)*SQRT(an*(an-2.0))
-         arg = 1.0/(an-1.0)
-         arg = arg/SQRT(1.0-arg*arg)
+         dd = (2.0_wp/picons)*SQRT(an*(an-2.0_wp))
+         arg = 1.0_wp/(an-1.0_wp)
+         arg = arg/SQRT(1.0_wp-arg*arg)
          ee = ATAN(arg)
-         sdgear = (1.0/an)*(1.0+dd+ee)
+         sdgear = (1.0_wp/an)*(1.0_wp+dd+ee)
          sdgear = sdgear - egeary*egeary
          sdgear = SQRT(sdgear)
          zgeary = (geary-egeary)/sdgear
@@ -295,25 +296,25 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--BIOMETRIKA, 1954, PAGE 483
 !
-         g = .33000598 + ((an-2.0)**.16)/41.785
-         pn = (an-g)/(an-2.0*g+1.0)
-         p1 = 1.0 - pn
+         g = .33000598_wp + ((an-2.0_wp)**.16_wp)/41.785_wp
+         pn = (an-g)/(an-2.0_wp*g+1.0_wp)
+         p1 = 1.0_wp - pn
          CALL NORPPF(pn,rpn)
          CALL NORPPF(p1,rp1)
          exn = rpn
          ex1 = rp1
          er = exn - ex1
          CALL NORPPF(p1,ppfnor)
-         sfp1 = 1.0/(constn*EXP(-(ppfnor*ppfnor)/2.0))
+         sfp1 = 1.0_wp/(constn*EXP(-(ppfnor*ppfnor)/2.0_wp))
          CALL NORPPF(pn,ppfnor)
-         sfpn = 1.0/(constn*EXP(-(ppfnor*ppfnor)/2.0))
-         varxn = pn*(1.0-pn)*sfpn*sfpn/(an+2.0)
+         sfpn = 1.0_wp/(constn*EXP(-(ppfnor*ppfnor)/2.0_wp))
+         varxn = pn*(1.0_wp-pn)*sfpn*sfpn/(an+2.0_wp)
          exnsq = varxn + exn*exn
-         cox1xn = p1*p1*sfp1*sfpn/(an+2.0)
+         cox1xn = p1*p1*sfp1*sfpn/(an+2.0_wp)
          ex1xn = cox1xn + ex1*exn
-         ersq = 2.0*(exnsq-ex1xn)
+         ersq = 2.0_wp*(exnsq-ex1xn)
          es = bb*cc
-         essq = 1.0
+         essq = 1.0_wp
          ers = er/es
          erssq = ersq/essq
          varrs = erssq - ers*ers
@@ -323,20 +324,20 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     COMPUTE THE WILK-SHAPIRO STATISTIC
 !
          al = ALOG10(an)
-         gamma = .327511 + .058212*al - .009776*al*al
-         sum = 0.0
+         gamma = .327511_wp + .058212_wp*al - .009776_wp*al*al
+         sum = 0.0_wp
          IF ( N<=20 ) arg = N
          IF ( N>20 ) arg = N + 1
-         asubn = SQRT((1.0+(1.0/(4.0*arg)))/SQRT(arg))
+         asubn = SQRT((1.0_wp+(1.0_wp/(4.0_wp*arg)))/SQRT(arg))
          asub1 = -asubn
          sum = sum + asub1*Y(1) + asubn*Y(N)
          IF ( N>2 ) THEN
             nm1 = N - 1
             DO i = 2 , nm1
                ai = i
-               pi = (ai-gamma)/(an-2.0*gamma+1.0)
+               pi = (ai-gamma)/(an-2.0_wp*gamma+1.0_wp)
                CALL NORPPF(pi,ei)
-               coefi = 2.0*ei/SQRT(-2.722+4.083*an)
+               coefi = 2.0_wp*ei/SQRT(-2.722_wp+4.083_wp*an)
                sum = sum + coefi*Y(i)
             ENDDO
          ENDIF
@@ -346,14 +347,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     STATISTIC UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--JJF APPROXIMATION TO MOMENTS ON PAGE 601 OF BIOMETRIKA (1965)
 !
-         IF ( N==3 ) ewilks = .9135
-         IF ( N==4 ) ewilks = .9012
-         IF ( N>=5 ) ewilks = .9026 + (an-5.0)                          &
-     &                        /(44.608+13.593*SQRT(an)+10.267*an)
-         IF ( N==3 ) sdwilk = .0755
-         IF ( N==4 ) sdwilk = .0719
-         IF ( N>=5 ) sdwilk = .0670 + (an-5.0)                          &
-     &                        /(-42.368-5.026*SQRT(an)-14.925*an)
+         IF ( N==3 ) ewilks = .9135_wp
+         IF ( N==4 ) ewilks = .9012_wp
+         IF ( N>=5 ) ewilks = .9026_wp + (an-5.0_wp)                          &
+     &                        /(44.608_wp+13.593_wp*SQRT(an)+10.267_wp*an)
+         IF ( N==3 ) sdwilk = .0755_wp
+         IF ( N==4 ) sdwilk = .0719_wp
+         IF ( N>=5 ) sdwilk = .0670_wp + (an-5.0_wp)                          &
+     &                        /(-42.368_wp-5.026_wp*SQRT(an)-14.925_wp*an)
          zwilks = (wilksh-ewilks)/sdwilk
 !
 !     COMPUTE THE CORRELATION COEFFICIENT BETWEEN THE ORDERED OBSERVATIONS
@@ -365,7 +366,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          ievodd = N - 2*(N/2)
          CALL UNIMED(N,Z)
          DO i = 1 , N
-            PTEnth(i) = Z(i)**(0.1)
+            PTEnth(i) = Z(i)**(0.1_wp)
          ENDDO
          DO idis = 1 , numdis
             IF ( idis==20 ) THEN
@@ -374,22 +375,22 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   CALL NORPPF(Z(i),YM(i))
                   YM(irev) = -YM(i)
                ENDDO
-               IF ( ievodd==1 ) YM(nhalfp) = 0.0
+               IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSEIF ( idis==22 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
-                  YM(i) = ALOG(Z(i)/(1.0-Z(i)))
+                  YM(i) = ALOG(Z(i)/(1.0_wp-Z(i)))
                   YM(irev) = -YM(i)
                ENDDO
-               IF ( ievodd==1 ) YM(nhalfp) = 0.0
+               IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSEIF ( idis==23 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
-                  IF ( Z(i)<=0.5 ) YM(i) = ALOG(2.0*Z(i))
-                  IF ( Z(i)>0.5 ) YM(i) = -ALOG(2.0*(1.0-Z(i)))
+                  IF ( Z(i)<=0.5_wp ) YM(i) = ALOG(2.0_wp*Z(i))
+                  IF ( Z(i)>0.5_wp ) YM(i) = -ALOG(2.0_wp*(1.0_wp-Z(i)))
                   YM(irev) = -YM(i)
                ENDDO
-               IF ( ievodd==1 ) YM(nhalfp) = 0.0
+               IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSEIF ( idis==33 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
@@ -397,13 +398,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   YM(i) = -COS(arg)/SIN(arg)
                   YM(irev) = -YM(i)
                ENDDO
-               IF ( ievodd==1 ) YM(nhalfp) = 0.0
+               IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSE
                IF ( idis<20 ) idis2 = idis
                IF ( idis==21 ) idis2 = idis - 1
                IF ( 23<idis .AND. idis<33 ) idis2 = idis - 2
                IF ( 33<idis ) idis2 = idis - 3
-               alamba = -(0.1)*FLOAT(idis2) + 2.1
+               alamba = -(0.1_wp)*FLOAT(idis2) + 2.1_wp
                IF ( idis==1 ) THEN
                   DO i = 1 , nhalf
                      irev = N - i + 1
@@ -412,7 +413,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSEIF ( idis==11 ) THEN
                   DO i = 1 , nhalf
                      irev = N - i + 1
@@ -421,34 +422,34 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSEIF ( idis==24 ) THEN
                   DO i = 1 , nhalf
                      irev = N - i + 1
-                     P(i) = Z(i)**(-0.1)
-                     P(irev) = Z(irev)**(-0.1)
+                     P(i) = Z(i)**(-0.1_wp)
+                     P(irev) = Z(irev)**(-0.1_wp)
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSEIF ( idis==34 ) THEN
                   DO i = 1 , nhalf
-                     P(irev) = 1.0/Z(irev)
-                     P(i) = 1.0/Z(i)
+                     P(irev) = 1.0_wp/Z(irev)
+                     P(i) = 1.0_wp/Z(i)
                      irev = N - i + 1
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSEIF ( idis==44 ) THEN
                   DO i = 1 , nhalf
                      irev = N - i + 1
-                     P(i) = 1.0/(Z(i)*Z(i))
-                     P(irev) = 1.0/(Z(irev)*Z(irev))
+                     P(i) = 1.0_wp/(Z(i)*Z(i))
+                     P(irev) = 1.0_wp/(Z(irev)*Z(irev))
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ELSE
                   DO i = 1 , nhalf
                      irev = N - i + 1
@@ -457,17 +458,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                      YM(i) = (P(i)-P(irev))/alamba
                      YM(irev) = -YM(i)
                   ENDDO
-                  IF ( ievodd==1 ) YM(nhalfp) = 0.0
+                  IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
                ENDIF
             ENDIF
-            sum1 = 0.0
-            sum2 = 0.0
+            sum1 = 0.0_wp
+            sum2 = 0.0_wp
             DO i = 1 , N
                sum1 = sum1 + Y(i)*YM(i)
                sum2 = sum2 + YM(i)*YM(i)
             ENDDO
             sum2 = SQRT(sum2)
-            sum3 = s*SQRT(an-1.0)
+            sum3 = s*SQRT(an-1.0_wp)
             corr(idis) = sum1/(sum2*sum3)
          ENDDO
 !
@@ -495,13 +496,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     CORRELATION COEFFICIENT UNDER THE NORMALITY ASSUMPTION
 !     REFERENCE--JJF UNPUBLISHED MANUSCRIPT
 !
-         IF ( N==2 ) ecc = 1.0
-         IF ( N==3 ) ecc = .95492958
-         IF ( N>=4 ) ecc = .94947355 + (an-4.0)                         &
-     &                     /(196.815-2.9418*SQRT(an)+19.7916*an)
-         IF ( N==2 ) sdcc = 99999999.9999
-         IF ( N==3 ) sdcc = .04007697
-         IF ( N>=4 ) sdcc = .039492 + (an-4.0)/(-127.0-25.3*an)
+         IF ( N==2 ) ecc = 1.0_wp
+         IF ( N==3 ) ecc = .95492958_wp
+         IF ( N>=4 ) ecc = .94947355_wp + (an-4.0_wp)                         &
+     &                     /(196.815_wp-2.9418_wp*SQRT(an)+19.7916_wp*an)
+         IF ( N==2 ) sdcc = 99999999.9999_wp
+         IF ( N==3 ) sdcc = .04007697_wp
+         IF ( N>=4 ) sdcc = .039492_wp + (an-4.0_wp)/(-127.0_wp-25.3_wp*an)
          zcc = (cc-ecc)/sdcc
 !
 !     WRITE OUT THE NORMAL TAIL LENGTH STATISTICS PAGE
@@ -592,7 +593,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          ENDDO
          icount = 0
          DO i = 1 , N
-            mx = 10.0*(((X(i)-xbar)/s)+6.0) + 0.5
+            mx = 10.0_wp*(((X(i)-xbar)/s)+6.0_wp) + 0.5_wp
             mx = mx + 7
             IF ( mx<7 .OR. mx>127 ) icount = icount + 1
             IF ( mx>=7 .AND. mx<=127 ) iline1(mx) = alphax
@@ -607,8 +608,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          DO i = 1 , 6
             irev = 13 - i + 1
             ai = i
-            xline(i) = xbar - (7.0-ai)*s
-            xline(irev) = xbar + (7.0-ai)*s
+            xline(i) = xbar - (7.0_wp-ai)*s
+            xline(irev) = xbar + (7.0_wp-ai)*s
          ENDDO
 !
 !     WRITE OUT THE LINE PLOT SHOWING THE DEVIATIONS OF THE OBSERVATIONS
@@ -659,11 +660,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &           'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,   &
      &           ')')
          WRITE (ipr,99043) corr(20)
-         alamba = -0.5
+         alamba = -0.5_wp
          DO i = 1 , nhalf
             irev = N - i + 1
             q = Z(i)
-            YM(i) = (q**alamba-(1.0-q)**alamba)/alamba
+            YM(i) = (q**alamba-(1.0_wp-q)**alamba)/alamba
             YM(irev) = -YM(i)
          ENDDO
          CALL PLOT(Y,YM,N)

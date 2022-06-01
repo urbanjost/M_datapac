@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine dexcdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_dexcdf
    use M_datapac, only : dexcdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call dexcdf(x,y)
    end program demo_dexcdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--DEXCDF3893
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , X
+REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -97,7 +97,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( X<=0.0 ) Cdf = 0.5*EXP(X)
-      IF ( X>0.0 ) Cdf = 1.0 - (0.5*EXP(-X))
+      IF ( X<=0.0_wp ) Cdf = 0.5_wp*EXP(X)
+      IF ( X>0.0_wp ) Cdf = 1.0_wp - (0.5_wp*EXP(-X))
 !
       END SUBROUTINE DEXCDF

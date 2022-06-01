@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine demod (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_demod
    use M_datapac, only : demod
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call demod(x,y)
    end program demo_demod
 
@@ -49,10 +49,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--DEMOD3578
 !*** Start of declarations inserted by SPAG
-      REAL ai , aiflag , aimax2 , alen1 , alen2 , an , del , F , fest , &
+REAL(kind=wp) :: ai , aiflag , aimax2 , alen1 , alen2 , an , del , F , fest , &
      &     fmin , hold , pi , range , slopeh , sloper , sum , WS , X ,  &
      &     Y1 , Y2
-      REAL Z , zmax , zmin , znew
+REAL(kind=wp) :: Z , zmax , zmin , znew
       INTEGER i , iend , iendp1 , iflag , ilower , imax1 , imax2 ,      &
      &        imax2m , ip1 , ipr , istart , iupper , j , lenma1 ,       &
      &        lenma2 , N
@@ -171,13 +171,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       EQUIVALENCE (Y1(1),WS(1))
       EQUIVALENCE (Y2(1),WS(5001))
       EQUIVALENCE (Z(1),WS(10001))
-      DATA pi/3.141592653/
+      DATA pi/3.141592653_wp/
 !
       ipr = 6
       ilower = 3
       iupper = 5000
       an = N
-      fmin = 2.0/(an-2.0)
+      fmin = 2.0_wp/(an-2.0_wp)
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -190,7 +190,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
-         IF ( F<=fmin .OR. F>=0.5 ) THEN
+         IF ( F<=fmin .OR. F>=0.5_wp ) THEN
             WRITE (ipr,99003) fmin
 99003       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD INPUT ARGUMENT TO THE  DEMOD  SUBROU&
@@ -221,14 +221,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
  50      DO i = 1 , N
             ai = i
-            Y1(i) = X(i)*COS(6.2831853*F*ai)
-            Y2(i) = X(i)*SIN(6.2831853*F*ai)
+            Y1(i) = X(i)*COS(6.2831853_wp*F*ai)
+            Y2(i) = X(i)*SIN(6.2831853_wp*F*ai)
          ENDDO
 !
 !     DEFINE THE LENGTH OF THE 2 MOVING AVERAGES
 !
-         lenma1 = 1.0/F
-         lenma2 = 1.0/F
+         lenma1 = 1.0_wp/F
+         lenma2 = 1.0_wp/F
          alen1 = lenma1
          alen2 = lenma2
          imax1 = N - lenma1
@@ -240,11 +240,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             istart = i + 1
             iend = i + lenma1 - 1
             iendp1 = i + lenma1
-            sum = 0.0
+            sum = 0.0_wp
             DO j = istart , iend
                sum = sum + Y1(j)
             ENDDO
-            sum = sum + Y1(i)/2.0 + Y1(iendp1)/2.0
+            sum = sum + Y1(i)/2.0_wp + Y1(iendp1)/2.0_wp
             Z(i) = sum/alen1
          ENDDO
 !
@@ -254,11 +254,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             istart = i + 1
             iend = i + lenma2 - 1
             iendp1 = i + lenma2
-            sum = 0.0
+            sum = 0.0_wp
             DO j = istart , iend
                sum = sum + Z(j)
             ENDDO
-            sum = sum + Z(i)/2.0 + Z(iendp1)/2.0
+            sum = sum + Z(i)/2.0_wp + Z(iendp1)/2.0_wp
             Y1(i) = sum/alen2
          ENDDO
 !
@@ -268,11 +268,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             istart = i + 1
             iend = i + lenma1 - 1
             iendp1 = i + lenma1
-            sum = 0.0
+            sum = 0.0_wp
             DO j = istart , iend
                sum = sum + Y2(j)
             ENDDO
-            sum = sum + Y2(i)/2.0 + Y2(iendp1)/2.0
+            sum = sum + Y2(i)/2.0_wp + Y2(iendp1)/2.0_wp
             Z(i) = sum/alen1
          ENDDO
 !
@@ -282,11 +282,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             istart = i + 1
             iend = i + lenma1 - 1
             iendp1 = i + lenma1
-            sum = 0.0
+            sum = 0.0_wp
             DO j = istart , iend
                sum = sum + Z(j)
             ENDDO
-            sum = sum + Z(i)/2.0 + Z(iendp1)/2.0
+            sum = sum + Z(i)/2.0_wp + Z(iendp1)/2.0_wp
             Y2(i) = sum/alen2
          ENDDO
 !
@@ -294,7 +294,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     FORM THE AMPLITUDES AND PLOT THEM
 !
          DO i = 1 , imax2
-            Z(i) = 2.0*SQRT(Y1(i)*Y1(i)+Y2(i)*Y2(i))
+            Z(i) = 2.0_wp*SQRT(Y1(i)*Y1(i)+Y2(i)*Y2(i))
          ENDDO
          CALL PLOTX(Z,imax2)
          WRITE (ipr,99007) F
@@ -337,8 +337,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          DO i = 1 , imax2m
             ip1 = i + 1
             del = Z(ip1) - Z(i)
-            IF ( del>2.5 ) iflag = iflag - 1
-            IF ( del<-2.5 ) iflag = iflag + 1
+            IF ( del>2.5_wp ) iflag = iflag - 1
+            IF ( del<-2.5_wp ) iflag = iflag + 1
             aiflag = iflag
             znew = Z(ip1) + aiflag*pi
             IF ( znew<zmin ) zmin = znew
@@ -346,7 +346,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
          ENDDO
          range = zmax - zmin
          sloper = range/aimax2
-         slopeh = sloper/(2.0*pi)
+         slopeh = sloper/(2.0_wp*pi)
          fest = F + slopeh
          WRITE (ipr,99010) zmin , zmax , range
 99010    FORMAT (' ',3X,'MINIMUM PHASE = ',E15.8,' RADIANS   ',         &

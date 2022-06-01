@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine cauplt (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_cauplt
    use M_datapac, only : cauplt
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call cauplt(x,y)
    end program demo_cauplt
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--CAUPLT1384
 !*** Start of declarations inserted by SPAG
-      REAL an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
+REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
      &     wbar , WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
@@ -115,8 +115,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      DATA pi/3.14159265358979/
-      DATA tau/10.02040649/
+      DATA pi/3.14159265358979_wp/
+      DATA tau/10.02040649_wp/
 !
       ipr = 6
       iupper = 7500
@@ -181,15 +181,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
 !     THEN WRITE THEM OUT.
 !
-         sum1 = 0.0
+         sum1 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
          ENDDO
          ybar = sum1/an
-         wbar = 0.0
-         sum1 = 0.0
-         sum2 = 0.0
-         sum3 = 0.0
+         wbar = 0.0_wp
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
             sum2 = sum2 + W(i)*Y(i)
@@ -204,4 +204,4 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE CAUPLT
+END SUBROUTINE CAUPLT

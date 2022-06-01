@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine decomp (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_decomp
    use M_datapac, only : decomp
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call decomp(x,y)
    end program demo_decomp
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--DECOMP3127
 !*** Start of declarations inserted by SPAG
-      REAL D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
+REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
      &     Tol , tol2 , WS
       INTEGER i , Insing , ip , IPIvot , iqarg , iqarg1 , iqarg2 ,      &
      &        Irank , irarg , irarg1 , irarg2 , is , ism1 , isp1 , j ,  &
@@ -94,10 +94,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       Insing = 0
       Irank = 0
       DO j = 1 , K
-         D(j) = 0.0
+         D(j) = 0.0_wp
          DO i = 1 , K
             irarg = (i-1)*K + j
-            R(irarg) = 0.0
+            R(irarg) = 0.0_wp
          ENDDO
       ENDDO
 !
@@ -110,7 +110,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     BEGIN STEP NUMBER      IS      IN THE DECOMPOSITION
 !
          IF ( is==1 ) fsum = .TRUE.
- 50      dis = 0.0
+ 50      dis = 0.0_wp
          ip = is
 !
 !     BEGIN THE PIVOT SEARCH
@@ -124,7 +124,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   DUM2(l) = Q(iqarg)
                ENDDO
 !
-               CALL DOT(DUM1,DUM2,1,N,0.0,D(j))
+               CALL DOT(DUM1,DUM2,1,N,0.0_wp,D(j))
             ENDIF
 !
             IF ( dis<D(j) ) THEN
@@ -170,11 +170,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             DUM2(l) = Q(iqarg)
          ENDDO
 !
-         CALL DOT(DUM1,DUM2,1,N,0.0,D(is))
+         CALL DOT(DUM1,DUM2,1,N,0.0_wp,D(is))
 !
          dis = D(is)
          IF ( dis<=tol2*D(1) ) RETURN
-         IF ( dis/=0.0 ) THEN
+         IF ( dis/=0.0_wp ) THEN
             isp1 = is + 1
             IF ( isp1<=K ) THEN
 !
@@ -190,7 +190,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   ENDDO
 !
                   irarg = (is-1)*K + j
-                  CALL DOT(DUM1,DUM2,1,N,0.0,R(irarg))
+                  CALL DOT(DUM1,DUM2,1,N,0.0_wp,R(irarg))
                   R(irarg) = R(irarg)/dis
 !
                   risj = R(irarg)

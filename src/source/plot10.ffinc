@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine plot10 (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_plot10
    use M_datapac, only : plot10
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call plot10(x,y)
    end program demo_plot10
 
@@ -52,10 +52,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PLOT1016034
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
+REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
      &     ratiox , ratioy , X , x25 , x75 , Xaxid , Xmax , xmid ,      &
      &     Xmin , Y , Yaxid , ylable
-      REAL Ymax , Ymin
+REAL(kind=wp) :: Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !*** End of declarations inserted by SPAG
 !      DLL_EXPORT PLOT10
@@ -69,7 +69,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !              3) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
 !                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
 !                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX; AND
-!              3) WITH HOLLARITH LABELS (AT MOST 6 CHARACTERS)
+!              3) WITH HOLLERITH LABELS (AT MOST 6 CHARACTERS)
 !                 FOR THE VERTICAL AXIS VARIABLE,
 !                 THE HORIZONTAL AXIS VARIABLE, AND
 !                 THE PLOTTING CHARACTER VARIABLE
@@ -114,7 +114,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !              WHERE THE SUBSET IS DEFINED
 !              BY VALUES IN THE VECTOR D.
 !
-!              THE USE OF HOLLARITH IDENTIFYING LABELS
+!              THE USE OF HOLLERITH IDENTIFYING LABELS
 !              ALLOWS THE DATA ANALYST TO AUTOMATICALLY
 !              HAVE THE PLOTS LABELED.  THIS IS PARTICULARLY
 !              USEFUL IN A LARGE ANALYSIS WHEN MANY
@@ -151,15 +151,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --YAXID  = THE HOLLARITH VALUE
+!                    --YAXID  = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               VERTICAL AXIS VARIABLE.
-!                    --XAXID  = THE HOLLARITH VALUE
+!                    --XAXID  = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               HORIZONTAL AXIS VARIABLE.
-!                    --PLCHID = THE HOLLARITH VALUE
+!                    --PLCHID = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               PLOTTING CHARACTER VARIABLE.
@@ -263,7 +263,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &     'Y' , 'Z' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -421,9 +421,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     DETERMINE XMID, X25 (=THE 25% POINT), AND
 !     X75 (=THE 75% POINT)
 !
-      xmid = (Xmin+Xmax)/2.0
-      x25 = 0.75*Xmin + 0.25*Xmax
-      x75 = 0.25*Xmin + 0.75*Xmax
+      xmid = (Xmin+Xmax)/2.0_wp
+      x25 = 0.75_wp*Xmin + 0.25_wp*Xmax
+      x75 = 0.25_wp*Xmin + 0.75_wp*Xmax
 !
 !     BLANK OUT THE GRAPH
 !
@@ -473,8 +473,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     DETERMINE THE (X,Y) PLOT POSITIONS
 !
-      ratioy = 40.0/(Ymax-Ymin)
-      ratiox = 100.0/(Xmax-Xmin)
+      ratioy = 40.0_wp/(Ymax-Ymin)
+      ratiox = 100.0_wp/(Xmax-Xmin)
       DO i = 1 , N
          IF ( Y(i)<cutoff ) THEN
             IF ( X(i)<cutoff ) THEN
@@ -483,13 +483,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                      IF ( X(i)>=Xmin .AND. X(i)<=Xmax ) THEN
                         IF ( D(i)>=Dmin ) THEN
                            IF ( D(i)<=Dmax ) THEN
-                              mx = ratiox*(X(i)-Xmin) + 0.5
+                              mx = ratiox*(X(i)-Xmin) + 0.5_wp
                               mx = mx + 7
-                              my = ratioy*(Y(i)-Ymin) + 0.5
+                              my = ratioy*(Y(i)-Ymin) + 0.5_wp
                               my = 43 - my
                               iarg = 37
-                              IF ( 0.5<Char(i) .AND. Char(i)<36.5 )     &
-     &                             iarg = Char(i) + 0.5
+                              IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp )     &
+     &                             iarg = Char(i) + 0.5_wp
                               IGRaph(my,mx) = iplotc(iarg)
                            ENDIF
                         ENDIF

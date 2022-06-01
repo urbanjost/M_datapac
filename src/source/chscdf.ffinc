@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine chscdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_chscdf
    use M_datapac, only : chscdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call chscdf(x,y)
    end program demo_chscdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--CHSCDF1816
 !*** Start of declarations inserted by SPAG
-      REAL amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
+REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
       INTEGER i , ibran , ievodd , imax , imin , ipr , Nu , nucut
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -138,10 +138,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
      &TINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) Nu
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         Cdf = 0.0
+         Cdf = 0.0_wp
          RETURN
       ELSE
-         IF ( X<0.0 ) THEN
+         IF ( X<0.0_wp ) THEN
             WRITE (ipr,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE CHSC&
@@ -149,7 +149,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             WRITE (ipr,99004) X
 99004       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
-            Cdf = 0.0
+            Cdf = 0.0_wp
             RETURN
          ELSE
 !
@@ -173,14 +173,14 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !     STANDARD DEVIATIONS ABOVE THE MEAN,
 !     SET CDF = 1.0 AND RETURN.
 !
-            IF ( X>0.0 ) THEN
+            IF ( X>0.0_wp ) THEN
                amean = anu
-               sd = SQRT(2.0*anu)
+               sd = SQRT(2.0_wp*anu)
                z = (X-amean)/sd
-               IF ( Nu>=10 .OR. z>=-200.0 ) THEN
-                  IF ( Nu<10 .OR. z>=-100.0 ) THEN
-                     IF ( Nu<10 .AND. z>200.0 ) GOTO 50
-                     IF ( Nu>=10 .AND. z>100.0 ) GOTO 50
+               IF ( Nu>=10 .OR. z>=-200.0_wp ) THEN
+                  IF ( Nu<10 .OR. z>=-100.0_wp ) THEN
+                     IF ( Nu<10 .AND. z>200.0_wp ) GOTO 50
+                     IF ( Nu>=10 .AND. z>100.0_wp ) GOTO 50
 !
 !     DISTINGUISH BETWEEN 3 SEPARATE REGIONS
 !     OF THE (X,NU) SPACE.
@@ -206,7 +206,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                         ELSE
 !
                            sum = 0.0D0
-                           term = 1.0/chi
+                           term = 1.0_wp/chi
                            imin = 1
                            imax = Nu - 1
                         ENDIF
@@ -277,10 +277,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                   ENDIF
                ENDIF
             ENDIF
-            Cdf = 0.0
+            Cdf = 0.0_wp
             RETURN
          ENDIF
- 50      Cdf = 1.0
+ 50      Cdf = 1.0_wp
          RETURN
       ENDIF
  100  Cdf = 1.0D0 - sum

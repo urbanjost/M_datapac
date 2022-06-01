@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine sd (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_sd
    use M_datapac, only : sd
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call sd(x,y)
    end program demo_sd
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--SD27364
 !*** Start of declarations inserted by SPAG
-      REAL an , hold , sum , var , X , xmean , Xsd
+REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -125,7 +125,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SD  &
      &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xsd = 0.0
+            Xsd = 0.0_wp
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -135,22 +135,22 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE SD     SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xsd = 0.0
+            Xsd = 0.0_wp
          ENDIF
          GOTO 100
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      sum = 0.0
+ 50      sum = 0.0_wp
          DO i = 1 , N
             sum = sum + X(i)
          ENDDO
          xmean = sum/an
-         sum = 0.0
+         sum = 0.0_wp
          DO i = 1 , N
             sum = sum + (X(i)-xmean)**2
          ENDDO
-         var = sum/(an-1.0)
+         var = sum/(an-1.0_wp)
          Xsd = SQRT(var)
       ENDIF
 !

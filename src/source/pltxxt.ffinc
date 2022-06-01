@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine pltxxt (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_pltxxt
    use M_datapac, only : pltxxt
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call pltxxt(x,y)
    end program demo_pltxxt
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PLTXXT22621
 !*** Start of declarations inserted by SPAG
-      REAL aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
+REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , hold , X , x2labl , xcwidt , xlable , xlower , xmax , &
      &     xmin , xrwidt , xupper
       INTEGER i , icol , icolmx , im1 , ipr , irow , ixdel , N ,        &
@@ -150,7 +150,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
       ipr = 6
-      cutoff = (10.0**10) - 1000.0
+      cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -257,16 +257,16 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             iline(icol) = blank
          ENDDO
          airow = irow
-         xupper = xmax + (1.5-airow)*xrwidt
-         xlable = xmax + (1.0-airow)*xrwidt
-         xlower = xmax + (0.5-airow)*xrwidt
+         xupper = xmax + (1.5_wp-airow)*xrwidt
+         xlable = xmax + (1.0_wp-airow)*xrwidt
+         xlower = xmax + (0.5_wp-airow)*xrwidt
          IF ( irow==numrow ) xlable = xmin
          DO i = 2 , N
             im1 = i - 1
             IF ( X(im1)<cutoff ) THEN
                IF ( X(i)<cutoff ) THEN
                   IF ( xlower<=X(i) .AND. X(i)<xupper ) THEN
-                     icol = ((X(im1)-xmin)/xcwidt) + 1.5
+                     icol = ((X(im1)-xmin)/xcwidt) + 1.5_wp
                      iline(icol) = alphax
                   ENDIF
                ENDIF
@@ -285,7 +285,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABLES.
+!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
       WRITE (ipr,99014) blank
       DO icol = 1 , numcol
@@ -302,12 +302,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       WRITE (ipr,99009) (x2labl(i),i=1,numlab)
 99009 FORMAT (' ',9X,5E12.4)
 !
-99010 FORMAT (' ','**************************************************', &
-     &        '********************')
+99010 FORMAT (' ','**********************************************************************')
 99011 FORMAT (' ','                   FATAL ERROR                    ')
-99012 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
-     &        ' SUBROUTINE')
+99012 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4, ' SUBROUTINE')
 99013 FORMAT (' ',18X,54A1)
 99014 FORMAT (' ',15X,A1)
 !
-      END SUBROUTINE PLTXXT
+END SUBROUTINE PLTXXT

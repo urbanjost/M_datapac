@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     Subroutine midr (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,7 +29,7 @@ EXAMPLES
    program demo_midr
    use M_datapac, only : midr
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call midr(x,y)
    end program demo_midr
 
@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--MIDR12898
 !*** Start of declarations inserted by SPAG
-      REAL hold , X , xmax , Xmidr , xmin
+REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
       INTEGER i , ipr , Iwrite , N
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -147,7 +147,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             IF ( X(i)<xmin ) xmin = X(i)
             IF ( X(i)>xmax ) xmax = X(i)
          ENDDO
-         Xmidr = (xmin+xmax)/2.0
+         Xmidr = (xmin+xmax)/2.0_wp
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN

@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine norcdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_norcdf
    use M_datapac, only : norcdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call norcdf(x,y)
    end program demo_norcdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--NORCDF14149
 !*** Start of declarations inserted by SPAG
-      REAL b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
+REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -90,8 +90,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !---------------------------------------------------------------------
 !
-      DATA b1 , b2 , b3 , b4 , b5 , p/.319381530 , -0.356563782 ,       &
-     &     1.781477937 , -1.821255978 , 1.330274429 , .2316419/
+      DATA b1 , b2 , b3 , b4 , b5 , p/.319381530_wp , -0.356563782_wp ,       &
+     &     1.781477937_wp , -1.821255978_wp , 1.330274429_wp , .2316419_wp/
 !
       ipr = 6
 !
@@ -102,10 +102,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !-----START POINT-----------------------------------------------------
 !
       z = X
-      IF ( X<0.0 ) z = -z
-      t = 1.0/(1.0+p*z)
-      Cdf = 1.0 - ((0.39894228040143)*EXP(-0.5*z*z))                    &
+      IF ( X<0.0_wp ) z = -z
+      t = 1.0_wp/(1.0_wp+p*z)
+      Cdf = 1.0_wp - ((0.39894228040143_wp)*EXP(-0.5_wp*z*z))                    &
      &      *(b1*t+b2*t**2+b3*t**3+b4*t**4+b5*t**5)
-      IF ( X<0.0 ) Cdf = 1.0 - Cdf
+      IF ( X<0.0_wp ) Cdf = 1.0_wp - Cdf
 !
       END SUBROUTINE NORCDF

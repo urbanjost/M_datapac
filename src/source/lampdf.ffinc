@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine lampdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_lampdf
    use M_datapac, only : lampdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call lampdf(x,y)
    end program demo_lampdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--LAMPDF10638
 !*** Start of declarations inserted by SPAG
-      REAL Alamba , cdf , Pdf , sf , X , xmax , xmin
+REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -106,8 +106,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0 ) THEN
-         xmax = 1.0/Alamba
+      IF ( Alamba>0.0_wp ) THEN
+         xmax = 1.0_wp/Alamba
          xmin = -xmax
          IF ( X<xmin .OR. X>xmax ) THEN
             WRITE (ipr,99001)
@@ -117,31 +117,31 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             WRITE (ipr,99002) X
 99002       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
-            IF ( X<xmin ) Pdf = 0.0
-            IF ( X>xmax ) Pdf = 1.0
+            IF ( X<xmin ) Pdf = 0.0_wp
+            IF ( X>xmax ) Pdf = 1.0_wp
             RETURN
          ENDIF
       ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( Alamba>0.0 ) THEN
-         xmax = 1.0/Alamba
+      IF ( Alamba>0.0_wp ) THEN
+         xmax = 1.0_wp/Alamba
          xmin = -xmax
          IF ( X<=xmin .OR. X>=xmax ) THEN
-            IF ( X<xmin .OR. X>xmax ) Pdf = 0.0
-            IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0
-            IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0
-            IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5
-            IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5
-            IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0
-            IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0
+            IF ( X<xmin .OR. X>xmax ) Pdf = 0.0_wp
+            IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0_wp
+            IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0_wp
+            IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5_wp
+            IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5_wp
+            IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0_wp
+            IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0_wp
             RETURN
          ENDIF
       ENDIF
 !
       CALL LAMCDF(X,Alamba,cdf)
-      sf = cdf**(Alamba-1.0) + (1.0-cdf)**(Alamba-1.0)
-      Pdf = 1.0/sf
+      sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
+      Pdf = 1.0_wp/sf
 !
       END SUBROUTINE LAMPDF

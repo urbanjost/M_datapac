@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine plotco (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_plotco
    use M_datapac, only : plotco
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call plotco(x,y)
    end program demo_plotco
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--PLOTCO18497
 !*** Start of declarations inserted by SPAG
-      REAL hold , ratioy , Y , ylable , ymax , ymin
+REAL(kind=wp) :: hold , ratioy , Y , ylable , ymax , ymin
       INTEGER i , iaxdel , idel , iflag , imax , imin , ipr , ix ,      &
      &        ixmax , ixmin , iz , j , jmax , jmin , k , mx , my , N ,  &
      &        numpag
@@ -112,10 +112,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !     DETERMINE THE Y VALUES TO BE LISTED ON THE LEFT VERTICAL AXIS
 !
- 50      ymin = -1.0
-         ymax = 1.0
+ 50      ymin = -1.0_wp
+         ymax = 1.0_wp
          DO i = 1 , 11
-            ylable(i) = FLOAT(6-i)/5.0
+            ylable(i) = FLOAT(6-i)/5.0_wp
          ENDDO
 !
 !     DETERMINE DISTANCES BETWEEN HORIZONTAL PLOT POINTS AND DISTANCES BETWEEN
@@ -200,13 +200,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             imin = ixmin + 1
             imax = ixmax
             IF ( imax>N ) imax = N
-            ratioy = 50.0/(ymax-ymin)
+            ratioy = 50.0_wp/(ymax-ymin)
             DO i = imin , imax
                mx = MOD(i,120)
                mx = mx*idel
                IF ( mx==0 ) mx = 120
                mx = mx + 10
-               my = ratioy*(Y(i)-ymin) + 0.5
+               my = ratioy*(Y(i)-ymin) + 0.5_wp
                my = 55 - my
                IGRaph(my,mx) = star
                jmax = MAX0(my,30)

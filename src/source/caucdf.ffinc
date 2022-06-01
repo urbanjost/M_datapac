@@ -7,8 +7,8 @@ NAME
 SYNOPSIS
     Subroutine caucdf (X, Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) :: X(:)
-     Real, Intent (In)                      :: Y
+     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
+   Real(kind=wp) :: (In)                      ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,7 +30,7 @@ EXAMPLES
    program demo_caucdf
    use M_datapac, only : caucdf
    implicit none
-   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call caucdf(x,y)
    end program demo_caucdf
 
@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       IMPLICIT NONE
 !*--CAUCDF1272
 !*** Start of declarations inserted by SPAG
-      REAL Cdf , pi , X
+REAL(kind=wp) :: Cdf , pi , X
       INTEGER ipr
 !*** End of declarations inserted by SPAG
 !CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
@@ -88,7 +88,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !---------------------------------------------------------------------
 !
-      DATA pi/3.14159265358979/
+      DATA pi/3.14159265358979_wp/
 !
       ipr = 6
 !
@@ -98,6 +98,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !
 !-----START POINT-----------------------------------------------------
 !
-      Cdf = 0.5 + ((1.0/pi)*ATAN(X))
+      Cdf = 0.5_wp + ((1.0_wp/pi)*ATAN(X))
 !
       END SUBROUTINE CAUCDF
