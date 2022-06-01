@@ -1841,8 +1841,7 @@ contains
       END SUBROUTINE CAUPDF
 !>
 !!##NAME
-!!    cauplt(3f) - [M_datapac:STATISTICS] generate a Cauchy probability plot
-!!    (line printer graph)
+!!    cauplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Cauchy probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -2748,8 +2747,8 @@ contains
 99999 END SUBROUTINE CHSCDF
 !>
 !!##NAME
-!!    chsplt(3f) - [M_datapac:STATISTICS] generate a chi-square probability
-!!    plot (line printer graph)
+!!    chsplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a chi-square probability
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -5306,8 +5305,8 @@ contains
       END SUBROUTINE DEXPDF
 !>
 !!##NAME
-!!    dexplt(3f) - [M_datapac:STATISTICS] generate a double exponential
-!!    probability plot (line printer graph)
+!!    dexplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a double exponential
+!!    probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -6983,8 +6982,8 @@ contains
       END SUBROUTINE EV1CDF
 !>
 !!##NAME
-!!    ev1plt(3f) - [M_datapac:STATISTICS] generate a extreme value type 1
-!!    (Gumbel) probability plot (line printer graph)
+!!    ev1plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 1
+!!    (Gumbel) probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -7593,8 +7592,8 @@ contains
       END SUBROUTINE EV2CDF
 !>
 !!##NAME
-!!    ev2plt(3f) - [M_datapac:STATISTICS] generate a extreme value type 2
-!!    (Frechet) probability plot (line printer graph)
+!!    ev2plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 2
+!!    (Frechet) probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -8346,8 +8345,8 @@ contains
       END SUBROUTINE EXPPDF
 !>
 !!##NAME
-!!    expplt(3f) - [M_datapac:STATISTICS] generate a exponential probability
-!!    plot (line printer graph)
+!!    expplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a exponential probability
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -10838,8 +10837,7 @@ contains
       END SUBROUTINE GAMCDF
 !>
 !!##NAME
-!!    gamplt(3f) - [M_datapac:STATISTICS] generate a gamma probability plot
-!!    (line printer graph)
+!!    gamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a gamma probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -11933,8 +11931,8 @@ contains
       END SUBROUTINE GEOCDF
 !>
 !!##NAME
-!!    geoplt(3f) - [M_datapac:STATISTICS] generate a geometric probability
-!!    plot (line printer graph)
+!!    geoplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a geometric probability
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -12697,8 +12695,8 @@ contains
       END SUBROUTINE HFNCDF
 !>
 !!##NAME
-!!    hfnplt(3f) - [M_datapac:STATISTICS] generate a half-normal probability
-!!    plot (line printer graph)
+!!    hfnplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a half-normal probability
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -14048,8 +14046,8 @@ contains
       END SUBROUTINE LAMPDF
 !>
 !!##NAME
-!!    lamplt(3f) - [M_datapac:STATISTICS] generate a Tukey-Lambda probability
-!!    plot (line printer graph)
+!!    lamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Tukey-Lambda probability
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -15815,8 +15813,8 @@ contains
       END SUBROUTINE LOGPDF
 !>
 !!##NAME
-!!    logplt(3f) - [M_datapac:STATISTICS] generate a logistic probability
-!!    plot (line printer graph)
+!!    logplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a logistic probability
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -19348,8 +19346,7 @@ contains
       END SUBROUTINE NORPDF
 !>
 !!##NAME
-!!    norplt(3f) - [M_datapac:STATISTICS] generate a normal probability plot
-!!    (line printer graph)
+!!    norplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a normal probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -20166,8 +20163,7 @@ contains
       END SUBROUTINE PARCDF
 !>
 !!##NAME
-!!    parplt(3f) - [M_datapac:STATISTICS] generate a Pareto probability plot
-!!    (line printer graph)
+!!    parplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Pareto probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -20703,7 +20699,7 @@ contains
       END SUBROUTINE PARRAN
 !>
 !!##NAME
-!!    plot10(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    plot10(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -21238,7 +21234,7 @@ contains
       END SUBROUTINE PLOT10
 !>
 !!##NAME
-!!    plot6(3f) - [M_datapac:STATISTICS] generate a line printer plot
+!!    plot6(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot
 !!
 !!##SYNOPSIS
 !!
@@ -21588,7 +21584,7 @@ contains
       END SUBROUTINE PLOT6
 !>
 !!##NAME
-!!    plot7(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    plot7(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -22025,7 +22021,7 @@ contains
       END SUBROUTINE PLOT7
 !>
 !!##NAME
-!!    plot8(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    plot8(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -22528,7 +22524,7 @@ contains
       END SUBROUTINE PLOT8
 !>
 !!##NAME
-!!    plot9(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    plot9(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -22997,7 +22993,7 @@ contains
       END SUBROUTINE PLOT9
 !>
 !!##NAME
-!!    plotc(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    plotc(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -23449,7 +23445,7 @@ contains
       END SUBROUTINE PLOTC
 !>
 !!##NAME
-!!    plotco(3f) - [M_datapac:STATISTICS] generate a line printer
+!!    plotco(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer
 !!    autocorrelation plot
 !!
 !!##SYNOPSIS
@@ -23702,7 +23698,7 @@ contains
       END SUBROUTINE PLOTCO
 !>
 !!##NAME
-!!    plotct(3f) - [M_datapac:STATISTICS] generate a line printer plot for
+!!    plotct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot for
 !!    the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -24462,7 +24458,7 @@ contains
       END SUBROUTINE PLOT
 !>
 !!##NAME
-!!    plotsc(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    plotsc(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -24993,7 +24989,7 @@ contains
       END SUBROUTINE PLOTSC
 !>
 !!##NAME
-!!    plots(3f) - [M_datapac:STATISTICS] generate a line printer plot of Y vs X
+!!    plots(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of Y vs X
 !!
 !!##SYNOPSIS
 !!
@@ -25431,7 +25427,7 @@ contains
       END SUBROUTINE PLOTS
 !>
 !!##NAME
-!!    plotsp(3f) - [M_datapac:STATISTICS] generate a line printer spectrum plot
+!!    plotsp(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer spectrum plot
 !!
 !!##SYNOPSIS
 !!
@@ -25656,7 +25652,7 @@ contains
       END SUBROUTINE PLOTSP
 !>
 !!##NAME
-!!    plotst(3f) - [M_datapac:STATISTICS] generate a line printer plot of
+!!    plotst(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
 !!    Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -26085,7 +26081,7 @@ contains
       END SUBROUTINE PLOTST
 !>
 !!##NAME
-!!    plott(3f) - [M_datapac:STATISTICS] generate a line printer plot of
+!!    plott(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
 !!    Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -26438,7 +26434,7 @@ contains
       END SUBROUTINE PLOTT
 !>
 !!##NAME
-!!    plotu(3f) - [M_datapac:STATISTICS] generate a line printer 4-plot
+!!    plotu(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer 4-plot
 !!
 !!##SYNOPSIS
 !!
@@ -27030,7 +27026,7 @@ contains
       END SUBROUTINE PLOTU
 !>
 !!##NAME
-!!    plotx(3f) - [M_datapac:STATISTICS] generate a line printer run sequence plot
+!!    plotx(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer run sequence plot
 !!
 !!##SYNOPSIS
 !!
@@ -27325,7 +27321,7 @@ contains
       END SUBROUTINE PLOTX
 !>
 !!##NAME
-!!    plotxt(3f) - [M_datapac:STATISTICS] generate a line printer run
+!!    plotxt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer run
 !!    sequence plot for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -27617,7 +27613,7 @@ contains
       END SUBROUTINE PLOTXT
 !>
 !!##NAME
-!!    plotxx(3f) - [M_datapac:STATISTICS] generate a line printer lag plot
+!!    plotxx(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
 !!
 !!##SYNOPSIS
 !!
@@ -27938,7 +27934,7 @@ contains
       END SUBROUTINE PLOTXX
 !>
 !!##NAME
-!!    pltsct(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+!!    pltsct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
 !!    special plot characters for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -28448,7 +28444,7 @@ contains
       END SUBROUTINE PLTSCT
 !>
 !!##NAME
-!!    pltxxt(3f) - [M_datapac:STATISTICS] generate a line printer lag plot
+!!    pltxxt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
 !!    for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -29003,7 +28999,7 @@ contains
       END SUBROUTINE POICDF
 !>
 !!##NAME
-!!    poiplt(3f) - [M_datapac:STATISTICS] generate a Poisson probability plot
+!!    poiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Poisson probability plot
 !!    (line printer graph)
 !!
 !!##SYNOPSIS
@@ -38945,7 +38941,7 @@ END SUBROUTINE SORTP
 99999 END SUBROUTINE TPPF
 !>
 !!##NAME
-!!    tran(3f) - [m_datapac:statistics] a random sample of size n from the
+!!    tran(3f) - [M_datapac:STATISTICS] a random sample of size n from the
 !!    student's t distribution with integer degrees of freedom parameter NU.
 !!
 !!##SYNOPSIS
@@ -39783,7 +39779,7 @@ END SUBROUTINE SORTP
       END SUBROUTINE UNIPDF
 !>
 !!##NAME
-!!    uniplt(3f) - [M_datapac:STATISTICS] generate a Uniform probability plot
+!!    uniplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Uniform probability plot
 !!    (line printer graph)
 !!
 !!##SYNOPSIS
@@ -41212,7 +41208,7 @@ END SUBROUTINE SORTP
       END SUBROUTINE WEICDF
 !>
 !!##NAME
-!!    weiplt(3f) - [M_datapac:STATISTICS] generate a Weibull probability plot
+!!    weiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Weibull probability plot
 !!    (line printer graph)
 !!
 !!##SYNOPSIS

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotct.3m_datapac.man
 NAME
-   plotct(3f) - [M_datapac:STATISTICS] generate a line printer plot for
+   plotct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot for
    the terminal (71 characters wide)
 
 SYNOPSIS

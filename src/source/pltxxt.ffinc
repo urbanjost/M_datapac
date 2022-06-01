@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file pltxxt.3m_datapac.man
 NAME
-   pltxxt(3f) - [M_datapac:STATISTICS] generate a line printer lag plot
+   pltxxt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
    for the terminal (71 characters wide)
 
 SYNOPSIS

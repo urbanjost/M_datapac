@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotu.3m_datapac.man
 NAME
-   plotu(3f) - [M_datapac:STATISTICS] generate a line printer 4-plot
+   plotu(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer 4-plot
 
 SYNOPSIS
     Subroutine plotu (X, Y)

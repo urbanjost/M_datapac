@@ -1,8 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file ev2plt.3m_datapac.man
 NAME
-   ev2plt(3f) - [M_datapac:STATISTICS] generate a extreme value type 2
-   (Frechet) probability plot (line printer graph)
+   ev2plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 2
+   (Frechet) probability plot 
 
 SYNOPSIS
     Subroutine ev2plt (X, Y)

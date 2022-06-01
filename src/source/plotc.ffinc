@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotc.3m_datapac.man
 NAME
-   plotc(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+   plotc(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
    special plot characters
 
 SYNOPSIS

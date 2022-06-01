@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file poiplt.3m_datapac.man
 NAME
-   poiplt(3f) - [M_datapac:STATISTICS] generate a Poisson probability plot
+   poiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Poisson probability plot
    (line printer graph)
 
 SYNOPSIS

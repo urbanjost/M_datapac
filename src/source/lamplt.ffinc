@@ -1,8 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lamplt.3m_datapac.man
 NAME
-   lamplt(3f) - [M_datapac:STATISTICS] generate a Tukey-Lambda probability
-   plot (line printer graph)
+   lamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Tukey-Lambda probability
+   plot 
 
 SYNOPSIS
     Subroutine lamplt (X, Y)

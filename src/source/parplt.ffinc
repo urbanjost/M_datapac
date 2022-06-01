@@ -1,8 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file parplt.3m_datapac.man
 NAME
-   parplt(3f) - [M_datapac:STATISTICS] generate a Pareto probability plot
-   (line printer graph)
+   parplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Pareto probability plot
 
 SYNOPSIS
     Subroutine parplt (X, Y)

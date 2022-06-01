@@ -1,8 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file hfnplt.3m_datapac.man
 NAME
-   hfnplt(3f) - [M_datapac:STATISTICS] generate a half-normal probability
-   plot (line printer graph)
+   hfnplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a half-normal probability
+   plot
 
 SYNOPSIS
     Subroutine hfnplt (X, Y)

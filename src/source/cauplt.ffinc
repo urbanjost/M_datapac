@@ -1,8 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file cauplt.3m_datapac.man
 NAME
-   cauplt(3f) - [M_datapac:STATISTICS] generate a Cauchy probability plot
-   (line printer graph)
+   cauplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Cauchy probability plot
 
 SYNOPSIS
     Subroutine cauplt (X, Y)

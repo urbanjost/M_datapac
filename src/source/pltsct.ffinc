@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file pltsct.3m_datapac.man
 NAME
-   pltsct(3f) - [M_datapac:STATISTICS] generate a line printer plot with
+   pltsct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
    special plot characters for the terminal (71 characters wide)
 
 SYNOPSIS

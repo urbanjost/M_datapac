@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotst.3m_datapac.man
 NAME
-   plotst(3f) - [M_datapac:STATISTICS] generate a line printer plot of
+   plotst(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
    Y vs X for the terminal (71 characters wide)
 
 SYNOPSIS

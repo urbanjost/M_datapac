@@ -1,8 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file dexplt.3m_datapac.man
 NAME
-   dexplt(3f) - [M_datapac:STATISTICS] generate a double exponential
-   probability plot (line printer graph)
+   dexplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a double exponential
+   probability plot 
 
 SYNOPSIS
     Subroutine dexplt (X, Y)

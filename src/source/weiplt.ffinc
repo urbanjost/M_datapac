@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file weiplt.3m_datapac.man
 NAME
-   weiplt(3f) - [M_datapac:STATISTICS] generate a Weibull probability plot
+   weiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Weibull probability plot
    (line printer graph)
 
 SYNOPSIS
