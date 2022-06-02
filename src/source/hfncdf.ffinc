@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file hfncdf.3m_datapac.man
 NAME
-   hfncdf(3f) - [M_datapac:STATISTICS] compute the half-normal cumulative
+   hfncdf(3f) - [M_datapac:STATISTICS:CD] compute the half-normal cumulative
    distribution function
 
 SYNOPSIS

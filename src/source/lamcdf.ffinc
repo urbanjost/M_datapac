@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lamcdf.3m_datapac.man
 NAME
-   lamcdf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda cumulative
+   lamcdf(3f) - [M_datapac:STATISTICS:CD] compute the Tukey-Lambda cumulative
    distribution function
 
 SYNOPSIS

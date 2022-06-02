@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file logppf.3m_datapac.man
 NAME
-   logppf(3f) - [M_datapac:STATISTICS] compute the logistic percent
+   logppf(3f) - [M_datapac:STATISTICS:PP] compute the logistic percent
    point function
 
 SYNOPSIS

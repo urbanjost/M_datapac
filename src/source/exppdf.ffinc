@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file exppdf.3m_datapac.man
 NAME
-   exppdf(3f) - [M_datapac:STATISTICS] compute the exponential probability
+   exppdf(3f) - [M_datapac:STATISTICS:PD] compute the exponential probability
    density function
 
 SYNOPSIS

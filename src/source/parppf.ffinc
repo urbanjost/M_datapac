@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file parppf.3m_datapac.man
 NAME
-   parppf(3f) - [M_datapac:STATISTICS] compute the Pareto percent point function
+   parppf(3f) - [M_datapac:STATISTICS:PP] compute the Pareto percent point function
 
 SYNOPSIS
     Subroutine parppf (X, Y)

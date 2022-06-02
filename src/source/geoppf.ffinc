@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file geoppf.3m_datapac.man
 NAME
-   geoppf(3f) - [M_datapac:STATISTICS] compute the geometric percent
+   geoppf(3f) - [M_datapac:STATISTICS:PP] compute the geometric percent
    point function
 
 SYNOPSIS

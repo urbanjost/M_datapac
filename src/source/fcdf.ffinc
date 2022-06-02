@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file fcdf.3m_datapac.man
 NAME
-   fcdf(3f) - [M_datapac:STATISTICS] compute the F cumulative distribution
+   fcdf(3f) - [M_datapac:STATISTICS:CD] compute the F cumulative distribution
    function
 
 SYNOPSIS

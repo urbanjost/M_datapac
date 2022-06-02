@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file logcdf.3m_datapac.man
 NAME
-   logcdf(3f) - [M_datapac:STATISTICS] compute the logistic cumulative
+   logcdf(3f) - [M_datapac:STATISTICS:CD] compute the logistic cumulative
    distribution function
 
 SYNOPSIS

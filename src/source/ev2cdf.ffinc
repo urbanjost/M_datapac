@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file ev2cdf.3m_datapac.man
 NAME
-   ev2cdf(3f) - [M_datapac:STATISTICS] compute the extreme value type 2
+   ev2cdf(3f) - [M_datapac:STATISTICS:CD] compute the extreme value type 2
    (Frechet) cumulative distribution function
 
 SYNOPSIS

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file bincdf.3m_datapac.man
 NAME
-   bincdf(3f) - [M_datapac:STATISTICS] compute the binomial cumulative
+   bincdf(3f) - [M_datapac:STATISTICS:CD] compute the binomial cumulative
    distribution function
 
 SYNOPSIS

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file chsppf.3m_datapac.man
 NAME
-   chsppf(3f) - [M_datapac:STATISTICS] compute the chi-square percent
+   chsppf(3f) - [M_datapac:STATISTICS:PP] compute the chi-square percent
    point function
 
 SYNOPSIS

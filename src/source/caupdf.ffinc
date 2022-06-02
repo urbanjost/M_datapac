@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file caupdf.3m_datapac.man
 NAME
-   caupdf(3f) - [M_datapac:STATISTICS] compute the Cauchy probability
+   caupdf(3f) - [M_datapac:STATISTICS:PD] compute the Cauchy probability
    density function
 
 SYNOPSIS

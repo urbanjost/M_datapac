@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file cauppf.3m_datapac.man
 NAME
-   cauppf(3f) - [M_datapac:STATISTICS] compute the Cauchy percent point
+   cauppf(3f) - [M_datapac:STATISTICS:PP] compute the Cauchy percent point
    function
 
 SYNOPSIS

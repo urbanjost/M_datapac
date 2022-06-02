@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file unicdf.3m_datapac.man
 NAME
-   unicdf(3f) - [M_datapac:STATISTICS] compute the Uniform cumulative
+   unicdf(3f) - [M_datapac:STATISTICS:CD] compute the Uniform cumulative
    distribution function
 
 SYNOPSIS

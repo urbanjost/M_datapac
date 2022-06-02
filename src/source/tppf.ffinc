@@ -1,9 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tppf.3m_datapac.man
 NAME
-   tppf(3f) - [M_datapac:STATISTICS] This subroutine computes the percent
-   point function value for the student's T distribution with integer
-   degrees of freedom parameter NU.
+   tppf(3f) - [M_datapac:STATISTICS:PP] computes the percent
+   point function value for the student's T distribution 
 
 SYNOPSIS
     Subroutine tppf (X, Y)

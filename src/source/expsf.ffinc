@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file expsf.3m_datapac.man
 NAME
-   expsf(3f) - [M_datapac:STATISTICS] compute the exponential sparsity function
+   expsf(3f) - [M_datapac:STATISTICS:SF] compute the exponential sparsity function
 
 SYNOPSIS
     Subroutine expsf (X, Y)

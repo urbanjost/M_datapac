@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file poicdf.3m_datapac.man
 NAME
-   poicdf(3f) - [M_datapac:STATISTICS] compute the Poisson cumulative
+   poicdf(3f) - [M_datapac:STATISTICS:CD] compute the Poisson cumulative
    distribution function
 
 SYNOPSIS

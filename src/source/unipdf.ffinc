@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file unipdf.3m_datapac.man
 NAME
-   unipdf(3f) - [M_datapac:STATISTICS] compute the Uniform probability
+   unipdf(3f) - [M_datapac:STATISTICS:PD] compute the Uniform probability
    density function
 
 SYNOPSIS

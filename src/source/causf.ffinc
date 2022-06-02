@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file causf.3m_datapac.man
 NAME
-   causf(3f) - [M_datapac:STATISTICS] compute the Cauchy sparsity function
+   causf(3f) - [M_datapac:STATISTICS:SF] compute the Cauchy sparsity function
 
 SYNOPSIS
     Subroutine causf (X, Y)

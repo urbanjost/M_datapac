@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file binppf.3m_datapac.man
 NAME
-   binppf(3f) - [M_datapac:STATISTICS] compute the binomial percent
+   binppf(3f) - [M_datapac:STATISTICS:PP] compute the binomial percent
    point function
 
 SYNOPSIS

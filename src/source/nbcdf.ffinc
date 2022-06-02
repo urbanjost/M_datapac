@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file nbcdf.3m_datapac.man
 NAME
-   nbcdf(3f) - [M_datapac:STATISTICS] compute the negative binomial
+   nbcdf(3f) - [M_datapac:STATISTICS:CD] compute the negative binomial
    cumulative distribution function
 
 SYNOPSIS

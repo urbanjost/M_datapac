@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file logsf.3m_datapac.man
 NAME
-   logsf(3f) - [M_datapac:STATISTICS] compute the logistic sparsity function
+   logsf(3f) - [M_datapac:STATISTICS:SF] compute the logistic sparsity function
 
 SYNOPSIS
     Subroutine logsf (X, Y)

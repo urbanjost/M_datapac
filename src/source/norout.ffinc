@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file norout.3m_datapac.man
 NAME
-   norout(3f) - [M_datapac:STATISTICS] Performs a normal outlier analysis
+   norout(3f) - [M_datapac:STATISTICS:CD] Performs a normal outlier analysis
                 on the data in the input vector X.
 
 SYNOPSIS

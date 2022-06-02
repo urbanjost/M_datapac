@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file poippf.3m_datapac.man
 NAME
-   poippf(3f) - [M_datapac:STATISTICS] compute the Poisson percent
+   poippf(3f) - [M_datapac:STATISTICS:PP] compute the Poisson percent
    point function
 
 SYNOPSIS

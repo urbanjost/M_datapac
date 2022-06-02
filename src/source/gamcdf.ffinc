@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file gamcdf.3m_datapac.man
 NAME
-   gamcdf(3f) - [M_datapac:STATISTICS] compute the gamma cumulative
+   gamcdf(3f) - [M_datapac:STATISTICS:CD] compute the gamma cumulative
    distribution function
 
 SYNOPSIS

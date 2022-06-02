@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file expppf.3m_datapac.man
 NAME
-   expppf(3f) - [M_datapac:STATISTICS] compute the exponential percent
+   expppf(3f) - [M_datapac:STATISTICS:PP] compute the exponential percent
    point function
 
 SYNOPSIS

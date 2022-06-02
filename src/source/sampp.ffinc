@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file sampp.3m_datapac.man
 NAME
-   sampp(3f) - [M_datapac:STATISTICS] compute the sample 100P percent
+   sampp(3f) - [M_datapac:STATISTICS:PP] compute the sample 100P percent
    point (i.e., percentile)
 
 SYNOPSIS

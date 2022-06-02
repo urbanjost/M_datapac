@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lampdf.3m_datapac.man
 NAME
-   lampdf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda
+   lampdf(3f) - [M_datapac:STATISTICS:PD] compute the Tukey-Lambda
    probability density function
 
 SYNOPSIS

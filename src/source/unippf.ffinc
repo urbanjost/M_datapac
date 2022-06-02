@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file unippf.3m_datapac.man
 NAME
-   unippf(3f) - [M_datapac:STATISTICS] compute the Uniform percent
+   unippf(3f) - [M_datapac:STATISTICS:PP] compute the Uniform percent
    point function
 
 SYNOPSIS

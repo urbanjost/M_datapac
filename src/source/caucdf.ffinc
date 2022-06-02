@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file caucdf.3m_datapac.man
 NAME
-   caucdf(3f) - [M_datapac:STATISTICS] compute the Cauchy cumulative
+   caucdf(3f) - [M_datapac:STATISTICS:CD] compute the Cauchy cumulative
    distribution function
 
 SYNOPSIS

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file geocdf.3m_datapac.man
 NAME
-   geocdf(3f) - [M_datapac:STATISTICS] compute the geometric cumulative
+   geocdf(3f) - [M_datapac:STATISTICS:CD] compute the geometric cumulative
    distribution function
 
 SYNOPSIS

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file nbppf.3m_datapac.man
 NAME
-   nbppf(3f) - [M_datapac:STATISTICS] compute the negative binomial
+   nbppf(3f) - [M_datapac:STATISTICS:PP] compute the negative binomial
    percent point function
 
 SYNOPSIS

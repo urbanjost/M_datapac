@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file dexpdf.3m_datapac.man
 NAME
-   dexpdf(3f) - [M_datapac:STATISTICS] compute the double exponential
+   dexpdf(3f) - [M_datapac:STATISTICS:PD] compute the double exponential
    probability density function
 
 SYNOPSIS

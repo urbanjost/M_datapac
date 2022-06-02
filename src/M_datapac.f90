@@ -330,7 +330,7 @@ integer i , ip1 , ipr , iwrite , n , nm1
 end subroutine autoco
 !>
 !!##NAME
-!!    betran(3f) - [M_datapac:STATISTICS] generate beta random numbers
+!!    betran(3f) - [M_datapac:STATISTICS:RANDOM] generate beta random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -552,7 +552,7 @@ INTEGER ::  i , ipr , Iseed , N
 END SUBROUTINE BETRAN
 !>
 !!##NAME
-!!    bincdf(3f) - [M_datapac:STATISTICS] compute the binomial cumulative
+!!    bincdf(3f) - [M_datapac:STATISTICS:CD] compute the binomial cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -914,7 +914,7 @@ REAL(kind=wp) :: an , Cdf , del , fintx , P , X
 END SUBROUTINE BINCDF
 !>
 !!##NAME
-!!    binppf(3f) - [M_datapac:STATISTICS] compute the binomial percent
+!!    binppf(3f) - [M_datapac:STATISTICS:PP] compute the binomial percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -1592,7 +1592,7 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 99999 END SUBROUTINE BINRAN
 !>
 !!##NAME
-!!    caucdf(3f) - [M_datapac:STATISTICS] compute the Cauchy cumulative
+!!    caucdf(3f) - [M_datapac:STATISTICS:CD] compute the Cauchy cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -1694,7 +1694,7 @@ REAL(kind=wp) :: Cdf , pi , X
       END SUBROUTINE CAUCDF
 !>
 !!##NAME
-!!    caupdf(3f) - [M_datapac:STATISTICS] compute the Cauchy probability
+!!    caupdf(3f) - [M_datapac:STATISTICS:PD] compute the Cauchy probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -2002,7 +2002,7 @@ REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
 END SUBROUTINE CAUPLT
 !>
 !!##NAME
-!!    cauppf(3f) - [M_datapac:STATISTICS] compute the Cauchy percent point
+!!    cauppf(3f) - [M_datapac:STATISTICS:PP] compute the Cauchy percent point
 !!    function
 !!
 !!##SYNOPSIS
@@ -2270,7 +2270,7 @@ REAL(kind=wp) :: arg , pi , X
       END SUBROUTINE CAURAN
 !>
 !!##NAME
-!!    causf(3f) - [M_datapac:STATISTICS] compute the Cauchy sparsity function
+!!    causf(3f) - [M_datapac:STATISTICS:SF] compute the Cauchy sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -2393,7 +2393,7 @@ REAL(kind=wp) :: arg , P , pi , Sf
       END SUBROUTINE CAUSF
 !>
 !!##NAME
-!!    chscdf(3f) - [M_datapac:STATISTICS] compute the chi-square cumulative
+!!    chscdf(3f) - [M_datapac:STATISTICS:CD] compute the chi-square cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -2919,7 +2919,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
       END SUBROUTINE CHSPLT
 !>
 !!##NAME
-!!    chsppf(3f) - [M_datapac:STATISTICS] compute the chi-square percent
+!!    chsppf(3f) - [M_datapac:STATISTICS:PP] compute the chi-square percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -5003,7 +5003,7 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
       END SUBROUTINE DEMOD
 !>
 !!##NAME
-!!    dexcdf(3f) - [M_datapac:STATISTICS] compute the double exponential
+!!    dexcdf(3f) - [M_datapac:STATISTICS:CD] compute the double exponential
 !!    cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -5105,7 +5105,7 @@ REAL(kind=wp) :: Cdf , X
       END SUBROUTINE DEXCDF
 !>
 !!##NAME
-!!    dexpdf(3f) - [M_datapac:STATISTICS] compute the double exponential
+!!    dexpdf(3f) - [M_datapac:STATISTICS:PD] compute the double exponential
 !!    probability density function
 !!
 !!##SYNOPSIS
@@ -5416,7 +5416,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
       END SUBROUTINE DEXPLT
 !>
 !!##NAME
-!!    dexppf(3f) - [M_datapac:STATISTICS] compute the double exponential
+!!    dexppf(3f) - [M_datapac:STATISTICS:PP] compute the double exponential
 !!    percent point function
 !!
 !!##SYNOPSIS
@@ -5692,7 +5692,7 @@ REAL(kind=wp) :: q , X
 END SUBROUTINE DEXRAN
 !>
 !!##NAME
-!!    dexsf(3f) - [M_datapac:STATISTICS] compute the double exponential
+!!    dexsf(3f) - [M_datapac:STATISTICS:SF] compute the double exponential
 !!    sparsity function
 !!
 !!##SYNOPSIS
@@ -6774,7 +6774,7 @@ REAL(kind=wp) :: A , B , Dotpro , Parpro
       END SUBROUTINE DOT
 !>
 !!##NAME
-!!    ev1cdf(3f) - [M_datapac:STATISTICS] compute the extreme value type 1
+!!    ev1cdf(3f) - [M_datapac:STATISTICS:CD] compute the extreme value type 1
 !!    (Gumbel) cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -7086,7 +7086,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
       END SUBROUTINE EV1PLT
 !>
 !!##NAME
-!!    ev1ppf(3f) - [M_datapac:STATISTICS] compute the extreme value type 1
+!!    ev1ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 1
 !!    (Gumbel) percent point function
 !!
 !!##SYNOPSIS
@@ -7343,7 +7343,7 @@ REAL(kind=wp) :: X
       END SUBROUTINE EV1RAN
 !>
 !!##NAME
-!!    ev2cdf(3f) - [M_datapac:STATISTICS] compute the extreme value type 2
+!!    ev2cdf(3f) - [M_datapac:STATISTICS:CD] compute the extreme value type 2
 !!    (Frechet) cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -7704,7 +7704,7 @@ REAL(kind=wp) :: yslope
       END SUBROUTINE EV2PLT
 !>
 !!##NAME
-!!    ev2ppf(3f) - [M_datapac:STATISTICS] compute the extreme value type 2
+!!    ev2ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 2
 !!    (Frechet) percent point function
 !!
 !!##SYNOPSIS
@@ -7981,7 +7981,7 @@ REAL(kind=wp) :: Gamma , X
       END SUBROUTINE EV2RAN
 !>
 !!##NAME
-!!    expcdf(3f) - [M_datapac:STATISTICS] compute the exponential cumulative
+!!    expcdf(3f) - [M_datapac:STATISTICS:CD] compute the exponential cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -8092,7 +8092,7 @@ REAL(kind=wp) :: Cdf , X
       END SUBROUTINE EXPCDF
 !>
 !!##NAME
-!!    exppdf(3f) - [M_datapac:STATISTICS] compute the exponential probability
+!!    exppdf(3f) - [M_datapac:STATISTICS:PD] compute the exponential probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -8410,7 +8410,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
       END SUBROUTINE EXPPLT
 !>
 !!##NAME
-!!    expppf(3f) - [M_datapac:STATISTICS] compute the exponential percent
+!!    expppf(3f) - [M_datapac:STATISTICS:PP] compute the exponential percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -8673,7 +8673,7 @@ REAL(kind=wp) :: X
       END SUBROUTINE EXPRAN
 !>
 !!##NAME
-!!    expsf(3f) - [M_datapac:STATISTICS] compute the exponential sparsity function
+!!    expsf(3f) - [M_datapac:STATISTICS:SF] compute the exponential sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -9272,7 +9272,7 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 99999 END SUBROUTINE EXTREM
 !>
 !!##NAME
-!!    fcdf(3f) - [M_datapac:STATISTICS] compute the F cumulative distribution
+!!    fcdf(3f) - [M_datapac:STATISTICS:CD] compute the F cumulative distribution
 !!    function
 !!
 !!##SYNOPSIS
@@ -10461,7 +10461,7 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
       END SUBROUTINE FREQ
 !>
 !!##NAME
-!!    gamcdf(3f) - [M_datapac:STATISTICS] compute the gamma cumulative
+!!    gamcdf(3f) - [M_datapac:STATISTICS:CD] compute the gamma cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -11077,7 +11077,7 @@ REAL(kind=wp) :: yslope
       END SUBROUTINE GAMPLT
 !>
 !!##NAME
-!!    gamppf(3f) - [M_datapac:STATISTICS] compute the gamma percent point function
+!!    gamppf(3f) - [M_datapac:STATISTICS:PP] compute the gamma percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -11570,7 +11570,7 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
       END SUBROUTINE GAMRAN
 !>
 !!##NAME
-!!    geocdf(3f) - [M_datapac:STATISTICS] compute the geometric cumulative
+!!    geocdf(3f) - [M_datapac:STATISTICS:CD] compute the geometric cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -11998,7 +11998,7 @@ REAL(kind=wp) :: yslope
       END SUBROUTINE GEOPLT
 !>
 !!##NAME
-!!    geoppf(3f) - [M_datapac:STATISTICS] compute the geometric percent
+!!    geoppf(3f) - [M_datapac:STATISTICS:PP] compute the geometric percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -12370,7 +12370,7 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
       END SUBROUTINE GEORAN
 !>
 !!##NAME
-!!    hfncdf(3f) - [M_datapac:STATISTICS] compute the half-normal cumulative
+!!    hfncdf(3f) - [M_datapac:STATISTICS:CD] compute the half-normal cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -12709,7 +12709,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
       END SUBROUTINE HFNPLT
 !>
 !!##NAME
-!!    hfnppf(3f) - [M_datapac:STATISTICS] compute the half-normal percent
+!!    hfnppf(3f) - [M_datapac:STATISTICS:PP] compute the half-normal percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -13496,7 +13496,7 @@ REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
       END SUBROUTINE INVXWX
 !>
 !!##NAME
-!!    lamcdf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda cumulative
+!!    lamcdf(3f) - [M_datapac:STATISTICS:CD] compute the Tukey-Lambda cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -13673,7 +13673,7 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 99999 END SUBROUTINE LAMCDF
 !>
 !!##NAME
-!!    lampdf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda
+!!    lampdf(3f) - [M_datapac:STATISTICS:PD] compute the Tukey-Lambda
 !!    probability density function
 !!
 !!##SYNOPSIS
@@ -14052,7 +14052,7 @@ REAL(kind=wp) :: yslope
       END SUBROUTINE LAMPLT
 !>
 !!##NAME
-!!    lamppf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda percent
+!!    lamppf(3f) - [M_datapac:STATISTICS:PP] compute the Tukey-Lambda percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -14477,7 +14477,7 @@ REAL(kind=wp) :: Alamba , P , Sf
 99999 END SUBROUTINE LAMSF
 !>
 !!##NAME
-!!    lgncdf(3f) - [M_datapac:STATISTICS] compute the lognormal cumulative
+!!    lgncdf(3f) - [M_datapac:STATISTICS:CD] compute the lognormal cumulative
 !!                 distribution function
 !!
 !!##SYNOPSIS
@@ -14599,7 +14599,7 @@ REAL(kind=wp) :: arg , Cdf , X
       END SUBROUTINE LGNCDF
 !>
 !!##NAME
-!!    lgnplt(3f) - [M_datapac:STATISTICS] generates a lognormal probability plot
+!!    lgnplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a lognormal probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -14814,7 +14814,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
       END SUBROUTINE LGNPLT
 !>
 !!##NAME
-!!    lgnppf(3f) - [M_datapac:STATISTICS] compute the lognormal percent
+!!    lgnppf(3f) - [M_datapac:STATISTICS:PP] compute the lognormal percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -15341,7 +15341,7 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
       END SUBROUTINE LOC
 !>
 !!##NAME
-!!    logcdf(3f) - [M_datapac:STATISTICS] compute the logistic cumulative
+!!    logcdf(3f) - [M_datapac:STATISTICS:CD] compute the logistic cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -15445,7 +15445,7 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE LOGCDF
 !>
 !!##NAME
-!!    logpdf(3f) - [M_datapac:STATISTICS] compute the logistic probability
+!!    logpdf(3f) - [M_datapac:STATISTICS:PD] compute the logistic probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -15750,7 +15750,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
       END SUBROUTINE LOGPLT
 !>
 !!##NAME
-!!    logppf(3f) - [M_datapac:STATISTICS] compute the logistic percent
+!!    logppf(3f) - [M_datapac:STATISTICS:PP] compute the logistic percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -16013,7 +16013,7 @@ REAL(kind=wp) :: X
       END SUBROUTINE LOGRAN
 !>
 !!##NAME
-!!    logsf(3f) - [M_datapac:STATISTICS] compute the logistic sparsity function
+!!    logsf(3f) - [M_datapac:STATISTICS:SF] compute the logistic sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -17276,7 +17276,7 @@ REAL(kind=wp) :: hold , X , Y
       END SUBROUTINE MOVE
 !>
 !!##NAME
-!!    nbcdf(3f) - [M_datapac:STATISTICS] compute the negative binomial
+!!    nbcdf(3f) - [M_datapac:STATISTICS:CD] compute the negative binomial
 !!    cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -17629,7 +17629,7 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
       END SUBROUTINE NBCDF
 !>
 !!##NAME
-!!    nbppf(3f) - [M_datapac:STATISTICS] compute the negative binomial
+!!    nbppf(3f) - [M_datapac:STATISTICS:PP] compute the negative binomial
 !!    percent point function
 !!
 !!##SYNOPSIS
@@ -18323,7 +18323,7 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 99999 END SUBROUTINE NBRAN
 !>
 !!##NAME
-!!    norcdf(3f) - [M_datapac:STATISTICS] compute the normal cumulative
+!!    norcdf(3f) - [M_datapac:STATISTICS:CD] compute the normal cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -18433,7 +18433,7 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
       END SUBROUTINE NORCDF
 !>
 !!##NAME
-!!    norout(3f) - [M_datapac:STATISTICS] Performs a normal outlier analysis
+!!    norout(3f) - [M_datapac:STATISTICS:CD] Performs a normal outlier analysis
 !!                 on the data in the input vector X.
 !!
 !!##SYNOPSIS
@@ -18945,7 +18945,7 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
       END SUBROUTINE NOROUT
 !>
 !!##NAME
-!!    norpdf(3f) - [M_datapac:STATISTICS] compute the normal probability
+!!    norpdf(3f) - [M_datapac:STATISTICS:PD] compute the normal probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -19256,7 +19256,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
       END SUBROUTINE NORPLT
 !>
 !!##NAME
-!!    norppf(3f) - [M_datapac:STATISTICS] compute the normal percent point function
+!!    norppf(3f) - [M_datapac:STATISTICS:PP] compute the normal percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -19590,7 +19590,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       END SUBROUTINE NORRAN
 !>
 !!##NAME
-!!    norsf(3f) - [M_datapac:STATISTICS] compute the normal sparsity function
+!!    norsf(3f) - [M_datapac:STATISTICS:SF] compute the normal sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -19714,7 +19714,7 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
       END SUBROUTINE NORSF
 !>
 !!##NAME
-!!    parcdf(3f) - [M_datapac:STATISTICS] compute the Pareto cumulative
+!!    parcdf(3f) - [M_datapac:STATISTICS:CD] compute the Pareto cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -20079,7 +20079,7 @@ REAL(kind=wp) :: yslope
       END SUBROUTINE PARPLT
 !>
 !!##NAME
-!!    parppf(3f) - [M_datapac:STATISTICS] compute the Pareto percent point function
+!!    parppf(3f) - [M_datapac:STATISTICS:PP] compute the Pareto percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -28408,7 +28408,7 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
 END SUBROUTINE PLTXXT
 !>
 !!##NAME
-!!    poicdf(3f) - [M_datapac:STATISTICS] compute the Poisson cumulative
+!!    poicdf(3f) - [M_datapac:STATISTICS:CD] compute the Poisson cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -28973,7 +28973,7 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
       END SUBROUTINE POIPLT
 !>
 !!##NAME
-!!    poippf(3f) - [M_datapac:STATISTICS] compute the Poisson percent
+!!    poippf(3f) - [M_datapac:STATISTICS:PP] compute the Poisson percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -33223,7 +33223,7 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
       END SUBROUTINE RUNS
 !>
 !!##NAME
-!!    sampp(3f) - [M_datapac:STATISTICS] compute the sample 100P percent
+!!    sampp(3f) - [M_datapac:STATISTICS:PP] compute the sample 100P percent
 !!    point (i.e., percentile)
 !!
 !!##SYNOPSIS
@@ -36920,7 +36920,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
       END SUBROUTINE TAIL
 !>
 !!##NAME
-!!    tcdf(3f) - [M_datapac:STATISTICS] computes the cumulative distribution
+!!    tcdf(3f) - [M_datapac:STATISTICS:CD] computes the cumulative distribution
 !!    function value for student's t distribution with integer degrees of
 !!    freedom NU.
 !!
@@ -38269,9 +38269,8 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 END SUBROUTINE TPLT
 !>
 !!##NAME
-!!    tppf(3f) - [M_datapac:STATISTICS] This subroutine computes the percent
-!!    point function value for the student's T distribution with integer
-!!    degrees of freedom parameter NU.
+!!    tppf(3f) - [M_datapac:STATISTICS:PP] computes the percent
+!!    point function value for the student's T distribution
 !!
 !!##SYNOPSIS
 !!
@@ -38970,7 +38969,7 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
       END SUBROUTINE TRIM
 !>
 !!##NAME
-!!    unicdf(3f) - [M_datapac:STATISTICS] compute the Uniform cumulative
+!!    unicdf(3f) - [M_datapac:STATISTICS:CD] compute the Uniform cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -39247,7 +39246,7 @@ REAL(kind=wp) :: ai , an , gam , X
       END SUBROUTINE UNIMED
 !>
 !!##NAME
-!!    unipdf(3f) - [M_datapac:STATISTICS] compute the Uniform probability
+!!    unipdf(3f) - [M_datapac:STATISTICS:PD] compute the Uniform probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -39560,7 +39559,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
       END SUBROUTINE UNIPLT
 !>
 !!##NAME
-!!    unippf(3f) - [M_datapac:STATISTICS] compute the Uniform percent
+!!    unippf(3f) - [M_datapac:STATISTICS:PP] compute the Uniform percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -39988,7 +39987,7 @@ INTEGER m(17)
 END SUBROUTINE UNIRAN
 !>
 !!##NAME
-!!    unisf(3f) - [M_datapac:STATISTICS] compute the Uniform sparsity function
+!!    unisf(3f) - [M_datapac:STATISTICS:SF] compute the Uniform sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -40644,7 +40643,7 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
       END SUBROUTINE WEIB
 !>
 !!##NAME
-!!    weicdf(3f) - [M_datapac:STATISTICS] compute the Weibull cumulative
+!!    weicdf(3f) - [M_datapac:STATISTICS:CD] compute the Weibull cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -41009,7 +41008,7 @@ REAL(kind=wp) :: yslope
       END SUBROUTINE WEIPLT
 !>
 !!##NAME
-!!    weippf(3f) - [M_datapac:STATISTICS] compute the Weibull percent
+!!    weippf(3f) - [M_datapac:STATISTICS:PP] compute the Weibull percent
 !!    point function
 !!
 !!##SYNOPSIS

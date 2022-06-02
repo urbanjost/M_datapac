@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file dexcdf.3m_datapac.man
 NAME
-   dexcdf(3f) - [M_datapac:STATISTICS] compute the double exponential
+   dexcdf(3f) - [M_datapac:STATISTICS:CD] compute the double exponential
    cumulative distribution function
 
 SYNOPSIS
