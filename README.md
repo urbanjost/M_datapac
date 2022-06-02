@@ -248,10 +248,9 @@ The following subroutines are available in M_datapac:
      descriptions of the man-pages is in
      [BOOK_M_datapac](https://urbanjost.github.io/M_datapac/BOOK_M_datapac.html).
 
-   - There are man-pages in the repository download in the docs/ directory
-     that may be installed on ULS (Unix-Like Systems).
-
    - ![man-pages](docs/images/manpages.gif)
+     There are man-pages in the repository download in the docs/ directory
+     that may be installed on ULS (Unix-Like Systems) 
       + [manpages.zip](https://urbanjost.github.io/M_datapac/manpages.zip)
       + [manpages.tgz](https://urbanjost.github.io/M_datapac/manpages.tgz)
 
