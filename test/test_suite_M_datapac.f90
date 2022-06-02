@@ -9,6 +9,7 @@ use M_verify, only : unit_check_start,unit_check,unit_check_done,unit_check_good
 use M_verify, only : unit_check_level
 use M_verify, only : unit_check_command, unit_check_keep_going, unit_check_level, unit_check_stop
 use M_verify,   only : unit_check_command, unit_check_keep_going, unit_check_level
+use M_datapac
 !use M_test_suite_M_anything
 !use M_anything, only : anyinteger_to_string, anyscalar_to_int64
 !use M_anything, only : anyscalar_to_real, anyscalar_to_double, anyscalar_to_real128
@@ -1205,16 +1206,55 @@ implicit none
 end subroutine test_skipr
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_sort()
-implicit none
+integer,parameter            :: isz=20   
+real                         :: aa(isz)
+real                         :: bb(isz)
+integer                      :: i
+integer                      :: ibad
+   ibad=0
    call unit_check_start('sort',msg='')
-   !!call unit_check('sort', 0.eq.0, 'checking',100)
+   call random_seed()
+   CALL RANDOM_NUMBER(aa)
+   aa=aa*450000.0
+   bb=real([(i,i=1,isz)])
+   call sort(aa,isz,bb)
+   do i=1,isz-1
+      if(bb(i).gt.bb(i+1))then
+         write(*,*)'Error in sorting reals small to large ',i,bb(i),bb(i+1)
+         ibad=ibad+1
+      endif
+   enddo
+   call unit_check('sort', ibad.eq.0, 'checking',100)
    call unit_check_done('sort',msg='')
 end subroutine test_sort
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_sortc()
-implicit none
+integer,parameter            :: isz=2000
+real                         :: aa(isz)
+real                         :: bb(isz)
+real                         :: cc(isz)
+real                         :: dd(isz)
+real                         :: cc2(isz)
+real                         :: dd2(isz)
+integer                      :: i
+integer                      :: ibad
+   ibad=0
    call unit_check_start('sortc',msg='')
-   !!call unit_check('sortc', 0.eq.0, 'checking',100)
+   call random_seed()
+   CALL RANDOM_NUMBER(aa)
+   aa=aa*450000.0
+   bb=real([(i,i=1,isz)])
+   call sortc(aa,bb,size(aa),cc,dd)
+   do i=1,isz-1 ! checking if real values are sorted
+      if(cc(i).gt.cc(i+1))then
+         write(*,*)'Error in sorting reals small to large ',i,cc(i),cc(i+1)
+         ibad=ibad+1
+      endif
+   enddo
+   call unit_check('sortc', ibad.eq.0, 'checking ascending')
+   call sortc(dd,cc,isz,dd2,cc2) ! put dd and cc back in original order
+   call unit_check('sortc', all(cc2.eq.aa), 'checking reversed')
+   call unit_check('sortc', all(dd2.eq.bb), 'checking reversed')
    call unit_check_done('sortc',msg='')
 end subroutine test_sortc
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT

@@ -5,24 +5,33 @@ NAME
    also return the positions in the original vector
 
 SYNOPSIS
-    Subroutine sort (X, Y)
+    SUBROUTINE SORT(X,N,Y)
 
-     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-   Real(kind=wp) :: (In)                      ::  Y
-
-   Where ${TYPE}(kind=${KIND}) may be
-
-      o Real(kind=real32)
-      o Real(kind=real64)
-      o Integer(kind=int32)
-      o Character(kind=selected_char_kind("DEFAULT"),len=*)
+     real,intent(in)    :: x(:)
+     integer,intent(in) :: n
+     real,intent(out)   :: y(:)
 
 DESCRIPTION
-  Description
+
+   This subroutine sorts (in ascending order) the N elements of the
+   single precision vector X using the binary sort algorithm and puts
+   the resulting N sorted values into the single precision vector Y.
 
 OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT
+    X  The single precision vector of
+       observations to be sorted.
+       The input vector X remains unaltered.
+
+    N  The integer number of observations
+       in the vector X.
+
+OUTPUT
+
+    Y  The single precision vector
+       into which the sorted data values
+       from X will be placed in
+       ascending order.
 
 EXAMPLES
   Sample program:
@@ -30,8 +39,26 @@ EXAMPLES
    program demo_sort
    use M_datapac, only : sort
    implicit none
-   character(len=*),parameter ::  g='(*(g0,1x))'
-   ! call sort(x,y)
+   integer,parameter            :: isz=20
+   real                         :: aa(isz)
+   real                         :: bb(isz)
+   integer                      :: i
+      write(*,*)'initializing array with ',isz,' random numbers'
+      call random_seed()
+      CALL RANDOM_NUMBER(aa)
+      aa=aa*450000.0
+      bb=real([(i,i=1,isz)])
+
+      call sort(aa,isz,bb) ! sort data
+
+      write(*,*)'checking if real values are sorted(3f)'
+      do i=1,isz-1
+         if(bb(i).gt.bb(i+1))then
+            write(*,*)'Error in sorting reals small to large ',i,bb(i),bb(i+1)
+         endif
+      enddo
+     write(*,'(2(g0,1x))')'ORIGINAL','SORTED',(aa(i),bb(i),i=1,isz)
+
    end program demo_sort
 
   Results:
@@ -39,40 +66,29 @@ EXAMPLES
 AUTHOR
    The original DATAPAC library was written by James Filliben of the Statistical
    Engineering Division, National Institute of Standards and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
+REFERENCES
+   1. CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
+   2. CACM JANUARY 1970, PAGE 54.
+   3. CACM OCTOBER 1970, PAGE 624.
+   1. JACM JANUARY 1961, PAGE 41.
+
 LICENSE
    CC0-1.0
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==sort.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SORT(X,N,Y)
-      IMPLICIT NONE
-!*--SORT27546
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: amed , hold , tt , X , Y
-      INTEGER i , il , ip1 , ipr , iu , j , jmi , jmk , k , l , lmi ,   &
-     &        m , mid , N , nm1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SORT
-!
-!     PURPOSE--THIS SUBROUTINE SORTS (IN ASCENDING ORDER)
-!              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X
-!              AND PUTS THE RESULTING N SORTED VALUES INTO THE
-!              SINGLE PRECISION VECTOR Y.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                OBSERVATIONS TO BE SORTED.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
-!                                INTO WHICH THE SORTED DATA VALUES
-!                                FROM X WILL BE PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
-!             CONTAINING THE SORTED
-!             (IN ASCENDING ORDER) VALUES
-!             OF THE SINGLE PRECISION VECTOR X.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+SUBROUTINE SORT(X,N,Y)
+IMPLICIT NONE
+
+REAL(kind=wp) :: amed, hold, tt, X, Y
+integer i, il, ip1, ipr, iu, j, jmi, jmk, k, l, lmi,   m, mid, n, nm1
+DIMENSION X(:), Y(:)
+DIMENSION iu(36), il(36)
+
 !     RESTRICTIONS--THE DIMENSIONS OF THE VECTORS IL AND IU
 !                   (DEFINED AND USED INTERNALLY WITHIN
 !                   THIS SUBROUTINE) DICTATE THE MAXIMUM
@@ -92,17 +108,13 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
 !                   (IN LIGHT OF THE ABOVE, NO CHECK OF THE
 !                   UPPER LIMIT OF N HAS BEEN INCORPORATED
 !                   INTO THIS SUBROUTINE.)
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--THE SMALLEST ELEMENT OF THE VECTOR X
 !              WILL BE PLACED IN THE FIRST POSITION
 !              OF THE VECTOR Y,
 !              THE SECOND SMALLEST ELEMENT IN THE VECTOR X
 !              WILL BE PLACED IN THE SECOND POSITION
 !              OF THE VECTOR Y, ETC.
-!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     COMMENT--IF THE ANALYST DESIRES A SORT 'IN PLACE',
 !              THIS IS DONE BY HAVING THE SAME
 !              OUTPUT VECTOR AS INPUT VECTOR IN THE CALLING SEQUENCE.
@@ -128,23 +140,10 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
 !                N = 1000               .141 SEC         4.332 SEC
 !                N = 3000               .476 SEC        37.683 SEC
 !                N = 10000             1.887 SEC      NOT COMPUTED
-!     REFERENCES--CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
-!                 BY RICHARD C. SINGLETON).
-!               --CACM JANUARY 1970, PAGE 54.
-!               --CACM OCTOBER 1970, PAGE 624.
-!               --JACM JANUARY 1961, PAGE 41.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:) , Y(:)
-      DIMENSION iu(36) , il(36)
 !
       ipr = 6
 !
@@ -161,9 +160,7 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
       ELSE
          IF ( N==1 ) THEN
             WRITE (ipr,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORT&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORT SUBROUTINE HAS THE VALUE 1 *****')
             Y(1) = X(1)
             RETURN
          ELSE
@@ -172,9 +169,10 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (ipr,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE SORT   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+99004       FORMAT (' ',&
+            & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORT   SUBROUTINE HAS ALL ELEMENTS =',&
+            & E15.8,&
+            & ' *****')
             DO i = 1 , N
                Y(i) = X(i)
             ENDDO
@@ -275,4 +273,4 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
             ENDDO
          ENDIF
       ENDDO
-      END SUBROUTINE SORT
+END SUBROUTINE SORT

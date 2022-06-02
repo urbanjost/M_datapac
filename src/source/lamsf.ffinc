@@ -1,20 +1,10 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lamsf.3m_datapac.man
 NAME
-   lamsf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda sparsity function
+   lamsf(3f) - [M_datapac:STATISTICS:SF] compute the Tukey-Lambda sparsity function
 
 SYNOPSIS
     Subroutine lamsf (X, Y)
-
-     ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-   Real(kind=wp) :: (In)                      ::  Y
-
-   Where ${TYPE}(kind=${KIND}) may be
-
-      o Real(kind=real32)
-      o Real(kind=real64)
-      o Integer(kind=int32)
-      o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
   Description

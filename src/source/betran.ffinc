@@ -6,8 +6,8 @@ NAME
 SYNOPSIS
     subroutine BETRAN (N,Alpha,Beta,Iseed,X)
 
-REAL(kind=wp) :: Alpha, Beta, X(N)
-      INTEGER ::  Iseed,  N
+      REAL(kind=wp) :: Alpha, Beta, X(N)
+      INTEGER       :: Iseed, N
 
 DESCRIPTION
 
@@ -24,7 +24,7 @@ DESCRIPTION
       standard_deviation=sqrt((ALPHA*BETA)/((ALPHA+BETA)**2)*(ALPHA+BETA+1))
    
    This distribution is defined for all X between 0.0 (inclusively) and 1.0
-   (inclusively).  and has the probability density function
+   (inclusively) and has the probability density function
    
       f(x) = (1/constant) * x**(alpha-1) * (1.0-x)**(beta-1)
    
@@ -32,6 +32,7 @@ DESCRIPTION
    and BETA.
 
 OPTIONS
+
    N      The desired integer number of random numbers to be generated.
 
    ALPHA  The single precision value of the first shape parameter.
@@ -40,6 +41,7 @@ OPTIONS
    BETA   The single precision value of the second shape parameter.
           BETA should be greater than or equal to 1.0.
 OUTPUT
+
    X      A random sample of size N from the beta distribution
           with shape parameter values ALPHA and BETA.
 
@@ -61,10 +63,30 @@ EXAMPLES
 AUTHOR
    The original DATAPAC library was written by James Filliben of the Statistical
    Engineering Division, National Institute of Standards and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
+REFERENCES
+
+  * Greenwood, 'A Fast Generator for Beta-distributed Random Variables',
+    Compstat 1974, Proceedings in Computational Statistics, Vienna,
+    September, 1974, Pages 19-27.
+  
+  * Tocher, The Art of Simulation, 1963, Pages 24-27.
+  
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, Pages 36-37.
+  
+  * Johnson and Kotz, Continuous Univariate Distributions --2, 1970, Pages 37-56.
+  
+  * Hastings and Peacock, Statistical Distributions--A Handbook For
+    Students and Practitioners, 1975, Pages 30-35.
+  
+  * National Bureau of Standards Applied Mathematics Series 55, 1964, Page 952.
+
 $ENDBLOCK
 !     VERSION NUMBER--82.3
 !     ORIGINAL VERSION--NOVEMBER  1975.
@@ -83,32 +105,12 @@ INTEGER ::  i , ipr , Iseed , N
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
-!     REFERENCES--GREENWOOD, 'A FAST GENERATOR FOR
-!                 BETA-DISTRIBUTED RANDOM VARIABLES',
-!                 COMPSTAT 1974, PROCEEDINGS IN
-!                 COMPUTATIONAL STATISTICS, VIENNA,
-!                 SEPTEMBER, 1974, PAGES 19-27.
-!               --TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 24-27.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGES 36-37.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 37-56.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 30-35.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 952.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
 !---------------------------------------------------------------------
-!
       DIMENSION X(:)
-!
       DIMENSION u(10)
-!
 !---------------------------------------------------------------------
 !
 !CCCC CHARACTER*4 IFEEDB

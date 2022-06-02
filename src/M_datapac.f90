@@ -336,8 +336,8 @@ end subroutine autoco
 !!
 !!     subroutine BETRAN (N,Alpha,Beta,Iseed,X)
 !!
-!! REAL(kind=wp) :: Alpha, Beta, X(N)
-!!       INTEGER ::  Iseed,  N
+!!       REAL(kind=wp) :: Alpha, Beta, X(N)
+!!       INTEGER       :: Iseed, N
 !!
 !!##DESCRIPTION
 !!
@@ -354,7 +354,7 @@ end subroutine autoco
 !!       standard_deviation=sqrt((ALPHA*BETA)/((ALPHA+BETA)**2)*(ALPHA+BETA+1))
 !!
 !!    This distribution is defined for all X between 0.0 (inclusively) and 1.0
-!!    (inclusively).  and has the probability density function
+!!    (inclusively) and has the probability density function
 !!
 !!       f(x) = (1/constant) * x**(alpha-1) * (1.0-x)**(beta-1)
 !!
@@ -362,6 +362,7 @@ end subroutine autoco
 !!    and BETA.
 !!
 !!##OPTIONS
+!!
 !!    N      The desired integer number of random numbers to be generated.
 !!
 !!    ALPHA  The single precision value of the first shape parameter.
@@ -370,6 +371,7 @@ end subroutine autoco
 !!    BETA   The single precision value of the second shape parameter.
 !!           BETA should be greater than or equal to 1.0.
 !!##OUTPUT
+!!
 !!    X      A random sample of size N from the beta distribution
 !!           with shape parameter values ALPHA and BETA.
 !!
@@ -392,10 +394,29 @@ end subroutine autoco
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
+!!##REFERENCES
+!!
+!!   * Greenwood, 'A Fast Generator for Beta-distributed Random Variables',
+!!     Compstat 1974, Proceedings in Computational Statistics, Vienna,
+!!     September, 1974, Pages 19-27.
+!!
+!!   * Tocher, The Art of Simulation, 1963, Pages 24-27.
+!!
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Pages 36-37.
+!!
+!!   * Johnson and Kotz, Continuous Univariate Distributions --2, 1970, Pages 37-56.
+!!
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook For
+!!     Students and Practitioners, 1975, Pages 30-35.
+!!
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964, Page 952.
 !     VERSION NUMBER--82.3
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -412,32 +433,12 @@ INTEGER ::  i , ipr , Iseed , N
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
-!     REFERENCES--GREENWOOD, 'A FAST GENERATOR FOR
-!                 BETA-DISTRIBUTED RANDOM VARIABLES',
-!                 COMPSTAT 1974, PROCEEDINGS IN
-!                 COMPUTATIONAL STATISTICS, VIENNA,
-!                 SEPTEMBER, 1974, PAGES 19-27.
-!               --TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 24-27.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGES 36-37.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 37-56.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 30-35.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 952.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
 !---------------------------------------------------------------------
-!
       DIMENSION X(:)
-!
       DIMENSION u(10)
-!
 !---------------------------------------------------------------------
 !
 !CCCC CHARACTER*4 IFEEDB
@@ -558,16 +559,6 @@ END SUBROUTINE BETRAN
 !!##SYNOPSIS
 !!
 !!     Subroutine bincdf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -920,16 +911,6 @@ END SUBROUTINE BINCDF
 !!##SYNOPSIS
 !!
 !!     Subroutine binppf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -1350,16 +1331,6 @@ END SUBROUTINE BINPPF
 !!
 !!     Subroutine binran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -1599,16 +1570,6 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !!
 !!     Subroutine caucdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -1701,16 +1662,6 @@ REAL(kind=wp) :: Cdf , pi , X
 !!
 !!     Subroutine caupdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -1801,16 +1752,6 @@ END SUBROUTINE CAUPDF
 !!##SYNOPSIS
 !!
 !!     Subroutine cauplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -2009,16 +1950,6 @@ END SUBROUTINE CAUPLT
 !!
 !!     Subroutine cauppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -2128,16 +2059,6 @@ REAL(kind=wp) :: arg , P , pi , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine cauran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -2276,16 +2197,6 @@ REAL(kind=wp) :: arg , pi , X
 !!
 !!     Subroutine causf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -2399,16 +2310,6 @@ REAL(kind=wp) :: arg , P , pi , Sf
 !!##SYNOPSIS
 !!
 !!     Subroutine chscdf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -2688,16 +2589,6 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !!
 !!     Subroutine chsplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -2925,16 +2816,6 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !!##SYNOPSIS
 !!
 !!     Subroutine chsppf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -3207,16 +3088,6 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !!
 !!     Subroutine chsran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -3371,16 +3242,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !!##SYNOPSIS
 !!
 !!     Subroutine code (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -3565,16 +3426,6 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 !!
 !!     Subroutine copy (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -3696,16 +3547,6 @@ REAL(kind=wp) :: hold , X , Y
 !!##SYNOPSIS
 !!
 !!     Subroutine corr (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -3891,16 +3732,6 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 !!
 !!     Subroutine count (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -4063,16 +3894,6 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 !!##SYNOPSIS
 !!
 !!     Subroutine decomp (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -4281,16 +4102,6 @@ REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
 !!
 !!     Subroutine define (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -4425,16 +4236,6 @@ REAL(kind=wp) :: X , Xnew
 !!##SYNOPSIS
 !!
 !!     Subroutine delete (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -4648,16 +4449,6 @@ END SUBROUTINE DELETE
 !!##SYNOPSIS
 !!
 !!     Subroutine demod (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -5010,16 +4801,6 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
 !!
 !!     Subroutine dexcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -5111,16 +4892,6 @@ REAL(kind=wp) :: Cdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine dexpdf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -5215,16 +4986,6 @@ REAL(kind=wp) :: arg , Pdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine dexplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -5423,16 +5184,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!
 !!     Subroutine dexppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -5544,16 +5295,6 @@ REAL(kind=wp) :: P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine dexran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -5699,16 +5440,6 @@ END SUBROUTINE DEXRAN
 !!
 !!     Subroutine dexsf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -5821,16 +5552,6 @@ REAL(kind=wp) :: P , Sf
 !!##SYNOPSIS
 !!
 !!     Subroutine discr2 (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -6106,16 +5827,6 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !!
 !!     Subroutine discr3 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -6387,16 +6098,6 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 !!##SYNOPSIS
 !!
 !!     Subroutine discre (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -6701,16 +6402,6 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
 !!
 !!     Subroutine dot (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -6780,16 +6471,6 @@ REAL(kind=wp) :: A , B , Dotpro , Parpro
 !!##SYNOPSIS
 !!
 !!     Subroutine ev1cdf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -6883,16 +6564,6 @@ REAL(kind=wp) :: Cdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine ev1plt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -7093,16 +6764,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!
 !!     Subroutine ev1ppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -7212,16 +6873,6 @@ REAL(kind=wp) :: P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine ev1ran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -7350,16 +7001,6 @@ REAL(kind=wp) :: X
 !!
 !!     Subroutine ev2cdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -7475,16 +7116,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!##SYNOPSIS
 !!
 !!     Subroutine ev2plt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -7711,16 +7342,6 @@ REAL(kind=wp) :: yslope
 !!
 !!     Subroutine ev2ppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -7839,16 +7460,6 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine ev2ran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -7988,16 +7599,6 @@ REAL(kind=wp) :: Gamma , X
 !!
 !!     Subroutine expcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -8099,16 +7700,6 @@ REAL(kind=wp) :: Cdf , X
 !!
 !!     Subroutine exppdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -8209,16 +7800,6 @@ REAL(kind=wp) :: Pdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine expplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -8417,16 +7998,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!
 !!     Subroutine expppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -8536,16 +8107,6 @@ REAL(kind=wp) :: P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine expran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -8679,15 +8240,6 @@ REAL(kind=wp) :: X
 !!
 !!     Subroutine expsf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -8800,16 +8352,6 @@ REAL(kind=wp) :: P , Sf
 !!##SYNOPSIS
 !!
 !!     Subroutine extrem (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -9279,16 +8821,6 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !!
 !!     Subroutine fcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -9683,16 +9215,6 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !!
 !!     Subroutine fourie (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -10048,16 +9570,6 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !!
 !!     Subroutine fran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -10255,16 +9767,6 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
 !!##SYNOPSIS
 !!
 !!     Subroutine freq (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -10468,16 +9970,6 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
 !!
 !!     Subroutine gamcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -10677,16 +10169,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!##SYNOPSIS
 !!
 !!     Subroutine gamplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -11083,16 +10565,6 @@ REAL(kind=wp) :: yslope
 !!
 !!     Subroutine gamppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -11359,16 +10831,6 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!
 !!     Subroutine gamran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -11577,16 +11039,6 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !!
 !!     Subroutine geocdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -11754,16 +11206,6 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
 !!##SYNOPSIS
 !!
 !!     Subroutine geoplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -12005,16 +11447,6 @@ REAL(kind=wp) :: yslope
 !!
 !!     Subroutine geoppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -12181,16 +11613,6 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !!##SYNOPSIS
 !!
 !!     Subroutine georan (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -12377,16 +11799,6 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !!
 !!     Subroutine hfncdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -12500,16 +11912,6 @@ REAL(kind=wp) :: Cdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine hfnplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -12716,16 +12118,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!
 !!     Subroutine hfnppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -12844,16 +12236,6 @@ REAL(kind=wp) :: arg , P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine hfnran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -13018,16 +12400,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!##SYNOPSIS
 !!
 !!     Subroutine hist (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -13351,16 +12723,6 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 !!
 !!     Subroutine invxwx (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -13502,16 +12864,6 @@ REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
 !!##SYNOPSIS
 !!
 !!     Subroutine lamcdf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -13680,16 +13032,6 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !!
 !!     Subroutine lampdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -13825,16 +13167,6 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !!##SYNOPSIS
 !!
 !!     Subroutine lamplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -14059,16 +13391,6 @@ REAL(kind=wp) :: yslope
 !!
 !!     Subroutine lamppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -14199,16 +13521,6 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine lamran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -14341,21 +13653,11 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
       END SUBROUTINE LAMRAN
 !>
 !!##NAME
-!!    lamsf(3f) - [M_datapac:STATISTICS] compute the Tukey-Lambda sparsity function
+!!    lamsf(3f) - [M_datapac:STATISTICS:SF] compute the Tukey-Lambda sparsity function
 !!
 !!##SYNOPSIS
 !!
 !!     Subroutine lamsf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -14484,16 +13786,6 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!
 !!     Subroutine lgncdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -14604,16 +13896,6 @@ REAL(kind=wp) :: arg , Cdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine lgnplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -14821,16 +14103,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!
 !!     Subroutine lgnppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -14946,16 +14218,6 @@ REAL(kind=wp) :: P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine lgnran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -15126,16 +14388,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!##SYNOPSIS
 !!
 !!     Subroutine loc (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -15348,16 +14600,6 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 !!
 !!     Subroutine logcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -15452,16 +14694,6 @@ END SUBROUTINE LOGCDF
 !!
 !!     Subroutine logpdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -15551,16 +14783,6 @@ REAL(kind=wp) :: Pdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine logplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -15757,16 +14979,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!
 !!     Subroutine logppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -15877,16 +15089,6 @@ REAL(kind=wp) :: P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine logran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -16019,16 +15221,6 @@ REAL(kind=wp) :: X
 !!
 !!     Subroutine logsf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -16138,16 +15330,6 @@ REAL(kind=wp) :: P , Sf
 !!##SYNOPSIS
 !!
 !!     Subroutine max (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -16286,16 +15468,6 @@ REAL(kind=wp) :: hold , X , Xmax
 !!##SYNOPSIS
 !!
 !!     Subroutine mean (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -16443,16 +15615,6 @@ REAL(kind=wp) :: an , hold , sum , X , Xmean
 !!##SYNOPSIS
 !!
 !!     Subroutine median (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -16608,16 +15770,6 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !!##SYNOPSIS
 !!
 !!     Subroutine midm (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -16805,16 +15957,6 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 !!
 !!     Subroutine midr (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -16963,16 +16105,6 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 !!
 !!     Subroutine min (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -17111,16 +16243,6 @@ REAL(kind=wp) :: hold , X , Xmin
 !!##SYNOPSIS
 !!
 !!     Subroutine move (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -17282,16 +16404,6 @@ REAL(kind=wp) :: hold , X , Y
 !!##SYNOPSIS
 !!
 !!     Subroutine nbcdf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -17635,16 +16747,6 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 !!##SYNOPSIS
 !!
 !!     Subroutine nbppf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -18075,16 +17177,6 @@ REAL(kind=wp) :: zppf
 !!
 !!     Subroutine nbran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -18330,16 +17422,6 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !!
 !!     Subroutine norcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -18439,16 +17521,6 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !!##SYNOPSIS
 !!
 !!     Subroutine norout (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -18952,16 +18024,6 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !!
 !!     Subroutine norpdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -19052,16 +18114,6 @@ REAL(kind=wp) :: c , Pdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine norplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -19262,16 +18314,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!
 !!     Subroutine norppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -19432,16 +18474,6 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !!
 !!     Subroutine norran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -19596,16 +18628,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!
 !!     Subroutine norsf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -19720,16 +18742,6 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !!##SYNOPSIS
 !!
 !!     Subroutine parcdf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -19850,16 +18862,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!##SYNOPSIS
 !!
 !!     Subroutine parplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -20085,16 +19087,6 @@ REAL(kind=wp) :: yslope
 !!
 !!     Subroutine parppf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -20217,16 +19209,6 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine parran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -20370,16 +19352,6 @@ REAL(kind=wp) :: Gamma , X
 !!##SYNOPSIS
 !!
 !!     Subroutine plot10 (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -20904,16 +19876,6 @@ REAL(kind=wp) :: Ymax , Ymin
 !!
 !!     Subroutine plot6 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -21253,16 +20215,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !!##SYNOPSIS
 !!
 !!     Subroutine plot7 (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -21689,16 +20641,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!##SYNOPSIS
 !!
 !!     Subroutine plot8 (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -22192,16 +21134,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !!
 !!     Subroutine plot9 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -22660,16 +21592,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 !!
 !!     Subroutine plotc (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -23111,16 +22033,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!
 !!     Subroutine plotco (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -23362,16 +22274,6 @@ REAL(kind=wp) :: hold , ratioy , Y , ylable , ymax , ymin
 !!##SYNOPSIS
 !!
 !!     Subroutine plotct (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -24129,16 +23031,6 @@ END SUBROUTINE PLOT
 !!
 !!     Subroutine plotsc (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -24658,16 +23550,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !!
 !!     Subroutine plots (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -25095,16 +23977,6 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 !!
 !!     Subroutine plotsp (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -25319,16 +24191,6 @@ REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
 !!##SYNOPSIS
 !!
 !!     Subroutine plotst (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -25748,16 +24610,6 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !!
 !!     Subroutine plott (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -26098,16 +24950,6 @@ REAL(kind=wp) :: yupper , ywidth
 !!##SYNOPSIS
 !!
 !!     Subroutine plotu (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -26690,16 +25532,6 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !!
 !!     Subroutine plotx (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -26985,16 +25817,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 !!
 !!     Subroutine plotxt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -27274,16 +26096,6 @@ REAL(kind=wp) :: xupper , xwidth
 !!##SYNOPSIS
 !!
 !!     Subroutine plotxx (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -27595,16 +26407,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !!##SYNOPSIS
 !!
 !!     Subroutine pltsct (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -28105,16 +26907,6 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 !!
 !!     Subroutine pltxxt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -28415,16 +27207,6 @@ END SUBROUTINE PLTXXT
 !!
 !!     Subroutine poicdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -28655,16 +27437,6 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 !!##SYNOPSIS
 !!
 !!     Subroutine poiplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -28979,16 +27751,6 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 !!##SYNOPSIS
 !!
 !!     Subroutine poippf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -29378,16 +28140,6 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !!
 !!     Subroutine poiran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -29576,16 +28328,6 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !!##SYNOPSIS
 !!
 !!     Subroutine poly (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -30268,16 +29010,6 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !!
 !!     Subroutine propor (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -30449,16 +29181,6 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 !!
 !!     Subroutine range (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -30608,16 +29330,6 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 !!##SYNOPSIS
 !!
 !!     Subroutine rank (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -30883,16 +29595,6 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !!
 !!     Subroutine ranper (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -31034,16 +29736,6 @@ REAL(kind=wp) :: add , an , hold , u , X
 !!##SYNOPSIS
 !!
 !!     Subroutine read (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -31573,16 +30265,6 @@ REAL(kind=wp) :: sum , X , y
 !!##SYNOPSIS
 !!
 !!     Subroutine readg (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -32125,16 +30807,6 @@ REAL(kind=wp) :: sum , X , y
 !!
 !!     Subroutine relsd (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -32294,16 +30966,6 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 !!##SYNOPSIS
 !!
 !!     Subroutine replac (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -32516,16 +31178,6 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 !!##SYNOPSIS
 !!
 !!     Subroutine retain (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -32742,16 +31394,6 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !!##SYNOPSIS
 !!
 !!     Subroutine runs (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -33230,16 +31872,6 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
 !!
 !!     Subroutine sampp (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -33430,16 +32062,6 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !!##SYNOPSIS
 !!
 !!     Subroutine scale (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -33650,16 +32272,6 @@ REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
 !!
 !!     Subroutine sd (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -33812,16 +32424,6 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!
 !!     Subroutine skipr (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -33923,16 +32525,6 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!##SYNOPSIS
 !!
 !!     Subroutine sortc (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -34254,16 +32846,6 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
 !!##SYNOPSIS
 !!
 !!     Subroutine sort (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -34852,16 +33434,6 @@ END SUBROUTINE SORTP
 !!
 !!     Subroutine spcorr (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -35046,16 +33618,6 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !!
 !!     Subroutine stmom3 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -35217,16 +33779,6 @@ END SUBROUTINE STMOM3
 !!
 !!     Subroutine stmom4 (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -35387,16 +33939,6 @@ END SUBROUTINE STMOM4
 !!##SYNOPSIS
 !!
 !!     Subroutine subse1 (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -35643,16 +34185,6 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
 !!##SYNOPSIS
 !!
 !!     Subroutine subse2 (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -35927,16 +34459,6 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
 !!
 !!     Subroutine subset (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -36191,16 +34713,6 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !!##SYNOPSIS
 !!
 !!     Subroutine tail (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -36928,16 +35440,6 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !!
 !!     Subroutine tcdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -37171,16 +35673,6 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !!##SYNOPSIS
 !!
 !!     Subroutine time (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -37621,16 +36113,6 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !!
 !!     Subroutine tol (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -38032,16 +36514,6 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 !!
 !!     Subroutine tplt (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -38275,16 +36747,6 @@ END SUBROUTINE TPLT
 !!##SYNOPSIS
 !!
 !!     Subroutine tppf (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -38546,16 +37008,6 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!
 !!     Subroutine tran (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -38717,16 +37169,6 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 !!##SYNOPSIS
 !!
 !!     Subroutine trim (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -38976,16 +37418,6 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
 !!
 !!     Subroutine unicdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -39089,16 +37521,6 @@ REAL(kind=wp) :: Cdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine unimed (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -39253,16 +37675,6 @@ REAL(kind=wp) :: ai , an , gam , X
 !!
 !!     Subroutine unipdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -39364,16 +37776,6 @@ REAL(kind=wp) :: Pdf , X
 !!##SYNOPSIS
 !!
 !!     Subroutine uniplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -39566,16 +37968,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!
 !!     Subroutine unippf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -39685,16 +38077,6 @@ REAL(kind=wp) :: P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine uniran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                    ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -39993,16 +38375,6 @@ END SUBROUTINE UNIRAN
 !!
 !!     Subroutine unisf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -40114,16 +38486,6 @@ REAL(kind=wp) :: P , Sf
 !!##SYNOPSIS
 !!
 !!     Subroutine var (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -40277,16 +38639,6 @@ REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 !!##SYNOPSIS
 !!
 !!     Subroutine weib (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -40650,16 +39002,6 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !!
 !!     Subroutine weicdf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -40777,16 +39119,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!##SYNOPSIS
 !!
 !!     Subroutine weiplt (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -41015,16 +39347,6 @@ REAL(kind=wp) :: yslope
 !!
 !!     Subroutine weippf (X, Y)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
 !!##DESCRIPTION
 !!   Description
 !!
@@ -41146,16 +39468,6 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!##SYNOPSIS
 !!
 !!     Subroutine weiran (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -41298,16 +39610,6 @@ REAL(kind=wp) :: Gamma , X
 !!##SYNOPSIS
 !!
 !!     Subroutine wind (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
@@ -41563,16 +39865,6 @@ END SUBROUTINE WIND
 !!##SYNOPSIS
 !!
 !!     Subroutine write (X, Y)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Description
