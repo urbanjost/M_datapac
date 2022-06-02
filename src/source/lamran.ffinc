@@ -78,7 +78,7 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -102,7 +102,7 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -139,7 +139,7 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
          DO i = 1 , N
             q = X(i)
             IF ( -0.001_wp<alamb2 .AND. alamb2<0.001_wp ) X(i)                &
-     &           = ALOG(q/(1.0-q))
+     &           = LOG(q/(1.0-q))
             IF ( -0.001_wp>=alamb2 .OR. alamb2>=0.001_wp ) X(i)               &
      &           = (q**alamb2-(1.0_wp-q)**alamb2)/alamb2
          ENDDO

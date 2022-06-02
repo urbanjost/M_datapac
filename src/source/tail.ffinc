@@ -105,7 +105,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 3000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG, ALOG10, EXP,
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG, LOG10, EXP,
 !                                         SIN, COS, ATAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
@@ -323,7 +323,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !
 !     COMPUTE THE WILK-SHAPIRO STATISTIC
 !
-         al = ALOG10(an)
+         al = LOG10(an)
          gamma = .327511_wp + .058212_wp*al - .009776_wp*al*al
          sum = 0.0_wp
          IF ( N<=20 ) arg = N
@@ -379,15 +379,15 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
             ELSEIF ( idis==22 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
-                  YM(i) = ALOG(Z(i)/(1.0_wp-Z(i)))
+                  YM(i) = LOG(Z(i)/(1.0_wp-Z(i)))
                   YM(irev) = -YM(i)
                ENDDO
                IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSEIF ( idis==23 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
-                  IF ( Z(i)<=0.5_wp ) YM(i) = ALOG(2.0_wp*Z(i))
-                  IF ( Z(i)>0.5_wp ) YM(i) = -ALOG(2.0_wp*(1.0_wp-Z(i)))
+                  IF ( Z(i)<=0.5_wp ) YM(i) = LOG(2.0_wp*Z(i))
+                  IF ( Z(i)>0.5_wp ) YM(i) = -LOG(2.0_wp*(1.0_wp-Z(i)))
                   YM(irev) = -YM(i)
                ENDDO
                IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp

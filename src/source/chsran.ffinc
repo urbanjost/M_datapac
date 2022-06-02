@@ -76,7 +76,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -100,7 +100,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       DIMENSION y(2) , z(2)
 !
 !---------------------------------------------------------------------
@@ -150,7 +150,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
             sum = 0.0_wp
             DO j = 1 , Nu , 2
                CALL UNIRAN(2,Iseed,y)
-               arg1 = -2.0_wp*ALOG(y(1))
+               arg1 = -2.0_wp*LOG(y(1))
                arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))

@@ -93,7 +93,7 @@ REAL(kind=wp) :: yslope
 !                   FOR THIS SUBROUTINE IS 7500.
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -180,7 +180,7 @@ REAL(kind=wp) :: yslope
 !     COMPUTE WEIBULL DISTRIBUTION ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = (-ALOG(1.0_wp-W(i)))**(1.0_wp/Gamma)
+            W(i) = (-LOG(1.0_wp-W(i)))**(1.0_wp/Gamma)
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -190,13 +190,13 @@ REAL(kind=wp) :: yslope
 !
          CALL PLOT(Y,W,N)
          q = 0.9975_wp
-         pp9975 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         pp9975 = (-LOG(1.0_wp-q))**(1.0_wp/Gamma)
          q = 0.0025_wp
-         pp0025 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         pp0025 = (-LOG(1.0_wp-q))**(1.0_wp/Gamma)
          q = 0.975_wp
-         pp975 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         pp975 = (-LOG(1.0_wp-q))**(1.0_wp/Gamma)
          q = 0.025_wp
-         pp025 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         pp025 = (-LOG(1.0_wp-q))**(1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99007) Gamma , tau , N
 !

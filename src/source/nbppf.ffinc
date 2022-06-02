@@ -115,7 +115,7 @@ REAL(kind=wp) :: zppf
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, NBCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
@@ -237,7 +237,7 @@ REAL(kind=wp) :: zppf
                         amean = an*(1.0_wp-Ppar)/Ppar
                         sd = SQRT(an*(1.0_wp-Ppar)/(Ppar*Ppar))
                         arg = SQRT((amean+0.375_wp)/(an-0.75_wp))
-                        arcsh = ALOG(arg+SQRT(arg*arg+1.0_wp))
+                        arcsh = LOG(arg+SQRT(arg*arg+1.0_wp))
                         ymean = (SQRT(an-0.5_wp))*arcsh
                         ysd = 0.5_wp
                         CALL NORPPF(P,zppf)

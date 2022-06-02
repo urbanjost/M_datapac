@@ -75,7 +75,7 @@ REAL(kind=wp) :: X
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -102,7 +102,7 @@ REAL(kind=wp) :: X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -136,7 +136,7 @@ REAL(kind=wp) :: X
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = -ALOG(X(i))
+            X(i) = -LOG(X(i))
          ENDDO
       ENDIF
 !

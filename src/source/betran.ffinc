@@ -186,7 +186,7 @@ INTEGER ::  i , ipr , Iseed , N
          DO i = 1 , N
             DO
 !
-               CALL NORRAN(1,Iseed,xn(1))
+               CALL NORRAN(1,Iseed,xn(1:1))
                xg = Alpha*(1.0_wp-a1+b1*xn(1))**3
                IF ( xg>=0.0_wp ) THEN
                   term = (xg/xg01)**(Alpha-athird)
@@ -197,7 +197,7 @@ INTEGER ::  i , ipr , Iseed , N
                      xg1 = xg
                      DO
 !
-                        CALL NORRAN(1,Iseed,xn(1))
+                        CALL NORRAN(1,Iseed,xn(1:1))
                         xg = Beta*(1.0_wp-a2+b2*xn(1))**3
                         IF ( xg>=0.0_wp ) THEN
                            term = (xg/xg02)**(Beta-athird)

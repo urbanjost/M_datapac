@@ -90,7 +90,7 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !                   OF N FOR THIS SUBROUTINE.
 !                 --ALAMBA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     COMMENT--THE SINGLE PRECISION TAIL LENGTH
@@ -141,7 +141,7 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -185,7 +185,7 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
             j = 1
             DO
                CALL UNIRAN(1,Iseed,u)
-               e = -ALOG(1.0_wp-u(1))
+               e = -LOG(1.0_wp-u(1))
                sum = sum + e
                IF ( sum>Alamba ) THEN
                   X(i) = j - 1

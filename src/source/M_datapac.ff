@@ -1,182 +1,205 @@
 module M_datapac
-use,intrinsic :: iso_fortran_env, only : real_kinds,wp=>real32,real64,real128
+!use,intrinsic :: iso_fortran_env, only : real_kinds,real32,real64,real128
+use,intrinsic :: iso_fortran_env, only : wp=>real32
+!use,intrinsic :: iso_fortran_env, only : wp=>real64
 implicit none
 private
-public :: autoco
-public :: betran
-public :: bincdf
-public :: binppf
-public :: binran
-public :: caucdf
-public :: caupdf
-public :: cauplt
-public :: cauppf
-public :: cauran
-public :: causf
-public :: chscdf
-public :: chsplt
-public :: chsppf
-public :: chsran
-public :: code
-public :: copy
-public :: corr
-public :: count
-public :: decomp
-public :: define
-public :: delete
-public :: demod
-public :: dexcdf
-public :: dexpdf
-public :: dexplt
-public :: dexppf
-public :: dexran
-public :: dexsf
-public :: discr2
-public :: discr3
-public :: discre
-public :: dot
-public :: ev1cdf
-public :: ev1plt
-public :: ev1ppf
-public :: ev1ran
-public :: ev2cdf
-public :: ev2plt
-public :: ev2ppf
-public :: ev2ran
-public :: expcdf
-public :: exppdf
-public :: expplt
-public :: expppf
-public :: expran
-public :: expsf
-public :: extrem
-public :: fcdf
-public :: fourie
-public :: fran
-public :: freq
-public :: gamcdf
-public :: gamplt
-public :: gamppf
-public :: gamran
-public :: geocdf
-public :: geoplt
-public :: geoppf
-public :: georan
-public :: hfncdf
-public :: hfnplt
-public :: hfnppf
-public :: hfnran
-public :: hist
-public :: invxwx
-public :: lamcdf
-public :: lampdf
-public :: lamplt
-public :: lamppf
-public :: lamran
-public :: lamsf
-public :: lgncdf
-public :: lgnplt
-public :: lgnppf
-public :: lgnran
-public :: loc
-public :: logcdf
-public :: logpdf
-public :: logplt
-public :: logppf
-public :: logran
-public :: logsf
-public :: max
-public :: mean
-public :: median
-public :: midm
-public :: midr
-public :: min
-public :: move
-public :: nbcdf
-public :: nbppf
-public :: nbran
-public :: norcdf
-public :: norout
-public :: norpdf
-public :: norplt
-public :: norppf
-public :: norran
-public :: norsf
-public :: parcdf
-public :: parplt
-public :: parppf
-public :: parran
-public :: plot10
-public :: plot6
-public :: plot7
-public :: plot8
-public :: plot9
-public :: plotc
-public :: plotco
-public :: plotct
-public :: plot
-public :: plotsc
-public :: plots
-public :: plotsp
-public :: plotst
-public :: plott
-public :: plotu
-public :: plotx
-public :: plotxt
-public :: plotxx
-public :: pltsct
-public :: pltxxt
-public :: poicdf
-public :: poiplt
-public :: poippf
-public :: poiran
-public :: poly
-public :: propor
-public :: range
-public :: rank
-public :: ranper
-public :: read
-public :: readg
-public :: relsd
-public :: replac
-public :: retain
-public :: runs
-public :: sampp
-public :: scale
-public :: sd
-public :: skipr
-public :: sortc
-public :: sort
-public :: sortp
-public :: spcorr
-public :: stmom3
-public :: stmom4
-public :: subse1
-public :: subse2
-public :: subset
-public :: tail
-public :: tcdf
-public :: time
-public :: tol
-public :: tplt
-public :: tppf
-public :: tran
-public :: trim
-public :: unicdf
-public :: unimed
-public :: unipdf
-public :: uniplt
-public :: unippf
-public :: uniran
-public :: unisf
-public :: var
-public :: weib
-public :: weicdf
-public :: weiplt
-public :: weippf
-public :: weiran
-public :: wind
-public :: write
+public :: &
+autoco  ,  betran  ,  bincdf  ,  binppf  ,  binran  ,  caucdf  ,  caupdf  ,  cauplt  ,  cauppf  ,  cauran  , &
+causf   ,  chscdf  ,  chsplt  ,  chsppf  ,  chsran  ,  code    ,  copy    ,  corr    ,  count   ,  decomp  , &
+define  ,  delete  ,  demod   ,  dexcdf  ,  dexpdf  ,  dexplt  ,  dexppf  ,  dexran  ,  dexsf   ,  discr2  , &
+discr3  ,  discre  ,  dot     ,  ev1cdf  ,  ev1plt  ,  ev1ppf  ,  ev1ran  ,  ev2cdf  ,  ev2plt  ,  ev2ppf  , &
+ev2ran  ,  expcdf  ,  exppdf  ,  expplt  ,  expppf  ,  expran  ,  expsf   ,  extrem  ,  fcdf    ,  fourie  , &
+fran    ,  freq    ,  gamcdf  ,  gamplt  ,  gamppf  ,  gamran  ,  geocdf  ,  geoplt  ,  geoppf  ,  georan  , &
+hfncdf  ,  hfnplt  ,  hfnppf  ,  hfnran  ,  hist    ,  invxwx  ,  lamcdf  ,  lampdf  ,  lamplt  ,  lamppf  , &
+lamran  ,  lamsf   ,  lgncdf  ,  lgnplt  ,  lgnppf  ,  lgnran  ,  loc     ,  logcdf  ,  logpdf  ,  logplt  , &
+logppf  ,  logran  ,  logsf   ,  max     ,  mean    ,  median  ,  midm    ,  midr    ,  min     ,  move    , &
+nbcdf   ,  nbppf   ,  nbran   ,  norcdf  ,  norout  ,  norpdf  ,  norplt  ,  norppf  ,  norran  ,  norsf   , &
+parcdf  ,  parplt  ,  parppf  ,  parran  ,  plot10  ,  plot6   ,  plot7   ,  plot8   ,  plot9   ,  plotc   , &
+plotco  ,  plotct  ,  plot    ,  plotsc  ,  plots   ,  plotsp  ,  plotst  ,  plott   ,  plotu   ,  plotx   , &
+plotxt  ,  plotxx  ,  pltsct  ,  pltxxt  ,  poicdf  ,  poiplt  ,  poippf  ,  poiran  ,  poly    ,  propor  , &
+range   ,  rank    ,  ranper  ,  read    ,  readg   ,  relsd   ,  replac  ,  retain  ,  runs    ,  sampp   , &
+scale   ,  sd      ,  skipr   ,  sortc   ,  sort    ,  sortp   ,  spcorr  ,  stmom3  ,  stmom4  ,  subse1  , &
+subse2  ,  subset  ,  tail    ,  tcdf    ,  time    ,  tol     ,  tplt    ,  tppf    ,  tran    ,  trim    , &
+unicdf  ,  unimed  ,  unipdf  ,  uniplt  ,  unippf  ,  uniran  ,  unisf   ,  var     ,  weib    ,  weicdf  , &
+weiplt  ,  weippf  ,  weiran  ,  wind    ,  write 
+
+interface  autoco;  module  procedure  autoco  ;  end  interface
+interface  betran;  module  procedure  betran  ;  end  interface
+interface  bincdf;  module  procedure  bincdf  ;  end  interface
+interface  binppf;  module  procedure  binppf  ;  end  interface
+interface  binran;  module  procedure  binran  ;  end  interface
+interface  caucdf;  module  procedure  caucdf  ;  end  interface
+interface  caupdf;  module  procedure  caupdf  ;  end  interface
+interface  cauplt;  module  procedure  cauplt  ;  end  interface
+interface  cauppf;  module  procedure  cauppf  ;  end  interface
+interface  cauran;  module  procedure  cauran  ;  end  interface
+interface  causf;   module  procedure  causf   ;  end  interface
+interface  chscdf;  module  procedure  chscdf  ;  end  interface
+interface  chsplt;  module  procedure  chsplt  ;  end  interface
+interface  chsppf;  module  procedure  chsppf  ;  end  interface
+interface  chsran;  module  procedure  chsran  ;  end  interface
+interface  code;    module  procedure  code    ;  end  interface
+interface  copy;    module  procedure  copy    ;  end  interface
+interface  corr;    module  procedure  corr    ;  end  interface
+interface  count;   module  procedure  count   ;  end  interface
+interface  decomp;  module  procedure  decomp  ;  end  interface
+interface  define;  module  procedure  define  ;  end  interface
+interface  delete;  module  procedure  delete  ;  end  interface
+interface  demod;   module  procedure  demod   ;  end  interface
+interface  dexcdf;  module  procedure  dexcdf  ;  end  interface
+interface  dexpdf;  module  procedure  dexpdf  ;  end  interface
+interface  dexplt;  module  procedure  dexplt  ;  end  interface
+interface  dexppf;  module  procedure  dexppf  ;  end  interface
+interface  dexran;  module  procedure  dexran  ;  end  interface
+interface  dexsf;   module  procedure  dexsf   ;  end  interface
+interface  discr2;  module  procedure  discr2  ;  end  interface
+interface  discr3;  module  procedure  discr3  ;  end  interface
+interface  discre;  module  procedure  discre  ;  end  interface
+interface  dot;     module  procedure  dot     ;  end  interface
+interface  ev1cdf;  module  procedure  ev1cdf  ;  end  interface
+interface  ev1plt;  module  procedure  ev1plt  ;  end  interface
+interface  ev1ppf;  module  procedure  ev1ppf  ;  end  interface
+interface  ev1ran;  module  procedure  ev1ran  ;  end  interface
+interface  ev2cdf;  module  procedure  ev2cdf  ;  end  interface
+interface  ev2plt;  module  procedure  ev2plt  ;  end  interface
+interface  ev2ppf;  module  procedure  ev2ppf  ;  end  interface
+interface  ev2ran;  module  procedure  ev2ran  ;  end  interface
+interface  expcdf;  module  procedure  expcdf  ;  end  interface
+interface  exppdf;  module  procedure  exppdf  ;  end  interface
+interface  expplt;  module  procedure  expplt  ;  end  interface
+interface  expppf;  module  procedure  expppf  ;  end  interface
+interface  expran;  module  procedure  expran  ;  end  interface
+interface  expsf;   module  procedure  expsf   ;  end  interface
+interface  extrem;  module  procedure  extrem  ;  end  interface
+interface  fcdf;    module  procedure  fcdf    ;  end  interface
+interface  fourie;  module  procedure  fourie  ;  end  interface
+interface  fran;    module  procedure  fran    ;  end  interface
+interface  freq;    module  procedure  freq    ;  end  interface
+interface  gamcdf;  module  procedure  gamcdf  ;  end  interface
+interface  gamplt;  module  procedure  gamplt  ;  end  interface
+interface  gamppf;  module  procedure  gamppf  ;  end  interface
+interface  gamran;  module  procedure  gamran  ;  end  interface
+interface  geocdf;  module  procedure  geocdf  ;  end  interface
+interface  geoplt;  module  procedure  geoplt  ;  end  interface
+interface  geoppf;  module  procedure  geoppf  ;  end  interface
+interface  georan;  module  procedure  georan  ;  end  interface
+interface  hfncdf;  module  procedure  hfncdf  ;  end  interface
+interface  hfnplt;  module  procedure  hfnplt  ;  end  interface
+interface  hfnppf;  module  procedure  hfnppf  ;  end  interface
+interface  hfnran;  module  procedure  hfnran  ;  end  interface
+interface  hist;    module  procedure  hist    ;  end  interface
+interface  invxwx;  module  procedure  invxwx  ;  end  interface
+interface  lamcdf;  module  procedure  lamcdf  ;  end  interface
+interface  lampdf;  module  procedure  lampdf  ;  end  interface
+interface  lamplt;  module  procedure  lamplt  ;  end  interface
+interface  lamppf;  module  procedure  lamppf  ;  end  interface
+interface  lamran;  module  procedure  lamran  ;  end  interface
+interface  lamsf;   module  procedure  lamsf   ;  end  interface
+interface  lgncdf;  module  procedure  lgncdf  ;  end  interface
+interface  lgnplt;  module  procedure  lgnplt  ;  end  interface
+interface  lgnppf;  module  procedure  lgnppf  ;  end  interface
+interface  lgnran;  module  procedure  lgnran  ;  end  interface
+interface  loc;     module  procedure  loc     ;  end  interface
+interface  logcdf;  module  procedure  logcdf  ;  end  interface
+interface  logpdf;  module  procedure  logpdf  ;  end  interface
+interface  logplt;  module  procedure  logplt  ;  end  interface
+interface  logppf;  module  procedure  logppf  ;  end  interface
+interface  logran;  module  procedure  logran  ;  end  interface
+interface  logsf;   module  procedure  logsf   ;  end  interface
+interface  max;     module  procedure  max     ;  end  interface
+interface  mean;    module  procedure  mean    ;  end  interface
+interface  median;  module  procedure  median  ;  end  interface
+interface  midm;    module  procedure  midm    ;  end  interface
+interface  midr;    module  procedure  midr    ;  end  interface
+interface  min;     module  procedure  min     ;  end  interface
+interface  move;    module  procedure  move    ;  end  interface
+interface  nbcdf;   module  procedure  nbcdf   ;  end  interface
+interface  nbppf;   module  procedure  nbppf   ;  end  interface
+interface  nbran;   module  procedure  nbran   ;  end  interface
+interface  norcdf;  module  procedure  norcdf  ;  end  interface
+interface  norout;  module  procedure  norout  ;  end  interface
+interface  norpdf;  module  procedure  norpdf  ;  end  interface
+interface  norplt;  module  procedure  norplt  ;  end  interface
+interface  norppf;  module  procedure  norppf  ;  end  interface
+interface  norran;  module  procedure  norran  ;  end  interface
+interface  norsf;   module  procedure  norsf   ;  end  interface
+interface  parcdf;  module  procedure  parcdf  ;  end  interface
+interface  parplt;  module  procedure  parplt  ;  end  interface
+interface  parppf;  module  procedure  parppf  ;  end  interface
+interface  parran;  module  procedure  parran  ;  end  interface
+interface  plot;    module  procedure  plot    ;  end  interface
+interface  plot10;  module  procedure  plot10  ;  end  interface
+interface  plot6;   module  procedure  plot6   ;  end  interface
+interface  plot7;   module  procedure  plot7   ;  end  interface
+interface  plot8;   module  procedure  plot8   ;  end  interface
+interface  plot9;   module  procedure  plot9   ;  end  interface
+interface  plotc;   module  procedure  plotc   ;  end  interface
+interface  plotco;  module  procedure  plotco  ;  end  interface
+interface  plotct;  module  procedure  plotct  ;  end  interface
+interface  plots;   module  procedure  plots   ;  end  interface
+interface  plotsc;  module  procedure  plotsc  ;  end  interface
+interface  plotsp;  module  procedure  plotsp  ;  end  interface
+interface  plotst;  module  procedure  plotst  ;  end  interface
+interface  plott;   module  procedure  plott   ;  end  interface
+interface  plotu;   module  procedure  plotu   ;  end  interface
+interface  plotx;   module  procedure  plotx   ;  end  interface
+interface  plotxt;  module  procedure  plotxt  ;  end  interface
+interface  plotxx;  module  procedure  plotxx  ;  end  interface
+interface  pltsct;  module  procedure  pltsct  ;  end  interface
+interface  pltxxt;  module  procedure  pltxxt  ;  end  interface
+interface  poicdf;  module  procedure  poicdf  ;  end  interface
+interface  poiplt;  module  procedure  poiplt  ;  end  interface
+interface  poippf;  module  procedure  poippf  ;  end  interface
+interface  poiran;  module  procedure  poiran  ;  end  interface
+interface  poly;    module  procedure  poly    ;  end  interface
+interface  propor;  module  procedure  propor  ;  end  interface
+interface  range;   module  procedure  range   ;  end  interface
+interface  rank;    module  procedure  rank    ;  end  interface
+interface  ranper;  module  procedure  ranper  ;  end  interface
+interface  read;    module  procedure  read    ;  end  interface
+interface  readg;   module  procedure  readg   ;  end  interface
+interface  relsd;   module  procedure  relsd   ;  end  interface
+interface  replac;  module  procedure  replac  ;  end  interface
+interface  retain;  module  procedure  retain  ;  end  interface
+interface  runs;    module  procedure  runs    ;  end  interface
+interface  sampp;   module  procedure  sampp   ;  end  interface
+interface  scale;   module  procedure  scale   ;  end  interface
+interface  sd;      module  procedure  sd      ;  end  interface
+interface  skipr;   module  procedure  skipr   ;  end  interface
+interface  sort;    module  procedure  sort    ;  end  interface
+interface  sortc;   module  procedure  sortc   ;  end  interface
+interface  sortp;   module  procedure  sortp   ;  end  interface
+interface  spcorr;  module  procedure  spcorr  ;  end  interface
+interface  stmom3;  module  procedure  stmom3  ;  end  interface
+interface  stmom4;  module  procedure  stmom4  ;  end  interface
+interface  subse1;  module  procedure  subse1  ;  end  interface
+interface  subse2;  module  procedure  subse2  ;  end  interface
+interface  subset;  module  procedure  subset  ;  end  interface
+interface  tail;    module  procedure  tail    ;  end  interface
+interface  tcdf;    module  procedure  tcdf    ;  end  interface
+interface  time;    module  procedure  time    ;  end  interface
+interface  tol;     module  procedure  tol     ;  end  interface
+interface  tplt;    module  procedure  tplt    ;  end  interface
+interface  tppf;    module  procedure  tppf    ;  end  interface
+interface  tran;    module  procedure  tran    ;  end  interface
+interface  trim;    module  procedure  trim    ;  end  interface
+interface  unicdf;  module  procedure  unicdf  ;  end  interface
+interface  unimed;  module  procedure  unimed  ;  end  interface
+interface  unipdf;  module  procedure  unipdf  ;  end  interface
+interface  uniplt;  module  procedure  uniplt  ;  end  interface
+interface  unippf;  module  procedure  unippf  ;  end  interface
+interface  uniran;  module  procedure  uniran  ;  end  interface
+interface  unisf;   module  procedure  unisf   ;  end  interface
+interface  var;     module  procedure  var     ;  end  interface
+interface  weib;    module  procedure  weib    ;  end  interface
+interface  weicdf;  module  procedure  weicdf  ;  end  interface
+interface  weiplt;  module  procedure  weiplt  ;  end  interface
+interface  weippf;  module  procedure  weippf  ;  end  interface
+interface  weiran;  module  procedure  weiran  ;  end  interface
+interface  wind;    module  procedure  wind    ;  end  interface
+interface  write;   module  procedure  write   ;  end  interface
+
 contains
 $INCLUDE "autoco.ffinc"
 $INCLUDE "betran.ffinc"

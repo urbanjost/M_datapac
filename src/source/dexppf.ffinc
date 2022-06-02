@@ -77,7 +77,7 @@ REAL(kind=wp) :: P , Ppf
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
@@ -116,8 +116,8 @@ REAL(kind=wp) :: P , Ppf
 !
 !-----START POINT-----------------------------------------------------
 !
-         IF ( P<=0.5_wp ) Ppf = ALOG(2.0_wp*P)
-         IF ( P>0.5_wp ) Ppf = -ALOG(2.0_wp*(1.0_wp-P))
+         IF ( P<=0.5_wp ) Ppf = LOG(2.0_wp*P)
+         IF ( P>0.5_wp ) Ppf = -LOG(2.0_wp*(1.0_wp-P))
       ENDIF
 !
       END SUBROUTINE DEXPPF

@@ -125,7 +125,7 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -204,7 +204,7 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
                   term = (xg/xg0)**(Gamma-athird)
                   arg = 0.5_wp*xn(1)*xn(1) - xg - 0.5_wp*xn0*xn0 + xg0
                   funct = term*EXP(arg)
-                  CALL UNIRAN(1,Iseed,u(1))
+                  CALL UNIRAN(1,Iseed,u(1:1))
                   IF ( u(1)<=funct ) THEN
                      X(i) = xg
                      EXIT

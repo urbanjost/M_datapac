@@ -75,7 +75,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     METHOD--BOX-MULLER ALGORITHM.
@@ -101,7 +101,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       DIMENSION y(2)
 !
 !---------------------------------------------------------------------
@@ -152,7 +152,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
             ELSE
                u2 = X(ip1)
             ENDIF
-            arg1 = -2.0_wp*ALOG(u1)
+            arg1 = -2.0_wp*LOG(u1)
             arg2 = 2.0_wp*pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)

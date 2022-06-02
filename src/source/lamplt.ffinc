@@ -91,7 +91,7 @@ REAL(kind=wp) :: yslope
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -175,7 +175,7 @@ REAL(kind=wp) :: yslope
          DO i = 1 , N
             q = W(i)
             IF ( -0.001_wp<Alamba .AND. Alamba<0.001_wp ) W(i)                &
-     &           = ALOG(q/(1.0_wp-q))
+     &           = LOG(q/(1.0_wp-q))
             IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) W(i)               &
      &           = (q**Alamba-(1.0_wp-q)**Alamba)/Alamba
          ENDDO

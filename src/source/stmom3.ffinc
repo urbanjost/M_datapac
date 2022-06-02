@@ -110,7 +110,7 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS

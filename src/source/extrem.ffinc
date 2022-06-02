@@ -86,7 +86,7 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, EV1PLT,
 !                                         EV2PLT, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
@@ -243,12 +243,12 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
          DO idis = 1 , numdis
             IF ( idis==numdis ) THEN
                DO i = 1 , N
-                  w(i) = -ALOG(ALOG(1.0_wp/Z(i)))
+                  w(i) = -LOG(LOG(1.0_wp/Z(i)))
                ENDDO
             ELSE
                a = gamtab(idis)
                DO i = 1 , N
-                  w(i) = (-ALOG(Z(i)))**(-1.0_wp/a)
+                  w(i) = (-LOG(Z(i)))**(-1.0_wp/a)
                ENDDO
             ENDIF
 !
@@ -407,7 +407,7 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
             DO i = 2 , numam
                r = 1.0_wp/am(i)
                p = 1.0_wp - r
-               arg = -ALOG(p)
+               arg = -LOG(p)
                IF ( arg>0.0_wp ) h(i,1) = yint + yslope*(arg**(-1.0_wp/a))
             ENDDO
          ENDIF
@@ -420,8 +420,8 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
          DO i = 2 , numam
             r = 1.0_wp/am(i)
             p = 1.0_wp - r
-            arg = -ALOG(p)
-            IF ( arg>0.0_wp ) h(i,2) = yint + yslope*(-ALOG(arg))
+            arg = -LOG(p)
+            IF ( arg>0.0_wp ) h(i,2) = yint + yslope*(-LOG(arg))
          ENDDO
 !
 !     WRITE OUT THE PAGE WITH THE RETURN PERIODS AND THE PREDICTED EXTREMES

@@ -86,7 +86,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -162,7 +162,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     COMPUTE LOGISTIC ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = ALOG(W(i)/(1.0_wp-W(i)))
+            W(i) = LOG(W(i)/(1.0_wp-W(i)))
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.

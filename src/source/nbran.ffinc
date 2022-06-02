@@ -200,7 +200,7 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !
 !-----START POINT-----------------------------------------------------
 !
-         CALL UNIRAN(1,Istart,g(1))
+         CALL UNIRAN(1,Istart,g(1:1))
 !
 !     CHECK ON THE MAGNITUDE OF P,
 !     AND BRANCH TO THE FASTER

@@ -85,7 +85,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -123,7 +123,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = (-ALOG(P))**(-1.0_wp/Gamma)
+         Ppf = (-LOG(P))**(-1.0_wp/Gamma)
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !

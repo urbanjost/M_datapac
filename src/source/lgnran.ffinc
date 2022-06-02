@@ -62,7 +62,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
 !              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
 !              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-ALOG(X)*ALOG(X)/2)
+!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
 !              THE PROTOTYPE LOGNORMAL DISTRIBUTION USED HEREIN
 !              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
 !              THE VARIATE Z IS NORMALLY DISTRIBUTED
@@ -82,7 +82,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS, EXP.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS, EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -107,7 +107,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       DIMENSION y(2)
 !
 !---------------------------------------------------------------------
@@ -158,7 +158,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
             ELSE
                u2 = X(ip1)
             ENDIF
-            arg1 = -2.0_wp*ALOG(u1)
+            arg1 = -2.0_wp*LOG(u1)
             arg2 = 2.0_wp*pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)

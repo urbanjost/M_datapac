@@ -1,182 +1,205 @@
 module M_datapac
-use,intrinsic :: iso_fortran_env, only : real_kinds,wp=>real32,real64,real128
+!use,intrinsic :: iso_fortran_env, only : real_kinds,real32,real64,real128
+use,intrinsic :: iso_fortran_env, only : wp=>real32
+!use,intrinsic :: iso_fortran_env, only : wp=>real64
 implicit none
 private
-public :: autoco
-public :: betran
-public :: bincdf
-public :: binppf
-public :: binran
-public :: caucdf
-public :: caupdf
-public :: cauplt
-public :: cauppf
-public :: cauran
-public :: causf
-public :: chscdf
-public :: chsplt
-public :: chsppf
-public :: chsran
-public :: code
-public :: copy
-public :: corr
-public :: count
-public :: decomp
-public :: define
-public :: delete
-public :: demod
-public :: dexcdf
-public :: dexpdf
-public :: dexplt
-public :: dexppf
-public :: dexran
-public :: dexsf
-public :: discr2
-public :: discr3
-public :: discre
-public :: dot
-public :: ev1cdf
-public :: ev1plt
-public :: ev1ppf
-public :: ev1ran
-public :: ev2cdf
-public :: ev2plt
-public :: ev2ppf
-public :: ev2ran
-public :: expcdf
-public :: exppdf
-public :: expplt
-public :: expppf
-public :: expran
-public :: expsf
-public :: extrem
-public :: fcdf
-public :: fourie
-public :: fran
-public :: freq
-public :: gamcdf
-public :: gamplt
-public :: gamppf
-public :: gamran
-public :: geocdf
-public :: geoplt
-public :: geoppf
-public :: georan
-public :: hfncdf
-public :: hfnplt
-public :: hfnppf
-public :: hfnran
-public :: hist
-public :: invxwx
-public :: lamcdf
-public :: lampdf
-public :: lamplt
-public :: lamppf
-public :: lamran
-public :: lamsf
-public :: lgncdf
-public :: lgnplt
-public :: lgnppf
-public :: lgnran
-public :: loc
-public :: logcdf
-public :: logpdf
-public :: logplt
-public :: logppf
-public :: logran
-public :: logsf
-public :: max
-public :: mean
-public :: median
-public :: midm
-public :: midr
-public :: min
-public :: move
-public :: nbcdf
-public :: nbppf
-public :: nbran
-public :: norcdf
-public :: norout
-public :: norpdf
-public :: norplt
-public :: norppf
-public :: norran
-public :: norsf
-public :: parcdf
-public :: parplt
-public :: parppf
-public :: parran
-public :: plot10
-public :: plot6
-public :: plot7
-public :: plot8
-public :: plot9
-public :: plotc
-public :: plotco
-public :: plotct
-public :: plot
-public :: plotsc
-public :: plots
-public :: plotsp
-public :: plotst
-public :: plott
-public :: plotu
-public :: plotx
-public :: plotxt
-public :: plotxx
-public :: pltsct
-public :: pltxxt
-public :: poicdf
-public :: poiplt
-public :: poippf
-public :: poiran
-public :: poly
-public :: propor
-public :: range
-public :: rank
-public :: ranper
-public :: read
-public :: readg
-public :: relsd
-public :: replac
-public :: retain
-public :: runs
-public :: sampp
-public :: scale
-public :: sd
-public :: skipr
-public :: sortc
-public :: sort
-public :: sortp
-public :: spcorr
-public :: stmom3
-public :: stmom4
-public :: subse1
-public :: subse2
-public :: subset
-public :: tail
-public :: tcdf
-public :: time
-public :: tol
-public :: tplt
-public :: tppf
-public :: tran
-public :: trim
-public :: unicdf
-public :: unimed
-public :: unipdf
-public :: uniplt
-public :: unippf
-public :: uniran
-public :: unisf
-public :: var
-public :: weib
-public :: weicdf
-public :: weiplt
-public :: weippf
-public :: weiran
-public :: wind
-public :: write
+public :: &
+autoco  ,  betran  ,  bincdf  ,  binppf  ,  binran  ,  caucdf  ,  caupdf  ,  cauplt  ,  cauppf  ,  cauran  , &
+causf   ,  chscdf  ,  chsplt  ,  chsppf  ,  chsran  ,  code    ,  copy    ,  corr    ,  count   ,  decomp  , &
+define  ,  delete  ,  demod   ,  dexcdf  ,  dexpdf  ,  dexplt  ,  dexppf  ,  dexran  ,  dexsf   ,  discr2  , &
+discr3  ,  discre  ,  dot     ,  ev1cdf  ,  ev1plt  ,  ev1ppf  ,  ev1ran  ,  ev2cdf  ,  ev2plt  ,  ev2ppf  , &
+ev2ran  ,  expcdf  ,  exppdf  ,  expplt  ,  expppf  ,  expran  ,  expsf   ,  extrem  ,  fcdf    ,  fourie  , &
+fran    ,  freq    ,  gamcdf  ,  gamplt  ,  gamppf  ,  gamran  ,  geocdf  ,  geoplt  ,  geoppf  ,  georan  , &
+hfncdf  ,  hfnplt  ,  hfnppf  ,  hfnran  ,  hist    ,  invxwx  ,  lamcdf  ,  lampdf  ,  lamplt  ,  lamppf  , &
+lamran  ,  lamsf   ,  lgncdf  ,  lgnplt  ,  lgnppf  ,  lgnran  ,  loc     ,  logcdf  ,  logpdf  ,  logplt  , &
+logppf  ,  logran  ,  logsf   ,  max     ,  mean    ,  median  ,  midm    ,  midr    ,  min     ,  move    , &
+nbcdf   ,  nbppf   ,  nbran   ,  norcdf  ,  norout  ,  norpdf  ,  norplt  ,  norppf  ,  norran  ,  norsf   , &
+parcdf  ,  parplt  ,  parppf  ,  parran  ,  plot10  ,  plot6   ,  plot7   ,  plot8   ,  plot9   ,  plotc   , &
+plotco  ,  plotct  ,  plot    ,  plotsc  ,  plots   ,  plotsp  ,  plotst  ,  plott   ,  plotu   ,  plotx   , &
+plotxt  ,  plotxx  ,  pltsct  ,  pltxxt  ,  poicdf  ,  poiplt  ,  poippf  ,  poiran  ,  poly    ,  propor  , &
+range   ,  rank    ,  ranper  ,  read    ,  readg   ,  relsd   ,  replac  ,  retain  ,  runs    ,  sampp   , &
+scale   ,  sd      ,  skipr   ,  sortc   ,  sort    ,  sortp   ,  spcorr  ,  stmom3  ,  stmom4  ,  subse1  , &
+subse2  ,  subset  ,  tail    ,  tcdf    ,  time    ,  tol     ,  tplt    ,  tppf    ,  tran    ,  trim    , &
+unicdf  ,  unimed  ,  unipdf  ,  uniplt  ,  unippf  ,  uniran  ,  unisf   ,  var     ,  weib    ,  weicdf  , &
+weiplt  ,  weippf  ,  weiran  ,  wind    ,  write
+
+interface  autoco;  module  procedure  autoco  ;  end  interface
+interface  betran;  module  procedure  betran  ;  end  interface
+interface  bincdf;  module  procedure  bincdf  ;  end  interface
+interface  binppf;  module  procedure  binppf  ;  end  interface
+interface  binran;  module  procedure  binran  ;  end  interface
+interface  caucdf;  module  procedure  caucdf  ;  end  interface
+interface  caupdf;  module  procedure  caupdf  ;  end  interface
+interface  cauplt;  module  procedure  cauplt  ;  end  interface
+interface  cauppf;  module  procedure  cauppf  ;  end  interface
+interface  cauran;  module  procedure  cauran  ;  end  interface
+interface  causf;   module  procedure  causf   ;  end  interface
+interface  chscdf;  module  procedure  chscdf  ;  end  interface
+interface  chsplt;  module  procedure  chsplt  ;  end  interface
+interface  chsppf;  module  procedure  chsppf  ;  end  interface
+interface  chsran;  module  procedure  chsran  ;  end  interface
+interface  code;    module  procedure  code    ;  end  interface
+interface  copy;    module  procedure  copy    ;  end  interface
+interface  corr;    module  procedure  corr    ;  end  interface
+interface  count;   module  procedure  count   ;  end  interface
+interface  decomp;  module  procedure  decomp  ;  end  interface
+interface  define;  module  procedure  define  ;  end  interface
+interface  delete;  module  procedure  delete  ;  end  interface
+interface  demod;   module  procedure  demod   ;  end  interface
+interface  dexcdf;  module  procedure  dexcdf  ;  end  interface
+interface  dexpdf;  module  procedure  dexpdf  ;  end  interface
+interface  dexplt;  module  procedure  dexplt  ;  end  interface
+interface  dexppf;  module  procedure  dexppf  ;  end  interface
+interface  dexran;  module  procedure  dexran  ;  end  interface
+interface  dexsf;   module  procedure  dexsf   ;  end  interface
+interface  discr2;  module  procedure  discr2  ;  end  interface
+interface  discr3;  module  procedure  discr3  ;  end  interface
+interface  discre;  module  procedure  discre  ;  end  interface
+interface  dot;     module  procedure  dot     ;  end  interface
+interface  ev1cdf;  module  procedure  ev1cdf  ;  end  interface
+interface  ev1plt;  module  procedure  ev1plt  ;  end  interface
+interface  ev1ppf;  module  procedure  ev1ppf  ;  end  interface
+interface  ev1ran;  module  procedure  ev1ran  ;  end  interface
+interface  ev2cdf;  module  procedure  ev2cdf  ;  end  interface
+interface  ev2plt;  module  procedure  ev2plt  ;  end  interface
+interface  ev2ppf;  module  procedure  ev2ppf  ;  end  interface
+interface  ev2ran;  module  procedure  ev2ran  ;  end  interface
+interface  expcdf;  module  procedure  expcdf  ;  end  interface
+interface  exppdf;  module  procedure  exppdf  ;  end  interface
+interface  expplt;  module  procedure  expplt  ;  end  interface
+interface  expppf;  module  procedure  expppf  ;  end  interface
+interface  expran;  module  procedure  expran  ;  end  interface
+interface  expsf;   module  procedure  expsf   ;  end  interface
+interface  extrem;  module  procedure  extrem  ;  end  interface
+interface  fcdf;    module  procedure  fcdf    ;  end  interface
+interface  fourie;  module  procedure  fourie  ;  end  interface
+interface  fran;    module  procedure  fran    ;  end  interface
+interface  freq;    module  procedure  freq    ;  end  interface
+interface  gamcdf;  module  procedure  gamcdf  ;  end  interface
+interface  gamplt;  module  procedure  gamplt  ;  end  interface
+interface  gamppf;  module  procedure  gamppf  ;  end  interface
+interface  gamran;  module  procedure  gamran  ;  end  interface
+interface  geocdf;  module  procedure  geocdf  ;  end  interface
+interface  geoplt;  module  procedure  geoplt  ;  end  interface
+interface  geoppf;  module  procedure  geoppf  ;  end  interface
+interface  georan;  module  procedure  georan  ;  end  interface
+interface  hfncdf;  module  procedure  hfncdf  ;  end  interface
+interface  hfnplt;  module  procedure  hfnplt  ;  end  interface
+interface  hfnppf;  module  procedure  hfnppf  ;  end  interface
+interface  hfnran;  module  procedure  hfnran  ;  end  interface
+interface  hist;    module  procedure  hist    ;  end  interface
+interface  invxwx;  module  procedure  invxwx  ;  end  interface
+interface  lamcdf;  module  procedure  lamcdf  ;  end  interface
+interface  lampdf;  module  procedure  lampdf  ;  end  interface
+interface  lamplt;  module  procedure  lamplt  ;  end  interface
+interface  lamppf;  module  procedure  lamppf  ;  end  interface
+interface  lamran;  module  procedure  lamran  ;  end  interface
+interface  lamsf;   module  procedure  lamsf   ;  end  interface
+interface  lgncdf;  module  procedure  lgncdf  ;  end  interface
+interface  lgnplt;  module  procedure  lgnplt  ;  end  interface
+interface  lgnppf;  module  procedure  lgnppf  ;  end  interface
+interface  lgnran;  module  procedure  lgnran  ;  end  interface
+interface  loc;     module  procedure  loc     ;  end  interface
+interface  logcdf;  module  procedure  logcdf  ;  end  interface
+interface  logpdf;  module  procedure  logpdf  ;  end  interface
+interface  logplt;  module  procedure  logplt  ;  end  interface
+interface  logppf;  module  procedure  logppf  ;  end  interface
+interface  logran;  module  procedure  logran  ;  end  interface
+interface  logsf;   module  procedure  logsf   ;  end  interface
+interface  max;     module  procedure  max     ;  end  interface
+interface  mean;    module  procedure  mean    ;  end  interface
+interface  median;  module  procedure  median  ;  end  interface
+interface  midm;    module  procedure  midm    ;  end  interface
+interface  midr;    module  procedure  midr    ;  end  interface
+interface  min;     module  procedure  min     ;  end  interface
+interface  move;    module  procedure  move    ;  end  interface
+interface  nbcdf;   module  procedure  nbcdf   ;  end  interface
+interface  nbppf;   module  procedure  nbppf   ;  end  interface
+interface  nbran;   module  procedure  nbran   ;  end  interface
+interface  norcdf;  module  procedure  norcdf  ;  end  interface
+interface  norout;  module  procedure  norout  ;  end  interface
+interface  norpdf;  module  procedure  norpdf  ;  end  interface
+interface  norplt;  module  procedure  norplt  ;  end  interface
+interface  norppf;  module  procedure  norppf  ;  end  interface
+interface  norran;  module  procedure  norran  ;  end  interface
+interface  norsf;   module  procedure  norsf   ;  end  interface
+interface  parcdf;  module  procedure  parcdf  ;  end  interface
+interface  parplt;  module  procedure  parplt  ;  end  interface
+interface  parppf;  module  procedure  parppf  ;  end  interface
+interface  parran;  module  procedure  parran  ;  end  interface
+interface  plot;    module  procedure  plot    ;  end  interface
+interface  plot10;  module  procedure  plot10  ;  end  interface
+interface  plot6;   module  procedure  plot6   ;  end  interface
+interface  plot7;   module  procedure  plot7   ;  end  interface
+interface  plot8;   module  procedure  plot8   ;  end  interface
+interface  plot9;   module  procedure  plot9   ;  end  interface
+interface  plotc;   module  procedure  plotc   ;  end  interface
+interface  plotco;  module  procedure  plotco  ;  end  interface
+interface  plotct;  module  procedure  plotct  ;  end  interface
+interface  plots;   module  procedure  plots   ;  end  interface
+interface  plotsc;  module  procedure  plotsc  ;  end  interface
+interface  plotsp;  module  procedure  plotsp  ;  end  interface
+interface  plotst;  module  procedure  plotst  ;  end  interface
+interface  plott;   module  procedure  plott   ;  end  interface
+interface  plotu;   module  procedure  plotu   ;  end  interface
+interface  plotx;   module  procedure  plotx   ;  end  interface
+interface  plotxt;  module  procedure  plotxt  ;  end  interface
+interface  plotxx;  module  procedure  plotxx  ;  end  interface
+interface  pltsct;  module  procedure  pltsct  ;  end  interface
+interface  pltxxt;  module  procedure  pltxxt  ;  end  interface
+interface  poicdf;  module  procedure  poicdf  ;  end  interface
+interface  poiplt;  module  procedure  poiplt  ;  end  interface
+interface  poippf;  module  procedure  poippf  ;  end  interface
+interface  poiran;  module  procedure  poiran  ;  end  interface
+interface  poly;    module  procedure  poly    ;  end  interface
+interface  propor;  module  procedure  propor  ;  end  interface
+interface  range;   module  procedure  range   ;  end  interface
+interface  rank;    module  procedure  rank    ;  end  interface
+interface  ranper;  module  procedure  ranper  ;  end  interface
+interface  read;    module  procedure  read    ;  end  interface
+interface  readg;   module  procedure  readg   ;  end  interface
+interface  relsd;   module  procedure  relsd   ;  end  interface
+interface  replac;  module  procedure  replac  ;  end  interface
+interface  retain;  module  procedure  retain  ;  end  interface
+interface  runs;    module  procedure  runs    ;  end  interface
+interface  sampp;   module  procedure  sampp   ;  end  interface
+interface  scale;   module  procedure  scale   ;  end  interface
+interface  sd;      module  procedure  sd      ;  end  interface
+interface  skipr;   module  procedure  skipr   ;  end  interface
+interface  sort;    module  procedure  sort    ;  end  interface
+interface  sortc;   module  procedure  sortc   ;  end  interface
+interface  sortp;   module  procedure  sortp   ;  end  interface
+interface  spcorr;  module  procedure  spcorr  ;  end  interface
+interface  stmom3;  module  procedure  stmom3  ;  end  interface
+interface  stmom4;  module  procedure  stmom4  ;  end  interface
+interface  subse1;  module  procedure  subse1  ;  end  interface
+interface  subse2;  module  procedure  subse2  ;  end  interface
+interface  subset;  module  procedure  subset  ;  end  interface
+interface  tail;    module  procedure  tail    ;  end  interface
+interface  tcdf;    module  procedure  tcdf    ;  end  interface
+interface  time;    module  procedure  time    ;  end  interface
+interface  tol;     module  procedure  tol     ;  end  interface
+interface  tplt;    module  procedure  tplt    ;  end  interface
+interface  tppf;    module  procedure  tppf    ;  end  interface
+interface  tran;    module  procedure  tran    ;  end  interface
+interface  trim;    module  procedure  trim    ;  end  interface
+interface  unicdf;  module  procedure  unicdf  ;  end  interface
+interface  unimed;  module  procedure  unimed  ;  end  interface
+interface  unipdf;  module  procedure  unipdf  ;  end  interface
+interface  uniplt;  module  procedure  uniplt  ;  end  interface
+interface  unippf;  module  procedure  unippf  ;  end  interface
+interface  uniran;  module  procedure  uniran  ;  end  interface
+interface  unisf;   module  procedure  unisf   ;  end  interface
+interface  var;     module  procedure  var     ;  end  interface
+interface  weib;    module  procedure  weib    ;  end  interface
+interface  weicdf;  module  procedure  weicdf  ;  end  interface
+interface  weiplt;  module  procedure  weiplt  ;  end  interface
+interface  weippf;  module  procedure  weippf  ;  end  interface
+interface  weiran;  module  procedure  weiran  ;  end  interface
+interface  wind;    module  procedure  wind    ;  end  interface
+interface  write;   module  procedure  write   ;  end  interface
+
 contains
 !>
 !!##NAME
@@ -492,7 +515,7 @@ INTEGER ::  i , ipr , Iseed , N
          DO i = 1 , N
             DO
 !
-               CALL NORRAN(1,Iseed,xn(1))
+               CALL NORRAN(1,Iseed,xn(1:1))
                xg = Alpha*(1.0_wp-a1+b1*xn(1))**3
                IF ( xg>=0.0_wp ) THEN
                   term = (xg/xg01)**(Alpha-athird)
@@ -503,7 +526,7 @@ INTEGER ::  i , ipr , Iseed , N
                      xg1 = xg
                      DO
 !
-                        CALL NORRAN(1,Iseed,xn(1))
+                        CALL NORRAN(1,Iseed,xn(1:1))
                         xg = Beta*(1.0_wp-a2+b2*xn(1))**3
                         IF ( xg>=0.0_wp ) THEN
                            term = (xg/xg02)**(Beta-athird)
@@ -1480,7 +1503,7 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -2200,7 +2223,7 @@ REAL(kind=wp) :: arg , pi , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -3253,7 +3276,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -3277,7 +3300,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       DIMENSION y(2) , z(2)
 !
 !---------------------------------------------------------------------
@@ -3327,7 +3350,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
             sum = 0.0_wp
             DO j = 1 , Nu , 2
                CALL UNIRAN(2,Iseed,y)
-               arg1 = -2.0_wp*ALOG(y(1))
+               arg1 = -2.0_wp*LOG(y(1))
                arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
@@ -5271,7 +5294,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -5348,8 +5371,8 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !
          DO i = 1 , N
             q = W(i)
-            IF ( q<=0.5_wp ) W(i) = ALOG(2.0_wp*q)
-            IF ( q>0.5_wp ) W(i) = -ALOG(2.0_wp*(1.0_wp-q))
+            IF ( q<=0.5_wp ) W(i) = LOG(2.0_wp*q)
+            IF ( q>0.5_wp ) W(i) = -LOG(2.0_wp*(1.0_wp-q))
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -5469,7 +5492,7 @@ REAL(kind=wp) :: P , Ppf
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
@@ -5508,8 +5531,8 @@ REAL(kind=wp) :: P , Ppf
 !
 !-----START POINT-----------------------------------------------------
 !
-         IF ( P<=0.5_wp ) Ppf = ALOG(2.0_wp*P)
-         IF ( P>0.5_wp ) Ppf = -ALOG(2.0_wp*(1.0_wp-P))
+         IF ( P<=0.5_wp ) Ppf = LOG(2.0_wp*P)
+         IF ( P>0.5_wp ) Ppf = -LOG(2.0_wp*(1.0_wp-P))
       ENDIF
 !
       END SUBROUTINE DEXPPF
@@ -5608,7 +5631,7 @@ REAL(kind=wp) :: q , X
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -5661,8 +5684,8 @@ REAL(kind=wp) :: q , X
 !
          DO i = 1 , N
             q = X(i)
-            IF ( q<=0.5_wp ) X(i) = ALOG(2.0_wp*q)
-            IF ( q>0.5_wp ) X(i) = -ALOG(2.0_wp*(1.0-q))
+            IF ( q<=0.5_wp ) X(i) = LOG(2.0_wp*q)
+            IF ( q>0.5_wp ) X(i) = -LOG(2.0_wp*(1.0-q))
          ENDDO
       ENDIF
 !
@@ -6940,7 +6963,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -7016,7 +7039,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     COMPUTE EXTREME VALUE TYPE 1 ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = -ALOG(ALOG(1.0_wp/W(i)))
+            W(i) = -LOG(LOG(1.0_wp/W(i)))
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -7145,7 +7168,7 @@ REAL(kind=wp) :: P , Ppf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -7177,7 +7200,7 @@ REAL(kind=wp) :: P , Ppf
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = -ALOG(ALOG(1.0_wp/P))
+         Ppf = -LOG(LOG(1.0_wp/P))
       ENDIF
 !
       END SUBROUTINE EV1PPF
@@ -7261,7 +7284,7 @@ REAL(kind=wp) :: X
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -7279,7 +7302,7 @@ REAL(kind=wp) :: X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -7313,7 +7336,7 @@ REAL(kind=wp) :: X
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = -ALOG(ALOG(1.0_wp/X(i)))
+            X(i) = -LOG(LOG(1.0_wp/X(i)))
          ENDDO
       ENDIF
 !
@@ -7538,7 +7561,7 @@ REAL(kind=wp) :: yslope
 !                   FOR THIS SUBROUTINE IS 7500.
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -7624,7 +7647,7 @@ REAL(kind=wp) :: yslope
 !     COMPUTE EXREME VALUE TYPE 2 DISTRIBUTION ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = (-ALOG(W(i)))**(-1.0_wp/Gamma)
+            W(i) = (-LOG(W(i)))**(-1.0_wp/Gamma)
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -7634,13 +7657,13 @@ REAL(kind=wp) :: yslope
 !
          CALL PLOT(Y,W,N)
          q = .9975_wp
-         pp9975 = (-ALOG(q))**(-1.0_wp/Gamma)
+         pp9975 = (-LOG(q))**(-1.0_wp/Gamma)
          q = .0025_wp
-         pp0025 = (-ALOG(q))**(-1.0_wp/Gamma)
+         pp0025 = (-LOG(q))**(-1.0_wp/Gamma)
          q = .975_wp
-         pp975 = (-ALOG(q))**(-1.0_wp/Gamma)
+         pp975 = (-LOG(q))**(-1.0_wp/Gamma)
          q = .025_wp
-         pp025 = (-ALOG(q))**(-1.0_wp/Gamma)
+         pp025 = (-LOG(q))**(-1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99007) Gamma , tau , N
 !
@@ -7765,7 +7788,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -7803,7 +7826,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = (-ALOG(P))**(-1.0_wp/Gamma)
+         Ppf = (-LOG(P))**(-1.0_wp/Gamma)
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -7890,7 +7913,7 @@ REAL(kind=wp) :: Gamma , X
 !                   OF N FOR THIS SUBROUTINE.
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -7908,7 +7931,7 @@ REAL(kind=wp) :: Gamma , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -7951,7 +7974,7 @@ REAL(kind=wp) :: Gamma , X
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = (-ALOG(X(i)))**(-1.0_wp/Gamma)
+            X(i) = (-LOG(X(i)))**(-1.0_wp/Gamma)
          ENDDO
       ENDIF
 !
@@ -8265,7 +8288,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -8341,7 +8364,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     COMPUTE EXPONENTIAL ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = -ALOG(1.0_wp-W(i))
+            W(i) = -LOG(1.0_wp-W(i))
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -8463,7 +8486,7 @@ REAL(kind=wp) :: P , Ppf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
@@ -8502,7 +8525,7 @@ REAL(kind=wp) :: P , Ppf
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = -ALOG(1.0_wp-P)
+         Ppf = -LOG(1.0_wp-P)
       ENDIF
 !
       END SUBROUTINE EXPPPF
@@ -8582,7 +8605,7 @@ REAL(kind=wp) :: X
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -8609,7 +8632,7 @@ REAL(kind=wp) :: X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -8643,7 +8666,7 @@ REAL(kind=wp) :: X
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = -ALOG(X(i))
+            X(i) = -LOG(X(i))
          ENDDO
       ENDIF
 !
@@ -8856,7 +8879,7 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, EV1PLT,
 !                                         EV2PLT, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
@@ -9013,12 +9036,12 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
          DO idis = 1 , numdis
             IF ( idis==numdis ) THEN
                DO i = 1 , N
-                  w(i) = -ALOG(ALOG(1.0_wp/Z(i)))
+                  w(i) = -LOG(LOG(1.0_wp/Z(i)))
                ENDDO
             ELSE
                a = gamtab(idis)
                DO i = 1 , N
-                  w(i) = (-ALOG(Z(i)))**(-1.0_wp/a)
+                  w(i) = (-LOG(Z(i)))**(-1.0_wp/a)
                ENDDO
             ENDIF
 !
@@ -9177,7 +9200,7 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
             DO i = 2 , numam
                r = 1.0_wp/am(i)
                p = 1.0_wp - r
-               arg = -ALOG(p)
+               arg = -LOG(p)
                IF ( arg>0.0_wp ) h(i,1) = yint + yslope*(arg**(-1.0_wp/a))
             ENDDO
          ENDIF
@@ -9190,8 +9213,8 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
          DO i = 2 , numam
             r = 1.0_wp/am(i)
             p = 1.0_wp - r
-            arg = -ALOG(p)
-            IF ( arg>0.0_wp ) h(i,2) = yint + yslope*(-ALOG(arg))
+            arg = -LOG(p)
+            IF ( arg>0.0_wp ) h(i,2) = yint + yslope*(-LOG(arg))
          ENDDO
 !
 !     WRITE OUT THE PAGE WITH THE RETURN PERIODS AND THE PREDICTED EXTREMES
@@ -10118,7 +10141,7 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
 !                 --NU1 SHOULD BE A POSITIVE INTEGER VARIABLE.
 !                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--MOOD AND GRABLE, INTRODUCTION TO THE
@@ -10196,7 +10219,7 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
             sum = 0.0_wp
             DO j = 1 , Nu1 , 2
                CALL UNIRAN(2,1,y)
-               arg1 = -2.0_wp*ALOG(y(1))
+               arg1 = -2.0_wp*LOG(y(1))
                arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
@@ -10208,7 +10231,7 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
             sum = 0.0_wp
             DO j = 1 , Nu2 , 2
                CALL UNIRAN(2,1,y)
-               arg1 = -2.0_wp*ALOG(y(1))
+               arg1 = -2.0_wp*LOG(y(1))
                arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
@@ -11454,7 +11477,7 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -11533,7 +11556,7 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
                   term = (xg/xg0)**(Gamma-athird)
                   arg = 0.5_wp*xn(1)*xn(1) - xg - 0.5_wp*xn0*xn0 + xg0
                   funct = term*EXP(arg)
-                  CALL UNIRAN(1,Iseed,u(1))
+                  CALL UNIRAN(1,Iseed,u(1:1))
                   IF ( u(1)<=funct ) THEN
                      X(i) = xg
                      EXIT
@@ -12073,7 +12096,7 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
@@ -12137,8 +12160,8 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !
          arg1 = 1.0_wp - P
          arg2 = 1.0_wp - Ppar
-         anum = ALOG(arg1)
-         aden = ALOG(arg2)
+         anum = LOG(arg1)
+         aden = LOG(arg2)
          ratio = anum/aden
          iratio = ratio
          Ppf = iratio
@@ -12247,7 +12270,7 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
@@ -12287,7 +12310,7 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -12333,8 +12356,8 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
             IF ( X(i)/=0.0_wp ) THEN
                arg1 = 1.0_wp - X(i)
                arg2 = 1.0_wp - P
-               anum = ALOG(arg1)
-               aden = ALOG(arg2)
+               anum = LOG(arg1)
+               aden = LOG(arg2)
                ratio = anum/aden
                iratio = ratio
                X(i) = iratio
@@ -12897,7 +12920,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -12916,7 +12939,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       DIMENSION y(2)
 !
 !---------------------------------------------------------------------
@@ -12967,7 +12990,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
             ELSE
                u2 = X(ip1)
             ENDIF
-            arg1 = -2.0_wp*ALOG(u1)
+            arg1 = -2.0_wp*LOG(u1)
             arg2 = 2.0_wp*pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)
@@ -13886,7 +13909,7 @@ REAL(kind=wp) :: yslope
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -13970,7 +13993,7 @@ REAL(kind=wp) :: yslope
          DO i = 1 , N
             q = W(i)
             IF ( -0.001_wp<Alamba .AND. Alamba<0.001_wp ) W(i)                &
-     &           = ALOG(q/(1.0_wp-q))
+     &           = LOG(q/(1.0_wp-q))
             IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) W(i)               &
      &           = (q**Alamba-(1.0_wp-q)**Alamba)/Alamba
          ENDDO
@@ -14111,7 +14134,7 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
@@ -14149,7 +14172,7 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !-----START POINT-----------------------------------------------------
 !
                   IF ( -0.001_wp<Alamba .AND. Alamba<0.001_wp ) THEN
-                     Ppf = ALOG(P/(1.0_wp-P))
+                     Ppf = LOG(P/(1.0_wp-P))
                      RETURN
                   ELSE
 !
@@ -14248,7 +14271,7 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -14272,7 +14295,7 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -14309,7 +14332,7 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
          DO i = 1 , N
             q = X(i)
             IF ( -0.001_wp<alamb2 .AND. alamb2<0.001_wp ) X(i)                &
-     &           = ALOG(q/(1.0-q))
+     &           = LOG(q/(1.0-q))
             IF ( -0.001_wp>=alamb2 .OR. alamb2>=0.001_wp ) X(i)               &
      &           = (q**alamb2-(1.0_wp-q)**alamb2)/alamb2
          ENDDO
@@ -14517,7 +14540,7 @@ REAL(kind=wp) :: arg , Cdf , X
 !              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
 !              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
 !              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-ALOG(X)*ALOG(X)/2)
+!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
 !              THE LOGNORMAL DISTRIBUTION USED HEREIN
 !              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
 !              THE VARIATE Z IS NORMALLY DISTRIBUTED
@@ -14535,7 +14558,7 @@ REAL(kind=wp) :: arg , Cdf , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -14569,7 +14592,7 @@ REAL(kind=wp) :: arg , Cdf , X
 !
 !-----START POINT-----------------------------------------------------
 !
-         arg = ALOG(X)
+         arg = LOG(X)
          CALL NORCDF(arg,Cdf)
       ENDIF
 !
@@ -14638,7 +14661,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
 !              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
 !              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-ALOG(X)*ALOG(X)/2)
+!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
 !              THE PROTOTYPE LOGNORMAL DISTRIBUTION USED HEREIN
 !              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
 !              THE VARIATE Z IS NORMALLY DISTRIBUTED
@@ -14854,7 +14877,7 @@ REAL(kind=wp) :: P , Ppf
 !              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
 !              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
 !              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-ALOG(X)*ALOG(X)/2)
+!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
 !              THE LOGNORMAL DISTRIBUTION USED HEREIN
 !              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
 !              THE VARIATE Z IS NORMALLY DISTRIBUTED
@@ -14979,7 +15002,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
 !              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
 !              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-ALOG(X)*ALOG(X)/2)
+!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
 !              THE PROTOTYPE LOGNORMAL DISTRIBUTION USED HEREIN
 !              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
 !              THE VARIATE Z IS NORMALLY DISTRIBUTED
@@ -14999,7 +15022,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS, EXP.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS, EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -15024,7 +15047,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       DIMENSION y(2)
 !
 !---------------------------------------------------------------------
@@ -15075,7 +15098,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
             ELSE
                u2 = X(ip1)
             ENDIF
-            arg1 = -2.0_wp*ALOG(u1)
+            arg1 = -2.0_wp*LOG(u1)
             arg2 = 2.0_wp*pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)
@@ -15607,7 +15630,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -15683,7 +15706,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     COMPUTE LOGISTIC ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = ALOG(W(i)/(1.0_wp-W(i)))
+            W(i) = LOG(W(i)/(1.0_wp-W(i)))
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -15842,8 +15865,8 @@ REAL(kind=wp) :: P , Ppf
 !-----START POINT-----------------------------------------------------
 !
 !CCCC CALL QCORR(P,Q)
-!CCCC PPF=ALOG(P/Q)
-         Ppf = ALOG(P/(1.0_wp-P))
+!CCCC PPF=LOG(P/Q)
+         Ppf = LOG(P/(1.0_wp-P))
       ENDIF
 !
       END SUBROUTINE LOGPPF
@@ -15923,7 +15946,7 @@ REAL(kind=wp) :: X
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -15949,7 +15972,7 @@ REAL(kind=wp) :: X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -15983,7 +16006,7 @@ REAL(kind=wp) :: X
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = ALOG(X(i)/(1.0_wp-X(i)))
+            X(i) = LOG(X(i)/(1.0_wp-X(i)))
          ENDDO
       ENDIF
 !
@@ -17720,7 +17743,7 @@ REAL(kind=wp) :: zppf
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, NBCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
@@ -17842,7 +17865,7 @@ REAL(kind=wp) :: zppf
                         amean = an*(1.0_wp-Ppar)/Ppar
                         sd = SQRT(an*(1.0_wp-Ppar)/(Ppar*Ppar))
                         arg = SQRT((amean+0.375_wp)/(an-0.75_wp))
-                        arcsh = ALOG(arg+SQRT(arg*arg+1.0_wp))
+                        arcsh = LOG(arg+SQRT(arg*arg+1.0_wp))
                         ymean = (SQRT(an-0.5_wp))*arcsh
                         ysd = 0.5_wp
                         CALL NORPPF(P,zppf)
@@ -18245,7 +18268,7 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !
 !-----START POINT-----------------------------------------------------
 !
-         CALL UNIRAN(1,Istart,g(1))
+         CALL UNIRAN(1,Istart,g(1:1))
 !
 !     CHECK ON THE MAGNITUDE OF P,
 !     AND BRANCH TO THE FASTER
@@ -19308,7 +19331,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--ODEH AND EVANS, THE PERCENTAGE POINTS
@@ -19390,7 +19413,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !
          r = P
          IF ( P>0.5_wp ) r = 1.0_wp - r
-         t = SQRT(-2.0_wp*ALOG(r))
+         t = SQRT(-2.0_wp*LOG(r))
          anum = ((((t*p4+p3)*t+p2)*t+p1)*t+p0)
          aden = ((((t*q4+q3)*t+q2)*t+q1)*t+q0)
          Ppf = t + (anum/aden)
@@ -19477,7 +19500,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     METHOD--BOX-MULLER ALGORITHM.
@@ -19503,7 +19526,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       DIMENSION y(2)
 !
 !---------------------------------------------------------------------
@@ -19554,7 +19577,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
             ELSE
                u2 = X(ip1)
             ENDIF
-            arg1 = -2.0_wp*ALOG(u1)
+            arg1 = -2.0_wp*LOG(u1)
             arg2 = 2.0_wp*pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)
@@ -20291,7 +20314,7 @@ REAL(kind=wp) :: Gamma , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -29438,7 +29461,7 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !                   OF N FOR THIS SUBROUTINE.
 !                 --ALAMBA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     COMMENT--THE SINGLE PRECISION TAIL LENGTH
@@ -29489,7 +29512,7 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -29533,7 +29556,7 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
             j = 1
             DO
                CALL UNIRAN(1,Iseed,u)
-               e = -ALOG(1.0_wp-u(1))
+               e = -LOG(1.0_wp-u(1))
                sum = sum + e
                IF ( sum>Alamba ) THEN
                   X(i) = j - 1
@@ -35125,7 +35148,7 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -36266,7 +36289,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 3000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG, ALOG10, EXP,
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG, LOG10, EXP,
 !                                         SIN, COS, ATAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
@@ -36484,7 +36507,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !
 !     COMPUTE THE WILK-SHAPIRO STATISTIC
 !
-         al = ALOG10(an)
+         al = LOG10(an)
          gamma = .327511_wp + .058212_wp*al - .009776_wp*al*al
          sum = 0.0_wp
          IF ( N<=20 ) arg = N
@@ -36540,15 +36563,15 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
             ELSEIF ( idis==22 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
-                  YM(i) = ALOG(Z(i)/(1.0_wp-Z(i)))
+                  YM(i) = LOG(Z(i)/(1.0_wp-Z(i)))
                   YM(irev) = -YM(i)
                ENDDO
                IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
             ELSEIF ( idis==23 ) THEN
                DO i = 1 , nhalf
                   irev = N - i + 1
-                  IF ( Z(i)<=0.5_wp ) YM(i) = ALOG(2.0_wp*Z(i))
-                  IF ( Z(i)>0.5_wp ) YM(i) = -ALOG(2.0_wp*(1.0_wp-Z(i)))
+                  IF ( Z(i)<=0.5_wp ) YM(i) = LOG(2.0_wp*Z(i))
+                  IF ( Z(i)>0.5_wp ) YM(i) = -LOG(2.0_wp*(1.0_wp-Z(i)))
                   YM(irev) = -YM(i)
                ENDDO
                IF ( ievodd==1 ) YM(nhalfp) = 0.0_wp
@@ -38593,7 +38616,7 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG, SQRT, SIN, COS.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--MOOD AND GRABLE, INTRODUCTION TO THE
@@ -38613,7 +38636,7 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
       DIMENSION y(2) , z(2)
 !
 !---------------------------------------------------------------------
@@ -38665,14 +38688,14 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
          DO i = 1 , N
 !
             CALL UNIRAN(2,Iseed,y)
-            arg1 = -2.0_wp*ALOG(y(1))
+            arg1 = -2.0_wp*LOG(y(1))
             arg2 = 2.0_wp*pi*y(2)
             znorm = (SQRT(arg1))*(COS(arg2))
 !
             sum = 0.0_wp
             DO j = 1 , Nu , 2
                CALL UNIRAN(2,Iseed,y)
-               arg1 = -2.0_wp*ALOG(y(1))
+               arg1 = -2.0_wp*LOG(y(1))
                arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
@@ -39665,7 +39688,7 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine uniran (X, Y)
 !!
 !!      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-!!    Real(kind=wp) :: (In)                      ::  Y
+!!    Real(kind=wp) :: (In)                    ::  Y
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -39702,17 +39725,13 @@ REAL(kind=wp) :: P , Ppf
 !!##LICENSE
 !!    CC0-1.0
 !*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNIRAN(N,Iseed,X)
-      IMPLICIT NONE
-!*--UNIRAN32343
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: ak , am1 , X
-      INTEGER i , ipr , Iseed , iseed3 , j , j0 , j1 , k , k0 , k1 , l ,&
-     &        m , m1 , m2 , mdig , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNIRAN
-!
+SUBROUTINE UNIRAN(N,Iseed,X)
+IMPLICIT NONE
+
+REAL(kind=wp) :: ak , am1 , X(:)
+INTEGER i, ipr, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
+INTEGER m(17)
+
 !     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
 !              FROM THE UNIFORM (RECTANGULAR)
 !              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
@@ -39747,7 +39766,7 @@ REAL(kind=wp) :: ak , am1 , X
 !           IN THE SENSE THAT FOR A GIVEN VALUE
 !           OF THE INPUT SEED ISEED AND FOR A GIVEN VALUE
 !           OF MDIG (TO BE DEFINED BELOW),
-!           THE SAME SEQUENCE OF UNIRFORM RANDOM
+!           THE SAME SEQUENCE OF UNIFORM RANDOM
 !           NUMBERS WILL RESULT ON DIFFERENT COMPUTERS
 !           (VAX, PRIME, PERKIN-ELMER, IBM, UNIVAC, HONEYWELL, ETC.)
 !
@@ -39844,10 +39863,6 @@ REAL(kind=wp) :: ak , am1 , X
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(*)
-!
-      DIMENSION m(17)
 !
 !---------------------------------------------------------------------
 !
@@ -39957,8 +39972,7 @@ REAL(kind=wp) :: ak , am1 , X
          WRITE (ipr,99002)
 99002    FORMAT (' ','***** ERROR IN UNIRAN--')
          WRITE (ipr,99003)
-99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS ',      &
-     &           'NON-POSITIVE.')
+99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS NON-POSITIVE.')
          WRITE (ipr,99004) N
 99004    FORMAT (' ','      N = ',I8)
       ENDIF
@@ -39971,7 +39985,7 @@ REAL(kind=wp) :: ak , am1 , X
 !CCCC DEBUG TRACE,INIT
 !CCCC AT 90
 !CCCC TRACE ON
-      END SUBROUTINE UNIRAN
+END SUBROUTINE UNIRAN
 !>
 !!##NAME
 !!    unisf(3f) - [M_datapac:STATISTICS] compute the Uniform sparsity function
@@ -40341,7 +40355,7 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, WEIPLT,
 !                                         EV1PLT, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
@@ -40495,12 +40509,12 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
          DO idis = 1 , numdis
             IF ( idis==numdis ) THEN
                DO i = 1 , N
-                  w(i) = -ALOG(ALOG(1.0_wp/Z(i)))
+                  w(i) = -LOG(LOG(1.0_wp/Z(i)))
                ENDDO
             ELSE
                a = gamtab(idis)
                DO i = 1 , N
-                  w(i) = (-ALOG(1.0_wp-Z(i)))**(1.0_wp/a)
+                  w(i) = (-LOG(1.0_wp-Z(i)))**(1.0_wp/a)
                ENDDO
             ENDIF
 !
@@ -40850,7 +40864,7 @@ REAL(kind=wp) :: yslope
 !                   FOR THIS SUBROUTINE IS 7500.
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
@@ -40937,7 +40951,7 @@ REAL(kind=wp) :: yslope
 !     COMPUTE WEIBULL DISTRIBUTION ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            W(i) = (-ALOG(1.0_wp-W(i)))**(1.0_wp/Gamma)
+            W(i) = (-LOG(1.0_wp-W(i)))**(1.0_wp/Gamma)
          ENDDO
 !
 !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
@@ -40947,13 +40961,13 @@ REAL(kind=wp) :: yslope
 !
          CALL PLOT(Y,W,N)
          q = 0.9975_wp
-         pp9975 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         pp9975 = (-LOG(1.0_wp-q))**(1.0_wp/Gamma)
          q = 0.0025_wp
-         pp0025 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         pp0025 = (-LOG(1.0_wp-q))**(1.0_wp/Gamma)
          q = 0.975_wp
-         pp975 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         pp975 = (-LOG(1.0_wp-q))**(1.0_wp/Gamma)
          q = 0.025_wp
-         pp025 = (-ALOG(1.0_wp-q))**(1.0_wp/Gamma)
+         pp025 = (-LOG(1.0_wp-q))**(1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (ipr,99007) Gamma , tau , N
 !
@@ -41079,7 +41093,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -41121,7 +41135,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !
 !-----START POINT-----------------------------------------------------
 !
-         Ppf = (-ALOG(1.0_wp-P))**(1.0_wp/Gamma)
+         Ppf = (-LOG(1.0_wp-P))**(1.0_wp/Gamma)
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -41207,7 +41221,7 @@ REAL(kind=wp) :: Gamma , X
 !                   OF N FOR THIS SUBROUTINE.
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -41229,7 +41243,7 @@ REAL(kind=wp) :: Gamma , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
+      DIMENSION X(:)
 !
 !---------------------------------------------------------------------
 !
@@ -41272,7 +41286,7 @@ REAL(kind=wp) :: Gamma , X
 !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
 !
          DO i = 1 , N
-            X(i) = (-ALOG(1.0_wp-X(i)))**(1.0_wp/Gamma)
+            X(i) = (-LOG(1.0_wp-X(i)))**(1.0_wp/Gamma)
          ENDDO
       ENDIF
 !

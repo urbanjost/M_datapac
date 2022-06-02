@@ -63,7 +63,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
 !              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
 !              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-ALOG(X)*ALOG(X)/2)
+!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
 !              THE PROTOTYPE LOGNORMAL DISTRIBUTION USED HEREIN
 !              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
 !              THE VARIATE Z IS NORMALLY DISTRIBUTED

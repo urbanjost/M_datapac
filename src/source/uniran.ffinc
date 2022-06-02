@@ -7,7 +7,7 @@ SYNOPSIS
     Subroutine uniran (X, Y)
 
      ${TYPE} (kind=${KIND}), Intent (InOut) ::  X(:)
-   Real(kind=wp) :: (In)                      ::  Y
+   Real(kind=wp) :: (In)                    ::  Y
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -45,17 +45,13 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNIRAN(N,Iseed,X)
-      IMPLICIT NONE
-!*--UNIRAN32343
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: ak , am1 , X
-      INTEGER i , ipr , Iseed , iseed3 , j , j0 , j1 , k , k0 , k1 , l ,&
-     &        m , m1 , m2 , mdig , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNIRAN
-!
+SUBROUTINE UNIRAN(N,Iseed,X)
+IMPLICIT NONE
+
+REAL(kind=wp) :: ak , am1 , X(:)
+INTEGER i, ipr, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
+INTEGER m(17)
+
 !     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
 !              FROM THE UNIFORM (RECTANGULAR)
 !              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
@@ -90,7 +86,7 @@ REAL(kind=wp) :: ak , am1 , X
 !           IN THE SENSE THAT FOR A GIVEN VALUE
 !           OF THE INPUT SEED ISEED AND FOR A GIVEN VALUE
 !           OF MDIG (TO BE DEFINED BELOW),
-!           THE SAME SEQUENCE OF UNIRFORM RANDOM
+!           THE SAME SEQUENCE OF UNIFORM RANDOM
 !           NUMBERS WILL RESULT ON DIFFERENT COMPUTERS
 !           (VAX, PRIME, PERKIN-ELMER, IBM, UNIVAC, HONEYWELL, ETC.)
 !
@@ -187,10 +183,6 @@ REAL(kind=wp) :: ak , am1 , X
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(*)
-!
-      DIMENSION m(17)
 !
 !---------------------------------------------------------------------
 !
@@ -300,8 +292,7 @@ REAL(kind=wp) :: ak , am1 , X
          WRITE (ipr,99002)
 99002    FORMAT (' ','***** ERROR IN UNIRAN--')
          WRITE (ipr,99003)
-99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS ',      &
-     &           'NON-POSITIVE.')
+99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS NON-POSITIVE.')
          WRITE (ipr,99004) N
 99004    FORMAT (' ','      N = ',I8)
       ENDIF
@@ -314,4 +305,4 @@ REAL(kind=wp) :: ak , am1 , X
 !CCCC DEBUG TRACE,INIT
 !CCCC AT 90
 !CCCC TRACE ON
-      END SUBROUTINE UNIRAN
+END SUBROUTINE UNIRAN

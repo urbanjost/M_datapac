@@ -94,7 +94,7 @@ REAL(kind=wp) :: q , X
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
@@ -147,8 +147,8 @@ REAL(kind=wp) :: q , X
 !
          DO i = 1 , N
             q = X(i)
-            IF ( q<=0.5_wp ) X(i) = ALOG(2.0_wp*q)
-            IF ( q>0.5_wp ) X(i) = -ALOG(2.0_wp*(1.0-q))
+            IF ( q<=0.5_wp ) X(i) = LOG(2.0_wp*q)
+            IF ( q>0.5_wp ) X(i) = -LOG(2.0_wp*(1.0-q))
          ENDDO
       ENDIF
 !

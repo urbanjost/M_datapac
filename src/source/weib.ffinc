@@ -84,7 +84,7 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, WEIPLT,
 !                                         EV1PLT, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
@@ -238,12 +238,12 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
          DO idis = 1 , numdis
             IF ( idis==numdis ) THEN
                DO i = 1 , N
-                  w(i) = -ALOG(ALOG(1.0_wp/Z(i)))
+                  w(i) = -LOG(LOG(1.0_wp/Z(i)))
                ENDDO
             ELSE
                a = gamtab(idis)
                DO i = 1 , N
-                  w(i) = (-ALOG(1.0_wp-Z(i)))**(1.0_wp/a)
+                  w(i) = (-LOG(1.0_wp-Z(i)))**(1.0_wp/a)
                ENDDO
             ENDIF
 !

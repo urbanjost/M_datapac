@@ -99,7 +99,7 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ALOG.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
@@ -163,8 +163,8 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !
          arg1 = 1.0_wp - P
          arg2 = 1.0_wp - Ppar
-         anum = ALOG(arg1)
-         aden = ALOG(arg2)
+         anum = LOG(arg1)
+         aden = LOG(arg2)
          ratio = anum/aden
          iratio = ratio
          Ppf = iratio
