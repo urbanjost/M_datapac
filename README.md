@@ -102,9 +102,9 @@ The following subroutines are available in M_datapac:
   * [SCALE](src/source/scale.ffinc)    - compute the sample range, sample standard deviation, sample relative standard deviation, and sample variance
   * [SD](src/source/sd.ffinc)          - compute the standard deviation of a vector of observations
   * [SKIPR](src/source/skipr.ffinc)    - skip over a user-specified number of rows in reading a data file
-  * [SORT](src/source/sort.ffinc)      - sort a vector of sample observations, also return the positions in the original vector
   * [SORTC](src/source/sortc.ffinc)    - sort a vector of sample observations and "carry" a second a vector
   * [SORTP](src/source/sortp.ffinc)   - sorts and ranks a numeric vector X
+  * [SORT](src/source/sort.ffinc)      - sort a vector of sample observations, also return the positions in the original vector
   * [SPCORR](src/source/spcorr.ffinc)  - compute the sample Spearman rank correlation coefficient between two vectors of observations
   * [STMOM3](src/source/stmom3.ffinc)  - compute the third central moment (i.e., the skewness) of a vector of observations
   * [STMOM4](src/source/stmom4.ffinc)  - compute the fourth central moment (i.e., the kurtosis) of a vector of observations
@@ -120,6 +120,9 @@ The following subroutines are available in M_datapac:
   * [WIND](src/source/wind.ffinc)      - compute the sample Winsorized mean of a vector of observations
 ## random values
   * [BETRAN](src/source/betran.ffinc)  - generate beta random numbers
+  * [BINRAN](src/source/binran.ffinc)  - generate binomial random numbers
+  * [CAURAN](src/source/cauran.ffinc)  - generate Cauchy random numbers
+  * [CHSRAN](src/source/chsran.ffinc)  - generate chi-square random numbers
   * [DEXRAN](src/source/dexran.ffinc)  - generate double exponential random numbers
   * [EV1RAN](src/source/ev1ran.ffinc)  - generate extreme value type 1 (Gumbel) random numbers
   * [EV2RAN](src/source/ev2ran.ffinc)  - generate extreme value type 2 (Frechet) random numbers
@@ -128,27 +131,28 @@ The following subroutines are available in M_datapac:
   * [GAMRAN](src/source/gamran.ffinc)  - generate gamma random numbers
   * [GEORAN](src/source/georan.ffinc)  - generate geometric random numbers
   * [HFNRAN](src/source/hfnran.ffinc)  - generate half-normal random numbers
-  * [CAURAN](src/source/cauran.ffinc)  - generate Cauchy random numbers
-  * [LOGRAN](src/source/logran.ffinc)  - generate logistic random numbers
   * [LGNRAN](src/source/lgnran.ffinc)  - generate lognormal random numbers
-  * [CHSRAN](src/source/chsran.ffinc)  - generate chi-square random numbers
-  * [BINRAN](src/source/binran.ffinc)  - generate binomial random numbers
-  * [WEIRAN](src/source/weiran.ffinc)  - generate Weibull random numbers
-  * [UNIRAN](src/source/uniran.ffinc)  - generate Uniform random numbers
-  * [TRAN](src/source/tran.ffinc)      - generate /t/ random numbers
-  * [RANPER](src/source/ranper.ffinc)  - generates a random permutation
-  * [POIRAN](src/source/poiran.ffinc)  - generate Poisson random numbers
-  * [PARRAN](src/source/parran.ffinc)  - generate Pareto random numbers
-  * [NORRAN](src/source/norran.ffinc)  - generate normal random numbers
+  * [LOGRAN](src/source/logran.ffinc)  - generate logistic random numbers
   * [NBRAN](src/source/nbran.ffinc)    - generate negative binomial random numbers
+  * [NORRAN](src/source/norran.ffinc)  - generate normal random numbers
+  * [PARRAN](src/source/parran.ffinc)  - generate Pareto random numbers
+  * [POIRAN](src/source/poiran.ffinc)  - generate Poisson random numbers
+  * [RANPER](src/source/ranper.ffinc)  - generates a random permutation
+  * [TRAN](src/source/tran.ffinc)      - generate /t/ random numbers
+  * [UNIRAN](src/source/uniran.ffinc)  - generate Uniform random numbers
+  * [WEIRAN](src/source/weiran.ffinc)  - generate Weibull random numbers
 ## probability density function
   * [CAUPDF](src/source/caupdf.ffinc)  - compute the Cauchy probability density function
   * [LGNPDF](src/source/lgnpdf.ffinc)  - compute the lognormal probability density function
-  * [UNIPDF](src/source/unipdf.ffinc)  - compute the Uniform probability density function
   * [LOGPDF](src/source/logpdf.ffinc)  - compute the logistic probability density function
   * [NORPDF](src/source/norpdf.ffinc)  - compute the normal probability density function
+  * [UNIPDF](src/source/unipdf.ffinc)  - compute the Uniform probability density function
 ## percent point function
   * [BINPPF](src/source/binppf.ffinc)  - compute the binomial percent point function
+  * [CAUPPF](src/source/cauppf.ffinc)  - compute the Cauchy percent point function
+  * [CHSPPF](src/source/chsppf.ffinc)  - compute the chi-square percent point function
+  * [LGNPPF](src/source/lgnppf.ffinc)  - compute the lognormal percent point function
+  * [LOGPPF](src/source/logppf.ffinc)  - compute the logistic percent point function
   * [NBPPF](src/source/nbppf.ffinc)    - compute the negative binomial percent point function
   * [NORPPF](src/source/norppf.ffinc)  - compute the normal percent point function
   * [PARPPF](src/source/parppf.ffinc)  - compute the Pareto percent point function
@@ -157,10 +161,6 @@ The following subroutines are available in M_datapac:
   * [TPPF](src/source/tppf.ffinc)      - compute the /t/ percent point function
   * [UNIPPF](src/source/unippf.ffinc)  - compute the Uniform percent point function
   * [WEIPPF](src/source/weippf.ffinc)  - compute the Weibull percent point function
-  * [CAUPPF](src/source/cauppf.ffinc)  - compute the Cauchy percent point function
-  * [CHSPPF](src/source/chsppf.ffinc)  - compute the chi-square percent point function
-  * [LGNPPF](src/source/lgnppf.ffinc)  - compute the lognormal percent point function
-  * [LOGPPF](src/source/logppf.ffinc)  - compute the logistic percent point function
 ## sparsity function
   * [CAUSF](src/source/causf.ffinc)    - compute the Cauchy sparsity function
   * [LAMSF](src/source/lamsf.ffinc)    - compute the Tukey-Lambda sparsity function
@@ -170,17 +170,17 @@ The following subroutines are available in M_datapac:
 ## cumulative distribution function
   * [BINCDF](src/source/bincdf.ffinc)  - compute the binomial cumulative distribution function
   * [CAUCDF](src/source/caucdf.ffinc)  - compute the Cauchy cumulative distribution function
-  * [NBCDF](src/source/nbcdf.ffinc)    - compute the negative binomial cumulative distribution function
-  * [NORCDF](src/source/norcdf.ffinc)  - compute the normal cumulative distribution function
-  * [PARCDF](src/source/parcdf.ffinc)  - compute the Pareto cumulative distribution function
-  * [TCDF](src/source/tcdf.ffinc)      - compute the /t/ cumulative distribution function
-  * [UNICDF](src/source/unicdf.ffinc)  - compute the Uniform cumulative distribution function
-  * [WEICDF](src/source/weicdf.ffinc)  - compute the Weibull cumulative distribution function
-  * [POICDF](src/source/poicdf.ffinc)  - compute the Poisson cumulative distribution function
-  * [POICDF](src/source/poicdf.ffinc)  - compute the Poisson cumulative distribution function
   * [CHSCDF](src/source/chscdf.ffinc)  - compute the chi-square cumulative distribution function
   * [LGNCDF](src/source/lgncdf.ffinc)  - compute the lognormal cumulative distribution function
   * [LOGCDF](src/source/logcdf.ffinc)  - compute the logistic cumulative distribution function
+  * [NBCDF](src/source/nbcdf.ffinc)    - compute the negative binomial cumulative distribution function
+  * [NORCDF](src/source/norcdf.ffinc)  - compute the normal cumulative distribution function
+  * [PARCDF](src/source/parcdf.ffinc)  - compute the Pareto cumulative distribution function
+  * [POICDF](src/source/poicdf.ffinc)  - compute the Poisson cumulative distribution function
+  * [POICDF](src/source/poicdf.ffinc)  - compute the Poisson cumulative distribution function
+  * [TCDF](src/source/tcdf.ffinc)      - compute the /t/ cumulative distribution function
+  * [UNICDF](src/source/unicdf.ffinc)  - compute the Uniform cumulative distribution function
+  * [WEICDF](src/source/weicdf.ffinc)  - compute the Weibull cumulative distribution function
 ## output formatting 
   * [WRITE](src/source/write.ffinc)    - write a vector of observations in a "neat" fashion
 ## line printer plots
@@ -199,18 +199,18 @@ The following subroutines are available in M_datapac:
   * [NOROUT](src/source/norout.ffinc)  - Performs a normal outlier analysis on the data in the input vector X.
   * [NORPLT](src/source/norplt.ffinc)  - generate a normal probability plot (line printer graph)
   * [PARPLT](src/source/parplt.ffinc)  - generate a Pareto probability plot (line printer graph)
-  * [PLOT](src/source/plot.ffinc)      - yields a one-page printer plot of y(i) versus x(i)
-  * [PLOT10](src/source/plot10.ffinc)  - generate a line printer plot with special plot characters
   * [PLOT6](src/source/plot6.ffinc)    - generate a line printer plot
   * [PLOT7](src/source/plot7.ffinc)    - generate a line printer plot with special plot characters
   * [PLOT8](src/source/plot8.ffinc)    - generate a line printer plot with special plot characters
   * [PLOT9](src/source/plot9.ffinc)    - generate a line printer plot with special plot characters
-  * [PLOTC](src/source/plotc.ffinc)    - generate a line printer plot with special plot characters
+  * [PLOT10](src/source/plot10.ffinc)  - generate a line printer plot with special plot characters
   * [PLOTCO](src/source/plotco.ffinc)  - generate a line printer autocorrelation plot
+  * [PLOTC](src/source/plotc.ffinc)    - generate a line printer plot with special plot characters
   * [PLOTCT](src/source/plotct.ffinc)  - generate a line printer plot for the terminal (71 characters wide)
   * [PLOTSC](src/source/plotsc.ffinc)  - generate a line printer plot with special plot characters
-  * [PLOTS](src/source/plots.ffinc)    - generate a line printer plot of Y vs X
   * [PLOTSP](src/source/plotsp.ffinc)  - generate a line printer spectrum plot
+  * [PLOT](src/source/plot.ffinc)      - yields a one-page printer plot of y(i) versus x(i)
+  * [PLOTS](src/source/plots.ffinc)    - generate a line printer plot of Y vs X
   * [PLOTST](src/source/plotst.ffinc)  - generate a line printer plot of Y vs X for the terminal (71 characters wide)
   * [PLOTT](src/source/plott.ffinc)    - generate a line printer plot of Y vs X for the terminal (71 characters wide)
   * [PLOTU](src/source/plotu.ffinc)    - generate a line printer 4-plot
