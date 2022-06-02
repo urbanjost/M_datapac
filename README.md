@@ -33,6 +33,9 @@ in the source code.
 These routines were written in Fortran 77 and were ported to a modern
 Fortran module accessible via `fpm`.
 
+The initial conversion was done with
+[spag](https://polyhedron.com/?product=plusfort) from plusfort.
+
 ## Needs
 
 Looking for unit tests and example programs that use DATAPAC, and to
