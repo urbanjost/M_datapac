@@ -13,21 +13,22 @@ The original DATAPAC library was written by James Filliben of the Statistical
 Engineering Division,
 [National Institute of Standards and Technology](https://www.nist.gov/).
 After these routines were incorporated into the [Dataplot](
-https://www.nist.gov/statistical-engineering-division/dataplot).
+https://www.nist.gov/statistical-engineering-division/dataplot)
 program, development of DATAPAC stopped. However, there are some
-subroutines here that may still be of interest. In particular, there are
+subroutines here that may be of interest. In particular, there are
 a number of routines for computing various probability functions.
 
-It is also useful to have the routines apart from Dataplot and as a
-separate make(1) and fpm(1) package for use in other applications.
+It is also useful to have the routines apart from Dataplot as a separate
+make(1) and fpm(1) package for use in other applications.
 
 It is provided on an "as is" basis.
 
 This software is not formally supported and is not being further developed
 other than to develop a test suite at this time.
 
-There is no formal documentation for the subroutines. However, most of the
-subroutines contain usage instructions in the comments in the source code.
+There is no formal documentation yet for the subroutines. However, most
+of the subroutines contain extensive usage instructions in the comments
+in the source code.
 
 These routines were written in Fortran 77 and were ported to a modern
 Fortran module accessible via `fpm`.
@@ -54,21 +55,25 @@ reformat the comments to man-page format.
      make F90=nvfortran nvfortran
 
 This will compile the Fortran module and basic example
-program that exercise the routine.
+program that exercise the routine and place the resulting
+files in the src/lib/ directory.
 
 ## Build and Test with FPM ![-](docs/images/fpm_logo.gif)
 
    Alternatively, download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
 
-   ```bash
+```bash
         git clone https://github.com/urbanjost/M_datapac.git
         cd M_datapac
+	fpm build
+```
+   Tests and examples are under construction as well
+```bash
         fpm run "*"
         fpm run --example "*"
         fpm test
-   ```
-
+```
    or just list it as a dependency in your fpm.toml project file.
 
 ```toml
@@ -78,33 +83,25 @@ program that exercise the routine.
 ## Contents
 
 The following subroutines are available in M_datapac:
-( Note they all contain a man-page template that is a place-holder as the documentation is composed)
+( Note they all contain a man-page template at the top that is a place-holder as the documentation is being re-composed)
 
   * [AUTOCO](src/source/autoco.ffinc)  - compute the sample autocorrelation coefficient
   * [LOC](src/source/loc.ffinc)        - compute the sample mean, midrange, midmean, and median
-  * [MAX](src/source/max.ffinc)        - compute the maximum of a data vector
   * [MEAN](src/source/mean.ffinc)      - compute the mean of a data vector
   * [MEDIAN](src/source/median.ffinc)  - compute the median of a data vector
   * [MIDM](src/source/midm.ffinc)      - compute the midmean of a data vector
   * [MIDR](src/source/midr.ffinc)      - compute the midrange of a data vector
-  * [MIN](src/source/min.ffinc)        - compute the minimum of a data vector
   * [MOVE](src/source/move.ffinc)      - move selected elements of one vector into another vector
   * [POLY](src/source/poly.ffinc)      - compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)
   * [PROPOR](src/source/propor.ffinc)  - compute the sample proportion
   * [RANGE](src/source/range.ffinc)    - compute the sample range
-  * [RANK](src/source/rank.ffinc)      - rank a vector of sample observations
   * [RELSD](src/source/relsd.ffinc)    - compute the relative standard deviation of a vector of observations
-  * [REPLAC](src/source/replac.ffinc)  - replace all observations in a vector within a given interval with a user-specified constant
-  * [RETAIN](src/source/retain.ffinc)  - retain all observations in a vector within a user-specified interval
   * [RUNS](src/source/runs.ffinc)      - perform a runs test
   * [SCALE](src/source/scale.ffinc)    - compute the sample range, sample standard deviation, sample relative standard deviation, and sample variance
   * [SD](src/source/sd.ffinc)          - compute the standard deviation of a vector of observations
   * [SPCORR](src/source/spcorr.ffinc)  - compute the sample Spearman rank correlation coefficient between two vectors of observations
   * [STMOM3](src/source/stmom3.ffinc)  - compute the third central moment (i.e., the skewness) of a vector of observations
   * [STMOM4](src/source/stmom4.ffinc)  - compute the fourth central moment (i.e., the kurtosis) of a vector of observations
-  * [SUBSE1](src/source/subse1.ffinc)  - extract the elements of a vector which fall into a user-specified subset (one subset variable)
-  * [SUBSE2](src/source/subse2.ffinc)  - extract the elements of a vector which fall into a user-specified subset (two subset variables)
-  * [SUBSET](src/source/subset.ffinc)  - extract the elements of a vector which fall into a user-specified subset (one subset variable)
   * [TAIL](src/source/tail.ffinc)      - performs a symmetric distribution tail length analysis
   * [TOL](src/source/tol.ffinc)        - compute normal and distribution-free tolerance limits
   * [TRIM](src/source/trim.ffinc)      - computes the sample trimmed mean of the data in the input vector X.
@@ -112,7 +109,17 @@ The following subroutines are available in M_datapac:
   * [VAR](src/source/var.ffinc)        - compute the sample variance of a vector of observations
   * [WEIB](src/source/weib.ffinc)      - perform a Weibull distribution analysis (Weibull PPCC analysis)
   * [WIND](src/source/wind.ffinc)      - compute the sample Winsorized mean of a vector of observations
+## 
+  * [REPLAC](src/source/replac.ffinc)  - replace all observations in a vector within a given interval with a user-specified constant
+  * [RETAIN](src/source/retain.ffinc)  - retain all observations in a vector within a user-specified interval
+  * [SUBSE1](src/source/subse1.ffinc)  - extract the elements of a vector which fall into a user-specified subset (one subset variable)
+  * [SUBSE2](src/source/subse2.ffinc)  - extract the elements of a vector which fall into a user-specified subset (two subset variables)
+  * [SUBSET](src/source/subset.ffinc)  - extract the elements of a vector which fall into a user-specified subset (one subset variable)
+## now available in modern Fortran
+  * [MAX](src/source/max.ffinc)        - compute the maximum of a data vector (see Fortran intrinsic MAXVAL(3f))
+  * [MIN](src/source/min.ffinc)        - compute the minimum of a data vector (see Fortran intrinsic MINVAL(3f))
 ## sort
+  * [RANK](src/source/rank.ffinc)      - rank a vector of sample observations
   * [SORTC](src/source/sortc.ffinc)    - sort a vector of sample observations and "carry" a second vector
   * [SORTP](src/source/sortp.ffinc)    - sorts and ranks a numeric vector X
   * [SORT](src/source/sort.ffinc)      - sort a vector of sample observations, also return the positions in the original vector
@@ -229,15 +236,14 @@ The following subroutines are available in M_datapac:
 
 ## Documentation   ![docs](docs/images/docs.gif)
 
-<!--
-### User
-   - A single page that uses javascript to combine all the HTML
-     descriptions of the man-pages is at
-     [BOOK_M_datapac](https://urbanjost.github.io/M_datapac/BOOK_M_datapac.html).
-
+### User (**UNDER CONSTRUCTION**)
    - a simple index to the man-pages in HTML form for the
    [routines](https://urbanjost.github.io/M_datapac/man3.html)
    and [programs](https://urbanjost.github.io/M_datapac/man1.html)
+
+   - A single page that uses javascript to combine all the HTML
+     descriptions of the man-pages is in
+     [BOOK_M_datapac](https://urbanjost.github.io/M_datapac/BOOK_M_datapac.html).
 
    - There are man-pages in the repository download in the docs/ directory
      that may be installed on ULS (Unix-Like Systems).
@@ -246,15 +252,13 @@ The following subroutines are available in M_datapac:
       + [manpages.zip](https://urbanjost.github.io/M_datapac/manpages.zip)
       + [manpages.tgz](https://urbanjost.github.io/M_datapac/manpages.tgz)
 
--->
    - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
-### Developer
+### Developer(**UNDER CONSTRUCTION**)
    - [ford(1) output](https://urbanjost.github.io/M_datapac/fpm-ford/index.html).
    - [doxygen(1) output](https://urbanjost.github.io/M_datapac/doxygen_out/html/index.html).
    - [github action status](docs/STATUS.md)
 ---
-
 ### License
    CC0-1.0
 

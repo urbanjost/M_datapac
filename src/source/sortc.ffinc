@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file sortc.3m_datapac.man
 NAME
-   sortc(3f) - [M_datapac:STATISTICS] sort a vector of sample observations
+   sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample observations
    and "carry" a second vector
 
 SYNOPSIS
@@ -199,7 +199,7 @@ INTEGER i, il(36), ip1, ipr, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
             ENDDO
             WRITE (ipr,99004) hold
 99004       FORMAT (' ',                                                &
-             & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORTC  SUBROUTINE HAS ALL ELEMENTS =',
+             & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORTC  SUBROUTINE HAS ALL ELEMENTS =', &
              & E15.8, &
              & ' *****')
             DO i = 1 , N

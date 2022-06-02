@@ -29325,7 +29325,7 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
       END SUBROUTINE RANGE
 !>
 !!##NAME
-!!    rank(3f) - [M_datapac:STATISTICS] rank a vector of sample observations
+!!    rank(3f) - [M_datapac:STATISTICS:SORT] rank a vector of sample observations
 !!
 !!##SYNOPSIS
 !!
@@ -29361,13 +29361,9 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 !*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANK(X,N,Xr)
       IMPLICIT NONE
-!*--RANK24782
-!*** Start of declarations inserted by SPAG
+
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
       INTEGER i , ibran , ipr , iupper , j , jmin , jp1 , k , N , nm1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT RANK
 !
 !     PURPOSE--THIS SUBROUTINE RANKS (IN ASCENDING ORDER)
 !              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X,
@@ -32519,19 +32515,50 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
       END SUBROUTINE SKIPR
 !>
 !!##NAME
-!!    sortc(3f) - [M_datapac:STATISTICS] sort a vector of sample observations
-!!    and "carry" a second a vector
+!!    sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample observations
+!!    and "carry" a second vector
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine sortc (X, Y)
+!!     Subroutine sortc(X,Y,N,Xs,Yc)
+!!
+!!       Real, Intent (In)    :: X
+!!       Real, Intent (In)    :: Y
+!!       Integer, Intent (In) :: N
+!!       Real, Intent (Out)   :: Xs
+!!       Real, Intent (Out)   :: Yc
 !!
 !!##DESCRIPTION
-!!   Description
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!! SORTC(3f) sorts (in ascending order) the N elements of the vector X,
+!! puts the resulting N sorted values into the single precision vector XS,
+!! rearranges the elements of the vector Y (according to the sort on X),
+!! and puts the rearranged Y values into the single precision vector YC.
+!! This subroutine gives the data analyst the ability to sort one data
+!! vector while 'carrying along' the elements of a second data vector.
+!!
+!!##INPUT ARGUMENTS
+!!      X   THE SINGLE PRECISION VECTOR OF
+!!          OBSERVATIONS TO BE SORTED.
+!!
+!!      Y   THE SINGLE PRECISION VECTOR OF
+!!          OBSERVATIONS TO BE 'CARRIED ALONG',
+!!          THAT IS, TO BE REARRANGED ACCORDING
+!!          TO THE SORT ON X.
+!!
+!!      N   THE INTEGER NUMBER OF OBSERVATIONS
+!!          IN THE VECTOR X.
+!!##OUTPUT ARGUMENTS
+!!
+!!      XS  THE SINGLE PRECISION VECTOR
+!!          INTO WHICH THE SORTED DATA VALUES
+!!          FROM X WILL BE PLACED.
+!!
+!!      YC  THE SINGLE PRECISION VECTOR
+!!          INTO WHICH THE REARRANGED
+!!          (ACCORDING TO THE SORT OF THE
+!!          VECTOR X) VALUES OF THE VECTOR Y
+!!          WILL BE PLACED.
 !!
 !!##EXAMPLES
 !!
@@ -32540,8 +32567,30 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!    program demo_sortc
 !!    use M_datapac, only : sortc
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call sortc(x,y)
+!!    integer,parameter            :: isz=20
+!!    real                         :: aa(isz)
+!!    real                         :: bb(isz)
+!!    real                         :: cc(isz)
+!!    real                         :: dd(isz)
+!!    integer                      :: i
+!!       write(*,*)'initializing array with ',isz,' random numbers'
+!!       call random_seed()
+!!       CALL RANDOM_NUMBER(aa)
+!!       aa=aa*450000.0
+!!       bb=real([(i,i=1,isz)])
+!!      call sortc(aa,bb,size(aa),cc,dd)
+!!
+!!      write(*,*)'checking if real values are sorted(3f)'
+!!      do i=1,isz-1
+!!         if(cc(i).gt.cc(i+1))then
+!!            write(*,*)'Error in sorting reals small to large ',i,cc(i),cc(i+1)
+!!         endif
+!!      enddo
+!!      write(*,*)'test of sortc(3f) complete'
+!!      write(*,'(4(g0,1x))')(aa(i),bb(i),cc(i),dd(i),i=1,isz)
+!!      write(*,'(*(g0,1x))')sum(aa),sum(cc) ! should be the same if no truncation
+!!      write(*,'(*(g0,1x))')sum(bb),sum(dd)
+!!
 !!    end program demo_sortc
 !!
 !!   Results:
@@ -32551,48 +32600,20 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!    Engineering Division, National Institute of Standards and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!##REFERENCES
+!!   1. CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
+!!   2. CACM JANUARY 1970, PAGE 54.
+!!   3. CACM OCTOBER 1970, PAGE 624.
+!!   4. JACM JANUARY 1961, PAGE 41.
 !!##LICENSE
 !!    CC0-1.0
 !*==sortc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SORTC(X,Y,N,Xs,Yc)
-      IMPLICIT NONE
-!*--SORTC27777
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
-      INTEGER i , il , ip1 , ipr , iu , j , jmi , jmk , k , l , lmi ,   &
-     &        m , mid , N , nm1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SORTC
+SUBROUTINE SORTC(X,Y,N,Xs,Yc)
+IMPLICIT NONE
+
+REAL(kind=wp) :: amed, bmed, hold, tx, ty, X(:), Xs(:), Y(:), Yc(:)
+INTEGER i, il(36), ip1, ipr, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
 !
-!     PURPOSE--THIS SUBROUTINE SORTS (IN ASCENDING ORDER)
-!              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X,
-!              PUTS THE RESULTING N SORTED VALUES INTO THE
-!              SINGLE PRECISION VECTOR XS,
-!              REARRANGES THE ELEMENTS OF THE VECTOR Y
-!              (ACCORDING TO THE SORT ON X),
-!              AND PUTS THE REARRANGED Y VALUES
-!              INTO THE SINGLE PRECISION VECTOR YC.
-!              THIS SUBROUTINE GIVES THE DATA ANALYST
-!              THE ABILITY TO SORT ONE DATA VECTOR
-!              WHILE 'CARRYING ALONG' THE ELEMENTS
-!              OF A SECOND DATA VECTOR.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                OBSERVATIONS TO BE SORTED.
-!                     --Y      = THE SINGLE PRECISION VECTOR OF
-!                                OBSERVATIONS TO BE 'CARRIED ALONG',
-!                                THAT IS, TO BE REARRANGED ACCORDING
-!                                TO THE SORT ON X.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--XS     = THE SINGLE PRECISION VECTOR
-!                                INTO WHICH THE SORTED DATA VALUES
-!                                FROM X WILL BE PLACED.
-!                     --YC     = THE SINGLE PRECISION VECTOR
-!                                INTO WHICH THE REARRANGED
-!                                (ACCORDING TO THE SORT OF THE
-!                                VECTOR X) VALUES OF THE VECTOR Y
-!                                WILL BE PLACED.
 !     OUTPUT--THE SINGLE PRECISION VECTOR XS
 !             CONTAINING THE SORTED
 !             (IN ASCENDING ORDER) VALUES
@@ -32601,7 +32622,7 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
 !             CONTAINING THE REARRANGED
 !             (ACCORDING TO THE SORT ON X)
 !             VALUES OF THE VECTOR Y.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+
 !     RESTRICTIONS--THE DIMENSIONS OF THE VECTORS IL AND IU
 !                   (DEFINED AND USED INTERNALLY WITHIN
 !                   THIS SUBROUTINE) DICTATE THE MAXIMUM
@@ -32621,10 +32642,7 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
 !                   (IN LIGHT OF THE ABOVE, NO CHECK OF THE
 !                   UPPER LIMIT OF N HAS BEEN INCORPORATED
 !                   INTO THIS SUBROUTINE.)
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--THE SMALLEST ELEMENT OF THE VECTOR X
 !              WILL BE PLACED IN THE FIRST POSITION
 !              OF THE VECTOR XS,
@@ -32667,41 +32685,24 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
 !                N = 1000               .141 SEC         4.332 SEC
 !                N = 3000               .476 SEC        37.683 SEC
 !                N = 10000             1.887 SEC      NOT COMPUTED
-!     REFERENCES--CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
-!                 BY RICHARD C. SINGLETON).
-!               --CACM JANUARY 1970, PAGE 54.
-!               --CACM OCTOBER 1970, PAGE 624.
-!               --JACM JANUARY 1961, PAGE 41.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:) , Y(:) , Xs(:) , Yc(:)
-      DIMENSION iu(36) , il(36)
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       ipr = 6
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTC  SUBROU&
-     &TINE IS NON-POSITIVE *****')
+99001    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTC  SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (ipr,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORT&
-     &C  SUBROUTINE HAS THE VALUE 1 *****')
+99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORTC  SUBROUTINE HAS THE VALUE 1 *****')
             Xs(1) = X(1)
             Yc(1) = Y(1)
             RETURN
@@ -32712,8 +32713,9 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
             ENDDO
             WRITE (ipr,99004) hold
 99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE SORTC  SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+             & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORTC  SUBROUTINE HAS ALL ELEMENTS =', &
+             & E15.8, &
+             & ' *****')
             DO i = 1 , N
                Xs(i) = X(i)
                Yc(i) = Y(i)
@@ -32724,7 +32726,8 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
 !-----START POINT-----------------------------------------------------
 !
 !     COPY THE VECTOR X INTO THE VECTOR XS
- 50      DO i = 1 , N
+ 50      continue
+         DO i = 1 , N
             Xs(i) = X(i)
          ENDDO
 !
@@ -32743,11 +32746,14 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
          ENDDO
          RETURN
       ENDIF
- 100  m = 1
+ 100  continue
+      m = 1
       i = 1
       j = N
- 200  IF ( i>=j ) GOTO 400
- 300  k = i
+ 200  continue
+      IF ( i>=j ) GOTO 400
+ 300  continue
+      k = i
       mid = (i+j)/2
       amed = Xs(mid)
       bmed = Yc(mid)
@@ -32810,11 +32816,13 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
             ENDDO
          ENDIF
       ENDDO
- 400  m = m - 1
+ 400  continue
+      m = m - 1
       IF ( m==0 ) RETURN
       i = il(m)
       j = iu(m)
- 500  jmi = j - i
+ 500  continue
+      jmi = j - i
       IF ( jmi>=11 ) GOTO 300
       IF ( i==1 ) GOTO 200
       i = i - 1
@@ -32837,22 +32845,41 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
             ENDDO
          ENDIF
       ENDDO
-      END SUBROUTINE SORTC
+END SUBROUTINE SORTC
 !>
 !!##NAME
-!!    sort(3f) - [M_datapac:STATISTICS] sort a vector of sample observations,
-!!    also return the positions in the original vector
+!!    sort(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample
+!!    observations, also return the positions in the original vector
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine sort (X, Y)
+!!     SUBROUTINE SORT(X,N,Y)
+!!
+!!      real,intent(in)    :: x(:)
+!!      integer,intent(in) :: n
+!!      real,intent(out)   :: y(:)
 !!
 !!##DESCRIPTION
-!!   Description
+!!
+!!    This subroutine sorts (in ascending order) the N elements of the
+!!    single precision vector X using the binary sort algorithm and puts
+!!    the resulting N sorted values into the single precision vector Y.
 !!
 !!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT
+!!     X  The single precision vector of
+!!        observations to be sorted.
+!!        The input vector X remains unaltered.
+!!
+!!     N  The integer number of observations
+!!        in the vector X.
+!!
+!!##OUTPUT
+!!
+!!     Y  The single precision vector
+!!        into which the sorted data values
+!!        from X will be placed in
+!!        ascending order.
 !!
 !!##EXAMPLES
 !!
@@ -32861,8 +32888,26 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
 !!    program demo_sort
 !!    use M_datapac, only : sort
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call sort(x,y)
+!!    integer,parameter            :: isz=20
+!!    real                         :: aa(isz)
+!!    real                         :: bb(isz)
+!!    integer                      :: i
+!!       write(*,*)'initializing array with ',isz,' random numbers'
+!!       call random_seed()
+!!       CALL RANDOM_NUMBER(aa)
+!!       aa=aa*450000.0
+!!       bb=real([(i,i=1,isz)])
+!!
+!!       call sort(aa,isz,bb) ! sort data
+!!
+!!       write(*,*)'checking if real values are sorted(3f)'
+!!       do i=1,isz-1
+!!          if(bb(i).gt.bb(i+1))then
+!!             write(*,*)'Error in sorting reals small to large ',i,bb(i),bb(i+1)
+!!          endif
+!!       enddo
+!!      write(*,'(2(g0,1x))')'ORIGINAL','SORTED',(aa(i),bb(i),i=1,isz)
+!!
 !!    end program demo_sort
 !!
 !!   Results:
@@ -32870,38 +32915,27 @@ REAL(kind=wp) :: amed , bmed , hold , tx , ty , X , Xs , Y , Yc
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
+!!##REFERENCES
+!!    1. CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
+!!    2. CACM JANUARY 1970, PAGE 54.
+!!    3. CACM OCTOBER 1970, PAGE 624.
+!!    1. JACM JANUARY 1961, PAGE 41.
+!!
 !!##LICENSE
 !!    CC0-1.0
 !*==sort.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SORT(X,N,Y)
-      IMPLICIT NONE
-!*--SORT27546
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: amed , hold , tt , X , Y
-      INTEGER i , il , ip1 , ipr , iu , j , jmi , jmk , k , l , lmi ,   &
-     &        m , mid , N , nm1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SORT
-!
-!     PURPOSE--THIS SUBROUTINE SORTS (IN ASCENDING ORDER)
-!              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X
-!              AND PUTS THE RESULTING N SORTED VALUES INTO THE
-!              SINGLE PRECISION VECTOR Y.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                OBSERVATIONS TO BE SORTED.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
-!                                INTO WHICH THE SORTED DATA VALUES
-!                                FROM X WILL BE PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
-!             CONTAINING THE SORTED
-!             (IN ASCENDING ORDER) VALUES
-!             OF THE SINGLE PRECISION VECTOR X.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+SUBROUTINE SORT(X,N,Y)
+IMPLICIT NONE
+
+REAL(kind=wp) :: amed, hold, tt, X, Y
+integer i, il, ip1, ipr, iu, j, jmi, jmk, k, l, lmi,   m, mid, n, nm1
+DIMENSION X(:), Y(:)
+DIMENSION iu(36), il(36)
+
 !     RESTRICTIONS--THE DIMENSIONS OF THE VECTORS IL AND IU
 !                   (DEFINED AND USED INTERNALLY WITHIN
 !                   THIS SUBROUTINE) DICTATE THE MAXIMUM
@@ -32921,17 +32955,13 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
 !                   (IN LIGHT OF THE ABOVE, NO CHECK OF THE
 !                   UPPER LIMIT OF N HAS BEEN INCORPORATED
 !                   INTO THIS SUBROUTINE.)
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--THE SMALLEST ELEMENT OF THE VECTOR X
 !              WILL BE PLACED IN THE FIRST POSITION
 !              OF THE VECTOR Y,
 !              THE SECOND SMALLEST ELEMENT IN THE VECTOR X
 !              WILL BE PLACED IN THE SECOND POSITION
 !              OF THE VECTOR Y, ETC.
-!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     COMMENT--IF THE ANALYST DESIRES A SORT 'IN PLACE',
 !              THIS IS DONE BY HAVING THE SAME
 !              OUTPUT VECTOR AS INPUT VECTOR IN THE CALLING SEQUENCE.
@@ -32957,23 +32987,10 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
 !                N = 1000               .141 SEC         4.332 SEC
 !                N = 3000               .476 SEC        37.683 SEC
 !                N = 10000             1.887 SEC      NOT COMPUTED
-!     REFERENCES--CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
-!                 BY RICHARD C. SINGLETON).
-!               --CACM JANUARY 1970, PAGE 54.
-!               --CACM OCTOBER 1970, PAGE 624.
-!               --JACM JANUARY 1961, PAGE 41.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:) , Y(:)
-      DIMENSION iu(36) , il(36)
 !
       ipr = 6
 !
@@ -32990,9 +33007,7 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
       ELSE
          IF ( N==1 ) THEN
             WRITE (ipr,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORT&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORT SUBROUTINE HAS THE VALUE 1 *****')
             Y(1) = X(1)
             RETURN
          ELSE
@@ -33001,9 +33016,10 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (ipr,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE SORT   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+99004       FORMAT (' ',&
+            & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORT   SUBROUTINE HAS ALL ELEMENTS =',&
+            & E15.8,&
+            & ' *****')
             DO i = 1 , N
                Y(i) = X(i)
             ENDDO
@@ -33104,10 +33120,11 @@ REAL(kind=wp) :: amed , hold , tt , X , Y
             ENDDO
          ENDIF
       ENDDO
-      END SUBROUTINE SORT
+END SUBROUTINE SORT
 !>
 !!##NAME
-!!    sortp(3f) - [M_datapac:STATISTICS] sorts and ranks a numeric vector X
+!!    sortp(3f) - [M_datapac:STATISTICS:SORT] sorts and ranks a numeric
+!!    vector X
 !!
 !!##SYNOPSIS
 !!
@@ -33933,19 +33950,58 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
 END SUBROUTINE STMOM4
 !>
 !!##NAME
+!!
 !!    subse1(3f) - [M_datapac:STATISTICS] extract the elements of a vector
 !!    which fall into a user-specified subset (one subset variable)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine subse1 (X, Y)
+!!
+!!     SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
+!!
+!!      REAL(kind=wp) :: D(:), Dmax, Dmin, X(:), Y(:)
+!!      INTEGER N, Ny
 !!
 !!##DESCRIPTION
-!!   Description
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    This subroutine carries over into Y all observations of the single
+!!    precision vector X for which the corresponding elements in the single
+!!    precision vector D are inside the closed (inclusive) interval defined
+!!    by DMIN and DMAX, while not carrying over any observations of X
+!!    corresponding to elements of D outside of this interval.
+!!
+!!    the input vector X is itself unaltered; those elements of X to be
+!!    retained are copied over into the output vector Y.
+!!
+!!    thus all observations of X which correspond to elements in D which
+!!    are smaller than DMIN or larger than DMAX are not copied over into Y.
+!!
+!!    the use of this subroutine gives the data analyst the capability
+!!    to easily extract subsets of the data prior to data analysis on
+!!    each subset.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X      The vector of (unsorted or sorted) observations.
+!!
+!!    n      The integer number of observations in the vector x.
+!!
+!!    d      The vector which 'defines' the various possible subsets of x.
+!!
+!!    dmin   The value which defines the lower limit (inclusively) of the
+!!           particular subset of interest to be retained.
+!!
+!!    dmax   The value which defines the upper limit (inclusively) of the
+!!           particular subset of interest to be retained.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    y      the vector containing only those elements
+!!           of x corresponding to values of the d vector
+!!           in the interval dmin to dmax (inclusive).
+!!
+!!    ny     the integer number of retained observations copied into
+!!           the vector y.
 !!
 !!##EXAMPLES
 !!
@@ -33970,60 +34026,11 @@ END SUBROUTINE STMOM4
 !*==subse1.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
       IMPLICIT NONE
-!*--SUBSE128754
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
-      INTEGER i , ipr , k , N , ndel , Ny
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SUBSE1
-!
-!     PURPOSE--THIS SUBROUTINE CARRIES OVER INTO Y ALL OBSERVATIONS
-!              OF THE SINGLE PRECISION VECTOR X FOR WHICH THE
-!              CORRESPONDING ELEMENTS IN THE
-!              SINGLE PRECISION VECTOR D ARE INSIDE
-!              THE CLOSED (INCLUSIVE) INTERVAL
-!              DEFINED BY DMIN AND DMAX,
-!              WHILE NOT CARRYING OVER ANY OBSERVATIONS OF X
-!              CORRESPONDING TO ELEMENTS OF D
-!              OUTSIDE OF THIS INTERVAL.
-!              THE INPUT VECTOR X IS ITSELF UNALTERED;
-!              THOSE ELEMENTS OF X TO BE RETAINED ARE
-!              COPIED OVER INTO THE SINGLE PRECISION
-!              OUTPUT VECTOR Y.
-!              THUS ALL OBSERVATIONS OF X WHICH
-!              CORRESPOND TO ELEMENTS IN D WHICH ARE SMALLER
-!              THAN DMIN OR LARGER THAN DMAX ARE
-!              NOT COPIED OVER INTO Y.
-!              THE USE OF THIS SUBROUTINE
-!              GIVES THE DATA ANALYST THE CAPABILITY TO
-!              EASILY EXTRACT SUBSETS OF THE DATA
-!              PRIOR TO DATA ANALYSIS ON EACH SUBSET.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --D      = THE SINGLE PRECISION VECTOR
-!                                WHICH 'DEFINES' THE VARIOUS
-!                                POSSIBLE SUBSETS OF X.
-!                     --DMIN   = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES THE LOWER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!                     --DMAX   = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES THE UPPER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
-!                                CONTAINING ONLY THOSE ELEMENTS
-!                                OF X CORRESPONDING TO
-!                                VALUES OF THE D VECTOR
-!                                IN THE INTERVAL DMIN TO DMAX
-!                                (INCLUSIVE).
-!                     --NY     = THE INTEGER NUMBER OF RETAINED
-!                                OBSERVATIONS COPIED INTO
-!                                THE VECTOR Y.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+
+REAL(kind=wp) :: D(:) , Dmax , Dmin , hold , pointl , pointu , X(:) , Y(:)
+INTEGER i , ipr , k , N , ndel , Ny
+
+!     OUTPUT--THE VECTOR Y
 !             INTO WHICH HAVE BEEN COPIED
 !             ONLY THOSE VALUES OF X WHICH
 !             CORRESPOND TO VALUES
@@ -34041,12 +34048,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
 !             3) WHAT THE SAMPLE SIZE OF X WAS (N);
 !             4) WHAT THE SAMPLE SIZE OF Y WAS (NY);
 !     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--THE INPUT VECTOR X IS NOT ALTERED
 !              BY APPLICATION OF THIS SUBROUTINE.
 !              THIS IS THE MAJOR DISTINCTION
@@ -34081,20 +34083,10 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
 !              Y AND D (DUE TO THE PACKING OF
 !              THE RETAINED ELEMENTS IN Y)
 !              AFTER APPLICATION OF THIS SUBROUTINE.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--APRIL     1975.
 !     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
-      DIMENSION X(:)
-      DIMENSION Y(:)
-      DIMENSION D(:)
 !
       ipr = 6
 !
@@ -34149,8 +34141,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
          WRITE (ipr,99006)
 99006    FORMAT (' ','OUTPUT FROM THE SUBSE1 SUBROUTINE--')
          WRITE (ipr,99007) pointl , pointu
-99007    FORMAT (' ',7X,'D1 LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     &
-     &           E15.8)
+99007    FORMAT (' ',7X,'D1 LIMITS (INCLUSIVE)--   ',E15.8,' AND ', E15.8)
          WRITE (ipr,99008)
 99008    FORMAT (' ',7X,'ONLY THOSE OBSERVATIONS IN X')
          WRITE (ipr,99009)
@@ -34166,14 +34157,11 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
          WRITE (ipr,99014)
 99014    FORMAT (' ',7X,'HAVE BEEN CARRIED OVER INTO Y.')
          WRITE (ipr,99015) N
-99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
          WRITE (ipr,99016) Ny
-99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', &
-     &           I6)
+99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', I6)
          WRITE (ipr,99017) ndel
-99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
-     &           I6)
+99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
       END SUBROUTINE SUBSE1
@@ -34184,16 +34172,73 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine subse2 (X, Y)
+!!    SUBROUTINE SUBSE2(X,N,D1,D1min,D1max,D2,D2min,D2max,Y,Ny)
+!!
+!!     REAL(kind=wp) :: D1(:), D1max, D1min, D2(:), D2max, D2min, X(:), Y(:)
+!!     INTEGER       :: N, Ny
 !!
 !!##DESCRIPTION
-!!   Description
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    This subroutine carries over into Y all observations of the single
+!!    precision vector X for which the corresponding elements in the single
+!!    precision vector D1 are inside the closed (inclusive) interval defined
+!!    by D1MIN and D1MAX, and also for which the corresponding elements
+!!    in the vector D2 are inside the closed (inclusive)
+!!    interval defined by D2MIN and D2MAX.
+!!
+!!    No observations in X corresponding to elements of D1 or D2 outside
+!!    of their respective intervals are carried over into Y.
+!!
+!!    The input vector X is itself unaltered; those elements of X to be
+!!    retained are copied over into the output vector Y.
+!!
+!!    Thus all observations of X which correspond to elements in D1 which
+!!    are smaller than D1MIN or larger than D1MAX, or which correspond to
+!!    elements in D2 which are smaller than D2MIN or larger than D2MAX,
+!!    are not copied over into Y.
+!!
+!!    The use of this subroutine gives the data analyst the capability
+!!    to easily extract subsets of the datA prior to data analysis on
+!!    each subset.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X      the vector of (unsorted or sorted) observations.
+!!
+!!    N      The integer number of observations in the vector x.
+!!
+!!    D1     A vector which (in conjunction with d2) 'defines' the various
+!!           possible subsets of x.
+!!
+!!    D1MIN  The value which defines in d1 the lower limit
+!!           (inclusively) of the particular subset of interest to be
+!!           retained.
+!!
+!!    D1MAX  The value which defines in d1 the upper limit
+!!           (inclusively) of the particular subset of interest to be
+!!           retained.
+!!
+!!    D2     A vector which (in conjunction with d2)
+!!           'defines' the various possible subsets of x.
+!!
+!!    D2MIN  The value which defines in d2 the lower limit
+!!           (inclusively) of the particular subset of interest to be retained.
+!!
+!!    D2MAX  The value which defines in d2 the upper limit
+!!           (inclusively) of the particular subset of interest to be retained.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    Y      The vector containing only those elements
+!!           of X simultaneously corresponding to values of the D1 vector
+!!           in the interval D1MIN to D1MAX (inclusive), and values of the
+!!           D2 vector in the interval D2MIN to D2MAX (inclusive).
+!!
+!!    NY     The integer number of retained observations copied into
+!!           the vector Y.
 !!
 !!##EXAMPLES
+!!
 !!
 !!   Sample program:
 !!
@@ -34214,87 +34259,13 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
 !!##LICENSE
 !!    CC0-1.0
 !*==subse2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SUBSE2(X,N,D1,D1min,D1max,D2,D2min,D2max,Y,Ny)
-      IMPLICIT NONE
-!*--SUBSE228964
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
-     &     poin1u , poin2l , poin2u , X , Y
-      INTEGER i , ipr , k , N , ndel , Ny
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SUBSE2
-!
-!     PURPOSE--THIS SUBROUTINE CARRIES OVER INTO Y ALL OBSERVATIONS
-!              OF THE SINGLE PRECISION VECTOR X FOR WHICH THE
-!              CORRESPONDING ELEMENTS IN THE
-!              SINGLE PRECISION VECTOR D1 ARE INSIDE
-!              THE CLOSED (INCLUSIVE) INTERVAL
-!              DEFINED BY D1MIN AND D1MAX,
-!              AND ALSO FOR WHICH THE
-!              CORRESPONDING ELEMENTS IN THE
-!              SINGLE PRECISION VECTOR D2 ARE INSIDE
-!              THE CLOSED (INCLUSIVE) INTERVAL
-!              DEFINED BY D2MIN AND D2MAX.
-!              NO OBSERVATIONS IN X
-!              CORRESPONDING TO ELEMENTS OF D1 OR D2
-!              OUTSIDE OF THEIR RESPECTIVE INTERVALS
-!              ARE CARRIED OVER INTO Y.
-!              THE INPUT VECTOR X IS ITSELF UNALTERED;
-!              THOSE ELEMENTS OF X TO BE RETAINED ARE
-!              COPIED OVER INTO THE SINGLE PRECISION
-!              OUTPUT VECTOR Y.
-!              THUS ALL OBSERVATIONS OF X WHICH
-!              CORRESPOND TO ELEMENTS IN D1 WHICH ARE SMALLER
-!              THAN D1MIN OR LARGER THAN D1MAX, OR WHICH
-!              CORRESPOND TO ELEMENTS IN D2 WHICH ARE SMALLER
-!              THAN D2MIN OR LARGER THAN D2MAX,
-!              ARE NOT COPIED OVER INTO Y.
-!              THE USE OF THIS SUBROUTINE
-!              GIVES THE DATA ANALYST THE CAPABILITY TO
-!              EASILY EXTRACT SUBSETS OF THE DATA
-!              PRIOR TO DATA ANALYSIS ON EACH SUBSET.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --D1     = A SINGLE PRECISION VECTOR
-!                                WHICH (IN CONJUNCTION WITH D2)
-!                                'DEFINES' THE VARIOUS
-!                                POSSIBLE SUBSETS OF X.
-!                     --D1MIN  = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES IN D1 THE LOWER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!                     --D1MAX  = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES IN D1 THE UPPER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!                     --D2     = A SINGLE PRECISION VECTOR
-!                                WHICH (IN CONJUNCTION WITH D2)
-!                                'DEFINES' THE VARIOUS
-!                                POSSIBLE SUBSETS OF X.
-!                     --D2MIN  = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES IN D2 THE LOWER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!                     --D2MAX  = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES IN D2 THE UPPER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
-!                                CONTAINING ONLY THOSE ELEMENTS
-!                                OF X SIMULTANEOUSLY CORRESPONDING TO
-!                                VALUES OF THE D1 VECTOR
-!                                IN THE INTERVAL D1MIN TO D1MAX
-!                                (INCLUSIVE), AND
-!                                VALUES OF THE D2 VECTOR
-!                                IN THE INTERVAL D2MIN TO D2MAX
-!                                (INCLUSIVE).
-!                     --NY     = THE INTEGER NUMBER OF RETAINED
-!                                OBSERVATIONS COPIED INTO
-!                                THE VECTOR Y.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+SUBROUTINE SUBSE2(X,N,D1,D1min,D1max,D2,D2min,D2max,Y,Ny)
+IMPLICIT NONE
+
+REAL(kind=wp) :: D1(:), D1max, D1min, D2(:), D2max, D2min, hold, poin1l, poin1u, poin2l, poin2u, X(:), Y(:)
+INTEGER       :: i, ipr, k, N, ndel, Ny
+
+!     OUTPUT--THE VECTOR Y
 !             INTO WHICH HAVE BEEN COPIED
 !             ONLY THOSE VALUES OF X WHICH
 !             SIMULTANEOUSLY CORRESPOND TO VALUES
@@ -34316,10 +34287,7 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--THE INPUT VECTOR X IS NOT ALTERED
 !              BY APPLICATION OF THIS SUBROUTINE.
 !              THIS IS A MAJOR DISTINCTION
@@ -34354,11 +34322,6 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(:)
-      DIMENSION Y(:)
-      DIMENSION D1(:)
-      DIMENSION D2(:)
-!
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -34366,8 +34329,7 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSE2 SUBROU&
-     &TINE IS NON-POSITIVE *****')
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSE2 SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
@@ -34375,8 +34337,7 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
          IF ( N==1 ) THEN
             WRITE (ipr,99003)
 99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SUBS&
-     &E2 SUBROUTINE HAS THE VALUE 1 *****')
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SUBSE2 SUBROUTINE HAS THE VALUE 1 *****')
          ELSE
             hold = X(1)
             DO i = 2 , N
@@ -34384,13 +34345,13 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
             ENDDO
             WRITE (ipr,99004) hold
 99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE SUBSE2 SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SUBSE2 SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      poin1l = D1min
+ 50      continue
+         poin1l = D1min
          poin1u = D1max
          IF ( D1min>D1max ) poin1l = D1max
          IF ( D1min>D1max ) poin1u = D1min
@@ -34418,18 +34379,15 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
          WRITE (ipr,99006)
 99006    FORMAT (' ','OUTPUT FROM THE SUBSE2 SUBROUTINE--')
          WRITE (ipr,99007) poin1l , poin1u
-99007    FORMAT (' ',7X,'D1 LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     &
-     &           E15.8)
+99007    FORMAT (' ',7X,'D1 LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     E15.8)
          WRITE (ipr,99008) poin2l , poin2u
-99008    FORMAT (' ',7X,'D2 LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     &
-     &           E15.8)
+99008    FORMAT (' ',7X,'D2 LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     E15.8)
          WRITE (ipr,99009)
 99009    FORMAT (' ',7X,'ONLY THOSE OBSERVATIONS IN X')
          WRITE (ipr,99010)
 99010    FORMAT (' ',7X,'WILL BE CARRIED OVER INTO Y')
          WRITE (ipr,99011)
-99011    FORMAT (' ',7X,'FOR WHICH THE CORRESPONDING ELEMENTS OF ',     &
-     &           'D1 AND D2')
+99011    FORMAT (' ',7X,'FOR WHICH THE CORRESPONDING ELEMENTS OF ',     'D1 AND D2')
          WRITE (ipr,99012)
 99012    FORMAT (' ',7X,'ARE SIMULTANEOUSLY WITHIN (INCLUSIVE)')
          WRITE (ipr,99013)
@@ -34439,17 +34397,14 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
          WRITE (ipr,99015)
 99015    FORMAT (' ',7X,'HAVE BEEN CARRIED OVER INTO Y.')
          WRITE (ipr,99016) N
-99016    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99016    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
          WRITE (ipr,99017) Ny
-99017    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', &
-     &           I6)
+99017    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', I6)
          WRITE (ipr,99018) ndel
-99018    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
-     &           I6)
+99018    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
-      END SUBROUTINE SUBSE2
+END SUBROUTINE SUBSE2
 !>
 !!##NAME
 !!    subset(3f) - [M_datapac:STATISTICS] extract the elements of a vector
@@ -34457,14 +34412,52 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine subset (X, Y)
+!!     SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
+!!
+!!      REAL(kind=wp) :: D(:), Dmax ,Dmin, X(:)
+!!      INTEGER       :: N , Newn
 !!
 !!##DESCRIPTION
-!!   Description
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    This subroutine retains all observations in the vector X for which
+!!    the corresponding elements in the vector D are inside the closed
+!!    (inclusive) interval defined by DMIN and DMAX, while deleting all
+!!    observations in X corresponding to elements of D outside of this
+!!    interval.
+!!
+!!    Thus all observations in X which correspond to elements in D which
+!!    are smaller than DMIN or larger than DMAX are deleted from X.
+!!
+!!    The use of this subroutine gives the data analyst the capability
+!!    to easily extract subsets of the data prior to data analysis on
+!!    each subset.
+!!
+!!##INPUT ARGUMENTS
+!!    x      the vector of
+!!           (unsorted or sorted) observations.
+!!    n      the integer number of observations
+!!           in the vector x.
+!!    d      the vector
+!!           which 'defines' the various
+!!           possible subsets of x.
+!!    dmin   the value
+!!           which defines the lower limit
+!!           (inclusively) of the particular
+!!           subset of interest to be retained.
+!!    dmax   the value
+!!           which defines the upper limit
+!!           (inclusively) of the particular
+!!           subset of interest to be retained.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    newn   the integer number of observations
+!!           remaining (retained) in x after all
+!!           of the observations in x
+!!           have been deleted which
+!!           correspond to values in the
+!!           vector d outside the
+!!           interval of interest.
 !!
 !!##EXAMPLES
 !!
@@ -34487,55 +34480,15 @@ REAL(kind=wp) :: D1 , D1max , D1min , D2 , D2max , D2min , hold , poin1l ,    &
 !!##LICENSE
 !!    CC0-1.0
 !*==subset.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
-      IMPLICIT NONE
-!*--SUBSET29201
-!*** Start of declarations inserted by SPAG
+SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
+IMPLICIT NONE
+
 REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SUBSET
+      DIMENSION X(:)
+      DIMENSION D(:)
 !
-!     PURPOSE--THIS SUBROUTINE RETAINS ALL OBSERVATIONS IN THE
-!              SINGLE PRECISION VECTOR X FOR WHICH THE
-!              CORRESPONDING ELEMENTS IN THE
-!              SINGLE PRECISION VECTOR D ARE INSIDE
-!              THE CLOSED (INCLUSIVE) INTERVAL
-!              DEFINED BY DMIN AND DMAX,
-!              WHILE DELETING ALL OBSERVATIONS IN X
-!              CORRESPONDING TO ELEMENTS OF D
-!              OUTSIDE OF THIS INTERVAL.
-!              THUS ALL OBSERVATIONS IN X WHICH
-!              CORRESPOND TO ELEMENTS IN D WHICH ARE SMALLER
-!              THAN DMIN OR LARGER THAN DMAX ARE DELETED FROM X.
-!              THE USE OF THIS SUBROUTINE
-!              GIVES THE DATA ANALYST THE CAPABILITY TO
-!              EASILY EXTRACT SUBSETS OF THE DATA
-!              PRIOR TO DATA ANALYSIS ON EACH SUBSET.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --D      = THE SINGLE PRECISION VECTOR
-!                                WHICH 'DEFINES' THE VARIOUS
-!                                POSSIBLE SUBSETS OF X.
-!                     --DMIN   = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES THE LOWER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!                     --DMAX   = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES THE UPPER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!     OUTPUT ARGUMENTS--NEWN   = THE INTEGER NUMBER OF OBSERVATIONS
-!                                REMAINING (RETAINED) IN X AFTER ALL
-!                                OF THE OBSERVATIONS IN X
-!                                HAVE BEEN DELETED WHICH
-!                                CORRESPOND TO VALUES IN THE
-!                                VECTOR D OUTSIDE THE
-!                                INTERVAL OF INTEREST.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE VECTOR X
 !             IN WHICH ONLY THOSE VALUES
 !             HAVE BEEN RETAINED WHICH
 !             CORRESPOND TO VALUES
@@ -34555,10 +34508,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
 !              MADE WHATEVER DELETIONS ARE APPROPRIATE,
 !              THE OUTPUT VECTOR X WILL BE 'PACKED';
@@ -34613,8 +34563,6 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(:)
-      DIMENSION D(:)
 !
       ipr = 6
 !
@@ -34647,7 +34595,8 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      pointl = Dmin
+ 50      continue
+         pointl = Dmin
          pointu = Dmax
          IF ( Dmin>Dmax ) pointl = Dmax
          IF ( Dmin>Dmax ) pointu = Dmin
@@ -34677,8 +34626,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
          WRITE (ipr,99006)
 99006    FORMAT (' ','OUTPUT FROM THE SUBSET SUBROUTINE--')
          WRITE (ipr,99007) pointl , pointu
-99007    FORMAT (' ',7X,'D  LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     &
-     &           E15.8)
+99007    FORMAT (' ',7X,'D  LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     E15.8)
          WRITE (ipr,99008)
 99008    FORMAT (' ',7X,'ONLY THOSE OBSERVATIONS IN X')
          WRITE (ipr,99009)
@@ -34694,14 +34642,11 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
          WRITE (ipr,99014)
 99014    FORMAT (' ',7X,'HAVE BEEN DELETED IN X.')
          WRITE (ipr,99015) nold
-99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
          WRITE (ipr,99016) Newn
-99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', I6)
          WRITE (ipr,99017) ndel
-99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
-     &           I6)
+99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
       END SUBROUTINE SUBSET
@@ -39864,11 +39809,52 @@ END SUBROUTINE WIND
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine write (X, Y)
+!!     SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
 !!
 !!##DESCRIPTION
-!!   Description
 !!
+!!    THIS SUBROUTINE WRITES OUT THE CONTENTS
+!!    OF THE SINGLE PRECISION VECTOR X IN AN ORDERLY
+!!    AND NEAT FASHION.
+!!
+!!    THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY
+!!    TO GET DATA OUT OF THE MACHINE WITHOUT HAVING
+!!    TO WORRY ABOUT AND SPECIFY FORMATS.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X       THE SINGLE PRECISION VECTOR OF
+!!            OBSERVATIONS TO BE PRINTED OUT.
+!!
+!!    N       THE INTEGER NUMBER OF OBSERVATIONS
+!!            IN THE VECTOR X.
+!!
+!!    NNLINE  THE INTEGER VALUE
+!!            OF THE DESIRED NUMBER OF
+!!            OBSERVATIONS IN X TO APPEAR PER LINE.
+!!
+!!    IWIDTH  THE INTEGER VALUE
+!!            OF THE LARGEST NUMBER OF
+!!            CHARACTERS THAT A VALUE IN X MAY TAKE UP
+!!
+!!                = THE DESIRED NUMBER OF INTEGER DIGITS
+!!                + THE DESIRED NUMBER OF DECIMAL DIGITS
+!!                + 1 DIGIT FOR THE SIGN
+!!                + 1 DIGIT FOR THE DECIMAL POINT.
+!!            (NO PROVISION NEED BE MADE FOR LEADING
+!!            OR TRAILING SEPARATION BLANKS--THIS IS
+!!            DONE AUTOMATICALLY BY THE SUBROUTINE.)
+!!
+!!    IDEC    THE INTEGER VALUE
+!!            OF THE DESIRED NUMBER OF
+!!            DECIMAL DIGITS TO BE PRINTED OUT.
+!!##OUTPUT
+!!
+!!    A LISTING OF THE N VALUES OF THE DATA VECTOR X
+!!    WITH NNLINE VALUES PRINTED PER LINE, AND WITH
+!!    BLANKS AUTOMATICALLY INSERTED BETWEEN ADJACENT VALUES.
+!!    A BLANK LINE WILL APPEAR AFTER EVERY TENTH LINE.
+!!    50 LINES OF DATA WILL APPEAR PER PRINTER PAGE.
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
@@ -39894,50 +39880,12 @@ END SUBROUTINE WIND
 !!##LICENSE
 !!    CC0-1.0
 !*==write.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
-      IMPLICIT NONE
-!*--WRITE33836
-!*** Start of declarations inserted by SPAG
-      INTEGER i , i10 , i50 , Idec , idecp1 , ipr , iwidm2 , iwidp1 ,   &
-     &        Iwidth , j , jmax , jmin , maxcha , maxwid , N , nlines , &
-     &        Nnline , numcha
-REAL(kind=wp) :: X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT WRITE
+SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
+IMPLICIT NONE
+
+INTEGER i, i10, i50, Idec, idecp1, ipr, iwidm2, iwidp1, Iwidth, j, jmax, jmin, maxcha, maxwid, N, nlines, Nnline, numcha
+REAL(kind=wp) :: X(:)
 !
-!     PURPOSE--THIS SUBROUTINE WRITES OUT THE CONTENTS
-!              OF THE SINGLE PRECISION VECTOR X IN AN ORDERLY
-!              AND NEAT FASHION.
-!              THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY
-!              TO GET DATA OUT OF THE MACHINE WITHOUT HAVING
-!              TO WORRY ABOUT AND SPECIFY FORMATS.
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                               OBSERVATIONS TO BE PRINTED OUT.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!                    --NNLINE = THE INTEGER VALUE
-!                               OF THE DESIRED NUMBER OF
-!                               OBSERVATIONS IN X TO APPEAR PER LINE.
-!                    --IWIDTH = THE INTEGER VALUE
-!                               OF THE LARGEST NUMBER OF
-!                               CHARACTERS THAT A VALUE IN X MAY TAKE UP
-!                               = THE DESIRED NUMBER OF INTEGER DIGITS
-!                               + THE DESIRED NUMBER OF DECIMAL DIGITS
-!                               + 1 DIGIT FOR THE SIGN
-!                               + 1 DIGIT FOR THE DECIMAL POINT.
-!                               (NO PROVISION NEED BE MADE FOR LEADING
-!                               OR TRAILING SEPARATION BLANKS--THIS IS
-!                               DONE AUTOMATICALLY BY THE SUBROUTINE.)
-!                    --IDEC   = THE INTEGER VALUE
-!                               OF THE DESIRED NUMBER OF
-!                               DECIMAL DIGITS TO BE PRINTED OUT.
-!     OUTPUT--A LISTING OF THE N VALUES OF THE DATA VECTOR X
-!             WITH NNLINE VALUES PRINTED PER LINE, AND WITH
-!             BLANKS AUTOMATICALLY INSERTED BETWEEN ADJACENT VALUES.
-!             A BLANK LINE WILL APPEAR AFTER EVERY TENTH LINE.
-!             50 LINES OF DATA WILL APPEAR PER PRINTER PAGE.
-!     PRINTING--YES.
 !     RESTRICTIONS--NNLINE MUST BE 1 OR LARGER;
 !                 --IWIDTH MUST BE 2 OR LARGER;
 !                 --IWIDTH MUST BE 12 OR SMALLER;
@@ -39945,28 +39893,16 @@ REAL(kind=wp) :: X
 !                 --IDEC MUST BE (IWIDTH-2) OR SMALLER;
 !                 --THE PRODUCT OF NNLINE AND (IWIDTH+1) MUST
 !                   BE 131 OR SMALLER.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--THE LISTED VALUES ARE TO BE READ ROW BY ROW--
 !              THAT IS, THE FIRST VALUE IN X APPEARS
 !              ON ROW 1, COLUMN 1 OF THE OUTPUT,
 !              THE SECOND VALUE IN X APPEARS ON ROW 1, COLUMN 2,
 !              ETC.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
+
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
       ipr = 6
       maxwid = 12
       maxcha = 131
@@ -39976,22 +39912,19 @@ REAL(kind=wp) :: X
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WRITE  SUBROU&
-     &TINE IS NON-POSITIVE *****')
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WRITE SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99075) N
          RETURN
       ELSEIF ( Nnline<1 ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WRITE  SUBROU&
-     &TINE IS NON-POSITIVE *****')
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WRITE SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99075) Nnline
          RETURN
       ELSEIF ( Iwidth<2 .OR. maxwid<Iwidth ) THEN
          WRITE (ipr,99003) maxwid
 99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE WRITE  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (2,',I4,') INTERVAL *****')
+     &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE WRITE SUBROUTINE IS OUTSIDE THE ALLOWABLE (2,',I4,') INTERVAL *****')
          WRITE (ipr,99075) Iwidth
          RETURN
       ELSE
@@ -39999,8 +39932,8 @@ REAL(kind=wp) :: X
          IF ( Idec<0 .OR. iwidm2<Idec ) THEN
             WRITE (ipr,99004) Iwidth , iwidm2
 99004       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE FIFTH  INPUT ARGUMENT TO THE WRITE  SUBROU&
-     &TINE IS NEGATIVE OR EXCEEDS IWIDTH-2 (= ',I6,'-2 = ',I6,') *****')
+     &'***** FATAL ERROR--THE FIFTH INPUT ARGUMENT TO THE WRITE SUBROUTINE IS NEGATIVE OR EXCEEDS IWIDTH-2 (= ', &
+     & I6,'-2 = ',I6,') *****')
             WRITE (ipr,99075) Idec
             RETURN
          ELSE
@@ -40312,5 +40245,5 @@ REAL(kind=wp) :: X
 99075 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 99076 FORMAT ('1')
 99077 FORMAT (' ')
-      END SUBROUTINE WRITE
+END SUBROUTINE WRITE
 end module M_datapac

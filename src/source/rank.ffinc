@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file rank.3m_datapac.man
 NAME
-   rank(3f) - [M_datapac:STATISTICS] rank a vector of sample observations
+   rank(3f) - [M_datapac:STATISTICS:SORT] rank a vector of sample observations
 
 SYNOPSIS
     Subroutine rank (X, Y)
@@ -37,13 +37,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANK(X,N,Xr)
       IMPLICIT NONE
-!*--RANK24782
-!*** Start of declarations inserted by SPAG
+
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
       INTEGER i , ibran , ipr , iupper , j , jmin , jp1 , k , N , nm1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT RANK
 !
 !     PURPOSE--THIS SUBROUTINE RANKS (IN ASCENDING ORDER)
 !              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X,

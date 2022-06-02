@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file sortp.3m_datapac.man
 NAME
-   sortp(3f) - [M_datapac:STATISTICS] sorts and ranks a numeric vector X
+   sortp(3f) - [M_datapac:STATISTICS:SORT] sorts and ranks a numeric
+   vector X
 
 SYNOPSIS
     SUBROUTINE SORTP(X,N,Y,Xpos)

@@ -1,18 +1,57 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file subse1.3m_datapac.man
 NAME
+
    subse1(3f) - [M_datapac:STATISTICS] extract the elements of a vector
    which fall into a user-specified subset (one subset variable)
 
 SYNOPSIS
-    Subroutine subse1 (X, Y)
+
+    SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
+
+     REAL(kind=wp) :: D(:), Dmax, Dmin, X(:), Y(:)
+     INTEGER N, Ny
 
 DESCRIPTION
-  Description
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+   This subroutine carries over into Y all observations of the single
+   precision vector X for which the corresponding elements in the single
+   precision vector D are inside the closed (inclusive) interval defined
+   by DMIN and DMAX, while not carrying over any observations of X
+   corresponding to elements of D outside of this interval.
+
+   the input vector X is itself unaltered; those elements of X to be
+   retained are copied over into the output vector Y.
+
+   thus all observations of X which correspond to elements in D which
+   are smaller than DMIN or larger than DMAX are not copied over into Y.
+
+   the use of this subroutine gives the data analyst the capability
+   to easily extract subsets of the data prior to data analysis on
+   each subset.
+
+INPUT ARGUMENTS
+
+   X      The vector of (unsorted or sorted) observations.
+
+   n      The integer number of observations in the vector x.
+
+   d      The vector which 'defines' the various possible subsets of x.
+
+   dmin   The value which defines the lower limit (inclusively) of the
+          particular subset of interest to be retained.
+
+   dmax   The value which defines the upper limit (inclusively) of the
+          particular subset of interest to be retained.
+
+OUTPUT ARGUMENTS
+
+   y      the vector containing only those elements
+          of x corresponding to values of the d vector
+          in the interval dmin to dmax (inclusive).
+
+   ny     the integer number of retained observations copied into
+          the vector y.
 
 EXAMPLES
   Sample program:
@@ -38,60 +77,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==subse1.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
       IMPLICIT NONE
-!*--SUBSE128754
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
-      INTEGER i , ipr , k , N , ndel , Ny
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SUBSE1
-!
-!     PURPOSE--THIS SUBROUTINE CARRIES OVER INTO Y ALL OBSERVATIONS
-!              OF THE SINGLE PRECISION VECTOR X FOR WHICH THE
-!              CORRESPONDING ELEMENTS IN THE
-!              SINGLE PRECISION VECTOR D ARE INSIDE
-!              THE CLOSED (INCLUSIVE) INTERVAL
-!              DEFINED BY DMIN AND DMAX,
-!              WHILE NOT CARRYING OVER ANY OBSERVATIONS OF X
-!              CORRESPONDING TO ELEMENTS OF D
-!              OUTSIDE OF THIS INTERVAL.
-!              THE INPUT VECTOR X IS ITSELF UNALTERED;
-!              THOSE ELEMENTS OF X TO BE RETAINED ARE
-!              COPIED OVER INTO THE SINGLE PRECISION
-!              OUTPUT VECTOR Y.
-!              THUS ALL OBSERVATIONS OF X WHICH
-!              CORRESPOND TO ELEMENTS IN D WHICH ARE SMALLER
-!              THAN DMIN OR LARGER THAN DMAX ARE
-!              NOT COPIED OVER INTO Y.
-!              THE USE OF THIS SUBROUTINE
-!              GIVES THE DATA ANALYST THE CAPABILITY TO
-!              EASILY EXTRACT SUBSETS OF THE DATA
-!              PRIOR TO DATA ANALYSIS ON EACH SUBSET.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --D      = THE SINGLE PRECISION VECTOR
-!                                WHICH 'DEFINES' THE VARIOUS
-!                                POSSIBLE SUBSETS OF X.
-!                     --DMIN   = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES THE LOWER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!                     --DMAX   = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES THE UPPER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
-!                                CONTAINING ONLY THOSE ELEMENTS
-!                                OF X CORRESPONDING TO
-!                                VALUES OF THE D VECTOR
-!                                IN THE INTERVAL DMIN TO DMAX
-!                                (INCLUSIVE).
-!                     --NY     = THE INTEGER NUMBER OF RETAINED
-!                                OBSERVATIONS COPIED INTO
-!                                THE VECTOR Y.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+
+REAL(kind=wp) :: D(:) , Dmax , Dmin , hold , pointl , pointu , X(:) , Y(:)
+INTEGER i , ipr , k , N , ndel , Ny
+
+!     OUTPUT--THE VECTOR Y
 !             INTO WHICH HAVE BEEN COPIED
 !             ONLY THOSE VALUES OF X WHICH
 !             CORRESPOND TO VALUES
@@ -109,12 +99,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
 !             3) WHAT THE SAMPLE SIZE OF X WAS (N);
 !             4) WHAT THE SAMPLE SIZE OF Y WAS (NY);
 !     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--THE INPUT VECTOR X IS NOT ALTERED
 !              BY APPLICATION OF THIS SUBROUTINE.
 !              THIS IS THE MAJOR DISTINCTION
@@ -149,20 +134,10 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
 !              Y AND D (DUE TO THE PACKING OF
 !              THE RETAINED ELEMENTS IN Y)
 !              AFTER APPLICATION OF THIS SUBROUTINE.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--APRIL     1975.
 !     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
-      DIMENSION X(:)
-      DIMENSION Y(:)
-      DIMENSION D(:)
 !
       ipr = 6
 !
@@ -217,8 +192,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
          WRITE (ipr,99006)
 99006    FORMAT (' ','OUTPUT FROM THE SUBSE1 SUBROUTINE--')
          WRITE (ipr,99007) pointl , pointu
-99007    FORMAT (' ',7X,'D1 LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     &
-     &           E15.8)
+99007    FORMAT (' ',7X,'D1 LIMITS (INCLUSIVE)--   ',E15.8,' AND ', E15.8)
          WRITE (ipr,99008)
 99008    FORMAT (' ',7X,'ONLY THOSE OBSERVATIONS IN X')
          WRITE (ipr,99009)
@@ -234,14 +208,11 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X , Y
          WRITE (ipr,99014)
 99014    FORMAT (' ',7X,'HAVE BEEN CARRIED OVER INTO Y.')
          WRITE (ipr,99015) N
-99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
          WRITE (ipr,99016) Ny
-99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', &
-     &           I6)
+99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', I6)
          WRITE (ipr,99017) ndel
-99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
-     &           I6)
+99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
       END SUBROUTINE SUBSE1

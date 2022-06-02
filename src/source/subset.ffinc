@@ -5,14 +5,52 @@ NAME
    which fall into a user-specified subset (one subset variable)
 
 SYNOPSIS
-    Subroutine subset (X, Y)
+    SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
+
+     REAL(kind=wp) :: D(:), Dmax ,Dmin, X(:)
+     INTEGER       :: N , Newn  
 
 DESCRIPTION
-  Description
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+   This subroutine retains all observations in the vector X for which
+   the corresponding elements in the vector D are inside the closed
+   (inclusive) interval defined by DMIN and DMAX, while deleting all
+   observations in X corresponding to elements of D outside of this
+   interval.
+
+   Thus all observations in X which correspond to elements in D which
+   are smaller than DMIN or larger than DMAX are deleted from X.
+
+   The use of this subroutine gives the data analyst the capability
+   to easily extract subsets of the data prior to data analysis on
+   each subset.
+
+INPUT ARGUMENTS
+   x      the vector of
+          (unsorted or sorted) observations.
+   n      the integer number of observations
+          in the vector x.
+   d      the vector
+          which 'defines' the various
+          possible subsets of x.
+   dmin   the value
+          which defines the lower limit
+          (inclusively) of the particular
+          subset of interest to be retained.
+   dmax   the value
+          which defines the upper limit
+          (inclusively) of the particular
+          subset of interest to be retained.
+
+OUTPUT ARGUMENTS
+
+   newn   the integer number of observations
+          remaining (retained) in x after all
+          of the observations in x
+          have been deleted which
+          correspond to values in the
+          vector d outside the
+          interval of interest.
 
 EXAMPLES
   Sample program:
@@ -36,55 +74,15 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==subset.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
-      IMPLICIT NONE
-!*--SUBSET29201
-!*** Start of declarations inserted by SPAG
+SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
+IMPLICIT NONE
+
 REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SUBSET
+      DIMENSION X(:)
+      DIMENSION D(:)
 !
-!     PURPOSE--THIS SUBROUTINE RETAINS ALL OBSERVATIONS IN THE
-!              SINGLE PRECISION VECTOR X FOR WHICH THE
-!              CORRESPONDING ELEMENTS IN THE
-!              SINGLE PRECISION VECTOR D ARE INSIDE
-!              THE CLOSED (INCLUSIVE) INTERVAL
-!              DEFINED BY DMIN AND DMAX,
-!              WHILE DELETING ALL OBSERVATIONS IN X
-!              CORRESPONDING TO ELEMENTS OF D
-!              OUTSIDE OF THIS INTERVAL.
-!              THUS ALL OBSERVATIONS IN X WHICH
-!              CORRESPOND TO ELEMENTS IN D WHICH ARE SMALLER
-!              THAN DMIN OR LARGER THAN DMAX ARE DELETED FROM X.
-!              THE USE OF THIS SUBROUTINE
-!              GIVES THE DATA ANALYST THE CAPABILITY TO
-!              EASILY EXTRACT SUBSETS OF THE DATA
-!              PRIOR TO DATA ANALYSIS ON EACH SUBSET.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --D      = THE SINGLE PRECISION VECTOR
-!                                WHICH 'DEFINES' THE VARIOUS
-!                                POSSIBLE SUBSETS OF X.
-!                     --DMIN   = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES THE LOWER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!                     --DMAX   = THE SINGLE PRECISION VALUE
-!                                WHICH DEFINES THE UPPER LIMIT
-!                                (INCLUSIVELY) OF THE PARTICULAR
-!                                SUBSET OF INTEREST TO BE RETAINED.
-!     OUTPUT ARGUMENTS--NEWN   = THE INTEGER NUMBER OF OBSERVATIONS
-!                                REMAINING (RETAINED) IN X AFTER ALL
-!                                OF THE OBSERVATIONS IN X
-!                                HAVE BEEN DELETED WHICH
-!                                CORRESPOND TO VALUES IN THE
-!                                VECTOR D OUTSIDE THE
-!                                INTERVAL OF INTEREST.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE VECTOR X
 !             IN WHICH ONLY THOSE VALUES
 !             HAVE BEEN RETAINED WHICH
 !             CORRESPOND TO VALUES
@@ -104,10 +102,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
 !              MADE WHATEVER DELETIONS ARE APPROPRIATE,
 !              THE OUTPUT VECTOR X WILL BE 'PACKED';
@@ -162,8 +157,6 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(:)
-      DIMENSION D(:)
 !
       ipr = 6
 !
@@ -196,7 +189,8 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      pointl = Dmin
+ 50      continue
+         pointl = Dmin
          pointu = Dmax
          IF ( Dmin>Dmax ) pointl = Dmax
          IF ( Dmin>Dmax ) pointu = Dmin
@@ -226,8 +220,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
          WRITE (ipr,99006)
 99006    FORMAT (' ','OUTPUT FROM THE SUBSET SUBROUTINE--')
          WRITE (ipr,99007) pointl , pointu
-99007    FORMAT (' ',7X,'D  LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     &
-     &           E15.8)
+99007    FORMAT (' ',7X,'D  LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     E15.8)
          WRITE (ipr,99008)
 99008    FORMAT (' ',7X,'ONLY THOSE OBSERVATIONS IN X')
          WRITE (ipr,99009)
@@ -243,14 +236,11 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
          WRITE (ipr,99014)
 99014    FORMAT (' ',7X,'HAVE BEEN DELETED IN X.')
          WRITE (ipr,99015) nold
-99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
          WRITE (ipr,99016) Newn
-99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', I6)
          WRITE (ipr,99017) ndel
-99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
-     &           I6)
+99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
       END SUBROUTINE SUBSET

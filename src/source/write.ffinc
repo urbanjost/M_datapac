@@ -5,11 +5,52 @@ NAME
    "neat" fashion
 
 SYNOPSIS
-    Subroutine write (X, Y)
+    SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
 
 DESCRIPTION
-  Description
 
+   THIS SUBROUTINE WRITES OUT THE CONTENTS
+   OF THE SINGLE PRECISION VECTOR X IN AN ORDERLY
+   AND NEAT FASHION.
+
+   THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY
+   TO GET DATA OUT OF THE MACHINE WITHOUT HAVING
+   TO WORRY ABOUT AND SPECIFY FORMATS.
+
+INPUT ARGUMENTS
+
+   X       THE SINGLE PRECISION VECTOR OF
+           OBSERVATIONS TO BE PRINTED OUT.
+
+   N       THE INTEGER NUMBER OF OBSERVATIONS
+           IN THE VECTOR X.
+
+   NNLINE  THE INTEGER VALUE
+           OF THE DESIRED NUMBER OF
+           OBSERVATIONS IN X TO APPEAR PER LINE.
+
+   IWIDTH  THE INTEGER VALUE
+           OF THE LARGEST NUMBER OF
+           CHARACTERS THAT A VALUE IN X MAY TAKE UP
+
+               = THE DESIRED NUMBER OF INTEGER DIGITS
+               + THE DESIRED NUMBER OF DECIMAL DIGITS
+               + 1 DIGIT FOR THE SIGN
+               + 1 DIGIT FOR THE DECIMAL POINT.
+           (NO PROVISION NEED BE MADE FOR LEADING
+           OR TRAILING SEPARATION BLANKS--THIS IS
+           DONE AUTOMATICALLY BY THE SUBROUTINE.)
+
+   IDEC    THE INTEGER VALUE
+           OF THE DESIRED NUMBER OF
+           DECIMAL DIGITS TO BE PRINTED OUT.
+OUTPUT
+
+   A LISTING OF THE N VALUES OF THE DATA VECTOR X
+   WITH NNLINE VALUES PRINTED PER LINE, AND WITH
+   BLANKS AUTOMATICALLY INSERTED BETWEEN ADJACENT VALUES.
+   A BLANK LINE WILL APPEAR AFTER EVERY TENTH LINE.
+   50 LINES OF DATA WILL APPEAR PER PRINTER PAGE.
 OPTIONS
     X   description of parameter
     Y   description of parameter
@@ -36,50 +77,12 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==write.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
-      IMPLICIT NONE
-!*--WRITE33836
-!*** Start of declarations inserted by SPAG
-      INTEGER i , i10 , i50 , Idec , idecp1 , ipr , iwidm2 , iwidp1 ,   &
-     &        Iwidth , j , jmax , jmin , maxcha , maxwid , N , nlines , &
-     &        Nnline , numcha
-REAL(kind=wp) :: X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT WRITE
+SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
+IMPLICIT NONE
+
+INTEGER i, i10, i50, Idec, idecp1, ipr, iwidm2, iwidp1, Iwidth, j, jmax, jmin, maxcha, maxwid, N, nlines, Nnline, numcha
+REAL(kind=wp) :: X(:)
 !
-!     PURPOSE--THIS SUBROUTINE WRITES OUT THE CONTENTS
-!              OF THE SINGLE PRECISION VECTOR X IN AN ORDERLY
-!              AND NEAT FASHION.
-!              THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY
-!              TO GET DATA OUT OF THE MACHINE WITHOUT HAVING
-!              TO WORRY ABOUT AND SPECIFY FORMATS.
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                               OBSERVATIONS TO BE PRINTED OUT.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!                    --NNLINE = THE INTEGER VALUE
-!                               OF THE DESIRED NUMBER OF
-!                               OBSERVATIONS IN X TO APPEAR PER LINE.
-!                    --IWIDTH = THE INTEGER VALUE
-!                               OF THE LARGEST NUMBER OF
-!                               CHARACTERS THAT A VALUE IN X MAY TAKE UP
-!                               = THE DESIRED NUMBER OF INTEGER DIGITS
-!                               + THE DESIRED NUMBER OF DECIMAL DIGITS
-!                               + 1 DIGIT FOR THE SIGN
-!                               + 1 DIGIT FOR THE DECIMAL POINT.
-!                               (NO PROVISION NEED BE MADE FOR LEADING
-!                               OR TRAILING SEPARATION BLANKS--THIS IS
-!                               DONE AUTOMATICALLY BY THE SUBROUTINE.)
-!                    --IDEC   = THE INTEGER VALUE
-!                               OF THE DESIRED NUMBER OF
-!                               DECIMAL DIGITS TO BE PRINTED OUT.
-!     OUTPUT--A LISTING OF THE N VALUES OF THE DATA VECTOR X
-!             WITH NNLINE VALUES PRINTED PER LINE, AND WITH
-!             BLANKS AUTOMATICALLY INSERTED BETWEEN ADJACENT VALUES.
-!             A BLANK LINE WILL APPEAR AFTER EVERY TENTH LINE.
-!             50 LINES OF DATA WILL APPEAR PER PRINTER PAGE.
-!     PRINTING--YES.
 !     RESTRICTIONS--NNLINE MUST BE 1 OR LARGER;
 !                 --IWIDTH MUST BE 2 OR LARGER;
 !                 --IWIDTH MUST BE 12 OR SMALLER;
@@ -87,28 +90,16 @@ REAL(kind=wp) :: X
 !                 --IDEC MUST BE (IWIDTH-2) OR SMALLER;
 !                 --THE PRODUCT OF NNLINE AND (IWIDTH+1) MUST
 !                   BE 131 OR SMALLER.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
+
 !     COMMENT--THE LISTED VALUES ARE TO BE READ ROW BY ROW--
 !              THAT IS, THE FIRST VALUE IN X APPEARS
 !              ON ROW 1, COLUMN 1 OF THE OUTPUT,
 !              THE SECOND VALUE IN X APPEARS ON ROW 1, COLUMN 2,
 !              ETC.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
+
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
       ipr = 6
       maxwid = 12
       maxcha = 131
@@ -118,22 +109,19 @@ REAL(kind=wp) :: X
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
 99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WRITE  SUBROU&
-     &TINE IS NON-POSITIVE *****')
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WRITE SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99075) N
          RETURN
       ELSEIF ( Nnline<1 ) THEN
          WRITE (ipr,99002)
 99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WRITE  SUBROU&
-     &TINE IS NON-POSITIVE *****')
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WRITE SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99075) Nnline
          RETURN
       ELSEIF ( Iwidth<2 .OR. maxwid<Iwidth ) THEN
          WRITE (ipr,99003) maxwid
 99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE WRITE  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (2,',I4,') INTERVAL *****')
+     &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE WRITE SUBROUTINE IS OUTSIDE THE ALLOWABLE (2,',I4,') INTERVAL *****')
          WRITE (ipr,99075) Iwidth
          RETURN
       ELSE
@@ -141,8 +129,8 @@ REAL(kind=wp) :: X
          IF ( Idec<0 .OR. iwidm2<Idec ) THEN
             WRITE (ipr,99004) Iwidth , iwidm2
 99004       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE FIFTH  INPUT ARGUMENT TO THE WRITE  SUBROU&
-     &TINE IS NEGATIVE OR EXCEEDS IWIDTH-2 (= ',I6,'-2 = ',I6,') *****')
+     &'***** FATAL ERROR--THE FIFTH INPUT ARGUMENT TO THE WRITE SUBROUTINE IS NEGATIVE OR EXCEEDS IWIDTH-2 (= ', &
+     & I6,'-2 = ',I6,') *****')
             WRITE (ipr,99075) Idec
             RETURN
          ELSE
@@ -454,4 +442,4 @@ REAL(kind=wp) :: X
 99075 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 99076 FORMAT ('1')
 99077 FORMAT (' ')
-      END SUBROUTINE WRITE
+END SUBROUTINE WRITE
