@@ -1,0 +1,88 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file dot.3m_datapac.man
+NAME
+   dot(3f) - [M_datapac:STATISTICS] compute a dot product of two vectors
+
+SYNOPSIS
+   subroutine dot(A,B,Imin,Imax,Parpro,Dotpro)
+
+    real(kind=wp),intent(in)  :: A(:), B(:), Parpro
+    real(kind=wp),intent(out) :: Dotpro 
+    integer,intent(in)        :: Imax, Imin
+
+DESCRIPTION
+
+   To compute the dot product between 2 vectors A and B only elements
+   IMIN through IMAX of the 2 vectors are considered. The computed dot
+   product is added to the input value PARPRO to yield a final answer
+   for DOTPRO.
+
+   Note Fortran now has a dot product intrinsic called DOT_PRODUCT(3f).
+
+INPUT OPTIONS
+
+   A       First vector
+   B       Second vector
+   Imin    First index in A and B to consider
+   Imax    Last index in A and B to consider
+   Parpro  Initial value to add the dot product to
+
+OUTPUT OPTIONS
+
+   Dotpro  Dot product of A and B.
+
+EXAMPLES
+  Sample program:
+
+   program demo_dot
+   use M_datapac
+   real, dimension(3) :: a, b
+   real :: dotpro , parpro
+   integer i , imax , imin
+       a = [ 1.0, 2.0, 3.0 ]
+       b = [ 4.0, 5.0, 6.0 ]
+       imin=1
+       imax=size(a)
+       parpro=0.0
+       call dot(a,b,imin,imax,parpro,dotpro)
+       write(*,*)a
+       write(*,*)b
+       write(*,*)dotpro, dot_product(a,b), dotpro == dot_product(a,b)
+   end program demo_dot
+
+  Results:
+
+      1.000000       2.000000       3.000000
+      4.000000       5.000000       6.000000
+      32.00000       32.00000     T
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine dot(A,B,Imin,Imax,Parpro,Dotpro)
+real(kind=wp),intent(in)  :: A(:) , B(:) , Parpro
+real(kind=wp),intent(out) :: Dotpro 
+integer,intent(in)        :: Imax , Imin
+integer                   :: i 
+double precision          :: sum , prod , dparpr
+
+   dparpr = Parpro
+   sum = 0.0d0
+   if ( Imin<=Imax ) then
+      do i = Imin , Imax
+         prod = A(i)*B(i)
+         sum = sum + prod
+      enddo
+   endif
+   Dotpro = sum + dparpr
+ 
+end subroutine dot
