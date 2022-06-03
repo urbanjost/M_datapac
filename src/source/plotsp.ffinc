@@ -9,13 +9,16 @@ SYNOPSIS
 DESCRIPTION
    this routine yields a one-page plot of the spectrum, along with upper
    and lower limits of the spectrum.
-   the convention has been followed that if the integer input parameter idf
-   has the value 0, then no confidence limits will be computed and only the
-   spectrum itself will be plotted out.
+
+   the convention has been followed that if the integer input parameter
+   idf has the value 0, then no confidence limits will be computed and
+   only the spectrum itself will be plotted out.
+
    multiple plot points are not indicated.
-   the first point will be plotted on the left vertical axis
-   the last point will be plotted on the right vertical axis
-   there is no restriction on the maximum value of n for this routine.
+
+   the first point will be plotted on the left vertical axis the
+   last point will be plotted on the right vertical axis there is no
+   restriction on the maximum value of n for this routine.
 
 OPTIONS
     X   description of parameter
@@ -43,8 +46,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plotsp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTSP(Y,N,Idf)
-      IMPLICIT NONE
+SUBROUTINE PLOTSP(Y,N,Idf)
 REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
      &     slower , spmax , spmin , supper , xi , Y , ylable , ymax ,   &
      &     ymin

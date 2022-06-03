@@ -8,8 +8,8 @@ SYNOPSIS
     Subroutine decomp (X, Y)
 
 DESCRIPTION
-   decomp(3f) decomposes the weighted data matrix q which originally
-   = the n by k data matrix x times the square root of the weights (in w).
+   decomp(3f) decomposes the weighted data matrix q which originally =
+   the n by k data matrix x times the square root of the weights (in w).
 
    the original q is decomposed into a new q times the inverse of a
    diagonal matrix d times the diagonal matrix d times an upper triangular
@@ -17,11 +17,11 @@ DESCRIPTION
 
    the new n by k q has orthogonal columns.
 
-   a second output from decomp(3f) is the rank and status
-   (non-singular or singular) of the data matrix x.
+   a second output from decomp(3f) is the rank and status (non-singular
+   or singular) of the data matrix x.
 
-   a third output from decomp(3f) is the numerically optimal pivot
-   points for the decomposition.
+   a third output from decomp(3f) is the numerically optimal pivot points
+   for the decomposition.
 
 OPTIONS
     X   description of parameter
@@ -50,7 +50,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==decomp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
-      IMPLICIT NONE
 REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
      &     Tol , tol2 , WS
       INTEGER i , Insing , ip , IPIvot , iqarg , iqarg1 , iqarg2 ,      &

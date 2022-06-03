@@ -82,8 +82,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==sort.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORT(X,N,Y)
-IMPLICIT NONE
-
 REAL(kind=wp) :: amed, hold, tt, X, Y
 integer i, il, ip1, ipr, iu, j, jmi, jmk, k, l, lmi,   m, mid, n, nm1
 DIMENSION X(:), Y(:)

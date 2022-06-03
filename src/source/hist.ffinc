@@ -8,18 +8,15 @@ SYNOPSIS
     Subroutine hist (X, Y)
 
 DESCRIPTION
-   hist(3f) produces 2 histograms
-   (with differing class widths)
-   of the data in the input vector x.
-   the first  histogram has class width = 0.1
-   sample standard deviations;
-   the second histogram has class width = 0.2
-   sample standard deviations.
-   two histograms of the same data set
-   are printed out so as to give the data
-   analyst some feel for how dependent
-   the histogram shape is as a function
-   of the class width and number of classes.
+   hist(3f) produces 2 histograms (with differing class widths) of the
+   data in the input vector x.
+
+   the first histogram has class width = 0.1 sample standard deviations;
+   the second histogram has class width = 0.2 sample standard deviations.
+
+   two histograms of the same data set are printed out so as to give
+   the data analyst some feel for how dependent the histogram shape is
+   as a function of the class width and number of classes.
 
 OPTIONS
     X   description of parameter
@@ -48,7 +45,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HIST(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
      &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
       INTEGER i , icoun2 , icount , ievodd , ihist , inc , ipr , irev , &

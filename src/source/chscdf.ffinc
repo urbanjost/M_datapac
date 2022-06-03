@@ -8,12 +8,13 @@ SYNOPSIS
     Subroutine chscdf (X, Y)
 
 DESCRIPTION
-   chscdf(3f) computes the cumulative distribution
-   function value for the chi-squared distribution
-   with integer degrees of freedom parameter = nu.
+   chscdf(3f) computes the cumulative distribution function value for
+   the chi-squared distribution with integer degrees of freedom parameter
+   = nu.
+
    this distribution is defined for all non-negative x.
-   the probability density function is given
-   in the references below.
+
+   the probability density function is given in the references below.
 
 OPTIONS
     X   description of parameter
@@ -41,8 +42,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CHSCDF(X,Nu,Cdf)
-      IMPLICIT NONE
+SUBROUTINE CHSCDF(X,Nu,Cdf)
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
       INTEGER i , ibran , ievodd , imax , imin , ipr , Nu , nucut
 !

@@ -7,14 +7,12 @@ SYNOPSIS
     Subroutine propor (X, Y)
 
 DESCRIPTION
-   propor(3f) computes the
-   the sample proportion which is the
-   proportion of data between xmin and xmax (inclusively)
-   in the input vector x.
-   the sample proportion = (the number of observations
-   in the sample between xmin and xmax, inclusively) / n.
-   the sample proportion will be a single precision
-   value between 0.0 and 1.0 (inclusively).
+   propor(3f) computes the the sample proportion which is the proportion
+   of data between xmin and xmax (inclusively) in the input vector x.
+
+   the sample proportion = (the number of observations in the sample
+   between xmin and xmax, inclusively) / n. The sample proportion will
+   be a single precision value between 0.0 and 1.0 (inclusively).
 
 OPTIONS
     X   description of parameter
@@ -42,8 +40,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==propor.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
-      IMPLICIT NONE
+SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
       INTEGER i , ipr , isum , Iwrite , N
 !

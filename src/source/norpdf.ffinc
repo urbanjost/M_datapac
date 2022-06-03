@@ -8,12 +8,14 @@ SYNOPSIS
     Subroutine norpdf (X, Y)
 
 DESCRIPTION
-   norpdf(3f) computes the probability density
-   function value for the normal (gaussian)
-   distribution with mean = 0 and standard deviation = 1.
-   this distribution is defined for all x and has
-   the probability density function
-   f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+   norpdf(3f) computes the probability density function value for the
+   normal (gaussian) distribution with mean = 0 and standard deviation
+   = 1.
+
+   this distribution is defined for all x and has the probability
+   density function
+
+       f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
 
 OPTIONS
     X   description of parameter

@@ -7,13 +7,13 @@ SYNOPSIS
     Subroutine weiran (X, Y)
 
 DESCRIPTION
-   weiran(3f) generates a random sample of size n
-   from the weibull distribution
-   with tail length parameter value = gamma.
-   the prototype weibull distribution used
-   herein is defined for all positive x,
-   and has the probability density function
-   f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+   weiran(3f) generates a random sample of size n from the weibull
+   distribution with tail length parameter value = gamma.
+
+   the prototype weibull distribution used herein is defined for all
+   positive x, and has the probability density function
+
+       f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
 
 OPTIONS
     X   description of parameter
@@ -41,10 +41,9 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==weiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
-      IMPLICIT NONE
+SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
-      INTEGER i , ipr , Iseed , N
+INTEGER i , ipr , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE

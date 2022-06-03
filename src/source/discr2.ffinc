@@ -8,35 +8,30 @@ SYNOPSIS
     Subroutine discr2 (X, Y)
 
 DESCRIPTION
-   discr2(3f) 'discretizes' the data
-   of the single precision vector x
+   discr2(3f) 'discretizes' the data of the single precision vector x
    into numcla classes.
-   all values in the vector x within a given class
-   will be mapped into the midpoint of that class.
-   the sample minimum and sample maximum
-   are automatically computed internally
-   and the class width (xdel) is computed as
-   the (sample max - sample min)/numcla.
-   the first class interval is from
-   the sample min to the sample min + xdel;
-   the second class interval is from
-   the sample min + xdel to
-   the sample min + 2*xdel;
+
+   all values in the vector x within a given class will be mapped into
+   the midpoint of that class.
+
+   the sample minimum and sample maximum are automatically computed
+   internally and the class width (xdel) is computed as the (sample max -
+   sample min)/numcla.
+
+   the first class interval is from the sample min to the sample min +
+   xdel; the second class interval is from the sample min + xdel to the
+   sample min + 2*xdel;
    ...;
-   the last class interval is from
-   the sample max - xdel to the sample max.
-   the use of discr2(3f)
-   (and the discre and discr3 subroutines)
-   gives the data analyst the capability of
-   constructing a discrete variate from
-   a continuous one.
-   the resulting discrete variate might then
-   (for example) be analyzed in itself for
-   gross structure, or for adherence to some
-   theroetical discrete probability model,
-   or the discrete variate might be used
-   as a subset definition vector for some
-   other variate.
+
+   the last class interval is from the sample max - xdel to the sample
+   max. The use of discr2(3f) (and the discre and discr3 subroutines)
+   gives the data analyst the capability of constructing a discrete
+   variate from a continuous one.
+
+   the resulting discrete variate might then (for example) be analyzed
+   in itself for gross structure, or for adherence to some theroetical
+   discrete probability model, or the discrete variate might be used as
+   a subset definition vector for some other variate.
 
 OPTIONS
     X   description of parameter
@@ -65,7 +60,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==discr2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCR2(X,N,Numcla,Y)
-      IMPLICIT NONE
 REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
      &     xmax , xmin , Y
       INTEGER i , icount , ip , ipr , iupncl , N , Numcla

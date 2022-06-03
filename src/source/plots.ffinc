@@ -7,20 +7,16 @@ SYNOPSIS
     Subroutine plots (X, Y)
 
 DESCRIPTION
-   plots(3f) yields a one-page printer plot
-   of y(i) versus x(i):
+   plots(3f) yields a one-page printer plot of y(i) versus x(i):
 
      1. with only those points (x(i),y(i)) plotted
         for which the corresponding value of d(i)
         is between the specified values of dmin and dmax.
 
-   the use of the subset definition vector d
-   gives the data analyst the capability of
-   plotting subsets of the data,
-   where the subset is defined
-   by values in the vector d.
+   the use of the subset definition vector d gives the data analyst
+   the capability of plotting subsets of the data, where the subset is
+   defined by values in the vector d.
    
-
 OPTIONS
     X   description of parameter
     Y   description of parameter
@@ -47,11 +43,11 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plots.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)
-      IMPLICIT NONE
+
+SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
      &     X , x25 , x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
-      INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
+INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -75,9 +71,6 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 !     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
 !             FOR ONLY OF A SPECIFIED SUBSET OF THE DATA.
 !     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))

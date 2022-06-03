@@ -15,7 +15,7 @@ DESCRIPTION
    deviation = sqrt(npar*p*(1-p)).
 
    this distribution is defined for all discrete integer x between 0
-   (inclusively) and npar (inclusively).  this distribution has the
+   (inclusively) and npar (inclusively). This distribution has the
    probability function
 
        f(x) = c(npar,x) * p**x * (1-p)**(npar-x).
@@ -58,7 +58,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==binran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
-IMPLICIT NONE
 REAL(kind=wp) :: g(1) , P , u(1) , X
       INTEGER i , ig , ipr , Iseed , isum , j , N , Npar
 !

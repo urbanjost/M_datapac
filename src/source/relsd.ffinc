@@ -8,15 +8,16 @@ SYNOPSIS
     Subroutine relsd (X, Y)
 
 DESCRIPTION
-   relsd(3f) computes the
-   sample relative standard deviation
-   of the data in the input vector x.
-   the sample relative standard deviation = (the sample
-   standard deviation)/(the sample mean).
-   the denominator n-1 is used in computing the
-   sample standard deviation.
-   the sample relative standard deviation is alternatively
-   referred to as the sample coefficient of variation.
+   relsd(3f) computes the sample relative standard deviation of the data
+   in the input vector x.
+
+   the sample relative standard deviation = (the sample standard
+   deviation)/(the sample mean).
+
+   the denominator n-1 is used in computing the sample standard deviation.
+
+   the sample relative standard deviation is alternatively referred to
+   as the sample coefficient of variation.
 
 OPTIONS
     X   description of parameter
@@ -45,7 +46,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==relsd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
       INTEGER i , ipr , Iwrite , N
 !

@@ -4,13 +4,17 @@ NAME
    dot(3f) - [M_datapac:STATISTICS] compute a dot product of two vectors
 
 SYNOPSIS
-    Subroutine dot (X, Y)
+   SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
+
+    REAL(kind=wp) :: A , B , Dotpro , Parpro
+    INTEGER i , Imax , Imin
 
 DESCRIPTION
-   to compute the dot product between 2 vectors--a and b.
-   only elements imin through imax of the 2 vectors are considered.
-   the computed dot product is added to the input value parpro
-   to yield a final answer for dotpro.
+
+   to compute the dot product between 2 vectors--A and B only elements
+   IMIN through IMAX of the 2 vectors are considered. The computed dot
+   product is added to the input value parpro to yield a final answer
+   for dotpro.
 
 OPTIONS
     X   description of parameter
@@ -36,28 +40,28 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
-      IMPLICIT NONE
+
+SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
 REAL(kind=wp) :: A , B , Dotpro , Parpro
-      INTEGER i , Imax , Imin
-!     UPDATED         --NOVEMBER  1975.
+INTEGER i , Imax , Imin
 !---------------------------------------------------------------------
 !
-      DOUBLE PRECISION sum , prod , dparpr
-      DIMENSION A(:) , B(:)
+DOUBLE PRECISION sum , prod , dparpr
+DIMENSION A(:) , B(:)
 !
 !-----START POINT-----------------------------------------------------
 !
-      dparpr = Parpro
-      sum = 0.0D0
-      IF ( Imin<=Imax ) THEN
-         DO i = Imin , Imax
-            prod = A(i)*B(i)
-            sum = sum + prod
-         ENDDO
-      ENDIF
-      Dotpro = sum + dparpr
+   dparpr = Parpro
+   sum = 0.0D0
+   IF ( Imin<=Imax ) THEN
+      DO i = Imin , Imax
+         prod = A(i)*B(i)
+         sum = sum + prod
+      ENDDO
+   ENDIF
+   Dotpro = sum + dparpr
 !
 END SUBROUTINE DOT

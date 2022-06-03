@@ -7,16 +7,15 @@ SYNOPSIS
     Subroutine causf (X, Y)
 
 DESCRIPTION
-   causf(3f) computes the sparsity
-   function value for the cauchy distribution
-   with median = 0 and 75% point = 1.
-   this distribution is defined for all x and has
-   the probability density function
-   f(x) = (1/pi)*(1/(1+x*x)).
-   note that the sparsity function of a distribution
-   is the derivative of the percent point function,
-   and also is the reciprocal of the probability
-   density function (but in units of p rather than x).
+   causf(3f) computes the sparsity function value for the cauchy
+   distribution with median = 0 and 75% point = 1.
+
+   this distribution is defined for all x and has the probability density
+   function f(x) = (1/pi)*(1/(1+x*x)).
+
+   note that the sparsity function of a distribution is the derivative
+   of the percent point function, and also is the reciprocal of the
+   probability density function (but in units of p rather than x).
 
 OPTIONS
     X   description of parameter
@@ -44,8 +43,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==causf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CAUSF(P,Sf)
-      IMPLICIT NONE
+SUBROUTINE CAUSF(P,Sf)
 REAL(kind=wp) :: arg , P , pi , Sf
       INTEGER ipr
 !

@@ -8,17 +8,18 @@ SYNOPSIS
     Subroutine ev2ppf (X, Y)
 
 DESCRIPTION
-   ev2ppf(3f) computes the percent point
-   function value for the extreme value type 2
-   distribution with single precision
-   tail length parameter = gamma.
-   the extreme value type 2 distribution used
-   herein is defined for all non-negative x,
-   and has the probability density function
-   f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
-   note that the percent point function of a distribution
-   is identically the same as the inverse cumulative
-   distribution function of the distribution.
+   ev2ppf(3f) computes the percent point function value for the extreme
+   value type 2 distribution with single precision tail length parameter
+   = gamma.
+
+   the extreme value type 2 distribution used herein is defined for all
+   non-negative x, and has the probability density function
+
+       f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+
+   note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
 
 OPTIONS
     X   description of parameter
@@ -47,7 +48,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2PPF(P,Gamma,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
 !

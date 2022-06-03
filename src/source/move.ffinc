@@ -8,13 +8,11 @@ SYNOPSIS
     Subroutine move (X, Y)
 
 DESCRIPTION
-   move(3f) moves (copies) m elements of the
-   single precision vector x
-   (starting with position ix1)
-   into the single precision vector y
+   move(3f) moves (copies) m elements of the single precision vector
+   x (starting with position ix1) into the single precision vector y
    (starting with position iy1).
-   this allows the data analyst
-   to take any subvector in x and place it
+
+   this allows the data analyst to take any subvector in x and place it
    anywhere in the vector y.
 
 OPTIONS

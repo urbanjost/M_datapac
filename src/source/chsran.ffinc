@@ -7,9 +7,8 @@ SYNOPSIS
     Subroutine chsran (X, Y)
 
 DESCRIPTION
-   chsran(3f) generates a random sample of size n
-   from the chi-squared distribution
-   with integer degrees of freedom parameter = nu.
+   chsran(3f) generates a random sample of size n from the chi-squared
+   distribution with integer degrees of freedom parameter = nu.
 
 OPTIONS
     X   description of parameter
@@ -38,7 +37,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSRAN(N,Nu,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
       INTEGER i , ipr , Iseed , j , N , Nu
 !

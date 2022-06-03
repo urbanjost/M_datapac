@@ -9,9 +9,9 @@ SYNOPSIS
     Subroutine scale (X, Y)
 
 DESCRIPTION
-   scale(3f) computes 4 estimates of the
-   scale (variation, scatter, dispersion)
-   of the data in the input vector x.
+   scale(3f) computes 4 estimates of the scale (variation, scatter,
+   dispersion) of the data in the input vector x.
+
    the 4 estimators employed are--
 
      1. the sample range;
@@ -19,12 +19,9 @@ DESCRIPTION
      3. the sample relative standard deviation; and
      4. the sample variance.
 
-   note that n-1 (rather than n)
-   is used in the divisor in the
-   computation of the sample standard
-   deviation, the sample relative
-   standard deviation, and the
-   sample variance.
+   note that n-1 (rather than n) is used in the divisor in the computation
+   of the sample standard deviation, the sample relative standard
+   deviation, and the sample variance.
 
 OPTIONS
     X   description of parameter
@@ -53,7 +50,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SCALE(X,N)
-IMPLICIT NONE
 
 REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd , xsd , xvar
 INTEGER i , ipr , N

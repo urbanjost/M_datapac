@@ -8,27 +8,27 @@ SYNOPSIS
     Subroutine chsplt (X, Y)
 
 DESCRIPTION
-   chsplt(3f) generates a chi-squared
-   probability plot (with integer
+   chsplt(3f) generates a chi-squared probability plot (with integer
    degrees of freedom parameter value = nu).
-   the prototype chi-squared distribution used
-   herein is defined for all non-negative x,
-   and its probability density function is given
-   in the references below.
-   as used herein, a probability plot for a distribution
-   is a plot of the ordered observations versus
-   the order statistic medians for that distribution.
-   the chi-squared probability plot is useful in
-   graphically testing the composite (that is,
-   location and scale parameters need not be specified)
-   hypothesis that the underlying distribution
-   from which the data have been randomly drawn
-   is the  chi-squared distribution
+
+   the prototype chi-squared distribution used herein is defined for all
+   non-negative x, and its probability density function is given in the
+   references below.
+
+   as used herein, a probability plot for a distribution is a plot
+   of the ordered observations versus the order statistic medians for
+   that distribution.
+
+   the chi-squared probability plot is useful in graphically testing
+   the composite (that is, location and scale parameters need not be
+   specified) hypothesis that the underlying distribution from which
+   the data have been randomly drawn is the chi-squared distribution
    with degrees of freedom parameter value = nu.
-   if the hypothesis is true, the probability plot
-   should be near-linear.
-   a measure of such linearity is given by the
-   calculated probability plot correlation coefficient.
+
+   if the hypothesis is true, the probability plot should be near-linear.
+
+   a measure of such linearity is given by the calculated probability
+   plot correlation coefficient.
 
 OPTIONS
     X   description of parameter
@@ -57,7 +57,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==chsplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSPLT(X,N,Nu)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope

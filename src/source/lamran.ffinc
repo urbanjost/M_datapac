@@ -7,13 +7,13 @@ SYNOPSIS
     Subroutine lamran (X, Y)
 
 DESCRIPTION
-   lamran(3f) generates a random sample of size n
-   from the (tukey) lambda distribution
-   with tail length parameter value = alamba.
-   in general, the probability density function
-   for this distribution is not simple.
-   the percent point function for this distribution is
-   g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+   lamran(3f) generates a random sample of size n from the (tukey)
+   lambda distribution with tail length parameter value = alamba.
+
+   in general, the probability density function for this distribution
+   is not simple. the percent point function for this distribution is
+
+       g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 
 OPTIONS
     X   description of parameter
@@ -42,7 +42,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==lamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: alamb2 , Alamba , q , X
       INTEGER i , ipr , Iseed , N
 !

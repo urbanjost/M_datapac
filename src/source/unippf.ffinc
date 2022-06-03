@@ -8,16 +8,17 @@ SYNOPSIS
     Subroutine unippf (X, Y)
 
 DESCRIPTION
-   unippf(3f) computes the percent point
-   function value for the uniform (rectangular)
-   distribution on the unit interval (0,1).
-   this distribution has mean = 0.5
-   and standard deviation = sqrt(1/12) = 0.28867513.
-   this distribution has the probability
-   density function f(x) = 1.
-   note that the percent point function of a distribution
-   is identically the same as the inverse cumulative
-   distribution function of the distribution.
+   unippf(3f) computes the percent point function value for the uniform
+   (rectangular) distribution on the unit interval (0,1).
+
+   this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+   = 0.28867513. This distribution has the probability density function
+
+       f(x) = 1.
+
+   note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
 
 OPTIONS
     X   description of parameter
@@ -45,10 +46,9 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==unippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNIPPF(P,Ppf)
-      IMPLICIT NONE
-      INTEGER ipr
+SUBROUTINE UNIPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
+INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)

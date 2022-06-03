@@ -7,7 +7,7 @@ SYNOPSIS
     Subroutine plotu (X, Y)
 
 DESCRIPTION
-   plotu(3f) produces the following 4 plots--
+   PLOTU(3f) produces the following 4 plots--
    all on the same printer page--
 
      1. data plot--x(i) versus i
@@ -15,15 +15,12 @@ DESCRIPTION
      3. histogram
      4. normal probability plot
 
-   in addition, location, scale, and autocorrelation
-   summary statistics are printed out automatically
-   on the same page.
+   In addition, location, scale, and autocorrelation summary statistics
+   are printed out automatically on the same page.
 
-   these plots give the data analyst a quick
-   first-pass check at some of
-   the underlying assumptions typically made--
-   constant location, constant scale, no outliers,
-   unautocorrelated data, symmetry, normality.
+   These plots give the data analyst a quick first-pass check at some of
+   the underlying assumptions typically made-- constant location, constant
+   scale, no outliers, unautocorrelated data, symmetry, normality.
 
 OPTIONS
     X   description of parameter
@@ -51,8 +48,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTU(X,N)
-      IMPLICIT NONE
+SUBROUTINE PLOTU(X,N)
 REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
      &     promin , ratiox , ratioy , s , sum , sum1 , sum2 , sum23 ,   &
      &     sum3 , width , WS , X

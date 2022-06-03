@@ -7,36 +7,32 @@ SYNOPSIS
     Subroutine fourie (X, Y)
 
 DESCRIPTION
-   fourie(3f) performs a Fourier analysis
-   of the data in the input vector X.
-   the analysis consists of the following--
+   FOURIE(3f) performs a Fourier analysis of the data in the input
+   vector X. The analysis consists of the following--
 
-              1. computing (and printing)
-                 (for each of the harmonic frequencies
-                 1/n, 2/n, 3/n, ..., 1/2)
-                 the corresponding fourier coeficients,
-                 the amplitude, the phase,
-                 the contribution to the total variance,
-                 and the relative contribution to the total
-                 variance.
-              2. plotting out a fourier line spectrum =
-                 the periodogram = the plot of relative
-                 contribution to total variance
-                 (at each fourier frequency) versus
-                 the fourier frequency.
+      1. computing (and printing)
+         (for each of the harmonic frequencies
+         1/n, 2/n, 3/n, ..., 1/2)
+         the corresponding fourier coeficients,
+         the amplitude, the phase,
+         the contribution to the total variance,
+         and the relative contribution to the total
+         variance.
+      2. plotting out a fourier line spectrum =
+         the periodogram = the plot of relative
+         contribution to total variance
+         (at each fourier frequency) versus
+         the fourier frequency.
    
-   in order that the results of the Fourier analysis
-   be valid and properly interpreted, the input data
-   in X should be equi-spaced in time
-   (or whatever variable corresponds to time).
-   
-   the horizontal axis of the spectra produced
-   by fourie(3f) is frequency.
-   this frequency is measured in units of
-   cycles per 'data point' or, more precisely, in
-   cycles per unit time where
-   'unit time' is defined as the
-   elapsed time between adjacent observations.
+   in order that the results of the Fourier analysis be valid and properly
+   interpreted, the input data in X should be equi-spaced in time (or
+   whatever variable corresponds to time).
+
+   the horizontal axis of the spectra produced by fourie(3f) is frequency.
+   this frequency is measured in units of cycles per 'data point' or,
+   more precisely, in cycles per unit time where 'unit time' is defined
+   as the elapsed time between adjacent observations.
+
    the range of the frequency axis is 0.0 to 0.5.
 
 OPTIONS
@@ -66,7 +62,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FOURIE(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
      &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
      &     suma , sumb , t

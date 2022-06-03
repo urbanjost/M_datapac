@@ -7,17 +7,18 @@ SYNOPSIS
     Subroutine lgnran (X, Y)
 
 DESCRIPTION
-   lgnran(3f) generates a random sample of size n
-   from the lognormal distribution.
-   the prototype lognormal distribution used
-   herein has mean = sqrt(e) = 1.64872127
-   and standard deviation = sqrt(e*(e-1)) = 2.16119742.
-   this distribution is defined for all positive x
-   and has the probability density function
-   f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
-   the prototype lognormal distribution used herein
-   is the distribution of the variate x = exp(z) where
-   the variate z is normally distributed
+   lgnran(3f) generates a random sample of size n from the lognormal
+   distribution.
+
+   the prototype lognormal distribution used herein has mean = sqrt(e)
+   = 1.64872127 and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+   this distribution is defined for all positive x and has the probability
+   density function
+
+       f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+
+   the prototype lognormal distribution used herein is the distribution
+   of the variate x = exp(z) where the variate z is normally distributed
    with mean = 0 and standard deviation = 1.
 
 OPTIONS
@@ -47,7 +48,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==lgnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNRAN(N,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
 !

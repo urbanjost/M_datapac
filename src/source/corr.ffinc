@@ -8,11 +8,10 @@ SYNOPSIS
     Subroutine corr (X, Y)
 
 DESCRIPTION
-   corr(3f) computes the
-   sample correlation coefficient
-   between the 2 sets of data in the input vectors x and y.
-   the sample correlation coefficient will be a single
-   precision value between -1.0 and 1.0 (inclusively).
+   corr(3f) computes the sample correlation coefficient between the 2
+   sets of data in the input vectors x and y. The sample correlation
+   coefficient will be a single precision value between -1.0 and 1.0
+   (inclusively).
 
 OPTIONS
     X   description of parameter
@@ -41,7 +40,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==corr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CORR(X,Y,N,Iwrite,C)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
       INTEGER i , iflag , ipr , Iwrite , N
 !

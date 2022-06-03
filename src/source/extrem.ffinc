@@ -8,22 +8,25 @@ SYNOPSIS
     Subroutine extrem (X, Y)
 
 DESCRIPTION
-   extrem(3f) performs an extreme value analysis
-   on the data in the input vector x.
-   this analysis consists of determining that particular
-   extreme value type 1 or extreme value type 2 distribution
-   which best fits the data set.
-   the goodness of fit criterion is the maximum probability
-   plot correlation coefficient criterion.
-   after the best-fit distribution is determined,
-   estimates are computed and printed out for the
-   location and scale parameters.
-   two probability plots are also printed out--
-   the best-fit type 2 probability plot
-   (if the best fit was in fact a type 2),
-   and the type 1 probability plot.
-   predicted extremes for various return periods are
-   also computed and printed out.
+   extrem(3f) performs an extreme value analysis on the data in the
+   input vector x.
+
+   this analysis consists of determining that particular extreme value
+   type 1 or extreme value type 2 distribution which best fits the
+   data set.
+
+   the goodness of fit criterion is the maximum probability plot
+   correlation coefficient criterion.
+
+   after the best-fit distribution is determined, estimates are computed
+   and printed out for the location and scale parameters.
+
+   two probability plots are also printed out-- the best-fit type 2
+   probability plot (if the best fit was in fact a type 2), and the type
+   1 probability plot.
+
+   predicted extremes for various return periods are also computed and
+   printed out.
 
 OPTIONS
     X   description of parameter
@@ -52,7 +55,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXTREM(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: a , aindex , am , an , arg , cc , corr , corrmx , gamtab ,   &
      &     h , hold , p , r , scrat , sum1 , sum2 , sum3 , sy , t , w
 REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &

@@ -7,28 +7,26 @@ SYNOPSIS
     Subroutine nbran (X, Y)
 
 DESCRIPTION
-   nbran(3f) generates a random sample of size n
-   from the negative binomial distribution
-   with single precision 'bernoulli probability'
-   parameter = p,
-   and integer 'number of successes in bernoulli trials'
-   parameter = npar.
-   the negative binomial distribution used
-   herein has mean = npar*(1-p)/p
-   and standard deviation = sqrt(npar*(1-p)/(p*p))).
-   this distribution is defined for
-   all non-negative integer x--x = 0, 1, 2, ... .
+   nbran(3f) generates a random sample of size n from the negative
+   binomial distribution with single precision 'bernoulli probability'
+   parameter = p, and integer 'number of successes in bernoulli trials'
+   parameter = npar. the negative binomial distribution used herein has
+   mean = npar*(1-p)/p and standard deviation = sqrt(npar*(1-p)/(p*p))).
+
+   this distribution is defined for all non-negative integer x--x = 0,
+   1, 2, ... .
+
    this distribution has the probability function
-   f(x) = c(npar+x-1,npar) * p**npar * (1-p)**x.
-   where c(npar+x-1,npar) is the combinatorial function
-   equaling the number of combinations of npar+x-1 items
-   taken npar at a time.
-   the negative binomial distribution is the
-   distribution of the number of failures
-   before obtaining npar successes in an
-   indefinite sequence of bernoulli (0,1)
-   trials where the probability of success
-   in a single trial = p.
+
+       f(x) = c(npar+x-1,npar) * p**npar * (1-p)**x.
+
+   where c(npar+x-1,npar) is the combinatorial function equaling the
+   number of combinations of npar+x-1 items taken npar at a time.
+
+   the negative binomial distribution is the distribution of the number
+   of failures before obtaining npar successes in an indefinite sequence
+   of bernoulli (0,1) trials where the probability of success in a single
+   trial = p.
 
 OPTIONS
     X   description of parameter
@@ -57,7 +55,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: b(1) , g(1) , P , X
       INTEGER i , ib , ig , ipr , Istart , isum , j , N , Npar
 !

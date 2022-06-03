@@ -46,8 +46,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CAUPPF(P,Ppf)
-      IMPLICIT NONE
+SUBROUTINE CAUPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , pi , Ppf
       INTEGER ipr
 !

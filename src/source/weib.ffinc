@@ -8,22 +8,23 @@ SYNOPSIS
     Subroutine weib (X, Y)
 
 DESCRIPTION
-   weib(3f) perfoms a weibull distribution analysis
-   on the data in the input vector x.
-   this analysis consists of determining that particular
-   weibull distribution
-   which best fits the data set.
-   the goodness of fit criterion is the maximum probability
-   plot correlation coefficient criterion.
-   after the best-fit distribution is determined,
-   estimates are computed and printed out for the
-   location and scale parameters.
-   two probability plots are also printed out--
-   the best-fit weibull probability plot
-   and an extreme value type 1 probability plot
-   (this is due to the fact that as the weibull parameter
-   gamma approaches infinity, the weibull distribution
-   approaches the extreme value type 1 distribution).
+   weib(3f) perfoms a weibull distribution analysis on the data in the
+   input vector x.
+
+   this analysis consists of determining that particular weibull
+   distribution which best fits the data set.
+
+   the goodness of fit criterion is the maximum probability plot
+   correlation coefficient criterion.
+
+   after the best-fit distribution is determined, estimates are computed
+   and printed out for the location and scale parameters.
+
+   two probability plots are also printed out-- the best-fit weibull
+   probability plot and an extreme value type 1 probability plot (this
+   is due to the fact that as the weibull parameter gamma approaches
+   infinity, the weibull distribution approaches the extreme value type
+   1 distribution).
 
 OPTIONS
     X   description of parameter
@@ -51,8 +52,8 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==weib.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WEIB(X,N)
-      IMPLICIT NONE
+SUBROUTINE WEIB(X,N)
+IMPLICIT NONE
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
      &     sum2 , sum3 , sy , t , w , wbar , WS , X , xmax , xmin , Y
 REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z

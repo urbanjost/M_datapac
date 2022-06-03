@@ -8,11 +8,11 @@ SYNOPSIS
     Subroutine tol (X, Y)
 
 DESCRIPTION
-   tol(3f) computes normal and
-   distribution-free tolerance limits
-   for the data in the input vector x.
-   15 normal tolerance limits are computed; and
-   30 distribution-free tolerance limits are computed.
+   tol(3f) computes normal and distribution-free tolerance limits for
+   the data in the input vector x.
+
+   15 normal tolerance limits are computed; and 30 distribution-free
+   tolerance limits are computed.
 
 OPTIONS
     X   description of parameter
@@ -40,8 +40,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TOL(X,N)
-      IMPLICIT NONE
+SUBROUTINE TOL(X,N)
 REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
      &     an4 , an5 , an6 , b , c , c1 , c2 , c3
 REAL(kind=wp) :: d , d1 , d2 , d3 , d4 , d5 , d6 , d7 , f , hold , p , pa ,   &

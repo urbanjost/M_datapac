@@ -8,8 +8,7 @@ SYNOPSIS
     Subroutine plot9 (X, Y)
 
 DESCRIPTION
-   plot9(3f) yields a one-page printer plot
-   of y(i) versus x(i):
+   plot9(3f) yields a one-page printer plot of y(i) versus x(i):
 
      1) with special plot characters;
      2) with the vertical (y) axis min and max
@@ -21,14 +20,12 @@ DESCRIPTION
         the plotting character variable
         also being provided by the data analyst.
 
-   the 'special plotting character' capability
-   allows the data analyst to incorporate information
-   from a third variable (aside from y and x) into
-   the plot.
+   the 'special plotting character' capability allows the data analyst
+   to incorporate information from a third variable (aside from y and x)
+   into the plot.
 
-   the plot character used at the i-th plotting
-   position (that is, at the coordinate (x(i),y(i)))
-   will be
+   the plot character used at the i-th plotting position (that is,
+   at the coordinate (x(i),y(i))) will be
 
      1 if char(i) is between  0.5 and  1.5
      2 if char(i) is between  1.5 and  2.5
@@ -50,17 +47,13 @@ DESCRIPTION
      x if char(i) is any value outside the range
                               0.5 to  36.5.
 
-   the use of the ymin, ymax, xmin, and xmax
-   specifications allows the data analyst
-   to control fully the plot axis limits,
-   so as, for example, to zero-in on an
-   interesting sub-region of a previous plot.
-   
-   the use of hollerith identifying labels
-   allows the data analyst to automatically
-   have the plots labeled.  this is particularly
-   useful in a large analysis when many
-   plots are being generated.
+   the use of the ymin, ymax, xmin, and xmax specifications allows the
+   data analyst to control fully the plot axis limits, so as, for example,
+   to zero-in on an interesting sub-region of a previous plot.
+
+   the use of hollerith identifying labels allows the data analyst to
+   automatically have the plots labeled. this is particularly useful
+   in a large analysis when many plots are being generated.
 
 OPTIONS
     X   description of parameter
@@ -90,7 +83,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plot9.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,      &
      &                 Plchid)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
      &     x25 , x75 , Xaxid , Xmax , xmid , Xmin , Y , Yaxid , ylable ,&
      &     Ymax , Ymin

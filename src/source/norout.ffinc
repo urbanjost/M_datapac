@@ -8,8 +8,10 @@ SYNOPSIS
     Subroutine norout (X, Y)
 
 DESCRIPTION
-   norout(3f) performs a normal outlier analysis
-   on the data in the input vector x.
+
+   norout(3f) performs a normal outlier analysis on the data in the
+   input vector x.
+
    this analysis consists of--
 
      1. various normal outlier statistics;
@@ -19,21 +21,15 @@ DESCRIPTION
      5. a line plot; and
      6. a normal probability plot.
 
-   when the first 40 and last 40 ordered observations
-   are printed out, also included for each
-   of the 40+40 = 80 listed data values
-   is the corresponding residual about
-   the (full) sample mean,
-   the standardized residual,
-   the normal n(0,1) value for the standardized
-   residual,
-   and the position number
-   in the original data vector x.
-   this last piece of information allows
-   the data analyst to easily locate
-   back in the original data vector .
-   a suspected outlier or otherwise
-   interesting observation.
+   when the first 40 and last 40 ordered observations are printed out,
+   also included for each of the 40+40 = 80 listed data values is the
+   corresponding residual about the (full) sample mean, the standardized
+   residual, the normal n(0,1) value for the standardized residual,
+   and the position number in the original data vector x.
+
+   this last piece of information allows the data analyst to easily
+   locate back in the original data vector. a suspected outlier or
+   otherwise interesting observation.
 
 OPTIONS
     X   description of parameter
@@ -62,7 +58,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NOROUT(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
      &     res , s , s1 , s13 , s14 , s2 , s23 , s24 , s3 , s4 , ssq
 REAL(kind=wp) :: ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &

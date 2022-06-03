@@ -8,9 +8,9 @@ SYNOPSIS
     Subroutine loc (X, Y)
 
 DESCRIPTION
-   loc(3f) computes 4 estimates of the
-   location (typical value, measure of central
-   tendancy) of the data in the input vector x.
+   loc(3f) computes 4 estimates of the location (typical value, measure
+   of central tendancy) of the data in the input vector x.
+
    the 4 estimators employed are--
 
            1. the sample midrange;
@@ -18,12 +18,9 @@ DESCRIPTION
            3. the sample midmean; and
            4. the sample median.
 
-   the above 4 estimators are near-optimal
-   estimators of location
-   for shorter-tailed symmetric distributions,
-   moderate-tailed distributions,
-   moderate-long-tailed distributions,
-   and long-tailed distributions,
+   the above 4 estimators are near-optimal estimators of location for
+   shorter-tailed symmetric distributions, moderate-tailed distributions,
+   moderate-long-tailed distributions, and long-tailed distributions,
    respectively.
 
 OPTIONS
@@ -53,7 +50,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==loc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOC(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
      &     xmidm , Y
       INTEGER i , iflag , imax , imaxm1 , imin , iminp1 , ipr , iupper ,&

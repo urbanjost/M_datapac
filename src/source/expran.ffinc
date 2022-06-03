@@ -7,12 +7,13 @@ SYNOPSIS
     Subroutine expran (X, Y)
 
 DESCRIPTION
-   expran(3f) generates a random sample of size n
-   from the exponential distribution
-   with mean = 1 and standard deviation = 1.
-   this distribution is defined for all non-negative x,
-   and has the probability density function
-   f(x) = exp(-x).
+   expran(3f) generates a random sample of size n from the exponential
+   distribution with mean = 1 and standard deviation = 1.
+
+   this distribution is defined for all non-negative x, and has the
+   probability density function
+
+       f(x) = exp(-x).
 
 OPTIONS
     X   description of parameter
@@ -41,7 +42,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPRAN(N,Iseed,X)
-      IMPLICIT NONE
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
 !

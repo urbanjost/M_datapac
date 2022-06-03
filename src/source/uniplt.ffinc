@@ -8,28 +8,29 @@ SYNOPSIS
     Subroutine uniplt (X, Y)
 
 DESCRIPTION
-   uniplt(3f) generates a uniform
-   probability plot.
-   the prototype uniform distribution used herein
-   is defined on the unit interval (0,1).
-   this distribution has mean = 0.5
-   and standard deviation = sqrt(1/12) = 0.28867513.
-   this distribution has
-   the probability density function
-   f(x) = 1.
-   as used herein, a probability plot for a distribution
-   is a plot of the ordered observations versus
-   the order statistic medians for that distribution.
-   the uniform probability plot is useful in
-   graphically testing the composite (that is,
-   location and scale parameters need not be specified)
-   hypothesis that the underlying distribution
-   from which the data have been randomly drawn
-   is the uniform distribution.
-   if the hypothesis is true, the probability plot
-   should be near-linear.
-   a measure of such linearity is given by the
-   calculated probability plot correlation coefficient.
+   uniplt(3f) generates a uniform probability plot.
+
+   the prototype uniform distribution used herein is defined on the
+   unit interval (0,1). This distribution has mean = 0.5 and standard
+   deviation = sqrt(1/12) = 0.28867513.
+
+   this distribution has the probability density function
+
+       f(x) = 1.
+
+   as used herein, a probability plot for a distribution is a plot
+   of the ordered observations versus the order statistic medians for
+   that distribution.
+
+   the uniform probability plot is useful in graphically testing
+   the composite (that is, location and scale parameters need not be
+   specified) hypothesis that the underlying distribution from which
+   the data have been randomly drawn is the uniform distribution.
+
+   if the hypothesis is true, the probability plot should be near-linear.
+
+   a measure of such linearity is given by the calculated probability
+   plot correlation coefficient.
 
 OPTIONS
     X   description of parameter
@@ -57,8 +58,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==uniplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNIPLT(X,N)
-      IMPLICIT NONE
+SUBROUTINE UNIPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N

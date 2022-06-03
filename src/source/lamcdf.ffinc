@@ -8,11 +8,11 @@ SYNOPSIS
     Subroutine lamcdf (X, Y)
 
 DESCRIPTION
-   lamcdf(3f) computes the cumulative distribution
-   function value for the (tukey) lambda distribution
-   with tail length parameter value = alamba.
-   in general, the probability density function
-   for this distribution is not simple.
+   lamcdf(3f) computes the cumulative distribution function value for the
+   (tukey) lambda distribution with tail length parameter value = alamba.
+   in general, the probability density function for this distribution
+   is not simple.
+
    the percent point function for this distribution is
 
        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
@@ -44,7 +44,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==lamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMCDF(X,Alamba,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
      &     X , xcalc , xmax , xmin
       INTEGER icount , ipr

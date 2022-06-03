@@ -8,13 +8,13 @@ SYNOPSIS
     Subroutine ev2ran (X, Y)
 
 DESCRIPTION
-   ev2ran(3f) generates a random sample of size n
-   from the extreme value type 2 distribution
-   with tail length parameter value = gamma.
-   the prototype extreme value type 2 distribution used
-   herein is defined for all non-negative x,
-   and has the probability density function
-   f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+   ev2ran(3f) generates a random sample of size n from the extreme value
+   type 2 distribution with tail length parameter value = gamma.
+
+   the prototype extreme value type 2 distribution used herein is defined
+   for all non-negative x, and has the probability density function
+
+       f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
 
 OPTIONS
     X   description of parameter
@@ -40,10 +40,13 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==ev2ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
 !
@@ -73,10 +76,6 @@ REAL(kind=wp) :: Gamma , X
 !                 1964, PAGE 36.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     VERSION NUMBER--82/7
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --DECEMBER  1981.
-!     UPDATED         --MAY       1982.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !

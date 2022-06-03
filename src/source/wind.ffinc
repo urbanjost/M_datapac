@@ -8,14 +8,14 @@ SYNOPSIS
     Subroutine wind (X, Y)
 
 DESCRIPTION
-   wind(3f) computes the
-   sample windsorized mean
-   of the data in the input vector x.
-   the windsorizing is such that
-   the lower 100*p1 % of the data is
-   replaced by the smallest non-windsorized value,
-   and the upper 100*p2 % of the data is windsorized.
-   replaced by the largest non-windsorized value.
+
+   wind(3f) computes the sample windsorized mean of the data in the
+   input vector x.
+
+   the windsorizing is such that the lower 100*p1 % of the data is
+   replaced by the smallest non-windsorized value, and the upper 100*p2 %
+   of the data is windsorized. replaced by the largest non-windsorized
+   value.
 
 OPTIONS
     X   description of parameter
@@ -46,7 +46,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
-IMPLICIT NONE
 REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
 INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !

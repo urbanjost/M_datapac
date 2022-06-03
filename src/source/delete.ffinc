@@ -8,21 +8,17 @@ SYNOPSIS
     Subroutine delete (X, Y)
 
 DESCRIPTION
-   delete(3f) deletes all observations in the
-   single precision vector x which are inside
-   the closed (inclusive) interval
-   defined by xmin and xmax,
-   while retaining all observations outside of
-   this interval.
-   thus all observations in x which are larger
-   than or equal to xmin and smaller than or
-   equal to xmax are deleted from x.
-   delete(3f) (and the
-   replac and retain subroutines)
-   gives the data analyst the ability to
-   easily 'clean up' a data set which has
-   missing and/or outlying observations
-   so that a more appropriate subsequent
+
+   delete(3f) deletes all observations in the single precision vector
+   x which are inside the closed (inclusive) interval defined by xmin
+   and xmax, while retaining all observations outside of this interval.
+
+   thus all observations in x which are larger than or equal to xmin
+   and smaller than or equal to xmax are deleted from x.
+
+   delete(3f) (and the replac and retain subroutines) gives the data
+   analyst the ability to easily 'clean up' a data set which has missing
+   and/or outlying observations so that a more appropriate subsequent
    data analysis may be performed.
 
 OPTIONS
@@ -51,8 +47,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==delete.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
-      IMPLICIT NONE
+SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
 !

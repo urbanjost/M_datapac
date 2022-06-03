@@ -8,27 +8,25 @@ SYNOPSIS
     Subroutine poippf (X, Y)
 
 DESCRIPTION
-   poippf(3f) computes the percent point
-   function value at the single precision value p
-   for the poisson distribution
-   with single precision
+   poippf(3f) computes the percent point function value at the single
+   precision value p for the poisson distribution with single precision
    tail length parameter = alamba.
-   the poisson distribution used
-   herein has mean = alamba
-   and standard deviation = sqrt(alamba).
-   this distribution is defined for
-   all discrete non-negative integer  x--x = 0, 1, 2, ... .
+
+   the poisson distribution used herein has mean = alamba and standard
+   deviation = sqrt(alamba). this distribution is defined for all
+   discrete non-negative integer x--x = 0, 1, 2, ... .
+
    this distribution has the probability function
-   f(x) = exp(-alamba) * alamba**x / x!.
-   the poisson distribution is the
-   distribution of the number of events
-   in the interval (0,alamba) when
-   the waiting time between events
-   is exponentially distributed
-   with mean = 1 and standard deviation = 1.
-   note that the percent point function of a distribution
-   is identically the same as the inverse cumulative
-   distribution function of the distribution.
+
+       f(x) = exp(-alamba) * alamba**x / x!.
+
+   the poisson distribution is the distribution of the number of events
+   in the interval (0,alamba) when the waiting time between events is
+   exponentially distributed with mean = 1 and standard deviation = 1.
+
+   note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
 
 OPTIONS
     X   description of parameter
@@ -57,7 +55,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==poippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2

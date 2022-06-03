@@ -8,31 +8,33 @@ SYNOPSIS
     Subroutine hfnplt (X, Y)
 
 DESCRIPTION
-   hfnplt(3f) generates a halfnormal
-   probability plot.
-   the prototype halfnormal distribution used herein
-   has mean = sqrt(2/pi) = 0.79788456
-   and standard deviation = 1.
-   this distribution is defined for all non-negative x
-   and has the probability density function
-   f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
-   the prototype halfnormal distribution used herein
-   is the distribution of the variate x = abs(z) where
-   the variate z is normally distributed
+   hfnplt(3f) generates a halfnormal probability plot.
+
+   the prototype halfnormal distribution used herein has mean = sqrt(2/pi)
+   = 0.79788456 and standard deviation = 1.
+
+   this distribution is defined for all non-negative x and has the
+   probability density function
+
+       f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+
+   the prototype halfnormal distribution used herein is the distribution
+   of the variate x = abs(z) where the variate z is normally distributed
    with mean = 0 and standard deviation = 1.
-   as used herein, a probability plot for a distribution
-   is a plot of the ordered observations versus
-   the order statistic medians for that distribution.
-   the halfnormal probability plot is useful in
-   graphically testing the composite (that is,
-   location and scale parameters need not be specified)
-   hypothesis that the underlying distribution
-   from which the data have been randomly drawn
-   is the halfnormal distribution.
-   if the hypothesis is true, the probability plot
-   should be near-linear.
-   a measure of such linearity is given by the
-   calculated probability plot correlation coefficient.
+
+   as used herein, a probability plot for a distribution is a plot
+   of the ordered observations versus the order statistic medians for
+   that distribution.
+
+   the halfnormal probability plot is useful in graphically testing
+   the composite (that is, location and scale parameters need not be
+   specified) hypothesis that the underlying distribution from which
+   the data have been randomly drawn is the halfnormal distribution.
+
+   if the hypothesis is true, the probability plot should be near-linear.
+
+   a measure of such linearity is given by the calculated probability
+   plot correlation coefficient.
 
 OPTIONS
     X   description of parameter
@@ -58,13 +60,17 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==hfnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HFNPLT(X,N)
-      IMPLICIT NONE
+
+SUBROUTINE HFNPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
+INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -86,14 +92,8 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
 !                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
+!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
 !
 !---------------------------------------------------------------------
 !

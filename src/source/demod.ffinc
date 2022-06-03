@@ -7,27 +7,28 @@ SYNOPSIS
     Subroutine demod (X, Y)
 
 DESCRIPTION
-   demod(3f) performs a complex demodulation
-   on the data in the input vector x
-   at the input demodulation frequency = f.
+   demod(3f) performs a complex demodulation on the data in the input
+   vector x at the input demodulation frequency = f.
+
    the complex demodulation consists of the following--
-   1) an amplitude versus time plot;
-   2) a phase versus time plot;
-   3) an updated demodulation frequency estimate
-   to assist the analyst in determining a
-   more appropriate frequency at which
-   to demodulate in case the specified
-   input demodulation frequency f
-   does not flatten sufficiently the
-   phase plot.
+
+    1. an amplitude versus time plot;
+    2. a phase versus time plot;
+    3. an updated demodulation frequency estimate
+       to assist the analyst in determining a
+       more appropriate frequency at which
+       to demodulate in case the specified
+       input demodulation frequency f
+       does not flatten sufficiently the
+       phase plot.
  
-   the allowable range of the input demodulation
-   frequency f is 0.0 to 0.5 (exclusively).
-   the input demodulation frequency f is measured  of
-   in units of cycles per 'data point' or,
-   more precisely, in cycles per unit time where
-   'unit time' is defined as the
-   elapsed time between adjacent observations.
+   the allowable range of the input demodulation frequency f is 0.0 to
+   0.5 (exclusively).
+
+   the input demodulation frequency f is measured of in units of
+   cycles per 'data point' or, more precisely, in cycles per unit time
+   where 'unit time' is defined as the elapsed time between adjacent
+   observations.
 
 OPTIONS
     X   description of parameter
@@ -56,7 +57,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==demod.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEMOD(X,N,F)
-      IMPLICIT NONE
 REAL(kind=wp) :: ai , aiflag , aimax2 , alen1 , alen2 , an , del , F , fest , &
      &     fmin , hold , pi , range , slopeh , sloper , sum , WS , X ,  &
      &     Y1 , Y2

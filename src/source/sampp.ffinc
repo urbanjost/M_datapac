@@ -8,12 +8,11 @@ SYNOPSIS
     Subroutine sampp (X, Y)
 
 DESCRIPTION
-   sampp(3f) computes the
-   sample 100p percent point
-   (where p is between 0.0 and 1.0, exclusively)
-   of the data in the input vector x.
-   the sample 100p percent point =  is that point in which
-   100p percent of the data in the sample is below.
+   SAMPP(3f) computes the sample 100p percent point (where p is between
+   0.0 and 1.0, exclusively) of the data in the input vector X.
+
+   the sample 100p percent point = is that point in which 100p percent
+   of the data in the sample is below.
 
 OPTIONS
     X   description of parameter
@@ -42,7 +41,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
-      IMPLICIT NONE
 REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
       INTEGER i , ipr , iupper , Iwrite , j , jp1 , N

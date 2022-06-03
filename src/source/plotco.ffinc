@@ -5,12 +5,16 @@ NAME
    autocorrelation plot
 
 SYNOPSIS
-    Subroutine plotco (X, Y)
+   SUBROUTINE PLOTCO(Y,N)
+
+    REAL(kind=wp) :: Y(:)
+    INTEGER       :: N
 
 DESCRIPTION
-   this routine yields a multi-page (if necessary) plot of the autocorrelatio
-   coefficient r(k) versus the lag k
-   there is no restriction on the maximum value of n for this routine.
+   This routine yields a multi-page (if necessary) plot of the
+   autocorrelation coefficient r(k) versus the lag k.
+
+   There is no restriction on the maximum value of n for this routine.
 
 OPTIONS
     X   description of parameter
@@ -36,30 +40,22 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==plotco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE PLOTCO(Y,N)
-IMPLICIT NONE
-
-REAL(kind=wp) :: hold, ratioy, Y, ylable, ymax, ymin
-INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, jmin, k, mx, my, N,  numpag
-
-!     PRINTING--YES
 !     UPDATED  -- JUN 1972
 !     UPDATED  -- UPDATED FEB 1975
 !     UPDATED  -- NOVEMBER  1975.
 !     UPDATED  -- FEBRUARY  1976.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==plotco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PLOTCO(Y,N)
+REAL(kind=wp) :: hold, ratioy, Y(:), ylable(11), ymax, ymin
+INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix(25), ixmax, ixmin, iz, j, jmax, jmin, k, mx, my, N,  numpag
 !
-!---------------------------------------------------------------------
+CHARACTER*4 IGRaph
+CHARACTER*4 blank , star , hyphen , alphai
+COMMON /BLOCK1/ IGRaph(55,130)
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 blank , star , hyphen , alphai
-      DIMENSION Y(:)
-      COMMON /BLOCK1/ IGRaph(55,130)
-      DIMENSION ylable(11)
-      DIMENSION ix(25)
-!
-      DATA blank , star , hyphen , alphai/' ' , '*' , '-' , 'I'/
+DATA blank , star , hyphen , alphai/' ' , '*' , '-' , 'I'/
 !
       ipr = 6
 !
@@ -67,17 +63,13 @@ INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, 
 !
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (ipr,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PLOT&
-     &CO SUBROUTINE HAS THE VALUE 1 *****')
+         99003    FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = Y(1)
@@ -85,9 +77,9 @@ INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, 
             IF ( Y(i)/=hold ) GOTO 50
          ENDDO
          WRITE (ipr,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE PLOTCO SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         99004    FORMAT (' ', &
+         &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+         &TO THE PLOTCO SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -202,13 +194,9 @@ INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, 
             WRITE (ipr,99005)
 99005       FORMAT ('1')
             IF ( iz==1 ) WRITE (ipr,99006) N
-99006       FORMAT (                                                    &
-     &          ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS '&
-     &          ,I5)
+99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS ',I5)
             IF ( iz>=2 ) WRITE (ipr,99007)
-99007       FORMAT (' ',                                                &
-     &'THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIO&
-     &US PAGE')
+99007       FORMAT (' THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIOUS PAGE')
             WRITE (ipr,99008)
 99008       FORMAT (' ')
             IF ( N<=24 ) WRITE (ipr,99011) (ix(i),i=1,25)
@@ -219,8 +207,7 @@ INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, 
                k = i/5
                IF ( iflag/=0 ) WRITE (ipr,99009) (IGRaph(i,j),j=1,130)
 99009          FORMAT (' ',130A1)
-               IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) ,            &
-     &                                (IGRaph(i,j),j=10,130)
+               IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) , (IGRaph(i,j),j=10,130)
 99010          FORMAT (' ',F9.2,130A1)
             ENDDO
             IF ( N<=24 ) WRITE (ipr,99011) (ix(i),i=1,25)

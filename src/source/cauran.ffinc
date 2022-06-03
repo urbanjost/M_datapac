@@ -41,8 +41,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==cauran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CAURAN(N,Iseed,X)
-      IMPLICIT NONE
+SUBROUTINE CAURAN(N,Iseed,X)
 REAL(kind=wp) :: arg , pi , X
       INTEGER i , ipr , Iseed , N
 !

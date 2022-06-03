@@ -8,12 +8,13 @@ SYNOPSIS
     Subroutine expcdf (X, Y)
 
 DESCRIPTION
-   expcdf(3f) computes the cumulative distribution
-   function value for the exponential distribution
-   with mean = 1 and standard deviation = 1.
-   this distribution is defined for all non-negative x,
-   and has the probability density function
-   f(x) = exp(-x).
+   expcdf(3f) computes the cumulative distribution function value for
+   the exponential distribution with mean = 1 and standard deviation = 1.
+
+   this distribution is defined for all non-negative x, and has the
+   probability density function
+
+      f(x) = exp(-x).
 
 OPTIONS
     X   description of parameter

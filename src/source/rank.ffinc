@@ -7,14 +7,12 @@ SYNOPSIS
     Subroutine rank (X, Y)
 
 DESCRIPTION
-   rank(3f) ranks (in ascending order)
-   the n elements of the single precision vector x,
-   and puts the resulting n ranks into the
-   single precision vector xr.
-   rank(3f) gives the data analyst
-   the ability to (for example) rank the data
-   preliminary to certain distribution-free
-   analyses.
+   rank(3f) ranks (in ascending order) the n elements of the single
+   precision vector x, and puts the resulting n ranks into the single
+   precision vector xr.
+
+   rank(3f) gives the data analyst the ability to (for example) rank
+   the data preliminary to certain distribution-free analyses.
 
 OPTIONS
     X   description of parameter
@@ -42,9 +40,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE RANK(X,N,Xr)
-      IMPLICIT NONE
-
+SUBROUTINE RANK(X,N,Xr)
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
       INTEGER i , ibran , ipr , iupper , j , jmin , jp1 , k , N , nm1
 !

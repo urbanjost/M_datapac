@@ -8,16 +8,16 @@ SYNOPSIS
     Subroutine plotc (X, Y)
 
 DESCRIPTION
-   plotc(3f) yields a one-page printer plot
-   of y(i) versus x(i) with special plotting
-   characters.
-   this 'special plotting character' capability
-   allows the data analyst to incorporate information
-   from a third variable (aside from y and x) into
-   the plot.
-   the plot character used at the i-th plotting
-   position (that is, at the coordinate (x(i),y(i)))
-   will be
+   plotc(3f) yields a one-page printer plot of y(i) versus x(i) with
+   special plotting characters.
+
+   this 'special plotting character' capability allows the data analyst
+   to incorporate information from a third variable (aside from y and x)
+   into the plot.
+
+   the plot character used at the i-th plotting position (that is,
+   at the coordinate (x(i),y(i))) will be
+
      1 if char(i) is between  0.5 and  1.5
      2 if char(i) is between  1.5 and  2.5
        .
@@ -65,7 +65,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plotc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTC(Y,X,Char,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2

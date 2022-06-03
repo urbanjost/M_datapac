@@ -8,36 +8,35 @@ SYNOPSIS
     Subroutine geoplt (X, Y)
 
 DESCRIPTION
-   geoplt(3f) generates a geometric
-   probability plot
-   (with 'bernoulli probability' parameter value = p).
-   the geometric distribution used
-   herein has mean = (1-p)/p
-   and standard deviation = sqrt((1-p)/(p*p))).
-   this distribution is defined for
-   all non-negative integer x--x = 0, 1, 2, ... .
-   this distribution has the probability function
-   f(x) = p * (1-p)**x.
-   the geometric distribution is the
-   distribution of the number of failures
-   before obtaining 1 success in an
-   indefinite sequence of bernoulli (0,1)
-   trials where the probability of success
-   in a single trial = p.
-   as used herein, a probability plot for a distribution
-   is a plot of the ordered observations versus
-   the order statistic medians for that distribution.
-   the geometric probability plot is useful in
-   graphically testing the composite (that is,
-   location and scale parameters need not be specified)
-   hypothesis that the underlying distribution
-   from which the data have been randomly drawn
-   is the  geometric distribution
-   with probability parameter value = p.
-   if the hypothesis is true, the probability plot
-   should be near-linear.
-   a measure of such linearity is given by the
-   calculated probability plot correlation coefficient.
+   geoplt(3f) generates a geometric probability plot (with 'bernoulli
+   probability' parameter value = p).
+
+   the geometric distribution used herein has mean = (1-p)/p and standard
+   deviation = sqrt((1-p)/(p*p))). this distribution is defined for
+   all non-negative integer x--x = 0, 1, 2, ... . this distribution
+   has the probability function
+
+       f(x) = p * (1-p)**x.
+
+   the geometric distribution is the distribution of the number of
+   failures before obtaining 1 success in an indefinite sequence of
+   bernoulli (0,1) trials where the probability of success in a single
+   trial = p.
+
+   as used herein, a probability plot for a distribution is a plot
+   of the ordered observations versus the order statistic medians for
+   that distribution.
+
+   the geometric probability plot is useful in graphically testing
+   the composite (that is, location and scale parameters need not be
+   specified) hypothesis that the underlying distribution from which
+   the data have been randomly drawn is the geometric distribution with
+   probability parameter value = p.
+
+   if the hypothesis is true, the probability plot should be near-linear.
+
+   a measure of such linearity is given by the calculated probability
+   plot correlation coefficient.
 
 OPTIONS
     X   description of parameter
@@ -65,13 +64,12 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==geoplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GEOPLT(X,N,P)
-      IMPLICIT NONE
+SUBROUTINE GEOPLT(X,N,P)
 REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
      &     sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,    &
      &     yint
 REAL(kind=wp) :: yslope
-      INTEGER i , ipr , iupper , N
+INTEGER i , ipr , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.

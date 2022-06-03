@@ -21,9 +21,9 @@ DESCRIPTION
    some elements in the vector Y (or X) are 'missing data', or when
    we purposely want to ignore certain elements in the vector Y (or X)
    for plotting purposes (That is, we do not want certain elements in
-   Y (or X) to be plotted).  To cause specific elements in Y (or X)
+   Y (or X) to be plotted). To cause specific elements in Y (or X)
    to be ignored, we replace the elements beforehand (by, for example,
-   use of the   REPLAC   subroutine) by some large value (like, say,
+   use of the REPLAC subroutine) by some large value (like, say,
    10.0**10) and they will subsequently be ignored in the plot subroutine.
 
 OPTIONS

@@ -7,17 +7,19 @@ SYNOPSIS
     Subroutine lamsf (X, Y)
 
 DESCRIPTION
-   lamsf(3f) computes the sparsity
-   function value for the (tukey) lambda distribution
-   with tail length parameter value = alamba.
-   in general, the probability density function
-   for this distribution is not simple.
+   lamsf(3f) computes the sparsity function value for the (tukey) lambda
+   distribution with tail length parameter value = alamba.
+
+   in general, the probability density function for this distribution
+   is not simple.
+
    the percent point function for this distribution is
-   g(p) = ((p**alamba)-((1-p)**alamba))/alamba
-   note that the sparsity function of a distribution
-   is the derivative of the percent point function,
-   and also is the reciprocal of the probability
-   density function (but in units of p rather than x).
+
+       g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+
+   note that the sparsity function of a distribution is the derivative
+   of the percent point function, and also is the reciprocal of the
+   probability density function (but in units of p rather than x).
 
 OPTIONS
     X   description of parameter
@@ -46,7 +48,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==lamsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMSF(P,Alamba,Sf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , P , Sf
       INTEGER ipr
 !

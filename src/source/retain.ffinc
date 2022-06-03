@@ -8,23 +8,16 @@ SYNOPSIS
     Subroutine retain (X, Y)
 
 DESCRIPTION
-   retain(3f) retains all observations in the
-   single precision vector x which are inside
-   the closed (inclusive) interval
-   defined by xmin and xmax,
-   while deleting all observations outside of
-   this interval.
-   thus all observations in x which are smaller
-   than xmin or larger than xmax are deleted from x.
-   retain(3f) (and the
-   replac and delete subroutines)
-   gives the data analyst the ability to
-   easily 'clean up' a data set which has
-   missing and/or outlying observations
-   so that a more appropriate subsequent
-   data analysis may be performed.
-   for example, a trimmed sample can easily
-   be constructed by use of retain(3f).
+   retain(3f) retains all observations in the single precision vector
+   x which are inside the closed (inclusive) interval defined by xmin
+   and xmax, while deleting all observations outside of this interval.
+
+   thus all observations in x which are smaller than xmin or larger
+   than xmax are deleted from x. retain(3f) (and the replac and delete
+   subroutines) gives the data analyst the ability to easily 'clean up' a
+   data set which has missing and/or outlying observations so that a more
+   appropriate subsequent data analysis may be performed. for example,
+   a trimmed sample can easily be constructed by use of retain(3f).
 
 OPTIONS
     X   description of parameter
@@ -53,7 +46,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==retain.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
-      IMPLICIT NONE
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
 !

@@ -8,29 +8,29 @@ SYNOPSIS
     Subroutine binppf (X, Y)
 
 DESCRIPTION
-   binppf(3f) computes the percent point function value at the single
-   precision value p for the binomial distribution with single precision
-   'bernoulli probability' parameter = ppar, and integer 'number of
-   bernoulli trials' parameter = n.
+   BINPPF(3f) computes the percent point function value at the single
+   precision value P for the binomial distribution with single precision
+   'Bernoulli probability' parameter = PPAR, and integer 'number of
+   Bernoulli trials' parameter = N.
 
-   the binomial distribution used herein has mean = n*ppar and standard
-   deviation = sqrt(n*ppar*(1-ppar)).
+   The binomial distribution used herein has mean = N*PPAR and standard
+   deviation = sqrt(N*PPAR*(1-PPAR)).
 
-   this distribution is defined for all discrete integer x between 0
-   (inclusively) and n (inclusively).
+   This distribution is defined for all discrete integer X between 0
+   (inclusively) and N (inclusively).
 
-   this distribution has the probability function
+   This distribution has the probability function
 
-      f(x) = c(n,x) * ppar**x * (1-ppar)**(n-x).
+      f(X) = c(N,X) * PPAR**X * (1-PPAR)**(N-X).
 
-   where c(n,x) is the combinatorial function equaling the number of
-   combinations of n items taken x at a time.
+   where c(N,X) is the combinatorial function equaling the number of
+   combinations of N items taken X at a time.
 
-   the binomial distribution is the distribution of the number of
-   successes in n bernoulli (0,1) trials where the probability of success
-   in a single trial = ppar.
+   The binomial distribution is the distribution of the number of
+   successes in N Bernoulli (0,1) trials where the probability of success
+   in a single trial = PPAR.
 
-   note that the percent point function of a distribution is identically
+   Note that the percent point function of a distribution is identically
    the same as the inverse cumulative distribution function of the
    distribution.
 

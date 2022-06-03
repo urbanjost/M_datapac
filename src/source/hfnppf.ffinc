@@ -8,22 +8,22 @@ SYNOPSIS
     Subroutine hfnppf (X, Y)
 
 DESCRIPTION
-   hfnppf(3f) computes the percent point
-   function value for the halfnormal
+   hfnppf(3f) computes the percent point function value for the halfnormal
    distribution.
-   the halfnormal distribution used
-   herein has mean = sqrt(2/pi) = 0.79788456
-   and standard deviation = 1.
-   this distribution is defined for all non-negative x
-   and has the probability density function
+
+   the halfnormal distribution used herein has mean = sqrt(2/pi) =
+   0.79788456 and standard deviation = 1. this distribution is defined
+   for all non-negative x and has the probability density function
+
    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
-   the halfnormal distribution used herein
-   is the distribution of the variate x = abs(z) where
-   the variate z is normally distributed
-   with mean = 0 and standard deviation = 1.
-   note that the percent point function of a distribution
-   is identically the same as the inverse cumulative
-   distribution function of the distribution.
+
+   the halfnormal distribution used herein is the distribution of the
+   variate x = abs(z) where the variate z is normally distributed with
+   mean = 0 and standard deviation = 1.
+
+   note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
 
 OPTIONS
     X   description of parameter
@@ -51,10 +51,9 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HFNPPF(P,Ppf)
-      IMPLICIT NONE
+SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
-      INTEGER ipr
+INTEGER       :: ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -81,28 +80,21 @@ REAL(kind=wp) :: arg , P , Ppf
 !     UPDATED         --OCTOBER   1976.
 !
 !---------------------------------------------------------------------
-!
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE HFNPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
          Ppf = 0.0_wp
-         RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          arg = (1.0_wp+P)/2.0_wp
          CALL NORPPF(arg,Ppf)
          IF ( Ppf<=0.0_wp ) Ppf = 0.0_wp
       ENDIF
+
+99001 FORMAT(' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE HFNPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
 !
 END SUBROUTINE HFNPPF

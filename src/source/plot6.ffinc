@@ -7,18 +7,15 @@ SYNOPSIS
     Subroutine plot6 (X, Y)
 
 DESCRIPTION
-   plot6(3f) yields a one-page printer plot
-   of y(i) versus x(i):
+   plot6(3f) yields a one-page printer plot of y(i) versus x(i):
 
      1. with the vertical (y) axis min and max
         and the horizontal (x) axis min and max
         values specified by the data analyst.
 
-   the use of the ymin, ymax, xmin, and xmax
-   specifications allows the data analyst
-   to control fully the plot axis limits,
-   so as, for example, to zero-in on an
-   interesting sub-region of a previous plot.
+   the use of the ymin, ymax, xmin, and xmax specifications allows the
+   data analyst to control fully the plot axis limits, so as, for example,
+   to zero-in on an interesting sub-region of a previous plot.
 
 OPTIONS
     X   description of parameter

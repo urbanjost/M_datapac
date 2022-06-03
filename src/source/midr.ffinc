@@ -7,9 +7,9 @@ SYNOPSIS
     Subroutine midr (X, Y)
 
 DESCRIPTION
-   midr(3f) computes the
-   sample midrange
-   of the data in the input vector x.
+   midr(3f) computes the sample midrange of the data in the input
+   vector x.
+
    the sample midrange = (sample min + sample max)/2.
 
 OPTIONS
@@ -39,7 +39,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==midr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
-      IMPLICIT NONE
 REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
       INTEGER i , ipr , Iwrite , N
 !

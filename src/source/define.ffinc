@@ -8,20 +8,15 @@ SYNOPSIS
     Subroutine define (X, Y)
 
 DESCRIPTION
-   define(3f) sets all of the elements
-   in the single precision vector x
-   equal to xnew.
-   define(3f) is useful in defining a
-   vector of constants.
-   for example, if the data analyst wishes
-   to treat the equal weights case in doing
-   a polynomial regression, this could
-   be done by defining as, say, 1.0
-   the input weight vector w to the
-   datapac poly subroutine;
-   such defining could be done
-   by use of the define subroutine
-   with xnew = 1.0.
+   define(3f) sets all of the elements in the single precision vector
+   x equal to xnew.
+
+   define(3f) is useful in defining a vector of constants.
+
+   for example, if the data analyst wishes to treat the equal weights case
+   in doing a polynomial regression, this could be done by defining as,
+   say, 1.0 the input weight vector w to the datapac poly subroutine; such
+   defining could be done by use of the define subroutine with xnew = 1.0.
 
 OPTIONS
     X   description of parameter
@@ -50,7 +45,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==define.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEFINE(X,N,Xnew)
-      IMPLICIT NONE
       INTEGER i , ipr , N
 REAL(kind=wp) :: X , Xnew
 !

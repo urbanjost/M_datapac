@@ -8,27 +8,32 @@ SYNOPSIS
     Subroutine ev1plt (X, Y)
 
 DESCRIPTION
-   ev1plt(3f) generates an extreme value type 1
-   probability plot.
-   the prototype extreme value type 1 distribution used here
-   has mean = euler's number = 0.57721566
-   and standard deviation = pi/sqrt(6) = 1.28254983.
-   this distribution is defined for all x
-   and has the probability density function
-   f(x) = (exp(-x)) * (exp(-(exp(-x))))
-   as used herein, a probability plot for a distribution
-   is a plot of the ordered observations versus
-   the order statistic medians for that distribution.
-   the extreme value type 1 probability plot is useful in
-   graphically testing the composite (that is,
-   location and scale parameters need not be specified)
-   hypothesis that the underlying distribution
-   from which the data have been randomly drawn
-   is the extreme value type 1 distribution.
-   if the hypothesis is true, the probability plot
-   should be near-linear.
-   a measure of such linearity is given by the
-   calculated probability plot correlation coefficient.
+
+   ev1plt(3f) generates an extreme value type 1 probability plot.
+
+   the prototype extreme value type 1 distribution used here has mean
+   = euler's number = 0.57721566 and standard deviation = pi/sqrt(6)
+   = 1.28254983.
+
+   this distribution is defined for all x and has the probability
+   density function
+
+      f(x) = (exp(-x)) * (exp(-(exp(-x))))
+
+   as used herein, a probability plot for a distribution is a plot
+   of the ordered observations versus the order statistic medians for
+   that distribution.
+
+   the extreme value type 1 probability plot is useful in graphically
+   testing the composite (that is, location and scale parameters need
+   not be specified) hypothesis that the underlying distribution from
+   which the data have been randomly drawn is the extreme value type
+   1 distribution.
+
+   if the hypothesis is true, the probability plot should be near-linear.
+
+   a measure of such linearity is given by the calculated probability
+   plot correlation coefficient.
 
 OPTIONS
     X   description of parameter
@@ -56,8 +61,8 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==ev1plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EV1PLT(X,N)
-      IMPLICIT NONE
+
+SUBROUTINE EV1PLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
@@ -88,7 +93,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
-!
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
       COMMON /BLOCK2/ WS(15000)

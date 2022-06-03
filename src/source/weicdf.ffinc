@@ -8,14 +8,14 @@ SYNOPSIS
     Subroutine weicdf (X, Y)
 
 DESCRIPTION
-   weicdf(3f) computes the cumulative distribution
-   function value for the weibull
-   distribution with single precision
-   tail length parameter = gamma.
-   the weibull distribution used
-   herein is defined for all positive x,
+   weicdf(3f) computes the cumulative distribution function value for
+   the weibull distribution with single precision tail length parameter
+   = gamma.
+
+   the weibull distribution used herein is defined for all positive x,
    and has the probability density function
-   f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+
+       f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
 
 OPTIONS
     X   description of parameter
@@ -43,10 +43,9 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WEICDF(X,Gamma,Cdf)
-      IMPLICIT NONE
+SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
-      INTEGER ipr
+INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -63,8 +62,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE POSITIVE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
 !               --HASTINGS AND PEACOCK, STATISTICAL

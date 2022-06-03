@@ -7,16 +7,15 @@ SYNOPSIS
     Subroutine plotxx (X, Y)
 
 DESCRIPTION
-   plotxx(3f) yields a one-page printer plot
-   of x(i) versus x(i-1).
-   this type of plot (which is called an
-   autocorrelation plot or a lag 1 plot)
-   is useful in examining for
-   autocorrelation in a sequence of observations.
-   uncorrelated data will produce an autocorrelation
-   plot with no apparent structure; autocorrelated
-   data will produce an autocorrelation plot with
-   linear, elliptical, or other kinds of structure.
+   plotxx(3f) yields a one-page printer plot of x(i) versus x(i-1).
+
+   this type of plot (which is called an autocorrelation plot or a lag
+   1 plot) is useful in examining for autocorrelation in a sequence
+   of observations.
+
+   uncorrelated data will produce an autocorrelation plot with no apparent
+   structure; autocorrelated data will produce an autocorrelation plot
+   with linear, elliptical, or other kinds of structure.
 
 OPTIONS
     X   description of parameter
@@ -44,8 +43,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plotxx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTXX(X,N)
-      IMPLICIT NONE
+SUBROUTINE PLOTXX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     xmax , xmid , xmin , ylable , ymax , ymin
       INTEGER i , iflag , im1 , ip2 , ipr , j , k , mx , my , N

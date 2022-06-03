@@ -264,8 +264,6 @@ contains
 !     UPDATED         --MAY       2022.
 !*==autoco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 subroutine autoco(x,n,iwrite,xautoc)
-implicit none
-
 real(kind=wp) :: an, hold , sum1 , sum2 , sum3 , x(:) , xautoc , xbar , xbar1 , xbar2
 integer i , ip1 , ipr , iwrite , n , nm1
 
@@ -423,8 +421,6 @@ end subroutine autoco
 !     UPDATED         --DECEMBER  1981.
 !*==betran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
-IMPLICIT NONE
-
 REAL(kind=wp) :: a1, a2, Alpha, arg, athird, b1, b2, Beta, funct, sqrt3, term, u, X, xg, xg01, xg02, xg1, xg2, xn(1)
 REAL(kind=wp) :: xn01, xn02
 INTEGER ::  i , ipr , Iseed , N
@@ -561,26 +557,26 @@ END SUBROUTINE BETRAN
 !!
 !!##DESCRIPTION
 !!    BINCDF(3f) computes the cumulative distribution function value
-!!    at the single precision value x for the binomial distribution with
-!!    single precision 'bernoulli probability' parameter = p, and integer
-!!    'number of bernoulli trials' parameter = n.
+!!    at the single precision value X for the binomial distribution with
+!!    single precision 'Bernoulli probability' parameter = P, and integer
+!!    'number of Bernoulli trials' parameter = N.
 !!
-!!    the binomial distribution used herein has mean = n*p and standard
-!!    deviation = sqrt(n*p*(1-p)).
+!!    The binomial distribution used herein has mean = N*P and standard
+!!    deviation = sqrt(N*P*(1-P)).
 !!
-!!    this distribution is defined for all discrete integer x between 0
-!!    (inclusively) and n (inclusively).
+!!    This distribution is defined for all discrete integer X between 0
+!!    (inclusively) and N (inclusively).
 !!
-!!    this distribution has the probability function
+!!    This distribution has the probability function
 !!
-!!        f(x) = c(n,x) * p**x * (1-p)**(n-x).
+!!        f(X) = c(N,X) * P**X * (1-P)**(N-X).
 !!
-!!    where c(n,x) is the combinatorial function equaling the number of
-!!    combinations of n items taken x at a time.
+!!    where c(N,X) is the combinatorial function equaling the number of
+!!    combinations of N items taken X at a time.
 !!
-!!    the binomial distribution is the distribution of the number of
-!!    successes in n bernoulli (0,1) trials where the probability of success
-!!    in a single trial = p.
+!!    The binomial distribution is the distribution of the number of
+!!    successes in N Bernoulli (0,1) trials where the probability of success
+!!    in a single trial = P.
 !!
 !!##OPTIONS
 !!     x   description of parameter
@@ -610,7 +606,6 @@ END SUBROUTINE BETRAN
 !     UPDATED         --MAY       1977.
 !*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE BINCDF(X,P,N,Cdf)
-IMPLICIT NONE
 REAL(kind=wp) :: an , Cdf , del , fintx , P , X
       INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
      &        N , nu1 , nu2
@@ -902,29 +897,29 @@ END SUBROUTINE BINCDF
 !!     Subroutine binppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    binppf(3f) computes the percent point function value at the single
-!!    precision value p for the binomial distribution with single precision
-!!    'bernoulli probability' parameter = ppar, and integer 'number of
-!!    bernoulli trials' parameter = n.
+!!    BINPPF(3f) computes the percent point function value at the single
+!!    precision value P for the binomial distribution with single precision
+!!    'Bernoulli probability' parameter = PPAR, and integer 'number of
+!!    Bernoulli trials' parameter = N.
 !!
-!!    the binomial distribution used herein has mean = n*ppar and standard
-!!    deviation = sqrt(n*ppar*(1-ppar)).
+!!    The binomial distribution used herein has mean = N*PPAR and standard
+!!    deviation = sqrt(N*PPAR*(1-PPAR)).
 !!
-!!    this distribution is defined for all discrete integer x between 0
-!!    (inclusively) and n (inclusively).
+!!    This distribution is defined for all discrete integer X between 0
+!!    (inclusively) and N (inclusively).
 !!
-!!    this distribution has the probability function
+!!    This distribution has the probability function
 !!
-!!       f(x) = c(n,x) * ppar**x * (1-ppar)**(n-x).
+!!       f(X) = c(N,X) * PPAR**X * (1-PPAR)**(N-X).
 !!
-!!    where c(n,x) is the combinatorial function equaling the number of
-!!    combinations of n items taken x at a time.
+!!    where c(N,X) is the combinatorial function equaling the number of
+!!    combinations of N items taken X at a time.
 !!
-!!    the binomial distribution is the distribution of the number of
-!!    successes in n bernoulli (0,1) trials where the probability of success
-!!    in a single trial = ppar.
+!!    The binomial distribution is the distribution of the number of
+!!    successes in N Bernoulli (0,1) trials where the probability of success
+!!    in a single trial = PPAR.
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
@@ -1319,7 +1314,7 @@ END SUBROUTINE BINPPF
 !!    deviation = sqrt(npar*p*(1-p)).
 !!
 !!    this distribution is defined for all discrete integer x between 0
-!!    (inclusively) and npar (inclusively).  this distribution has the
+!!    (inclusively) and npar (inclusively). This distribution has the
 !!    probability function
 !!
 !!        f(x) = c(npar,x) * p**x * (1-p)**(npar-x).
@@ -1361,7 +1356,6 @@ END SUBROUTINE BINPPF
 !     UPDATED         --MAY       1982.
 !*==binran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
-IMPLICIT NONE
 REAL(kind=wp) :: g(1) , P , u(1) , X
       INTEGER i , ig , ipr , Iseed , isum , j , N , Npar
 !
@@ -1522,7 +1516,8 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
       RETURN
 99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-99999 END SUBROUTINE BINRAN
+99999 continue
+END SUBROUTINE BINRAN
 !>
 !!##NAME
 !!    caucdf(3f) - [M_datapac:STATISTICS:CD] compute the Cauchy cumulative
@@ -1533,7 +1528,7 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !!     Subroutine caucdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    caucdf(3f) computes the cumulative distribution function value for
+!!    CAUCDF(3f) computes the cumulative distribution function value for
 !!    the cauchy distribution with median = 0 and 75% point = 1.
 !!
 !!    this distribution is defined for all x and has the probability
@@ -1569,9 +1564,7 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==caucdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CAUCDF(X,Cdf)
-      IMPLICIT NONE
-!*--CAUCDF1272
+SUBROUTINE CAUCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , pi , X
       INTEGER ipr
 !
@@ -1585,12 +1578,6 @@ REAL(kind=wp) :: Cdf , pi , X
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
-!     WRITTEN BY--JAMES F. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
-!
 !---------------------------------------------------------------------
 !
       DATA pi/3.14159265358979_wp/
@@ -1605,7 +1592,7 @@ REAL(kind=wp) :: Cdf , pi , X
 !
       Cdf = 0.5_wp + ((1.0_wp/pi)*ATAN(X))
 !
-      END SUBROUTINE CAUCDF
+END SUBROUTINE CAUCDF
 !>
 !!##NAME
 !!    caupdf(3f) - [M_datapac:STATISTICS:PD] compute the Cauchy probability
@@ -1652,9 +1639,7 @@ REAL(kind=wp) :: Cdf , pi , X
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CAUPDF(X,Pdf)
-      IMPLICIT NONE
-!*--CAUPDF1328
+SUBROUTINE CAUPDF(X,Pdf)
 REAL(kind=wp) :: c , Pdf , X
       INTEGER ipr
 !
@@ -1741,8 +1726,7 @@ END SUBROUTINE CAUPDF
 !!##LICENSE
 !!    CC0-1.0
 !*==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CAUPLT(X,N)
-      IMPLICIT NONE
+SUBROUTINE CAUPLT(X,N)
 REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
      &     wbar , WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
@@ -1918,8 +1902,7 @@ END SUBROUTINE CAUPLT
 !!##LICENSE
 !!    CC0-1.0
 !*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CAUPPF(P,Ppf)
-      IMPLICIT NONE
+SUBROUTINE CAUPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , pi , Ppf
       INTEGER ipr
 !
@@ -1975,7 +1958,7 @@ REAL(kind=wp) :: arg , P , pi , Ppf
          Ppf = -COS(arg)/SIN(arg)
       ENDIF
 !
-      END SUBROUTINE CAUPPF
+END SUBROUTINE CAUPPF
 !>
 !!##NAME
 !!    cauran(3f) - [M_datapac:STATISTICS:RANDOM] generate Cauchy random numbers
@@ -2018,8 +2001,7 @@ REAL(kind=wp) :: arg , P , pi , Ppf
 !!##LICENSE
 !!    CC0-1.0
 !*==cauran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CAURAN(N,Iseed,X)
-      IMPLICIT NONE
+SUBROUTINE CAURAN(N,Iseed,X)
 REAL(kind=wp) :: arg , pi , X
       INTEGER i , ipr , Iseed , N
 !
@@ -2106,7 +2088,7 @@ REAL(kind=wp) :: arg , pi , X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE CAURAN
+END SUBROUTINE CAURAN
 !>
 !!##NAME
 !!    causf(3f) - [M_datapac:STATISTICS:SF] compute the Cauchy sparsity function
@@ -2116,16 +2098,15 @@ REAL(kind=wp) :: arg , pi , X
 !!     Subroutine causf (X, Y)
 !!
 !!##DESCRIPTION
-!!    causf(3f) computes the sparsity
-!!    function value for the cauchy distribution
-!!    with median = 0 and 75% point = 1.
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = (1/pi)*(1/(1+x*x)).
-!!    note that the sparsity function of a distribution
-!!    is the derivative of the percent point function,
-!!    and also is the reciprocal of the probability
-!!    density function (but in units of p rather than x).
+!!    causf(3f) computes the sparsity function value for the cauchy
+!!    distribution with median = 0 and 75% point = 1.
+!!
+!!    this distribution is defined for all x and has the probability density
+!!    function f(x) = (1/pi)*(1/(1+x*x)).
+!!
+!!    note that the sparsity function of a distribution is the derivative
+!!    of the percent point function, and also is the reciprocal of the
+!!    probability density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2152,8 +2133,7 @@ REAL(kind=wp) :: arg , pi , X
 !!##LICENSE
 !!    CC0-1.0
 !*==causf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CAUSF(P,Sf)
-      IMPLICIT NONE
+SUBROUTINE CAUSF(P,Sf)
 REAL(kind=wp) :: arg , P , pi , Sf
       INTEGER ipr
 !
@@ -2206,7 +2186,7 @@ REAL(kind=wp) :: arg , P , pi , Sf
          Sf = pi/((SIN(arg))**2)
       ENDIF
 !
-      END SUBROUTINE CAUSF
+END SUBROUTINE CAUSF
 !>
 !!##NAME
 !!    chscdf(3f) - [M_datapac:STATISTICS:CD] compute the chi-square cumulative
@@ -2217,12 +2197,13 @@ REAL(kind=wp) :: arg , P , pi , Sf
 !!     Subroutine chscdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    chscdf(3f) computes the cumulative distribution
-!!    function value for the chi-squared distribution
-!!    with integer degrees of freedom parameter = nu.
+!!    chscdf(3f) computes the cumulative distribution function value for
+!!    the chi-squared distribution with integer degrees of freedom parameter
+!!    = nu.
+!!
 !!    this distribution is defined for all non-negative x.
-!!    the probability density function is given
-!!    in the references below.
+!!
+!!    the probability density function is given in the references below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2249,8 +2230,7 @@ REAL(kind=wp) :: arg , P , pi , Sf
 !!##LICENSE
 !!    CC0-1.0
 !*==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CHSCDF(X,Nu,Cdf)
-      IMPLICIT NONE
+SUBROUTINE CHSCDF(X,Nu,Cdf)
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
       INTEGER i , ibran , ievodd , imax , imin , ipr , Nu , nucut
 !
@@ -2483,27 +2463,27 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !!     Subroutine chsplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    chsplt(3f) generates a chi-squared
-!!    probability plot (with integer
+!!    chsplt(3f) generates a chi-squared probability plot (with integer
 !!    degrees of freedom parameter value = nu).
-!!    the prototype chi-squared distribution used
-!!    herein is defined for all non-negative x,
-!!    and its probability density function is given
-!!    in the references below.
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the chi-squared probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the  chi-squared distribution
+!!
+!!    the prototype chi-squared distribution used herein is defined for all
+!!    non-negative x, and its probability density function is given in the
+!!    references below.
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the chi-squared probability plot is useful in graphically testing
+!!    the composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the chi-squared distribution
 !!    with degrees of freedom parameter value = nu.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2531,7 +2511,6 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !!    CC0-1.0
 !*==chsplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSPLT(X,N,Nu)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope
@@ -2688,7 +2667,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
       ENDIF
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-      END SUBROUTINE CHSPLT
+END SUBROUTINE CHSPLT
 !>
 !!##NAME
 !!    chsppf(3f) - [M_datapac:STATISTICS:PP] compute the chi-square percent
@@ -2737,7 +2716,6 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !!    CC0-1.0
 !*==chsppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSPPF(P,Nu,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit , Nu
 !
@@ -2948,7 +2926,7 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
          GOTO 400
       ENDIF
 !
-      END SUBROUTINE CHSPPF
+END SUBROUTINE CHSPPF
 !>
 !!##NAME
 !!    chsran(3f) - [M_datapac:STATISTICS:RANDOM] generate chi-square random numbers
@@ -2958,9 +2936,8 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !!     Subroutine chsran (X, Y)
 !!
 !!##DESCRIPTION
-!!    chsran(3f) generates a random sample of size n
-!!    from the chi-squared distribution
-!!    with integer degrees of freedom parameter = nu.
+!!    chsran(3f) generates a random sample of size n from the chi-squared
+!!    distribution with integer degrees of freedom parameter = nu.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2988,7 +2965,6 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !!    CC0-1.0
 !*==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSRAN(N,Nu,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
       INTEGER i , ipr , Iseed , j , N , Nu
 !
@@ -3095,7 +3071,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-      END SUBROUTINE CHSRAN
+END SUBROUTINE CHSRAN
 !>
 !!##NAME
 !!    code(3f) - [M_datapac:STATISTICS] code the elements of a vector
@@ -3106,14 +3082,16 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !!     Subroutine code (X, Y)
 !!
 !!##DESCRIPTION
-!!    code(3f) codes the elements
-!!    of the input vector x
-!!    and puts the coded values into the output vector y.
-!!    the coding is as follows--
-!!    the minimum is coded as 1.0.
-!!    the next larger value as 2.0,
-!!    the next larger value as 3.0,
-!!    etc.
+!!
+!!    code(3f) codes the elements of the input vector x and puts the coded
+!!    values into the output vector y.
+!!
+!!    The coding is as follows--
+!!
+!!     o  the minimum is coded as 1.0.
+!!     o  the next larger value as 2.0,
+!!     o  the next larger value as 3.0,
+!!     o  etc.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3141,7 +3119,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !!    CC0-1.0
 !*==code.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CODE(X,N,Y)
-      IMPLICIT NONE
 REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
       INTEGER i , ipr , iupper , j , N , numdis
 !
@@ -3264,7 +3241,7 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
       ENDIF
 99011 FORMAT (' ')
 !
-      END SUBROUTINE CODE
+END SUBROUTINE CODE
 !>
 !!##NAME
 !!    copy(3f) - [M_datapac:STATISTICS] copy the elements of one vector
@@ -3275,9 +3252,8 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 !!     Subroutine copy (X, Y)
 !!
 !!##DESCRIPTION
-!!    copy(3f) copies the contents
-!!    of the single precision vector x into the
-!!    single precision vector y.
+!!    copy(3f) copies the contents of the single precision vector x into
+!!    the single precision vector y.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3305,7 +3281,6 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 !!    CC0-1.0
 !*==copy.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE COPY(X,N,Y)
-      IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Y
       INTEGER i , ipr , N
 !
@@ -3371,7 +3346,7 @@ REAL(kind=wp) :: hold , X , Y
          ENDDO
       ENDIF
 !
-      END SUBROUTINE COPY
+END SUBROUTINE COPY
 !>
 !!##NAME
 !!    corr(3f) - [M_datapac:STATISTICS] compute the sample correlation
@@ -3382,11 +3357,10 @@ REAL(kind=wp) :: hold , X , Y
 !!     Subroutine corr (X, Y)
 !!
 !!##DESCRIPTION
-!!    corr(3f) computes the
-!!    sample correlation coefficient
-!!    between the 2 sets of data in the input vectors x and y.
-!!    the sample correlation coefficient will be a single
-!!    precision value between -1.0 and 1.0 (inclusively).
+!!    corr(3f) computes the sample correlation coefficient between the 2
+!!    sets of data in the input vectors x and y. The sample correlation
+!!    coefficient will be a single precision value between -1.0 and 1.0
+!!    (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3414,7 +3388,6 @@ REAL(kind=wp) :: hold , X , Y
 !!    CC0-1.0
 !*==corr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CORR(X,Y,N,Iwrite,C)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
       INTEGER i , iflag , ipr , Iwrite , N
 !
@@ -3542,7 +3515,7 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
      &     'THE LINEAR        CORRELATION COEFFICIENT OF THE 2 SETS OF '&
      &     ,I6,' OBSERVATIONS IS ',F14.5)
       ENDIF
-      END SUBROUTINE CORR
+END SUBROUTINE CORR
 !>
 !!##NAME
 !!    count(3f) - [M_datapac:STATISTICS] compute the number of observations
@@ -3553,10 +3526,8 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 !!     Subroutine count (X, Y)
 !!
 !!##DESCRIPTION
-!!    count(3f) computes
-!!    the number of observations
-!!    between xmin and xmax (inclusively)
-!!    in the input vector x.
+!!    count(3f) computes the number of observations between xmin and xmax
+!!    (inclusively) in the input vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3584,7 +3555,6 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 !!    CC0-1.0
 !*==count.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
       INTEGER i , ipr , isum , Iwrite , N
 !
@@ -3691,7 +3661,7 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
      &           ' OBSERVATIONS) IN THE INTERVAL ',E15.7,' TO ',E15.7,  &
      &           ' IS ',E15.7)
       ENDIF
-      END SUBROUTINE COUNT
+END SUBROUTINE COUNT
 !>
 !!##NAME
 !!    decomp(3f) - [M_datapac:STATISTICS] decomposes a weighted data matrix
@@ -3702,8 +3672,8 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 !!     Subroutine decomp (X, Y)
 !!
 !!##DESCRIPTION
-!!    decomp(3f) decomposes the weighted data matrix q which originally
-!!    = the n by k data matrix x times the square root of the weights (in w).
+!!    decomp(3f) decomposes the weighted data matrix q which originally =
+!!    the n by k data matrix x times the square root of the weights (in w).
 !!
 !!    the original q is decomposed into a new q times the inverse of a
 !!    diagonal matrix d times the diagonal matrix d times an upper triangular
@@ -3711,11 +3681,11 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 !!
 !!    the new n by k q has orthogonal columns.
 !!
-!!    a second output from decomp(3f) is the rank and status
-!!    (non-singular or singular) of the data matrix x.
+!!    a second output from decomp(3f) is the rank and status (non-singular
+!!    or singular) of the data matrix x.
 !!
-!!    a third output from decomp(3f) is the numerically optimal pivot
-!!    points for the decomposition.
+!!    a third output from decomp(3f) is the numerically optimal pivot points
+!!    for the decomposition.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3743,7 +3713,6 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 !!    CC0-1.0
 !*==decomp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
-      IMPLICIT NONE
 REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
      &     Tol , tol2 , WS
       INTEGER i , Insing , ip , IPIvot , iqarg , iqarg1 , iqarg2 ,      &
@@ -3898,7 +3867,7 @@ REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
 !     END STEP NUMBER     IS     INTHE DECOMPOSITION
 !
       Insing = 1
-      END SUBROUTINE DECOMP
+END SUBROUTINE DECOMP
 !>
 !!##NAME
 !!    define(3f) - [M_datapac:STATISTICS] set all elements of a vector
@@ -3909,20 +3878,15 @@ REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
 !!     Subroutine define (X, Y)
 !!
 !!##DESCRIPTION
-!!    define(3f) sets all of the elements
-!!    in the single precision vector x
-!!    equal to xnew.
-!!    define(3f) is useful in defining a
-!!    vector of constants.
-!!    for example, if the data analyst wishes
-!!    to treat the equal weights case in doing
-!!    a polynomial regression, this could
-!!    be done by defining as, say, 1.0
-!!    the input weight vector w to the
-!!    datapac poly subroutine;
-!!    such defining could be done
-!!    by use of the define subroutine
-!!    with xnew = 1.0.
+!!    define(3f) sets all of the elements in the single precision vector
+!!    x equal to xnew.
+!!
+!!    define(3f) is useful in defining a vector of constants.
+!!
+!!    for example, if the data analyst wishes to treat the equal weights case
+!!    in doing a polynomial regression, this could be done by defining as,
+!!    say, 1.0 the input weight vector w to the datapac poly subroutine; such
+!!    defining could be done by use of the define subroutine with xnew = 1.0.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3950,7 +3914,6 @@ REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
 !!    CC0-1.0
 !*==define.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEFINE(X,N,Xnew)
-      IMPLICIT NONE
       INTEGER i , ipr , N
 REAL(kind=wp) :: X , Xnew
 !
@@ -4018,7 +3981,7 @@ REAL(kind=wp) :: X , Xnew
 99007    FORMAT (' ',7X,'THE DEFINING CONSTANT IS ',E15.8)
       ENDIF
 !
-      END SUBROUTINE DEFINE
+END SUBROUTINE DEFINE
 !>
 !!##NAME
 !!    delete(3f) - [M_datapac:STATISTICS] delete all elements of a vector
@@ -4029,21 +3992,17 @@ REAL(kind=wp) :: X , Xnew
 !!     Subroutine delete (X, Y)
 !!
 !!##DESCRIPTION
-!!    delete(3f) deletes all observations in the
-!!    single precision vector x which are inside
-!!    the closed (inclusive) interval
-!!    defined by xmin and xmax,
-!!    while retaining all observations outside of
-!!    this interval.
-!!    thus all observations in x which are larger
-!!    than or equal to xmin and smaller than or
-!!    equal to xmax are deleted from x.
-!!    delete(3f) (and the
-!!    replac and retain subroutines)
-!!    gives the data analyst the ability to
-!!    easily 'clean up' a data set which has
-!!    missing and/or outlying observations
-!!    so that a more appropriate subsequent
+!!
+!!    delete(3f) deletes all observations in the single precision vector
+!!    x which are inside the closed (inclusive) interval defined by xmin
+!!    and xmax, while retaining all observations outside of this interval.
+!!
+!!    thus all observations in x which are larger than or equal to xmin
+!!    and smaller than or equal to xmax are deleted from x.
+!!
+!!    delete(3f) (and the replac and retain subroutines) gives the data
+!!    analyst the ability to easily 'clean up' a data set which has missing
+!!    and/or outlying observations so that a more appropriate subsequent
 !!    data analysis may be performed.
 !!
 !!##OPTIONS
@@ -4071,8 +4030,7 @@ REAL(kind=wp) :: X , Xnew
 !!##LICENSE
 !!    CC0-1.0
 !*==delete.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
-      IMPLICIT NONE
+SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
 !
@@ -4227,27 +4185,28 @@ END SUBROUTINE DELETE
 !!     Subroutine demod (X, Y)
 !!
 !!##DESCRIPTION
-!!    demod(3f) performs a complex demodulation
-!!    on the data in the input vector x
-!!    at the input demodulation frequency = f.
-!!    the complex demodulation consists of the following--
-!!    1) an amplitude versus time plot;
-!!    2) a phase versus time plot;
-!!    3) an updated demodulation frequency estimate
-!!    to assist the analyst in determining a
-!!    more appropriate frequency at which
-!!    to demodulate in case the specified
-!!    input demodulation frequency f
-!!    does not flatten sufficiently the
-!!    phase plot.
+!!    demod(3f) performs a complex demodulation on the data in the input
+!!    vector x at the input demodulation frequency = f.
 !!
-!!    the allowable range of the input demodulation
-!!    frequency f is 0.0 to 0.5 (exclusively).
-!!    the input demodulation frequency f is measured  of
-!!    in units of cycles per 'data point' or,
-!!    more precisely, in cycles per unit time where
-!!    'unit time' is defined as the
-!!    elapsed time between adjacent observations.
+!!    the complex demodulation consists of the following--
+!!
+!!     1. an amplitude versus time plot;
+!!     2. a phase versus time plot;
+!!     3. an updated demodulation frequency estimate
+!!        to assist the analyst in determining a
+!!        more appropriate frequency at which
+!!        to demodulate in case the specified
+!!        input demodulation frequency f
+!!        does not flatten sufficiently the
+!!        phase plot.
+!!
+!!    the allowable range of the input demodulation frequency f is 0.0 to
+!!    0.5 (exclusively).
+!!
+!!    the input demodulation frequency f is measured of in units of
+!!    cycles per 'data point' or, more precisely, in cycles per unit time
+!!    where 'unit time' is defined as the elapsed time between adjacent
+!!    observations.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4275,7 +4234,6 @@ END SUBROUTINE DELETE
 !!    CC0-1.0
 !*==demod.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEMOD(X,N,F)
-      IMPLICIT NONE
 REAL(kind=wp) :: ai , aiflag , aimax2 , alen1 , alen2 , an , del , F , fest , &
      &     fmin , hold , pi , range , slopeh , sloper , sum , WS , X ,  &
      &     Y1 , Y2
@@ -4554,7 +4512,7 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
      &           E15.8,' CYC./UNIT TIME')
       ENDIF
 !
-      END SUBROUTINE DEMOD
+END SUBROUTINE DEMOD
 !>
 !!##NAME
 !!    dexcdf(3f) - [M_datapac:STATISTICS:CD] compute the double exponential
@@ -4565,13 +4523,14 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
 !!     Subroutine dexcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    dexcdf(3f) computes the cumulative distribution
-!!    function value for the double exponential
-!!    (laplace) distribution with mean = 0 and
-!!    standard deviation = sqrt(2).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = 0.5*exp(-abs(x)).
+!!    dexcdf(3f) computes the cumulative distribution function value for the
+!!    double exponential (laplace) distribution with mean = 0 and standard
+!!    deviation = sqrt(2).
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = 0.5*exp(-abs(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4599,7 +4558,6 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
 !!    CC0-1.0
 !*==dexcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXCDF(X,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !
@@ -4631,7 +4589,7 @@ REAL(kind=wp) :: Cdf , X
       IF ( X<=0.0_wp ) Cdf = 0.5_wp*EXP(X)
       IF ( X>0.0_wp ) Cdf = 1.0_wp - (0.5_wp*EXP(-X))
 !
-      END SUBROUTINE DEXCDF
+END SUBROUTINE DEXCDF
 !>
 !!##NAME
 !!    dexpdf(3f) - [M_datapac:STATISTICS:PD] compute the double exponential
@@ -4642,13 +4600,14 @@ REAL(kind=wp) :: Cdf , X
 !!     Subroutine dexpdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    dexpdf(3f) computes the probability density
-!!    function value for the double exponential
-!!    (laplace) distribution with mean = 0 and
-!!    standard deviaiton = sqrt(2).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = 0.5*exp(-abs(x)).
+!!    dexpdf(3f) computes the probability density function value for the
+!!    double exponential (laplace) distribution with mean = 0 and standard
+!!    deviaiton = sqrt(2).
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = 0.5*exp(-abs(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4676,7 +4635,6 @@ REAL(kind=wp) :: Cdf , X
 !!    CC0-1.0
 !*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXPDF(X,Pdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: arg , Pdf , X
       INTEGER ipr
 !
@@ -4710,7 +4668,7 @@ REAL(kind=wp) :: arg , Pdf , X
       IF ( X<0.0_wp ) arg = -X
       Pdf = 0.5_wp*EXP(-arg)
 !
-      END SUBROUTINE DEXPDF
+END SUBROUTINE DEXPDF
 !>
 !!##NAME
 !!    dexplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a double exponential
@@ -4721,26 +4679,30 @@ REAL(kind=wp) :: arg , Pdf , X
 !!     Subroutine dexplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    dexplt(3f) generates a double exponential (laplace)
-!!    probability plot.
-!!    the prototype double exponential distribution used herein
-!!    has mean = 0 and standard deviation = sqrt(2).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = 0.5 * exp(-abs(x)).
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the double exponential probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the double exponential distribution.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    dexplt(3f) generates a double exponential (laplace) probability plot.
+!!
+!!    the prototype double exponential distribution used herein has mean =
+!!    0 and standard deviation = sqrt(2).
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = 0.5 * exp(-abs(x)).
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the double exponential probability plot is useful in graphically
+!!    testing the composite (that is, location and scale parameters need
+!!    not be specified) hypothesis that the underlying distribution from
+!!    which the data have been randomly drawn is the double exponential
+!!    distribution.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4768,7 +4730,6 @@ REAL(kind=wp) :: arg , Pdf , X
 !!    CC0-1.0
 !*==dexplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXPLT(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
@@ -4895,7 +4856,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE DEXPLT
+END SUBROUTINE DEXPLT
 !>
 !!##NAME
 !!    dexppf(3f) - [M_datapac:STATISTICS:PP] compute the double exponential
@@ -4906,16 +4867,18 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!     Subroutine dexppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    dexppf(3f) computes the percent point
-!!    function value for the double exponential
-!!    (laplace) distribution with mean = 0 and
-!!    standard deviation = sqrt(2).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = 0.5*exp(-abs(x)).
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!    dexppf(3f) computes the percent point function value for the double
+!!    exponential (laplace) distribution with mean = 0 and standard deviation
+!!    = sqrt(2).
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!       f(x) = 0.5*exp(-abs(x)).
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4943,7 +4906,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!    CC0-1.0
 !*==dexppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXPPF(P,Ppf)
-      IMPLICIT NONE
       INTEGER ipr
 REAL(kind=wp) :: P , Ppf
 !
@@ -4994,7 +4956,7 @@ REAL(kind=wp) :: P , Ppf
          IF ( P>0.5_wp ) Ppf = -LOG(2.0_wp*(1.0_wp-P))
       ENDIF
 !
-      END SUBROUTINE DEXPPF
+END SUBROUTINE DEXPPF
 !>
 !!##NAME
 !!    dexran(3f) - [M_datapac:STATISTICS:RANDOM] generate double exponential
@@ -5005,13 +4967,14 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine dexran (X, Y)
 !!
 !!##DESCRIPTION
-!!    dexran(3f) generates a random sample of size n
-!!    from the double exponential
-!!    (laplace) distribution with mean = 0 and
-!!    standard deviation = sqrt(2).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = 0.5*exp(-abs(x)).
+!!    dexran(3f) generates a random sample of size n from the double
+!!    exponential (laplace) distribution with mean = 0 and standard deviation
+!!    = sqrt(2).
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = 0.5*exp(-abs(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5039,7 +5002,6 @@ REAL(kind=wp) :: P , Ppf
 !!    CC0-1.0
 !*==dexran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXRAN(N,Istart,X)
-      IMPLICIT NONE
       INTEGER i , ipr , Istart , N
 REAL(kind=wp) :: q , X
 !
@@ -5137,17 +5099,18 @@ END SUBROUTINE DEXRAN
 !!     Subroutine dexsf (X, Y)
 !!
 !!##DESCRIPTION
-!!    dexsf(3f) computes the sparsity
-!!    function value for the double exponential
-!!    (laplace) distribution with mean = 0 and
-!!    standard deviation = sqrt(2).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = 0.5*exp(-abs(x)).
-!!    note that the sparsity function of a distribution
-!!    is the derivative of the percent point function,
-!!    and also is the reciprocal of the probability
-!!    density function (but in units of p rather than x).
+!!    dexsf(3f) computes the sparsity function value for the double
+!!    exponential (laplace) distribution with mean = 0 and standard deviation
+!!    = sqrt(2).
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = 0.5*exp(-abs(x)).
+!!
+!!    note that the sparsity function of a distribution is the derivative
+!!    of the percent point function, and also is the reciprocal of the
+!!    probability density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5175,7 +5138,6 @@ END SUBROUTINE DEXRAN
 !!    CC0-1.0
 !*==dexsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXSF(P,Sf)
-      IMPLICIT NONE
       INTEGER ipr
 REAL(kind=wp) :: P , Sf
 !
@@ -5225,7 +5187,7 @@ REAL(kind=wp) :: P , Sf
          IF ( P>0.5_wp ) Sf = 1.0_wp/(1.0_wp-P)
       ENDIF
 !
-      END SUBROUTINE DEXSF
+END SUBROUTINE DEXSF
 !>
 !!##NAME
 !!    discr2(3f) - [M_datapac:STATISTICS] bin the elements of a vector
@@ -5236,35 +5198,30 @@ REAL(kind=wp) :: P , Sf
 !!     Subroutine discr2 (X, Y)
 !!
 !!##DESCRIPTION
-!!    discr2(3f) 'discretizes' the data
-!!    of the single precision vector x
+!!    discr2(3f) 'discretizes' the data of the single precision vector x
 !!    into numcla classes.
-!!    all values in the vector x within a given class
-!!    will be mapped into the midpoint of that class.
-!!    the sample minimum and sample maximum
-!!    are automatically computed internally
-!!    and the class width (xdel) is computed as
-!!    the (sample max - sample min)/numcla.
-!!    the first class interval is from
-!!    the sample min to the sample min + xdel;
-!!    the second class interval is from
-!!    the sample min + xdel to
-!!    the sample min + 2*xdel;
+!!
+!!    all values in the vector x within a given class will be mapped into
+!!    the midpoint of that class.
+!!
+!!    the sample minimum and sample maximum are automatically computed
+!!    internally and the class width (xdel) is computed as the (sample max -
+!!    sample min)/numcla.
+!!
+!!    the first class interval is from the sample min to the sample min +
+!!    xdel; the second class interval is from the sample min + xdel to the
+!!    sample min + 2*xdel;
 !!    ...;
-!!    the last class interval is from
-!!    the sample max - xdel to the sample max.
-!!    the use of discr2(3f)
-!!    (and the discre and discr3 subroutines)
-!!    gives the data analyst the capability of
-!!    constructing a discrete variate from
-!!    a continuous one.
-!!    the resulting discrete variate might then
-!!    (for example) be analyzed in itself for
-!!    gross structure, or for adherence to some
-!!    theroetical discrete probability model,
-!!    or the discrete variate might be used
-!!    as a subset definition vector for some
-!!    other variate.
+!!
+!!    the last class interval is from the sample max - xdel to the sample
+!!    max. The use of discr2(3f) (and the discre and discr3 subroutines)
+!!    gives the data analyst the capability of constructing a discrete
+!!    variate from a continuous one.
+!!
+!!    the resulting discrete variate might then (for example) be analyzed
+!!    in itself for gross structure, or for adherence to some theroetical
+!!    discrete probability model, or the discrete variate might be used as
+!!    a subset definition vector for some other variate.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5292,7 +5249,6 @@ REAL(kind=wp) :: P , Sf
 !!    CC0-1.0
 !*==discr2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCR2(X,N,Numcla,Y)
-      IMPLICIT NONE
 REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
      &     xmax , xmin , Y
       INTEGER i , icount , ip , ipr , iupncl , N , Numcla
@@ -5484,7 +5440,7 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 99016 FORMAT (' ')
 !
-      END SUBROUTINE DISCR2
+END SUBROUTINE DISCR2
 !>
 !!##NAME
 !!    discr3(3f) - [M_datapac:STATISTICS] bin the elements of a vector
@@ -5495,45 +5451,33 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !!     Subroutine discr3 (X, Y)
 !!
 !!##DESCRIPTION
-!!    discr3(3f) 'discretizes' the data
-!!    on the single precision vector x
+!!    discr3(3f) 'discretizes' the data on the single precision vector x
 !!    into numcla classes.
-!!    all values in the vector x within a given class
-!!    will be mapped into the class number
-!!    (1, 2, ... , numcla).
-!!    thus all the elements in the lowermost class
-!!    will be mapped into the value 1.0;
-!!    all the elements of x in the next higher class
-!!    will be mapped into 2.0;
-!!    etc.
-!!    the sample minimum and sample maximum
-!!    are automatically computed internally
-!!    and the class width (xdel) is computed as
-!!    the (sample max - sample min)/numcla.
-!!    the first class interval is from
-!!    the sample min to the sample min + xdel;
-!!    the second class interval is from
-!!    the sample min + xdel to
-!!    the sample min + 2*xdel;
+!!
+!!    all values in the vector x within a given class will be mapped into
+!!    the class number (1, 2, ... , numcla). thus all the elements in the
+!!    lowermost class will be mapped into the value 1.0; all the elements
+!!    of x in the next higher class will be mapped into 2.0; etc.
+!!
+!!    the sample minimum and sample maximum are automatically computed
+!!    internally and the class width (xdel) is computed as the (sample max
+!!    - sample min)/numcla. the first class interval is from the sample
+!!    min to the sample min + xdel; the second class interval is from the
+!!    sample min + xdel to the sample min + 2*xdel;
 !!    ...;
-!!    the last class interval is from
-!!    the sample max - xdel to the sample max.
-!!    the use of discr3(3f)
-!!    (and the discre and discr2 subroutines)
-!!    gives the data analyst the capability of
-!!    constructing a discrete variate from
-!!    a continuous one.
-!!    the resulting discrete variate might then
-!!    (for example) be analyzed in itself for
-!!    gross structure, or for adherence to some
-!!    theroetical discrete probability model,
-!!    or the discrete variate might be used
-!!    as a subset definition vector for some
-!!    other variate.
-!!    this discr3 subroutine is particularly
-!!    suited to this last purpose inasmuch
-!!    as it output's 1's, 2's, etc.
-!!    rather than midpoints.
+!!
+!!    the last class interval is from the sample max - xdel to the sample
+!!    max. the use of discr3(3f) (and the discre and discr2 subroutines)
+!!    gives the data analyst the capability of constructing a discrete
+!!    variate from a continuous one.
+!!
+!!    the resulting discrete variate might then (for example) be analyzed
+!!    in itself for gross structure, or for adherence to some theroetical
+!!    discrete probability model, or the discrete variate might be used as
+!!    a subset definition vector for some other variate.
+!!
+!!    this discr3 subroutine is particularly suited to this last purpose
+!!    inasmuch as it output's 1's, 2's, etc. rather than midpoints.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5561,7 +5505,6 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !!    CC0-1.0
 !*==discr3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCR3(X,N,Numcla,Y)
-      IMPLICIT NONE
 REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
      &     xmin , Y
       INTEGER i , icount , ip , ipr , iupncl , N , Numcla
@@ -5741,7 +5684,7 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 99016 FORMAT (' ')
 !
-      END SUBROUTINE DISCR3
+END SUBROUTINE DISCR3
 !>
 !!##NAME
 !!    discre(3f) - [M_datapac:STATISTICS] bin the elements of a vector
@@ -5752,31 +5695,27 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 !!     Subroutine discre (X, Y)
 !!
 !!##DESCRIPTION
-!!    discre(3f) 'discretizes' the data
-!!    of the single precision vector x.
-!!    the first class interval is from
-!!    xmin to xmin + xdel;
-!!    the second class interval is from
-!!    xmin+ xdel to xmin + 2*xdel;
-!!    etc.
-!!    all values in the vector x within a given class
-!!    will be mapped into the midpoint of that class.
-!!    all values in the vector x smaller than xmin
-!!    will be mapped into xmin - (xdel/2.0).
-!!    all values in the vector x larger than xmax
-!!    will be mapped into xmax + (xdel/2.0).
-!!    the use of discre(3f)
-!!    (and the discr2 and discr3 subroutines)
-!!    gives the data analyst the capability of
-!!    constructing a discrete variate from
-!!    a continuous one.
-!!    the resulting discrete variate might then
-!!    (for example) be analyzed in itself for
-!!    gross structure, or for adherence to some
-!!    theroetical discrete probability model,
-!!    or the discrete variate might be used
-!!    as a subset definition vector for some
-!!    other variate.
+!!    discre(3f) 'discretizes' the data of the single precision vector x.
+!!    the first class interval is from xmin to xmin + xdel; the second
+!!    class interval is from xmin+ xdel to xmin + 2*xdel; etc.
+!!
+!!    all values in the vector x within a given class will be mapped into
+!!    the midpoint of that class.
+!!
+!!    all values in the vector x smaller than xmin will be mapped into xmin -
+!!    (xdel/2.0).
+!!
+!!    all values in the vector x larger than xmax will be mapped into xmax +
+!!    (xdel/2.0).
+!!
+!!    the use of discre(3f) (and the discr2 and discr3 subroutines) gives
+!!    the data analyst the capability of constructing a discrete variate
+!!    from a continuous one.
+!!
+!!    the resulting discrete variate might then (for example) be analyzed
+!!    in itself for gross structure, or for adherence to some theroetical
+!!    discrete probability model, or the discrete variate might be used as
+!!    a subset definition vector for some other variate.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5804,7 +5743,6 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 !!    CC0-1.0
 !*==discre.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
-      IMPLICIT NONE
 REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
       INTEGER i , icounl , icount , icounu , ip , ipr , N , numcla
@@ -6030,20 +5968,24 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
       ENDIF
 99020 FORMAT (' ')
 !
-      END SUBROUTINE DISCRE
+END SUBROUTINE DISCRE
 !>
 !!##NAME
 !!    dot(3f) - [M_datapac:STATISTICS] compute a dot product of two vectors
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine dot (X, Y)
+!!    SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
+!!
+!!     REAL(kind=wp) :: A , B , Dotpro , Parpro
+!!     INTEGER i , Imax , Imin
 !!
 !!##DESCRIPTION
-!!    to compute the dot product between 2 vectors--a and b.
-!!    only elements imin through imax of the 2 vectors are considered.
-!!    the computed dot product is added to the input value parpro
-!!    to yield a final answer for dotpro.
+!!
+!!    to compute the dot product between 2 vectors--A and B only elements
+!!    IMIN through IMAX of the 2 vectors are considered. The computed dot
+!!    product is added to the input value parpro to yield a final answer
+!!    for dotpro.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6069,30 +6011,30 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
-      IMPLICIT NONE
-REAL(kind=wp) :: A , B , Dotpro , Parpro
-      INTEGER i , Imax , Imin
 !     UPDATED         --NOVEMBER  1975.
+!*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
+REAL(kind=wp) :: A , B , Dotpro , Parpro
+INTEGER i , Imax , Imin
 !---------------------------------------------------------------------
 !
-      DOUBLE PRECISION sum , prod , dparpr
-      DIMENSION A(:) , B(:)
+DOUBLE PRECISION sum , prod , dparpr
+DIMENSION A(:) , B(:)
 !
 !-----START POINT-----------------------------------------------------
 !
-      dparpr = Parpro
-      sum = 0.0D0
-      IF ( Imin<=Imax ) THEN
-         DO i = Imin , Imax
-            prod = A(i)*B(i)
-            sum = sum + prod
-         ENDDO
-      ENDIF
-      Dotpro = sum + dparpr
+   dparpr = Parpro
+   sum = 0.0D0
+   IF ( Imin<=Imax ) THEN
+      DO i = Imin , Imax
+         prod = A(i)*B(i)
+         sum = sum + prod
+      ENDDO
+   ENDIF
+   Dotpro = sum + dparpr
 !
-      END SUBROUTINE DOT
+END SUBROUTINE DOT
 !>
 !!##NAME
 !!    ev1cdf(3f) - [M_datapac:STATISTICS:CD] compute the extreme value type 1
@@ -6103,15 +6045,16 @@ REAL(kind=wp) :: A , B , Dotpro , Parpro
 !!     Subroutine ev1cdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    ev1cdf(3f) computes the cumulative distribution
-!!    function value for the extreme value type 1
-!!    distribution.
-!!    the extreme value type 1 distribution used
-!!    herein has mean = euler's number = 0.57721566
-!!    and standard deviation = pi/sqrt(6) = 1.28254983.
-!!    this distribution is defined for all x
-!!    and has the probability density function
-!!    f(x) = (exp(-x)) * (exp(-(exp(-x))))
+!!    ev1cdf(3f) computes the cumulative distribution function value for
+!!    the extreme value type 1 distribution.
+!!
+!!    the extreme value type 1 distribution used herein has mean = euler's
+!!    number = 0.57721566 and standard deviation = pi/sqrt(6) = 1.28254983.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (exp(-x)) * (exp(-(exp(-x))))
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6139,7 +6082,6 @@ REAL(kind=wp) :: A , B , Dotpro , Parpro
 !!    CC0-1.0
 !*==ev1cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1CDF(X,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !
@@ -6171,7 +6113,7 @@ REAL(kind=wp) :: Cdf , X
 !
       Cdf = 1.0_wp - EXP(-(EXP(-X)))
 !
-      END SUBROUTINE EV1CDF
+END SUBROUTINE EV1CDF
 !>
 !!##NAME
 !!    ev1plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 1
@@ -6182,27 +6124,32 @@ REAL(kind=wp) :: Cdf , X
 !!     Subroutine ev1plt (X, Y)
 !!
 !!##DESCRIPTION
-!!    ev1plt(3f) generates an extreme value type 1
-!!    probability plot.
-!!    the prototype extreme value type 1 distribution used here
-!!    has mean = euler's number = 0.57721566
-!!    and standard deviation = pi/sqrt(6) = 1.28254983.
-!!    this distribution is defined for all x
-!!    and has the probability density function
-!!    f(x) = (exp(-x)) * (exp(-(exp(-x))))
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the extreme value type 1 probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the extreme value type 1 distribution.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!
+!!    ev1plt(3f) generates an extreme value type 1 probability plot.
+!!
+!!    the prototype extreme value type 1 distribution used here has mean
+!!    = euler's number = 0.57721566 and standard deviation = pi/sqrt(6)
+!!    = 1.28254983.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!       f(x) = (exp(-x)) * (exp(-(exp(-x))))
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the extreme value type 1 probability plot is useful in graphically
+!!    testing the composite (that is, location and scale parameters need
+!!    not be specified) hypothesis that the underlying distribution from
+!!    which the data have been randomly drawn is the extreme value type
+!!    1 distribution.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6229,8 +6176,8 @@ REAL(kind=wp) :: Cdf , X
 !!##LICENSE
 !!    CC0-1.0
 !*==ev1plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EV1PLT(X,N)
-      IMPLICIT NONE
+
+SUBROUTINE EV1PLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
@@ -6261,7 +6208,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
-!
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
       COMMON /BLOCK2/ WS(15000)
@@ -6358,7 +6304,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE EV1PLT
+END SUBROUTINE EV1PLT
 !>
 !!##NAME
 !!    ev1ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 1
@@ -6369,18 +6315,19 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!     Subroutine ev1ppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    ev1ppf(3f) computes the percent point
-!!    function value for the extreme value type 1
+!!    ev1ppf(3f) computes the percent point function value for the extreme
+!!    value type 1 distribution.
+!!
+!!    the extreme value type 1 distribution used herein has mean = euler's
+!!    number = 0.57721566 and standard deviation = pi/sqrt(6) = 1.28254983.
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (exp(-x)) * (exp(-(exp(-x))))
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
 !!    distribution.
-!!    the extreme value type 1 distribution used
-!!    herein has mean = euler's number = 0.57721566
-!!    and standard deviation = pi/sqrt(6) = 1.28254983.
-!!    this distribution is defined for all x
-!!    and has the probability density function
-!!    f(x) = (exp(-x)) * (exp(-(exp(-x))))
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6408,7 +6355,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!    CC0-1.0
 !*==ev1ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1PPF(P,Ppf)
-      IMPLICIT NONE
       INTEGER ipr
 REAL(kind=wp) :: P , Ppf
 !
@@ -6455,7 +6401,7 @@ REAL(kind=wp) :: P , Ppf
          Ppf = -LOG(LOG(1.0_wp/P))
       ENDIF
 !
-      END SUBROUTINE EV1PPF
+END SUBROUTINE EV1PPF
 !>
 !!##NAME
 !!    ev1ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 1
@@ -6466,14 +6412,15 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine ev1ran (X, Y)
 !!
 !!##DESCRIPTION
-!!    ev1ran(3f) generates a random sample of size n
-!!    from the extreme value type 1 distribution.
-!!    the prototype extreme value type 1 distribution used
-!!    herein has mean = euler's number = 0.57721566
-!!    and standard deviation = pi/sqrt(6) = 1.28254983.
-!!    this distribution is defined for all x
-!!    and has the probability density function
-!!    f(x) = (exp(-x)) * (exp(-(exp(-x))))
+!!    ev1ran(3f) generates a random sample of size n from the extreme value
+!!    type 1 distribution.
+!!
+!!    the prototype extreme value type 1 distribution used herein has mean
+!!    = euler's number = 0.57721566 and standard deviation = pi/sqrt(6)
+!!    = 1.28254983. This distribution is defined for all x and has the
+!!    probability density function
+!!
+!!        f(x) = (exp(-x)) * (exp(-(exp(-x))))
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6501,7 +6448,6 @@ REAL(kind=wp) :: P , Ppf
 !!    CC0-1.0
 !*==ev1ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1RAN(N,Iseed,X)
-      IMPLICIT NONE
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
 !
@@ -6575,7 +6521,7 @@ REAL(kind=wp) :: X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE EV1RAN
+END SUBROUTINE EV1RAN
 !>
 !!##NAME
 !!    ev2cdf(3f) - [M_datapac:STATISTICS:CD] compute the extreme value type 2
@@ -6586,14 +6532,14 @@ REAL(kind=wp) :: X
 !!     Subroutine ev2cdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    ev2cdf(3f) computes the cumulative distribution
-!!    function value for the extreme value type 2
-!!    distribution with single precision
-!!    tail length parameter = gamma.
-!!    the extreme value type 2 distribution used
-!!    herein is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+!!    ev2cdf(3f) computes the cumulative distribution function value for
+!!    the extreme value type 2 distribution with single precision tail
+!!    length parameter = gamma.
+!!
+!!    the extreme value type 2 distribution used herein is defined for all
+!!    non-negative x, and has the probability density function
+!!
+!!        f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6621,7 +6567,6 @@ REAL(kind=wp) :: X
 !!    CC0-1.0
 !*==ev2cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2CDF(X,Gamma,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER ipr
 !
@@ -6678,7 +6623,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE EV2CDF
+END SUBROUTINE EV2CDF
 !>
 !!##NAME
 !!    ev2plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 2
@@ -6689,27 +6634,29 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!     Subroutine ev2plt (X, Y)
 !!
 !!##DESCRIPTION
-!!    ev2plt(3f) generates a extreme value type 2
-!!    probability plot
-!!    (with tail length parameter value = gamma).
-!!    the prototype extreme value type 2 distribution used     n
-!!    herein is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the extreme value type 2 probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the  extreme value type 2 distribution
-!!    with tail length parameter value = gamma.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    ev2plt(3f) generates a extreme value type 2 probability plot (with
+!!    tail length parameter value = gamma).
+!!
+!!    the prototype extreme value type 2 distribution used n herein
+!!    is defined for all non-negative x, and has the probability density
+!!    function
+!!
+!!        f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the extreme value type 2 probability plot is useful in graphically
+!!    testing the composite (that is, location and scale parameters need
+!!    not be specified) hypothesis that the underlying distribution from
+!!    which the data have been randomly drawn is the extreme value type
+!!    2 distribution with tail length parameter value = gamma.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6736,13 +6683,12 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!##LICENSE
 !!    CC0-1.0
 !*==ev2plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EV2PLT(X,N,Gamma)
-      IMPLICIT NONE
+SUBROUTINE EV2PLT(X,N,Gamma)
 REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
 REAL(kind=wp) :: yslope
-      INTEGER i , ipr , iupper , N
+INTEGER i , ipr , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -6891,7 +6837,7 @@ REAL(kind=wp) :: yslope
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE EV2PLT
+END SUBROUTINE EV2PLT
 !>
 !!##NAME
 !!    ev2ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 2
@@ -6902,17 +6848,18 @@ REAL(kind=wp) :: yslope
 !!     Subroutine ev2ppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    ev2ppf(3f) computes the percent point
-!!    function value for the extreme value type 2
-!!    distribution with single precision
-!!    tail length parameter = gamma.
-!!    the extreme value type 2 distribution used
-!!    herein is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!    ev2ppf(3f) computes the percent point function value for the extreme
+!!    value type 2 distribution with single precision tail length parameter
+!!    = gamma.
+!!
+!!    the extreme value type 2 distribution used herein is defined for all
+!!    non-negative x, and has the probability density function
+!!
+!!        f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6940,7 +6887,6 @@ REAL(kind=wp) :: yslope
 !!    CC0-1.0
 !*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2PPF(P,Gamma,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
 !
@@ -6997,7 +6943,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE EV2PPF
+END SUBROUTINE EV2PPF
 !>
 !!##NAME
 !!    ev2ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 2
@@ -7008,13 +6954,13 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!     Subroutine ev2ran (X, Y)
 !!
 !!##DESCRIPTION
-!!    ev2ran(3f) generates a random sample of size n
-!!    from the extreme value type 2 distribution
-!!    with tail length parameter value = gamma.
-!!    the prototype extreme value type 2 distribution used
-!!    herein is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+!!    ev2ran(3f) generates a random sample of size n from the extreme value
+!!    type 2 distribution with tail length parameter value = gamma.
+!!
+!!    the prototype extreme value type 2 distribution used herein is defined
+!!    for all non-negative x, and has the probability density function
+!!
+!!        f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7040,9 +6986,12 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
 !*==ev2ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
 !
@@ -7072,10 +7021,6 @@ REAL(kind=wp) :: Gamma , X
 !                 1964, PAGE 36.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     VERSION NUMBER--82/7
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --DECEMBER  1981.
-!     UPDATED         --MAY       1982.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -7128,7 +7073,7 @@ REAL(kind=wp) :: Gamma , X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE EV2RAN
+END SUBROUTINE EV2RAN
 !>
 !!##NAME
 !!    expcdf(3f) - [M_datapac:STATISTICS:CD] compute the exponential cumulative
@@ -7139,12 +7084,13 @@ REAL(kind=wp) :: Gamma , X
 !!     Subroutine expcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    expcdf(3f) computes the cumulative distribution
-!!    function value for the exponential distribution
-!!    with mean = 1 and standard deviation = 1.
-!!    this distribution is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x) = exp(-x).
+!!    expcdf(3f) computes the cumulative distribution function value for
+!!    the exponential distribution with mean = 1 and standard deviation = 1.
+!!
+!!    this distribution is defined for all non-negative x, and has the
+!!    probability density function
+!!
+!!       f(x) = exp(-x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7216,7 +7162,7 @@ INTEGER ipr
          Cdf = 1.0_wp - EXP(-X)
       ENDIF
 !
-      END SUBROUTINE EXPCDF
+END SUBROUTINE EXPCDF
 !>
 !!##NAME
 !!    exppdf(3f) - [M_datapac:STATISTICS:PD] compute the exponential probability
@@ -7227,12 +7173,13 @@ INTEGER ipr
 !!     Subroutine exppdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    exppdf(3f) computes the probability density
-!!    function value for the exponential distribution
-!!    with mean = 1 and standard deviation = 1.
-!!    this distribution is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x) = exp(-x).
+!!    exppdf(3f) computes the probability density function value for the
+!!    exponential distribution with mean = 1 and standard deviation = 1.
+!!
+!!    this distribution is defined for all non-negative x, and has the
+!!    probability density function
+!!
+!!       f(x) = exp(-x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7260,7 +7207,6 @@ INTEGER ipr
 !!    CC0-1.0
 !*==exppdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPPDF(X,Pdf)
-      IMPLICIT NONE
       INTEGER ipr
 REAL(kind=wp) :: Pdf , X
 !
@@ -7304,7 +7250,7 @@ REAL(kind=wp) :: Pdf , X
          Pdf = EXP(-X)
       ENDIF
 !
-      END SUBROUTINE EXPPDF
+END SUBROUTINE EXPPDF
 !>
 !!##NAME
 !!    expplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a exponential probability
@@ -7315,26 +7261,29 @@ REAL(kind=wp) :: Pdf , X
 !!     Subroutine expplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    expplt(3f) generates an exponential
-!!    probability plot.
-!!    the prototype exponential distribution used herein
-!!    has mean = 1 and standard deviation = 1.
-!!    this distribution is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x)=exp(-x).
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the exponential probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the exponential distribution.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    expplt(3f) generates an exponential probability plot.
+!!
+!!    the prototype exponential distribution used herein has mean = 1 and
+!!    standard deviation = 1.
+!!
+!!    this distribution is defined for all non-negative x, and has the
+!!    probability density function
+!!
+!!        f(x)=exp(-x).
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the exponential probability plot is useful in graphically testing
+!!    the composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the exponential distribution.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7361,11 +7310,10 @@ REAL(kind=wp) :: Pdf , X
 !!##LICENSE
 !!    CC0-1.0
 !*==expplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EXPPLT(X,N)
-      IMPLICIT NONE
-REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
-     &     X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
+
+SUBROUTINE EXPPLT(X,N)
+REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
+INTEGER i , ipr , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -7489,7 +7437,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE EXPPLT
+END SUBROUTINE EXPPLT
 !>
 !!##NAME
 !!    expppf(3f) - [M_datapac:STATISTICS:PP] compute the exponential percent
@@ -7500,15 +7448,17 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!     Subroutine expppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    expppf(3f) computes the percent point
-!!    function value for the exponential distribution
-!!    with mean = 1 and standard deviation = 1.
-!!    this distribution is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x) = exp(-x).
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!    expppf(3f) computes the percent point function value for the
+!!    exponential distribution with mean = 1 and standard deviation = 1.
+!!
+!!    this distribution is defined for all non-negative x, and has the
+!!    probability density function
+!!
+!!        f(x) = exp(-x).
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7536,7 +7486,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!    CC0-1.0
 !*==expppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPPPF(P,Ppf)
-      IMPLICIT NONE
       INTEGER ipr
 REAL(kind=wp) :: P , Ppf
 !
@@ -7587,7 +7536,7 @@ REAL(kind=wp) :: P , Ppf
          Ppf = -LOG(1.0_wp-P)
       ENDIF
 !
-      END SUBROUTINE EXPPPF
+END SUBROUTINE EXPPPF
 !>
 !!##NAME
 !!    expran(3f) - [M_datapac:STATISTICS:RANDOM] generate exponential random numbers
@@ -7597,12 +7546,13 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine expran (X, Y)
 !!
 !!##DESCRIPTION
-!!    expran(3f) generates a random sample of size n
-!!    from the exponential distribution
-!!    with mean = 1 and standard deviation = 1.
-!!    this distribution is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x) = exp(-x).
+!!    expran(3f) generates a random sample of size n from the exponential
+!!    distribution with mean = 1 and standard deviation = 1.
+!!
+!!    this distribution is defined for all non-negative x, and has the
+!!    probability density function
+!!
+!!        f(x) = exp(-x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7630,7 +7580,6 @@ REAL(kind=wp) :: P , Ppf
 !!    CC0-1.0
 !*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPRAN(N,Iseed,X)
-      IMPLICIT NONE
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
 !
@@ -7712,7 +7661,7 @@ REAL(kind=wp) :: X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE EXPRAN
+END SUBROUTINE EXPRAN
 !>
 !!##NAME
 !!    expsf(3f) - [M_datapac:STATISTICS:SF] compute the exponential sparsity function
@@ -7723,16 +7672,17 @@ REAL(kind=wp) :: X
 !!
 !!
 !!##DESCRIPTION
-!!    expsf(3f) computes the sparsity
-!!    function value for the exponential distribution
-!!    with mean = 1 and standard deviation = 1.
-!!    this distribution is defined for all non-negative x,
-!!    and has the probability density function
-!!    f(x) = exp(-x).
-!!    note that the sparsity function of a distribution
-!!    is the derivative of the percent point function,
-!!    and also is the reciprocal of the probability
-!!    density function (but in units of p rather than x).
+!!    expsf(3f) computes the sparsity function value for the exponential
+!!    distribution with mean = 1 and standard deviation = 1.
+!!
+!!    this distribution is defined for all non-negative x, and has the
+!!    probability density function
+!!
+!!        f(x) = exp(-x).
+!!
+!!    note that the sparsity function of a distribution is the derivative
+!!    of the percent point function, and also is the reciprocal of the
+!!    probability density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7760,7 +7710,6 @@ REAL(kind=wp) :: X
 !!    CC0-1.0
 !*==expsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPSF(P,Sf)
-      IMPLICIT NONE
       INTEGER ipr
 REAL(kind=wp) :: P , Sf
 !
@@ -7810,7 +7759,7 @@ REAL(kind=wp) :: P , Sf
          Sf = 1.0_wp/(1.0_wp-P)
       ENDIF
 !
-      END SUBROUTINE EXPSF
+END SUBROUTINE EXPSF
 !>
 !!##NAME
 !!    extrem(3f) - [M_datapac:STATISTICS] determine whether a type 1 or
@@ -7821,22 +7770,25 @@ REAL(kind=wp) :: P , Sf
 !!     Subroutine extrem (X, Y)
 !!
 !!##DESCRIPTION
-!!    extrem(3f) performs an extreme value analysis
-!!    on the data in the input vector x.
-!!    this analysis consists of determining that particular
-!!    extreme value type 1 or extreme value type 2 distribution
-!!    which best fits the data set.
-!!    the goodness of fit criterion is the maximum probability
-!!    plot correlation coefficient criterion.
-!!    after the best-fit distribution is determined,
-!!    estimates are computed and printed out for the
-!!    location and scale parameters.
-!!    two probability plots are also printed out--
-!!    the best-fit type 2 probability plot
-!!    (if the best fit was in fact a type 2),
-!!    and the type 1 probability plot.
-!!    predicted extremes for various return periods are
-!!    also computed and printed out.
+!!    extrem(3f) performs an extreme value analysis on the data in the
+!!    input vector x.
+!!
+!!    this analysis consists of determining that particular extreme value
+!!    type 1 or extreme value type 2 distribution which best fits the
+!!    data set.
+!!
+!!    the goodness of fit criterion is the maximum probability plot
+!!    correlation coefficient criterion.
+!!
+!!    after the best-fit distribution is determined, estimates are computed
+!!    and printed out for the location and scale parameters.
+!!
+!!    two probability plots are also printed out-- the best-fit type 2
+!!    probability plot (if the best fit was in fact a type 2), and the type
+!!    1 probability plot.
+!!
+!!    predicted extremes for various return periods are also computed and
+!!    printed out.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7864,7 +7816,6 @@ REAL(kind=wp) :: P , Sf
 !!    CC0-1.0
 !*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXTREM(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: a , aindex , am , an , arg , cc , corr , corrmx , gamtab ,   &
      &     h , hold , p , r , scrat , sum1 , sum2 , sum3 , sy , t , w
 REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
@@ -8277,13 +8228,11 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !!     Subroutine fcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    fcdf(3f) computes the cumulative distribution
-!!    function value for the f distribution
-!!    with integer degrees of freedom
-!!    parameters = nu1 and nu2.
-!!    this distribution is defined for all non-negative x.
-!!    the probability density function is given
-!!    in the references below.
+!!    fcdf(3f) computes the cumulative distribution function value for the f
+!!    distribution with integer degrees of freedom parameters = nu1 and nu2.
+!!
+!!    this distribution is defined for all non-negative x. the probability
+!!    density function is given in the references below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -8311,7 +8260,6 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !!    CC0-1.0
 !*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
      &     zratio
       INTEGER i , ibran , ievodd , iflag1 , iflag2 , imax , imin , ipr ,&
@@ -8659,36 +8607,32 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !!     Subroutine fourie (X, Y)
 !!
 !!##DESCRIPTION
-!!    fourie(3f) performs a Fourier analysis
-!!    of the data in the input vector X.
-!!    the analysis consists of the following--
+!!    FOURIE(3f) performs a Fourier analysis of the data in the input
+!!    vector X. The analysis consists of the following--
 !!
-!!               1. computing (and printing)
-!!                  (for each of the harmonic frequencies
-!!                  1/n, 2/n, 3/n, ..., 1/2)
-!!                  the corresponding fourier coeficients,
-!!                  the amplitude, the phase,
-!!                  the contribution to the total variance,
-!!                  and the relative contribution to the total
-!!                  variance.
-!!               2. plotting out a fourier line spectrum =
-!!                  the periodogram = the plot of relative
-!!                  contribution to total variance
-!!                  (at each fourier frequency) versus
-!!                  the fourier frequency.
+!!       1. computing (and printing)
+!!          (for each of the harmonic frequencies
+!!          1/n, 2/n, 3/n, ..., 1/2)
+!!          the corresponding fourier coeficients,
+!!          the amplitude, the phase,
+!!          the contribution to the total variance,
+!!          and the relative contribution to the total
+!!          variance.
+!!       2. plotting out a fourier line spectrum =
+!!          the periodogram = the plot of relative
+!!          contribution to total variance
+!!          (at each fourier frequency) versus
+!!          the fourier frequency.
 !!
-!!    in order that the results of the Fourier analysis
-!!    be valid and properly interpreted, the input data
-!!    in X should be equi-spaced in time
-!!    (or whatever variable corresponds to time).
+!!    in order that the results of the Fourier analysis be valid and properly
+!!    interpreted, the input data in X should be equi-spaced in time (or
+!!    whatever variable corresponds to time).
 !!
-!!    the horizontal axis of the spectra produced
-!!    by fourie(3f) is frequency.
-!!    this frequency is measured in units of
-!!    cycles per 'data point' or, more precisely, in
-!!    cycles per unit time where
-!!    'unit time' is defined as the
-!!    elapsed time between adjacent observations.
+!!    the horizontal axis of the spectra produced by fourie(3f) is frequency.
+!!    this frequency is measured in units of cycles per 'data point' or,
+!!    more precisely, in cycles per unit time where 'unit time' is defined
+!!    as the elapsed time between adjacent observations.
+!!
 !!    the range of the frequency axis is 0.0 to 0.5.
 !!
 !!##OPTIONS
@@ -8717,7 +8661,6 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !!    CC0-1.0
 !*==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FOURIE(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
      &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
      &     suma , sumb , t
@@ -8993,7 +8936,7 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 99013 FORMAT ('1')
 99014 FORMAT (' ')
 !
-      END SUBROUTINE FOURIE
+END SUBROUTINE FOURIE
 !>
 !!##NAME
 !!    fran(3f) - [M_datapac:STATISTICS:RANDOM] generate F random numbers
@@ -9003,13 +8946,12 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !!     Subroutine fran (X, Y)
 !!
 !!##DESCRIPTION
-!!    fran(3f) generates a random sample of size n
-!!    from the f distribution
-!!    with integer degrees of freedom
-!!    parameters = nu1 and nu2.
+!!    fran(3f) generates a random sample of size n from the f distribution
+!!    with integer degrees of freedom parameters = nu1 and nu2.
+!!
 !!    this distribution is defined for all non-negative x.
-!!    the probability density function is given
-!!    in the references below.
+!!
+!!    the probability density function is given in the references below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -9037,7 +8979,6 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !!    CC0-1.0
 !*==fran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
      &     z
       INTEGER i , ipr , Istart , j , N , Nu1 , Nu2
@@ -9178,7 +9119,7 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
       ENDIF
 99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-      END SUBROUTINE FRAN
+END SUBROUTINE FRAN
 !>
 !!##NAME
 !!    freq(3f) - [M_datapac:STATISTICS] compute the sample frequency and
@@ -9189,8 +9130,7 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
 !!     Subroutine freq (X, Y)
 !!
 !!##DESCRIPTION
-!!    freq(3f) computes the sample frequency
-!!    and sample cumulative frequency
+!!    freq(3f) computes the sample frequency and sample cumulative frequency
 !!    for the data in the input vector x.
 !!
 !!##OPTIONS
@@ -9218,12 +9158,10 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
 !!##LICENSE
 !!    CC0-1.0
 !*==freq.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE FREQ(X,N)
-      IMPLICIT NONE
-REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
-     &     WS , X , xbar , Y
-      INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     &
-     &        ndv , nm1 , numseq
+
+SUBROUTINE FREQ(X,N)
+REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,    WS , X , xbar , Y
+INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     ndv , nm1 , numseq
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
@@ -9316,17 +9254,11 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
          WRITE (ipr,99014)
          WRITE (ipr,99014)
          WRITE (ipr,99010)
-99010    FORMAT (' ',                                                   &
-     &'    INDEX            VALUE       FREQUENCY    PERCENTAGE        C&
-     &UMULATIVE    PERCENTAGE')
+99010    FORMAT ('     INDEX            VALUE       FREQUENCY    PERCENTAGE        CUMULATIVE    PERCENTAGE')
+99011    FORMAT ('                                               FREQUENCY         FREQUENCY     CUMULATIVE')
+99012    FORMAT ('                                                                               FREQUENCY ')
          WRITE (ipr,99011)
-99011    FORMAT (' ',                                                   &
-     &'                                              FREQUENCY         F&
-     &REQUENCY     CUMULATIVE')
          WRITE (ipr,99012)
-99012    FORMAT (' ',                                                   &
-     &'                                                                 &
-     &             FREQUENCY ')
          WRITE (ipr,99014)
 !
          CALL SORT(X,N,Y)
@@ -9346,8 +9278,7 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
                cfreq = icfreq
                pfreq = 100.0_wp*frq/an
                pcfreq = 100.0_wp*cfreq/an
-               WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq ,&
-     &                           pcfreq
+               WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq , pcfreq
                iflag = ndv - 10*(ndv/10)
                IF ( iflag==0 ) WRITE (ipr,99014)
                numseq = 1
@@ -9361,14 +9292,13 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
          cfreq = icfreq
          pfreq = 100.0_wp*frq/an
          pcfreq = 100.0_wp*cfreq/an
-         WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq ,      &
-     &                     pcfreq
+         WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq , pcfreq
          iflag = ndv - 10*(ndv/10)
          IF ( iflag==0 ) WRITE (ipr,99014)
       ENDIF
 99013 FORMAT (' ',I8,4X,E17.10,3X,I8,6X,F8.4,10X,I8,6X,F8.4)
 99014 FORMAT (' ')
-      END SUBROUTINE FREQ
+END SUBROUTINE FREQ
 !>
 !!##NAME
 !!    gamcdf(3f) - [M_datapac:STATISTICS:CD] compute the gamma cumulative
@@ -9379,18 +9309,18 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
 !!     Subroutine gamcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    gamcdf(3f) computes the cumulative distribution
-!!    function value for the gamma
-!!    distribution with single precision
-!!    tail length parameter = gamma.
-!!    the gamma distribution used
-!!    herein has mean = gamma
-!!    and standard deviation = sqrt(gamma).
-!!    this distribution is defined for all positive x,
-!!    and has the probability density function
-!!    f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
-!!    where the constant = the gamma function evaluated
-!!    at the value gamma.
+!!    gamcdf(3f) computes the cumulative distribution function value for the
+!!    gamma distribution with single precision tail length parameter = gamma.
+!!
+!!    the gamma distribution used herein has mean = gamma and standard
+!!    deviation = sqrt(gamma).
+!!
+!!    this distribution is defined for all positive x, and has the
+!!    probability density function
+!!
+!!        f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!
+!!    where the constant = the gamma function evaluated at the value gamma.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -9418,7 +9348,6 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
 !!    CC0-1.0
 !*==gamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMCDF(X,Gamma,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER i , ipr , maxit
 !
@@ -9556,7 +9485,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
       ENDIF
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE GAMCDF
+END SUBROUTINE GAMCDF
 !>
 !!##NAME
 !!    gamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a gamma probability plot
@@ -9566,31 +9495,33 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!     Subroutine gamplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    gamplt(3f) generates a gamma
-!!    probability plot
-!!    (with tail length parameter value = gamma).
-!!    the prototype gamma distribution used
-!!    herein has mean = gamma
-!!    and standard deviation = sqrt(gamma).
-!!    this distribution is defined for all positive x,
-!!    and has the probability density function
-!!    f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
-!!    where the constant = the gamma function evaluated
-!!    at the value gamma.
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the gamma probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the  gamma distribution
-!!    with tail length parameter value = gamma.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    gamplt(3f) generates a gamma probability plot (with tail length
+!!    parameter value = gamma).
+!!
+!!    the prototype gamma distribution used herein has mean = gamma and
+!!    standard deviation = sqrt(gamma).
+!!
+!!    this distribution is defined for all positive x, and has the
+!!    probability density function
+!!
+!!        f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!
+!!    where the constant = the gamma function evaluated at the value gamma.
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the gamma probability plot is useful in graphically testing the
+!!    composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the gamma distribution with
+!!    tail length parameter value = gamma.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -9617,8 +9548,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!##LICENSE
 !!    CC0-1.0
 !*==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GAMPLT(X,N,Gamma)
-      IMPLICIT NONE
+SUBROUTINE GAMPLT(X,N,Gamma)
 REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
      &     dx , g , Gamma , hold , pcalc , pp0025 , pp025 , pp975 ,     &
      &     pp9975 , sum , sum1
@@ -9626,7 +9556,7 @@ REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
      &     xlower , xmax , xmid , xmin , xmin0 , xupper , Y , ybar ,    &
      &     yint
 REAL(kind=wp) :: yslope
-      INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
+INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -9939,7 +9869,7 @@ REAL(kind=wp) :: yslope
          GOTO 500
       ENDIF
 !
-      END SUBROUTINE GAMPLT
+END SUBROUTINE GAMPLT
 !>
 !!##NAME
 !!    gamppf(3f) - [M_datapac:STATISTICS:PP] compute the gamma percent point function
@@ -9949,21 +9879,20 @@ REAL(kind=wp) :: yslope
 !!     Subroutine gamppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    gamppf(3f) computes the percent point
-!!    function value for the gamma distribution
-!!    with single precision
-!!    tail length parameter = gamma.
-!!    the gamma distribution used
-!!    herein has mean = gamma
-!!    and standard deviation = sqrt(gamma).
-!!    this distribution is defined for all positive x,
-!!    and has the probability density function
-!!    f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
-!!    where the constant = the gamma function evaluated
-!!    at the value gamma.
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!    gamppf(3f) computes the percent point function value for the gamma
+!!    distribution with single precision tail length parameter = gamma.
+!!
+!!    the gamma distribution used herein has mean = gamma and standard
+!!    deviation = sqrt(gamma). this distribution is defined for all positive
+!!    x, and has the probability density function
+!!
+!!        f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!
+!!    where the constant = the gamma function evaluated at the value gamma.
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -9991,7 +9920,6 @@ REAL(kind=wp) :: yslope
 !!    CC0-1.0
 !*==gamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPPF(P,Gamma,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit
 !
@@ -10192,7 +10120,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
       ENDIF
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE GAMPPF
+END SUBROUTINE GAMPPF
 !>
 !!##NAME
 !!    gamran(3f) - [M_datapac:STATISTICS:RANDOM] generate gamma random numbers
@@ -10202,17 +10130,16 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!     Subroutine gamran (X, Y)
 !!
 !!##DESCRIPTION
-!!    gamran(3f) generates a random sample of size n
-!!    from the gamma distribution
-!!    with tail length parameter value = gamma.
-!!    the prototype gamma distribution used
-!!    herein has mean = gamma
-!!    and standard deviation = sqrt(gamma).
-!!    this distribution is defined for all positive x,
-!!    and has the probability density function
-!!    f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
-!!    where the constant = the gamma function evaluated
-!!    at the value gamma.
+!!    gamran(3f) generates a random sample of size n from the gamma
+!!    distribution with tail length parameter value = gamma.
+!!
+!!    the prototype gamma distribution used herein has mean = gamma and
+!!    standard deviation = sqrt(gamma). this distribution is defined for
+!!    all positive x, and has the probability density function
+!!
+!!        f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!
+!!    where the constant = the gamma function evaluated at the value gamma.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -10240,7 +10167,6 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!    CC0-1.0
 !*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
      &     X , xg , xg0 , xn(1) , xn0
       INTEGER i , ipr , Iseed , N
@@ -10392,7 +10318,7 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
       ENDIF
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE GAMRAN
+END SUBROUTINE GAMRAN
 !>
 !!##NAME
 !!    geocdf(3f) - [M_datapac:STATISTICS:CD] compute the geometric cumulative
@@ -10403,24 +10329,22 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !!     Subroutine geocdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    geocdf(3f) computes the cumulative distribution
-!!    function value at the single precision value x
-!!    for the geometric distribution
-!!    with single precision
-!!    'bernoulli probability' parameter = p.
-!!    the geometric distribution used herein
-!!    herein has mean = (1-p)/p
-!!    and standard deviation = sqrt((1-p)/(p*p))).
-!!    this distribution is defined for
-!!    all non-negative integer x--x = 0, 1, 2, ... .
-!!    this distribution has the probability function
-!!    f(x) = p * (1-p)**x.
-!!    the geometric distribution is the
-!!    distribution of the number of failures
-!!    before obtaining 1 success in an
-!!    indefinite sequence of bernoulli (0,1)
-!!    trials where the probability of success
-!!    in a single trial = p.
+!!    geocdf(3f) computes the cumulative distribution function value at the
+!!    single precision value x for the geometric distribution with single
+!!    precision 'bernoulli probability' parameter = p.
+!!
+!!    the geometric distribution used herein herein has mean = (1-p)/p and
+!!    standard deviation = sqrt((1-p)/(p*p))).
+!!
+!!    this distribution is defined for all non-negative integer x--x = 0,
+!!    1, 2, ... . this distribution has the probability function
+!!
+!!        f(x) = p * (1-p)**x.
+!!
+!!    the geometric distribution is the distribution of the number of
+!!    failures before obtaining 1 success in an indefinite sequence of
+!!    bernoulli (0,1) trials where the probability of success in a single
+!!    trial = p.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -10446,11 +10370,17 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!!##REFERENCES
+!!    o Feller, An Introduction to Probability Theory and its Applications,
+!!      Volume 1, Edition 2, 1957, Pages 155-157, 210.
+!!    o National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!      Page 929.
+!     ORIGINAL VERSION--NOVEMBER  1975.
 !*==geocdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GEOCDF(X,P,Cdf)
-      IMPLICIT NONE
+
+SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp) :: Cdf , del , fintx , P , X
-      INTEGER intx , ipr
+INTEGER intx , ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -10498,35 +10428,19 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 155-157, 210.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
-!
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOCDF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99004) P
          Cdf = 0.0_wp
-         RETURN
       ELSEIF ( X<0.0_wp ) THEN
          WRITE (ipr,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOC&
-     &DF SUBROUTINE IS NEGATIVE *****')
          WRITE (ipr,99004) X
          Cdf = 0.0_wp
-         RETURN
       ELSE
          intx = X + 0.0001_wp
          fintx = intx
@@ -10534,19 +10448,16 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
          IF ( del<0.0_wp ) del = -del
          IF ( del>0.001_wp ) THEN
             WRITE (ipr,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOC&
-     &DF SUBROUTINE IS NON-INTEGRAL *****')
             WRITE (ipr,99004) X
          ENDIF
-!
-!-----START POINT-----------------------------------------------------
-!
          Cdf = 1.0_wp - (1.0_wp-P)**(X+1.0_wp)
       ENDIF
-99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-!
-      END SUBROUTINE GEOCDF
+99001 FORMAT(' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+99002 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NEGATIVE *****')
+99003 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NON-INTEGRAL *****')
+99004 FORMAT(' ***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+
+END SUBROUTINE GEOCDF
 !>
 !!##NAME
 !!    geoplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a geometric probability
@@ -10557,36 +10468,35 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
 !!     Subroutine geoplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    geoplt(3f) generates a geometric
-!!    probability plot
-!!    (with 'bernoulli probability' parameter value = p).
-!!    the geometric distribution used
-!!    herein has mean = (1-p)/p
-!!    and standard deviation = sqrt((1-p)/(p*p))).
-!!    this distribution is defined for
-!!    all non-negative integer x--x = 0, 1, 2, ... .
-!!    this distribution has the probability function
-!!    f(x) = p * (1-p)**x.
-!!    the geometric distribution is the
-!!    distribution of the number of failures
-!!    before obtaining 1 success in an
-!!    indefinite sequence of bernoulli (0,1)
-!!    trials where the probability of success
-!!    in a single trial = p.
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the geometric probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the  geometric distribution
-!!    with probability parameter value = p.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    geoplt(3f) generates a geometric probability plot (with 'bernoulli
+!!    probability' parameter value = p).
+!!
+!!    the geometric distribution used herein has mean = (1-p)/p and standard
+!!    deviation = sqrt((1-p)/(p*p))). this distribution is defined for
+!!    all non-negative integer x--x = 0, 1, 2, ... . this distribution
+!!    has the probability function
+!!
+!!        f(x) = p * (1-p)**x.
+!!
+!!    the geometric distribution is the distribution of the number of
+!!    failures before obtaining 1 success in an indefinite sequence of
+!!    bernoulli (0,1) trials where the probability of success in a single
+!!    trial = p.
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the geometric probability plot is useful in graphically testing
+!!    the composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the geometric distribution with
+!!    probability parameter value = p.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -10613,13 +10523,12 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
 !!##LICENSE
 !!    CC0-1.0
 !*==geoplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GEOPLT(X,N,P)
-      IMPLICIT NONE
+SUBROUTINE GEOPLT(X,N,P)
 REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
      &     sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,    &
      &     yint
 REAL(kind=wp) :: yslope
-      INTEGER i , ipr , iupper , N
+INTEGER i , ipr , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -10774,7 +10683,7 @@ REAL(kind=wp) :: yslope
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE GEOPLT
+END SUBROUTINE GEOPLT
 !>
 !!##NAME
 !!    geoppf(3f) - [M_datapac:STATISTICS:PP] compute the geometric percent
@@ -10785,26 +10694,28 @@ REAL(kind=wp) :: yslope
 !!     Subroutine geoppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    geoppf(3f) computes the percent point
-!!    function value for the geometric
-!!    distribution with single precision
-!!    'bernoulli probability' parameter = ppar.
-!!    the geometric distribution used
-!!    herein has mean = (1-ppar)/ppar
-!!    and standard deviation = sqrt((1-ppar)/(ppar*ppar))).
-!!    this distribution is defined for
-!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    geoppf(3f) computes the percent point function value for the geometric
+!!    distribution with single precision 'bernoulli probability' parameter
+!!    = ppar.
+!!
+!!    the geometric distribution used herein has mean = (1-ppar)/ppar and
+!!    standard deviation = sqrt((1-ppar)/(ppar*ppar))).
+!!
+!!    this distribution is defined for all non-negative integer x--x = 0,
+!!    1, 2, ... .
+!!
 !!    this distribution has the probability function
-!!    f(x) = ppar * (1-ppar)**x.
-!!    the geometric distribution is the
-!!    distribution of the number of failures
-!!    before obtaining 1 success in an
-!!    indefinite sequence of bernoulli (0,1)
-!!    trials where the probability of success
-!!    in a single trial = ppar.
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!
+!!        f(x) = ppar * (1-ppar)**x.
+!!
+!!    the geometric distribution is the distribution of the number of
+!!    failures before obtaining 1 success in an indefinite sequence of
+!!    bernoulli (0,1) trials where the probability of success in a single
+!!    trial = ppar.
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -10831,10 +10742,9 @@ REAL(kind=wp) :: yslope
 !!##LICENSE
 !!    CC0-1.0
 !*==geoppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GEOPPF(P,Ppar,Ppf)
-      IMPLICIT NONE
+SUBROUTINE GEOPPF(P,Ppar,Ppf)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
-      INTEGER ipr , iratio
+INTEGER ipr , iratio
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -10939,23 +10849,22 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !!     Subroutine georan (X, Y)
 !!
 !!##DESCRIPTION
-!!    georan(3f) generates a random sample of size n
-!!    from the geometric distribution
-!!    with single precision 'bernoulli probability'
-!!    parameter = p.
-!!    the geometric distribution used
-!!    herein has mean = (1-p)/p
-!!    and standard deviation = sqrt((1-p)/(p*p))).
-!!    this distribution is defined for
-!!    all non-negative integer x--x = 0, 1, 2, ... .
-!!    this distribution has the probability function
-!!    f(x) = p * (1-p)**x.
-!!    the geometric distribution is the
-!!    distribution of the number of failures
-!!    before obtaining 1 success in an
-!!    indefinite sequence of bernoulli (0,1)
-!!    trials where the probability of success
-!!    in a single trial = p.
+!!    GEORAN(3f) generates a random sample of size N from the geometric
+!!    distribution with single precision 'Bernoulli probability' parameter
+!!    = P.
+!!
+!!    The geometric distribution used herein has mean = (1-P)/P and standard
+!!    deviation = sqrt((1-P)/(P*P))). This distribution is defined for
+!!    all non-negative integer X-- X = 0, 1, 2, ... .
+!!
+!!    This distribution has the probability function
+!!
+!!    f(X) = P * (1-P)**X.
+!!
+!!    The geometric distribution is the distribution of the number of
+!!    failures before obtaining 1 success in an indefinite sequence of
+!!    Bernoulli (0,1) trials where the probability of success in a single
+!!    trial = P.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -10983,7 +10892,6 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !!    CC0-1.0
 !*==georan.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEORAN(N,P,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
       INTEGER i , ipr , iratio , Iseed , N
 !
@@ -11106,7 +11014,7 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE GEORAN
+END SUBROUTINE GEORAN
 !>
 !!##NAME
 !!    hfncdf(3f) - [M_datapac:STATISTICS:CD] compute the half-normal cumulative
@@ -11117,19 +11025,20 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !!     Subroutine hfncdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    hfncdf(3f) computes the cumulative distribution
-!!    function value for the halfnormal
-!!    distribution.
-!!    the halfnormal distribution used
-!!    herein has mean = sqrt(2/pi) = 0.79788456
-!!    and standard deviation = 1.
-!!    this distribution is defined for all non-negative x
-!!    and has the probability density function
+!!    hfncdf(3f) computes the cumulative distribution function value for
+!!    the halfnormal distribution.
+!!
+!!    the halfnormal distribution used herein has mean = sqrt(2/pi) =
+!!    0.79788456 and standard deviation = 1.
+!!
+!!    this distribution is defined for all non-negative x and has the
+!!    probability density function
+!!
 !!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
-!!    the halfnormal distribution used herein
-!!    is the distribution of the variate x = abs(z) where
-!!    the variate z is normally distributed
-!!    with mean = 0 and standard deviation = 1.
+!!
+!!    the halfnormal distribution used herein is the distribution of the
+!!    variate x = abs(z) where the variate z is normally distributed with
+!!    mean = 0 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11157,7 +11066,6 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !!    CC0-1.0
 !*==hfncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNCDF(X,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !
@@ -11207,7 +11115,7 @@ REAL(kind=wp) :: Cdf , X
          Cdf = 2.0_wp*Cdf - 1.0_wp
       ENDIF
 !
-      END SUBROUTINE HFNCDF
+END SUBROUTINE HFNCDF
 !>
 !!##NAME
 !!    hfnplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a half-normal probability
@@ -11218,31 +11126,33 @@ REAL(kind=wp) :: Cdf , X
 !!     Subroutine hfnplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    hfnplt(3f) generates a halfnormal
-!!    probability plot.
-!!    the prototype halfnormal distribution used herein
-!!    has mean = sqrt(2/pi) = 0.79788456
-!!    and standard deviation = 1.
-!!    this distribution is defined for all non-negative x
-!!    and has the probability density function
-!!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
-!!    the prototype halfnormal distribution used herein
-!!    is the distribution of the variate x = abs(z) where
-!!    the variate z is normally distributed
+!!    hfnplt(3f) generates a halfnormal probability plot.
+!!
+!!    the prototype halfnormal distribution used herein has mean = sqrt(2/pi)
+!!    = 0.79788456 and standard deviation = 1.
+!!
+!!    this distribution is defined for all non-negative x and has the
+!!    probability density function
+!!
+!!        f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!
+!!    the prototype halfnormal distribution used herein is the distribution
+!!    of the variate x = abs(z) where the variate z is normally distributed
 !!    with mean = 0 and standard deviation = 1.
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the halfnormal probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the halfnormal distribution.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the halfnormal probability plot is useful in graphically testing
+!!    the composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the halfnormal distribution.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11268,12 +11178,16 @@ REAL(kind=wp) :: Cdf , X
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 !*==hfnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HFNPLT(X,N)
-      IMPLICIT NONE
+
+SUBROUTINE HFNPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
+INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -11295,14 +11209,8 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
 !                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
+!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
 !
 !---------------------------------------------------------------------
 !
@@ -11403,7 +11311,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE HFNPLT
+END SUBROUTINE HFNPLT
 !>
 !!##NAME
 !!    hfnppf(3f) - [M_datapac:STATISTICS:PP] compute the half-normal percent
@@ -11414,22 +11322,22 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!     Subroutine hfnppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    hfnppf(3f) computes the percent point
-!!    function value for the halfnormal
+!!    hfnppf(3f) computes the percent point function value for the halfnormal
 !!    distribution.
-!!    the halfnormal distribution used
-!!    herein has mean = sqrt(2/pi) = 0.79788456
-!!    and standard deviation = 1.
-!!    this distribution is defined for all non-negative x
-!!    and has the probability density function
+!!
+!!    the halfnormal distribution used herein has mean = sqrt(2/pi) =
+!!    0.79788456 and standard deviation = 1. this distribution is defined
+!!    for all non-negative x and has the probability density function
+!!
 !!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
-!!    the halfnormal distribution used herein
-!!    is the distribution of the variate x = abs(z) where
-!!    the variate z is normally distributed
-!!    with mean = 0 and standard deviation = 1.
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!
+!!    the halfnormal distribution used herein is the distribution of the
+!!    variate x = abs(z) where the variate z is normally distributed with
+!!    mean = 0 and standard deviation = 1.
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11456,10 +11364,9 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!##LICENSE
 !!    CC0-1.0
 !*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HFNPPF(P,Ppf)
-      IMPLICIT NONE
+SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
-      INTEGER ipr
+INTEGER       :: ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -11486,31 +11393,24 @@ REAL(kind=wp) :: arg , P , Ppf
 !     UPDATED         --OCTOBER   1976.
 !
 !---------------------------------------------------------------------
-!
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE HFNPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
          Ppf = 0.0_wp
-         RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          arg = (1.0_wp+P)/2.0_wp
          CALL NORPPF(arg,Ppf)
          IF ( Ppf<=0.0_wp ) Ppf = 0.0_wp
       ENDIF
+
+99001 FORMAT(' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE HFNPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
 !
-      END SUBROUTINE HFNPPF
+END SUBROUTINE HFNPPF
 !>
 !!##NAME
 !!    hfnran(3f) - [M_datapac:STATISTICS:RANDOM] generate half-normal random numbers
@@ -11520,17 +11420,17 @@ REAL(kind=wp) :: arg , P , Ppf
 !!     Subroutine hfnran (X, Y)
 !!
 !!##DESCRIPTION
-!!    hfnran(3f) generates a random sample of size n
-!!    from the halfnormal distribution.
-!!    the prototype halfnormal distribution used
-!!    herein has mean = sqrt(2/pi) = 0.79788456
-!!    and standard deviation = 1.
-!!    this distribution is defined for all non-negative x
-!!    and has the probability density function
-!!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
-!!    the prototype halfnormal distribution used herein
-!!    is the distribution of the variate x = abs(z) where
-!!    the variate z is normally distributed
+!!    hfnran(3f) generates a random sample of size n from the halfnormal
+!!    distribution.
+!!
+!!    the prototype halfnormal distribution used herein has mean = sqrt(2/pi)
+!!    = 0.79788456 and standard deviation = 1. this distribution is defined
+!!    for all non-negative x and has the probability density function
+!!
+!!        f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!
+!!    the prototype halfnormal distribution used herein is the distribution
+!!    of the variate x = abs(z) where the variate z is normally distributed
 !!    with mean = 0 and standard deviation = 1.
 !!
 !!##OPTIONS
@@ -11559,7 +11459,6 @@ REAL(kind=wp) :: arg , P , Ppf
 !!    CC0-1.0
 !*==hfnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNRAN(N,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
 !
@@ -11666,7 +11565,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
          ENDDO
       ENDIF
 !
-      END SUBROUTINE HFNRAN
+END SUBROUTINE HFNRAN
 !>
 !!##NAME
 !!    hist(3f) - [M_datapac:STATISTICS] generates histograms based on two
@@ -11677,18 +11576,15 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!     Subroutine hist (X, Y)
 !!
 !!##DESCRIPTION
-!!    hist(3f) produces 2 histograms
-!!    (with differing class widths)
-!!    of the data in the input vector x.
-!!    the first  histogram has class width = 0.1
-!!    sample standard deviations;
-!!    the second histogram has class width = 0.2
-!!    sample standard deviations.
-!!    two histograms of the same data set
-!!    are printed out so as to give the data
-!!    analyst some feel for how dependent
-!!    the histogram shape is as a function
-!!    of the class width and number of classes.
+!!    hist(3f) produces 2 histograms (with differing class widths) of the
+!!    data in the input vector x.
+!!
+!!    the first histogram has class width = 0.1 sample standard deviations;
+!!    the second histogram has class width = 0.2 sample standard deviations.
+!!
+!!    two histograms of the same data set are printed out so as to give
+!!    the data analyst some feel for how dependent the histogram shape is
+!!    as a function of the class width and number of classes.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11716,7 +11612,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!    CC0-1.0
 !*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HIST(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
      &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
       INTEGER i , icoun2 , icount , ievodd , ihist , inc , ipr , irev , &
@@ -11976,7 +11871,7 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
          ENDDO
       ENDIF
 99013 FORMAT (' ',6X,123A1)
-      END SUBROUTINE HIST
+END SUBROUTINE HIST
 !>
 !!##NAME
 !!    invxwx(3f) - [M_datapac:STATISTICS] compute the inverse of X'WX
@@ -11986,19 +11881,20 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 !!     Subroutine invxwx (X, Y)
 !!
 !!##DESCRIPTION
-!!    invxwx(3f) computes the inverse of x'wx
-!!    which is done by computing the inverse of r'r (where
-!!    r has just recently been modified before calling this
-!!    subroutine.  the input r = the square root of
-!!    the diagonal matrix d times the old matrix r.
-!!    the inverse of x'wx will be identical
-!!    (except for the absence of s**2 = the residual
-!!    variance) to the covariance matrix of the coefficients.
-!!    the only reason invxwx(3f) exists is for the
-!!    calculation of such covariances.
-!!    unpivoting has also been done herein so as to undo
-!!    the pivoting done in the decomposition subroutine (decomp).
-!!    the matrix c used herein is an intermediate result matrix.
+!!    invxwx(3f) computes the inverse of x'wx which is done by computing
+!!    the inverse of r'r (where r has just recently been modified before
+!!    calling this subroutine. the input r = the square root of the
+!!    diagonal matrix d times the old matrix r. the inverse of x'wx will
+!!    be identical (except for the absence of s**2 = the residual variance)
+!!    to the covariance matrix of the coefficients.
+!!
+!!    the only reason invxwx(3f) exists is for the calculation of such
+!!    covariances.
+!!
+!!    unpivoting has also been done herein so as to undo the pivoting done
+!!    in the decomposition subroutine (decomp). the matrix c used herein
+!!    is an intermediate result matrix.
+!!
 !!    x--not used
 !!    q--not used
 !!    r--used and changed
@@ -12029,17 +11925,15 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE INVXWX(N,K)
-      IMPLICIT NONE
-
-REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
-      INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
-
-!     INVERSION ALGORITHM USED--CHOLESKI DECOMPOSITION
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
+!*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE INVXWX(N,K)
+REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
+INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
+
+!     INVERSION ALGORITHM USED--CHOLESKI DECOMPOSITION
 !---------------------------------------------------------------------
 !
       DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
@@ -12116,7 +12010,7 @@ REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
          irarg = (i-1)*K + i
          R(irarg) = dum3(i)
       ENDDO
-      END SUBROUTINE INVXWX
+END SUBROUTINE INVXWX
 !>
 !!##NAME
 !!    lamcdf(3f) - [M_datapac:STATISTICS:CD] compute the Tukey-Lambda cumulative
@@ -12127,11 +12021,11 @@ REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
 !!     Subroutine lamcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    lamcdf(3f) computes the cumulative distribution
-!!    function value for the (tukey) lambda distribution
-!!    with tail length parameter value = alamba.
-!!    in general, the probability density function
-!!    for this distribution is not simple.
+!!    lamcdf(3f) computes the cumulative distribution function value for the
+!!    (tukey) lambda distribution with tail length parameter value = alamba.
+!!    in general, the probability density function for this distribution
+!!    is not simple.
+!!
 !!    the percent point function for this distribution is
 !!
 !!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
@@ -12162,7 +12056,6 @@ REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
 !!    CC0-1.0
 !*==lamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMCDF(X,Alamba,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
      &     X , xcalc , xmax , xmin
       INTEGER icount , ipr
@@ -12281,13 +12174,15 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !!     Subroutine lampdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    lampdf(3f) computes the probability density
-!!    function value for the (tukey) lambda distribution
-!!    with tail length parameter value = alamba.
-!!    in general, the probability density function
-!!    for this distribution is not simple.
+!!    lampdf(3f) computes the probability density function value for the
+!!    (tukey) lambda distribution with tail length parameter value = alamba.
+!!
+!!    in general, the probability density function for this distribution
+!!    is not simple.
+!!
 !!    the percent point function for this distribution is
-!!    g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!
+!!       g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12315,7 +12210,6 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !!    CC0-1.0
 !*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPDF(X,Alamba,Pdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
       INTEGER ipr
 !
@@ -12393,7 +12287,7 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
       sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
       Pdf = 1.0_wp/sf
 !
-      END SUBROUTINE LAMPDF
+END SUBROUTINE LAMPDF
 !>
 !!##NAME
 !!    lamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Tukey-Lambda probability
@@ -12404,27 +12298,30 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !!     Subroutine lamplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    lamplt(3f) generates a (tukey) lambda distribution
-!!    probability plot
+!!    lamplt(3f) generates a (tukey) lambda distribution probability plot
 !!    (with tail length parameter value = alamba).
-!!    in general, the probability density function
-!!    for this distribution is not simple.
+!!
+!!    in general, the probability density function for this distribution
+!!    is not simple.
+!!
 !!    the percent point function for this distribution is
-!!    g(p) = ((p**alamba)-((1-p)**alamba)) / alamba
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the lambda probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the lambda distribution
-!!    with tail length parameter value = alamba.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!
+!!        g(p) = ((p**alamba)-((1-p)**alamba)) / alamba
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the lambda probability plot is useful in graphically testing the
+!!    composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the lambda distribution with
+!!    tail length parameter value = alamba.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12452,7 +12349,6 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !!    CC0-1.0
 !*==lamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPLT(X,N,Alamba)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
@@ -12604,7 +12500,7 @@ REAL(kind=wp) :: yslope
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE LAMPLT
+END SUBROUTINE LAMPLT
 !>
 !!##NAME
 !!    lamppf(3f) - [M_datapac:STATISTICS:PP] compute the Tukey-Lambda percent
@@ -12615,16 +12511,19 @@ REAL(kind=wp) :: yslope
 !!     Subroutine lamppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    lamppf(3f) computes the percent point
-!!    function value for the (tukey) lambda distribution
-!!    with tail length parameter value = alamba.
-!!    in general, the probability density function
-!!    for this distribution is not simple.
+!!    lamppf(3f) computes the percent point function value for the (tukey)
+!!    lambda distribution with tail length parameter value = alamba.
+!!
+!!    in general, the probability density function for this distribution
+!!    is not simple.
+!!
 !!    the percent point function for this distribution is
-!!    g(p) = ((p**alamba)-((1-p)**alamba))/alamba
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!
+!!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12652,7 +12551,6 @@ REAL(kind=wp) :: yslope
 !!    CC0-1.0
 !*==lamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , P , Ppf
       INTEGER ipr
 !
@@ -12733,13 +12631,13 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!     Subroutine lamran (X, Y)
 !!
 !!##DESCRIPTION
-!!    lamran(3f) generates a random sample of size n
-!!    from the (tukey) lambda distribution
-!!    with tail length parameter value = alamba.
-!!    in general, the probability density function
-!!    for this distribution is not simple.
-!!    the percent point function for this distribution is
-!!    g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!    lamran(3f) generates a random sample of size n from the (tukey)
+!!    lambda distribution with tail length parameter value = alamba.
+!!
+!!    in general, the probability density function for this distribution
+!!    is not simple. the percent point function for this distribution is
+!!
+!!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12767,7 +12665,6 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!    CC0-1.0
 !*==lamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: alamb2 , Alamba , q , X
       INTEGER i , ipr , Iseed , N
 !
@@ -12853,7 +12750,7 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE LAMRAN
+END SUBROUTINE LAMRAN
 !>
 !!##NAME
 !!    lamsf(3f) - [M_datapac:STATISTICS:SF] compute the Tukey-Lambda sparsity function
@@ -12863,17 +12760,19 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !!     Subroutine lamsf (X, Y)
 !!
 !!##DESCRIPTION
-!!    lamsf(3f) computes the sparsity
-!!    function value for the (tukey) lambda distribution
-!!    with tail length parameter value = alamba.
-!!    in general, the probability density function
-!!    for this distribution is not simple.
+!!    lamsf(3f) computes the sparsity function value for the (tukey) lambda
+!!    distribution with tail length parameter value = alamba.
+!!
+!!    in general, the probability density function for this distribution
+!!    is not simple.
+!!
 !!    the percent point function for this distribution is
-!!    g(p) = ((p**alamba)-((1-p)**alamba))/alamba
-!!    note that the sparsity function of a distribution
-!!    is the derivative of the percent point function,
-!!    and also is the reciprocal of the probability
-!!    density function (but in units of p rather than x).
+!!
+!!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!
+!!    note that the sparsity function of a distribution is the derivative
+!!    of the percent point function, and also is the reciprocal of the
+!!    probability density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12901,7 +12800,6 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !!    CC0-1.0
 !*==lamsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMSF(P,Alamba,Sf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , P , Sf
       INTEGER ipr
 !
@@ -12976,19 +12874,18 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!     Subroutine lgncdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    lgncdf(3f) computes the cumulative distribution
-!!    function value for the lognormal
-!!    distribution.
-!!    the lognormal distribution used
-!!    herein has mean = sqrt(e) = 1.64872127
-!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742.
-!!    this distribution is defined for all positive x
-!!    and has the probability density function
-!!    f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
-!!    the lognormal distribution used herein
-!!    is the distribution of the variate x = exp(z) where
-!!    the variate z is normally distributed
-!!    with mean = 0 and standard deviation = 1.
+!!    lgncdf(3f) computes the cumulative distribution function value for
+!!    the lognormal distribution.
+!!
+!!    the lognormal distribution used herein has mean = sqrt(e) = 1.64872127
+!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742. this distribution
+!!    is defined for all positive x and has the probability density function
+!!
+!!        f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!
+!!    the lognormal distribution used herein is the distribution of the
+!!    variate x = exp(z) where the variate z is normally distributed with
+!!    mean = 0 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13016,7 +12913,6 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!    CC0-1.0
 !*==lgncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNCDF(X,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: arg , Cdf , X
       INTEGER ipr
 !
@@ -13065,7 +12961,7 @@ REAL(kind=wp) :: arg , Cdf , X
          CALL NORCDF(arg,Cdf)
       ENDIF
 !
-      END SUBROUTINE LGNCDF
+END SUBROUTINE LGNCDF
 !>
 !!##NAME
 !!    lgnplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a lognormal probability plot
@@ -13075,31 +12971,32 @@ REAL(kind=wp) :: arg , Cdf , X
 !!     Subroutine lgnplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    lgnplt(3f) generates a lognormal
-!!    probability plot.
-!!    the prototype lognormal distribution used herein
-!!    has mean = sqrt(e) = 1.64872127
-!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742.
-!!    this distribution is defined for all positive x
-!!    and has the probability density function
-!!    f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
-!!    the prototype lognormal distribution used herein
-!!    is the distribution of the variate x = exp(z) where
-!!    the variate z is normally distributed
+!!    lgnplt(3f) generates a lognormal probability plot.
+!!
+!!    the prototype lognormal distribution used herein has mean = sqrt(e)
+!!    = 1.64872127 and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+!!    this distribution is defined for all positive x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!
+!!    the prototype lognormal distribution used herein is the distribution
+!!    of the variate x = exp(z) where the variate z is normally distributed
 !!    with mean = 0 and standard deviation = 1.
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the lognormal probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the lognormal distribution.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the lognormal probability plot is useful in graphically testing
+!!    the composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the lognormal distribution.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13127,7 +13024,6 @@ REAL(kind=wp) :: arg , Cdf , X
 !!    CC0-1.0
 !*==lgnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNPLT(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
@@ -13258,7 +13154,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE LGNPLT
+END SUBROUTINE LGNPLT
 !>
 !!##NAME
 !!    lgnppf(3f) - [M_datapac:STATISTICS:PP] compute the lognormal percent
@@ -13269,22 +13165,22 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!     Subroutine lgnppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    lgnppf(3f) computes the percent point
-!!    function value for the lognormal
+!!    LGNPPF(3f) computes the percent point function value for the lognormal
 !!    distribution.
-!!    the lognormal distribution used
-!!    herein has mean = sqrt(e) = 1.64872127
-!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742.
-!!    this distribution is defined for all positive x
-!!    and has the probability density function
-!!    f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
-!!    the lognormal distribution used herein
-!!    is the distribution of the variate x = exp(z) where
-!!    the variate z is normally distributed
-!!    with mean = 0 and standard deviation = 1.
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!
+!!    The lognormal distribution used herein has mean = sqrt(e) = 1.64872127
+!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742. This distribution
+!!    is defined for all positive X and has the probability density function
+!!
+!!        f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!
+!!    The lognormal distribution used herein is the distribution of the
+!!    variate x = exp(z) where the variate z is normally distributed with
+!!    mean = 0 and standard deviation = 1.
+!!
+!!    Note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13310,10 +13206,11 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--NOVEMBER  1975.
 !*==lgnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LGNPPF(P,Ppf)
-      IMPLICIT NONE
-      INTEGER ipr
+
+SUBROUTINE LGNPPF(P,Ppf)
+INTEGER ipr
 REAL(kind=wp) :: P , Ppf
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -13327,43 +13224,29 @@ REAL(kind=wp) :: P , Ppf
 !             VALUE PPF FOR THE LOGNORMAL DISTRIBUTION
 !             WITH MEAN = SQRT(E) = 1.64872127
 !             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!                 1946, PAGES 219-220.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
+!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 112-136.
+!               --CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !---------------------------------------------------------------------
-!
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LGNPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
          Ppf = 0.0_wp
-         RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          CALL NORPPF(P,Ppf)
          Ppf = EXP(Ppf)
       ENDIF
+
+99001 FORMAT(' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LGNPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
 !
-      END SUBROUTINE LGNPPF
+END SUBROUTINE LGNPPF
 !>
 !!##NAME
 !!    lgnran(3f) - [M_datapac:STATISTICS:RANDOM] generate lognormal random numbers
@@ -13373,17 +13256,18 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine lgnran (X, Y)
 !!
 !!##DESCRIPTION
-!!    lgnran(3f) generates a random sample of size n
-!!    from the lognormal distribution.
-!!    the prototype lognormal distribution used
-!!    herein has mean = sqrt(e) = 1.64872127
-!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742.
-!!    this distribution is defined for all positive x
-!!    and has the probability density function
-!!    f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
-!!    the prototype lognormal distribution used herein
-!!    is the distribution of the variate x = exp(z) where
-!!    the variate z is normally distributed
+!!    lgnran(3f) generates a random sample of size n from the lognormal
+!!    distribution.
+!!
+!!    the prototype lognormal distribution used herein has mean = sqrt(e)
+!!    = 1.64872127 and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+!!    this distribution is defined for all positive x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!
+!!    the prototype lognormal distribution used herein is the distribution
+!!    of the variate x = exp(z) where the variate z is normally distributed
 !!    with mean = 0 and standard deviation = 1.
 !!
 !!##OPTIONS
@@ -13412,7 +13296,6 @@ REAL(kind=wp) :: P , Ppf
 !!    CC0-1.0
 !*==lgnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNRAN(N,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
 !
@@ -13525,7 +13408,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
          ENDDO
       ENDIF
 !
-      END SUBROUTINE LGNRAN
+END SUBROUTINE LGNRAN
 !>
 !!##NAME
 !!    loc(3f) - [M_datapac:STATISTICS] compute the sample mean, midrange,
@@ -13536,9 +13419,9 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!     Subroutine loc (X, Y)
 !!
 !!##DESCRIPTION
-!!    loc(3f) computes 4 estimates of the
-!!    location (typical value, measure of central
-!!    tendancy) of the data in the input vector x.
+!!    loc(3f) computes 4 estimates of the location (typical value, measure
+!!    of central tendancy) of the data in the input vector x.
+!!
 !!    the 4 estimators employed are--
 !!
 !!            1. the sample midrange;
@@ -13546,12 +13429,9 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!            3. the sample midmean; and
 !!            4. the sample median.
 !!
-!!    the above 4 estimators are near-optimal
-!!    estimators of location
-!!    for shorter-tailed symmetric distributions,
-!!    moderate-tailed distributions,
-!!    moderate-long-tailed distributions,
-!!    and long-tailed distributions,
+!!    the above 4 estimators are near-optimal estimators of location for
+!!    shorter-tailed symmetric distributions, moderate-tailed distributions,
+!!    moderate-long-tailed distributions, and long-tailed distributions,
 !!    respectively.
 !!
 !!##OPTIONS
@@ -13580,7 +13460,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!    CC0-1.0
 !*==loc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOC(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
      &     xmidm , Y
       INTEGER i , iflag , imax , imaxm1 , imin , iminp1 , ipr , iupper ,&
@@ -13725,7 +13604,7 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
       ENDIF
 99011 FORMAT (' ')
 !
-      END SUBROUTINE LOC
+END SUBROUTINE LOC
 !>
 !!##NAME
 !!    logcdf(3f) - [M_datapac:STATISTICS:CD] compute the logistic cumulative
@@ -13736,12 +13615,14 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 !!     Subroutine logcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    logcdf(3f) computes the cumulative distribution
-!!    function value for the logistic distribution
-!!    with mean = 0 and standard deviation = pi/sqrt(3).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = exp(x)/(1+exp(x)).
+!!    logcdf(3f) computes the cumulative distribution function value for
+!!    the logistic distribution with mean = 0 and standard deviation =
+!!    pi/sqrt(3).
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = exp(x)/(1+exp(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13769,7 +13650,6 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 !!    CC0-1.0
 !*==logcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGCDF(X,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !
@@ -13815,12 +13695,14 @@ END SUBROUTINE LOGCDF
 !!     Subroutine logpdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    logpdf(3f) computes the probability density
-!!    function value for the logistic distribution
-!!    with mean = 0 and standard deviation = pi/sqrt(3).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = exp(x)/(1+exp(x)).
+!!    logpdf(3f) computes the probability density function value for
+!!    the logistic distribution with mean = 0 and standard deviation =
+!!    pi/sqrt(3).
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = exp(x)/(1+exp(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13848,7 +13730,6 @@ END SUBROUTINE LOGCDF
 !!    CC0-1.0
 !*==logpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGPDF(X,Pdf)
-      IMPLICIT NONE
       INTEGER ipr
 REAL(kind=wp) :: Pdf , X
 !
@@ -13879,7 +13760,7 @@ REAL(kind=wp) :: Pdf , X
 !
       Pdf = EXP(X)/((1.0_wp+EXP(X))**2)
 !
-      END SUBROUTINE LOGPDF
+END SUBROUTINE LOGPDF
 !>
 !!##NAME
 !!    logplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a logistic probability
@@ -13890,26 +13771,27 @@ REAL(kind=wp) :: Pdf , X
 !!     Subroutine logplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    logplt(3f) generates a logistic
-!!    probability plot.
-!!    the prototype logistic distribution used herein
-!!    has mean = 0 and standard deviation = pi/sqrt(3).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = exp(x) / (1+exp(x)).
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the logistic probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the logistic distribution.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    logplt(3f) generates a logistic probability plot.
+!!
+!!    the prototype logistic distribution used herein has mean = 0 and
+!!    standard deviation = pi/sqrt(3). This distribution is defined for
+!!    all x and has the probability density function
+!!
+!!        f(x) = exp(x) / (1+exp(x)).
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the logistic probability plot is useful in graphically testing
+!!    the composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the logistic distribution.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13937,7 +13819,6 @@ REAL(kind=wp) :: Pdf , X
 !!    CC0-1.0
 !*==logplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGPLT(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
@@ -14062,7 +13943,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE LOGPLT
+END SUBROUTINE LOGPLT
 !>
 !!##NAME
 !!    logppf(3f) - [M_datapac:STATISTICS:PP] compute the logistic percent
@@ -14070,18 +13951,22 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine logppf (X, Y)
+!!     SUBROUTINE LOGPPF(P,Ppf)
+!!
+!!      REAL(kind=wp) :: P , Ppf
 !!
 !!##DESCRIPTION
-!!    logppf(3f) computes the percent point
-!!    function value for the logistic distribution
-!!    with mean = 0 and standard deviation = pi/sqrt(3).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = exp(x)/(1+exp(x)).
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!    LOGPPF(3f) computes the percent point function value for the logistic
+!!    distribution with mean = 0 and standard deviation = pi/sqrt(3).
+!!
+!!    This distribution is defined for all X and has the probability
+!!    density function
+!!
+!!        f(X) = exp(X)/(1+exp(X))
+!!
+!!    Note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14107,11 +13992,14 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==logppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LOGPPF(P,Ppf)
-      IMPLICIT NONE
-      INTEGER ipr
+
+SUBROUTINE LOGPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
+INTEGER       :: ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -14123,8 +14011,6 @@ REAL(kind=wp) :: P , Ppf
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -14133,35 +14019,22 @@ REAL(kind=wp) :: P , Ppf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (ipr,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-!CCCC CALL QCORR(P,Q)
-!CCCC PPF=LOG(P/Q)
          Ppf = LOG(P/(1.0_wp-P))
       ENDIF
 !
-      END SUBROUTINE LOGPPF
+99001 FORMAT(' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
+END SUBROUTINE LOGPPF
 !>
 !!##NAME
 !!    logran(3f) - [M_datapac:STATISTICS:RANDOM] generate logistic random numbers
@@ -14171,12 +14044,13 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine logran (X, Y)
 !!
 !!##DESCRIPTION
-!!    logran(3f) generates a random sample of size n
-!!    from the logistic distribution
-!!    with mean = 0 and standard deviation = pi/sqrt(3).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = exp(x)/(1+exp(x)).
+!!    LOGRAN(3f) generates a random sample of size N from the logistic
+!!    distribution with mean = 0 and standard deviation = pi/sqrt(3).
+!!
+!!    This distribution is defined for all X and has the probability
+!!    density function
+!!
+!!        f(X) = exp(X)/(1+exp(X))
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14202,9 +14076,14 @@ REAL(kind=wp) :: P , Ppf
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
 !*==logran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGRAN(N,Iseed,X)
-      IMPLICIT NONE
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
 !
@@ -14236,27 +14115,10 @@ REAL(kind=wp) :: X
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     VERSION NUMBER--82.6
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --DECEMBER  1981.
-!     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
 !---------------------------------------------------------------------
-!
       DIMENSION X(:)
-!
 !---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
       ipr = 6
 !
 !-----START POINT-----------------------------------------------------
@@ -14272,9 +14134,9 @@ REAL(kind=wp) :: X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
          CALL UNIRAN(N,Iseed,X)
 !
 !     GENERATE N LOGISTIC RANDOM NUMBERS
@@ -14285,7 +14147,7 @@ REAL(kind=wp) :: X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE LOGRAN
+END SUBROUTINE LOGRAN
 !>
 !!##NAME
 !!    logsf(3f) - [M_datapac:STATISTICS:SF] compute the logistic sparsity function
@@ -14295,16 +14157,17 @@ REAL(kind=wp) :: X
 !!     Subroutine logsf (X, Y)
 !!
 !!##DESCRIPTION
-!!    logsf(3f) computes the sparsity
-!!    function value for the logistic distribution
-!!    with mean = 0 and standard deviation = pi/sqrt(3).
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = exp(x)/(1+exp(x)).
-!!    note that the sparsity function of a distribution
-!!    is the derivative of the percent point function,
-!!    and also is the reciprocal of the probability
-!!    density function (but in units of p rather than x).
+!!    logsf(3f) computes the sparsity function value for the logistic
+!!    distribution with mean = 0 and standard deviation = pi/sqrt(3).
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = exp(x)/(1+exp(x)).
+!!
+!!    note that the sparsity function of a distribution is the derivative
+!!    of the percent point function, and also is the reciprocal of the
+!!    probability density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14332,7 +14195,6 @@ REAL(kind=wp) :: X
 !!    CC0-1.0
 !*==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGSF(P,Sf)
-      IMPLICIT NONE
       INTEGER ipr
 REAL(kind=wp) :: P , Sf
 !
@@ -14381,7 +14243,7 @@ REAL(kind=wp) :: P , Sf
          Sf = 1.0_wp/(P-P*P)
       ENDIF
 !
-      END SUBROUTINE LOGSF
+END SUBROUTINE LOGSF
 !>
 !!##NAME
 !!    max(3f) - [M_datapac:STATISTICS] MAX compute the maximum of a data vector
@@ -14391,9 +14253,8 @@ REAL(kind=wp) :: P , Sf
 !!     Subroutine max (X, Y)
 !!
 !!##DESCRIPTION
-!!    max(3f) computes the
-!!    sample maximum
-!!    of the data in the input vector x.
+!!
+!!    max(3f) computes the sample maximum of the data in the input vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14420,10 +14281,10 @@ REAL(kind=wp) :: P , Sf
 !!##LICENSE
 !!    CC0-1.0
 !*==max.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE MAX(X,N,Iwrite,Xmax)
-      IMPLICIT NONE
-REAL(kind=wp) :: hold , X , Xmax
-      INTEGER i , ipr , Iwrite , N
+
+SUBROUTINE MAX(X,N,Iwrite,Xmax)
+REAL(kind=wp) :: hold , X(:) , Xmax
+INTEGER i , ipr , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -14456,56 +14317,47 @@ REAL(kind=wp) :: hold , X , Xmax
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
       ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( N<1 ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MAX    SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         RETURN
-      ELSE
-         IF ( N==1 ) THEN
-            WRITE (ipr,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MAX &
-     &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xmax = X(1)
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (ipr,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE MAX    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xmax = X(1)
-         ENDIF
-         GOTO 100
+IF ( N<1 ) THEN
+   WRITE (ipr,99001)
+   99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MAX    SUBROUTINE IS NON-POSITIVE *****')
+   WRITE (ipr,99002) N
+   99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+   RETURN
+ELSE
+   IF ( N==1 ) THEN
+      WRITE (ipr,99003)
+      99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MAX SUBROUTINE HAS THE VALUE 1 *****')
+      Xmax = X(1)
+   ELSE
+      hold = X(1)
+      DO i = 2 , N
+         IF ( X(i)/=hold ) GOTO 50
+      ENDDO
+      WRITE (ipr,99004) hold
+      99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO THE MAX SUBROUTINE HAS ALL ELEMENTS = ', &
+      & E15.8, &
+      & ' *****')
+      Xmax = X(1)
+   ENDIF
+
+   GOTO 100
+   50  continue
+   Xmax = X(1)
+   DO i = 2 , N
+      IF ( X(i)>Xmax ) Xmax = X(i)
+   ENDDO
+ENDIF
 !
-!-----START POINT-----------------------------------------------------
-!
- 50      Xmax = X(1)
-         DO i = 2 , N
-            IF ( X(i)>Xmax ) Xmax = X(i)
-         ENDDO
-      ENDIF
-!
- 100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
-99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xmax
-99006 FORMAT (' ','THE MAXIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ',  &
-     &        E15.8)
-      END SUBROUTINE MAX
+100  IF ( Iwrite==0 ) RETURN
+   WRITE (ipr,99005)
+   99005 FORMAT (' ')
+   WRITE (ipr,99006) N , Xmax
+   99006 FORMAT (' ','THE MAXIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ', E15.8)
+END SUBROUTINE MAX
 !>
 !!##NAME
 !!    mean(3f) - [M_datapac:STATISTICS] compute the mean of a data vector
@@ -14515,8 +14367,8 @@ REAL(kind=wp) :: hold , X , Xmax
 !!     Subroutine mean (X, Y)
 !!
 !!##DESCRIPTION
-!!    mean(3f) computes the sample mean
-!!    of the data in the input vector x.
+!!    mean(3f) computes the sample mean of the data in the input vector x.
+!!
 !!    the sample mean = (sum of the observations)/n.
 !!
 !!##OPTIONS
@@ -14544,10 +14396,9 @@ REAL(kind=wp) :: hold , X , Xmax
 !!##LICENSE
 !!    CC0-1.0
 !*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE MEAN(X,N,Iwrite,Xmean)
-      IMPLICIT NONE
-REAL(kind=wp) :: an , hold , sum , X , Xmean
-      INTEGER i , ipr , Iwrite , N
+SUBROUTINE MEAN(X,N,Iwrite,Xmean)
+REAL(kind=wp) :: an, hold, sum, X, Xmean
+INTEGER       :: i, ipr, Iwrite, N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -14637,7 +14488,7 @@ REAL(kind=wp) :: an , hold , sum , X , Xmean
       WRITE (ipr,99006) N , Xmean
 99006 FORMAT (' ','THE SAMPLE MEAN OF THE ',I6,' OBSERVATIONS IS ',     &
      &        E15.8)
-      END SUBROUTINE MEAN
+END SUBROUTINE MEAN
 !>
 !!##NAME
 !!    median(3f) - [M_datapac:STATISTICS] compute the median of a data vector
@@ -14647,11 +14498,11 @@ REAL(kind=wp) :: an , hold , sum , X , Xmean
 !!     Subroutine median (X, Y)
 !!
 !!##DESCRIPTION
-!!    median(3f) computes the
-!!    sample median
-!!    of the data in the input vector x.
-!!    the sample median = that value such that half the
-!!    data set is below it and half above it.
+!!    median(3f) computes the sample median of the data in the input
+!!    vector x.
+!!
+!!    the sample median = that value such that half the data set is below
+!!    it and half above it.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14679,7 +14530,6 @@ REAL(kind=wp) :: an , hold , sum , X , Xmean
 !!    CC0-1.0
 !*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
-      IMPLICIT NONE
 REAL(kind=wp) :: hold , WS , X , Xmed , Y
       INTEGER i , iflag , ipr , iupper , Iwrite , N , nmid , nmidp1
 !
@@ -14779,7 +14629,7 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
       WRITE (ipr,99006) N , Xmed
 99006 FORMAT (' ','THE SAMPLE MEDIAN OF THE ',I6,' OBSERVATIONS IS ',   &
      &        E15.8)
-      END SUBROUTINE MEDIAN
+END SUBROUTINE MEDIAN
 !>
 !!##NAME
 !!    midm(3f) - [M_datapac:STATISTICS] compute the midmean of a data vector
@@ -14789,10 +14639,8 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !!     Subroutine midm (X, Y)
 !!
 !!##DESCRIPTION
-!!    midm(3f) computes the
-!!    sample midmean = the
-!!    sample 25% (on each side) trimmed mean
-!!    of the data in the input vector x.
+!!    midm(3f) computes the sample midmean = the sample 25% (on each side)
+!!    trimmed mean of the data in the input vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14820,7 +14668,6 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !!    CC0-1.0
 !*==midm.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
-      IMPLICIT NONE
 REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
      &     X , Xmidm , Y
       INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
@@ -14952,7 +14799,7 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 99010 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
      &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
 !
-      END SUBROUTINE MIDM
+END SUBROUTINE MIDM
 !>
 !!##NAME
 !!    midr(3f) - [M_datapac:STATISTICS] compute the midrange of a data vector
@@ -14962,9 +14809,9 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 !!     Subroutine midr (X, Y)
 !!
 !!##DESCRIPTION
-!!    midr(3f) computes the
-!!    sample midrange
-!!    of the data in the input vector x.
+!!    midr(3f) computes the sample midrange of the data in the input
+!!    vector x.
+!!
 !!    the sample midrange = (sample min + sample max)/2.
 !!
 !!##OPTIONS
@@ -14993,7 +14840,6 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 !!    CC0-1.0
 !*==midr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
-      IMPLICIT NONE
 REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
       INTEGER i , ipr , Iwrite , N
 !
@@ -15086,7 +14932,7 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
       WRITE (ipr,99006) N , Xmidr
 99006 FORMAT (' ','THE SAMPLE MIDRANGE OF THE ',I6,' OBSERVATIONS IS ', &
      &        E22.15)
-      END SUBROUTINE MIDR
+END SUBROUTINE MIDR
 !>
 !!##NAME
 !!    min(3f) - [M_datapac:STATISTICS] compute the minimum of a data vector
@@ -15096,8 +14942,7 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 !!     Subroutine min (X, Y)
 !!
 !!##DESCRIPTION
-!!    min(3f) computes the sample minimum
-!!    of the data in the input vector x.
+!!    min(3f) computes the sample minimum of the data in the input vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15125,7 +14970,6 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 !!    CC0-1.0
 !*==min.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIN(X,N,Iwrite,Xmin)
-      IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Xmin
       INTEGER i , ipr , Iwrite , N
 !
@@ -15209,7 +15053,7 @@ REAL(kind=wp) :: hold , X , Xmin
       WRITE (ipr,99006) N , Xmin
 99006 FORMAT (' ','THE MINIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ',  &
      &        E15.8)
-      END SUBROUTINE MIN
+END SUBROUTINE MIN
 !>
 !!##NAME
 !!    move(3f) - [M_datapac:STATISTICS] move selected elements of one vector
@@ -15220,13 +15064,11 @@ REAL(kind=wp) :: hold , X , Xmin
 !!     Subroutine move (X, Y)
 !!
 !!##DESCRIPTION
-!!    move(3f) moves (copies) m elements of the
-!!    single precision vector x
-!!    (starting with position ix1)
-!!    into the single precision vector y
+!!    move(3f) moves (copies) m elements of the single precision vector
+!!    x (starting with position ix1) into the single precision vector y
 !!    (starting with position iy1).
-!!    this allows the data analyst
-!!    to take any subvector in x and place it
+!!
+!!    this allows the data analyst to take any subvector in x and place it
 !!    anywhere in the vector y.
 !!
 !!##OPTIONS
@@ -15355,7 +15197,7 @@ INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
       ENDIF
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-      END SUBROUTINE MOVE
+END SUBROUTINE MOVE
 !>
 !!##NAME
 !!    nbcdf(3f) - [M_datapac:STATISTICS:CD] compute the negative binomial
@@ -15366,29 +15208,26 @@ INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
 !!     Subroutine nbcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    nbcdf(3f) computes the cumulative distribution
-!!    function value at the single precision value x
-!!    for the negative binomial distribution
-!!    with single precision 'bernoulli probability'
-!!    parameter = p,
-!!    and integer 'number of successes in bernoulli trials'
-!!    parameter = n.
-!!    the negative binomial distribution used
-!!    herein has mean = n*(1-p)/p
-!!    and standard deviation = sqrt(n*(1-p)/(p*p))).
-!!    this distribution is defined for
-!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!
+!!    nbcdf(3f) computes the cumulative distribution function value at the
+!!    single precision value x for the negative binomial distribution with
+!!    single precision 'bernoulli probability' parameter = p, and integer
+!!    'number of successes in bernoulli trials' parameter = n.
+!!
+!!    the negative binomial distribution used herein has mean = n*(1-p)/p
+!!    and standard deviation = sqrt(n*(1-p)/(p*p))). this distribution
+!!    is defined for all non-negative integer x--x = 0, 1, 2, ... .
 !!    this distribution has the probability function
-!!    f(x) = c(n+x-1,n) * p**n * (1-p)**x.
-!!    where c(n+x-1,n) is the combinatorial function
-!!    equaling the number of combinations of n+x-1 items
-!!    taken n at a time.
-!!    the negative binomial distribution is the
-!!    distribution of the number of failures
-!!    before obtaining n successes in an
-!!    indefinite sequence of bernoulli (0,1)
-!!    trials where the probability of success
-!!    in a single trial = p.
+!!
+!!        f(x) = c(n+x-1,n) * p**n * (1-p)**x.
+!!
+!!    where c(n+x-1,n) is the combinatorial function equaling the number
+!!    of combinations of n+x-1 items taken n at a time.
+!!
+!!    the negative binomial distribution is the distribution of the number
+!!    of failures before obtaining n successes in an indefinite sequence of
+!!    bernoulli (0,1) trials where the probability of success in a single
+!!    trial = p.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15416,7 +15255,6 @@ INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
 !!    CC0-1.0
 !*==nbcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBCDF(X,P,N,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
       INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
      &        k , N , n2 , nu1 , nu2
@@ -15685,7 +15523,7 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
       ENDIF
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE NBCDF
+END SUBROUTINE NBCDF
 !>
 !!##NAME
 !!    nbppf(3f) - [M_datapac:STATISTICS:PP] compute the negative binomial
@@ -15696,32 +15534,32 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 !!     Subroutine nbppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    nbppf(3f) computes the percent point
-!!    function value at the single precision value p
-!!    for the negative binomial distribution
-!!    with single precision 'bernoulli probability'
-!!    parameter = ppar,
-!!    and integer 'number of successes in bernoulli trials'
-!!    parameter = n.
-!!    the negative binomial distribution used
-!!    herein has mean = n*(1-ppar)/ppar
-!!    and standard deviation = sqrt(n*(1-ppar)/(ppar*ppar))).
-!!    this distribution is defined for
-!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    nbppf(3f) computes the percent point function value at the single
+!!    precision value p for the negative binomial distribution with single
+!!    precision 'bernoulli probability' parameter = ppar, and integer
+!!    'number of successes in bernoulli trials' parameter = n.
+!!
+!!    the negative binomial distribution used herein has mean =
+!!    n*(1-ppar)/ppar and standard deviation = sqrt(n*(1-ppar)/(ppar*ppar))).
+!!    this distribution is defined for all non-negative integer x--x = 0,
+!!    1, 2, ... .
+!!
 !!    this distribution has the probability function
-!!    f(x) = c(n+x-1,n) * ppar**n * (1-ppar)**x.
+!!
+!!        f(x) = c(n+x-1,n) * ppar**n * (1-ppar)**x.
+!!
 !!    where c(n+x-1,n) is the combinatorial function
 !!    equaling the number of combinations of n+x-1 items
 !!    taken n at a time.
-!!    the negative binomial distribution is the
-!!    distribution of the number of failures
-!!    before obtaining n successes in an
-!!    indefinite sequence of bernoulli (0,1)
-!!    trials where the probability of success
-!!    in a single trial = ppar.
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!
+!!    the negative binomial distribution is the distribution of the number
+!!    of failures before obtaining n successes in an indefinite sequence of
+!!    bernoulli (0,1) trials where the probability of success in a single
+!!    trial = ppar.
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15749,7 +15587,6 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 !!    CC0-1.0
 !*==nbppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
      &     Ppar , Ppf , sd , sinh , x0 , x1 , x2 , ymean , yppf , ysd
 REAL(kind=wp) :: zppf
@@ -16103,7 +15940,7 @@ REAL(kind=wp) :: zppf
 99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
 99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
-      END SUBROUTINE NBPPF
+END SUBROUTINE NBPPF
 !>
 !!##NAME
 !!    nbran(3f) - [M_datapac:STATISTICS:RANDOM] generate negative binomial random numbers
@@ -16113,28 +15950,26 @@ REAL(kind=wp) :: zppf
 !!     Subroutine nbran (X, Y)
 !!
 !!##DESCRIPTION
-!!    nbran(3f) generates a random sample of size n
-!!    from the negative binomial distribution
-!!    with single precision 'bernoulli probability'
-!!    parameter = p,
-!!    and integer 'number of successes in bernoulli trials'
-!!    parameter = npar.
-!!    the negative binomial distribution used
-!!    herein has mean = npar*(1-p)/p
-!!    and standard deviation = sqrt(npar*(1-p)/(p*p))).
-!!    this distribution is defined for
-!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    nbran(3f) generates a random sample of size n from the negative
+!!    binomial distribution with single precision 'bernoulli probability'
+!!    parameter = p, and integer 'number of successes in bernoulli trials'
+!!    parameter = npar. the negative binomial distribution used herein has
+!!    mean = npar*(1-p)/p and standard deviation = sqrt(npar*(1-p)/(p*p))).
+!!
+!!    this distribution is defined for all non-negative integer x--x = 0,
+!!    1, 2, ... .
+!!
 !!    this distribution has the probability function
-!!    f(x) = c(npar+x-1,npar) * p**npar * (1-p)**x.
-!!    where c(npar+x-1,npar) is the combinatorial function
-!!    equaling the number of combinations of npar+x-1 items
-!!    taken npar at a time.
-!!    the negative binomial distribution is the
-!!    distribution of the number of failures
-!!    before obtaining npar successes in an
-!!    indefinite sequence of bernoulli (0,1)
-!!    trials where the probability of success
-!!    in a single trial = p.
+!!
+!!        f(x) = c(npar+x-1,npar) * p**npar * (1-p)**x.
+!!
+!!    where c(npar+x-1,npar) is the combinatorial function equaling the
+!!    number of combinations of npar+x-1 items taken npar at a time.
+!!
+!!    the negative binomial distribution is the distribution of the number
+!!    of failures before obtaining npar successes in an indefinite sequence
+!!    of bernoulli (0,1) trials where the probability of success in a single
+!!    trial = p.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -16162,7 +15997,6 @@ REAL(kind=wp) :: zppf
 !!    CC0-1.0
 !*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: b(1) , g(1) , P , X
       INTEGER i , ib , ig , ipr , Istart , isum , j , N , Npar
 !
@@ -16345,12 +16179,13 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !!     Subroutine norcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    norcdf(3f) computes the cumulative distribution
-!!    function value for the normal (gaussian)
-!!    distribution with mean = 0 and standard deviation = 1.
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!    norcdf(3f) computes the cumulative distribution function value for the
+!!    normal (gaussian) distribution with mean = 0 and standard deviation = 1.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -16377,10 +16212,9 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !!##LICENSE
 !!    CC0-1.0
 !*==norcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NORCDF(X,Cdf)
-      IMPLICIT NONE
+SUBROUTINE NORCDF(X,Cdf)
 REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
-      INTEGER ipr
+INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
@@ -16419,7 +16253,7 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
      &      *(b1*t+b2*t**2+b3*t**3+b4*t**4+b5*t**5)
       IF ( X<0.0_wp ) Cdf = 1.0_wp - Cdf
 !
-      END SUBROUTINE NORCDF
+END SUBROUTINE NORCDF
 !>
 !!##NAME
 !!    norout(3f) - [M_datapac:STATISTICS:CD] Performs a normal outlier analysis
@@ -16430,8 +16264,10 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !!     Subroutine norout (X, Y)
 !!
 !!##DESCRIPTION
-!!    norout(3f) performs a normal outlier analysis
-!!    on the data in the input vector x.
+!!
+!!    norout(3f) performs a normal outlier analysis on the data in the
+!!    input vector x.
+!!
 !!    this analysis consists of--
 !!
 !!      1. various normal outlier statistics;
@@ -16441,21 +16277,15 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !!      5. a line plot; and
 !!      6. a normal probability plot.
 !!
-!!    when the first 40 and last 40 ordered observations
-!!    are printed out, also included for each
-!!    of the 40+40 = 80 listed data values
-!!    is the corresponding residual about
-!!    the (full) sample mean,
-!!    the standardized residual,
-!!    the normal n(0,1) value for the standardized
-!!    residual,
-!!    and the position number
-!!    in the original data vector x.
-!!    this last piece of information allows
-!!    the data analyst to easily locate
-!!    back in the original data vector .
-!!    a suspected outlier or otherwise
-!!    interesting observation.
+!!    when the first 40 and last 40 ordered observations are printed out,
+!!    also included for each of the 40+40 = 80 listed data values is the
+!!    corresponding residual about the (full) sample mean, the standardized
+!!    residual, the normal n(0,1) value for the standardized residual,
+!!    and the position number in the original data vector x.
+!!
+!!    this last piece of information allows the data analyst to easily
+!!    locate back in the original data vector. a suspected outlier or
+!!    otherwise interesting observation.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -16483,7 +16313,6 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !!    CC0-1.0
 !*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NOROUT(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
      &     res , s , s1 , s13 , s14 , s2 , s23 , s24 , s3 , s4 , ssq
 REAL(kind=wp) :: ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
@@ -16911,7 +16740,7 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 99043 FORMAT (' ',I5,4X,E15.8,1X,E15.8,7X,F7.2,11X,F8.5,11X,F7.0)
 99044 FORMAT (' ',130A1)
 !
-      END SUBROUTINE NOROUT
+END SUBROUTINE NOROUT
 !>
 !!##NAME
 !!    norpdf(3f) - [M_datapac:STATISTICS:PD] compute the normal probability
@@ -16922,12 +16751,14 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !!     Subroutine norpdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    norpdf(3f) computes the probability density
-!!    function value for the normal (gaussian)
-!!    distribution with mean = 0 and standard deviation = 1.
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!    norpdf(3f) computes the probability density function value for the
+!!    normal (gaussian) distribution with mean = 0 and standard deviation
+!!    = 1.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -16988,7 +16819,7 @@ REAL(kind=wp) :: c , Pdf , X
 !
       Pdf = c*EXP(-(X*X)/2.0_wp)
 !
-      END SUBROUTINE NORPDF
+END SUBROUTINE NORPDF
 !>
 !!##NAME
 !!    norplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a normal probability plot
@@ -16998,26 +16829,25 @@ REAL(kind=wp) :: c , Pdf , X
 !!     Subroutine norplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    norplt(3f) generates a normal (gaussian)
-!!    probability plot.
-!!    the prototype normal distribution used herein
-!!    has mean = 0 and standard deviation = 1.
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = (1/sqrt(2*pi)) * exp(-x*x/2).
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the normal probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the normal distribution.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    norplt(3f) generates a normal (gaussian) probability plot.
+!!
+!!    the prototype normal distribution used herein has mean = 0 and standard
+!!    deviation = 1. this distribution is defined for all x and has the
+!!    probability density function
+!!
+!!        f(x) = (1/sqrt(2*pi)) * exp(-x*x/2).
+!!
+!!    as used herein, a probability plot for a distribution is a plot of
+!!    the ordered observations versus the order statistic medians for that
+!!    distribution. the normal probability plot is useful in graphically
+!!    testing the composite (that is, location and scale parameters need
+!!    not be specified) hypothesis that the underlying distribution from
+!!    which the data have been randomly drawn is the normal distribution.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -17045,7 +16875,6 @@ REAL(kind=wp) :: c , Pdf , X
 !!    CC0-1.0
 !*==norplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORPLT(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
@@ -17175,7 +17004,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE NORPLT
+END SUBROUTINE NORPLT
 !>
 !!##NAME
 !!    norppf(3f) - [M_datapac:STATISTICS:PP] compute the normal percent point function
@@ -17185,15 +17014,17 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!     Subroutine norppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    norppf(3f) computes the percent point
-!!    function value for the normal (gaussian)
-!!    distribution with mean = 0 and standard deviation = 1.
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!    norppf(3f) computes the percent point function value for the normal
+!!    (gaussian) distribution with mean = 0 and standard deviation = 1.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -17221,7 +17052,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!    CC0-1.0
 !*==norppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORPPF(P,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
      &     q2 , q3 , q4 , r , t
       INTEGER ipr
@@ -17366,7 +17196,6 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !!    CC0-1.0
 !*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORRAN(N,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
 !
@@ -17471,7 +17300,7 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
          ENDDO
       ENDIF
 !
-      END SUBROUTINE NORRAN
+END SUBROUTINE NORRAN
 !>
 !!##NAME
 !!    norsf(3f) - [M_datapac:STATISTICS:SF] compute the normal sparsity function
@@ -17481,16 +17310,17 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!     Subroutine norsf (X, Y)
 !!
 !!##DESCRIPTION
-!!    norsf(3f) computes the sparsity
-!!    function value for the normal (gaussian)
-!!    distribution with mean = 0 and standard deviation = 1.
-!!    this distribution is defined for all x and has
-!!    the probability density function
-!!    f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
-!!    note that the sparsity function of a distribution
-!!    is the derivative of the percent point function,
-!!    and also is the reciprocal of the probability
-!!    density function (but in units of p rather than x).
+!!    norsf(3f) computes the sparsity function value for the normal
+!!    (gaussian) distribution with mean = 0 and standard deviation = 1.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!
+!!    note that the sparsity function of a distribution is the derivative
+!!    of the percent point function, and also is the reciprocal of the
+!!    probability density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -17518,7 +17348,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!    CC0-1.0
 !*==norsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORSF(P,Sf)
-      IMPLICIT NONE
 REAL(kind=wp) :: c , P , pdf , ppf , Sf
       INTEGER ipr
 !
@@ -17573,7 +17402,7 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
          Sf = 1.0_wp/pdf
       ENDIF
 !
-      END SUBROUTINE NORSF
+END SUBROUTINE NORSF
 !>
 !!##NAME
 !!    parcdf(3f) - [M_datapac:STATISTICS:CD] compute the Pareto cumulative
@@ -17584,15 +17413,15 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !!     Subroutine parcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    parcdf(3f) computes the cumulative distribution
-!!    function value for the pareto
-!!    distribution with single precision
-!!    tail length parameter = gamma.
-!!    the pareto distribution used
-!!    herein is defined for all x greater than
-!!    or equal to 1,
-!!    and has the probability density function
-!!    f(x) = gamma / (x**(gamma+1)).
+!!
+!!    parcdf(3f) computes the cumulative distribution function value for
+!!    the pareto distribution with single precision tail length parameter
+!!    = gamma.
+!!
+!!    the pareto distribution used herein is defined for all x greater than
+!!    or equal to 1, and has the probability density function
+!!
+!!        f(x) = gamma / (x**(gamma+1)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -17618,9 +17447,10 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--NOVEMBER  1975.
 !*==parcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PARCDF(X,Gamma,Cdf)
-      IMPLICIT NONE
+
+SUBROUTINE PARCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER ipr
 !
@@ -17648,8 +17478,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGE 102.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
       ipr = 6
@@ -17680,7 +17508,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE PARCDF
+END SUBROUTINE PARCDF
 !>
 !!##NAME
 !!    parplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Pareto probability plot
@@ -17690,28 +17518,28 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!     Subroutine parplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    parplt(3f) generates a pareto
-!!    probability plot
-!!    (with tail length parameter value = gamma).
-!!    the prototype pareto distribution used
-!!    herein is defined for all x equal to
-!!    or greater than 1,
-!!    and has the probability density function
-!!    f(x) = gamma / (x**(gamma+1)).
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the pareto probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the  pareto distribution
-!!    with tail length parameter value = gamma.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    parplt(3f) generates a pareto probability plot (with tail length
+!!    parameter value = gamma).
+!!
+!!    the prototype pareto distribution used herein is defined for all x
+!!    equal to or greater than 1, and has the probability density function
+!!
+!!        f(x) = gamma / (x**(gamma+1)).
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the pareto probability plot is useful in graphically testing the
+!!    composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the pareto distribution with
+!!    tail length parameter value = gamma.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -17738,8 +17566,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!##LICENSE
 !!    CC0-1.0
 !*==parplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PARPLT(X,N,Gamma)
-      IMPLICIT NONE
+SUBROUTINE PARPLT(X,N,Gamma)
 REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
@@ -17892,7 +17719,7 @@ REAL(kind=wp) :: yslope
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE PARPLT
+END SUBROUTINE PARPLT
 !>
 !!##NAME
 !!    parppf(3f) - [M_datapac:STATISTICS:PP] compute the Pareto percent point function
@@ -17902,18 +17729,17 @@ REAL(kind=wp) :: yslope
 !!     Subroutine parppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    parppf(3f) computes the percent point
-!!    function value for the pareto
-!!    distribution with single precision
-!!    tail length parameter = gamma.
-!!    the pareto distribution used
-!!    herein is defined for all x greater than
-!!    or equal to 1,
-!!    and has the probability density function
-!!    f(x) = gamma / (x**(gamma+1)).
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!    parppf(3f) computes the percent point function value for the pareto
+!!    distribution with single precision tail length parameter = gamma.
+!!
+!!    the pareto distribution used herein is defined for all x greater than
+!!    or equal to 1, and has the probability density function
+!!
+!!        f(x) = gamma / (x**(gamma+1)).
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -17941,7 +17767,6 @@ REAL(kind=wp) :: yslope
 !!    CC0-1.0
 !*==parppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPPF(P,Gamma,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
 !
@@ -18001,7 +17826,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE PARPPF
+END SUBROUTINE PARPPF
 !>
 !!##NAME
 !!    parran(3f) - [M_datapac:STATISTICS:RANDOM] generate Pareto random numbers
@@ -18011,14 +17836,13 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!     Subroutine parran (X, Y)
 !!
 !!##DESCRIPTION
-!!    parran(3f) generates a random sample of size n
-!!    from the pareto distribution
-!!    with tail length parameter value = gamma.
-!!    the prototype pareto distribution used
-!!    herein is defined for all x greater than
-!!    or equal to 1,
-!!    and has the probability density function
-!!    f(x) = gamma / (x**(gamma+1)).
+!!    parran(3f) generates a random sample of size n from the pareto
+!!    distribution with tail length parameter value = gamma.
+!!
+!!    the prototype pareto distribution used herein is defined for all x
+!!    greater than or equal to 1, and has the probability density function
+!!
+!!        f(x) = gamma / (x**(gamma+1)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18046,7 +17870,6 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!    CC0-1.0
 !*==parran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
 !
@@ -18135,7 +17958,7 @@ REAL(kind=wp) :: Gamma , X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE PARRAN
+END SUBROUTINE PARRAN
 !>
 !!##NAME
 !!    plot10(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
@@ -18146,8 +17969,7 @@ REAL(kind=wp) :: Gamma , X
 !!     Subroutine plot10 (X, Y)
 !!
 !!##DESCRIPTION
-!!    plot10(3f) yields a one-page printer plot
-!!    of y(i) versus x(i):
+!!    plot10(3f) yields a one-page printer plot of y(i) versus x(i):
 !!
 !!               1. with special plot characters;
 !!               2. with the vertical (y) axis min and max
@@ -18162,13 +17984,12 @@ REAL(kind=wp) :: Gamma , X
 !!                  the plotting character variable
 !!                  also being provided by the data analyst.
 !!
-!!    the 'special plotting character' capability
-!!    allows the data analyst to incorporate information
-!!    from a third variable (aside from y and x) into
-!!    the plot.
-!!    the plot character used at the i-th plotting
-!!    position (that is, at the coordinate (x(i),y(i)))
-!!    will be
+!!    the 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from y and x)
+!!    into the plot.
+!!
+!!    the plot character used at the i-th plotting position (that is,
+!!    at the coordinate (x(i),y(i))) will be
 !!
 !!               1 if char(i) is between  0.5 and  1.5
 !!               2 if char(i) is between  1.5 and  2.5
@@ -18190,23 +18011,17 @@ REAL(kind=wp) :: Gamma , X
 !!               x if char(i) is any value outside the range
 !!                                        0.5 to  36.5.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax
-!!    specifications allows the data analyst
-!!    to control fully the plot axis limits,
-!!    so as, for example, to zero-in on an
-!!    interesting sub-region of a previous plot.
+!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    data analyst to control fully the plot axis limits, so as, for example,
+!!    to zero-in on an interesting sub-region of a previous plot.
 !!
-!!    the use of the subset definition vector d
-!!    gives the data analyst the capability of
-!!    plotting subsets of the data,
-!!    where the subset is defined
-!!    by values in the vector d.
+!!    the use of the subset definition vector d gives the data analyst
+!!    the capability of plotting subsets of the data, where the subset is
+!!    defined by values in the vector d.
 !!
-!!    the use of hollerith identifying labels
-!!    allows the data analyst to automatically
-!!    have the plots labeled.  this is particularly
-!!    useful in a large analysis when many
-!!    plots are being generated.
+!!    the use of hollerith identifying labels allows the data analyst to
+!!    automatically have the plots labeled. this is particularly useful
+!!    in a large analysis when many plots are being generated.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18646,7 +18461,7 @@ REAL(kind=wp) :: Ymax , Ymin
 99021 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99022 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOT10
+END SUBROUTINE PLOT10
 !>
 !!##NAME
 !!    plot6(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot
@@ -18656,18 +18471,15 @@ REAL(kind=wp) :: Ymax , Ymin
 !!     Subroutine plot6 (X, Y)
 !!
 !!##DESCRIPTION
-!!    plot6(3f) yields a one-page printer plot
-!!    of y(i) versus x(i):
+!!    plot6(3f) yields a one-page printer plot of y(i) versus x(i):
 !!
 !!      1. with the vertical (y) axis min and max
 !!         and the horizontal (x) axis min and max
 !!         values specified by the data analyst.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax
-!!    specifications allows the data analyst
-!!    to control fully the plot axis limits,
-!!    so as, for example, to zero-in on an
-!!    interesting sub-region of a previous plot.
+!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    data analyst to control fully the plot axis limits, so as, for example,
+!!    to zero-in on an interesting sub-region of a previous plot.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18970,7 +18782,7 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 99015 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99016 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOT6
+END SUBROUTINE PLOT6
 !>
 !!##NAME
 !!    plot7(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
@@ -18981,20 +18793,19 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !!     Subroutine plot7 (X, Y)
 !!
 !!##DESCRIPTION
-!!    plot7(3f) yields a one-page printer plot
-!!    of y(i) versus x(i):
+!!    plot7(3f) yields a one-page printer plot of y(i) versus x(i):
+!!
 !!      1. with special plot characters; and
 !!      2. with the vertical (y) axis min and max
 !!         and the horizontal (x) axis min and max
 !!         values specified by the data analyst.
 !!
-!!    the 'special plotting character' capability
-!!    allows the data analyst to incorporate information
-!!    from a third variable (aside from y and x) into
-!!    the plot.
-!!    the plot character used at the i-th plotting
-!!    position (that is, at the coordinate (x(i),y(i)))
-!!    will be
+!!    the 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from y and x)
+!!    into the plot.
+!!
+!!    the plot character used at the i-th plotting position (that is,
+!!    at the coordinate (x(i),y(i))) will be
 !!
 !!      1 if char(i) is between  0.5 and  1.5
 !!      2 if char(i) is between  1.5 and  2.5
@@ -19016,12 +18827,9 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !!      x if char(i) is any value outside the range
 !!                               0.5 to  36.5.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax
-!!    specifications allows the data analyst
-!!    to control fully the plot axis limits,
-!!    so as, for example, to zero-in on an
-!!    interesting sub-region of a previous plot.
-!!
+!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    data analyst to control fully the plot axis limits, so as, for example,
+!!    to zero-in on an interesting sub-region of a previous plot.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -19049,7 +18857,6 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !!    CC0-1.0
 !*==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
@@ -19383,7 +19190,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 99016 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99017 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOT7
+END SUBROUTINE PLOT7
 !>
 !!##NAME
 !!    plot8(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
@@ -19394,8 +19201,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!     Subroutine plot8 (X, Y)
 !!
 !!##DESCRIPTION
-!!    plot8(3f) yields a one-page printer plot
-!!    of y(i) versus x(i):
+!!    plot8(3f) yields a one-page printer plot of y(i) versus x(i):
 !!
 !!      1. with special plot characters;
 !!      2. with the vertical (y) axis min and max
@@ -19405,14 +19211,12 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!         for which the corresponding value of d(i)
 !!         is between the specified values of dmin and dmax.
 !!
-!!    the 'special plotting character' capability
-!!    allows the data analyst to incorporate information
-!!    from a third variable (aside from y and x) into
-!!    the plot.
+!!    the 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from y and x)
+!!    into the plot.
 !!
-!!    the plot character used at the i-th plotting
-!!    position (that is, at the coordinate (x(i),y(i)))
-!!    will be
+!!    the plot character used at the i-th plotting position (that is,
+!!    at the coordinate (x(i),y(i))) will be
 !!
 !!      1 if char(i) is between  0.5 and  1.5
 !!      2 if char(i) is between  1.5 and  2.5
@@ -19434,17 +19238,13 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!      x if char(i) is any value outside the range
 !!                               0.5 to  36.5.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax
-!!    specifications allows the data analyst
-!!    to control fully the plot axis limits,
-!!    so as, for example, to zero-in on an
-!!    interesting sub-region of a previous plot.
+!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    data analyst to control fully the plot axis limits, so as, for example,
+!!    to zero-in on an interesting sub-region of a previous plot.
 !!
-!!    the use of the subset defintion vector d
-!!    gives the data analyst the capability of
-!!    plotting subsets of the data,
-!!    where the subset is defined
-!!    by values in the vector d.
+!!    the use of the subset defintion vector d gives the data analyst
+!!    the capability of plotting subsets of the data, where the subset is
+!!    defined by values in the vector d.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -19472,7 +19272,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!    CC0-1.0
 !*==plot8.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable ,   &
      &     Ymax , Ymin
@@ -19864,7 +19663,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 99019 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99020 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOT8
+END SUBROUTINE PLOT8
 !>
 !!##NAME
 !!    plot9(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
@@ -19875,8 +19674,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !!     Subroutine plot9 (X, Y)
 !!
 !!##DESCRIPTION
-!!    plot9(3f) yields a one-page printer plot
-!!    of y(i) versus x(i):
+!!    plot9(3f) yields a one-page printer plot of y(i) versus x(i):
 !!
 !!      1) with special plot characters;
 !!      2) with the vertical (y) axis min and max
@@ -19888,14 +19686,12 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !!         the plotting character variable
 !!         also being provided by the data analyst.
 !!
-!!    the 'special plotting character' capability
-!!    allows the data analyst to incorporate information
-!!    from a third variable (aside from y and x) into
-!!    the plot.
+!!    the 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from y and x)
+!!    into the plot.
 !!
-!!    the plot character used at the i-th plotting
-!!    position (that is, at the coordinate (x(i),y(i)))
-!!    will be
+!!    the plot character used at the i-th plotting position (that is,
+!!    at the coordinate (x(i),y(i))) will be
 !!
 !!      1 if char(i) is between  0.5 and  1.5
 !!      2 if char(i) is between  1.5 and  2.5
@@ -19917,17 +19713,13 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !!      x if char(i) is any value outside the range
 !!                               0.5 to  36.5.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax
-!!    specifications allows the data analyst
-!!    to control fully the plot axis limits,
-!!    so as, for example, to zero-in on an
-!!    interesting sub-region of a previous plot.
+!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    data analyst to control fully the plot axis limits, so as, for example,
+!!    to zero-in on an interesting sub-region of a previous plot.
 !!
-!!    the use of hollerith identifying labels
-!!    allows the data analyst to automatically
-!!    have the plots labeled.  this is particularly
-!!    useful in a large analysis when many
-!!    plots are being generated.
+!!    the use of hollerith identifying labels allows the data analyst to
+!!    automatically have the plots labeled. this is particularly useful
+!!    in a large analysis when many plots are being generated.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -19956,7 +19748,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !*==plot9.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,      &
      &                 Plchid)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
      &     x25 , x75 , Xaxid , Xmax , xmid , Xmin , Y , Yaxid , ylable ,&
      &     Ymax , Ymin
@@ -20311,7 +20102,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 99018 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99019 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOT9
+END SUBROUTINE PLOT9
 !>
 !!##NAME
 !!    plotc(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
@@ -20322,16 +20113,16 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 !!     Subroutine plotc (X, Y)
 !!
 !!##DESCRIPTION
-!!    plotc(3f) yields a one-page printer plot
-!!    of y(i) versus x(i) with special plotting
-!!    characters.
-!!    this 'special plotting character' capability
-!!    allows the data analyst to incorporate information
-!!    from a third variable (aside from y and x) into
-!!    the plot.
-!!    the plot character used at the i-th plotting
-!!    position (that is, at the coordinate (x(i),y(i)))
-!!    will be
+!!    plotc(3f) yields a one-page printer plot of y(i) versus x(i) with
+!!    special plotting characters.
+!!
+!!    this 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from y and x)
+!!    into the plot.
+!!
+!!    the plot character used at the i-th plotting position (that is,
+!!    at the coordinate (x(i),y(i))) will be
+!!
 !!      1 if char(i) is between  0.5 and  1.5
 !!      2 if char(i) is between  1.5 and  2.5
 !!        .
@@ -20378,7 +20169,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 !!    CC0-1.0
 !*==plotc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTC(Y,X,Char,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
@@ -20738,7 +20528,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 99016 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99017 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOTC
+END SUBROUTINE PLOTC
 !>
 !!##NAME
 !!    plotco(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer
@@ -20746,12 +20536,16 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotco (X, Y)
+!!    SUBROUTINE PLOTCO(Y,N)
+!!
+!!     REAL(kind=wp) :: Y(:)
+!!     INTEGER       :: N
 !!
 !!##DESCRIPTION
-!!    this routine yields a multi-page (if necessary) plot of the autocorrelatio
-!!    coefficient r(k) versus the lag k
-!!    there is no restriction on the maximum value of n for this routine.
+!!    This routine yields a multi-page (if necessary) plot of the
+!!    autocorrelation coefficient r(k) versus the lag k.
+!!
+!!    There is no restriction on the maximum value of n for this routine.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -20777,29 +20571,21 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==plotco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE PLOTCO(Y,N)
-IMPLICIT NONE
-
-REAL(kind=wp) :: hold, ratioy, Y, ylable, ymax, ymin
-INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, jmin, k, mx, my, N,  numpag
-
-!     PRINTING--YES
 !     UPDATED  -- JUN 1972
 !     UPDATED  -- UPDATED FEB 1975
 !     UPDATED  -- NOVEMBER  1975.
 !     UPDATED  -- FEBRUARY  1976.
+!*==plotco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PLOTCO(Y,N)
+REAL(kind=wp) :: hold, ratioy, Y(:), ylable(11), ymax, ymin
+INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix(25), ixmax, ixmin, iz, j, jmax, jmin, k, mx, my, N,  numpag
 !
-!---------------------------------------------------------------------
+CHARACTER*4 IGRaph
+CHARACTER*4 blank , star , hyphen , alphai
+COMMON /BLOCK1/ IGRaph(55,130)
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 blank , star , hyphen , alphai
-      DIMENSION Y(:)
-      COMMON /BLOCK1/ IGRaph(55,130)
-      DIMENSION ylable(11)
-      DIMENSION ix(25)
-!
-      DATA blank , star , hyphen , alphai/' ' , '*' , '-' , 'I'/
+DATA blank , star , hyphen , alphai/' ' , '*' , '-' , 'I'/
 !
       ipr = 6
 !
@@ -20807,17 +20593,13 @@ INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, 
 !
       IF ( N<1 ) THEN
          WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROUTINE IS NON-POSITIVE *****')
          WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (ipr,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PLOT&
-     &CO SUBROUTINE HAS THE VALUE 1 *****')
+         99003    FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = Y(1)
@@ -20825,9 +20607,9 @@ INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, 
             IF ( Y(i)/=hold ) GOTO 50
          ENDDO
          WRITE (ipr,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE PLOTCO SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         99004    FORMAT (' ', &
+         &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+         &TO THE PLOTCO SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -20942,13 +20724,9 @@ INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, 
             WRITE (ipr,99005)
 99005       FORMAT ('1')
             IF ( iz==1 ) WRITE (ipr,99006) N
-99006       FORMAT (                                                    &
-     &          ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS '&
-     &          ,I5)
+99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS ',I5)
             IF ( iz>=2 ) WRITE (ipr,99007)
-99007       FORMAT (' ',                                                &
-     &'THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIO&
-     &US PAGE')
+99007       FORMAT (' THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIOUS PAGE')
             WRITE (ipr,99008)
 99008       FORMAT (' ')
             IF ( N<=24 ) WRITE (ipr,99011) (ix(i),i=1,25)
@@ -20959,8 +20737,7 @@ INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, 
                k = i/5
                IF ( iflag/=0 ) WRITE (ipr,99009) (IGRaph(i,j),j=1,130)
 99009          FORMAT (' ',130A1)
-               IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) ,            &
-     &                                (IGRaph(i,j),j=10,130)
+               IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) , (IGRaph(i,j),j=10,130)
 99010          FORMAT (' ',F9.2,130A1)
             ENDDO
             IF ( N<=24 ) WRITE (ipr,99011) (ix(i),i=1,25)
@@ -20982,18 +20759,19 @@ END SUBROUTINE PLOTCO
 !!     Subroutine plotct (X, Y)
 !!
 !!##DESCRIPTION
-!!    plotct(3f) yields a narrow-width (71-character)
-!!    plot of y(i) versus x(i) with special plotting
-!!    characters.
-!!    its narrow width makes it appropriate for use on a
-!!    terminal.
-!!    this 'special plotting character' capability
-!!    allows the data analyst to incorporate information
-!!    from a third variable (aside from y and x) into
-!!    the plot.
-!!    the plot character used at the i-th plotting
-!!    position (that is, at the coordinate (x(i),y(i)))
-!!    will be
+!!
+!!    plotct(3f) yields a narrow-width (71-character) plot of y(i) versus
+!!    x(i) with special plotting characters.
+!!
+!!    its narrow width makes it appropriate for use on a terminal.
+!!
+!!    this 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from y and x)
+!!    into the plot.
+!!
+!!    the plot character used at the i-th plotting position (that is,
+!!    at the coordinate (x(i),y(i))) will be
+!!
 !!      1 if char(i) is between  0.5 and  1.5
 !!      2 if char(i) is between  1.5 and  2.5
 !!        .
@@ -21040,7 +20818,6 @@ END SUBROUTINE PLOTCO
 !!    CC0-1.0
 !*==plotct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTCT(Y,X,Char,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , delx , dely , hold , X , xlable , xmax , xmin ,     &
      &     xwidth , Y , ylable , ylower , ymax
@@ -21390,7 +21167,7 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 99018 FORMAT (' ',18X,54A1)
 99019 FORMAT (' ',15X,A1)
 !
-      END SUBROUTINE PLOTCT
+END SUBROUTINE PLOTCT
 !>
 !!##NAME
 !!    plot(3f) - [M_datapac:STATISTICS:LINE PLOT] yields a one-page printer
@@ -21414,9 +21191,9 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 !!    some elements in the vector Y (or X) are 'missing data', or when
 !!    we purposely want to ignore certain elements in the vector Y (or X)
 !!    for plotting purposes (That is, we do not want certain elements in
-!!    Y (or X) to be plotted).  To cause specific elements in Y (or X)
+!!    Y (or X) to be plotted). To cause specific elements in Y (or X)
 !!    to be ignored, we replace the elements beforehand (by, for example,
-!!    use of the   REPLAC   subroutine) by some large value (like, say,
+!!    use of the REPLAC subroutine) by some large value (like, say,
 !!    10.0**10) and they will subsequently be ignored in the plot subroutine.
 !!
 !!##OPTIONS
@@ -21724,21 +21501,19 @@ END SUBROUTINE PLOT
 !!     Subroutine plotsc (X, Y)
 !!
 !!##DESCRIPTION
-!!    plotsc(3f) yields a one-page printer plot
-!!    of y(i) versus x(i):
+!!    plotsc(3f) yields a one-page printer plot of y(i) versus x(i):
 !!
 !!      1. with special plot characters; and
 !!      2. with only those points (x(i),y(i)) plotted
 !!         for which the corresponding value of d(i)
 !!         is between the specified values of dmin and dmax.
 !!
-!!    the 'special plotting character' capability
-!!    allows the data analyst to incorporate information
-!!    from a third variable (aside from y and x) into
-!!    the plot.
-!!    the plot character used at the i-th plotting
-!!    position (that is, at the coordinate (x(i),y(i)))
-!!    will be
+!!    the 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from y and x)
+!!    into the plot.
+!!
+!!    the plot character used at the i-th plotting position (that is,
+!!    at the coordinate (x(i),y(i))) will be
 !!
 !!      1 if char(i) is between  0.5 and  1.5
 !!      2 if char(i) is between  1.5 and  2.5
@@ -21759,11 +21534,10 @@ END SUBROUTINE PLOT
 !!      z if char(i) is between 35.5 and 36.5
 !!      x if char(i) is any value outside the range
 !!                               0.5 to  36.5.
-!!    the use of the subset defintion vector d
-!!    gives the data analyst the capability of
-!!    plotting subsets of the data,
-!!    where the subset is defined
-!!    by values in the vector d.
+!!
+!!    the use of the subset defintion vector d gives the data analyst
+!!    the capability of plotting subsets of the data, where the subset is
+!!    defined by values in the vector d.
 !!
 !!
 !!##OPTIONS
@@ -21792,7 +21566,6 @@ END SUBROUTINE PLOT
 !!    CC0-1.0
 !*==plotsc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTSC(Y,X,Char,N,D,Dmin,Dmax)
-IMPLICIT NONE
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , xmax , xmid , xmin , Y , ylable ,   &
      &     ymax , ymin
@@ -22221,7 +21994,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 99019 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99020 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOTSC
+END SUBROUTINE PLOTSC
 !>
 !!##NAME
 !!    plots(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of Y vs X
@@ -22231,19 +22004,15 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !!     Subroutine plots (X, Y)
 !!
 !!##DESCRIPTION
-!!    plots(3f) yields a one-page printer plot
-!!    of y(i) versus x(i):
+!!    plots(3f) yields a one-page printer plot of y(i) versus x(i):
 !!
 !!      1. with only those points (x(i),y(i)) plotted
 !!         for which the corresponding value of d(i)
 !!         is between the specified values of dmin and dmax.
 !!
-!!    the use of the subset definition vector d
-!!    gives the data analyst the capability of
-!!    plotting subsets of the data,
-!!    where the subset is defined
-!!    by values in the vector d.
-!!
+!!    the use of the subset definition vector d gives the data analyst
+!!    the capability of plotting subsets of the data, where the subset is
+!!    defined by values in the vector d.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -22270,11 +22039,11 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !!##LICENSE
 !!    CC0-1.0
 !*==plots.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)
-      IMPLICIT NONE
+
+SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
      &     X , x25 , x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
-      INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
+INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -22298,9 +22067,6 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 !     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
 !             FOR ONLY OF A SPECIFIED SUBSET OF THE DATA.
 !     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -22634,7 +22400,7 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 99019 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99020 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOTS
+END SUBROUTINE PLOTS
 !>
 !!##NAME
 !!    plotsp(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer spectrum plot
@@ -22646,13 +22412,16 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 !!##DESCRIPTION
 !!    this routine yields a one-page plot of the spectrum, along with upper
 !!    and lower limits of the spectrum.
-!!    the convention has been followed that if the integer input parameter idf
-!!    has the value 0, then no confidence limits will be computed and only the
-!!    spectrum itself will be plotted out.
+!!
+!!    the convention has been followed that if the integer input parameter
+!!    idf has the value 0, then no confidence limits will be computed and
+!!    only the spectrum itself will be plotted out.
+!!
 !!    multiple plot points are not indicated.
-!!    the first point will be plotted on the left vertical axis
-!!    the last point will be plotted on the right vertical axis
-!!    there is no restriction on the maximum value of n for this routine.
+!!
+!!    the first point will be plotted on the left vertical axis the
+!!    last point will be plotted on the right vertical axis there is no
+!!    restriction on the maximum value of n for this routine.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -22679,8 +22448,7 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 !!##LICENSE
 !!    CC0-1.0
 !*==plotsp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTSP(Y,N,Idf)
-      IMPLICIT NONE
+SUBROUTINE PLOTSP(Y,N,Idf)
 REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
      &     slower , spmax , spmin , supper , xi , Y , ylable , ymax ,   &
      &     ymin
@@ -22842,7 +22610,7 @@ REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
      &  4.00      3.43      3.00      2.67      2.40      2.18      2.00&
      &')
       ENDIF
-      END SUBROUTINE PLOTSP
+END SUBROUTINE PLOTSP
 !>
 !!##NAME
 !!    plotst(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
@@ -22853,21 +22621,18 @@ REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
 !!     Subroutine plotst (X, Y)
 !!
 !!##DESCRIPTION
-!!    plotst(3f) yields a narrow-width (71-character)
-!!    of y(i) versus x(i):
+!!
+!!    plotst(3f) yields a narrow-width (71-character) of y(i) versus x(i):
 !!
 !!      1. with only those points (x(i),y(i)) plotted
 !!         for which the corresponding value of d(i)
 !!         is between the specified values of dmin and dmax.
 !!
-!!    its narrow width makes it
-!!    appropriate for use on a terminal.
+!!    its narrow width makes it appropriate for use on a terminal.
 !!
-!!    the use of the subset defintion vector d
-!!    gives the data analyst the capability of
-!!    plotting subsets of the data,
-!!    where the subset is defined
-!!    by values in the vector d.
+!!    the use of the subset defintion vector d gives the data analyst
+!!    the capability of plotting subsets of the data, where the subset is
+!!    defined by values in the vector d.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -22894,8 +22659,7 @@ REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
 !!##LICENSE
 !!    CC0-1.0
 !*==plotst.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTST(Y,X,N,D,Dmin,Dmax)
-      IMPLICIT NONE
+SUBROUTINE PLOTST(Y,X,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     D , delx , dely , Dmax , Dmin , hold , X , xlable , xmax ,   &
      &     xmin , xwidth , Y , ylable
@@ -23246,7 +23010,7 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 99021 FORMAT (' ',18X,54A1)
 99022 FORMAT (' ',15X,A1)
 !
-      END SUBROUTINE PLOTST
+END SUBROUTINE PLOTST
 !>
 !!##NAME
 !!    plott(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
@@ -23257,9 +23021,8 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !!     Subroutine plott (X, Y)
 !!
 !!##DESCRIPTION
-!!    plott(3f) yields a narrow-width (71-character)
-!!    plot of y(i) versus x(i).  its narrow width makes it
-!!    appropriate for use on a terminal.
+!!    PLOTT(3f) yields a narrow-width (71-character) plot of Y(i) versus
+!!    X(i). Its narrow width makes it appropriate for use on a terminal.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -23286,8 +23049,7 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !!##LICENSE
 !!    CC0-1.0
 !*==plott.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTT(Y,X,N)
-      IMPLICIT NONE
+SUBROUTINE PLOTT(Y,X,N)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , dely , hold , X , xlable , xmax , xmin , xwidth , Y , &
      &     ylable , ylower , ymax , ymin
@@ -23573,7 +23335,7 @@ REAL(kind=wp) :: yupper , ywidth
 99017 FORMAT (' ',18X,54A1)
 99018 FORMAT (' ',15X,A1)
 !
-      END SUBROUTINE PLOTT
+END SUBROUTINE PLOTT
 !>
 !!##NAME
 !!    plotu(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer 4-plot
@@ -23583,7 +23345,7 @@ REAL(kind=wp) :: yupper , ywidth
 !!     Subroutine plotu (X, Y)
 !!
 !!##DESCRIPTION
-!!    plotu(3f) produces the following 4 plots--
+!!    PLOTU(3f) produces the following 4 plots--
 !!    all on the same printer page--
 !!
 !!      1. data plot--x(i) versus i
@@ -23591,15 +23353,12 @@ REAL(kind=wp) :: yupper , ywidth
 !!      3. histogram
 !!      4. normal probability plot
 !!
-!!    in addition, location, scale, and autocorrelation
-!!    summary statistics are printed out automatically
-!!    on the same page.
+!!    In addition, location, scale, and autocorrelation summary statistics
+!!    are printed out automatically on the same page.
 !!
-!!    these plots give the data analyst a quick
-!!    first-pass check at some of
-!!    the underlying assumptions typically made--
-!!    constant location, constant scale, no outliers,
-!!    unautocorrelated data, symmetry, normality.
+!!    These plots give the data analyst a quick first-pass check at some of
+!!    the underlying assumptions typically made-- constant location, constant
+!!    scale, no outliers, unautocorrelated data, symmetry, normality.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -23626,8 +23385,7 @@ REAL(kind=wp) :: yupper , ywidth
 !!##LICENSE
 !!    CC0-1.0
 !*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTU(X,N)
-      IMPLICIT NONE
+SUBROUTINE PLOTU(X,N)
 REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
      &     promin , ratiox , ratioy , s , sum , sum1 , sum2 , sum23 ,   &
      &     sum3 , width , WS , X
@@ -24145,7 +23903,7 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 99019 FORMAT (' ',F16.7,4A1,45A1,F16.7,4A1,45A1)
 99020 FORMAT (' ',17X,5F10.4,15X,4F10.4,F9.3)
 !
-      END SUBROUTINE PLOTU
+END SUBROUTINE PLOTU
 !>
 !!##NAME
 !!    plotx(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer run sequence plot
@@ -24155,8 +23913,7 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !!     Subroutine plotx (X, Y)
 !!
 !!##DESCRIPTION
-!!    plotx(3f) yields a one-page printer plot
-!!    of x(i) versus i.
+!!    PLOTX(3f) yields a one-page printer plot of X(I) versus I.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -24182,12 +23939,20 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --JANUARY   1975.
+!     UPDATED         --JULY      1975.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --OCTOBER   1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --FEBRUARY  1977.
 !*==plotx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTX(X,N)
-      IMPLICIT NONE
+
+SUBROUTINE PLOTX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
      &     xmax , xmid , xmin , ylable , ymax , ymin
-      INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
+INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -24196,9 +23961,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 !                               IN THE VECTOR X.
 !     OUTPUT--A ONE-PAGE PRINTER PLOT OF X(I) VERSUS I.
 !     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -24214,14 +23976,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTX
 !              SUBROUTINE.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --JANUARY   1975.
-!     UPDATED         --JULY      1975.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --OCTOBER   1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
-!     UPDATED         --FEBRUARY  1977.
 !
 !---------------------------------------------------------------------
 !
@@ -24414,7 +24168,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
      &        ' SUBROUTINE')
 !
-      END SUBROUTINE PLOTX
+END SUBROUTINE PLOTX
 !>
 !!##NAME
 !!    plotxt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer run
@@ -24425,9 +24179,8 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 !!     Subroutine plotxt (X, Y)
 !!
 !!##DESCRIPTION
-!!    plotxt(3f) yields a narrow-width (71-character)
-!!    plot of x(i) versus i.  its narrow width makes it
-!!    appropriate for use on a terminal.
+!!    plotxt(3f) yields a narrow-width (71-character) plot of x(i) versus i.
+!!    its narrow width makes it appropriate for use on a terminal.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -24454,8 +24207,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 !!##LICENSE
 !!    CC0-1.0
 !*==plotxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTXT(X,N)
-      IMPLICIT NONE
+SUBROUTINE PLOTXT(X,N)
 REAL(kind=wp) :: ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
      &     anumcm , anumlm , anumr , anumrm , cutoff , delai , delx ,   &
      &     hold , X , xlable , xlower , xmax , xmin
@@ -24680,7 +24432,7 @@ REAL(kind=wp) :: xupper , xwidth
 99013 FORMAT (' ',18X,54A1)
 99014 FORMAT (' ',15X,A1)
 !
-      END SUBROUTINE PLOTXT
+END SUBROUTINE PLOTXT
 !>
 !!##NAME
 !!    plotxx(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
@@ -24690,16 +24442,15 @@ REAL(kind=wp) :: xupper , xwidth
 !!     Subroutine plotxx (X, Y)
 !!
 !!##DESCRIPTION
-!!    plotxx(3f) yields a one-page printer plot
-!!    of x(i) versus x(i-1).
-!!    this type of plot (which is called an
-!!    autocorrelation plot or a lag 1 plot)
-!!    is useful in examining for
-!!    autocorrelation in a sequence of observations.
-!!    uncorrelated data will produce an autocorrelation
-!!    plot with no apparent structure; autocorrelated
-!!    data will produce an autocorrelation plot with
-!!    linear, elliptical, or other kinds of structure.
+!!    plotxx(3f) yields a one-page printer plot of x(i) versus x(i-1).
+!!
+!!    this type of plot (which is called an autocorrelation plot or a lag
+!!    1 plot) is useful in examining for autocorrelation in a sequence
+!!    of observations.
+!!
+!!    uncorrelated data will produce an autocorrelation plot with no apparent
+!!    structure; autocorrelated data will produce an autocorrelation plot
+!!    with linear, elliptical, or other kinds of structure.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -24726,8 +24477,7 @@ REAL(kind=wp) :: xupper , xwidth
 !!##LICENSE
 !!    CC0-1.0
 !*==plotxx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTXX(X,N)
-      IMPLICIT NONE
+SUBROUTINE PLOTXX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     xmax , xmid , xmin , ylable , ymax , ymin
       INTEGER i , iflag , im1 , ip2 , ipr , j , k , mx , my , N
@@ -24976,7 +24726,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
      &        ' SUBROUTINE')
 !
-      END SUBROUTINE PLOTXX
+END SUBROUTINE PLOTXX
 !>
 !!##NAME
 !!    pltsct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
@@ -24987,23 +24737,22 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !!     Subroutine pltsct (X, Y)
 !!
 !!##DESCRIPTION
-!!    pltsct(3f) yields a narrow-width (71-character)
-!!    plot of y(i) versus x(i):
+!!    pltsct(3f) yields a narrow-width (71-character) plot of y(i) versus
+!!    x(i):
 !!
 !!      1. with special plot characters; and
 !!      2. with only those points (x(i),y(i)) plotted
 !!         for which the corresponding value of d(i)
 !!         is between the specified values of dmin and dmax.
 !!
-!!    its narrow width makes it appropriate for use on a
-!!    terminal.
-!!    the 'special plotting character' capability
-!!    allows the data analyst to incorporate information
-!!    from a third variable (aside from y and x) into
-!!    the plot.
-!!    the plot character used at the i-th plotting
-!!    position (that is, at the coordinate (x(i),y(i)))
-!!    will be
+!!    its narrow width makes it appropriate for use on a terminal.
+!!
+!!    the 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from y and x)
+!!    into the plot.
+!!
+!!    the plot character used at the i-th plotting position (that is,
+!!    at the coordinate (x(i),y(i))) will be
 !!
 !!      1 if char(i) is between  0.5 and  1.5
 !!      2 if char(i) is between  1.5 and  2.5
@@ -25024,11 +24773,10 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !!      z if char(i) is between 35.5 and 36.5
 !!      x if char(i) is any value outside the range
 !!                               0.5 to  36.5.
-!!    the use of the subset defintion vector d
-!!    gives the data analyst the capability of
-!!    plotting subsets of the data,
-!!    where the subset is defined
-!!    by values in the vector d.
+!!
+!!    the use of the subset defintion vector d gives the data analyst
+!!    the capability of plotting subsets of the data, where the subset is
+!!    defined by values in the vector d.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -25056,7 +24804,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !!    CC0-1.0
 !*==pltsct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTSCT(Y,X,Char,N,D,Dmin,Dmax)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , D , delx , dely , Dmax , Dmin , hold , X , xlable , &
      &     xmax , xmin , xwidth , Y
@@ -25463,7 +25210,7 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 99021 FORMAT (' ',18X,54A1)
 99022 FORMAT (' ',15X,A1)
 !
-      END SUBROUTINE PLTSCT
+END SUBROUTINE PLTSCT
 !>
 !!##NAME
 !!    pltxxt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
@@ -25474,17 +25221,17 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 !!     Subroutine pltxxt (X, Y)
 !!
 !!##DESCRIPTION
-!!    pltxxt(3f) yields a narrow-width (71-character)
-!!    plot of x(i) versus x(i-1).  its narrow width makes it
-!!    appropriate for use on a terminal.
-!!    this type of plot (which is called an
-!!    autocorrelation plot or a lag 1 plot)
-!!    is useful in examining for
-!!    autocorrelation in a sequence of observations.
-!!    uncorrelated data will produce an autocorrelation
-!!    plot with no apparent structure; autocorrelated
-!!    data will produce an autocorrelation plot with
-!!    linear, elliptical, or other kinds of structure.
+!!
+!!    pltxxt(3f) yields a narrow-width (71-character) plot of x(i) versus
+!!    x(i-1). Its narrow width makes it appropriate for use on a terminal.
+!!
+!!    this type of plot (which is called an autocorrelation plot or a lag
+!!    1 plot) is useful in examining for autocorrelation in a sequence
+!!    of observations.
+!!
+!!    uncorrelated data will produce an autocorrelation plot with no apparent
+!!    structure; autocorrelated data will produce an autocorrelation plot
+!!    with linear, elliptical, or other kinds of structure.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -25512,7 +25259,6 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 !!    CC0-1.0
 !*==pltxxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTXXT(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , hold , X , x2labl , xcwidt , xlable , xlower , xmax , &
      &     xmin , xrwidt , xupper
@@ -25760,24 +25506,23 @@ END SUBROUTINE PLTXXT
 !!     Subroutine poicdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    poicdf(3f) computes the cumulative distribution
-!!    function value at the single precision value x
-!!    for the poisson distribution
-!!    with single precision
-!!    tail length parameter = alamba.
-!!    the poisson distribution used
-!!    herein has mean = alamba
-!!    and standard deviation = sqrt(alamba).
-!!    this distribution is defined for
-!!    all discrete non-negative integer  x--x = 0, 1, 2, ... .
+!!    poicdf(3f) computes the cumulative distribution function value at
+!!    the single precision value x for the poisson distribution with single
+!!    precision tail length parameter = alamba.
+!!
+!!    the poisson distribution used herein has mean = alamba and standard
+!!    deviation = sqrt(alamba).
+!!
+!!    this distribution is defined for all discrete non-negative integer
+!!    x--x = 0, 1, 2, ... .
+!!
 !!    this distribution has the probability function
-!!    f(x) = exp(-alamba) * alamba**x / x!.
-!!    the poisson distribution is the
-!!    distribution of the number of events
-!!    in the interval (0,alamba) when
-!!    the waiting time between events
-!!    is exponentially distributed
-!!    with mean = 1 and standard deviation = 1.
+!!
+!!        f(x) = exp(-alamba) * alamba**x / x!.
+!!
+!!    the poisson distribution is the distribution of the number of events
+!!    in the interval (0,alamba) when the waiting time between events is
+!!    exponentially distributed with mean = 1 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -25805,7 +25550,6 @@ END SUBROUTINE PLTXXT
 !!    CC0-1.0
 !*==poicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POICDF(X,Alamba,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
       INTEGER i , ievodd , imax , imin , intx , ipr , nu
 !
@@ -25968,7 +25712,7 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
       ENDIF
 99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE POICDF
+END SUBROUTINE POICDF
 !>
 !!##NAME
 !!    poiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Poisson probability plot
@@ -25979,43 +25723,42 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 !!     Subroutine poiplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    poiplt(3f) generates a poisson
-!!    probability plot
-!!    (with single precision
+!!    poiplt(3f) generates a poisson probability plot (with single precision
 !!    tail length parameter = alamba).
-!!    the prototype poisson distribution used
-!!    herein has mean = alamba
-!!    and standard deviation = sqrt(alamba).
-!!    this distribution is defined for
-!!    all discrete non-negative integer  x--x = 0, 1, 2, ... .
+!!
+!!    the prototype poisson distribution used herein has mean = alamba and
+!!    standard deviation = sqrt(alamba).
+!!
+!!    this distribution is defined for all discrete non-negative integer
+!!    x--x = 0, 1, 2, ... .
+!!
 !!    this distribution has the probability function
-!!    f(x) = exp(-alamba) * alamba**x / x!.
-!!    the poisson distribution is the
-!!    distribution of the number of events
-!!    in the interval (0,alamba) when
-!!    the waiting time between events
-!!    is exponentially distributed
-!!    with mean = 1 and standard deviation = 1.
-!!    the prototype distribution restrictions of
-!!    discreteness and non-negativeness
-!!    mentioned above do not carry over to the
-!!    input vector x of observations to be analyzed.
-!!    the input observations in x may be discrete, continuous,
-!!    non-negative, or negative.
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the poisson probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the poisson distribution
+!!
+!!        f(x) = exp(-alamba) * alamba**x / x!.
+!!
+!!    the poisson distribution is the distribution of the number of events
+!!    in the interval (0,alamba) when the waiting time between events is
+!!    exponentially distributed with mean = 1 and standard deviation = 1.
+!!
+!!    the prototype distribution restrictions of discreteness and
+!!    non-negativeness mentioned above do not carry over to the input vector
+!!    x of observations to be analyzed.
+!!
+!!    the input observations in x may be discrete, continuous, non-negative,
+!!    or negative.
+!!
+!!    as used herein, a probability plot for a distribution is a plot of
+!!    the ordered observations versus the order statistic medians for that
+!!    distribution.  the poisson probability plot is useful in graphically
+!!    testing the composite (that is, location and scale parameters need
+!!    not be specified) hypothesis that the underlying distribution from
+!!    which the data have been randomly drawn is the poisson distribution
 !!    with tail length parameter value = alamba.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26043,7 +25786,6 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 !!    CC0-1.0
 !*==poiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPLT(X,N,Alamba)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
      &     sum1 , sum2 , sum3 , W , wbar , WS , X , Y , ybar , yint ,   &
      &     yslope , Z
@@ -26270,7 +26012,7 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE POIPLT
+END SUBROUTINE POIPLT
 !>
 !!##NAME
 !!    poippf(3f) - [M_datapac:STATISTICS:PP] compute the Poisson percent
@@ -26281,27 +26023,25 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 !!     Subroutine poippf (X, Y)
 !!
 !!##DESCRIPTION
-!!    poippf(3f) computes the percent point
-!!    function value at the single precision value p
-!!    for the poisson distribution
-!!    with single precision
+!!    poippf(3f) computes the percent point function value at the single
+!!    precision value p for the poisson distribution with single precision
 !!    tail length parameter = alamba.
-!!    the poisson distribution used
-!!    herein has mean = alamba
-!!    and standard deviation = sqrt(alamba).
-!!    this distribution is defined for
-!!    all discrete non-negative integer  x--x = 0, 1, 2, ... .
+!!
+!!    the poisson distribution used herein has mean = alamba and standard
+!!    deviation = sqrt(alamba). this distribution is defined for all
+!!    discrete non-negative integer x--x = 0, 1, 2, ... .
+!!
 !!    this distribution has the probability function
-!!    f(x) = exp(-alamba) * alamba**x / x!.
-!!    the poisson distribution is the
-!!    distribution of the number of events
-!!    in the interval (0,alamba) when
-!!    the waiting time between events
-!!    is exponentially distributed
-!!    with mean = 1 and standard deviation = 1.
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!
+!!        f(x) = exp(-alamba) * alamba**x / x!.
+!!
+!!    the poisson distribution is the distribution of the number of events
+!!    in the interval (0,alamba) when the waiting time between events is
+!!    exponentially distributed with mean = 1 and standard deviation = 1.
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26329,7 +26069,6 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 !!    CC0-1.0
 !*==poippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2
@@ -26647,7 +26386,7 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 99019 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
 99020 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
-      END SUBROUTINE POIPPF
+END SUBROUTINE POIPPF
 !>
 !!##NAME
 !!    poiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Poisson random numbers
@@ -26657,23 +26396,22 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !!     Subroutine poiran (X, Y)
 !!
 !!##DESCRIPTION
-!!    poiran(3f) generates a random sample of size n
-!!    from the poisson distribution
-!!    with single precision
-!!    tail length parameter = alamba.
-!!    the poisson distribution used
-!!    herein has mean = alamba
-!!    and standard deviation = sqrt(alamba).
-!!    this distribution is defined for
-!!    all discrete non-negative integer  x--x = 0, 1, 2, ... .
+!!    poiran(3f) generates a random sample of size n from the poisson
+!!    distribution with single precision tail length parameter = alamba.
+!!
+!!    the poisson distribution used herein has mean = alamba and standard
+!!    deviation = sqrt(alamba).
+!!
+!!    this distribution is defined for all discrete non-negative integer
+!!    x--x = 0, 1, 2, ... .
+!!
 !!    this distribution has the probability function
-!!    f(x) = exp(-alamba) * alamba**x / x!.
-!!    the poisson distribution is the
-!!    distribution of the number of events
-!!    in the interval (0,alamba) when
-!!    the waiting time between events
-!!    is exponentially distributed
-!!    with mean = 1 and standard deviation = 1.
+!!
+!!        f(x) = exp(-alamba) * alamba**x / x!.
+!!
+!!    the poisson distribution is the distribution of the number of events
+!!    in the interval (0,alamba) when the waiting time between events is
+!!    exponentially distributed with mean = 1 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26701,7 +26439,6 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !!    CC0-1.0
 !*==poiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: Alamba , e , sum , u(1) , X
       INTEGER i , ipr , Iseed , j , N
 !
@@ -26829,7 +26566,7 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE POIRAN
+END SUBROUTINE POIRAN
 !>
 !!##NAME
 !!    poly(3f) - [M_datapac:STATISTICS] compute a least squares polynomial fit
@@ -26839,11 +26576,9 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !!     Subroutine poly (X, Y)
 !!
 !!##DESCRIPTION
-!!    poly(3f) computes a least squares
-!!    polynomial fit (of degree = ideg) of the
-!!    response variable data in the single precision
-!!    vector y as a function of the independent
-!!    variable data in the single precision
+!!    poly(3f) computes a least squares polynomial fit (of degree = ideg)
+!!    of the response variable data in the single precision vector y as
+!!    a function of the independent variable data in the single precision
 !!    vector x.
 !!
 !!##OPTIONS
@@ -26871,8 +26606,7 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !!##LICENSE
 !!    CC0-1.0
 !*==poly.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE POLY(Y,X,W,N,Ideg,Iwrite,B,Sdb,S,Df,Pred,Res)
-      IMPLICIT NONE
+SUBROUTINE POLY(Y,X,W,N,Ideg,Iwrite,B,Sdb,S,Df,Pred,Res)
 REAL(kind=wp) :: ak , amb , amdb1 , amdb2 , amdr1 , amdr2 , amr , an ,        &
      &     aneggi , aneggj , ani , B , b2 , cdf , cdf2 , D , Df , DUM1 ,&
      &     DUM2 , e
@@ -27512,14 +27246,12 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !!     Subroutine propor (X, Y)
 !!
 !!##DESCRIPTION
-!!    propor(3f) computes the
-!!    the sample proportion which is the
-!!    proportion of data between xmin and xmax (inclusively)
-!!    in the input vector x.
-!!    the sample proportion = (the number of observations
-!!    in the sample between xmin and xmax, inclusively) / n.
-!!    the sample proportion will be a single precision
-!!    value between 0.0 and 1.0 (inclusively).
+!!    propor(3f) computes the the sample proportion which is the proportion
+!!    of data between xmin and xmax (inclusively) in the input vector x.
+!!
+!!    the sample proportion = (the number of observations in the sample
+!!    between xmin and xmax, inclusively) / n. The sample proportion will
+!!    be a single precision value between 0.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -27546,8 +27278,7 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !!##LICENSE
 !!    CC0-1.0
 !*==propor.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
-      IMPLICIT NONE
+SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
       INTEGER i , ipr , isum , Iwrite , N
 !
@@ -27659,7 +27390,7 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
      &           ' OBSERVATIONS IN THE INTERVAL ',E15.7,' TO ',E15.7,   &
      &           ' IS ',E15.7)
       ENDIF
-      END SUBROUTINE PROPOR
+END SUBROUTINE PROPOR
 !>
 !!##NAME
 !!    range(3f) - [M_datapac:STATISTICS] compute the sample range
@@ -27669,9 +27400,7 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 !!     Subroutine range (X, Y)
 !!
 !!##DESCRIPTION
-!!    range(3f) computes the
-!!    sample range
-!!    of the data in the input vector x.
+!!    range(3f) computes the sample range of the data in the input vector x.
 !!    the sample range = sample max - sample min.
 !!
 !!##OPTIONS
@@ -27699,8 +27428,7 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 !!##LICENSE
 !!    CC0-1.0
 !*==range.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE RANGE(X,N,Iwrite,Xrange)
-      IMPLICIT NONE
+SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
       INTEGER i , ipr , Iwrite , N
 !
@@ -27795,7 +27523,7 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
       WRITE (ipr,99006) N , Xrange
 99006 FORMAT (' ','THE SAMPLE RANGE OF THE ',I6,' OBSERVATIONS IS ',    &
      &        E15.8)
-      END SUBROUTINE RANGE
+END SUBROUTINE RANGE
 !>
 !!##NAME
 !!    rank(3f) - [M_datapac:STATISTICS:SORT] rank a vector of sample observations
@@ -27805,14 +27533,12 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 !!     Subroutine rank (X, Y)
 !!
 !!##DESCRIPTION
-!!    rank(3f) ranks (in ascending order)
-!!    the n elements of the single precision vector x,
-!!    and puts the resulting n ranks into the
-!!    single precision vector xr.
-!!    rank(3f) gives the data analyst
-!!    the ability to (for example) rank the data
-!!    preliminary to certain distribution-free
-!!    analyses.
+!!    rank(3f) ranks (in ascending order) the n elements of the single
+!!    precision vector x, and puts the resulting n ranks into the single
+!!    precision vector xr.
+!!
+!!    rank(3f) gives the data analyst the ability to (for example) rank
+!!    the data preliminary to certain distribution-free analyses.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -27839,9 +27565,7 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 !!##LICENSE
 !!    CC0-1.0
 !*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE RANK(X,N,Xr)
-      IMPLICIT NONE
-
+SUBROUTINE RANK(X,N,Xr)
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
       INTEGER i , ibran , ipr , iupper , j , jmin , jp1 , k , N , nm1
 !
@@ -28047,7 +27771,7 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE--',           &
      &        'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
 !
-      END SUBROUTINE RANK
+END SUBROUTINE RANK
 !>
 !!##NAME
 !!    ranper(3f) - [M_datapac:STATISTICS:RANDOM] generates a random permutation
@@ -28057,8 +27781,8 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !!     Subroutine ranper (X, Y)
 !!
 !!##DESCRIPTION
-!!    ranper(3f) generates a random permutation of size n
-!!    of the values 1.0, 2.0, 3.0, ..., n-1, n.
+!!    ranper(3f) generates a random permutation of size n of the values 1.0,
+!!    2.0, 3.0, ..., n-1, n.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -28086,7 +27810,6 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !!    CC0-1.0
 !*==ranper.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANPER(N,Istart,X)
-      IMPLICIT NONE
 REAL(kind=wp) :: add , an , hold , u , X
       INTEGER i , iadd , ipr , Istart , j , N
 !
@@ -28174,7 +27897,7 @@ REAL(kind=wp) :: add , an , hold , u , X
             X(i) = hold
          ENDDO
       ENDIF
-      END SUBROUTINE RANPER
+END SUBROUTINE RANPER
 !>
 !!##NAME
 !!    read(3f) - [M_datapac:STATISTICS] perform a format-free read of data
@@ -28185,17 +27908,17 @@ REAL(kind=wp) :: add , an , hold , u , X
 !!     Subroutine read (X, Y)
 !!
 !!##DESCRIPTION
-!!    read(3f) performs a format-free read
-!!    of data from punched cards.
-!!    only the card columns between icol1 and icol2
-!!    (inclusively) are scanned for the read.
-!!    read(3f) gives the data analyst the ability
-!!    to get data into the machine without having
-!!    to worry about and specify formats.
-!!    the data cards may be punched up
-!!    without regard to any particular format
-!!    and may be entered into the machine
-!!    without defining any formats.
+!!    read(3f) performs a format-free read of data from punched cards.
+!!
+!!    only the card columns between icol1 and icol2 (inclusively) are
+!!    scanned for the read.
+!!
+!!    read(3f) gives the data analyst the ability to get data into the
+!!    machine without having to worry about and specify formats.
+!!
+!!    the data cards may be punched up without regard to any particular
+!!    format and may be entered into the machine without defining any
+!!    formats.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -28222,9 +27945,8 @@ REAL(kind=wp) :: add , an , hold , u , X
 !!##LICENSE
 !!    CC0-1.0
 !*==read.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE READ(Icol1,Icol2,X,N)
-      IMPLICIT NONE
-      INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ipr , ird ,    &
+SUBROUTINE READ(Icol1,Icol2,X,N)
+INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ipr , ird ,    &
      &        istart , istop , j , jp1 , jp2 , jrev , k , l , locpt ,   &
      &        maxcol , mincol , N
       INTEGER nc , ncp1 , ndp , numcrd , numdec , numint
@@ -28688,7 +28410,7 @@ REAL(kind=wp) :: sum , X , y
      &        '-TH DATA CARD THAT WAS READ')
 99028 FORMAT (' ','      THE CARD IS AS FOLLOWS--   ',80A1)
 99029 FORMAT (' ','      OF THE FOLLOWING DATA VALUE--   ',41A1)
-      END SUBROUTINE READ
+END SUBROUTINE READ
 !>
 !!##NAME
 !!    readg(3f) - [M_datapac:STATISTICS] perform a format-free read of data
@@ -28699,24 +28421,23 @@ REAL(kind=wp) :: sum , X , y
 !!     Subroutine readg (X, Y)
 !!
 !!##DESCRIPTION
-!!    readg(3f) performs a format-free read
-!!    of data from input unit = ird.
-!!    only the card columns between icol1 and icol2
-!!    (inclusively) are scanned for the read.
-!!    readg(3f) is identical to the read subroutine
-!!    except that the read subroutine assumes input unit 5,
-!!    whereas this readg subroutine allows the analyst
-!!    to specify the input unit.
-!!    readg(3f) gives the data analyst the ability
-!!    to get data into the machine
-!!    from a variety of input sources
-!!    (card, tape, disc, etc.)
-!!    without having
-!!    to worry about and specify formats.
-!!    the data card images may be made
-!!    without regard to any particular format
-!!    and may be entered into the machine
-!!    without defining any formats.
+!!
+!!    readg(3f) performs a format-free read of data from input unit = ird.
+!!
+!!    only the card columns between icol1 and icol2 (inclusively) are
+!!    scanned for the read.
+!!
+!!    readg(3f) is identical to the read subroutine except that the read
+!!    subroutine assumes input unit 5, whereas this readg subroutine allows
+!!    the analyst to specify the input unit.
+!!
+!!    readg(3f) gives the data analyst the ability to get data into the
+!!    machine from a variety of input sources (card, tape, disc, etc.)
+!!    without having to worry about and specify formats.
+!!
+!!    the data card images may be made without regard to any particular
+!!    format and may be entered into the machine without defining any
+!!    formats.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -28744,7 +28465,6 @@ REAL(kind=wp) :: sum , X , y
 !!    CC0-1.0
 !*==readg.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE READG(Ird,Icol1,Icol2,X,N)
-      IMPLICIT NONE
       INTEGER i , Icol1 , Icol2 , iend , ipower , ipr , Ird , istart ,  &
      &        istop , j , jp1 , jp2 , jrev , k , l , locpt , maxcol ,   &
      &        mincol , N , nc
@@ -29214,7 +28934,7 @@ REAL(kind=wp) :: sum , X , y
 99027 FORMAT (' ','      THE CARD IMAGE IS AS FOLLOWS--   ',80A1)
 99028 FORMAT (' ','      OF THE FOLLOWING DATA VALUE--   ',41A1)
 !
-      END SUBROUTINE READG
+END SUBROUTINE READG
 !>
 !!##NAME
 !!    relsd(3f) - [M_datapac:STATISTICS] compute the relative standard
@@ -29225,15 +28945,16 @@ REAL(kind=wp) :: sum , X , y
 !!     Subroutine relsd (X, Y)
 !!
 !!##DESCRIPTION
-!!    relsd(3f) computes the
-!!    sample relative standard deviation
-!!    of the data in the input vector x.
-!!    the sample relative standard deviation = (the sample
-!!    standard deviation)/(the sample mean).
-!!    the denominator n-1 is used in computing the
-!!    sample standard deviation.
-!!    the sample relative standard deviation is alternatively
-!!    referred to as the sample coefficient of variation.
+!!    relsd(3f) computes the sample relative standard deviation of the data
+!!    in the input vector x.
+!!
+!!    the sample relative standard deviation = (the sample standard
+!!    deviation)/(the sample mean).
+!!
+!!    the denominator n-1 is used in computing the sample standard deviation.
+!!
+!!    the sample relative standard deviation is alternatively referred to
+!!    as the sample coefficient of variation.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -29261,7 +28982,6 @@ REAL(kind=wp) :: sum , X , y
 !!    CC0-1.0
 !*==relsd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
       INTEGER i , ipr , Iwrite , N
 !
@@ -29361,7 +29081,7 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 99006 FORMAT (' THE RELATIVE STANDARD DEVIATION (= STANDARD ',          &
      &        'DEVIATION/MEAN) FOR THE ',I6,' OBSERVATIONS IS ',E12.8,  &
      &        ' PERCENT')
-      END SUBROUTINE RELSD
+END SUBROUTINE RELSD
 !>
 !!##NAME
 !!    replac(3f) - [M_datapac:STATISTICS] replace all observations in a
@@ -29372,27 +29092,19 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 !!     Subroutine replac (X, Y)
 !!
 !!##DESCRIPTION
-!!    replac(3f) replaces (with the value xnew)
-!!    all observations in the
-!!    single precision vector x which are inside
-!!    the closed (inclusive) interval
-!!    defined by xmin and xmax.
-!!    all observations outside of
-!!    this interval are left unchanged.
-!!    thus all observations in x which are
-!!    equal to or larger than xmin and
-!!    equal to or smaller than xmax,
-!!    will be replaced by xnew.
-!!    replac(3f) (and the
-!!    retain and delete subroutines)
-!!    gives the data analyst the ability to
-!!    easily 'clean up' a data set which has
-!!    missing and/or outlying observations
-!!    so that a more appropriate subsequent
-!!    data analysis may be performed.
-!!    for example, replacement of an outlier with
-!!    a more appropriate value can easily
-!!    be done by replac(3f).
+!!    REPLAC(3f) replaces (with the value xnew) all observations in the
+!!    single precision vector X which are inside the closed (inclusive)
+!!    interval defined by XMIN and XMAX.
+!!
+!!    All observations outside of this interval are left unchanged.
+!!    thus all observations in X which are equal to or larger than XMIN
+!!    and equal to or smaller than XMAX, will be replaced by XNEW.
+!!
+!!    REPLAC(3f) (and the retain and delete subroutines) gives the data
+!!    analyst the ability to easily 'clean up' a data set which has missing
+!!    and/or outlying observations so that a more appropriate subsequent
+!!    data analysis may be performed. For example, replacement of an
+!!    outlier with a more appropriate value can easily be done by REPLAC(3f).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -29420,7 +29132,6 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 !!    CC0-1.0
 !*==replac.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
-      IMPLICIT NONE
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
       INTEGER i , ipr , k , N , ndel
 !
@@ -29558,7 +29269,7 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 99014    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS UNCHANGED IS ',I6)
       ENDIF
 !
-      END SUBROUTINE REPLAC
+END SUBROUTINE REPLAC
 !>
 !!##NAME
 !!    retain(3f) - [M_datapac:STATISTICS] retain all observations in a
@@ -29569,23 +29280,16 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 !!     Subroutine retain (X, Y)
 !!
 !!##DESCRIPTION
-!!    retain(3f) retains all observations in the
-!!    single precision vector x which are inside
-!!    the closed (inclusive) interval
-!!    defined by xmin and xmax,
-!!    while deleting all observations outside of
-!!    this interval.
-!!    thus all observations in x which are smaller
-!!    than xmin or larger than xmax are deleted from x.
-!!    retain(3f) (and the
-!!    replac and delete subroutines)
-!!    gives the data analyst the ability to
-!!    easily 'clean up' a data set which has
-!!    missing and/or outlying observations
-!!    so that a more appropriate subsequent
-!!    data analysis may be performed.
-!!    for example, a trimmed sample can easily
-!!    be constructed by use of retain(3f).
+!!    retain(3f) retains all observations in the single precision vector
+!!    x which are inside the closed (inclusive) interval defined by xmin
+!!    and xmax, while deleting all observations outside of this interval.
+!!
+!!    thus all observations in x which are smaller than xmin or larger
+!!    than xmax are deleted from x. retain(3f) (and the replac and delete
+!!    subroutines) gives the data analyst the ability to easily 'clean up' a
+!!    data set which has missing and/or outlying observations so that a more
+!!    appropriate subsequent data analysis may be performed. for example,
+!!    a trimmed sample can easily be constructed by use of retain(3f).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -29613,7 +29317,6 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 !!    CC0-1.0
 !*==retain.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
-      IMPLICIT NONE
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
 !
@@ -29760,7 +29463,7 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
      &           I6)
       ENDIF
 !
-      END SUBROUTINE RETAIN
+END SUBROUTINE RETAIN
 !>
 !!##NAME
 !!    runs(3f) - [M_datapac:STATISTICS] perform a runs test
@@ -29770,20 +29473,20 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !!     Subroutine runs (X, Y)
 !!
 !!##DESCRIPTION
-!!    runs(3f) performs a runs analysis
-!!    of the data in the input vector x.
-!!    the analysis consists of first determining
-!!    the observed number of runs from the data,
-!!    and then computing
-!!    the expected number of runs,
-!!    the standard deviation of the number of runs,
-!!    and the resulting standardized statistic
-!!    for the number of runs for runs of various
+!!
+!!    runs(3f) performs a runs analysis of the data in the input vector x.
+!!
+!!    the analysis consists of first determining the observed number of
+!!    runs from the data, and then computing the expected number of runs,
+!!
+!!    the standard deviation of the number of runs, and the resulting
+!!    standardized statistic for the number of runs for runs of various
 !!    lengths.
-!!    this is done for runs up, runs down, and
-!!    runs up and down.
-!!    this runs anslysis is a useful distribution-free
-!!    test of the randomness of a data set.
+!!
+!!    this is done for runs up, runs down, and runs up and down.
+!!
+!!    this runs anslysis is a useful distribution-free test of the randomness
+!!    of a data set.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -29810,8 +29513,8 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !!##LICENSE
 !!    CC0-1.0
 !*==runs.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE RUNS(X,N)
-      IMPLICIT NONE
+
+SUBROUTINE RUNS(X,N)
 REAL(kind=wp) :: ai , an , anrdl , anrdlg , anrtl , anrtlg , anrul , anrulg , &
      &     c1 , c2 , c3 , c4 , den , enrtl , enrtlg , enrul , enrulg ,  &
      &     hold , snrtl , snrtlg
@@ -30223,7 +29926,7 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
 99023 FORMAT (' ',4X,I4,13X,6X,F7.1,13X,F8.4,12X,F8.4,11X,F8.2)
 99024 FORMAT ('1')
 99025 FORMAT (' ')
-      END SUBROUTINE RUNS
+END SUBROUTINE RUNS
 !>
 !!##NAME
 !!    sampp(3f) - [M_datapac:STATISTICS:PP] compute the sample 100P percent
@@ -30234,12 +29937,11 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
 !!     Subroutine sampp (X, Y)
 !!
 !!##DESCRIPTION
-!!    sampp(3f) computes the
-!!    sample 100p percent point
-!!    (where p is between 0.0 and 1.0, exclusively)
-!!    of the data in the input vector x.
-!!    the sample 100p percent point =  is that point in which
-!!    100p percent of the data in the sample is below.
+!!    SAMPP(3f) computes the sample 100p percent point (where p is between
+!!    0.0 and 1.0, exclusively) of the data in the input vector X.
+!!
+!!    the sample 100p percent point = is that point in which 100p percent
+!!    of the data in the sample is below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -30267,7 +29969,6 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
 !!    CC0-1.0
 !*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
-      IMPLICIT NONE
 REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
       INTEGER i , ipr , iupper , Iwrite , j , jp1 , N
@@ -30399,7 +30100,7 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &        '  THE VALUE OF THE THIRD INPUT ARGUMENT = ',E20.10,      &
      &        '*****')
 !
-      END SUBROUTINE SAMPP
+END SUBROUTINE SAMPP
 !>
 !!##NAME
 !!    scale(3f) - [M_datapac:STATISTICS] compute the sample range, sample
@@ -30411,9 +30112,9 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !!     Subroutine scale (X, Y)
 !!
 !!##DESCRIPTION
-!!    scale(3f) computes 4 estimates of the
-!!    scale (variation, scatter, dispersion)
-!!    of the data in the input vector x.
+!!    scale(3f) computes 4 estimates of the scale (variation, scatter,
+!!    dispersion) of the data in the input vector x.
+!!
 !!    the 4 estimators employed are--
 !!
 !!      1. the sample range;
@@ -30421,12 +30122,9 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !!      3. the sample relative standard deviation; and
 !!      4. the sample variance.
 !!
-!!    note that n-1 (rather than n)
-!!    is used in the divisor in the
-!!    computation of the sample standard
-!!    deviation, the sample relative
-!!    standard deviation, and the
-!!    sample variance.
+!!    note that n-1 (rather than n) is used in the divisor in the computation
+!!    of the sample standard deviation, the sample relative standard
+!!    deviation, and the sample variance.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -30454,7 +30152,6 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !!    CC0-1.0
 !*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SCALE(X,N)
-IMPLICIT NONE
 
 REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd , xsd , xvar
 INTEGER i , ipr , N
@@ -30609,11 +30306,11 @@ END SUBROUTINE SCALE
 !!     Subroutine sd (X, Y)
 !!
 !!##DESCRIPTION
-!!    sd(3f) computes the
-!!    sample standard deviation (with denominator n-1)
+!!    sd(3f) computes the sample standard deviation (with denominator n-1)
 !!    of the data in the input vector x.
-!!    the sample standard deviation = sqrt((the sum of the
-!!    squared deviations about the sample mean)/(n-1)).
+!!
+!!    the sample standard deviation = sqrt((the sum of the squared deviations
+!!    about the sample mean)/(n-1)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -30640,7 +30337,7 @@ END SUBROUTINE SCALE
 !!##LICENSE
 !!    CC0-1.0
 !*==sd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SD(X,N,Iwrite,Xsd)
+SUBROUTINE SD(X,N,Iwrite,Xsd)
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
       INTEGER i , ipr , Iwrite , N
 !
@@ -30736,7 +30433,7 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
       WRITE (ipr,99006) N , Xsd
 99006 FORMAT (' ','THE SAMPLE STANDARD DEVIATION OF THE ',I6,           &
      &        ' OBSERVATIONS IS ',E15.8)
-      END SUBROUTINE SD
+END SUBROUTINE SD
 !>
 !!##NAME
 !!    skipr(3f) - [M_datapac:STATISTICS] skip over a user-specified number
@@ -30747,12 +30444,11 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!     Subroutine skipr (X, Y)
 !!
 !!##DESCRIPTION
-!!    skipr(3f) reads through (skips over)
-!!    nlhead lines from input unit = 5.
-!!    if header information exists at the
-!!    beginning of a data file, skipr(3f)
-!!    is convenient for reading through
-!!    (skipping over) that header information.
+!!    skipr(3f) reads through (skips over) nlhead lines from input unit = 5.
+!!
+!!    if header information exists at the beginning of a data file,
+!!    skipr(3f) is convenient for reading through (skipping over) that
+!!    header information.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -30779,9 +30475,8 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!##LICENSE
 !!    CC0-1.0
 !*==skipr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SKIPR(Nlhead)
-      IMPLICIT NONE
-      INTEGER i , ia , ipr , ird , Nlhead
+SUBROUTINE SKIPR(Nlhead)
+INTEGER i , ia , ipr , ird , Nlhead
 !
 !     INPUT  ARGUMENTS--NLHEAD = THE INTEGER NUMBER OF CARD
 !                                IMAGES TO BE READ THROUGH
@@ -30822,7 +30517,7 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
          ENDDO
       ENDIF
 !
-      END SUBROUTINE SKIPR
+END SUBROUTINE SKIPR
 !>
 !!##NAME
 !!    sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample observations
@@ -30848,27 +30543,27 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!    vector while 'carrying along' the elements of a second data vector.
 !!
 !!##INPUT ARGUMENTS
-!!      X   THE SINGLE PRECISION VECTOR OF
-!!          OBSERVATIONS TO BE SORTED.
+!!      x   the single precision vector of
+!!          observations to be sorted.
 !!
-!!      Y   THE SINGLE PRECISION VECTOR OF
-!!          OBSERVATIONS TO BE 'CARRIED ALONG',
-!!          THAT IS, TO BE REARRANGED ACCORDING
-!!          TO THE SORT ON X.
+!!      y   the single precision vector of
+!!          observations to be 'carried along',
+!!          that is, to be rearranged according
+!!          to the sort on x.
 !!
-!!      N   THE INTEGER NUMBER OF OBSERVATIONS
-!!          IN THE VECTOR X.
+!!      n   the integer number of observations
+!!          in the vector x.
 !!##OUTPUT ARGUMENTS
 !!
-!!      XS  THE SINGLE PRECISION VECTOR
-!!          INTO WHICH THE SORTED DATA VALUES
-!!          FROM X WILL BE PLACED.
+!!      xs  the single precision vector
+!!          into which the sorted data values
+!!          from x will be placed.
 !!
-!!      YC  THE SINGLE PRECISION VECTOR
-!!          INTO WHICH THE REARRANGED
-!!          (ACCORDING TO THE SORT OF THE
-!!          VECTOR X) VALUES OF THE VECTOR Y
-!!          WILL BE PLACED.
+!!      yc  the single precision vector
+!!          into which the rearranged
+!!          (according to the sort of the
+!!          vector x) values of the vector y
+!!          will be placed.
 !!
 !!##EXAMPLES
 !!
@@ -30919,7 +30614,6 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!    CC0-1.0
 !*==sortc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTC(X,Y,N,Xs,Yc)
-IMPLICIT NONE
 
 REAL(kind=wp) :: amed, bmed, hold, tx, ty, X(:), Xs(:), Y(:), Yc(:)
 INTEGER i, il(36), ip1, ipr, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
@@ -31239,8 +30933,6 @@ END SUBROUTINE SORTC
 !!    CC0-1.0
 !*==sort.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORT(X,N,Y)
-IMPLICIT NONE
-
 REAL(kind=wp) :: amed, hold, tt, X, Y
 integer i, il, ip1, ipr, iu, j, jmi, jmk, k, l, lmi,   m, mid, n, nm1
 DIMENSION X(:), Y(:)
@@ -31485,7 +31177,6 @@ END SUBROUTINE SORT
 !!    CC0-1.0
 !*==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTP(X,N,Y,Xpos)
-IMPLICIT NONE
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
       INTEGER i , il , ip1 , ipr , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
@@ -31754,12 +31445,11 @@ END SUBROUTINE SORTP
 !!     Subroutine spcorr (X, Y)
 !!
 !!##DESCRIPTION
-!!    spcorr(3f) computes the
-!!    spearman rank correlation coefficient
-!!    between the 2 sets of data in the input vectors x and y.
-!!    the spearman rank correlation coefficient will be a
-!!    single precision value between -1.0 and 1.0
-!!    (inclusively).
+!!    spcorr(3f) computes the spearman rank correlation coefficient between
+!!    the 2 sets of data in the input vectors x and y.
+!!
+!!    the spearman rank correlation coefficient will be a single precision
+!!    value between -1.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -31787,7 +31477,6 @@ END SUBROUTINE SORTP
 !!    CC0-1.0
 !*==spcorr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
       INTEGER i , iflag , ipr , iupper , Iwrite , N
 !
@@ -31914,7 +31603,7 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
      &     'THE SPEARMAN RANK CORRELATION COEFFICIENT OF THE 2 SETS OF '&
      &     ,I6,' OBSERVATIONS IS ',F14.5)
       ENDIF
-      END SUBROUTINE SPCORR
+END SUBROUTINE SPCORR
 !>
 !!##NAME
 !!    stmom3(3f) - [M_datapac:STATISTICS] compute the third central moment
@@ -31925,15 +31614,15 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !!     Subroutine stmom3 (X, Y)
 !!
 !!##DESCRIPTION
-!!    stmom3(3f) computes the
-!!    sample standardized third central moment
-!!    of the data in the input vector x.
-!!    the sample standardized third central moment =
-!!    (the sample third central moment)/((the sample
-!!    standard deviation)**3).
-!!    n (rather than n-1) has been used in the denominator
-!!    in the calculation of both the sample third central
-!!    moment and the sample standard deviation.
+!!    stmom3(3f) computes the sample standardized third central moment of
+!!    the data in the input vector x.
+!!
+!!    the sample standardized third central moment = (the sample third
+!!    central moment)/((the sample standard deviation)**3).
+!!
+!!    n (rather than n-1) has been used in the denominator in the calculation
+!!    of both the sample third central moment and the sample standard
+!!    deviation.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -31961,7 +31650,6 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !!    CC0-1.0
 !*==stmom3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
       INTEGER i , ipr , Iwrite , N
 !
@@ -32072,15 +31760,16 @@ END SUBROUTINE STMOM3
 !!     Subroutine stmom4 (X, Y)
 !!
 !!##DESCRIPTION
-!!    stmom4(3f) computes the
-!!    sample standardized fourth central moment
-!!    of the data in the input vector x.
-!!    the sample standardized fourth central moment =
-!!    (the sample fourth central moment)/((the sample
-!!    standard deviation)**4).
-!!    n (rather than n-1) has been used in the denominator
-!!    in the calculation of both the sample fourth central
-!!    moment and the sample standard deviation.
+!!
+!!    stmom4(3f) computes the sample standardized fourth central moment of
+!!    the data in the input vector x.
+!!
+!!    the sample standardized fourth central moment = (the sample fourth
+!!    central moment)/((the sample standard deviation)**4).
+!!
+!!    n (rather than n-1) has been used in the denominator in the calculation
+!!    of both the sample fourth central moment and the sample standard
+!!    deviation.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -32108,7 +31797,6 @@ END SUBROUTINE STMOM3
 !!    CC0-1.0
 !*==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
-      IMPLICIT NONE
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
       INTEGER i , ipr , Iwrite , N
 !
@@ -32285,9 +31973,7 @@ END SUBROUTINE STMOM4
 !!##LICENSE
 !!    CC0-1.0
 !*==subse1.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
-      IMPLICIT NONE
-
+SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
 REAL(kind=wp) :: D(:) , Dmax , Dmin , hold , pointl , pointu , X(:) , Y(:)
 INTEGER i , ipr , k , N , ndel , Ny
 
@@ -32425,7 +32111,7 @@ INTEGER i , ipr , k , N , ndel , Ny
 99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
-      END SUBROUTINE SUBSE1
+END SUBROUTINE SUBSE1
 !>
 !!##NAME
 !!    subse2(3f) - [M_datapac:STATISTICS] extract the elements of a vector
@@ -32521,8 +32207,6 @@ INTEGER i , ipr , k , N , ndel , Ny
 !!    CC0-1.0
 !*==subse2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SUBSE2(X,N,D1,D1min,D1max,D2,D2min,D2max,Y,Ny)
-IMPLICIT NONE
-
 REAL(kind=wp) :: D1(:), D1max, D1min, D2(:), D2max, D2min, hold, poin1l, poin1u, poin2l, poin2u, X(:), Y(:)
 INTEGER       :: i, ipr, k, N, ndel, Ny
 
@@ -32736,8 +32420,6 @@ END SUBROUTINE SUBSE2
 !!    CC0-1.0
 !*==subset.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
-IMPLICIT NONE
-
 REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
       DIMENSION X(:)
@@ -32898,7 +32580,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
-      END SUBROUTINE SUBSET
+END SUBROUTINE SUBSET
 !>
 !!##NAME
 !!    tail(3f) - [M_datapac:STATISTICS] performs a symmetric distribution
@@ -32909,9 +32591,9 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !!     Subroutine tail (X, Y)
 !!
 !!##DESCRIPTION
-!!    tail(3f) perfoms a symmetric distribution
-!!    tail length analysis
-!!    on the data in the input vector x.
+!!    tail(3f) perfoms a symmetric distribution tail length analysis on
+!!    the data in the input vector x.
+!!
 !!    the analysis consists of the following--
 !!
 !!      1. various test statistics to test
@@ -32930,14 +32612,12 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !!         admissable set consisting of
 !!         43 symmetric distributions.
 !!
-!!    the admissable set of symmetric
-!!    distributions considered includes the
-!!    uniform, normal, logistic,
-!!    double exponential, cauchy, and
-!!    37 distributions drawn from the
-!!    the tukey lambda distributional family.
-!!    the goodness of fit criterion is the maximum probability
-!!    plot correlation coefficient criterion.
+!!    the admissable set of symmetric distributions considered includes
+!!    the uniform, normal, logistic, double exponential, cauchy, and 37
+!!    distributions drawn from the the tukey lambda distributional family.
+!!
+!!    the goodness of fit criterion is the maximum probability plot
+!!    correlation coefficient criterion.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -32964,10 +32644,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !!##LICENSE
 !!    CC0-1.0
 !*==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TAIL(X,N)
-      IMPLICIT NONE
-!*--TAIL29420
-
+SUBROUTINE TAIL(X,N)
 REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
 REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
 REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
@@ -33615,7 +33292,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 99044 FORMAT ('1')
 99045 FORMAT (' ')
 !
-      END SUBROUTINE TAIL
+END SUBROUTINE TAIL
 !>
 !!##NAME
 !!    tcdf(3f) - [M_datapac:STATISTICS:CD] computes the cumulative distribution
@@ -33627,12 +33304,11 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !!     Subroutine tcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    tcdf(3f) computes the cumulative distribution
-!!    function value for student's t distribution
-!!    with integer degrees of freedom parameter = nu.
-!!    this distribution is defined for all x.
-!!    the probability density function is given
-!!    in the references below.
+!!    tcdf(3f) computes the cumulative distribution function value for
+!!    student's t distribution with integer degrees of freedom parameter
+!!    = nu. This distribution is defined for all x.
+!!
+!!    the probability density function is given in the references below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -33659,8 +33335,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !!##LICENSE
 !!    CC0-1.0
 !*==tcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TCDF(X,Nu,Cdf)
-      IMPLICIT NONE
+SUBROUTINE TCDF(X,Nu,Cdf)
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
       INTEGER i , ievodd , imax , imin , ipr , Nu , nucut
 !
@@ -33837,7 +33512,7 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
          Cdf = dcdf
       ENDIF
 !
-      END SUBROUTINE TCDF
+END SUBROUTINE TCDF
 !>
 !!##NAME
 !!    time(3f) - [M_datapac:STATISTICS] perform a time series analysis
@@ -33849,8 +33524,9 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !!     Subroutine time (X, Y)
 !!
 !!##DESCRIPTION
-!!    time(3f) performs a time series analysis
-!!    on the data in the input vector x.
+!!    time(3f) performs a time series analysis on the data in the input
+!!    vector x.
+!!
 !!    the analysis consists of the following--
 !!
 !!      1. a plot of autocorrelation versus lag number;
@@ -33859,18 +33535,16 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !!      4. 4 other estimated spectra--each based
 !!         on a differing bandwidth.
 !!
-!!    in order that the results of the time series analysis
-!!    be valid and properly interpreted, the input data
-!!    in x should be equi-spaced in time
+!!    in order that the results of the time series analysis be valid and
+!!    properly interpreted, the input data in x should be equi-spaced in time
 !!    (or whatever variable corresponds to time).
 !!
-!!    the horizontal axis of the spectra produced
-!!    by time(3f) is frequency.
-!!    this frequency is measured in units of
-!!    cycles per 'data point' or, more precisely, in
-!!    cycles per unit time where
-!!    'unit time' is defined as the
-!!    elapsed time between adjacent observations.
+!!    the horizontal axis of the spectra produced by time(3f) is frequency.
+!!
+!!    this frequency is measured in units of cycles per 'data point' or,
+!!    more precisely, in cycles per unit time where 'unit time' is defined
+!!    as the elapsed time between adjacent observations.
+!!
 !!    the range of the frequency axis is 0.0 to 0.5.
 !!
 !!##OPTIONS
@@ -33898,8 +33572,7 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !!##LICENSE
 !!    CC0-1.0
 !*==time.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TIME(X,N)
-      IMPLICIT NONE
+SUBROUTINE TIME(X,N)
 REAL(kind=wp) :: absr , ak , al , all , almax , an , an2 , arg1 , arg2 , bw , &
      &     df , dfroun , hold , p , perout , pi , pmsq , ps , pssq , r
 REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
@@ -34266,7 +33939,7 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
       ENDDO
 99017 FORMAT (' ')
 !
-      END SUBROUTINE TIME
+END SUBROUTINE TIME
 !>
 !!##NAME
 !!    tol(3f) - [M_datapac:STATISTICS] compute normal and distribution-free
@@ -34277,11 +33950,11 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !!     Subroutine tol (X, Y)
 !!
 !!##DESCRIPTION
-!!    tol(3f) computes normal and
-!!    distribution-free tolerance limits
-!!    for the data in the input vector x.
-!!    15 normal tolerance limits are computed; and
-!!    30 distribution-free tolerance limits are computed.
+!!    tol(3f) computes normal and distribution-free tolerance limits for
+!!    the data in the input vector x.
+!!
+!!    15 normal tolerance limits are computed; and 30 distribution-free
+!!    tolerance limits are computed.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -34308,8 +33981,7 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !!##LICENSE
 !!    CC0-1.0
 !*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TOL(X,N)
-      IMPLICIT NONE
+SUBROUTINE TOL(X,N)
 REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
      &     an4 , an5 , an6 , b , c , c1 , c2 , c3
 REAL(kind=wp) :: d , d1 , d2 , d3 , d4 , d5 , d6 , d7 , f , hold , p , pa ,   &
@@ -34653,7 +34325,7 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 99016 FORMAT ('1')
 99017 FORMAT (' ')
 !
-      END SUBROUTINE TOL
+END SUBROUTINE TOL
 !>
 !!##NAME
 !!    tplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a student's
@@ -34665,27 +34337,27 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 !!     Subroutine tplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    tplt(3f) generates a student's t
-!!    probability plot (with integer
+!!    tplt(3f) generates a student's t probability plot (with integer
 !!    degrees of freedom parameter value = nu).
-!!    the prototype student's t distribution used
-!!    herein is defined for all x,
-!!    and its probability density function is given
-!!    in the references below.
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the student's t probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the  student's t distribution
+!!
+!!    the prototype student's t distribution used herein is defined for all
+!!    x, and its probability density function is given in the references
+!!    below.
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the student's t probability plot is useful in graphically testing
+!!    the composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the student's t distribution
 !!    with degrees of freedom parameter value = nu.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -34712,8 +34384,7 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 !!##LICENSE
 !!    CC0-1.0
 !*==tplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TPLT(X,N,Nu)
-      IMPLICIT NONE
+SUBROUTINE TPLT(X,N,Nu)
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope
@@ -34887,16 +34558,15 @@ END SUBROUTINE TPLT
 !!     Subroutine tppf (X, Y)
 !!
 !!##DESCRIPTION
-!!    tppf(3f) computes the percent point
-!!    function value for the student's t distribution
-!!    with integer degrees of freedom parameter = nu.
-!!    the student's t distribution used
-!!    herein is defined for all x,
-!!    and its probability density function is given
-!!    in the references below.
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!
+!!    tppf(3f) computes the percent point function value for the student's
+!!    t distribution with integer degrees of freedom parameter = nu.
+!!    the student's t distribution used herein is defined for all x, and
+!!    its probability density function is given in the references below.
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -34923,9 +34593,8 @@ END SUBROUTINE TPLT
 !!##LICENSE
 !!    CC0-1.0
 !*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TPPF(P,Nu,Ppf)
-      IMPLICIT NONE
-      INTEGER ipass , ipr , maxit , Nu
+SUBROUTINE TPPF(P,Nu,Ppf)
+INTEGER ipass , ipr , maxit , Nu
 REAL(kind=wp) :: P , Ppf , ppfn
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -34946,7 +34615,6 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSIN, DCOS, DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
 !     COMMENT--FOR NU = 1 AND NU = 2, THE PERCENT POINT FUNCTION
 !              FOR THE T DISTRIBUTION EXISTS IN SIMPLE CLOSED FORM
@@ -35164,10 +34832,9 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!##LICENSE
 !!    CC0-1.0
 !*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TRAN(N,Nu,Iseed,X)
-      IMPLICIT NONE
+SUBROUTINE TRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
-      INTEGER i , ipr , Iseed , j , N , Nu
+INTEGER i , ipr , Iseed , j , N , Nu
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -35279,7 +34946,7 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-      END SUBROUTINE TRAN
+END SUBROUTINE TRAN
 !>
 !!##NAME
 !!    trim(3f) - [M_datapac:STATISTICS] computes the sample trimmed mean
@@ -35290,12 +34957,11 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 !!     Subroutine trim (X, Y)
 !!
 !!##DESCRIPTION
-!!    trim(3f) computes the
-!!    sample trimmed mean
-!!    of the data in the input vector x.
-!!    the trimming is such that
-!!    the lower 100*p1 % of the data is trimmed off
-!!    and the upper 100*p2 % of the data is trimmed off.
+!!    trim(3f) computes the sample trimmed mean of the data in the input
+!!    vector x.
+!!
+!!    the trimming is such that the lower 100*p1 % of the data is trimmed
+!!    off and the upper 100*p2 % of the data is trimmed off.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -35322,11 +34988,9 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 !!##LICENSE
 !!    CC0-1.0
 !*==trim.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
-      IMPLICIT NONE
-
+SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
-      INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
+INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
 
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -35519,7 +35183,7 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
      &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE TRIM
+END SUBROUTINE TRIM
 !>
 !!##NAME
 !!    unicdf(3f) - [M_datapac:STATISTICS:CD] compute the Uniform cumulative
@@ -35530,13 +35194,13 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
 !!     Subroutine unicdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    unicdf(3f) computes the cumulative distribution
-!!    function value for the uniform (rectangular)
-!!    distribution on the unit interval (0,1).
-!!    this distribution has mean = 0.5
-!!    and standard deviation = sqrt(1/12) = 0.28867513.
-!!    this distribution has the probability
-!!    density function f(x) = 1.
+!!    unicdf(3f) computes the cumulative distribution function value for
+!!    the uniform (rectangular) distribution on the unit interval (0,1).
+!!
+!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    = 0.28867513.
+!!
+!!    this distribution has the probability density function f(x) = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -35563,8 +35227,7 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
 !!##LICENSE
 !!    CC0-1.0
 !*==unicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNICDF(X,Cdf)
-      IMPLICIT NONE
+SUBROUTINE UNICDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
 !
@@ -35608,7 +35271,7 @@ REAL(kind=wp) :: Cdf , X
          Cdf = X
       ENDIF
 !
-      END SUBROUTINE UNICDF
+END SUBROUTINE UNICDF
 !>
 !!##NAME
 !!    unimed(3f) - [M_datapac:STATISTICS] generates the N order statistic
@@ -35620,31 +35283,27 @@ REAL(kind=wp) :: Cdf , X
 !!     Subroutine unimed (X, Y)
 !!
 !!##DESCRIPTION
-!!    unimed(3f) generates the n order statistic medians
-!!    from the uniform (rectangular)
-!!    distribution on the unit interval (0,1).
-!!    this distribution has mean = 0.5
-!!    and standard deviation = sqrt(1/12) = 0.28867513.
-!!    this distribution has the probability
-!!    density function f(x) = 1.
-!!    unimed(3f) is a support subroutine for
-!!    all of the probability plot subroutines
-!!    in datapac; it is rarely used by the
-!!    data analyst directly.
-!!    a probability plot for a general distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the i-th order statistic median for a general
-!!    distribution is obtained by transforming
-!!    the i-th uniform order statistic median
-!!    by the percent point function of the desired
-!!    distribution--hence the importance of being able to
-!!    generate uniform order statistic medians.
-!!    it is of theroetical interest to note that
-!!    the i-th uniform order statistic median
-!!    in a sample of size n is identically the
-!!    median of the beta distribution
-!!    with parameters i and n-i+1.
+!!    UNIMED(3f) generates the N order statistic medians from the uniform
+!!    (rectangular) distribution on the unit interval (0,1).
+!!
+!!    This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    = 0.28867513. This distribution has the probability density function
+!!    f(X) = 1.
+!!
+!!    UNIMED(3f) is a support subroutine for all of the probability plot
+!!    subroutines in datapac; it is rarely used by the data analyst directly.
+!!
+!!    A probability plot for a general distribution is a plot of the ordered
+!!    observations versus the order statistic medians for that distribution.
+!!
+!!    The i-th order statistic median for a general distribution is obtained
+!!    by transforming the i-th uniform order statistic median by the percent
+!!    point function of the desired distribution--hence the importance of
+!!    being able to generate uniform order statistic medians.
+!!
+!!    It is of theroetical interest to note that the i-th uniform order
+!!    statistic median in a sample of size n is identically the median of
+!!    the beta distribution with parameters i and n-i+1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -35671,10 +35330,9 @@ REAL(kind=wp) :: Cdf , X
 !!##LICENSE
 !!    CC0-1.0
 !*==unimed.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNIMED(N,X)
-      IMPLICIT NONE
-REAL(kind=wp) :: ai , an , gam , X
-      INTEGER i , imax , ipr , irev , N , nevodd , nhalf
+SUBROUTINE UNIMED(N,X)
+REAL(kind=wp) :: ai , an , gam , X(:)
+INTEGER i , imax , ipr , irev , N , nevodd , nhalf
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF UNIFORM ORDER STATISTIC MEDIANS
@@ -35697,8 +35355,6 @@ REAL(kind=wp) :: ai , an , gam , X
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
 !
       ipr = 6
 !
@@ -35748,7 +35404,7 @@ REAL(kind=wp) :: ai , an , gam , X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE UNIMED
+END SUBROUTINE UNIMED
 !>
 !!##NAME
 !!    unipdf(3f) - [M_datapac:STATISTICS:PD] compute the Uniform probability
@@ -35759,13 +35415,12 @@ REAL(kind=wp) :: ai , an , gam , X
 !!     Subroutine unipdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    unipdf(3f) computes the probability density
-!!    function value for the uniform (rectangular)
-!!    distribution on the unit interval (0,1).
-!!    this distribution has mean = 0.5
-!!    and standard deviation = sqrt(1/12) = 0.28867513.
-!!    this distribution has the probability
-!!    density function f(x) = 1.
+!!    unipdf(3f) computes the probability density function value for the
+!!    uniform (rectangular) distribution on the unit interval (0,1).
+!!
+!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    = 0.28867513. this distribution has the probability density function
+!!    f(x) = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -35792,10 +35447,9 @@ REAL(kind=wp) :: ai , an , gam , X
 !!##LICENSE
 !!    CC0-1.0
 !*==unipdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNIPDF(X,Pdf)
-      IMPLICIT NONE
-      INTEGER ipr
+SUBROUTINE UNIPDF(X,Pdf)
 REAL(kind=wp) :: Pdf , X
+INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
@@ -35836,7 +35490,7 @@ REAL(kind=wp) :: Pdf , X
          Pdf = 1.0_wp
       ENDIF
 !
-      END SUBROUTINE UNIPDF
+END SUBROUTINE UNIPDF
 !>
 !!##NAME
 !!    uniplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Uniform probability plot
@@ -35847,28 +35501,29 @@ REAL(kind=wp) :: Pdf , X
 !!     Subroutine uniplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    uniplt(3f) generates a uniform
-!!    probability plot.
-!!    the prototype uniform distribution used herein
-!!    is defined on the unit interval (0,1).
-!!    this distribution has mean = 0.5
-!!    and standard deviation = sqrt(1/12) = 0.28867513.
-!!    this distribution has
-!!    the probability density function
-!!    f(x) = 1.
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the uniform probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the uniform distribution.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    uniplt(3f) generates a uniform probability plot.
+!!
+!!    the prototype uniform distribution used herein is defined on the
+!!    unit interval (0,1). This distribution has mean = 0.5 and standard
+!!    deviation = sqrt(1/12) = 0.28867513.
+!!
+!!    this distribution has the probability density function
+!!
+!!        f(x) = 1.
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the uniform probability plot is useful in graphically testing
+!!    the composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the uniform distribution.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -35895,8 +35550,7 @@ REAL(kind=wp) :: Pdf , X
 !!##LICENSE
 !!    CC0-1.0
 !*==uniplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNIPLT(X,N)
-      IMPLICIT NONE
+SUBROUTINE UNIPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
@@ -36015,7 +35669,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE UNIPLT
+END SUBROUTINE UNIPLT
 !>
 !!##NAME
 !!    unippf(3f) - [M_datapac:STATISTICS:PP] compute the Uniform percent
@@ -36026,16 +35680,17 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!     Subroutine unippf (X, Y)
 !!
 !!##DESCRIPTION
-!!    unippf(3f) computes the percent point
-!!    function value for the uniform (rectangular)
-!!    distribution on the unit interval (0,1).
-!!    this distribution has mean = 0.5
-!!    and standard deviation = sqrt(1/12) = 0.28867513.
-!!    this distribution has the probability
-!!    density function f(x) = 1.
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!    unippf(3f) computes the percent point function value for the uniform
+!!    (rectangular) distribution on the unit interval (0,1).
+!!
+!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    = 0.28867513. This distribution has the probability density function
+!!
+!!        f(x) = 1.
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36062,10 +35717,9 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!##LICENSE
 !!    CC0-1.0
 !*==unippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNIPPF(P,Ppf)
-      IMPLICIT NONE
-      INTEGER ipr
+SUBROUTINE UNIPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
+INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -36112,7 +35766,7 @@ REAL(kind=wp) :: P , Ppf
          Ppf = P
       ENDIF
 !
-      END SUBROUTINE UNIPPF
+END SUBROUTINE UNIPPF
 !>
 !!##NAME
 !!    uniran(3f) - [M_datapac:STATISTICS:RANDOM] generate Uniform random numbers
@@ -36122,13 +35776,13 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine uniran (X, Y)
 !!
 !!##DESCRIPTION
-!!    uniran(3f) generates a random sample of size n
-!!    from the uniform (rectangular)
-!!    distribution on the unit interval (0,1).
-!!    this distribution has mean = 0.5
-!!    and standard deviation = sqrt(1/12) = 0.28867513.
-!!    this distribution has the probability
-!!    density function f(x) = 1.
+!!    uniran(3f) generates a random sample of size n from the uniform
+!!    (rectangular) distribution on the unit interval (0,1).
+!!
+!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    = 0.28867513. This distribution has the probability density function
+!!
+!!        f(x) = 1
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36174,8 +35828,6 @@ REAL(kind=wp) :: P , Ppf
 !!    CC0-1.0
 !*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIRAN(N,Iseed,X)
-IMPLICIT NONE
-
 REAL(kind=wp) :: ak , am1 , X(:)
 INTEGER i, ipr, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
 INTEGER m(17)
@@ -36441,10 +36093,9 @@ END SUBROUTINE UNIRAN
 !!##LICENSE
 !!    CC0-1.0
 !*==unisf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE UNISF(P,Sf)
-      IMPLICIT NONE
-      INTEGER ipr
+SUBROUTINE UNISF(P,Sf)
 REAL(kind=wp) :: P , Sf
+INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -36491,7 +36142,7 @@ REAL(kind=wp) :: P , Sf
          Sf = 1.0_wp
       ENDIF
 !
-      END SUBROUTINE UNISF
+END SUBROUTINE UNISF
 !>
 !!##NAME
 !!    var(3f) - [M_datapac:STATISTICS] compute the sample variance of a
@@ -36502,11 +36153,11 @@ REAL(kind=wp) :: P , Sf
 !!     Subroutine var (X, Y)
 !!
 !!##DESCRIPTION
-!!    var(3f) computes the
-!!    sample variance (with denominator n-1)
-!!    of the data in the input vector x.
-!!    the sample variance = (the sum of the
-!!    squared deviations about the sample mean)/(n-1).
+!!    var(3f) computes the sample variance (with denominator n-1) of the
+!!    data in the input vector x.
+!!
+!!    the sample variance = (the sum of the squared deviations about the
+!!    sample mean)/(n-1).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36533,10 +36184,9 @@ REAL(kind=wp) :: P , Sf
 !!##LICENSE
 !!    CC0-1.0
 !*==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE VAR(X,N,Iwrite,Xvar)
-      IMPLICIT NONE
+SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
-      INTEGER i , ipr , Iwrite , N
+INTEGER i , ipr , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -36630,7 +36280,7 @@ REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
       WRITE (ipr,99006) N , Xvar
 99006 FORMAT (' ','THE SAMPLE VARIANCE OF THE ',I6,' OBSERVATIONS IS ', &
      &        E15.8)
-      END SUBROUTINE VAR
+END SUBROUTINE VAR
 !>
 !!##NAME
 !!    weib(3f) - [M_datapac:STATISTICS] perform a Weibull distribution
@@ -36641,22 +36291,23 @@ REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 !!     Subroutine weib (X, Y)
 !!
 !!##DESCRIPTION
-!!    weib(3f) perfoms a weibull distribution analysis
-!!    on the data in the input vector x.
-!!    this analysis consists of determining that particular
-!!    weibull distribution
-!!    which best fits the data set.
-!!    the goodness of fit criterion is the maximum probability
-!!    plot correlation coefficient criterion.
-!!    after the best-fit distribution is determined,
-!!    estimates are computed and printed out for the
-!!    location and scale parameters.
-!!    two probability plots are also printed out--
-!!    the best-fit weibull probability plot
-!!    and an extreme value type 1 probability plot
-!!    (this is due to the fact that as the weibull parameter
-!!    gamma approaches infinity, the weibull distribution
-!!    approaches the extreme value type 1 distribution).
+!!    weib(3f) perfoms a weibull distribution analysis on the data in the
+!!    input vector x.
+!!
+!!    this analysis consists of determining that particular weibull
+!!    distribution which best fits the data set.
+!!
+!!    the goodness of fit criterion is the maximum probability plot
+!!    correlation coefficient criterion.
+!!
+!!    after the best-fit distribution is determined, estimates are computed
+!!    and printed out for the location and scale parameters.
+!!
+!!    two probability plots are also printed out-- the best-fit weibull
+!!    probability plot and an extreme value type 1 probability plot (this
+!!    is due to the fact that as the weibull parameter gamma approaches
+!!    infinity, the weibull distribution approaches the extreme value type
+!!    1 distribution).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36683,8 +36334,8 @@ REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 !!##LICENSE
 !!    CC0-1.0
 !*==weib.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WEIB(X,N)
-      IMPLICIT NONE
+SUBROUTINE WEIB(X,N)
+IMPLICIT NONE
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
      &     sum2 , sum3 , sy , t , w , wbar , WS , X , xmax , xmin , Y
 REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
@@ -36980,7 +36631,7 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
       ENDIF
 99020 FORMAT (' ')
 !
-      END SUBROUTINE WEIB
+END SUBROUTINE WEIB
 !>
 !!##NAME
 !!    weicdf(3f) - [M_datapac:STATISTICS:CD] compute the Weibull cumulative
@@ -36991,14 +36642,14 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !!     Subroutine weicdf (X, Y)
 !!
 !!##DESCRIPTION
-!!    weicdf(3f) computes the cumulative distribution
-!!    function value for the weibull
-!!    distribution with single precision
-!!    tail length parameter = gamma.
-!!    the weibull distribution used
-!!    herein is defined for all positive x,
+!!    weicdf(3f) computes the cumulative distribution function value for
+!!    the weibull distribution with single precision tail length parameter
+!!    = gamma.
+!!
+!!    the weibull distribution used herein is defined for all positive x,
 !!    and has the probability density function
-!!    f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+!!
+!!        f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37025,10 +36676,9 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !!##LICENSE
 !!    CC0-1.0
 !*==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WEICDF(X,Gamma,Cdf)
-      IMPLICIT NONE
+SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
-      INTEGER ipr
+INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -37045,8 +36695,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE POSITIVE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
 !               --HASTINGS AND PEACOCK, STATISTICAL
@@ -37085,7 +36734,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE WEICDF
+END SUBROUTINE WEICDF
 !>
 !!##NAME
 !!    weiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Weibull probability plot
@@ -37096,27 +36745,28 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!     Subroutine weiplt (X, Y)
 !!
 !!##DESCRIPTION
-!!    weiplt(3f) generates a weibull
-!!    probability plot
-!!    (with tail length parameter value = gamma).
-!!    the prototype weibull distribution used
-!!    herein is defined for all positive x,
-!!    and has the probability density function
-!!    f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
-!!    as used herein, a probability plot for a distribution
-!!    is a plot of the ordered observations versus
-!!    the order statistic medians for that distribution.
-!!    the weibull probability plot is useful in
-!!    graphically testing the composite (that is,
-!!    location and scale parameters need not be specified)
-!!    hypothesis that the underlying distribution
-!!    from which the data have been randomly drawn
-!!    is the  weibull distribution
-!!    with tail length parameter value = gamma.
-!!    if the hypothesis is true, the probability plot
-!!    should be near-linear.
-!!    a measure of such linearity is given by the
-!!    calculated probability plot correlation coefficient.
+!!    weiplt(3f) generates a weibull probability plot (with tail length
+!!    parameter value = gamma).
+!!
+!!    the prototype weibull distribution used herein is defined for all
+!!    positive x, and has the probability density function
+!!
+!!        f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma))
+!!
+!!    As used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the weibull probability plot is useful in graphically testing
+!!    the composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which the
+!!    data have been randomly drawn is the weibull distribution with tail
+!!    length parameter value = gamma.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37143,13 +36793,13 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!##LICENSE
 !!    CC0-1.0
 !*==weiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WEIPLT(X,N,Gamma)
-      IMPLICIT NONE
+
+SUBROUTINE WEIPLT(X,N,Gamma)
 REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
 REAL(kind=wp) :: yslope
-      INTEGER i , ipr , iupper , N
+INTEGER i , ipr , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -37300,7 +36950,7 @@ REAL(kind=wp) :: yslope
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE WEIPLT
+END SUBROUTINE WEIPLT
 !>
 !!##NAME
 !!    weippf(3f) - [M_datapac:STATISTICS:PP] compute the Weibull percent
@@ -37311,17 +36961,16 @@ REAL(kind=wp) :: yslope
 !!     Subroutine weippf (X, Y)
 !!
 !!##DESCRIPTION
-!!    weippf(3f) computes the percent point
-!!    function value for the weibull
-!!    distribution with single precision
-!!    tail length parameter = gamma.
-!!    the weibull distribution used
-!!    herein is defined for all positive x,
-!!    and has the probability density function
-!!    f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
-!!    note that the percent point function of a distribution
-!!    is identically the same as the inverse cumulative
-!!    distribution function of the distribution.
+!!    weippf(3f) computes the percent point function value for the weibull
+!!    distribution with single precision tail length parameter = gamma.
+!!
+!!    the weibull distribution used herein is defined for all positive x,
+!!    and has the probability density function f(x) = gamma * (x**(gamma-1))
+!!    * exp(-(x**gamma)).
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37348,10 +36997,9 @@ REAL(kind=wp) :: yslope
 !!##LICENSE
 !!    CC0-1.0
 !*==weippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WEIPPF(P,Gamma,Ppf)
-      IMPLICIT NONE
+SUBROUTINE WEIPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
-      INTEGER ipr
+INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -37410,7 +37058,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE WEIPPF
+END SUBROUTINE WEIPPF
 !>
 !!##NAME
 !!    weiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Weibull random numbers
@@ -37420,13 +37068,13 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!     Subroutine weiran (X, Y)
 !!
 !!##DESCRIPTION
-!!    weiran(3f) generates a random sample of size n
-!!    from the weibull distribution
-!!    with tail length parameter value = gamma.
-!!    the prototype weibull distribution used
-!!    herein is defined for all positive x,
-!!    and has the probability density function
-!!    f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+!!    weiran(3f) generates a random sample of size n from the weibull
+!!    distribution with tail length parameter value = gamma.
+!!
+!!    the prototype weibull distribution used herein is defined for all
+!!    positive x, and has the probability density function
+!!
+!!        f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37453,10 +37101,9 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!##LICENSE
 !!    CC0-1.0
 !*==weiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
-      IMPLICIT NONE
+SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
-      INTEGER i , ipr , Iseed , N
+INTEGER i , ipr , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -37544,7 +37191,7 @@ REAL(kind=wp) :: Gamma , X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE WEIRAN
+END SUBROUTINE WEIRAN
 !>
 !!##NAME
 !!    wind(3f) - [M_datapac:STATISTICS] compute the sample Winsorized mean
@@ -37555,14 +37202,14 @@ REAL(kind=wp) :: Gamma , X
 !!     Subroutine wind (X, Y)
 !!
 !!##DESCRIPTION
-!!    wind(3f) computes the
-!!    sample windsorized mean
-!!    of the data in the input vector x.
-!!    the windsorizing is such that
-!!    the lower 100*p1 % of the data is
-!!    replaced by the smallest non-windsorized value,
-!!    and the upper 100*p2 % of the data is windsorized.
-!!    replaced by the largest non-windsorized value.
+!!
+!!    wind(3f) computes the sample windsorized mean of the data in the
+!!    input vector x.
+!!
+!!    the windsorizing is such that the lower 100*p1 % of the data is
+!!    replaced by the smallest non-windsorized value, and the upper 100*p2 %
+!!    of the data is windsorized. replaced by the largest non-windsorized
+!!    value.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37592,7 +37239,6 @@ REAL(kind=wp) :: Gamma , X
 !     UPDATED         --FEBRUARY  1976.
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
-IMPLICIT NONE
 REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
 INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !
@@ -37861,8 +37507,6 @@ END SUBROUTINE WIND
 !     UPDATED         --NOVEMBER  1975.
 !*==write.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
-IMPLICIT NONE
-
 INTEGER i, i10, i50, Idec, idecp1, ipr, iwidm2, iwidp1, Iwidth, j, jmax, jmin, maxcha, maxwid, N, nlines, Nnline, numcha
 REAL(kind=wp) :: X(:)
 !

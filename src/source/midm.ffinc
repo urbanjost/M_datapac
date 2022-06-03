@@ -7,10 +7,8 @@ SYNOPSIS
     Subroutine midm (X, Y)
 
 DESCRIPTION
-   midm(3f) computes the
-   sample midmean = the
-   sample 25% (on each side) trimmed mean
-   of the data in the input vector x.
+   midm(3f) computes the sample midmean = the sample 25% (on each side)
+   trimmed mean of the data in the input vector x.
 
 OPTIONS
     X   description of parameter
@@ -39,7 +37,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==midm.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
-      IMPLICIT NONE
 REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
      &     X , Xmidm , Y
       INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&

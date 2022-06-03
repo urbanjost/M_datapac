@@ -121,6 +121,7 @@ The following subroutines are available in M_datapac:
 ## now available in modern Fortran
   * [MAX](src/source/max.ffinc)        - compute the maximum of a data vector (see Fortran intrinsic MAXVAL(3f))
   * [MIN](src/source/min.ffinc)        - compute the minimum of a data vector (see Fortran intrinsic MINVAL(3f))
+  * [DOT](src/source/dot.ffinc)        - compute the dot product of two equal-sized vectors (see Fortran intrinsic DOT_PRODUCT(3f))
 ## sort
   * [RANK](src/source/rank.ffinc)      - rank a vector of sample observations
   * [SORTC](src/source/sortc.ffinc)    - sort a vector of sample observations and "carry" a second vector
@@ -266,4 +267,6 @@ The following subroutines are available in M_datapac:
 
 ## References
    * [datapac](https://www.nist.gov/itl/sed/datapac)
+   * [dataplot](https://github.com/usnistgov/dataplot)
+
 ---

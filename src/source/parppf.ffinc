@@ -7,18 +7,17 @@ SYNOPSIS
     Subroutine parppf (X, Y)
 
 DESCRIPTION
-   parppf(3f) computes the percent point
-   function value for the pareto
-   distribution with single precision
-   tail length parameter = gamma.
-   the pareto distribution used
-   herein is defined for all x greater than
-   or equal to 1,
-   and has the probability density function
-   f(x) = gamma / (x**(gamma+1)).
-   note that the percent point function of a distribution
-   is identically the same as the inverse cumulative
-   distribution function of the distribution.
+   parppf(3f) computes the percent point function value for the pareto
+   distribution with single precision tail length parameter = gamma.
+
+   the pareto distribution used herein is defined for all x greater than
+   or equal to 1, and has the probability density function
+
+       f(x) = gamma / (x**(gamma+1)).
+
+   note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
 
 OPTIONS
     X   description of parameter
@@ -47,7 +46,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==parppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPPF(P,Gamma,Ppf)
-      IMPLICIT NONE
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
 !

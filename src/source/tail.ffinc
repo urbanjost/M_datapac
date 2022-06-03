@@ -8,9 +8,9 @@ SYNOPSIS
     Subroutine tail (X, Y)
 
 DESCRIPTION
-   tail(3f) perfoms a symmetric distribution
-   tail length analysis
-   on the data in the input vector x.
+   tail(3f) perfoms a symmetric distribution tail length analysis on
+   the data in the input vector x.
+
    the analysis consists of the following--
 
      1. various test statistics to test
@@ -29,14 +29,12 @@ DESCRIPTION
         admissable set consisting of
         43 symmetric distributions.
 
-   the admissable set of symmetric
-   distributions considered includes the
-   uniform, normal, logistic,
-   double exponential, cauchy, and
-   37 distributions drawn from the
-   the tukey lambda distributional family.
-   the goodness of fit criterion is the maximum probability
-   plot correlation coefficient criterion.
+   the admissable set of symmetric distributions considered includes
+   the uniform, normal, logistic, double exponential, cauchy, and 37
+   distributions drawn from the the tukey lambda distributional family.
+
+   the goodness of fit criterion is the maximum probability plot
+   correlation coefficient criterion.
 
 OPTIONS
     X   description of parameter
@@ -64,10 +62,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE TAIL(X,N)
-      IMPLICIT NONE
-!*--TAIL29420
-
+SUBROUTINE TAIL(X,N)
 REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
 REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
 REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs

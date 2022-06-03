@@ -8,16 +8,17 @@ SYNOPSIS
 
 
 DESCRIPTION
-   expsf(3f) computes the sparsity
-   function value for the exponential distribution
-   with mean = 1 and standard deviation = 1.
-   this distribution is defined for all non-negative x,
-   and has the probability density function
-   f(x) = exp(-x).
-   note that the sparsity function of a distribution
-   is the derivative of the percent point function,
-   and also is the reciprocal of the probability
-   density function (but in units of p rather than x).
+   expsf(3f) computes the sparsity function value for the exponential
+   distribution with mean = 1 and standard deviation = 1.
+
+   this distribution is defined for all non-negative x, and has the
+   probability density function
+
+       f(x) = exp(-x).
+
+   note that the sparsity function of a distribution is the derivative
+   of the percent point function, and also is the reciprocal of the
+   probability density function (but in units of p rather than x).
 
 OPTIONS
     X   description of parameter
@@ -46,7 +47,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==expsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPSF(P,Sf)
-      IMPLICIT NONE
       INTEGER ipr
 REAL(kind=wp) :: P , Sf
 !

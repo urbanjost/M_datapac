@@ -8,15 +8,15 @@ SYNOPSIS
     Subroutine parcdf (X, Y)
 
 DESCRIPTION
-   parcdf(3f) computes the cumulative distribution
-   function value for the pareto
-   distribution with single precision
-   tail length parameter = gamma.
-   the pareto distribution used
-   herein is defined for all x greater than
-   or equal to 1,
-   and has the probability density function
-   f(x) = gamma / (x**(gamma+1)).
+
+   parcdf(3f) computes the cumulative distribution function value for
+   the pareto distribution with single precision tail length parameter
+   = gamma.
+
+   the pareto distribution used herein is defined for all x greater than
+   or equal to 1, and has the probability density function
+
+       f(x) = gamma / (x**(gamma+1)).
 
 OPTIONS
     X   description of parameter
@@ -42,10 +42,11 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==parcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PARCDF(X,Gamma,Cdf)
-      IMPLICIT NONE
+
+SUBROUTINE PARCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER ipr
 !
@@ -73,8 +74,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGE 102.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
       ipr = 6

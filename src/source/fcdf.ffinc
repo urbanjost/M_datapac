@@ -8,13 +8,11 @@ SYNOPSIS
     Subroutine fcdf (X, Y)
 
 DESCRIPTION
-   fcdf(3f) computes the cumulative distribution
-   function value for the f distribution
-   with integer degrees of freedom
-   parameters = nu1 and nu2.
-   this distribution is defined for all non-negative x.
-   the probability density function is given
-   in the references below.
+   fcdf(3f) computes the cumulative distribution function value for the f
+   distribution with integer degrees of freedom parameters = nu1 and nu2.
+
+   this distribution is defined for all non-negative x. the probability
+   density function is given in the references below.
 
 OPTIONS
     X   description of parameter
@@ -43,7 +41,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
-      IMPLICIT NONE
 REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
      &     zratio
       INTEGER i , ibran , ievodd , iflag1 , iflag2 , imax , imin , ipr ,&

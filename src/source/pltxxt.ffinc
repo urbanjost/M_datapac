@@ -8,17 +8,17 @@ SYNOPSIS
     Subroutine pltxxt (X, Y)
 
 DESCRIPTION
-   pltxxt(3f) yields a narrow-width (71-character)
-   plot of x(i) versus x(i-1).  its narrow width makes it
-   appropriate for use on a terminal.
-   this type of plot (which is called an
-   autocorrelation plot or a lag 1 plot)
-   is useful in examining for
-   autocorrelation in a sequence of observations.
-   uncorrelated data will produce an autocorrelation
-   plot with no apparent structure; autocorrelated
-   data will produce an autocorrelation plot with
-   linear, elliptical, or other kinds of structure.
+
+   pltxxt(3f) yields a narrow-width (71-character) plot of x(i) versus
+   x(i-1). Its narrow width makes it appropriate for use on a terminal.
+
+   this type of plot (which is called an autocorrelation plot or a lag
+   1 plot) is useful in examining for autocorrelation in a sequence
+   of observations.
+
+   uncorrelated data will produce an autocorrelation plot with no apparent
+   structure; autocorrelated data will produce an autocorrelation plot
+   with linear, elliptical, or other kinds of structure.
 
 OPTIONS
     X   description of parameter
@@ -47,7 +47,6 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==pltxxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTXXT(X,N)
-      IMPLICIT NONE
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , hold , X , x2labl , xcwidt , xlable , xlower , xmax , &
      &     xmin , xrwidt , xupper
