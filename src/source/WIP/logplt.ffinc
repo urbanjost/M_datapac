@@ -1,0 +1,179 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file logplt.3m_datapac.man
+NAME
+   logplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a logistic probability
+   plot
+
+SYNOPSIS
+      SUBROUTINE LOGPLT(X,N)
+
+DESCRIPTION
+   logplt(3f) generates a logistic probability plot.
+
+   the prototype logistic distribution used herein has mean = 0 and
+   standard deviation = pi/sqrt(3). This distribution is defined for
+   all x and has the probability density function
+
+       f(x) = exp(x) / (1+exp(x)).
+
+   as used herein, a probability plot for a distribution is a plot
+   of the ordered observations versus the order statistic medians for
+   that distribution.
+
+   the logistic probability plot is useful in graphically testing
+   the composite (that is, location and scale parameters need not be
+   specified) hypothesis that the underlying distribution from which
+   the data have been randomly drawn is the logistic distribution.
+
+   if the hypothesis is true, the probability plot should be near-linear.
+
+   a measure of such linearity is given by the calculated probability
+   plot correlation coefficient.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_logplt
+   use M_datapac, only : logplt
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call logplt(x,y)
+   end program demo_logplt
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!                 OCTOBER, 1972), PAGES 425-450.
+!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!                 1967, PAGES 260-308.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==logplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LOGPLT(X,N)
+REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
+INTEGER :: i , iupper , N
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!     OUTPUT--A ONE-PAGE LOGISTIC PROBABILITY PLOT.
+!     PRINTING--YES.
+!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
+!                   FOR THIS SUBROUTINE IS 7500.
+!
+!---------------------------------------------------------------------
+!
+DIMENSION X(:)
+DIMENSION Y(7500) , W(7500)
+COMMON /BLOCK2/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (W(1),WS(7501))
+!
+DATA tau/1.63473745_wp/
+!
+      iupper = 7500
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 .OR. N>iupper ) THEN
+         WRITE (G_IO,99001) iupper
+         99001    FORMAT (' ', &
+         & '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LOGPLT SUBROUTINE IS OUTSIDE THE ALLOWABLE (1,', &
+	 & I6, &
+	 & ') INTERVAL *****')
+         WRITE (G_IO,99002) N
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE LOGPLT SUBROUTINE HAS THE VALUE 1 *****')
+         RETURN
+      ELSE
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+         99004    FORMAT (' ', &
+         &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE LOGPLT SUBROUTINE HAS ALL ELEMENTS = ',&
+         & E15.8,&
+         & ' *****')
+      !
+      !-----START POINT-----------------------------------------------------
+         !
+          50      an = N
+         !
+         !     SORT THE DATA
+         !
+         CALL SORT(X,N,Y)
+         !
+         !     GENERATE UNIFORM ORDER STATISTIC MEDIANS
+         !
+         CALL UNIMED(N,W)
+         !
+         !     COMPUTE LOGISTIC ORDER STATISTIC MEDIANS
+         !
+         DO i = 1 , N
+            W(i) = LOG(W(i)/(1.0_wp-W(i)))
+         ENDDO
+         !
+         !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
+         !     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
+         !     AND THE SAMPLE SIZE.
+         !
+         CALL PLOT(Y,W,N)
+         WRITE (G_IO,99005) tau , N
+         99005    FORMAT (' ','LOGISTIC PROBABILITY PLOT (TAU = ',E15.8,')',54X, 'THE SAMPLE SIZE N = ',I7)
+         !
+         !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
+         !     COMPUTE LOCATION AND SCALE ESTIMATES
+         !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
+         !     THEN WRITE THEM OUT.
+         !
+         sum1 = 0.0_wp
+         DO i = 1 , N
+            sum1 = sum1 + Y(i)
+         ENDDO
+         ybar = sum1/an
+         wbar = 0.0_wp
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
+         DO i = 1 , N
+            sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
+            sum2 = sum2 + W(i)*Y(i)
+            sum3 = sum3 + W(i)*W(i)
+         ENDDO
+         cc = sum2/SQRT(sum3*sum1)
+         yslope = sum2/sum3
+         yint = ybar - yslope*wbar
+         WRITE (G_IO,99006) cc , yint , yslope
+         99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
+         &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
+         &           'ESTIMATED SLOPE = ',E15.8)
+      ENDIF
+ 
+END SUBROUTINE LOGPLT

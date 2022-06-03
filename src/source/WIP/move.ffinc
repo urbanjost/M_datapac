@@ -1,0 +1,143 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file move.3m_datapac.man
+NAME
+   move(3f) - [M_datapac:STATISTICS] move selected elements of one vector
+   into another vector
+
+SYNOPSIS
+      SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
+
+DESCRIPTION
+   move(3f) moves (copies) m elements of the single precision vector
+   x (starting with position ix1) into the single precision vector y
+   (starting with position iy1).
+
+   this allows the data analyst to take any subvector in x and place it
+   anywhere in the vector y.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_move
+   use M_datapac, only : move
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call move(x,y)
+   end program demo_move
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==move.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
+IMPLICIT NONE
+REAL(kind=wp) :: hold , X , Y
+INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                OBSERVATIONS, PART (OR ALL)
+!                                OF WHICH IS TO BE MOVED
+!                                (COPIED) OVER INTO THE VECTOR Y.
+!                     --M      = THE INTEGER NUMBER OF ELEMENTS
+!                                IN THE VECTOR X TO BE MOVED.
+!                     --IX1    = THE INTEGER VALUE WHICH DEFINES
+!                                THE POSITION IN THE VECTOR X
+!                                OF THE FIRST ELEMENT TO BE MOVED.
+!                     --IY1    = THE INTEGER VALUE WHICH DEFINES
+!                                THE POSITION IN THE VECTOR Y
+!                                WHERE THE FIRST ELEMENT TO BE MOVED
+!                                WILL BE PLACED.
+!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!                                INTO WHICH THE COPIED DATA VALUES
+!                                FROM THE VECTOR X WILL BE SEQUENTIALLY
+!                                PLACED, STARTING IN POSITION IY1 OF Y.
+!     OUTPUT--THE SINGLE PRECISION VECTOR Y.
+!             IN WHICH THE M ELEMENTS IN POSITIONS
+!             IY1, IY1+1, ... , IY1+M-1
+!             WILL BE IDENTICAL TO THE M ELEMENTS
+!             IN THE X VECTOR IN POSITIONS
+!             IX1, IX1+1, ... , IX1+M-1.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF M FOR THIS SUBROUTINE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     COMMENT--THE ELEMENT IN POSITION IX1 OF THE VECTOR X
+!            IS COPIED INTO POSITION IY1 OF THE VECTOR Y,
+!            THE ELEMENT IN POSITION (IX1+1) OF THE VECTOR X
+!            IS COPIED INTO POSITION (IY1+1) OF THE VECTOR Y,
+!            ... ,
+!            THE ELEMENT IN POSITION (IX1+M-1) OF THE VECTOR X
+!            IS COPIED INTO POSITION (IY1+M-1) OF THE VECTOR Y.
+!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
+!     ORIGINAL VERSION--NOVEMBER  1972.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:) , Y(:)
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( M<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MOVE   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99006) M
+         RETURN
+      ELSEIF ( Ix1<1 ) THEN
+         WRITE (G_IO,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE MOVE   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99006) Ix1
+         RETURN
+      ELSEIF ( Iy1<1 ) THEN
+         WRITE (G_IO,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE MOVE   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99006) Iy1
+         RETURN
+      ELSE
+         IF ( M==1 ) THEN
+            WRITE (G_IO,99004)
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MOVE&
+     &   SUBROUTINE HAS THE VALUE 1 *****')
+         ELSE
+            hold = X(Ix1)
+            istart = Ix1 + 1
+            iend = Ix1 + M - 1
+            DO i = istart , iend
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99005) hold
+99005       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE MOVE   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      DO i = 1 , M
+            j = Ix1 - 1 + i
+            k = Iy1 - 1 + i
+            Y(k) = X(j)
+         ENDDO
+      ENDIF
+99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+!
+END SUBROUTINE MOVE

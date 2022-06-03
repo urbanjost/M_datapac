@@ -1,0 +1,126 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file ranper.3m_datapac.man
+NAME
+   ranper(3f) - [M_datapac:STATISTICS:RANDOM] generates a random permutation
+
+SYNOPSIS
+      SUBROUTINE RANPER(N,Istart,X)
+
+DESCRIPTION
+   ranper(3f) generates a random permutation of size n of the values 1.0,
+   2.0, 3.0, ..., n-1, n.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_ranper
+   use M_datapac, only : ranper
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call ranper(x,y)
+   end program demo_ranper
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==ranper.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE RANPER(N,Istart,X)
+REAL(kind=wp) :: add , an , hold , u , X
+INTEGER :: i , iadd , Istart , j , N
+!
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER SIZE
+!                                OF THE RANDOM 1 TO N PERMUTATION.
+!                     --ISTART = AN INTEGER FLAG CODE WHICH
+!                                (IF SET TO 0) WILL START THE
+!                                GENERATOR OVER AND HENCE
+!                                PRODUCE THE SAME RANDOM PERMUTATION
+!                                OVER AND OVER AGAIN
+!                                UPON SUCCESSIVE CALLS TO
+!                                THIS SUBROUTINE WITHIN A RUN; OR
+!                                (IF SET TO SOME INTEGER
+!                                VALUE NOT EQUAL TO 0,
+!                                LIKE, SAY, 1) WILL ALLOW
+!                                THE GENERATOR TO CONTINUE
+!                                FROM WHERE IT STOPPED
+!                                AND HENCE PRODUCE DIFFERENT
+!                                RANDOM PERMUTATIONS UPON
+!                                SUCCESSIVE CALLS TO
+!                                THIS SUBROUTINE WITHIN A RUN.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM PERMUTATION WILL BE PLACED.
+!     OUTPUT--A RANDOM PERMUTATION OF SIZE N
+!             OF THE VALUES 1.0, 2.0, 3.0, ..., N-1, N.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     COMMENT--ALGORITHM SUGGESTED BY DAN LOZIER,
+!              NATIONAL BUREAU OF STANDARDS (205.01).
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --MAY       1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION u(1)
+!
+      an = N
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE RANPER SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE RANP&
+     &ER SUBROUTINE HAS THE VALUE 1 *****')
+         X(1) = 1
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         CALL UNIRAN(1,Istart,u)
+!
+         DO i = 1 , N
+            X(i) = i
+         ENDDO
+!
+         DO i = 1 , N
+            CALL UNIRAN(1,1,u)
+            add = an*u(1) + 1.0_wp
+            iadd = add
+            IF ( iadd<1 ) iadd = 1
+            IF ( iadd>N ) iadd = N
+            j = i + iadd
+            IF ( j>N ) j = j - N
+            hold = X(j)
+            X(j) = X(i)
+            X(i) = hold
+         ENDDO
+      ENDIF
+END SUBROUTINE RANPER

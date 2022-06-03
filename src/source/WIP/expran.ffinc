@@ -1,0 +1,120 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file expran.3m_datapac.man
+NAME
+   expran(3f) - [M_datapac:STATISTICS:RANDOM] generate exponential random numbers
+
+SYNOPSIS
+      SUBROUTINE EXPRAN(N,Iseed,X)
+
+DESCRIPTION
+   expran(3f) generates a random sample of size n from the exponential
+   distribution with mean = 1 and standard deviation = 1.
+
+   this distribution is defined for all non-negative x, and has the
+   probability density function
+
+       f(x) = exp(-x).
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_expran
+   use M_datapac, only : expran
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call expran(x,y)
+   end program demo_expran
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --TOCHER, THE ART OF SIMULATION,
+!                 1963, PAGES 14, 35-36.
+!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!                 1964, PAGE 36.
+!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGE 58.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EXPRAN(N,Iseed,X)
+INTEGER i , Iseed , N
+REAL(kind=wp) :: X
+!
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE EXPONENTIAL DISTRIBUTION
+!             WITH MEAN = 1 AND STANDARD DEVIATION = 1.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --JULY      1976.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+!
+!---------------------------------------------------------------------
+!
+!-----START POINT-----------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+!
+!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+!
+         CALL UNIRAN(N,Iseed,X)
+!
+!     GENERATE N EXPONENTIAL RANDOM NUMBERS
+!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+!
+         DO i = 1 , N
+            X(i) = -LOG(X(i))
+         ENDDO
+      ENDIF
+!
+END SUBROUTINE EXPRAN

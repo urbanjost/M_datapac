@@ -1,0 +1,132 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file unimed.3m_datapac.man
+NAME
+   unimed(3f) - [M_datapac:STATISTICS] generates the N order statistic
+   medians from the uniform (rectangular) distribution on the unit
+   interval (0,1).
+
+SYNOPSIS
+      SUBROUTINE UNIMED(N,X)
+
+DESCRIPTION
+   UNIMED(3f) generates the N order statistic medians from the uniform
+   (rectangular) distribution on the unit interval (0,1).
+
+   This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+   = 0.28867513. This distribution has the probability density function
+   f(X) = 1.
+
+   UNIMED(3f) is a support subroutine for all of the probability plot
+   subroutines in datapac; it is rarely used by the data analyst directly.
+
+   A probability plot for a general distribution is a plot of the ordered
+   observations versus the order statistic medians for that distribution.
+
+   The i-th order statistic median for a general distribution is obtained
+   by transforming the i-th uniform order statistic median by the percent
+   point function of the desired distribution--hence the importance of
+   being able to generate uniform order statistic medians.
+
+   It is of theoretical interest to note that the i-th uniform order
+   statistic median in a sample of size n is identically the median of
+   the beta distribution with parameters i and n-i+1.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_unimed
+   use M_datapac, only : unimed
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call unimed(x,y)
+   end program demo_unimed
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
+!                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==unimed.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE UNIMED(N,X)
+REAL(kind=wp) :: ai , an , gam , X(:)
+INTEGER i , imax , irev , N , nevodd , nhalf
+!
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF UNIFORM ORDER STATISTIC MEDIANS
+!                                TO BE GENERATED.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                UNIFORM ORDER STATISTIC MEDIANS
+!                                WILL BE PLACED.
+!     OUTPUT--THE N ORDER STATISTIC MEDIANS
+!             FROM THE RECTANGULAR DISTRIBUTION ON (0,1).
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNIMED SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (G_IO,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE UNIM&
+     &ED SUBROUTINE HAS THE VALUE 1 *****')
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+         an = N
+!
+!     COMPUTE THE MEDIANS FOR THE FIRST AND LAST ORDER STATISTICS
+!
+         X(N) = 0.5_wp**(1.0_wp/an)
+         X(1) = 1.0_wp - X(N)
+!
+!     DETERMINE IF AN ODD OR EVEN SAMPLE SIZE
+!
+         nhalf = (N/2) + 1
+         nevodd = 2*(N/2)
+         IF ( N/=nevodd ) X(nhalf) = 0.5_wp
+         IF ( N<=3 ) RETURN
+!
+!     COMPUTE THE MEDIANS FOR THE OTHER ORDER STATISTICS
+!
+         gam = 0.3175_wp
+         imax = N/2
+         DO i = 2 , imax
+            ai = i
+            irev = N - i + 1
+            X(i) = (ai-gam)/(an-2.0_wp*gam+1.0_wp)
+            X(irev) = 1.0_wp - X(i)
+         ENDDO
+      ENDIF
+!
+END SUBROUTINE UNIMED

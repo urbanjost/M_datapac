@@ -1,89 +1,125 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file unicdf.3m_datapac.man
 NAME
-   unicdf(3f) - [M_datapac:STATISTICS:CD] compute the Uniform cumulative
-   distribution function
+   unicdf(3f) - [M_datapac:STATISTICS:CD] trivially compute the Uniform
+   cumulative distribution function
 
 SYNOPSIS
-    Subroutine unicdf (X, Y)
+    subroutine unicdf(X,Cdf)
+
+     real(kind=wp), intent(in)  :: X
+     real(kind=wp), intent(out) :: Cdf
 
 DESCRIPTION
-   unicdf(3f) computes the cumulative distribution function value for
+   UNICDF(3f) computes the cumulative distribution function value for
    the uniform (rectangular) distribution on the unit interval (0,1).
 
-   this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+   This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
    = 0.28867513.
 
-   this distribution has the probability density function f(x) = 1.
+   This distribution has the probability density function f(x) = x.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+   That is, this is a trivial function as the output equals the input.
+
+INPUT ARGUMENTS
+
+   X    The value at which the cumulative distribution function is to
+        be evaluated. X should be between 0 and 1, inclusively.
+
+OUTPUT ARGUMENTS
+
+  CDF   the single precision cumulative distribution function value.
 
 EXAMPLES
-  Sample program:
+ Sample program:
 
    program demo_unicdf
-   use M_datapac, only : unicdf
+   !@(#) line plotter graph of function
+   use M_datapac, only : unicdf, plott
    implicit none
-   character(len=*),parameter ::  g='(*(g0,1x))'
-   ! call unicdf(x,y)
+   integer,parameter :: n=40
+   real              :: x(0:n), y(0:n)
+   integer           :: i
+      x=[(real(i)/real(n),i=0,n)]
+      do i=0,n
+         call unicdf(x(i),y(i))
+      enddo
+      call plott(x,y,n+1)
    end program demo_unicdf
 
-  Results:
+ Result:
+ 
+  THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZONTALLY)
+                    I-----------I-----------I-----------I-----------I
+                  
+   0.1000000E+01 -                                                  X
+   0.9583333E+00 I                                                XX
+   0.9166667E+00 I                                             XX
+   0.8750000E+00 I                                            X
+   0.8333333E+00 I                                          XX
+   0.7916666E+00 I                                       XX
+   0.7500000E+00 -                                      X
+   0.7083333E+00 I                                    XX
+   0.6666666E+00 I                                 XX
+   0.6250000E+00 I                                X
+   0.5833333E+00 I                              XX
+   0.5416666E+00 I                           XX
+   0.5000000E+00 -                          X
+   0.4583333E+00 I                        XX
+   0.4166666E+00 I                     XX
+   0.3750000E+00 I                    X
+   0.3333333E+00 I                  XX
+   0.2916666E+00 I               XX
+   0.2500000E+00 -              X
+   0.2083333E+00 I            XX
+   0.1666666E+00 I         XX
+   0.1250000E+00 I        X
+   0.8333331E-01 I      XX
+   0.4166663E-01 I   XX
+   0.0000000E+00 -  X
+                  
+                    I-----------I-----------I-----------I-----------I
+             0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
 
 AUTHOR
    The original DATAPAC library was written by James Filliben of the Statistical
    Engineering Division, National Institute of Standards and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
+REFERENCES
+ o Johnson and Kotz, Continuous Univariate Distributions -- 2, 1970, Pages 57-74.
+
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==unicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE UNICDF(X,Cdf)
-REAL(kind=wp) :: Cdf , X
-      INTEGER ipr
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE BETWEEN 0 AND 1, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      ipr = 6
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( X<0.0_wp .OR. X>1.0_wp ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE UNIC&
-     &DF SUBROUTINE IS OUTSIDE THE USUAL (0,1) INTERVAL *****')
-         WRITE (ipr,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         IF ( X<0.0_wp ) Cdf = 0.0_wp
-         IF ( X>1.0_wp ) Cdf = 1.0_wp
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Cdf = X
-      ENDIF
-!
-END SUBROUTINE UNICDF
+!     UPDATED         --JUNE      2022.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==unicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine unicdf(X,Cdf)
+real(kind=wp), intent(in)  :: X
+real(kind=wp), intent(out) :: Cdf
+
+   if ( X < 0.0_wp .or. X > 1.0_wp ) then ! CHECK THE INPUT ARGUMENTS FOR ERRORS
+      write (g_io,99001)
+      99001 format (' ***** NON-FATAL DIAGNOSTIC--The first input argument to UNICDF(3f) is outside the usual (0,1) interval *****')
+      write (g_io,99002) X
+      99002 format (' ***** The value of the argument is ',E15.8,' *****')
+      if ( X < 0.0_wp ) then
+         Cdf = 0.0_wp
+      else if ( X > 1.0_wp ) then
+         Cdf = 1.0_wp
+      else
+         stop '**unicdf** should not get here'
+      endif
+   else
+      Cdf = X
+   endif
+
+end subroutine unicdf

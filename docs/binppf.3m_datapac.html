@@ -61,11 +61,11 @@ point function
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
+<A HREF=#3>Examples</A><BR>
+<A HREF=#4>Author</A><BR>
+<A HREF=#5>Maintainer</A><BR>
+<A HREF=#6>License</A><BR>
+<A HREF=#7>References</A><BR>
 </BLOCKQUOTE>
 <A name=8>
 
@@ -73,7 +73,7 @@ point function
 
 </A>
 <BLOCKQUOTE>
-Subroutine binppf (<I>X</I>, <I>Y</I>)
+SUBROUTINE <B>BINPPF</B>(P,Ppar,N,Ppf)
 </BLOCKQUOTE>
 <A name=2>
 
@@ -89,7 +89,7 @@ Bernoulli trials&#146; parameter = N.
 The binomial distribution used herein has mean = N*PPAR and standard
 deviation = <B>sqrt</B>(N*PPAR*(1-PPAR)).
 <P>
-This distribution is defined for all discrete integer <I>X</I> between 0
+This distribution is defined for all discrete integer X between 0
 (inclusively) and N (inclusively).
 <P>
 This distribution has the probability function
@@ -98,8 +98,8 @@ This distribution has the probability function
       f(X) = c(N,X) * PPAR**X * (1-PPAR)**(N-X).
 <P>
 </PRE>
-where <B>c</B>(N,<I>X</I>) is the combinatorial function equaling the number of
-combinations of N items taken <I>X</I> at a time.
+where <B>c</B>(N,X) is the combinatorial function equaling the number of
+combinations of N items taken X at a time.
 <P>
 The binomial distribution is the distribution of the number of
 successes in N Bernoulli (0,1) trials where the probability of success
@@ -109,23 +109,105 @@ Note that the percent point function of a distribution is identically
 the same as the inverse cumulative distribution function of the
 distribution.
 </BLOCKQUOTE>
-<A name=3>
-
-     <H3>OPTIONS</H3>
-
-</A>
-<BLOCKQUOTE>
-<TABLE cellpadding=3>
+<TABLE cellpadding=3><!-- tsb: Note that the percent point function of a distribution is identically
+ -->
+<TR></TR><TR></TR>
 <TR valign=top><TD width=6% nowrap>
-<B></B><I>X</I> </TD><TD valign=bottom>
-description of parameter
+<B>!</B> </TD><TD valign=bottom>
+INPUT  ARGUMENTS-<B>-P</B>      = THE SINGLE PRECISION VALUE
+<TABLE width=100% cellpadding=3><!-- tsb: INPUT  ARGUMENTS-<B>-P</B>      = THE SINGLE PRECISION VALUE
+ -->
+<TR></TR><TR></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+(BETWEEN 0.0 (INCLUSIVELY)
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B></B><I>Y</I> </TD><TD valign=bottom>
-description of parameter
+<B>!</B> </TD><TD valign=bottom>
+AND 1.0 (INCLUSIVELY))
 </TD></TR>
-<TR></TR></TABLE></BLOCKQUOTE>
-<A name=4>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+AT WHICH THE PERCENT POINT
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+FUNCTION IS TO BE EVALUATED.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+<B>--PPAR</B>   = THE SINGLE PRECISION VALUE
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+OF THE &#146;BERNOULLI PROBABILITY&#146;
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+PARAMETER FOR THE BINOMIAL
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+DISTRIBUTION.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+PPAR SHOULD BE BETWEEN
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+0.0 (EXCLUSIVELY) AND
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+1.0 (EXCLUSIVELY).
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+<B>--N</B>      = THE INTEGER VALUE
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+OF THE &#146;NUMBER OF BERNOULLI TRIALS&#146;
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+PARAMETER.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+N SHOULD BE A POSITIVE INTEGER.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+OUTPUT ARGUMENTS-<B>-PPF</B>    = THE SINGLE PRECISION PERCENT
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+POINT FUNCTION VALUE.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+OUTPUT-<B>-THE</B> SINGLE PRECISION PERCENT POINT  .
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+FUNCTION VALUE PPF
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+FOR THE BINOMIAL DISTRIBUTION
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+WITH &#146;BERNOULLI PROBABILITY&#146; PARAMETER = PPAR
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>!</B> </TD><TD valign=bottom>
+AND &#146;NUMBER OF BERNOULLI TRIALS&#146; PARAMETER = N.
+</TD></TR>
+<TR></TR></TABLE></TD></TR>
+<TR></TR></TABLE><A name=3>
 
      <H3>EXAMPLES</H3>
 
@@ -144,7 +226,7 @@ Sample program:
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=5>
+<A name=4>
 
      <H3>AUTHOR</H3>
 
@@ -153,7 +235,7 @@ Results:
 The original DATAPAC library was written by James Filliben of the Statistical
 Engineering Division, National Institute of Standards and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=5>
 
      <H3>MAINTAINER</H3>
 
@@ -161,7 +243,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=6>
 
      <H3>LICENSE</H3>
 
@@ -169,8 +251,61 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
+<A name=7>
+
+     <H3>REFERENCES</H3>
+
+</A>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Johnson and Kotz, Discrete
+Distributions, 1969, Pages 50-86,
+especially Page 64, Formula 36.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Hastings and Peacock, Statistical
+Distributions-<B>-A</B> Handbook for
+Students and Practitioners, 1975,
+Pages 36-41.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+National Bureau of Standards Applied Mathematics
+Series 55, 1964, Page 929.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Feller, An Introduction to Probability
+Theory and Its Applications, Volume 1,
+Edition 2, 1957, Pages 135-142.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Kendall and Stuart, The Advanced Theory of
+Statistics, Volume 1, Edition 2, 1963, Pages 120-125.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Mood and Grable, Introduction to the Theory
+of Statistics, Edition 2, 1963, Pages 64-69.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Owen, Handbook of Statistical Tables, 1962, PAGES 264-272.
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>binppf (3m_datapac)</TD> <TD align=right width=33%><I>June 03, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from d91dbfae-28b9-4651-a154-69e104e43cb0 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>binppf (3m_datapac)</TD> <TD align=right width=33%><I>June 03, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from a96439c6-2434-4b81-893e-d94e1b9205b2 using man macros.</FONT>
 <br><br><center><img src="images/binppf.gif"></center>
 </div>
 </div>

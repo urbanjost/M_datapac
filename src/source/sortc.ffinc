@@ -1,8 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file sortc.3m_datapac.man
 NAME
-   sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample observations
-   and "carry" a second vector
+   sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample
+   observations and "carry" a second vector
 
 SYNOPSIS
     Subroutine sortc(X,Y,N,Xs,Yc)
@@ -16,34 +16,59 @@ SYNOPSIS
 DESCRIPTION
 
    SORTC(3f) sorts (in ascending order) the N elements of the vector X,
-   puts the resulting N sorted values into the single precision vector XS,
+   puts the resulting N sorted values into the vector XS,
    rearranges the elements of the vector Y (according to the sort on X),
-   and puts the rearranged Y values into the single precision vector YC.
+   and puts the rearranged Y values into the vector YC.
    This subroutine gives the data analyst the ability to sort one data
    vector while 'carrying along' the elements of a second data vector.
 
+   The smallest element of the vector X will be placed in the first
+   position of the vector XS, the second smallest element in the vector
+   X will be placed in the second position of the vector XS, etc.
+
+   The element in the vector Y corresponding to the smallest element in
+   X will be placed in the first position of the vector YC, the element
+   in the vector Y corresponding to the second smallest element in X
+   will be placed in the second position of the vector YC, etc.
+
+   The input vector X remains unaltered.
+
+   If the analyst desires a sort 'in place', this is done by having the
+   same output vector as input vector in the calling sequence. Thus,
+   for example, the calling sequence CALL SORTC(X,Y,N,X,YC) is allowable
+   and will result in the desired 'in-place' sort.
+
+   The sorting algorthm used herein is the binary sort. This algorthim
+   is extremely fast as the following time trials indicate. These time
+   trials were carried out on the UNIVAC 1108 EXEC 8 system at NBS in
+   August of 1974. By way of comparison, the time trial values for the
+   easy-to-program but extremely inefficient bubble sort algorithm have
+   also been included--
+
+     Number of Random        Binary Sort       Bubble Sort
+     Numbers Sorted
+       N = 10                 .002 sec          .002 sec
+       N = 100                .011 sec          .045 sec
+       N = 1000               .141 sec         4.332 sec
+       N = 3000               .476 sec        37.683 sec
+       N = 10000             1.887 sec      NOT COMPUTED
+
 INPUT ARGUMENTS
-     x   the single precision vector of
-         observations to be sorted.
+     X   The vector of observations to be sorted.
 
-     y   the single precision vector of
-         observations to be 'carried along',
-         that is, to be rearranged according
-         to the sort on x.
+     Y   The vector of
+         observations to be 'carried along', that is, to be rearranged
+         according to the sort on X.
 
-     n   the integer number of observations
-         in the vector x.
+     N   The integer number of observations in the vector X.
+
 OUTPUT ARGUMENTS
 
-     xs  the single precision vector
-         into which the sorted data values
-         from x will be placed.
+     XS  The vector into which the sorted data values from X will be
+         placed in ascending order.
 
-     yc  the single precision vector
-         into which the rearranged
-         (according to the sort of the
-         vector x) values of the vector y
-         will be placed.
+     YC  The vector into which the rearranged (according to the sort of
+         the vector X) values of the vector Y will be placed.
 
 EXAMPLES
   Sample program:
@@ -57,13 +82,13 @@ EXAMPLES
    real                         :: cc(isz)
    real                         :: dd(isz)
    integer                      :: i
-      write(*,*)'initializing array with ',isz,' random numbers'
-      call random_seed()
-      CALL RANDOM_NUMBER(aa)
-      aa=aa*450000.0
-      bb=real([(i,i=1,isz)])
+     write(*,*)'initializing array with ',isz,' random numbers'
+     call random_seed()
+     CALL RANDOM_NUMBER(aa)
+     aa=aa*450000.0
+     bb=real([(i,i=1,isz)])
      call sortc(aa,bb,size(aa),cc,dd)
-     
+    
      write(*,*)'checking if real values are sorted(3f)'
      do i=1,isz-1
         if(cc(i).gt.cc(i+1))then
@@ -92,22 +117,15 @@ REFERENCES
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==sortc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTC(X,Y,N,Xs,Yc)
 
 REAL(kind=wp) :: amed, bmed, hold, tx, ty, X(:), Xs(:), Y(:), Yc(:)
-INTEGER i, il(36), ip1, ipr, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
+INTEGER i, il(36), ip1, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
 !
-!     OUTPUT--THE SINGLE PRECISION VECTOR XS
-!             CONTAINING THE SORTED
-!             (IN ASCENDING ORDER) VALUES
-!             OF THE SINGLE PRECISION VECTOR X, AND
-!             THE SINGLE PRECISION VECTOR YC
-!             CONTAINING THE REARRANGED
-!             (ACCORDING TO THE SORT ON X)
-!             VALUES OF THE VECTOR Y.
-
 !     RESTRICTIONS--THE DIMENSIONS OF THE VECTORS IL AND IU
 !                   (DEFINED AND USED INTERNALLY WITHIN
 !                   THIS SUBROUTINE) DICTATE THE MAXIMUM
@@ -127,90 +145,42 @@ INTEGER i, il(36), ip1, ipr, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
 !                   (IN LIGHT OF THE ABOVE, NO CHECK OF THE
 !                   UPPER LIMIT OF N HAS BEEN INCORPORATED
 !                   INTO THIS SUBROUTINE.)
-
-!     COMMENT--THE SMALLEST ELEMENT OF THE VECTOR X
-!              WILL BE PLACED IN THE FIRST POSITION
-!              OF THE VECTOR XS,
-!              THE SECOND SMALLEST ELEMENT IN THE VECTOR X
-!              WILL BE PLACED IN THE SECOND POSITION
-!              OF THE VECTOR XS,
-!              ETC.
-!     COMMENT--THE ELEMENT IN THE VECTOR Y CORRESPONDING
-!              TO THE SMALLEST ELEMENT IN X
-!              WILL BE PLACED IN THE FIRST POSITION
-!              OF THE VECTOR YC,
-!              THE ELEMENT IN THE VECTOR Y CORRESPONDING
-!              TO THE SECOND SMALLEST ELEMENT IN X
-!              WILL BE PLACED IN THE SECOND POSITION
-!              OF THE VECTOR YC,
-!              ETC.
-!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     COMMENT--IF THE ANALYST DESIRES A SORT 'IN PLACE',
-!              THIS IS DONE BY HAVING THE SAME
-!              OUTPUT VECTOR AS INPUT VECTOR IN THE CALLING SEQUENCE.
-!              THUS, FOR EXAMPLE, THE CALLING SEQUENCE
-!              CALL SORTC(X,Y,N,X,YC)
-!              IS ALLOWABLE AND WILL RESULT IN
-!              THE DESIRED 'IN-PLACE' SORT.
-!     COMMENT--THE SORTING ALGORTHM USED HEREIN
-!              IS THE BINARY SORT.
-!              THIS ALGORTHIM IS EXTREMELY FAST AS THE
-!              FOLLOWING TIME TRIALS INDICATE.
-!              THESE TIME TRIALS WERE CARRIED OUT ON THE
-!              UNIVAC 1108 EXEC 8 SYSTEM AT NBS
-!              IN AUGUST OF 1974.
-!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES
-!              FOR THE EASY-TO-PROGRAM BUT EXTREMELY
-!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE
-!              ALSO BEEN INCLUDED--
-!              NUMBER OF RANDOM        BINARY SORT       BUBBLE SORT
-!               NUMBERS SORTED
-!                N = 10                 .002 SEC          .002 SEC
-!                N = 100                .011 SEC          .045 SEC
-!                N = 1000               .141 SEC         4.332 SEC
-!                N = 3000               .476 SEC        37.683 SEC
-!                N = 10000             1.887 SEC      NOT COMPUTED
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      ipr = 6
-      IF ( N<1 ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTC  SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ','***** FATAL ERROR--The second input argument to SORTC(3f)  is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ','***** The value of the argument is ',I8,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ','***** NON-FATAL DIAGNOSTIC--The second input argument to SORTC(3f) has the value 1 *****')
+         Xs(1) = X(1)
+         Yc(1) = Y(1)
          RETURN
       ELSE
-         IF ( N==1 ) THEN
-            WRITE (ipr,99003)
-99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORTC  SUBROUTINE HAS THE VALUE 1 *****')
-            Xs(1) = X(1)
-            Yc(1) = Y(1)
-            RETURN
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (ipr,99004) hold
-99004       FORMAT (' ',                                                &
-             & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORTC  SUBROUTINE HAS ALL ELEMENTS =', &
-             & E15.8, &
-             & ' *****')
-            DO i = 1 , N
-               Xs(i) = X(i)
-               Yc(i) = Y(i)
-            ENDDO
-            RETURN
-         ENDIF
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+          99004       FORMAT (' ',                                                &
+          & '***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to SORTC(3f) has all elements =', &
+          & E15.8, &
+          & ' *****')
+         DO i = 1 , N
+            Xs(i) = X(i)
+            Yc(i) = Y(i)
+         ENDDO
+         RETURN
+      ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-!     COPY THE VECTOR X INTO THE VECTOR XS
+!  COPY THE VECTOR X INTO THE VECTOR XS
  50      continue
          DO i = 1 , N
             Xs(i) = X(i)

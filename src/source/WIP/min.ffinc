@@ -1,0 +1,122 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file min.3m_datapac.man
+NAME
+   min(3f) - [M_datapac:STATISTICS] compute the minimum of a data vector
+
+SYNOPSIS
+      SUBROUTINE MIN(X,N,Iwrite,Xmin)
+
+DESCRIPTION
+   min(3f) computes the sample minimum of the data in the input vector x.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_min
+   use M_datapac, only : min
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call min(x,y)
+   end program demo_min
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --DAVID, ORDER STATISTICS, 1970, PAGE 7.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==min.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE MIN(X,N,Iwrite,Xmin)
+REAL(kind=wp) :: hold , X , Xmin
+INTEGER :: i , Iwrite , N
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --IWRITE = AN INTEGER FLAG CODE WHICH
+!                                (IF SET TO 0) WILL SUPPRESS
+!                                THE PRINTING OF THE
+!                                SAMPLE MINIMUM
+!                                AS IT IS COMPUTED;
+!                                OR (IF SET TO SOME INTEGER
+!                                VALUE NOT EQUAL TO 0),
+!                                LIKE, SAY, 1) WILL CAUSE
+!                                THE PRINTING OF THE
+!                                SAMPLE MINIMUM
+!                                AT THE TIME IT IS COMPUTED.
+!     OUTPUT ARGUMENTS--XMIN   = THE SINGLE PRECISION VALUE OF THE
+!                                COMPUTED SAMPLE MINIMUM.
+!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!             SAMPLE MINIMUM.
+!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
+!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
+!               CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MIN    SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (G_IO,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MIN &
+     &   SUBROUTINE HAS THE VALUE 1 *****')
+            Xmin = X(1)
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE MIN    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            Xmin = X(1)
+         ENDIF
+         GOTO 100
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      Xmin = X(1)
+         DO i = 2 , N
+            IF ( X(i)<Xmin ) Xmin = X(i)
+         ENDDO
+      ENDIF
+!
+ 100  IF ( Iwrite==0 ) RETURN
+      WRITE (G_IO,99005)
+99005 FORMAT (' ')
+      WRITE (G_IO,99006) N , Xmin
+99006 FORMAT (' ','THE MINIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ',  &
+     &        E15.8)
+END SUBROUTINE MIN

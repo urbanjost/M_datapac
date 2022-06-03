@@ -1,0 +1,138 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file geocdf.3m_datapac.man
+NAME
+   geocdf(3f) - [M_datapac:STATISTICS:CD] compute the geometric cumulative
+   distribution function
+
+SYNOPSIS
+      SUBROUTINE GEOCDF(X,P,Cdf)
+
+DESCRIPTION
+   geocdf(3f) computes the cumulative distribution function value at the
+   single precision value x for the geometric distribution with single
+   precision 'bernoulli probability' parameter = p.
+
+   the geometric distribution used herein herein has mean = (1-p)/p and
+   standard deviation = sqrt((1-p)/(p*p))).
+
+   this distribution is defined for all non-negative integer x--x = 0,
+   1, 2, ... . this distribution has the probability function
+
+       f(x) = p * (1-p)**x.
+
+   the geometric distribution is the distribution of the number of
+   failures before obtaining 1 success in an indefinite sequence of
+   bernoulli (0,1) trials where the probability of success in a single
+   trial = p.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_geocdf
+   use M_datapac, only : geocdf
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call geocdf(x,y)
+   end program demo_geocdf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+REFERENCES
+   o Feller, An Introduction to Probability Theory and its Applications,
+     Volume 1, Edition 2, 1957, Pages 155-157, 210.
+   o National Bureau of Standards Applied Mathematics Series 55, 1964,
+     Page 929.
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==geocdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE GEOCDF(X,P,Cdf)
+REAL(kind=wp) :: Cdf , del , fintx , P , X
+INTEGER intx 
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!                                AT WHICH THE CUMULATIVE DISTRIBUTION
+!                                FUNCTION IS TO BE EVALUATED.
+!                                X SHOULD BE NON-NEGATIVE AND
+!                                INTEGRAL-VALUED.
+!                     --P      = THE SINGLE PRECISION VALUE
+!                                OF THE 'BERNOULLI PROBABILITY'
+!                                PARAMETER FOR THE GEOMETRIC
+!                                DISTRIBUTION.
+!                                P SHOULD BE BETWEEN
+!                                0.0 (EXCLUSIVELY) AND
+!                                1.0 (EXCLUSIVELY).
+!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!                                DISTRIBUTION FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!             FUNCTION VALUE CDF
+!             FOR THE GEOMETRIC DISTRIBUTION
+!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
+!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
+!              TO THIS CUMULATIVE
+!              DISTRIBUTION FUNCTION SUBROUTINE
+!              FOR THIS DISCRETE DISTRIBUTION
+!              SHOULD (UNDER NORMAL CIRCUMSTANCES) BE A
+!              DISCRETE INTEGER VALUE,
+!              THE INPUT VARIABLE X IS SINGLE
+!              PRECISION IN MODE.
+!              X HAS BEEN SPECIFIED AS SINGLE
+!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
+!              CONVENTION THAT ALL INPUT ****DATA****
+!              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
+!              VARIABLES TO ALL
+!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              THIS CONVENTION IS BASED ON THE BELIEF THAT
+!              1) A MIXTURE OF MODES (FLOATING POINT
+!              VERSUS INTEGER) IS INCONSISTENT AND
+!              AN UNNECESSARY COMPLICATION
+!              IN A DATA ANALYSIS; AND
+!              2) FLOATING POINT MACHINE ARITHMETIC
+!              (AS OPPOSED TO INTEGER ARITHMETIC)
+!              IS THE MORE NATURAL MODE FOR DOING
+!              DATA ANALYSIS.
+!---------------------------------------------------------------------
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+         WRITE (G_IO,99001)
+         WRITE (G_IO,99004) P
+         Cdf = 0.0_wp
+      ELSEIF ( X<0.0_wp ) THEN
+         WRITE (G_IO,99002)
+         WRITE (G_IO,99004) X
+         Cdf = 0.0_wp
+      ELSE
+         intx = X + 0.0001_wp
+         fintx = intx
+         del = X - fintx
+         IF ( del<0.0_wp ) del = -del
+         IF ( del>0.001_wp ) THEN
+            WRITE (G_IO,99003)
+            WRITE (G_IO,99004) X
+         ENDIF
+         Cdf = 1.0_wp - (1.0_wp-P)**(X+1.0_wp)
+      ENDIF
+99001 FORMAT(' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+99002 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NEGATIVE *****')
+99003 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NON-INTEGRAL *****')
+99004 FORMAT(' ***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+ 
+END SUBROUTINE GEOCDF

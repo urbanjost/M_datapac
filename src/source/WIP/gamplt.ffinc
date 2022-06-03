@@ -1,0 +1,385 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file gamplt.3m_datapac.man
+NAME
+   gamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a gamma probability plot
+
+SYNOPSIS
+      SUBROUTINE GAMPLT(X,N,Gamma)
+
+DESCRIPTION
+   gamplt(3f) generates a gamma probability plot (with tail length
+   parameter value = gamma).
+
+   the prototype gamma distribution used herein has mean = gamma and
+   standard deviation = sqrt(gamma).
+
+   this distribution is defined for all positive x, and has the
+   probability density function
+
+       f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+
+   where the constant = the gamma function evaluated at the value gamma.
+
+   as used herein, a probability plot for a distribution is a plot
+   of the ordered observations versus the order statistic medians for
+   that distribution.
+
+   the gamma probability plot is useful in graphically testing the
+   composite (that is, location and scale parameters need not be
+   specified) hypothesis that the underlying distribution from which
+   the data have been randomly drawn is the gamma distribution with
+   tail length parameter value = gamma.
+
+   if the hypothesis is true, the probability plot should be near-linear.
+
+   a measure of such linearity is given by the calculated probability
+   plot correlation coefficient.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_gamplt
+   use M_datapac, only : gamplt
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call gamplt(x,y)
+   end program demo_gamplt
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
+!                 PLOTS FOR THE GAMMA DISTRIBUTION',
+!                 TECHNOMETRICS, 1962, PAGES 1-15.
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
+!               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!                 OCTOBER, 1972), PAGES 425-450.
+!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!                 1967, PAGES 260-308.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE GAMPLT(X,N,Gamma)
+REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
+     &     dx , g , Gamma , hold , pcalc , pp0025 , pp025 , pp975 ,     &
+     &     pp9975 , sum , sum1
+REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
+     &     xlower , xmax , xmid , xmin , xmin0 , xupper , Y , ybar ,    &
+     &     yint
+REAL(kind=wp) :: yslope
+INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                                TAIL LENGTH PARAMETER.
+!                                GAMMA SHOULD BE POSITIVE.
+!     OUTPUT--A ONE-PAGE GAMMA PROBABILITY PLOT.
+!     PRINTING--YES.
+!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
+!                   FOR THIS SUBROUTINE IS 7500.
+!                 --GAMMA SHOULD BE POSITIVE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ABS, EXP, DEXP, DLOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION
+!     ORIGINAL VERSION--NOVEMBER  1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d
+      DOUBLE PRECISION DEXP , DLOG
+      DIMENSION d(10)
+      DIMENSION X(:)
+      DIMENSION Y(7500) , W(7500)
+      COMMON /BLOCK2/ WS(15000)
+      EQUIVALENCE (Y(1),WS(1))
+      EQUIVALENCE (W(1),WS(7501))
+      DATA c/.918938533204672741D0/
+      DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
+     &     -.277777777777777778D-2 , +.793650793650793651D-3 ,          &
+     &     -.595238095238095238D-3 , +.841750841750841751D-3/
+      DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
+     &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
+     &     +.179644372368830573D0 , -.139243221690590111D1/
+!
+      iupper = 7500
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 .OR. N>iupper ) THEN
+         WRITE (G_IO,99001) iupper
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPLT SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE GAMP&
+     &LT SUBROUTINE HAS THE VALUE 1 *****')
+         RETURN
+      ELSE
+         IF ( Gamma<=0.0_wp ) THEN
+            WRITE (G_IO,99004)
+99004       FORMAT (' ',                                                &
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE GAMPLT SUBROU&
+     &TINE IS NON-POSITIVE *****')
+            WRITE (G_IO,99005) Gamma
+99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
+     &              ' *****')
+            RETURN
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99006) hold
+99006       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE GAMPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      an = N
+         dgamma = Gamma
+!
+!     COMPUTE THE GAMMA FUNCTION USING THE ALGORITHM IN THE
+!     NBS APPLIED MATHEMATICS SERIES REFERENCE.
+!     THIS GAMMA FUNCTION NEED BE CALCULATED ONLY ONCE.
+!     IT IS USED IN THE CALCULATION OF THE CDF BASED ON
+!     THE TENTATIVE VALUE OF THE PPF IN THE ITERATION.
+!
+         z = dgamma
+         den = 1.0D0
+         DO WHILE ( z<10.0D0 )
+            den = den*z
+            z = z + 1.0D0
+         ENDDO
+         z2 = z*z
+         z3 = z*z2
+         z4 = z2*z2
+         z5 = z2*z3
+         a = (z-0.5D0)*DLOG(z) - z + c
+         b = d(1)/z + d(2)/z3 + d(3)/z5 + d(4)/(z2*z5) + d(5)/(z4*z5)   &
+     &       + d(6)/(z*z5*z5) + d(7)/(z3*z5*z5) + d(8)/(z5*z5*z5) + d(9)&
+     &       /(z2*z5*z5*z5)
+         g = DEXP(a+b)/den
+!
+!     SORT THE DATA
+!
+         CALL SORT(X,N,Y)
+!
+!     GENERATE UNIFORM ORDER STATISTIC MEDIANS
+!
+         CALL UNIMED(N,W)
+!
+!     GENERATE GAMMA DISTRIBUTION ORDER STATISTIC MEDIANS
+!
+!     DETERMINE LOWER AND UPPER BOUNDS ON THE DESIRED I-TH GAMMA
+!     ORDER STATISTIC MEDIAN.
+!     FOR EACH I, A LOWER BOUND IS GIVEN BY
+!     (Y(I)*GAMMA*THE GAMMA FUNCTION OF GAMMA)**(1.0/GAMMA)
+!     WHERE Y(I) IS THE CORRESPONDING UNIFORM (0,1) ORDER STATISIC
+!     MEDIAN.
+!     FOR EACH I EXCEPT I = N, AN UPPER BOUND IS GIVEN BY THE
+!     (I+1)-ST GAMMA ORDER STATISTIC MEDIAN (ASSUMEDLY ALREADY
+!     CALCULTATED).
+!     FOR I = N, AN UPPER BOUND IS DETERMINED BY COMPUTING
+!     MULTIPLES OF THE LOWER BOUND FOR I = N UNTIL A LARGER
+!     VALUE IS OBTAINED.
+!     DUE TO THE ABOVE CONSIDERATIONS, THE GAMMA ORDER STATISTIC
+!     MEDIANS WILL BE CALCULATED LARGEST TO SMALLEST, THAT IS,
+!     IN THE FOLLOWING SEQUENCE:  W(N), W(N-1), ..., W(2), W(1).
+!     NOTE ALSO THAT 1) THE CODE IS COMPLICATED SLIGHTLY BY THE
+!     FACT THAT PERCENT POINT VALUES INVOLVED IN THE CALCULATION OF
+!     THE TAIL LENGTH MEASURE TAU (SEE LABEL 605) ARE GOING ON
+!     'SIMULATNEOUSLY'. AND 2) THE VECTOR W WILL AT VARIOUS TIMES
+!     IN THE PROGRAM HAVE UNIFORM ORDER STATISTIC MEDIANS AND
+!     THEN LATER GRADUALLY FILL UP WITH GAMMA ORDER STATISTIC
+!     MEDIANS.
+!
+         i = N
+         itail = 0
+      ENDIF
+ 100  IF ( itail==0 ) u = W(i)
+      dp = u
+      xmin0 = (u*Gamma*g)**(1.0_wp/Gamma)
+      xmin = xmin0
+      IF ( i==N .OR. itail>=1 ) THEN
+         iloop = 1
+         icount = 1
+      ELSE
+         ip1 = i + 1
+         xmax = W(ip1)
+         GOTO 300
+      ENDIF
+ 200  acount = icount
+      xmax = acount*xmin0
+      dx = xmax
+      GOTO 600
+ 300  xmid = (xmin+xmax)/2.0_wp
+!
+!     AT THIS STAGE WE NOW HAVE LOWER AND UPPER LIMITS ON
+!     THE DESIRED I-TH GAMMA ORDER STATISITC MEDIAN W(I).
+!     NOW ITERATE BY BISECTION UNTIL THE DESIRED ACCURACY IS ACHIEVED
+!     FOR THE I-TH GAMMA ORDER STATISITIC MEDIAN.
+!
+      iloop = 2
+      xlower = xmin
+      xupper = xmax
+      icount = 0
+ 400  dx = xmid
+      GOTO 600
+ 500  IF ( itail<1 ) THEN
+         W(i) = xmid
+         IF ( i<=1 ) THEN
+!
+!     AT THIS POINT, THE GAMMA ORDER STATISTIC MEDIANS ARE ALL COMPUTED.
+!     NOW PLOT OUT THE GAMMA PROBABILITY PLOT
+!
+            CALL PLOT(Y,W,N)
+         ELSE
+            i = i - 1
+            GOTO 100
+         ENDIF
+      ENDIF
+!
+!     COMPUTE THE TAIL LENGTH MEASURE OF THE DISTRIBUTION.
+!     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
+!     AND THE SAMPLE SIZE.
+!
+      IF ( itail==0 ) THEN
+         u = 0.9975_wp
+         itail = 1
+         GOTO 100
+      ELSEIF ( itail==1 ) THEN
+         pp9975 = xmid
+         u = 0.0025_wp
+         itail = 2
+         GOTO 100
+      ELSEIF ( itail==2 ) THEN
+         pp0025 = xmid
+         u = 0.975_wp
+         itail = 3
+         GOTO 100
+      ELSEIF ( itail==3 ) THEN
+         pp975 = xmid
+         u = 0.025_wp
+         itail = 4
+         GOTO 100
+      ELSE
+         pp025 = xmid
+         tau = (pp9975-pp0025)/(pp975-pp025)
+         WRITE (G_IO,99007) Gamma , tau , N
+!
+99007    FORMAT (' ','GAMMA PROBABILITY PLOT WITH SHAPE PARAMETER = ',  &
+     &           E17.10,1X,'(TAU = ',E15.8,')',16X,'SAMPLE SIZE N = ',  &
+     &           I7)
+!
+!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
+!     COMPUTE LOCATION AND SCALE ESTIMATES
+!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
+!     THEN WRITE THEM OUT.
+!
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         DO i = 1 , N
+            sum1 = sum1 + Y(i)
+            sum2 = sum2 + W(i)
+         ENDDO
+         ybar = sum1/an
+         wbar = sum2/an
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
+         DO i = 1 , N
+            sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
+            sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
+            sum3 = sum3 + (W(i)-wbar)*(W(i)-wbar)
+         ENDDO
+         cc = sum2/SQRT(sum3*sum1)
+         yslope = sum2/sum3
+         yint = ybar - yslope*wbar
+         WRITE (G_IO,99008) cc , yint , yslope
+99008    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
+     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
+     &           'ESTIMATED SLOPE = ',E15.8)
+!
+         RETURN
+      ENDIF
+!
+!********************************************************************
+!     THIS SECTION BELOW IS LOGICALLY SEPARATE FROM THE ABOVE.
+!     THIS SECTION COMPUTES A CDF VALUE FOR ANY GIVEN TENTATIVE
+!     PERCENT POINT X VALUE AS DEFINED IN EITHER OF THE 2
+!     ITERATION LOOPS IN THE ABOVE CODE.
+!
+!     COMPUTE T-SUB-Q AS DEFINED ON PAGE 4 OF THE WILK, GNANADESIKAN,
+!     AND HUYETT REFERENCE
+!
+ 600  sum = 1.0_wp/dgamma
+      term = 1.0_wp/dgamma
+      cut1 = dx - dgamma
+      cut2 = dx*10000000.0_wp
+      DO j = 1 , 1000
+         aj = j
+         term = dx*term/(dgamma+aj)
+         sum = sum + term
+         cutoff = cut1 + (cut2*term/sum)
+         IF ( aj>cutoff ) GOTO 700
+      ENDDO
+      WRITE (G_IO,99009)
+99009 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMPLT ',   &
+     &        'SUBROUTINE--THE NUMBER OF CDF ITERATIONS EXCEEDS 1000')
+      WRITE (G_IO,99010) Gamma
+99010 FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
+ 700  t = sum
+      pcalc = (dx**dgamma)*(EXP(-dx))*t/g
+      IF ( iloop==1 ) THEN
+         IF ( pcalc>=dp ) GOTO 300
+         xmin = xmax
+         icount = icount + 1
+         IF ( icount>30000 ) GOTO 300
+         GOTO 200
+      ELSE
+         IF ( pcalc==dp ) GOTO 500
+         IF ( pcalc>dp ) THEN
+            xupper = xmid
+            xmid = (xmid+xlower)/2.0_wp
+         ELSE
+            xlower = xmid
+            xmid = (xmid+xupper)/2.0_wp
+         ENDIF
+         xdel = ABS(xmid-xlower)
+         icount = icount + 1
+         IF ( xdel>=0.0000001_wp .AND. icount<=100 ) GOTO 400
+         GOTO 500
+      ENDIF
+!
+END SUBROUTINE GAMPLT

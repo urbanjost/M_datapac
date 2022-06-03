@@ -1,0 +1,78 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file norpdf.3m_datapac.man
+NAME
+   norpdf(3f) - [M_datapac:STATISTICS:PD] compute the normal probability
+   density function
+
+SYNOPSIS
+      SUBROUTINE NORPDF(X,Pdf)
+
+DESCRIPTION
+   norpdf(3f) computes the probability density function value for the
+   normal (gaussian) distribution with mean = 0 and standard deviation
+   = 1.
+
+   this distribution is defined for all x and has the probability
+   density function
+
+       f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_norpdf
+   use M_datapac, only : norpdf
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call norpdf(x,y)
+   end program demo_norpdf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE NORPDF(X,Pdf)
+IMPLICIT NONE
+REAL(kind=wp) :: c , Pdf , X
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!                                WHICH THE PROBABILITY DENSITY
+!                                FUNCTION IS TO BE EVALUATED.
+!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
+!                                DENSITY FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
+!             FUNCTION VALUE PDF.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DATA c/.3989422804_wp/
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
+!     NO INPUT ARGUMENT ERRORS POSSIBLE
+!     FOR THIS DISTRIBUTION.
+!
+!-----START POINT-----------------------------------------------------
+!
+      Pdf = c*EXP(-(X*X)/2.0_wp)
+!
+END SUBROUTINE NORPDF

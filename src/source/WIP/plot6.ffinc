@@ -1,0 +1,321 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file plot6.3m_datapac.man
+NAME
+   plot6(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot
+
+SYNOPSIS
+      SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
+
+DESCRIPTION
+   plot6(3f) yields a one-page printer plot of y(i) versus x(i):
+
+     1. with the vertical (y) axis min and max
+        and the horizontal (x) axis min and max
+        values specified by the data analyst.
+
+   the use of the ymin, ymax, xmin, and xmax specifications allows the
+   data analyst to control fully the plot axis limits, so as, for example,
+   to zero-in on an interesting sub-region of a previous plot.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_plot6
+   use M_datapac, only : plot6
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call plot6(x,y)
+   end program demo_plot6
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --OCTOBER   1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --FEBRUARY  1977.
+!     UPDATED         --JUNE      1977.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==plot6.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
+IMPLICIT NONE
+REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
+INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
+!
+!
+!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS
+!                               TO BE PLOTTED VERTICALLY.
+!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS
+!                               TO BE PLOTTED HORIZONTALLY.
+!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR Y.
+!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
+!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
+!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
+!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
+!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
+!             WITH SPECIFIED AXIS LIMITS.
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
+!              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
+!              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
+!              WHICH ARE SMALLER THAN XMIN OR LARGER THAN XMAX
+!              WILL NOT BE PLOTTED.
+!            --VALUES IN THE VERTICAL AXIS VECTOR (Y)
+!              OR THE HORIZONTAL AXIS VECTOR (X) WHICH ARE
+!              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
+!              PLOTTED.
+!              THIS CONVENTION GREATLY SIMPLIFIES THE PROBLEM
+!              OF PLOTTING WHEN SOME ELEMENTS IN THE VECTOR Y
+!              (OR X) ARE 'MISSING DATA', OR WHEN WE PURPOSELY
+!              WANT TO IGNORE CERTAIN ELEMENTS IN THE VECTOR Y
+!              (OR X) FOR PLOTTING PURPOSES (THAT IS, WE DO NOT
+!              WANT CERTAIN ELEMENTS IN Y (OR X) TO BE PLOTTED).
+!              TO CAUSE SPECIFIC ELEMENTS IN Y (OR X) TO BE
+!              IGNORED, WE REPLACE THE ELEMENTS BEFOREHAND
+!              (BY, FOR EXAMPLE, USE OF THE   REPLAC   SUBROUTINE)
+!              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
+!              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOT
+!              SUBROUTINE.
+!
+!---------------------------------------------------------------------
+!
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
+!
+      DIMENSION Y(:)
+      DIMENSION X(:)
+      DIMENSION ylable(11)
+      COMMON /BLOCK1/ IGRaph(55,130)
+!
+      DATA sbnam1 , sbnam2/'PLOT' , '6   '/
+      DATA alph11 , alph12/'FIRS' , 'T   '/
+      DATA alph21 , alph22/'SECO' , 'ND  '/
+      DATA alph31 , alph32/'THIR' , 'D   '/
+      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
+     &     'N' , '='/
+!
+      cutoff = (10.0_wp**10) - 1000.0_wp
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      WRITE (G_IO,99001)
+99001 FORMAT ('1')
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+         WRITE (G_IO,99011)
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
+99003       FORMAT (' ','HAS THE VALUE 1')
+            WRITE (G_IO,99011)
+            RETURN
+         ELSE
+!
+            hold = Y(1)
+            DO i = 2 , N
+               IF ( Y(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99014) hold
+            WRITE (G_IO,99011)
+            RETURN
+         ENDIF
+ 50      hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 100
+         ENDDO
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99014) hold
+         WRITE (G_IO,99011)
+         RETURN
+      ENDIF
+!
+ 100  DO i = 1 , N
+         IF ( Y(i)<cutoff ) GOTO 200
+      ENDDO
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) cutoff
+      WRITE (G_IO,99011)
+      RETURN
+ 200  DO i = 1 , N
+         IF ( X(i)<cutoff ) GOTO 300
+      ENDDO
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) cutoff
+      WRITE (G_IO,99011)
+      RETURN
+!
+ 300  n2 = 0
+      DO i = 1 , N
+         IF ( Y(i)<cutoff .AND. X(i)<cutoff ) THEN
+            n2 = n2 + 1
+            IF ( n2>=2 ) GOTO 400
+         ENDIF
+      ENDDO
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99004) alph11 , alph12 , alph21 , alph22
+99004 FORMAT (' ','THE ',A4,A4,', AND ',A4,A4)
+      WRITE (G_IO,99005) sbnam1 , sbnam2
+99005 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
+      WRITE (G_IO,99006)
+99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
+     &        ' EXCLUDED FROM THE PLOT.')
+      WRITE (G_IO,99007) n2
+99007 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+      WRITE (G_IO,99011)
+      RETURN
+!
+!-----START POINT-----------------------------------------------------
+!
+!     DETERMINE THE VALUES TO BE LISTED ON THE LEFT VERTICAL AXIS
+!
+ 400  DO i = 1 , 9
+         aim1 = i - 1
+         ylable(i) = Ymax - (aim1/8.0_wp)*(Ymax-Ymin)
+      ENDDO
+!
+!     DETERMINE THE VALUES TO BE LISTED ON THE BOTTOM HORIZONTAL AXIS
+!     DETERMINE XMID, X25 (=THE 25% POINT), AND
+!     X75 (=THE 75% POINT)
+!
+      xmid = (Xmin+Xmax)/2.0_wp
+      x25 = 0.75_wp*Xmin + 0.25_wp*Xmax
+      x75 = 0.25_wp*Xmin + 0.75_wp*Xmax
+!
+!     BLANK OUT THE GRAPH
+!
+      DO i = 1 , 45
+         DO j = 1 , 109
+            IGRaph(i,j) = blank
+         ENDDO
+      ENDDO
+!
+!     PRODUCE THE VERTICAL AXES
+!
+      DO i = 3 , 43
+         IGRaph(i,5) = alphai
+         IGRaph(i,109) = alphai
+      ENDDO
+      DO i = 3 , 43 , 5
+         IGRaph(i,5) = hyphen
+         IGRaph(i,109) = hyphen
+      ENDDO
+      IGRaph(3,1) = equal
+      IGRaph(3,2) = alpham
+      IGRaph(3,3) = alphaa
+      IGRaph(3,4) = alphax
+      IGRaph(23,1) = equal
+      IGRaph(23,2) = alpham
+      IGRaph(23,3) = alphai
+      IGRaph(23,4) = alphad
+      IGRaph(43,1) = equal
+      IGRaph(43,2) = alpham
+      IGRaph(43,3) = alphai
+      IGRaph(43,4) = alphan
+!
+!     PRODUCE THE HORIZONTAL AXES
+!
+      DO j = 7 , 107
+         IGRaph(1,j) = hyphen
+         IGRaph(45,j) = hyphen
+      ENDDO
+      DO j = 7 , 107 , 25
+         IGRaph(1,j) = alphai
+         IGRaph(45,j) = alphai
+      ENDDO
+      DO j = 20 , 107 , 25
+         IGRaph(1,j) = alphai
+         IGRaph(45,j) = alphai
+      ENDDO
+!
+!     DETERMINE THE (X,Y) PLOT POSITIONS
+!
+      ratioy = 40.0_wp/(Ymax-Ymin)
+      ratiox = 100.0_wp/(Xmax-Xmin)
+      DO i = 1 , N
+         IF ( Y(i)<cutoff ) THEN
+            IF ( X(i)<cutoff ) THEN
+               IF ( Y(i)>=Ymin .AND. Y(i)<=Ymax ) THEN
+                  IF ( X(i)>=Xmin .AND. X(i)<=Xmax ) THEN
+                     mx = ratiox*(X(i)-Xmin) + 0.5_wp
+                     mx = mx + 7
+                     my = ratioy*(Y(i)-Ymin) + 0.5_wp
+                     my = 43 - my
+                     IGRaph(my,mx) = alphax
+                  ENDIF
+               ENDIF
+            ENDIF
+         ENDIF
+      ENDDO
+!
+!     WRITE OUT THE GRAPH
+!
+      DO i = 1 , 45
+         ip2 = i + 2
+         iflag = ip2 - (ip2/5)*5
+         k = ip2/5
+         IF ( iflag/=0 ) WRITE (G_IO,99008) (IGRaph(i,j),j=1,109)
+!
+99008    FORMAT (' ',20X,109A1)
+         IF ( iflag==0 ) WRITE (G_IO,99009) ylable(k) ,                  &
+     &                          (IGRaph(i,j),j=1,109)
+99009    FORMAT (' ',F20.7,109A1)
+      ENDDO
+      WRITE (G_IO,99010) Xmin , x25 , xmid , x75 , Xmax
+99010 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
+!
+99011 FORMAT (' ','**************************************************', &
+     &        '********************')
+99012 FORMAT (' ','                   FATAL ERROR                    ')
+99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
+     &        ' SUBROUTINE')
+99014 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
+99015 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
+99016 FORMAT (' ','VALUE OF ',E15.8)
+!
+END SUBROUTINE PLOT6

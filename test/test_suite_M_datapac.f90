@@ -1365,8 +1365,15 @@ end subroutine test_trim
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_unicdf()
 implicit none
+integer,parameter :: n=40
+real              :: x(0:n), y(0:n)
+integer           :: i
    call unit_check_start('unicdf',msg='')
-   !!call unit_check('unicdf', 0.eq.0, 'checking',100)
+   x=[(real(i)/real(n),i=0,n)]
+   do i=0,n
+         call unicdf(x(i),y(i))
+   enddo
+   call unit_check('unicdf', all(x.eq.y), 'checking in equals out')
    call unit_check_done('unicdf',msg='')
 end subroutine test_unicdf
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT

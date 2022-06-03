@@ -1,0 +1,148 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file tran.3m_datapac.man
+NAME
+   tran(3f) - [M_datapac:STATISTICS:RANDOM] a random sample of size n from the
+   student's t distribution with integer degrees of freedom parameter NU.
+
+SYNOPSIS
+      SUBROUTINE TRAN(N,Nu,Iseed,X)
+
+DESCRIPTION
+
+   This subroutine generates a random sample of size N from the student's
+   T distribution with integer degrees of freedom parameter = NU.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_tran
+   use M_datapac, only : tran
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call tran(x,y)
+   end program demo_tran
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --MOOD AND GRABLE, INTRODUCTION TO THE
+!                 THEORY OF STATISTICS, 1963, PAGE 233.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--2, 1970, PAGE 94.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGE 121.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE TRAN(N,Nu,Iseed,X)
+REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
+INTEGER i , Iseed , j , N , Nu
+!
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!                     --NU     = THE INTEGER DEGREES OF FREEDOM
+!                                (PARAMETER) FOR THE T
+!                                DISTRIBUTION.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE STUDENT'S T DISTRIBUTION
+!             WITH DEGREES OF FREEDOM PARAMETER = NU.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION y(2) , z(2)
+!
+!---------------------------------------------------------------------
+!
+!-----DATA STATEMENTS-------------------------------------------------
+!
+      DATA pi/3.14159265359_wp/
+!
+!-----START POINT-----------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE TRAN   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99003) N
+         RETURN
+      ELSEIF ( Nu<=0 ) THEN
+         WRITE (G_IO,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TRAN   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99003) Nu
+         RETURN
+      ELSE
+!
+!     GENERATE N STUDENT'S T RANDOM NUMBERS
+!     USING THE DEFINITION THAT
+!     A STUDENT'S T VARIATE WITH NU DEGREES OF FREEDOM
+!     EQUALS A NORMAL VARIATE DIVIDED BY
+!     A STANDARDIZED CHI VARIATE
+!     (WHERE THE LATTER EQUALS SQRT(CHI-SQUARED/NU).
+!     FIRST GENERATE A NORMAL RANDOM NUMBER,
+!     THEN GENERATE A STANDARDIZED CHI RANDOM NUMBER,
+!     THEN FORM THE RATIO OF THE FIRST DIVIDED BY
+!     THE SECOND.
+!
+         anu = Nu
+         DO i = 1 , N
+!
+            CALL UNIRAN(2,Iseed,y)
+            arg1 = -2.0_wp*LOG(y(1))
+            arg2 = 2.0_wp*pi*y(2)
+            znorm = (SQRT(arg1))*(COS(arg2))
+!
+            sum = 0.0_wp
+            DO j = 1 , Nu , 2
+               CALL UNIRAN(2,Iseed,y)
+               arg1 = -2.0_wp*LOG(y(1))
+               arg2 = 2.0_wp*pi*y(2)
+               z(1) = (SQRT(arg1))*(COS(arg2))
+               z(2) = (SQRT(arg1))*(SIN(arg2))
+               sum = sum + z(1)*z(1)
+               IF ( j/=Nu ) sum = sum + z(2)*z(2)
+            ENDDO
+!
+            X(i) = znorm/SQRT(sum/anu)
+!
+         ENDDO
+      ENDIF
+99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+!
+END SUBROUTINE TRAN

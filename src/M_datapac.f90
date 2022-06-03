@@ -2,8 +2,15 @@ module M_datapac
 !use,intrinsic :: iso_fortran_env, only : real_kinds,real32,real64,real128
 use,intrinsic :: iso_fortran_env, only : wp=>real32
 !use,intrinsic :: iso_fortran_env, only : wp=>real64
+
+use,intrinsic :: iso_fortran_env, only : stdin=>input_unit,  stdout=>output_unit, stderr=>error_unit
+
 implicit none
 private
+integer, save           :: G_IO=stdout  ! IO LUN for all write statements
+real(kind=wp),parameter :: G_pi = 3.14159265358979_wp
+real(kind=wp),parameter :: G_pi_dp = 3.14159265358979d0
+
 public :: &
 autoco  ,  betran  ,  bincdf  ,  binppf  ,  binran  ,  caucdf  ,  caupdf  ,  cauplt  ,  cauppf  ,  cauran  , &
 causf   ,  chscdf  ,  chsplt  ,  chsppf  ,  chsran  ,  code    ,  copy    ,  corr    ,  count   ,  decomp  , &
@@ -210,9 +217,9 @@ contains
 !!
 !!     SUBROUTINE AUTOCO(X,N,Iwrite,Xautoc)
 !!
-!!    Real(kind=wp) :: (InOut) ::  X(:)
-!!      Integer, Intent (In) ::  Iwrite
-!!    Real(kind=wp) :: (In)    ::  Xautoc
+!!      Real(kind=wp), Intent (InOut) ::  X(:)
+!!      Integer,       Intent (In)    ::  Iwrite
+!!      Real(kind=wp), Intent (In)    ::  Xautoc
 !!
 !!##DESCRIPTION
 !!
@@ -263,30 +270,30 @@ contains
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --MAY       2022.
 !*==autoco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 subroutine autoco(x,n,iwrite,xautoc)
 real(kind=wp) :: an, hold , sum1 , sum2 , sum3 , x(:) , xautoc , xbar , xbar1 , xbar2
-integer i , ip1 , ipr , iwrite , n , nm1
+integer i , ip1 , iwrite , n , nm1
 
-      ipr = 6
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
       an = n
       if ( n<1 ) then
-         write (ipr,99001)
-99001    format (' ', '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE AUTOCO SUBROUTINE IS NON-POSITIVE *****')
-         write (ipr,99002) n
-99002    format (' ','***** THE VALUE OF THE ARGUMENT IS ',i8,' *****')
+         write (G_IO,99001)
+         99001    format (' ', '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE AUTOCO SUBROUTINE IS NON-POSITIVE *****')
+         write (G_IO,99002) n
+         99002    format (' ','***** THE VALUE OF THE ARGUMENT IS ',i8,' *****')
          return
       else
          if ( n==1 ) then
-            write (ipr,99003)
-99003       format (' ', '***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE AUTOCO SUBROUTINE HAS THE VALUE 1 *****')
+            write (G_IO,99003)
+            99003 format (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE AUTOCO SUBROUTINE HAS THE VALUE 1 *****')
             xautoc = 0.0_wp
          else
             hold = x(1)
             do i = 2 , n
                if ( x(i)/=hold ) goto 50
             enddo
-            write (ipr,99004) hold
+            write (G_IO,99004) hold
 99004       format (' ',&
              & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE AUTOCO SUBROUTINE HAS ALL ELEMENTS = ', &
              & e15.8, &
@@ -321,10 +328,10 @@ integer i , ip1 , ipr , iwrite , n , nm1
 !
  100  continue
       if ( iwrite==0 ) return
-      write (ipr,99005)
-99005 format (' ')
-      write (ipr,99006) n , xautoc
-99006 format (' ', 'THE LINEAR AUTOCORRELATION COEFFICIENT OF THE SET OF ',i6,' OBSERVATIONS IS ',f14.6)
+      write (G_IO,99005)
+      99005 format (' ')
+      write (G_IO,99006) n , xautoc
+      99006 format (' ', 'THE LINEAR AUTOCORRELATION COEFFICIENT OF THE SET OF ',i6,' OBSERVATIONS IS ',f14.6)
 end subroutine autoco
 !>
 !!##NAME
@@ -340,7 +347,7 @@ end subroutine autoco
 !!##DESCRIPTION
 !!
 !!    BETRAN(3f) generates a random sample of size N from the beta
-!!    distribution with single precision shape parameters ALPHA and BETA.
+!!    distribution with shape parameters ALPHA and BETA.
 !!
 !!    The prototype beta distribution used herein has
 !!
@@ -362,17 +369,17 @@ end subroutine autoco
 !!
 !!    N      The desired integer number of random numbers to be generated.
 !!
-!!    ALPHA  The single precision value of the first shape parameter.
+!!    ALPHA  The value of the first shape parameter.
 !!           ALPHA should be greater than or equal to 1.0.
 !!
-!!    BETA   The single precision value of the second shape parameter.
+!!    BETA   The value of the second shape parameter.
 !!           BETA should be greater than or equal to 1.0.
 !!##OUTPUT
 !!
 !!    X      A random sample of size N from the beta distribution
 !!           with shape parameter values ALPHA and BETA.
 !!
-!!           A single precision vector (of dimension at least N) into which
+!!           A vector (of dimension at least N) into which
 !!           the generated random sample will be placed.
 !!
 !!##EXAMPLES
@@ -420,34 +427,25 @@ end subroutine autoco
 !     UPDATED         --JUNE      1978.
 !     UPDATED         --DECEMBER  1981.
 !*==betran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
 REAL(kind=wp) :: a1, a2, Alpha, arg, athird, b1, b2, Beta, funct, sqrt3, term, u, X, xg, xg01, xg02, xg1, xg2, xn(1)
 REAL(kind=wp) :: xn01, xn02
-INTEGER ::  i , ipr , Iseed , N
+INTEGER ::  i , Iseed , N
 
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
-!
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
-!---------------------------------------------------------------------
       DIMENSION X(:)
       DIMENSION u(10)
 !---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
       DATA athird/0.33333333_wp/
       DATA sqrt3/1.73205081_wp/
 !
-      ipr = 6
 !
 !
 !-----START POINT-----------------------------------------------------
@@ -455,20 +453,20 @@ INTEGER ::  i , ipr , Iseed , N
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ','***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         WRITE (G_IO,99001)
+         99001    FORMAT (' ','***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( Alpha<1.0_wp ) THEN
-         WRITE (ipr,99003)
-99003    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS SMALLER THAN 1.0 *****')
-         WRITE (ipr,99005) Alpha
+         WRITE (G_IO,99003)
+         99003    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS SMALLER THAN 1.0 *****')
+         WRITE (G_IO,99005) Alpha
          RETURN
       ELSEIF ( Beta<1.0_wp ) THEN
-         WRITE (ipr,99004)
-99004    FORMAT (' ','***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS SMALLER THAN 1.0 *****')
-         WRITE (ipr,99005) Beta
+         WRITE (G_IO,99004)
+         99004    FORMAT (' ','***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS SMALLER THAN 1.0 *****')
+         WRITE (G_IO,99005) Beta
          RETURN
       ELSE
 !
@@ -553,7 +551,7 @@ END SUBROUTINE BETRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine bincdf (X, Y)
+!!     SUBROUTINE BINCDF(X,P,N,Cdf)
 !!
 !!##DESCRIPTION
 !!    BINCDF(3f) computes the cumulative distribution function value
@@ -602,13 +600,30 @@ END SUBROUTINE BETRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!!##REFERENCES
+!!    o hastings and peacock, statistical
+!!      distributions--a handbook for students and practitioners, 1975,
+!!      page 38.
+!!    o national bureau of standards applied mathematics
+!!      series 55, 1964, page 945, formulae 26.5.24 and 26.5.28, and
+!!      page 929.
+!!    o johnson and kotz, discrete
+!!      distributions, 1969, pages 50-86, especially pages 63-64.
+!!    o feller, an introduction to probability
+!!      theory and its applications, volume 1, edition 2, 1957, pages
+!!      135-142.
+!!    o kendall and stuart, the advanced theory of
+!!      statistics, volume 1, edition 2, 1963, pages 120-125.
+!!    o mood and grable, introduction to the theory
+!!      of statistics, edition 2, 1963, pages 64-69.
+!!    o owen, handbook of statistical tables, 1962, pages 264-272.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --MAY       1977.
 !*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE BINCDF(X,P,N,Cdf)
-REAL(kind=wp) :: an , Cdf , del , fintx , P , X
-      INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
-     &        N , nu1 , nu2
+REAL(kind=wp) :: an, Cdf, del, fintx, P, X
+INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -641,7 +656,7 @@ REAL(kind=wp) :: an , Cdf , del , fintx , P , X
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --N SHOULD BE A POSITIVE INTEGER.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
+
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
@@ -666,31 +681,6 @@ REAL(kind=wp) :: an , Cdf , del , fintx , P , X
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 38.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 945, FORMULAE 26.5.24 AND
-!                 26.5.28, AND PAGE 929.
-!               --JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 50-86,
-!                 ESPECIALLY PAGES 63-64.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 135-142.
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 120-125.
-!               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
-!                 OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
-!               --OWEN, HANDBOOK OF STATISTICAL
-!                 TABLES, 1962, PAGES 264-272.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
-!
 !---------------------------------------------------------------------
 !
       DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
@@ -699,34 +689,32 @@ REAL(kind=wp) :: an , Cdf , del , fintx , P , X
       DOUBLE PRECISION DSQRT , DATAN
       DATA pi/3.14159265358979D0/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINCDF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99006) P
+         WRITE (G_IO,99006) P
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( N<1 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINCDF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) N
+         WRITE (G_IO,99003) N
 99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( X<0.0_wp .OR. X>an ) THEN
-         WRITE (ipr,99004) N
+         WRITE (G_IO,99004) N
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE BINC&
      &DF SUBROUTINE IS OUTSIDE THE USUAL (0,N) = (0,',I7,',INTERVAL *')
-         WRITE (ipr,99006) X
+         WRITE (G_IO,99006) X
          IF ( X<0.0_wp ) Cdf = 0.0_wp
          IF ( X>an ) Cdf = 1.0_wp
          RETURN
@@ -736,11 +724,11 @@ REAL(kind=wp) :: an , Cdf , del , fintx , P , X
          del = X - fintx
          IF ( del<0.0_wp ) del = -del
          IF ( del>0.001_wp ) THEN
-            WRITE (ipr,99005)
+            WRITE (G_IO,99005)
 99005       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE BINC&
      &DF SUBROUTINE IS NON-INTEGRAL *****')
-            WRITE (ipr,99006) X
+            WRITE (G_IO,99006) X
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
@@ -894,7 +882,7 @@ END SUBROUTINE BINCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine binppf (X, Y)
+!!     SUBROUTINE BINPPF(P,Ppar,N,Ppf)
 !!
 !!##DESCRIPTION
 !!    BINPPF(3f) computes the percent point function value at the single
@@ -923,9 +911,29 @@ END SUBROUTINE BINCDF
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!! !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!! !                                (BETWEEN 0.0 (INCLUSIVELY)
+!! !                                AND 1.0 (INCLUSIVELY))
+!! !                                AT WHICH THE PERCENT POINT
+!! !                                FUNCTION IS TO BE EVALUATED.
+!! !                     --PPAR   = THE SINGLE PRECISION VALUE
+!! !                                OF THE 'BERNOULLI PROBABILITY'
+!! !                                PARAMETER FOR THE BINOMIAL
+!! !                                DISTRIBUTION.
+!! !                                PPAR SHOULD BE BETWEEN
+!! !                                0.0 (EXCLUSIVELY) AND
+!! !                                1.0 (EXCLUSIVELY).
+!! !                     --N      = THE INTEGER VALUE
+!! !                                OF THE 'NUMBER OF BERNOULLI TRIALS'
+!! !                                PARAMETER.
+!! !                                N SHOULD BE A POSITIVE INTEGER.
+!! !     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!! !                                POINT FUNCTION VALUE.
+!! !     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
+!! !             FUNCTION VALUE PPF
+!! !             FOR THE BINOMIAL DISTRIBUTION
+!! !             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
+!! !             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = N.
 !!
 !!##EXAMPLES
 !!
@@ -947,46 +955,38 @@ END SUBROUTINE BINCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!!##REFERENCES
+!!   o Johnson and Kotz, Discrete
+!!     Distributions, 1969, Pages 50-86,
+!!     especially Page 64, Formula 36.
+!!   o Hastings and Peacock, Statistical
+!!     Distributions--A Handbook for
+!!     Students and Practitioners, 1975,
+!!     Pages 36-41.
+!!   o National Bureau of Standards Applied Mathematics
+!!     Series 55, 1964, Page 929.
+!!   o Feller, An Introduction to Probability
+!!     Theory and Its Applications, Volume 1,
+!!     Edition 2, 1957, Pages 135-142.
+!!   o Kendall and Stuart, The Advanced Theory of
+!!     Statistics, Volume 1, Edition 2, 1963, Pages 120-125.
+!!   o Mood and Grable, Introduction to the Theory
+!!     of Statistics, Edition 2, 1963, Pages 64-69.
+!!   o Owen, Handbook of Statistical Tables, 1962, PAGES 264-272.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !*==binppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE BINPPF(P,Ppar,N,Ppf)
+REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd , x0 , x1 , x2 , zppf
+INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 
-REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
-     &     x0 , x1 , x2 , zppf
-      INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
-
-!
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
-!                                (BETWEEN 0.0 (INCLUSIVELY)
-!                                AND 1.0 (INCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --PPAR   = THE SINGLE PRECISION VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE BINOMIAL
-!                                DISTRIBUTION.
-!                                PPAR SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!                     --N      = THE INTEGER VALUE
-!                                OF THE 'NUMBER OF BERNOULLI TRIALS'
-!                                PARAMETER.
-!                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
-!             FUNCTION VALUE PPF
-!             FOR THE BINOMIAL DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
-!             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = N.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--PPAR SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --N SHOULD BE A POSITIVE INTEGER.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (INCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, BINCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
@@ -1008,56 +1008,36 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 50-86,
-!                 ESPECIALLY PAGE 64, FORMULA 36.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 36-41.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 135-142.
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 120-125.
-!               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
-!                 OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
-!               --OWEN, HANDBOOK OF STATISTICAL
-!                 TABLES, 1962, PAGES 264-272.
 !---------------------------------------------------------------------
 !
       DOUBLE PRECISION dppar
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99019) P
+         WRITE (G_IO,99019) P
          Ppf = 0.0_wp
          RETURN
       ELSE
          IF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
-            WRITE (ipr,99002)
+            WRITE (G_IO,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-            WRITE (ipr,99019) Ppar
+            WRITE (G_IO,99019) Ppar
             Ppf = 0.0_wp
             RETURN
          ELSE
             IF ( N<1 ) THEN
-               WRITE (ipr,99003)
+               WRITE (G_IO,99003)
 99003          FORMAT (' ',                                             &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
-               WRITE (ipr,99004) N
+               WRITE (G_IO,99004) N
 99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
      &                 ' *****')
                Ppf = 0.0_wp
@@ -1135,8 +1115,8 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
                               IF ( p2>=P ) GOTO 50
                               ix0 = ix2
                            ENDDO
-                           WRITE (ipr,99020)
-                           WRITE (ipr,99005)
+                           WRITE (G_IO,99020)
+                           WRITE (G_IO,99005)
 !
 99005                      FORMAT (' ',                                 &
      &                     'NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS'&
@@ -1152,8 +1132,8 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
                               IF ( p2<P ) GOTO 100
                               ix1 = ix2
                            ENDDO
-                           WRITE (ipr,99020)
-                           WRITE (ipr,99006)
+                           WRITE (G_IO,99020)
+                           WRITE (G_IO,99006)
 99006                      FORMAT (' ',                                 &
      &                     'NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS'&
      &                     )
@@ -1179,8 +1159,8 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
          ELSEIF ( ix0==N ) THEN
             ix0 = ix0 - 1
          ELSE
-            WRITE (ipr,99020)
-            WRITE (ipr,99007)
+            WRITE (G_IO,99020)
+            WRITE (G_IO,99007)
 99007       FORMAT (' ','LOWER AND UPPER BOUND IDENTICAL')
             GOTO 300
          ENDIF
@@ -1216,8 +1196,8 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
                ix2 = (ix0+ix1)/2
                IF ( ix2/=ix0 ) THEN
                   IF ( ix2==ix1 ) THEN
-                     WRITE (ipr,99020)
-                     WRITE (ipr,99021)
+                     WRITE (G_IO,99020)
+                     WRITE (G_IO,99021)
                      EXIT
                   ELSE
                      x2 = ix2
@@ -1232,15 +1212,15 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
                         ENDIF
                         CYCLE
                      ELSEIF ( p2<=p0 ) THEN
-                        WRITE (ipr,99020)
-                        WRITE (ipr,99008)
+                        WRITE (G_IO,99020)
+                        WRITE (G_IO,99008)
 99008                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
      &                          'LESS THAN LOWER BOUND PROBABILITY (P0)'&
      &                          )
                         EXIT
                      ELSEIF ( p2>=p1 ) THEN
-                        WRITE (ipr,99020)
-                        WRITE (ipr,99009)
+                        WRITE (G_IO,99020)
+                        WRITE (G_IO,99009)
 99009                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
      &                       'GREATER THAN UPPER BOUND PROBABILITY (P1)'&
      &                       )
@@ -1248,8 +1228,8 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
                      ENDIF
                   ENDIF
                ENDIF
-               WRITE (ipr,99020)
-               WRITE (ipr,99021)
+               WRITE (G_IO,99020)
+               WRITE (G_IO,99021)
                EXIT
             ENDIF
          ENDDO
@@ -1260,35 +1240,35 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
          Ppf = ix1
          RETURN
       ELSEIF ( p0>p1 ) THEN
-         WRITE (ipr,99020)
-         WRITE (ipr,99010)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
      &           'UPPER BOUND PROBABILITY (P1)')
       ELSEIF ( p0>P ) THEN
-         WRITE (ipr,99020)
-         WRITE (ipr,99011)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
      &           'INPUT PROBABILITY (P)')
       ELSEIF ( p1<P ) THEN
-         WRITE (ipr,99020)
-         WRITE (ipr,99012)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ','UPPER BOUND PROBABILITY (P1) LESS    THAN ',      &
      &           'INPUT PROBABILITY (P)')
       ELSE
-         WRITE (ipr,99020)
-         WRITE (ipr,99013)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
       ENDIF
 !
- 300  WRITE (ipr,99014) ix0 , p0
+ 300  WRITE (G_IO,99014) ix0 , p0
 99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
-      WRITE (ipr,99015) ix1 , p1
+      WRITE (G_IO,99015) ix1 , p1
 99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
-      WRITE (ipr,99016) ix2 , p2
+      WRITE (G_IO,99016) ix2 , p2
 99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
-      WRITE (ipr,99017) P
+      WRITE (G_IO,99017) P
 99017 FORMAT (' ','P    = ',F14.7)
-      WRITE (ipr,99018) Ppar , N
+      WRITE (G_IO,99018) Ppar , N
 99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
       RETURN
 99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
@@ -1303,11 +1283,11 @@ END SUBROUTINE BINPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine binran (X, Y)
+!!     SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
 !!
 !!##DESCRIPTION
-!!    binran(3f) generates a random sample of size n from the binomial
-!!    distribution with single precision 'bernoulli probability' parameter =
+!!    BINRAN(3f) generates a random sample of size n from the binomial
+!!    distribution with 'bernoulli probability' parameter =
 !!    p, and integer 'number of bernoulli trials' parameter = npar.
 !!
 !!    the binomial distribution used herein has mean = npar*p and standard
@@ -1327,8 +1307,28 @@ END SUBROUTINE BINPPF
 !!    success in a single trial = p.
 !!
 !!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!! !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!! !                                OF RANDOM NUMBERS TO BE
+!! !                                GENERATED.
+!! !                     --P      = THE VALUE
+!! !                                OF THE 'BERNOULLI PROBABILITY'
+!! !                                PARAMETER FOR THE BINOMIAL
+!! !                                DISTRIBUTION.
+!! !                                P SHOULD BE BETWEEN
+!! !                                0.0 (EXCLUSIVELY) AND
+!! !                                1.0 (EXCLUSIVELY).
+!! !                     --NPAR   = THE INTEGER VALUE
+!! !                                OF THE 'NUMBER OF BERNOULLI TRIALS'
+!! !                                PARAMETER.
+!! !                                NPAR SHOULD BE A POSITIVE INTEGER.
+!! !     OUTPUT ARGUMENTS--X      = A VECTOR
+!! !                                (OF DIMENSION AT LEAST N)
+!! !                                INTO WHICH THE GENERATED
+!! !                                RANDOM SAMPLE WILL BE PLACED.
+!! !     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!! !             FROM THE BINOMIAL DISTRIBUTION
+!! !             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
+!! !             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = NPAR.
 !!
 !!##EXAMPLES
 !!
@@ -1350,45 +1350,41 @@ END SUBROUTINE BINPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, DISCRETE
+!! !                 DISTRIBUTIONS, 1969, PAGES 50-86.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 41.
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 135-142.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 929.
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 120-125.
+!! !               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
+!! !                 OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 39-40.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
 !*==binran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
 REAL(kind=wp) :: g(1) , P , u(1) , X
-      INTEGER i , ig , ipr , Iseed , isum , j , N , Npar
+INTEGER i , ig , Iseed , isum , j , N , Npar
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --P      = THE SINGLE PRECISION VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE BINOMIAL
-!                                DISTRIBUTION.
-!                                P SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!                     --NPAR   = THE INTEGER VALUE
-!                                OF THE 'NUMBER OF BERNOULLI TRIALS'
-!                                PARAMETER.
-!                                NPAR SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE BINOMIAL DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
-!             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = NPAR.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --NPAR SHOULD BE A POSITIVE INTEGER.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, GEORAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -1398,7 +1394,6 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !              X HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -1408,81 +1403,44 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 50-86.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 41.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 135-142.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 120-125.
-!               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
-!                 OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
-!               --TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 39-40.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
 !---------------------------------------------------------------------
-!
       DIMENSION X(:)
-!
-!---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
-!
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99005) N
+         WRITE (G_IO,99001)
+         99001    FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINRAN SUBROUTINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99005) N
          RETURN
       ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99003) P
-99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         WRITE (G_IO,99002)
+         99002 FORMAT (&
+         & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (G_IO,99003) P
+         99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          RETURN
       ELSEIF ( Npar<1 ) THEN
-         WRITE (ipr,99004)
-99004    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99005) Npar
+         WRITE (G_IO,99004)
+         99004    FORMAT (' ','***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINRAN SUBROUTINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99005) Npar
          RETURN
-!
-!     CHECK ON THE MAGNITUDE OF P,
-!     AND BRANCH TO THE FASTER
-!     GENERATION METHOD ACCORDINGLY.
-!
       ELSEIF ( P<0.1_wp ) THEN
-!
-!     IF P IS SMALL,
-!     GENERATE N BINOMIAL NUMBERS
-!     USING THE FACT THAT THE
-!     WAITING TIME FOR 1 SUCCESS IN
-!     BERNOULLI TRIALS HAS A
-!     GEOMETRIC DISTRIBUTION.
-!
+         !
+         !     CHECK ON THE MAGNITUDE OF P,
+         !     AND BRANCH TO THE FASTER
+         !     GENERATION METHOD ACCORDINGLY.
+         !
+         !
+         !     IF P IS SMALL,
+         !     GENERATE N BINOMIAL NUMBERS
+         !     USING THE FACT THAT THE
+         !     WAITING TIME FOR 1 SUCCESS IN
+         !     BERNOULLI TRIALS HAS A
+         !     GEOMETRIC DISTRIBUTION.
+         !
          DO i = 1 , N
             isum = 0
             j = 1
@@ -1500,11 +1458,11 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
          ENDDO
          GOTO 99999
       ENDIF
-!
-!     IF P IS MODERATE OR LARGE,
-!     GENERATE N BINOMIAL RANDOM NUMBERS
-!     USING THE REJECTION METHOD.
-!
+      !
+      !     IF P IS MODERATE OR LARGE,
+      !     GENERATE N BINOMIAL RANDOM NUMBERS
+      !     USING THE REJECTION METHOD.
+      !
       DO i = 1 , N
          isum = 0
          DO j = 1 , Npar
@@ -1525,20 +1483,26 @@ END SUBROUTINE BINRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine caucdf (X, Y)
+!!
+!!     SUBROUTINE CAUCDF(X,Cdf)
 !!
 !!##DESCRIPTION
 !!    CAUCDF(3f) computes the cumulative distribution function value for
-!!    the cauchy distribution with median = 0 and 75% point = 1.
+!!    the Cauchy distribution with median = 0 and 75% point = 1.
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
 !!        f(x) = (1/pi)*(1/(1+x*x))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X   The value at which the cumulative distribution function is to
+!!    be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!   CDF  The cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
@@ -1560,38 +1524,21 @@ END SUBROUTINE BINRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970, pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==caucdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE CAUCDF(X,Cdf)
-REAL(kind=wp) :: Cdf , pi , X
-      INTEGER ipr
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
-!---------------------------------------------------------------------
-!
-      DATA pi/3.14159265358979_wp/
-!
-      ipr = 6
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
-!
-      Cdf = 0.5_wp + ((1.0_wp/pi)*ATAN(X))
-!
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Cdf
+
+   ! CHECK THE INPUT ARGUMENTS FOR ERRORS ...  NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
+
+   Cdf = 0.5_wp + ((1.0_wp/G_pi)*ATAN(X))
+
 END SUBROUTINE CAUCDF
 !>
 !!##NAME
@@ -1600,20 +1547,25 @@ END SUBROUTINE CAUCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine caupdf (X, Y)
+!!     SUBROUTINE CAUPDF(X,Pdf)
 !!
 !!##DESCRIPTION
-!!    caupdf(3f) computes the probability density function value for the
-!!    cauchy distribution with median = 0 and 75% point = 1.
+!!    CAUPDF(3f) computes the probability density function value for the
+!!    Cauchy distribution with median = 0 and 75% point = 1.
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
 !!        f(x) = (1/pi)*(1/(1+x*x)).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X    The value at which the probability density
+!!         function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!   PDF   The probability density function value.
 !!
 !!##EXAMPLES
 !!
@@ -1629,81 +1581,77 @@ END SUBROUTINE CAUCDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
+!!##REFERENCES
+!!
+!!  o Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970,
+!!    Pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE CAUPDF(X,Pdf)
-REAL(kind=wp) :: c , Pdf , X
-      INTEGER ipr
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out):: Pdf
+REAL(kind=wp),parameter :: c = 0.31830988618379_wp
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
-!---------------------------------------------------------------------
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
-      DATA c/0.31830988618379_wp/
-!
-      ipr = 6
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
-!
-      Pdf = c*(1.0_wp/(1.0_wp+X*X))
+   Pdf = c*(1.0_wp/(1.0_wp+X*X))
 !
 END SUBROUTINE CAUPDF
 !>
 !!##NAME
-!!    cauplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Cauchy probability plot
+!!    cauplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Cauchy
+!!    probability plot
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine cauplt (X, Y)
+!!     SUBROUTINE CAUPLT(X,N)
 !!
 !!##DESCRIPTION
-!!    cauplt(3f) generates a Cauchy probability plot.
+!!    CAUPLT(3f) generates a one-page Cauchy probability plot.
 !!
-!!    the prototype Cauchy distribution used herein has median = 0 and 75%
+!!    The prototype Cauchy distribution used herein has median = 0 and 75%
 !!    point = 1.
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/pi) * (1/(1+x*x)).
+!!        f(X) = (1/pi) * (1/(1+X*X)).
 !!
-!!    as used herein, a probability plot for a distribution is a plot
+!!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the Cauchy probability plot is useful in graphically testing the
+!!    The Cauchy probability plot is useful in graphically testing the
 !!    composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which
 !!    the data have been randomly drawn is the Cauchy distribution.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
-!!    a measure of such linearity is given by the calculated probability
+!!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The vector of (unsorted or sorted) observations.
+!!    N     The integer number of observations in the vector X.
+!!
+!!##OUTPUT
+!!
+!!    A one-page Cauchy probability plot.
 !!
 !!##EXAMPLES
 !!
@@ -1725,77 +1673,61 @@ END SUBROUTINE CAUPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE CAUPLT(X,N)
-REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
-     &     wbar , WS , X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE CAUCHY PROBABILITY PLOT.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
-
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (W(1),WS(7501))
-!
-      DATA pi/3.14159265358979_wp/
-      DATA tau/10.02040649_wp/
-!
-      ipr = 6
-      iupper = 7500
+!*==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CAUPLT(X,N)
+REAL(kind=wp) :: X(:)
+INTEGER       :: N
+REAL(kind=wp) :: an, arg, cc, hold, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
+!REAL(kind=wp),allocatable :: Y(:), W(:)
+REAL(kind=wp) :: Y(7500), W(7500)
+INTEGER       ::  i, iupper
+
+COMMON /BLOCK2/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (W(1),WS(7501))
+
+DATA tau/10.02040649_wp/
+
+!   if(allocated(y))deallocate(y)
+!   if(allocated(w))deallocate(w)
+!   allocate(y(n),w(n)
+
+      iupper = size(y)
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CAUPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         WRITE (G_IO,99001) iupper
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO CAUPLT(3f) IS OUTSIDE THE ALLOWABLE (1,' &
+         & ,I6,') INTERVAL *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE CAUP&
-     &LT SUBROUTINE HAS THE VALUE 1 *****')
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE CAUPLT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE CAUPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO CAUPLT(3f) HAS ALL ELEMENTS = ', &
+         & E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -1812,7 +1744,7 @@ REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
 !     COMPUTE CAUCHY ORDER STATISTIC MEDIANS
 !
          DO i = 1 , N
-            arg = pi*W(i)
+            arg = G_pi*W(i)
             W(i) = -COS(arg)/SIN(arg)
          ENDDO
 !
@@ -1821,10 +1753,8 @@ REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99005) tau , N
-!
-99005    FORMAT (' ','CAUCHY PROBABILITY PLOT (TAU = ',E15.8,')',56X,   &
-     &           'THE SAMPLE SIZE N = ',I7)
+         WRITE (G_IO,99005) tau , N
+         99005    FORMAT (' ','CAUCHY PROBABILITY PLOT (TAU = ',E15.8,')',56X, 'THE SAMPLE SIZE N = ',I7)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -1848,10 +1778,9 @@ REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
-99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
-     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
-     &           'ESTIMATED SLOPE = ',E15.8)
+         WRITE (G_IO,99006) cc , yint , yslope
+         99006 FORMAT (' PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,5X,&
+         & 'ESTIMATED INTERCEPT = ',E15.8,3X,'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
 END SUBROUTINE CAUPLT
@@ -1862,24 +1791,31 @@ END SUBROUTINE CAUPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine cauppf (X, Y)
+!!     SUBROUTINE CAUPPF(P,Ppf)
 !!
 !!##DESCRIPTION
-!!    cauppf(3f) computes the percent point function value for the cauchy
+!!    CAUPPF(3f) computes the percent point function value for the cauchy
 !!    distribution with median = 0 and 75% point = 1.
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all x and has the probability
 !!    density function
 !!
-!!        f(x) = (1/pi)*(1/(1+x*x)).
+!!        f(X) = (1/pi)*(1/(1+X*X))
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P    The value (between 0.0 and 1.0) at which the percent point
+!!         function is to be evaluated.
+!!
+!!         P should be between 0.0 and 1.0, exclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF  The percent point function value.
 !!
 !!##EXAMPLES
 !!
@@ -1895,68 +1831,54 @@ END SUBROUTINE CAUPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE CAUPPF(P,Ppf)
-REAL(kind=wp) :: arg , P , pi , Ppf
-      INTEGER ipr
-!
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
-!             FUNCTION VALUE PPF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
+!!
+!!##REFERENCES
+!!
+!!    o Filliben, Simple and Robust Linear Estimation
+!!      of the Location Parameter of a Symmetric
+!!      Distribution (Unpublished PH.D. Dissertation,
+!!      Princeton University), 1969, Pages 21-44, 229-231.
+!!    o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!      1970, Pages 28-31.
+!!    o Johnson and Kotz, Continuous Univariate Distributions
+!!      -- 1, 1970, PAGES 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
+!*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CAUPPF(P,Ppf)
+REAL(kind=wp) :: arg , P , pi , Ppf
 !
 !---------------------------------------------------------------------
 !
-      DATA pi/3.14159265358979_wp/
+   DATA pi/3.14159265358979_wp/
 !
-      ipr = 6
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ',&
-         & '***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-         RETURN
-      ELSE
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001    FORMAT (' ',&
+      & '***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      WRITE (G_IO,99002) P
+      99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      RETURN
+   ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-         arg = pi*P
-         Ppf = -COS(arg)/SIN(arg)
-      ENDIF
+      arg = pi*P
+      Ppf = -COS(arg)/SIN(arg)
+   ENDIF
 !
 END SUBROUTINE CAUPPF
 !>
@@ -1965,7 +1887,7 @@ END SUBROUTINE CAUPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine cauran (X, Y)
+!! SUBROUTINE CAURAN(N,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    CAURAN(3f) generates a random sample of size N from the Cauchy
@@ -2000,10 +1922,24 @@ END SUBROUTINE CAUPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGE 15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!!                  1964, PAGE 36.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGE 231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
 !*==cauran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE CAURAN(N,Iseed,X)
 REAL(kind=wp) :: arg , pi , X
-      INTEGER i , ipr , Iseed , N
+INTEGER :: i , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -2021,18 +1957,6 @@ REAL(kind=wp) :: arg , pi , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGE 15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGE 231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -2046,31 +1970,20 @@ REAL(kind=wp) :: arg , pi , X
 !
       DIMENSION X(:)
 !
-!---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
 !-----DATA STATEMENTS-------------------------------------------------
 !
       DATA pi/3.14159265359_wp/
-!
-      ipr = 6
-!
 !
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAURAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -2095,7 +2008,7 @@ END SUBROUTINE CAURAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine causf (X, Y)
+!! SUBROUTINE CAUSF(P,Sf)
 !!
 !!##DESCRIPTION
 !!    causf(3f) computes the sparsity function value for the cauchy
@@ -2132,10 +2045,19 @@ END SUBROUTINE CAURAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
 !*==causf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE CAUSF(P,Sf)
 REAL(kind=wp) :: arg , P , pi , Sf
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -2149,14 +2071,6 @@ REAL(kind=wp) :: arg , P , pi , Sf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -2165,16 +2079,14 @@ REAL(kind=wp) :: arg , P , pi , Sf
 !
       DATA pi/3.14159265358979_wp/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUSF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -2194,7 +2106,7 @@ END SUBROUTINE CAUSF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine chscdf (X, Y)
+!! SUBROUTINE CHSCDF(X,Nu,Cdf)
 !!
 !!##DESCRIPTION
 !!    chscdf(3f) computes the cumulative distribution function value for
@@ -2229,10 +2141,27 @@ END SUBROUTINE CAUSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGE 176,
+!! !                 FORMULA 28, AND PAGE 180, FORMULA 33.1.
+!! !               --OWEN, HANDBOOK OF STATISTICAL TABLES,
+!! !                 1962, PAGES 50-55.
+!! !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
+!! !                 FOR STATISTICIANS, VOLUME 1, 1954,
+!! !                 PAGES 122-131.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --MAY       1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --OCTOBER   1976.
 !*==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE CHSCDF(X,Nu,Cdf)
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
-      INTEGER i , ibran , ievodd , imax , imin , ipr , Nu , nucut
+INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
@@ -2252,21 +2181,6 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DEXP.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGE 176,
-!                 FORMULA 28, AND PAGE 180, FORMULA 33.1.
-!               --OWEN, HANDBOOK OF STATISTICAL TABLES,
-!                 1962, PAGES 50-55.
-!               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
-!                 FOR STATISTICIANS, VOLUME 1, 1954,
-!                 PAGES 122-131.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --MAY       1974.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --OCTOBER   1976.
 !
 !---------------------------------------------------------------------
 !
@@ -2293,26 +2207,24 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
       DATA b42/6.0D0/
       DATA b43/17.0D0/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( Nu<=0 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSCDF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) Nu
+         WRITE (G_IO,99002) Nu
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSE
          IF ( X<0.0_wp ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE CHSC&
      &DF SUBROUTINE IS NEGATIVE *****')
-            WRITE (ipr,99004) X
+            WRITE (G_IO,99004) X
 99004       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
             Cdf = 0.0_wp
@@ -2432,7 +2344,7 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
                         GOTO 99999
                      ELSE
                         ibran = 1
-                        WRITE (ipr,99005) ibran
+                        WRITE (G_IO,99005) ibran
 99005                   FORMAT (' ',                                    &
      &                      '*****INTERNAL ERROR IN CHSCDF SUBROUTINE--'&
      &                      ,                                           &
@@ -2460,7 +2372,7 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine chsplt (X, Y)
+!!       SUBROUTINE CHSPLT(X,N,Nu)
 !!
 !!##DESCRIPTION
 !!    chsplt(3f) generates a chi-squared probability plot (with integer
@@ -2509,12 +2421,30 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
+!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
+!! !                 TECHNOMETRICS, 1962, PAGES 1-15.
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 46-51.
 !*==chsplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CHSPLT(X,N,Nu)
+
+SUBROUTINE CHSPLT(X,N,Nu)
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope
-      INTEGER i , ipr , iupper , N , Nu
+INTEGER i , iupper , N , Nu
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -2531,22 +2461,6 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, CHSPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!                 TECHNOMETRICS, 1962, PAGES 1-15.
-!               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 46-51.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
@@ -2559,38 +2473,37 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99007) N
+         WRITE (G_IO,99007) N
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE CHSP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          IF ( Nu<=0 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE CHSPLT SUBROU&
      &TINE IS NON-POSITIVE *****')
-            WRITE (ipr,99007) Nu
+            WRITE (G_IO,99007) Nu
             RETURN
          ELSE
             hold = X(1)
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE CHSPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -2630,7 +2543,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
          q = .025_wp
          CALL CHSPPF(q,Nu,pp025)
          tau = (pp9975-pp0025)/(pp975-pp025)
-         WRITE (ipr,99005) Nu , tau , N
+         WRITE (G_IO,99005) Nu , tau , N
 !
 99005    FORMAT (' ',                                                   &
      &         'CHI-SQUARED PROBABILITY PLOT WITH DEGREES OF FREEDOM = '&
@@ -2660,7 +2573,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -2675,7 +2588,7 @@ END SUBROUTINE CHSPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine chsppf (X, Y)
+!!       SUBROUTINE CHSPPF(P,Nu,Ppf)
 !!
 !!##DESCRIPTION
 !!    chsppf(3f) computes the percent point function value for the
@@ -2714,10 +2627,25 @@ END SUBROUTINE CHSPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
+!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
+!! !                 TECHNOMETRICS, 1962, PAGES 1-15,
+!! !                 ESPECIALLY PAGES 3-5.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41,
+!! !                 AND PAGES 940-943.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 46-51.
 !*==chsppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CHSPPF(P,Nu,Ppf)
+
+SUBROUTINE CHSPPF(P,Nu,Ppf)
 REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
-      INTEGER icount , iloop , ipr , j , maxit , Nu
+INTEGER icount , iloop , j , maxit , Nu
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -2736,8 +2664,7 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !     RESTRICTIONS--NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+
 !     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
 !               COMPARED TO THE KNOWN NU = 2 (EXPONENTIAL)
 !               RESULTS, AGREEMENT WAS HAD OUT TO 6 SIGNIFICANT
@@ -2750,19 +2677,6 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !               THE WORST DETECTED ERROR WAS AGREEMENT TO ONLY 3
 !               SIGNIFICANT DIGITS (IN THEIR 8 SIGNIFICANT DIGIT TABLE)
 !               FOR P = .999.)
-!     REFERENCES--WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!                 TECHNOMETRICS, 1962, PAGES 1-15,
-!                 ESPECIALLY PAGES 3-5.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41,
-!                 AND PAGES 940-943.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 46-51.
 !     ORIGINAL VERSION--SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -2783,26 +2697,24 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
      &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
      &     +.179644372368830573D0 , -.139243221690590111D1/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CHSPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          Ppf = 0.0_wp
          RETURN
       ELSEIF ( Nu<1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99004) Nu
+         WRITE (G_IO,99004) Nu
 99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          Ppf = 0.0_wp
          RETURN
@@ -2889,15 +2801,15 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
          cutoff = cut1 + (cut2*term/sum)
          IF ( aj>cutoff ) GOTO 600
       ENDDO
-      WRITE (ipr,99005) maxit
+      WRITE (G_IO,99005) maxit
 !
 99005 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE CHSPPF ',   &
      &        'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I7)
-      WRITE (ipr,99006) P
+      WRITE (G_IO,99006) P
 99006 FORMAT (' ','     THE INPUT VALUE OF P     IS ',E15.8)
-      WRITE (ipr,99007) Nu
+      WRITE (G_IO,99007) Nu
 99007 FORMAT (' ','     THE INPUT VALUE OF NU    IS ',I8)
-      WRITE (ipr,99008)
+      WRITE (G_IO,99008)
 99008 FORMAT (' ','     THE OUTPUT VALUE OF PPF HAS BEEN SET TO 0.0')
       Ppf = 0.0_wp
       RETURN
@@ -2933,7 +2845,7 @@ END SUBROUTINE CHSPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine chsran (X, Y)
+!!       SUBROUTINE CHSRAN(N,Nu,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    chsran(3f) generates a random sample of size n from the chi-squared
@@ -2963,10 +2875,22 @@ END SUBROUTINE CHSPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 34-35.
+!! !               --MOOD AND GRABLE, INTRODUCTION TO THE
+!! !                 THEORY OF STATISTICS, 1963, PAGES 226-227.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGE 171.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 48.
 !*==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CHSRAN(N,Nu,Iseed,X)
+
+SUBROUTINE CHSRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
-      INTEGER i , ipr , Iseed , j , N , Nu
+INTEGER i , Iseed , j , N , Nu
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -2988,16 +2912,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 34-35.
-!               --MOOD AND GRABLE, INTRODUCTION TO THE
-!                 THEORY OF STATISTICS, 1963, PAGES 226-227.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGE 171.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 48.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--FEBRUARY  1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -3014,36 +2928,27 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !
 !---------------------------------------------------------------------
 !
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
 !-----DATA STATEMENTS-------------------------------------------------
 !
       DATA pi/3.14159265359_wp/
-!
-      ipr = 6
-!
 !
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CHSRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) N
+         WRITE (G_IO,99003) N
          RETURN
       ELSEIF ( Nu<=0 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) Nu
+         WRITE (G_IO,99003) Nu
          RETURN
       ELSE
 !
@@ -3079,7 +2984,7 @@ END SUBROUTINE CHSRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine code (X, Y)
+!!       SUBROUTINE CODE(X,N,Y)
 !!
 !!##DESCRIPTION
 !!
@@ -3118,9 +3023,10 @@ END SUBROUTINE CHSRAN
 !!##LICENSE
 !!    CC0-1.0
 !*==code.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CODE(X,N,Y)
+
+SUBROUTINE CODE(X,N,Y)
 REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
-      INTEGER i , ipr , iupper , j , N , numdis
+INTEGER i , iupper , j , N , numdis
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
 !                                OF OBSERVATIONS TO BE CODED.
@@ -3136,8 +3042,7 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+
 !     COMMENT--ALL OCCURRANCES OF THE MINIMUM ARE CODED AS 1.0;
 !              ALL OCCURANCES OF THE NEXT LARGER VALUE
 !              ARE CODED AS 2.0;
@@ -3155,22 +3060,21 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (DISt(1),WS(1))
 !
-      ipr = 6
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CODE   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE CODE&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -3181,7 +3085,7 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE CODE   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -3214,9 +3118,9 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
             DO j = 1 , numdis
                IF ( X(i)==DISt(j) ) GOTO 120
             ENDDO
-            WRITE (ipr,99005)
+            WRITE (G_IO,99005)
 99005       FORMAT (' ','*****INTERNAL ERROR IN CODE SUBROUTINE')
-            WRITE (ipr,99006) i , X(i)
+            WRITE (G_IO,99006) i , X(i)
 99006       FORMAT (' ','NO CODE FOUND FOR ELEMENT NUMBER ',I5,' = ',   &
      &              F15.7)
             RETURN
@@ -3225,17 +3129,17 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 !
 !     WRITE OUT A FEW LINES OF SUMMARY INFORMATION ABOUT THE CODING.
 !
-         WRITE (ipr,99011)
-         WRITE (ipr,99007)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99007)
 99007    FORMAT (' ','OUTPUT FROM THE CODE SUBROUTINE')
-         WRITE (ipr,99008) numdis
+         WRITE (G_IO,99008) numdis
 99008    FORMAT (' ','NUMBER OF DISTINCT CODE VALUES = ',I8)
-         WRITE (ipr,99011)
-         WRITE (ipr,99009)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',8X,'VALUE     CODED VALUE')
          DO i = 1 , numdis
             ai = i
-            WRITE (ipr,99010) DISt(i) , ai
+            WRITE (G_IO,99010) DISt(i) , ai
 99010       FORMAT (' ',F15.7,6X,F6.0)
          ENDDO
       ENDIF
@@ -3249,7 +3153,7 @@ END SUBROUTINE CODE
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine copy (X, Y)
+!!       SUBROUTINE COPY(X,N,Y)
 !!
 !!##DESCRIPTION
 !!    copy(3f) copies the contents of the single precision vector x into
@@ -3279,10 +3183,13 @@ END SUBROUTINE CODE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--NOVEMBER  1972.
+!     UPDATED         --NOVEMBER  1975.
 !*==copy.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE COPY(X,N,Y)
+
+SUBROUTINE COPY(X,N,Y)
 REAL(kind=wp) :: hold , X , Y
-      INTEGER i , ipr , N
+INTEGER i , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE COPIED.
@@ -3298,33 +3205,29 @@ REAL(kind=wp) :: hold , X , Y
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+
 !     COMMENT--THE FIRST ELEMENT OF X IS COPIED INTO THE FIRST
 !              ELEMENT OF Y; THE SECOND ELEMENT OF X IS COPIED INTO
 !              THE SECOND ELEMENT OF Y, ETC.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     ORIGINAL VERSION--NOVEMBER  1972.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
       DIMENSION X(:) , Y(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE COPY   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE COPY&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -3333,7 +3236,7 @@ REAL(kind=wp) :: hold , X , Y
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE COPY   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -3354,7 +3257,7 @@ END SUBROUTINE COPY
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine corr (X, Y)
+!!       SUBROUTINE CORR(X,Y,N,Iwrite,C)
 !!
 !!##DESCRIPTION
 !!    corr(3f) computes the sample correlation coefficient between the 2
@@ -3386,10 +3289,18 @@ END SUBROUTINE COPY
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 235-236.
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 292-293.
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGES 172-198.
 !*==corr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE CORR(X,Y,N,Iwrite,C)
+
+SUBROUTINE CORR(X,Y,N,Iwrite,C)
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
-      INTEGER i , iflag , ipr , Iwrite , N
+INTEGER i , iflag , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
@@ -3431,12 +3342,6 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 235-236.
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 292-293.
-!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGES 172-198.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -3445,23 +3350,21 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 !
       DIMENSION X(:) , Y(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       C = 0.0_wp
       iflag = 0
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE CORR   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO THE CORR&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -3471,7 +3374,7 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE CORR   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -3480,7 +3383,7 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
          DO i = 2 , N
             IF ( Y(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99005) hold
+         WRITE (G_IO,99005) hold
 99005    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT (A VECTOR) &
      &TO THE CORR   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -3510,7 +3413,7 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
          sum3 = SQRT(sum3)
          C = sum1/(sum2*sum3)
 !
-         IF ( Iwrite/=0 ) WRITE (ipr,99006) N , C
+         IF ( Iwrite/=0 ) WRITE (G_IO,99006) N , C
 99006    FORMAT (' ',                                                   &
      &     'THE LINEAR        CORRELATION COEFFICIENT OF THE 2 SETS OF '&
      &     ,I6,' OBSERVATIONS IS ',F14.5)
@@ -3523,7 +3426,7 @@ END SUBROUTINE CORR
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine count (X, Y)
+!!       SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 !!
 !!##DESCRIPTION
 !!    count(3f) computes the number of observations between xmin and xmax
@@ -3553,10 +3456,16 @@ END SUBROUTINE CORR
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGES 207-213.
+!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!! !                 ANALYSIS, EDITION 2, 1957, PAGES 81-82, 228-231.
 !*==count.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
+
+SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
-      INTEGER i , ipr , isum , Iwrite , N
+INTEGER i , isum , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -3591,30 +3500,24 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGES 207-213.
-!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!                 ANALYSIS, EDITION 2, 1957, PAGES 81-82, 228-231.
 !     ORIGINAL VERSION--FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE COUNT  SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE COUN&
      &T  SUBROUTINE HAS THE VALUE 1 *****')
@@ -3622,10 +3525,10 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
          RETURN
       ELSE
          IF ( Xmin==Xmax ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ','***** FATAL ERROR--THE THIRD AND FOURTH INPUT '&
      &              ,'ARGUMENTS TO THE COUNT  SUBROUTINE ARE IDENTICAL')
-            WRITE (ipr,99005) Xmin
+            WRITE (G_IO,99005) Xmin
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENTS ARE ',E15.7,  &
      &              ' *****')
             Xcount = 0.0_wp
@@ -3635,7 +3538,7 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99006) hold
+            WRITE (G_IO,99006) hold
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE COUNT  SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -3654,9 +3557,9 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
          Xcount = isum
 !
          IF ( Iwrite==0 ) RETURN
-         WRITE (ipr,99007)
+         WRITE (G_IO,99007)
 99007    FORMAT (' ')
-         WRITE (ipr,99008) N , Xmin , Xmax , Xcount
+         WRITE (G_IO,99008) N , Xmin , Xmax , Xcount
 99008    FORMAT (' ','THE NUMBER (OUT OF THE ',I6,                      &
      &           ' OBSERVATIONS) IN THE INTERVAL ',E15.7,' TO ',E15.7,  &
      &           ' IS ',E15.7)
@@ -3669,7 +3572,7 @@ END SUBROUTINE COUNT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine decomp (X, Y)
+!!       SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
 !!
 !!##DESCRIPTION
 !!    decomp(3f) decomposes the weighted data matrix q which originally =
@@ -3711,33 +3614,21 @@ END SUBROUTINE COUNT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==decomp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
-REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
-     &     Tol , tol2 , WS
-      INTEGER i , Insing , ip , IPIvot , iqarg , iqarg1 , iqarg2 ,      &
-     &        Irank , irarg , irarg1 , irarg2 , is , ism1 , isp1 , j ,  &
-     &        K , l , m , N
-
-!
-!     X--NOT USED
-!     Q--USED AND CHANGED
-!     R--DEFINED
-!     D--PERMANENTLY DEFINED
-!     IPIVOT--PERMANENTLY DEFINED
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
-      LOGICAL fsum
-      DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
-      COMMON /BLOCK2/ WS(15000)
-      COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
-      EQUIVALENCE (Q(1),WS(1))
-      EQUIVALENCE (R(1),WS(10001))
-      EQUIVALENCE (D(1),WS(12501))
-      EQUIVALENCE (IPIvot(1),WS(12551))
+!*==decomp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
+REAL(kind=wp) :: D, dis, dn, DUM1, DUM2, Eta, hold, Q, R, risj, Tol, tol2, WS
+INTEGER i, Insing, ip, IPIvot, iqarg, iqarg1, iqarg2, Irank, irarg, irarg1, irarg2, is, ism1, isp1, j, K, l, m, N
+LOGICAL fsum
+DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
+COMMON /BLOCK2/ WS(15000)
+COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+EQUIVALENCE (Q(1),WS(1))          !     Q--USED AND CHANGED
+EQUIVALENCE (R(1),WS(10001))      !     R--DEFINED
+EQUIVALENCE (D(1),WS(12501))      !     D--PERMANENTLY DEFINED
+EQUIVALENCE (IPIvot(1),WS(12551)) !     IPIVOT--PERMANENTLY DEFINED
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -3875,7 +3766,7 @@ END SUBROUTINE DECOMP
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine define (X, Y)
+!!       SUBROUTINE DEFINE(X,N,Xnew)
 !!
 !!##DESCRIPTION
 !!    define(3f) sets all of the elements in the single precision vector
@@ -3913,8 +3804,9 @@ END SUBROUTINE DECOMP
 !!##LICENSE
 !!    CC0-1.0
 !*==define.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DEFINE(X,N,Xnew)
-      INTEGER i , ipr , N
+
+SUBROUTINE DEFINE(X,N,Xnew)
+INTEGER i , N
 REAL(kind=wp) :: X , Xnew
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -3943,21 +3835,19 @@ REAL(kind=wp) :: X , Xnew
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DEFINE SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE DEFI&
      &NE SUBROUTINE HAS THE VALUE 1 *****')
@@ -3971,13 +3861,13 @@ REAL(kind=wp) :: X , Xnew
 !
 !     WRITE OUT A BRIEF SUMMARY
 !
-         WRITE (ipr,99004)
+         WRITE (G_IO,99004)
 99004    FORMAT (' ')
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ','OUTPUT FROM THE DEFINE SUBROUTINE--')
-         WRITE (ipr,99006) N
+         WRITE (G_IO,99006) N
 99006    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS  IS ',I6)
-         WRITE (ipr,99007) Xnew
+         WRITE (G_IO,99007) Xnew
 99007    FORMAT (' ',7X,'THE DEFINING CONSTANT IS ',E15.8)
       ENDIF
 !
@@ -3989,7 +3879,7 @@ END SUBROUTINE DEFINE
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine delete (X, Y)
+!!     SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
 !!
 !!##DESCRIPTION
 !!
@@ -4030,9 +3920,10 @@ END SUBROUTINE DEFINE
 !!##LICENSE
 !!    CC0-1.0
 !*==delete.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
-      INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
+INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -4096,21 +3987,19 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DELETE SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE DELE&
      &TE SUBROUTINE HAS THE VALUE 1 *****')
@@ -4119,7 +4008,7 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE DELETE SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -4152,25 +4041,25 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !
 !     WRITE OUT A BRIEF SUMMARY
 !
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ')
-         WRITE (ipr,99006)
+         WRITE (G_IO,99006)
 99006    FORMAT (' ','OUTPUT FROM THE DELETE SUBROUTINE--')
-         WRITE (ipr,99007) pointl , pointu
+         WRITE (G_IO,99007) pointl , pointu
 99007    FORMAT (' ',7X,'ALL OBSERVATIONS BETWEEN ',E15.8,' AND ',E15.8)
-         WRITE (ipr,99008)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ',7X,'(INCLUSIVE) HAVE BEEN DELETED.')
-         WRITE (ipr,99009)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',7X,'ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ',7X,'HAVE BEEN RETAINED.')
-         WRITE (ipr,99011) nold
+         WRITE (G_IO,99011) nold
 99011    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
      &           I6)
-         WRITE (ipr,99012) Newn
+         WRITE (G_IO,99012) Newn
 99012    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', &
      &           I6)
-         WRITE (ipr,99013) ndel
+         WRITE (G_IO,99013) ndel
 99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
      &           I6)
       ENDIF
@@ -4182,7 +4071,7 @@ END SUBROUTINE DELETE
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine demod (X, Y)
+!!       SUBROUTINE DEMOD(X,N,F)
 !!
 !!##DESCRIPTION
 !!    demod(3f) performs a complex demodulation on the data in the input
@@ -4232,15 +4121,15 @@ END SUBROUTINE DELETE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --GRANGER AND HATANAKA, PAGES 170 TO 189,
+!! !                 ESPECIALLY PAGES 173, 177, AND 182.
 !*==demod.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DEMOD(X,N,F)
-REAL(kind=wp) :: ai , aiflag , aimax2 , alen1 , alen2 , an , del , F , fest , &
-     &     fmin , hold , pi , range , slopeh , sloper , sum , WS , X ,  &
-     &     Y1 , Y2
-REAL(kind=wp) :: Z , zmax , zmin , znew
-      INTEGER i , iend , iendp1 , iflag , ilower , imax1 , imax2 ,      &
-     &        imax2m , ip1 , ipr , istart , iupper , j , lenma1 ,       &
-     &        lenma2 , N
+
+SUBROUTINE DEMOD(X,N,F)
+REAL(kind=wp) :: ai, aiflag, aimax2, alen1, alen2, an, del, F, fest, fmin, hold, pi, range, slopeh, sloper, sum, WS, X, Y1, Y2
+REAL(kind=wp) :: Z, zmax, zmin, znew
+INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iupper, j, lenma1, lenma2, N
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
@@ -4311,8 +4200,6 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
 !              AND OUGHT ALSO BE EXCLUDED,
 !              THE REQUIREMENT IS EXTENDED
 !              SO THAT N - 2/F MUST BE GREATER THAN 1.
-!     REFERENCES--GRANGER AND HATANAKA, PAGES 170 TO 189,
-!                 ESPECIALLY PAGES 173, 177, AND 182.
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -4327,7 +4214,6 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
       EQUIVALENCE (Z(1),WS(10001))
       DATA pi/3.141592653_wp/
 !
-      ipr = 6
       ilower = 3
       iupper = 5000
       an = N
@@ -4336,23 +4222,23 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<ilower .OR. N>iupper ) THEN
-         WRITE (ipr,99001) ilower , iupper
+         WRITE (G_IO,99001) ilower , iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DEMOD  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (',I6,',',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( F<=fmin .OR. F>=0.5_wp ) THEN
-            WRITE (ipr,99003) fmin
+            WRITE (G_IO,99003) fmin
 99003       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD INPUT ARGUMENT TO THE  DEMOD  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (',F10.8,',0.5) ','INTERVAL *****')
-            WRITE (ipr,99004) F
+            WRITE (G_IO,99004) F
 99004       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
-            WRITE (ipr,99005) fmin , N
+            WRITE (G_IO,99005) fmin , N
 99005       FORMAT (' ','                   THE ABOVE LOWER LIMIT (',   &
      &              F10.8,                                              &
      &              ') = 2/(N-2) WHERE N = THE INPUT SAMPLE SIZE = ',I8)
@@ -4362,7 +4248,7 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99006) hold
+            WRITE (G_IO,99006) hold
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE DEMOD  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -4451,7 +4337,7 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
             Z(i) = 2.0_wp*SQRT(Y1(i)*Y1(i)+Y2(i)*Y2(i))
          ENDDO
          CALL PLOTX(Z,imax2)
-         WRITE (ipr,99007) F
+         WRITE (G_IO,99007) F
 !
 99007    FORMAT (' ',30X,                                               &
      &           'AMPLITUDE PLOT FOR THE DEMODULATION FREQUENCY = ',    &
@@ -4466,7 +4352,7 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
             IF ( Z(i)>zmax ) zmax = Z(i)
          ENDDO
          range = zmax - zmin
-         WRITE (ipr,99008) zmin , zmax , range
+         WRITE (G_IO,99008) zmin , zmax , range
 99008    FORMAT (' ',9X,'MINIMUM AMPLITUDE = ',E15.8,5X,                &
      &           'MAXIMUM AMPLITUDE = ',E15.8,5X,                       &
      &           'RANGE OF AMPLITUDES = ',E15.8)
@@ -4477,7 +4363,7 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
             Z(i) = ATAN(Y1(i)/Y2(i))
          ENDDO
          CALL PLOTX(Z,imax2)
-         WRITE (ipr,99009) F
+         WRITE (G_IO,99009) F
 99009    FORMAT (' ',32X,'PHASE PLOT FOR THE DEMODULATION FREQUENCY = ',&
      &           F8.6,' CYCLES PER UNIT TIME')
 !
@@ -4502,11 +4388,11 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
          sloper = range/aimax2
          slopeh = sloper/(2.0_wp*pi)
          fest = F + slopeh
-         WRITE (ipr,99010) zmin , zmax , range
+         WRITE (G_IO,99010) zmin , zmax , range
 99010    FORMAT (' ',3X,'MINIMUM PHASE = ',E15.8,' RADIANS   ',         &
      &           'MAXIMUM PHASE = ',E15.8,' RADIANS   ',                &
      &           'RANGE OF PHASES = ',E15.8,' RADIANS')
-         WRITE (ipr,99011) sloper , slopeh , fest
+         WRITE (G_IO,99011) sloper , slopeh , fest
 99011    FORMAT (' ','SLOPE = ',E14.8,' RADIANS = ',E14.6,              &
      &           ' CYCLES PER UNIT TIME    EST. OF NEW DEMOD. FREQ. = ',&
      &           E15.8,' CYC./UNIT TIME')
@@ -4520,7 +4406,7 @@ END SUBROUTINE DEMOD
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine dexcdf (X, Y)
+!!       SUBROUTINE DEXCDF(X,Cdf)
 !!
 !!##DESCRIPTION
 !!    dexcdf(3f) computes the cumulative distribution function value for the
@@ -4556,11 +4442,15 @@ END SUBROUTINE DEMOD
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970, PAGES 22-36.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==dexcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DEXCDF(X,Cdf)
+
+SUBROUTINE DEXCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
-      INTEGER ipr
-!
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -4568,17 +4458,7 @@ REAL(kind=wp) :: Cdf , X
 !                                DISTRIBUTION FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS.
 !     NO INPUT ARGUMENT ERRORS POSSIBLE
@@ -4597,12 +4477,12 @@ END SUBROUTINE DEXCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine dexpdf (X, Y)
+!!       SUBROUTINE DEXPDF(X,Pdf)
 !!
 !!##DESCRIPTION
 !!    dexpdf(3f) computes the probability density function value for the
 !!    double exponential (laplace) distribution with mean = 0 and standard
-!!    deviaiton = sqrt(2).
+!!    deviation = sqrt(2).
 !!
 !!    this distribution is defined for all x and has the probability
 !!    density function
@@ -4633,10 +4513,13 @@ END SUBROUTINE DEXCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
 !*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DEXPDF(X,Pdf)
+
+SUBROUTINE DEXPDF(X,Pdf)
 REAL(kind=wp) :: arg , Pdf , X
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
@@ -4647,8 +4530,6 @@ REAL(kind=wp) :: arg , Pdf , X
 !             FUNCTION VALUE PDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4656,7 +4537,6 @@ REAL(kind=wp) :: arg , Pdf , X
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS.
 !     NO INPUT ARGUMENT ERRORS POSSIBLE
@@ -4676,7 +4556,7 @@ END SUBROUTINE DEXPDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine dexplt (X, Y)
+!!       SUBROUTINE DEXPLT(X,N)
 !!
 !!##DESCRIPTION
 !!    dexplt(3f) generates a double exponential (laplace) probability plot.
@@ -4728,11 +4608,22 @@ END SUBROUTINE DEXPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
 !*==dexplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DEXPLT(X,N)
+
+SUBROUTINE DEXPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
+INTEGER :: i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -4745,15 +4636,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4769,21 +4651,20 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !
       DATA tau/1.76862179_wp/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DEXPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE DEXP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
@@ -4793,7 +4674,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE DEXPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -4823,7 +4704,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99005) tau , N
+         WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','DOUBLE EXPONENTIAL PROBABILITY PLOT (TAU = ',     &
      &           E15.8,')',44X,'THE SAMPLE SIZE N = ',I7)
@@ -4850,7 +4731,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -4864,7 +4745,7 @@ END SUBROUTINE DEXPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine dexppf (X, Y)
+!!       SUBROUTINE DEXPPF(P,Ppf)
 !!
 !!##DESCRIPTION
 !!    dexppf(3f) computes the percent point function value for the double
@@ -4904,9 +4785,21 @@ END SUBROUTINE DEXPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==dexppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DEXPPF(P,Ppf)
-      INTEGER ipr
+
+SUBROUTINE DEXPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -4921,30 +4814,16 @@ REAL(kind=wp) :: P , Ppf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE DEXPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -4964,7 +4843,7 @@ END SUBROUTINE DEXPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine dexran (X, Y)
+!!       SUBROUTINE DEXRAN(N,Istart,X)
 !!
 !!##DESCRIPTION
 !!    dexran(3f) generates a random sample of size n from the double
@@ -5000,9 +4879,23 @@ END SUBROUTINE DEXPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 14-15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 36.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGE 231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
 !*==dexran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
       SUBROUTINE DEXRAN(N,Istart,X)
-      INTEGER i , ipr , Istart , N
+INTEGER :: i , Istart , N
 REAL(kind=wp) :: q , X
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
@@ -5038,18 +4931,6 @@ REAL(kind=wp) :: q , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGE 231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5058,16 +4939,14 @@ REAL(kind=wp) :: q , X
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE DEXRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -5096,7 +4975,7 @@ END SUBROUTINE DEXRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine dexsf (X, Y)
+!!       SUBROUTINE DEXSF(P,Sf)
 !!
 !!##DESCRIPTION
 !!    dexsf(3f) computes the sparsity function value for the double
@@ -5136,9 +5015,18 @@ END SUBROUTINE DEXRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
 !*==dexsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DEXSF(P,Sf)
-      INTEGER ipr
+
+SUBROUTINE DEXSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -5152,30 +5040,20 @@ REAL(kind=wp) :: P , Sf
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE DEXSF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -5195,7 +5073,7 @@ END SUBROUTINE DEXSF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine discr2 (X, Y)
+!!       SUBROUTINE DISCR2(X,N,Numcla,Y)
 !!
 !!##DESCRIPTION
 !!    discr2(3f) 'discretizes' the data of the single precision vector x
@@ -5219,7 +5097,7 @@ END SUBROUTINE DEXSF
 !!    variate from a continuous one.
 !!
 !!    the resulting discrete variate might then (for example) be analyzed
-!!    in itself for gross structure, or for adherence to some theroetical
+!!    in itself for gross structure, or for adherence to some theoretical
 !!    discrete probability model, or the discrete variate might be used as
 !!    a subset definition vector for some other variate.
 !!
@@ -5248,10 +5126,11 @@ END SUBROUTINE DEXSF
 !!##LICENSE
 !!    CC0-1.0
 !*==discr2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DISCR2(X,N,Numcla,Y)
+
+SUBROUTINE DISCR2(X,N,Numcla,Y)
 REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
      &     xmax , xmin , Y
-      INTEGER i , icount , ip , ipr , iupncl , N , Numcla
+INTEGER i , icount , ip , iupncl , N , Numcla
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -5312,38 +5191,37 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
       DIMENSION icount(1000)
       DIMENSION classm(1000)
 !
-      ipr = 6
       iupncl = 1000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DISCR2 SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99015) N
+         WRITE (G_IO,99015) N
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE DISC&
      &R2 SUBROUTINE HAS THE VALUE 1 *****')
          Y(1) = X(1)
          RETURN
       ELSEIF ( Numcla<1 .OR. Numcla>iupncl ) THEN
-         WRITE (ipr,99003) iupncl
+         WRITE (G_IO,99003) iupncl
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE DISCR2 SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99015) Numcla
+         WRITE (G_IO,99015) Numcla
          DO i = 1 , N
             Y(i) = 0.0_wp
          ENDDO
          RETURN
       ELSE
          IF ( Numcla==1 ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO THE DISC&
      &R2 SUBROUTINE HAS THE VALUE 1 *****')
@@ -5352,7 +5230,7 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99005) hold
+            WRITE (G_IO,99005) hold
 99005       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE DISCR2 SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -5405,27 +5283,27 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !
 !     COMPUTE CLASS LIMITS AND WRITE OUT SUMMARY INFORMATION.
 !
-         WRITE (ipr,99016)
-         WRITE (ipr,99006)
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99006)
 !
 99006    FORMAT (' ','OUTPUT FROM THE DISCR2 SUBROUTINE--')
-         WRITE (ipr,99016)
-         WRITE (ipr,99007) N
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99007) N
 99007    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
-         WRITE (ipr,99008) Numcla
+         WRITE (G_IO,99008) Numcla
 99008    FORMAT (' ',7X,'SPECIFIED NUMBER OF LEVELS        = ',I8)
-         WRITE (ipr,99009) xmin
+         WRITE (G_IO,99009) xmin
 99009    FORMAT (' ',7X,'COMPUTED  LOWER BOUND OF INTERVAL = ',F15.7)
-         WRITE (ipr,99010) xdel
+         WRITE (G_IO,99010) xdel
 99010    FORMAT (' ',7X,'COMPUTED  CLASS WIDTH             = ',F15.7)
-         WRITE (ipr,99011) xmax
+         WRITE (G_IO,99011) xmax
 99011    FORMAT (' ',7X,'COMPUTED  UPPER BOUND OF INTERVAL = ',F15.7)
-         WRITE (ipr,99016)
-         WRITE (ipr,99012)
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ',                                                   &
      &           '       CLASS     MINIMUM       MIDPOINT      MAXIMUM',&
      &           '      COUNT')
-         WRITE (ipr,99013)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ',                                                   &
      &           '       -------------------------------------------',  &
      &           '-------------')
@@ -5433,7 +5311,7 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
             ai = i
             cmin = xmin + (ai-1.0_wp)*xdel
             cmax = xmin + ai*xdel
-            WRITE (ipr,99014) i , cmin , classm(i) , cmax , icount(i)
+            WRITE (G_IO,99014) i , cmin , classm(i) , cmax , icount(i)
 99014       FORMAT (' ',4X,I6,2X,3F14.7,I8)
          ENDDO
       ENDIF
@@ -5448,7 +5326,7 @@ END SUBROUTINE DISCR2
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine discr3 (X, Y)
+!!       SUBROUTINE DISCR3(X,N,Numcla,Y)
 !!
 !!##DESCRIPTION
 !!    discr3(3f) 'discretizes' the data on the single precision vector x
@@ -5472,7 +5350,7 @@ END SUBROUTINE DISCR2
 !!    variate from a continuous one.
 !!
 !!    the resulting discrete variate might then (for example) be analyzed
-!!    in itself for gross structure, or for adherence to some theroetical
+!!    in itself for gross structure, or for adherence to some theoretical
 !!    discrete probability model, or the discrete variate might be used as
 !!    a subset definition vector for some other variate.
 !!
@@ -5504,10 +5382,11 @@ END SUBROUTINE DISCR2
 !!##LICENSE
 !!    CC0-1.0
 !*==discr3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DISCR3(X,N,Numcla,Y)
+
+SUBROUTINE DISCR3(X,N,Numcla,Y)
 REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
      &     xmin , Y
-      INTEGER i , icount , ip , ipr , iupncl , N , Numcla
+INTEGER i , icount , ip , iupncl , N , Numcla
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -5565,38 +5444,37 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
       DIMENSION X(:) , Y(:)
       DIMENSION icount(1000)
 !
-      ipr = 6
       iupncl = 1000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DISCR3 SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99015) N
+         WRITE (G_IO,99015) N
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE DISC&
      &R3 SUBROUTINE HAS THE VALUE 1 *****')
          Y(1) = X(1)
          RETURN
       ELSEIF ( Numcla<1 .OR. Numcla>iupncl ) THEN
-         WRITE (ipr,99003) iupncl
+         WRITE (G_IO,99003) iupncl
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE DISCR3 SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99015) Numcla
+         WRITE (G_IO,99015) Numcla
          DO i = 1 , N
             Y(i) = 0.0_wp
          ENDDO
          RETURN
       ELSE
          IF ( Numcla==1 ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO THE DISC&
      &R3 SUBROUTINE HAS THE VALUE 1 *****')
@@ -5605,7 +5483,7 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99005) hold
+            WRITE (G_IO,99005) hold
 99005       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE DISCR3 SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -5651,33 +5529,33 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 !
 !     COMPUTE CLASS LIMITS AND WRITE OUT SUMMARY INFORMATION.
 !
-         WRITE (ipr,99016)
-         WRITE (ipr,99006)
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99006)
 !
 99006    FORMAT (' ','OUTPUT FROM THE DISCR3 SUBROUTINE--')
-         WRITE (ipr,99016)
-         WRITE (ipr,99007) N
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99007) N
 99007    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
-         WRITE (ipr,99008) Numcla
+         WRITE (G_IO,99008) Numcla
 99008    FORMAT (' ',7X,'SPECIFIED NUMBER OF LEVELS        = ',I8)
-         WRITE (ipr,99009) xmin
+         WRITE (G_IO,99009) xmin
 99009    FORMAT (' ',7X,'COMPUTED  LOWER BOUND OF INTERVAL = ',F15.7)
-         WRITE (ipr,99010) xdel
+         WRITE (G_IO,99010) xdel
 99010    FORMAT (' ',7X,'COMPUTED  CLASS WIDTH             = ',F15.7)
-         WRITE (ipr,99011) xmax
+         WRITE (G_IO,99011) xmax
 99011    FORMAT (' ',7X,'COMPUTED  UPPER BOUND OF INTERVAL = ',F15.7)
-         WRITE (ipr,99016)
-         WRITE (ipr,99012)
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ','       LEVEL     MINIMUM       MAXIMUM      COUNT'&
      &           )
-         WRITE (ipr,99013)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ','       ------------------------------------------'&
      &           )
          DO i = 1 , Numcla
             ai = i
             cmin = xmin + (ai-1.0_wp)*xdel
             cmax = xmin + ai*xdel
-            WRITE (ipr,99014) i , cmin , cmax , icount(i)
+            WRITE (G_IO,99014) i , cmin , cmax , icount(i)
 99014       FORMAT (' ',4X,I6,2X,2F14.7,I8)
          ENDDO
       ENDIF
@@ -5692,7 +5570,7 @@ END SUBROUTINE DISCR3
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine discre (X, Y)
+!!       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
 !!
 !!##DESCRIPTION
 !!    discre(3f) 'discretizes' the data of the single precision vector x.
@@ -5713,7 +5591,7 @@ END SUBROUTINE DISCR3
 !!    from a continuous one.
 !!
 !!    the resulting discrete variate might then (for example) be analyzed
-!!    in itself for gross structure, or for adherence to some theroetical
+!!    in itself for gross structure, or for adherence to some theoretical
 !!    discrete probability model, or the discrete variate might be used as
 !!    a subset definition vector for some other variate.
 !!
@@ -5742,10 +5620,11 @@ END SUBROUTINE DISCR3
 !!##LICENSE
 !!    CC0-1.0
 !*==discre.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
+
+SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
 REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
-      INTEGER i , icounl , icount , icounu , ip , ipr , N , numcla
+INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -5816,31 +5695,29 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
       DIMENSION icount(1000)
       DIMENSION classm(1000)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DISCRE SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE DISC&
      &RE SUBROUTINE HAS THE VALUE 1 *****')
          Y(1) = X(1)
          RETURN
       ELSEIF ( Xdel<=0.0_wp ) THEN
-         WRITE (ipr,99004)
+         WRITE (G_IO,99004)
 99004    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE DISCRE SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99005) Xdel
+         WRITE (G_IO,99005) Xdel
 99005    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.7,       &
      &           ' *****')
          DO i = 1 , N
@@ -5849,10 +5726,10 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
          RETURN
       ELSE
          IF ( Xmin==Xmax ) THEN
-            WRITE (ipr,99006)
+            WRITE (G_IO,99006)
 99006       FORMAT (' ','***** FATAL ERROR--THE THIRD AND FIFTH INPUT ',&
      &              'ARGUMENTS TO THE DISCRE SUBROUTINE ARE IDENTICAL')
-            WRITE (ipr,99007) Xmin
+            WRITE (G_IO,99007) Xmin
 99007       FORMAT (' ','***** THE VALUE OF THE ARGUMENTS ARE ',E15.7,  &
      &              ' *****')
             DO i = 1 , N
@@ -5864,7 +5741,7 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99008) hold
+            WRITE (G_IO,99008) hold
 99008       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE DISCRE SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -5929,41 +5806,41 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
 !
 !     COMPUTE CLASS LIMITS AND WRITE OUT SUMMARY INFORMATION.
 !
-         WRITE (ipr,99020)
-         WRITE (ipr,99009)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99009)
 !
 99009    FORMAT (' ','OUTPUT FROM THE DISCRE SUBROUTINE--')
-         WRITE (ipr,99020)
-         WRITE (ipr,99010) N
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99010) N
 99010    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
-         WRITE (ipr,99011) Xmin
+         WRITE (G_IO,99011) Xmin
 99011    FORMAT (' ',7X,'SPECIFIED LOWER BOUND OF INTERVAL = ',F15.7)
-         WRITE (ipr,99012) Xdel
+         WRITE (G_IO,99012) Xdel
 99012    FORMAT (' ',7X,'SPECIFIED CLASS WIDTH             = ',F15.7)
-         WRITE (ipr,99013) Xmax
+         WRITE (G_IO,99013) Xmax
 99013    FORMAT (' ',7X,'SPECIFIED UPPER BOUND OF INTERVAL = ',F15.7)
-         WRITE (ipr,99014) numcla
+         WRITE (G_IO,99014) numcla
 99014    FORMAT (' ',7X,'COMPUTED  NUMBER OF LEVELS        = ',I8)
-         WRITE (ipr,99020)
-         WRITE (ipr,99015)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99015)
 99015    FORMAT (' ',                                                   &
      &           '       CLASS     MINIMUM       MIDPOINT      MAXIMUM',&
      &           '      COUNT')
-         WRITE (ipr,99016)
+         WRITE (G_IO,99016)
 99016    FORMAT (' ',                                                   &
      &           '       -------------------------------------------',  &
      &           '-------------')
-         IF ( icounl>=1 ) WRITE (ipr,99017) clasml , pointl , icounl
+         IF ( icounl>=1 ) WRITE (G_IO,99017) clasml , pointl , icounl
 99017    FORMAT (' ',4X,'   BELOW     -INFINITY',2F14.7,I8)
          DO i = 1 , numcla
             ai = i
             cmin = pointl + (ai-1.0_wp)*Xdel
             cmax = pointl + ai*Xdel
             IF ( cmax>pointu ) cmax = pointu
-            WRITE (ipr,99018) i , cmin , classm(i) , cmax , icount(i)
+            WRITE (G_IO,99018) i , cmin , classm(i) , cmax , icount(i)
 99018       FORMAT (' ',4X,I6,2X,3F14.7,I8)
          ENDDO
-         IF ( icounu>=1 ) WRITE (ipr,99019) pointu , clasmu , icounu
+         IF ( icounu>=1 ) WRITE (G_IO,99019) pointu , clasmu , icounu
 99019    FORMAT (' ',4X,'   ABOVE',2F14.7,'     +INFINITY',I8)
       ENDIF
 99020 FORMAT (' ')
@@ -5977,7 +5854,7 @@ END SUBROUTINE DISCRE
 !!
 !!    SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
 !!
-!!     REAL(kind=wp) :: A , B , Dotpro , Parpro
+!!     REAL(kind=wp) :: A(:) , B(:) , Dotpro , Parpro
 !!     INTEGER i , Imax , Imin
 !!
 !!##DESCRIPTION
@@ -6015,12 +5892,9 @@ END SUBROUTINE DISCRE
 !*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
-REAL(kind=wp) :: A , B , Dotpro , Parpro
+REAL(kind=wp) :: A(:) , B(:) , Dotpro , Parpro
 INTEGER i , Imax , Imin
-!---------------------------------------------------------------------
-!
 DOUBLE PRECISION sum , prod , dparpr
-DIMENSION A(:) , B(:)
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -6042,7 +5916,7 @@ END SUBROUTINE DOT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ev1cdf (X, Y)
+!!       SUBROUTINE EV1CDF(X,Cdf)
 !!
 !!##DESCRIPTION
 !!    ev1cdf(3f) computes the cumulative distribution function value for
@@ -6080,10 +5954,13 @@ END SUBROUTINE DOT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !*==ev1cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EV1CDF(X,Cdf)
+
+SUBROUTINE EV1CDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -6097,13 +5974,9 @@ REAL(kind=wp) :: Cdf , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS.
 !     NO INPUT ARGUMENT ERRORS POSSIBLE
@@ -6121,7 +5994,7 @@ END SUBROUTINE EV1CDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ev1plt (X, Y)
+!!     SUBROUTINE EV1PLT(X,N)
 !!
 !!##DESCRIPTION
 !!
@@ -6175,12 +6048,22 @@ END SUBROUTINE EV1CDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !*==ev1plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1PLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
+INTEGER :: i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -6193,15 +6076,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -6216,21 +6090,20 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !
       DATA tau/1.56186687_wp/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV1PLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE EV1P&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
@@ -6240,7 +6113,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE EV1PLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -6268,7 +6141,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99005) tau , N
+         WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ',                                                   &
      &'EXTREME VALUE TYPE 1 (EXPONENTIAL TYPE) PROBABILITY PLOT (TAU = '&
@@ -6298,7 +6171,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -6312,7 +6185,7 @@ END SUBROUTINE EV1PLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ev1ppf (X, Y)
+!!       SUBROUTINE EV1PPF(P,Ppf)
 !!
 !!##DESCRIPTION
 !!    ev1ppf(3f) computes the percent point function value for the extreme
@@ -6353,9 +6226,12 @@ END SUBROUTINE EV1PLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !*==ev1ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EV1PPF(P,Ppf)
-      INTEGER ipr
+
+SUBROUTINE EV1PPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -6374,22 +6250,18 @@ REAL(kind=wp) :: P , Ppf
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1PPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          Ppf = 0.0_wp
@@ -6409,7 +6281,7 @@ END SUBROUTINE EV1PPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ev1ran (X, Y)
+!!       SUBROUTINE EV1RAN(N,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    ev1ran(3f) generates a random sample of size n from the extreme value
@@ -6446,10 +6318,19 @@ END SUBROUTINE EV1PPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
 !*==ev1ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EV1RAN(N,Iseed,X)
-      INTEGER i , ipr , Iseed , N
-REAL(kind=wp) :: X
+
+SUBROUTINE EV1RAN(N,Iseed,X)
+INTEGER i , Iseed , N
+REAL(kind=wp) :: X(:)
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -6463,63 +6344,29 @@ REAL(kind=wp) :: X
 !             WITH MEAN = EULER'S NUMBER = 0.57721566
 !             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     VERSION NUMBER--82/7
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --DECEMBER  1981.
-!     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
-!
-!-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( N<1 ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1RAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         RETURN
-      ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
-         CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N EXTREME VALUE TYPE 1 RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
-         DO i = 1 , N
-            X(i) = -LOG(LOG(1.0_wp/X(i)))
-         ENDDO
-      ENDIF
+    IF ( N<1 ) THEN
+       WRITE (G_IO,99001)
+       99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1RAN SUBROUTINE IS NON-POSITIVE *****')
+       WRITE (G_IO,99002) N
+       99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+    ELSE
+       !
+       !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+       !
+       CALL UNIRAN(N,Iseed,X)
+       !
+       !     GENERATE N EXTREME VALUE TYPE 1 RANDOM NUMBERS
+       !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+       !
+       DO i = 1 , N
+          X(i) = -LOG(LOG(1.0_wp/X(i)))
+       ENDDO
+    ENDIF
 !
 END SUBROUTINE EV1RAN
 !>
@@ -6529,7 +6376,7 @@ END SUBROUTINE EV1RAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ev2cdf (X, Y)
+!!       SUBROUTINE EV2CDF(X,Gamma,Cdf)
 !!
 !!##DESCRIPTION
 !!    ev2cdf(3f) computes the cumulative distribution function value for
@@ -6565,10 +6412,13 @@ END SUBROUTINE EV1RAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !*==ev2cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EV2CDF(X,Gamma,Cdf)
+
+SUBROUTINE EV2CDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -6587,30 +6437,26 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !                 --X SHOULD BE NON-NEGATIVE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EV2C&
      &DF SUBROUTINE IS NEGATIVE *****')
-         WRITE (ipr,99003) X
+         WRITE (G_IO,99003) X
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2CDF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) Gamma
+         WRITE (G_IO,99003) Gamma
          Cdf = 0.0_wp
          RETURN
       ELSE
@@ -6631,7 +6477,7 @@ END SUBROUTINE EV2CDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ev2plt (X, Y)
+!!     SUBROUTINE EV2PLT(X,N,Gamma)
 !!
 !!##DESCRIPTION
 !!    ev2plt(3f) generates a extreme value type 2 probability plot (with
@@ -6682,13 +6528,28 @@ END SUBROUTINE EV2CDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!     ORIGINAL VERSION--DECEMBER  1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 !*==ev2plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE EV2PLT(X,N,Gamma)
 REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
 REAL(kind=wp) :: yslope
-INTEGER i , ipr , iupper , N
+INTEGER i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -6705,19 +6566,6 @@ INTEGER i , ipr , iupper , N
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     ORIGINAL VERSION--DECEMBER  1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
@@ -6727,32 +6575,31 @@ INTEGER i , ipr , iupper , N
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2PLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE EV2P&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          IF ( Gamma<=0.0_wp ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE EV2PLT SUBROU&
      &TINE IS NON-POSITIVE *****')
-            WRITE (ipr,99005) Gamma
+            WRITE (G_IO,99005) Gamma
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
             RETURN
@@ -6761,7 +6608,7 @@ INTEGER i , ipr , iupper , N
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99006) hold
+            WRITE (G_IO,99006) hold
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE EV2PLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -6801,7 +6648,7 @@ INTEGER i , ipr , iupper , N
          q = .025_wp
          pp025 = (-LOG(q))**(-1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
-         WRITE (ipr,99007) Gamma , tau , N
+         WRITE (G_IO,99007) Gamma , tau , N
 !
 99007    FORMAT (' ',                                                   &
      & 'EXTREME VALUE TYPE 2 (CAUCHY TYPE) PROB. PLOT WITH EXP. PAR. = '&
@@ -6831,7 +6678,7 @@ INTEGER i , ipr , iupper , N
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99008) cc , yint , yslope
+         WRITE (G_IO,99008) cc , yint , yslope
 99008    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -6845,7 +6692,7 @@ END SUBROUTINE EV2PLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ev2ppf (X, Y)
+!!       SUBROUTINE EV2PPF(P,Gamma,Ppf)
 !!
 !!##DESCRIPTION
 !!    ev2ppf(3f) computes the percent point function value for the extreme
@@ -6885,10 +6732,13 @@ END SUBROUTINE EV2PLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EV2PPF(P,Gamma,Ppf)
+
+SUBROUTINE EV2PPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
@@ -6909,30 +6759,26 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV2PPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99003) P
+         WRITE (G_IO,99003) P
          Ppf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2PPF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) Gamma
+         WRITE (G_IO,99003) Gamma
          Ppf = 0.0_wp
          RETURN
       ELSE
@@ -6951,7 +6797,7 @@ END SUBROUTINE EV2PPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ev2ran (X, Y)
+!!       SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    ev2ran(3f) generates a random sample of size n from the extreme value
@@ -6986,14 +6832,19 @@ END SUBROUTINE EV2PPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!!##REFERENCES
+!!  o Tocher, The Art of Simulation, 1963, Pages 14-15.
+!!  o Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+!!  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970, Pages 272-295.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
 !*==ev2ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
-REAL(kind=wp) :: Gamma , X
-      INTEGER i , ipr , Iseed , N
+
+SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
+REAL(kind=wp) :: Gamma , X(:)
+INTEGER i , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -7015,59 +6866,34 @@ REAL(kind=wp) :: Gamma , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
 !
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV2RAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV2RAN SUBROUTINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2RAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99004) Gamma
-99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2RAN SUBROUTINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99004) Gamma
+         99004 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
          RETURN
       ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
          CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N EXTREME VALUE TYPE 2 DISTRIBUTION RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
+         !
+         !     GENERATE N EXTREME VALUE TYPE 2 DISTRIBUTION RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
          DO i = 1 , N
             X(i) = (-LOG(X(i)))**(-1.0_wp/Gamma)
          ENDDO
@@ -7081,7 +6907,7 @@ END SUBROUTINE EV2RAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine expcdf (X, Y)
+!!       SUBROUTINE EXPCDF(X,Cdf)
 !!
 !!##DESCRIPTION
 !!    expcdf(3f) computes the cumulative distribution function value for
@@ -7116,11 +6942,14 @@ END SUBROUTINE EV2RAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
 !*==expcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE EXPCDF(X,Cdf)
 IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
-INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
@@ -7133,24 +6962,20 @@ INTEGER ipr
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EXPC&
      &DF SUBROUTINE IS NEGATIVE *****')
-         WRITE (ipr,99002) X
+         WRITE (G_IO,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          Cdf = 0.0_wp
@@ -7170,7 +6995,7 @@ END SUBROUTINE EXPCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine exppdf (X, Y)
+!!       SUBROUTINE EXPPDF(X,Pdf)
 !!
 !!##DESCRIPTION
 !!    exppdf(3f) computes the probability density function value for the
@@ -7205,9 +7030,12 @@ END SUBROUTINE EXPCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
 !*==exppdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EXPPDF(X,Pdf)
-      INTEGER ipr
+
+SUBROUTINE EXPPDF(X,Pdf)
 REAL(kind=wp) :: Pdf , X
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
@@ -7221,24 +7049,20 @@ REAL(kind=wp) :: Pdf , X
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EXPP&
      &DF SUBROUTINE IS NEGATIVE *****')
-         WRITE (ipr,99002) X
+         WRITE (G_IO,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          Pdf = 0.0_wp
@@ -7258,7 +7082,7 @@ END SUBROUTINE EXPPDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine expplt (X, Y)
+!!       SUBROUTINE EXPPLT(X,N)
 !!
 !!##DESCRIPTION
 !!    expplt(3f) generates an exponential probability plot.
@@ -7309,11 +7133,21 @@ END SUBROUTINE EXPPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
 !*==expplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
-INTEGER i , ipr , iupper , N
+INTEGER i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -7326,15 +7160,6 @@ INTEGER i , ipr , iupper , N
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7350,21 +7175,20 @@ INTEGER i , ipr , iupper , N
 !
       DATA tau/1.63473745_wp/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EXPPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE EXPP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
@@ -7374,7 +7198,7 @@ INTEGER i , ipr , iupper , N
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE EXPPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -7402,7 +7226,7 @@ INTEGER i , ipr , iupper , N
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99005) tau , N
+         WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','EXPONENTIAL PROBABILITY PLOT (TAU = ',E15.8,')',  &
      &           51X,'THE SAMPLE SIZE N = ',I7)
@@ -7431,7 +7255,7 @@ INTEGER i , ipr , iupper , N
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -7445,7 +7269,7 @@ END SUBROUTINE EXPPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine expppf (X, Y)
+!!       SUBROUTINE EXPPPF(P,Ppf)
 !!
 !!##DESCRIPTION
 !!    expppf(3f) computes the percent point function value for the
@@ -7484,9 +7308,21 @@ END SUBROUTINE EXPPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==expppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EXPPPF(P,Ppf)
-      INTEGER ipr
+
+SUBROUTINE EXPPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -7497,45 +7333,21 @@ REAL(kind=wp) :: P , Ppf
 !                                POINT FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION PERCENT POINT
 !             FUNCTION VALUE PPF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!
+!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY) AND 1.0 (EXCLUSIVELY).
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
+         WRITE (G_IO,99001)
+         99001    FORMAT (&
+         &' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (G_IO,99002) P
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          Ppf = -LOG(1.0_wp-P)
       ENDIF
-!
+
 END SUBROUTINE EXPPPF
 !>
 !!##NAME
@@ -7543,7 +7355,7 @@ END SUBROUTINE EXPPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine expran (X, Y)
+!!       SUBROUTINE EXPRAN(N,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    expran(3f) generates a random sample of size n from the exponential
@@ -7578,9 +7390,23 @@ END SUBROUTINE EXPPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 14, 35-36.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 36.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 58.
 !*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EXPRAN(N,Iseed,X)
-      INTEGER i , ipr , Iseed , N
+
+SUBROUTINE EXPRAN(N,Iseed,X)
+INTEGER i , Iseed , N
 REAL(kind=wp) :: X
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
@@ -7599,18 +7425,6 @@ REAL(kind=wp) :: X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14, 35-36.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 58.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -7627,24 +7441,16 @@ REAL(kind=wp) :: X
 !
 !---------------------------------------------------------------------
 !
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
-!
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -7668,8 +7474,7 @@ END SUBROUTINE EXPRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine expsf (X, Y)
-!!
+!!       SUBROUTINE EXPSF(P,Sf)
 !!
 !!##DESCRIPTION
 !!    expsf(3f) computes the sparsity function value for the exponential
@@ -7708,9 +7513,18 @@ END SUBROUTINE EXPRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
 !*==expsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EXPSF(P,Sf)
-      INTEGER ipr
+
+SUBROUTINE EXPSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -7725,30 +7539,20 @@ REAL(kind=wp) :: P , Sf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPSF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -7767,7 +7571,7 @@ END SUBROUTINE EXPSF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine extrem (X, Y)
+!!       SUBROUTINE EXTREM(X,N)
 !!
 !!##DESCRIPTION
 !!    extrem(3f) performs an extreme value analysis on the data in the
@@ -7814,14 +7618,21 @@ END SUBROUTINE EXPSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
+!! !                 ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
+!! !                 CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
+!! !                 ARMY RESEARCH AND TESTING, PAGES 425-450.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 UNPUBLISHED MANUSCRIPT.
+!! !               --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS-1, 1970, PAGES 272-295.
 !*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EXTREM(X,N)
-REAL(kind=wp) :: a , aindex , am , an , arg , cc , corr , corrmx , gamtab ,   &
-     &     h , hold , p , r , scrat , sum1 , sum2 , sum3 , sy , t , w
-REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
-     &     yslope , Z
-      INTEGER i , idis , idismx , ipr , iupper , j , jskip , k , N ,    &
-     &        numam , numdis , numdm1
+
+SUBROUTINE EXTREM(X,N)
+REAL(kind=wp) :: a, aindex, am, an, arg, cc, corr, corrmx, gamtab,   h, hold, p, r, scrat, sum1, sum2, sum3, sy, t, w
+REAL(kind=wp) :: wbar, WS, X, xmax, xmin, Y, ybar, yi, yint, ys, yslope, Z
+INTEGER       :: i, idis, idismx, iupper, j, jskip, k, N, numam, numdis, numdm1
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
@@ -7835,14 +7646,6 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !                                         EV2PLT, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!                 ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!                 CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!                 ARMY RESEARCH AND TESTING, PAGES 425-450.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 UNPUBLISHED MANUSCRIPT.
-!               --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS-1, 1970, PAGES 272-295.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --DECEMBER  1974.
 !     UPDATED         --NOVEMBER  1975.
@@ -7850,13 +7653,13 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 blank , alpham , alphaa , alphax
-      CHARACTER*4 alphai , alphan , alphaf , alphat , alphay
-      CHARACTER*4 alphag , equal
+CHARACTER(len=4) :: blank , alpham , alphaa , alphax
+CHARACTER(len=4) :: alphai , alphan , alphaf , alphat , alphay
+CHARACTER(len=4) :: alphag , equal
 !
-      CHARACTER*4 iflag1
-      CHARACTER*4 iflag2
-      CHARACTER*4 iflag3
+CHARACTER(len=4) :: iflag1
+CHARACTER(len=4) :: iflag2
+CHARACTER(len=4) :: iflag3
 !
       DIMENSION w(3000)
       DIMENSION X(:)
@@ -7864,12 +7667,10 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
       DIMENSION gamtab(50) , corr(50)
       DIMENSION yi(50) , ys(50) , t(50)
       DIMENSION iflag1(50) , iflag2(50) , iflag3(50)
-!CCCC DIMENSION C(10)
       DIMENSION am(50)
       DIMENSION scrat(50)
 !
       DIMENSION aindex(50)
-!CCCC DIMENSION P0(10)
       DIMENSION h(60,2)
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
@@ -7929,23 +7730,22 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
      &     34.0_wp , 35.0_wp , 36.0_wp , 37.0_wp , 38.0_wp , 39.0_wp , 40.0_wp , 41.0_wp , 42.0_wp , 43.0_wp ,  &
      &     44.0_wp , 45.0_wp , 46.0_wp , 47.0_wp , 48.0_wp , 49.0_wp , 50.0_wp/
 !
-      ipr = 6
       iupper = 7500
       numdis = 43
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EXTREM SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE EXTR&
      &EM SUBROUTINE HAS THE VALUE 1 *****')
@@ -7955,7 +7755,7 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE EXTREM SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -8039,37 +7839,37 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !
 !     WRITE OUT THE TABLE OF PROB PLOT CORR COEFFICIENTS FOR VARIOUS GAMMA
 !
-         WRITE (ipr,99028)
-         WRITE (ipr,99005)
+         WRITE (G_IO,99028)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ',40X,'EXTREME VALUE ANALYSIS')
-         WRITE (ipr,99029)
-         WRITE (ipr,99006) N
+         WRITE (G_IO,99029)
+         WRITE (G_IO,99006) N
 99006    FORMAT (' ',37X,'THE SAMPLE SIZE N = ',I7)
-         WRITE (ipr,99007) ybar
+         WRITE (G_IO,99007) ybar
 99007    FORMAT (' ',34X,'THE SAMPLE MEAN = ',F14.7)
-         WRITE (ipr,99008) sy
+         WRITE (G_IO,99008) sy
 99008    FORMAT (' ',28X,'THE SAMPLE STANDARD DEVIATION = ',F14.7)
-         WRITE (ipr,99009) xmin
+         WRITE (G_IO,99009) xmin
 99009    FORMAT (' ',32X,'THE SAMPLE MINIMUM = ',F14.7)
-         WRITE (ipr,99010) xmax
+         WRITE (G_IO,99010) xmax
 99010    FORMAT (' ',32X,'THE SAMPLE MAXIMUM = ',F14.7)
-         WRITE (ipr,99029)
-         WRITE (ipr,99011)
+         WRITE (G_IO,99029)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ',                                                   &
      &'     EXTREME VALUE      PROBABILITY PLOT     LOCATION         SCA&
      &LE       TAIL LENGTH')
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ',                                                   &
      &'  TYPE 2 TAIL LENGTH      CORRELATION        ESTIMATE        ESTI&
      &MATE       MEASURE')
-         WRITE (ipr,99013)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ','   PARAMETER (GAMMA)      COEFFICIENT')
-         WRITE (ipr,99029)
+         WRITE (G_IO,99029)
 !
          numdm1 = numdis - 1
          IF ( numdm1>=1 ) THEN
             DO i = 1 , numdm1
-               WRITE (ipr,99014) gamtab(i) , corr(i) , iflag1(i) ,      &
+               WRITE (G_IO,99014) gamtab(i) , corr(i) , iflag1(i) ,      &
      &                           iflag2(i) , iflag3(i) , yi(i) , ys(i) ,&
      &                           t(i)
 99014          FORMAT (' ',3X,F10.2,13X,F8.5,1X,3A1,2X,F14.7,2X,F14.7,  &
@@ -8077,7 +7877,7 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
             ENDDO
          ENDIF
          i = numdis
-         WRITE (ipr,99015) alphai , alphan , alphaf , alphai , alphan , &
+         WRITE (G_IO,99015) alphai , alphan , alphaf , alphai , alphan , &
      &                     alphai , alphat , alphay , corr(i) ,         &
      &                     iflag1(i) , iflag2(i) , iflag3(i) , yi(i) ,  &
      &                     ys(i) , t(i)
@@ -8086,18 +7886,18 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !     PLOT THE PROB PLOT CORR COEFFICIENT VERSUS GAMMA VALUE INDEX
 !
          CALL PLOT(corr,aindex,numdis)
-         WRITE (ipr,99016) alphag , alphaa , alpham , alpham , alphaa , &
+         WRITE (G_IO,99016) alphag , alphaa , alpham , alpham , alphaa , &
      &                     equal , gamtab(1) , gamtab(12) , gamtab(23) ,&
      &                     gamtab(34) , alphai , alphan , alphaf ,      &
      &                     alphai , alphan , alphai , alphat , alphay
 99016    FORMAT (' ',12X,5A1,1X,A1,F14.7,11X,F14.7,11X,F14.7,11X,F14.7, &
      &           15X,8A1)
-         WRITE (ipr,99029)
-         WRITE (ipr,99017)
+         WRITE (G_IO,99029)
+         WRITE (G_IO,99017)
 99017    FORMAT (' ',                                                   &
      &'THE ABOVE IS A PLOT OF THE 46 PROBABILITY PLOT CORRELATION COEFFI&
      &CIENTS (FROM THE PREVIOUS PAGE)')
-         WRITE (ipr,99018)
+         WRITE (G_IO,99018)
 99018    FORMAT (' ',16X,'VERSUS THE 46 EXTREME VALUE DISTRIBUTIONS')
 !
 !     IF THE OPTIMAL GAMMA IS FINITE, PLOT OUT THE EXTREME VALUE
@@ -8169,47 +7969,47 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !     FOR THE 2 DISTRIBUTIONS--OPTIMAL EXTREME VALUE TYPE 2, AND EXTREME
 !     VALUE TYPE 1.
 !
-         WRITE (ipr,99028)
+         WRITE (G_IO,99028)
          IF ( idismx==numdis ) THEN
 !
-            WRITE (ipr,99019)
+            WRITE (G_IO,99019)
 99019       FORMAT (' ','   RETURN PERIOD     PREDICTED EXTREME WIND')
-            WRITE (ipr,99020)
+            WRITE (G_IO,99020)
 99020       FORMAT (' ','    (IN YEARS)              BASED ON')
-            WRITE (ipr,99021)
+            WRITE (G_IO,99021)
 99021       FORMAT (' ','                      EXTREME VALUE TYPE 1')
-            WRITE (ipr,99022)
+            WRITE (G_IO,99022)
 99022       FORMAT (' ','                          DISTRIBUTION')
-            WRITE (ipr,99029)
+            WRITE (G_IO,99029)
             DO i = 2 , numam
-               WRITE (ipr,99030) am(i) , h(i,2)
+               WRITE (G_IO,99030) am(i) , h(i,2)
                j = i - 1
                jskip = j - 5*(j/5)
-               IF ( jskip==0 ) WRITE (ipr,99029)
+               IF ( jskip==0 ) WRITE (G_IO,99029)
             ENDDO
             GOTO 99999
          ENDIF
       ENDIF
-      WRITE (ipr,99023)
+      WRITE (G_IO,99023)
 99023 FORMAT (' ','   RETURN PERIOD     PREDICTED EXTREME WIND',        &
      &        '     PREDICTED EXTREME WIND')
-      WRITE (ipr,99024)
+      WRITE (G_IO,99024)
 99024 FORMAT (' ','    (IN YEARS)          BASED ON OPTIMAL   ',        &
      &        '            BASED ON')
-      WRITE (ipr,99025)
+      WRITE (G_IO,99025)
 99025 FORMAT (' ','                      EXTREME VALUE TYPE 2',         &
      &        '       EXTREME VALUE TYPE 1')
-      WRITE (ipr,99026)
+      WRITE (G_IO,99026)
 99026 FORMAT (' ','                          DISTRIBUTION     ',        &
      &        '          DISTRIBUTION')
-      WRITE (ipr,99027) gamtab(idismx)
+      WRITE (G_IO,99027) gamtab(idismx)
 99027 FORMAT (' ','                     (GAMMA = ',F12.5,')')
-      WRITE (ipr,99029)
+      WRITE (G_IO,99029)
       DO i = 2 , numam
-         WRITE (ipr,99030) am(i) , h(i,1) , h(i,2)
+         WRITE (G_IO,99030) am(i) , h(i,1) , h(i,2)
          j = i - 1
          jskip = j - 5*(j/5)
-         IF ( jskip==0 ) WRITE (ipr,99029)
+         IF ( jskip==0 ) WRITE (G_IO,99029)
       ENDDO
       RETURN
 !
@@ -8225,7 +8025,7 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine fcdf (X, Y)
+!!       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 !!
 !!##DESCRIPTION
 !!    fcdf(3f) computes the cumulative distribution function value for the f
@@ -8258,11 +8058,25 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGES 946-947,
+!! !                 FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGE 83, FORMULA 20,
+!! !                 AND PAGE 84, THIRD FORMULA.
+!! !               --PAULSON, AN APPROXIMATE NORMAILIZATION
+!! !                 OF THE ANALYSIS OF VARIANCE DISTRIBUTION,
+!! !                 ANNALS OF MATHEMATICAL STATISTICS, 1942,
+!! !                 NUMBER 13, PAGES 233-135.
+!! !               --SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES
+!! !                 FOR POPULATION TOLERANCE LIMITS, 1944,
+!! !                 NUMBER 15, PAGE 217.
 !*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
      &     zratio
-      INTEGER i , ibran , ievodd , iflag1 , iflag2 , imax , imin , ipr ,&
+INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
@@ -8288,19 +8102,6 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF,CHSCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGES 946-947,
-!                 FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGE 83, FORMULA 20,
-!                 AND PAGE 84, THIRD FORMULA.
-!               --PAULSON, AN APPROXIMATE NORMAILIZATION
-!                 OF THE ANALYSIS OF VARIANCE DISTRIBUTION,
-!                 ANNALS OF MATHEMATICAL STATISTICS, 1942,
-!                 NUMBER 13, PAGES 233-135.
-!               --SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES
-!                 FOR POPULATION TOLERANCE LIMITS, 1944,
-!                 NUMBER 15, PAGE 217.
 !     ORIGINAL VERSION--AUGUST    1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -8321,34 +8122,32 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
       DATA dpow1 , dpow2/0.33333333333333D0 , 0.66666666666667D0/
       DATA nucut1 , nucut2/100 , 1000/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( Nu1<=0 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FCDF   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99006) Nu1
+         WRITE (G_IO,99006) Nu1
          Cdf = 0.0_wp
          RETURN
       ELSE
          IF ( Nu2<=0 ) THEN
-            WRITE (ipr,99002)
+            WRITE (G_IO,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FCDF   SUBROU&
      &TINE IS NON-POSITIVE *****')
-            WRITE (ipr,99006) Nu2
+            WRITE (G_IO,99006) Nu2
             Cdf = 0.0_wp
             RETURN
          ELSE
             IF ( X<0.0 ) THEN
-               WRITE (ipr,99003)
+               WRITE (G_IO,99003)
 99003          FORMAT (' ',                                             &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE FCDF&
      &   SUBROUTINE IS NEGATIVE *****')
-               WRITE (ipr,99004) X
+               WRITE (G_IO,99004) X
 99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, &
      &                 ' *****')
                Cdf = 0.0_wp
@@ -8562,7 +8361,7 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
                   GOTO 99999
                ELSEIF ( Nu1<nucut2 .OR. Nu2<nucut1 ) THEN
                   ibran = 5
-                  WRITE (ipr,99005) ibran
+                  WRITE (G_IO,99005) ibran
 99005             FORMAT (' ',                                          &
      &                    '*****INTERNAL ERROR IN   FCDF SUBROUTINE--', &
      &                  'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = '&
@@ -8604,7 +8403,7 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine fourie (X, Y)
+!!       SUBROUTINE FOURIE(X,N)
 !!
 !!##DESCRIPTION
 !!    FOURIE(3f) performs a Fourier analysis of the data in the input
@@ -8659,13 +8458,15 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JENKINS AND WATTS, ESPECIALLY PAGE 290.
 !*==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FOURIE(X,N)
 REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
      &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
      &     suma , sumb , t
 REAL(kind=wp) :: vbias , WS , X , xbar
-      INTEGER i , ievodd , ilower , ipage , ipr , iskip , iupper , j ,  &
+INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
      &        maxpag , N , nhalf , nnpage
 !
 !
@@ -8755,14 +8556,13 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !              THIS CORRESPONDS TO THE FACT THAT THE
 !              SMALLEST DETECTABLE CYCLE IN THE DATA
 !              IS 2 DATA POINTS PER CYCLE.
-!     REFERENCES--JENKINS AND WATTS, ESPECIALLY PAGE 290.
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 alperc
+CHARACTER(len=4) :: alperc
       DIMENSION X(:)
       DIMENSION A(7500) , B(7500)
       COMMON /BLOCK2/ WS(15000)
@@ -8771,7 +8571,6 @@ REAL(kind=wp) :: vbias , WS , X , xbar
       DATA pi/3.14159265358979_wp/
       DATA alperc/'%'/
 !
-      ipr = 6
       ilower = 3
       iupper = 15000
       maxpag = 8
@@ -8779,11 +8578,11 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<ilower .OR. N>iupper ) THEN
-         WRITE (ipr,99001) ilower , iupper
+         WRITE (G_IO,99001) ilower , iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FOURIE SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (',I6,',',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -8791,7 +8590,7 @@ REAL(kind=wp) :: vbias , WS , X , xbar
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99003) hold
+         WRITE (G_IO,99003) hold
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE FOURIE SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -8844,19 +8643,19 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !     WRITE OUT THE SAMPLE SIZE, THE SAMPLE MEAN,
 !     AND THE (BIASED) SAMPLE VARIANCE.
 !
-      WRITE (ipr,99013)
-      WRITE (ipr,99004)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99004)
 !
 99004 FORMAT (' ',44X,'FOURIER ANALYSIS')
-      WRITE (ipr,99014)
-      WRITE (ipr,99014)
-      WRITE (ipr,99005) N
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99005) N
 99005 FORMAT (' ',40X,'THE SAMPLE SIZE N                      = ',I8)
-      WRITE (ipr,99006) xbar
+      WRITE (G_IO,99006) xbar
 99006 FORMAT (' ',40X,'THE SAMPLE MEAN                        = ',F20.8)
-      WRITE (ipr,99007) vbias
+      WRITE (G_IO,99007) vbias
 99007 FORMAT (' ',40X,'THE SAMPLE VARIANCE (WITH DIVISOR N-1) = ',F20.8)
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
 !
 !     COMPUTE THE HARMONIC CONTRIBUTION
 !     AT EACH OF THE FOURIER FREQUENCIES.
@@ -8882,18 +8681,18 @@ REAL(kind=wp) :: vbias , WS , X , xbar
       nnpage = 50
       i = 0
       DO ipage = 1 , maxpag
-         WRITE (ipr,99013)
-         WRITE (ipr,99008)
+         WRITE (G_IO,99013)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ','     I   FOURIER   PERIOD      FOURIER  ',        &
      &           '      FOURIER       AMPLITUDE ',                      &
      &           '      PHASE          PHASE         VARIANCE   ',      &
      &           '  RELATIVE')
-         WRITE (ipr,99009)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ','        FREQUENCY            COEFFICIENT    ',    &
      &           'COEFFICIENT',                                         &
      &     '                    RADIANS        DEGREES        COMPONENT'&
      &     ,'    VARIANCE')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ','     (CYCLES/POINT)             A(I)       ',     &
      &           '    B(I)      ',                                      &
      &           '                                                  ',  &
@@ -8911,13 +8710,13 @@ REAL(kind=wp) :: vbias , WS , X , xbar
             conmsq = 2.0_wp*amp*amp
             IF ( i==nhalf .AND. ievodd==0 ) conmsq = conmsq/2.0_wp
             percon = 100.0_wp*(conmsq/vbias)
-            WRITE (ipr,99011) i , ffreq , period , A(i) , B(i) , amp ,  &
+            WRITE (G_IO,99011) i , ffreq , period , A(i) , B(i) , amp ,  &
      &                        phase1 , phase2 , conmsq , percon , alperc
 99011       FORMAT (' ',I6,2X,F8.6,1X,F8.2,6(1X,E14.7),2X,F6.2,A1)
             A(i) = percon
             IF ( i>=nhalf ) GOTO 200
             iskip = i - 10*(i/10)
-            IF ( iskip==0 ) WRITE (ipr,99014)
+            IF ( iskip==0 ) WRITE (G_IO,99014)
          ENDDO
       ENDDO
 !
@@ -8929,7 +8728,7 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !     PLOT IN SPECTRAL ANALYSIS.
 !
  200  CALL PLOTSP(A,nhalf,0)
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
 99012 FORMAT (' ',40X,                                                  &
      &        'PERIODOGRAM = FOURIER LINE SPECTRUM OF THE ORIGINAL DATA'&
      &        )
@@ -8943,7 +8742,7 @@ END SUBROUTINE FOURIE
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine fran (X, Y)
+!!       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
 !!
 !!##DESCRIPTION
 !!    fran(3f) generates a random sample of size n from the f distribution
@@ -8977,11 +8776,20 @@ END SUBROUTINE FOURIE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --MOOD AND GRABLE, INTRODUCTION TO THE
+!! !                 THEORY OF STATISTICS, 1963, PAGES 231-232.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 75-93.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 64.
 !*==fran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
 REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
      &     z
-      INTEGER i , ipr , Istart , j , N , Nu1 , Nu2
+INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -9022,14 +8830,6 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--MOOD AND GRABLE, INTRODUCTION TO THE
-!                 THEORY OF STATISTICS, 1963, PAGES 231-232.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 75-93.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 64.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -9038,30 +8838,28 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
       DIMENSION y(2) , z(2)
       DATA pi/3.14159265358979_wp/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE FRAN   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99004) N
+         WRITE (G_IO,99004) N
          RETURN
       ELSEIF ( Nu1<=0 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FRAN   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99004) Nu1
+         WRITE (G_IO,99004) Nu1
          RETURN
       ELSEIF ( Nu2<=0 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FRAN   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99004) Nu2
+         WRITE (G_IO,99004) Nu2
          RETURN
       ELSE
 !
@@ -9127,7 +8925,7 @@ END SUBROUTINE FRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine freq (X, Y)
+!!       SUBROUTINE FREQ(X,N)
 !!
 !!##DESCRIPTION
 !!    freq(3f) computes the sample frequency and sample cumulative frequency
@@ -9157,11 +8955,14 @@ END SUBROUTINE FRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
 !*==freq.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE FREQ(X,N)
 REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,    WS , X , xbar , Y
-INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     ndv , nm1 , numseq
+INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
@@ -9179,8 +8980,6 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     ndv , nm1 , nu
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -9192,21 +8991,20 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     ndv , nm1 , nu
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
-      ipr = 6
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FREQ   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE FREQ&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -9216,7 +9014,7 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     ndv , nm1 , nu
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE FREQ   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -9238,28 +9036,28 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     ndv , nm1 , nu
          ENDDO
          s = SQRT(sum/(an-1.0_wp))
 !
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT ('1')
-         WRITE (ipr,99006)
+         WRITE (G_IO,99006)
 !
 99006    FORMAT (' ',18X,                                               &
      &           'SAMPLE FREQUENCY AND SAMPLE CUMULATIVE FREQUENCY')
-         WRITE (ipr,99014)
-         WRITE (ipr,99007) N
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99007) N
 99007    FORMAT (' ',27X,'THE SAMPLE SIZE N = ',I8)
-         WRITE (ipr,99008) xbar
+         WRITE (G_IO,99008) xbar
 99008    FORMAT (' ',25X,'THE SAMPLE MEAN = ',E15.8)
-         WRITE (ipr,99009) s
+         WRITE (G_IO,99009) s
 99009    FORMAT (' ',20X,'THE SAMPLE STANDARD DEVIATION = ',E15.8)
-         WRITE (ipr,99014)
-         WRITE (ipr,99014)
-         WRITE (ipr,99010)
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99010)
 99010    FORMAT ('     INDEX            VALUE       FREQUENCY    PERCENTAGE        CUMULATIVE    PERCENTAGE')
 99011    FORMAT ('                                               FREQUENCY         FREQUENCY     CUMULATIVE')
 99012    FORMAT ('                                                                               FREQUENCY ')
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99014)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99014)
 !
          CALL SORT(X,N,Y)
          ndv = 0
@@ -9278,9 +9076,9 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     ndv , nm1 , nu
                cfreq = icfreq
                pfreq = 100.0_wp*frq/an
                pcfreq = 100.0_wp*cfreq/an
-               WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq , pcfreq
+               WRITE (G_IO,99013) ndv , dvalue , ifreq , pfreq , icfreq , pcfreq
                iflag = ndv - 10*(ndv/10)
-               IF ( iflag==0 ) WRITE (ipr,99014)
+               IF ( iflag==0 ) WRITE (G_IO,99014)
                numseq = 1
             ENDIF
          ENDDO
@@ -9292,9 +9090,9 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     ndv , nm1 , nu
          cfreq = icfreq
          pfreq = 100.0_wp*frq/an
          pcfreq = 100.0_wp*cfreq/an
-         WRITE (ipr,99013) ndv , dvalue , ifreq , pfreq , icfreq , pcfreq
+         WRITE (G_IO,99013) ndv , dvalue , ifreq , pfreq , icfreq , pcfreq
          iflag = ndv - 10*(ndv/10)
-         IF ( iflag==0 ) WRITE (ipr,99014)
+         IF ( iflag==0 ) WRITE (G_IO,99014)
       ENDIF
 99013 FORMAT (' ',I8,4X,E17.10,3X,I8,6X,F8.4,10X,I8,6X,F8.4)
 99014 FORMAT (' ')
@@ -9306,7 +9104,7 @@ END SUBROUTINE FREQ
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine gamcdf (X, Y)
+!!       SUBROUTINE GAMCDF(X,Gamma,Cdf)
 !!
 !!##DESCRIPTION
 !!    gamcdf(3f) computes the cumulative distribution function value for the
@@ -9346,10 +9144,23 @@ END SUBROUTINE FREQ
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
+!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
+!! !                 TECHNOMETRICS, 1962, PAGES 1-15,
+!! !                 ESPECIALLY PAGES 3-5.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 68-73.
 !*==gamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
-      INTEGER i , ipr , maxit
+INTEGER :: i , maxit
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -9376,18 +9187,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !               RANGE OF THE DISTRIBUTION--FROM THE 0.00001
 !               PERCENT POINT UP TO THE 99.99999 PERCENT POINT
 !               OF THE DISTRIBUTION.
-!     REFERENCES--WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!                 TECHNOMETRICS, 1962, PAGES 1-15,
-!                 ESPECIALLY PAGES 3-5.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 68-73.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -9406,24 +9205,22 @@ REAL(kind=wp) :: Cdf , Gamma , X
      &     +.179644372368830573D0 , -.139243221690590111D1/
 !
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<=0.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GAMC&
      &DF SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99007) X
+         WRITE (G_IO,99007) X
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMCDF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99007) Gamma
+         WRITE (G_IO,99007) Gamma
          Cdf = 0.0_wp
          RETURN
       ELSE
@@ -9467,15 +9264,15 @@ REAL(kind=wp) :: Cdf , Gamma , X
             cutoff = cut1 + (cut2*term/sum)
             IF ( ai>cutoff ) GOTO 50
          ENDDO
-         WRITE (ipr,99003) maxit
+         WRITE (G_IO,99003) maxit
 !
 99003    FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMCDF ',&
      &           'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I7)
-         WRITE (ipr,99004) X
+         WRITE (G_IO,99004) X
 99004    FORMAT (' ','     THE INPUT VALUE OF X     IS ',E15.8)
-         WRITE (ipr,99005) Gamma
+         WRITE (G_IO,99005) Gamma
 99005    FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
-         WRITE (ipr,99006)
+         WRITE (G_IO,99006)
 99006    FORMAT (' ','     THE OUTPUT VALUE OF CDF HAS BEEN SET TO 1.0')
          Cdf = 1.0_wp
          RETURN
@@ -9492,7 +9289,7 @@ END SUBROUTINE GAMCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine gamplt (X, Y)
+!!       SUBROUTINE GAMPLT(X,N,Gamma)
 !!
 !!##DESCRIPTION
 !!    gamplt(3f) generates a gamma probability plot (with tail length
@@ -9547,6 +9344,21 @@ END SUBROUTINE GAMCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
+!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
+!! !                 TECHNOMETRICS, 1962, PAGES 1-15.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
 !*==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GAMPLT(X,N,Gamma)
 REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
@@ -9556,7 +9368,7 @@ REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
      &     xlower , xmax , xmid , xmin , xmin0 , xupper , Y , ybar ,    &
      &     yint
 REAL(kind=wp) :: yslope
-INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
+INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -9573,20 +9385,6 @@ INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ABS, EXP, DEXP, DLOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION
-!     REFERENCES--WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!                 TECHNOMETRICS, 1962, PAGES 1-15.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
-!               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -9610,32 +9408,31 @@ INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
      &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
      &     +.179644372368830573D0 , -.139243221690590111D1/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE GAMP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          IF ( Gamma<=0.0_wp ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE GAMPLT SUBROU&
      &TINE IS NON-POSITIVE *****')
-            WRITE (ipr,99005) Gamma
+            WRITE (G_IO,99005) Gamma
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
             RETURN
@@ -9644,7 +9441,7 @@ INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99006) hold
+            WRITE (G_IO,99006) hold
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE GAMPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -9783,7 +9580,7 @@ INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
       ELSE
          pp025 = xmid
          tau = (pp9975-pp0025)/(pp975-pp025)
-         WRITE (ipr,99007) Gamma , tau , N
+         WRITE (G_IO,99007) Gamma , tau , N
 !
 99007    FORMAT (' ','GAMMA PROBABILITY PLOT WITH SHAPE PARAMETER = ',  &
      &           E17.10,1X,'(TAU = ',E15.8,')',16X,'SAMPLE SIZE N = ',  &
@@ -9813,7 +9610,7 @@ INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99008) cc , yint , yslope
+         WRITE (G_IO,99008) cc , yint , yslope
 99008    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -9841,10 +9638,10 @@ INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
          cutoff = cut1 + (cut2*term/sum)
          IF ( aj>cutoff ) GOTO 700
       ENDDO
-      WRITE (ipr,99009)
+      WRITE (G_IO,99009)
 99009 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMPLT ',   &
      &        'SUBROUTINE--THE NUMBER OF CDF ITERATIONS EXCEEDS 1000')
-      WRITE (ipr,99010) Gamma
+      WRITE (G_IO,99010) Gamma
 99010 FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
  700  t = sum
       pcalc = (dx**dgamma)*(EXP(-dx))*t/g
@@ -9876,7 +9673,7 @@ END SUBROUTINE GAMPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine gamppf (X, Y)
+!!       SUBROUTINE GAMPPF(P,Gamma,Ppf)
 !!
 !!##DESCRIPTION
 !!    gamppf(3f) computes the percent point function value for the gamma
@@ -9918,10 +9715,23 @@ END SUBROUTINE GAMPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
+!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
+!! !                 TECHNOMETRICS, 1962, PAGES 1-15,
+!! !                 ESPECIALLY PAGES 3-5.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 68-73.
 !*==gamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
-      INTEGER icount , iloop , ipr , j , maxit
+INTEGER :: icount , iloop , j , maxit
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
@@ -9954,18 +9764,6 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !               THE WORST DETECTED ERROR WAS AGREEMENT TO ONLY 3
 !               SIGNIFICANT DIGITS (IN THEIR 8 SIGNIFICANT DIGIT TABLE)
 !               FOR P = .999.)
-!     REFERENCES--WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!                 TECHNOMETRICS, 1962, PAGES 1-15,
-!                 ESPECIALLY PAGES 3-5.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 68-73.
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -9987,24 +9785,22 @@ REAL(kind=wp) :: Gamma , P , Ppf
      &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
      &     +.179644372368830573D0 , -.139243221690590111D1/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GAMPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99007) P
+         WRITE (G_IO,99007) P
          Ppf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99007) Gamma
+         WRITE (G_IO,99007) Gamma
          Ppf = 0.0_wp
          RETURN
       ELSE
@@ -10082,15 +9878,15 @@ REAL(kind=wp) :: Gamma , P , Ppf
          cutoff = cut1 + (cut2*term/sum)
          IF ( aj>cutoff ) GOTO 600
       ENDDO
-      WRITE (ipr,99003) maxit
+      WRITE (G_IO,99003) maxit
 !
 99003 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMPPF ',   &
      &        'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I7)
-      WRITE (ipr,99004) P
+      WRITE (G_IO,99004) P
 99004 FORMAT (' ','     THE INPUT VALUE OF P     IS ',E15.8)
-      WRITE (ipr,99005) Gamma
+      WRITE (G_IO,99005) Gamma
 99005 FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ','     THE OUTPUT VALUE OF PPF HAS BEEN SET TO 0.0')
       Ppf = 0.0_wp
       RETURN
@@ -10127,7 +9923,7 @@ END SUBROUTINE GAMPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine gamran (X, Y)
+!!       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    gamran(3f) generates a random sample of size n from the gamma
@@ -10165,11 +9961,32 @@ END SUBROUTINE GAMPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --GREENWOOD, 'A FAST GENERATOR FOR
+!! !                 GAMMA-DISTRIBUTED RANDOM VARIABLES',
+!! !                 COMPSTAT 1974, PROCEEDINGS IN
+!! !                 COMPUTATIONAL STATISTICS, VIENNA,
+!! !                 SEPTEMBER, 1974, PAGES 19-27.
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 24-27.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGES 36-37.
+!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
+!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
+!! !                 TECHNOMETRICS, 1962, PAGES 1-15.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 68-73.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 952.
 !*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
      &     X , xg , xg0 , xn(1) , xn0
-      INTEGER i , ipr , Iseed , N
+INTEGER :: i , Iseed , N
 !     ******STILL NEEDS ALGORITHM WORK ******
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
@@ -10196,26 +10013,6 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--GREENWOOD, 'A FAST GENERATOR FOR
-!                 GAMMA-DISTRIBUTED RANDOM VARIABLES',
-!                 COMPSTAT 1974, PROCEEDINGS IN
-!                 COMPUTATIONAL STATISTICS, VIENNA,
-!                 SEPTEMBER, 1974, PAGES 19-27.
-!               --TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 24-27.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGES 36-37.
-!               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!                 TECHNOMETRICS, 1962, PAGES 1-15.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 68-73.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 952.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -10232,46 +10029,38 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !
 !---------------------------------------------------------------------
 !
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
 !-----DATA STATEMENTS-------------------------------------------------
 !
       DATA athird/0.3333333_wp/
       DATA sqrt3/1.73205081_wp/
-!
-      ipr = 6
 !
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GAMRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99006) Gamma
+         WRITE (G_IO,99006) Gamma
          RETURN
       ELSEIF ( Gamma<=0.33333333_wp ) THEN
-         WRITE (ipr,99004)
+         WRITE (G_IO,99004)
 99004    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMRAN SUBROU&
      &TINE IS SMALLER THAN OR EQUAL TO 0.33333333 *****')
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ','                   (ALGORITHMIC RESTIRCTION)')
-         WRITE (ipr,99006) Gamma
+         WRITE (G_IO,99006) Gamma
          RETURN
       ELSE
 !
@@ -10326,7 +10115,7 @@ END SUBROUTINE GAMRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine geocdf (X, Y)
+!!       SUBROUTINE GEOCDF(X,P,Cdf)
 !!
 !!##DESCRIPTION
 !!    geocdf(3f) computes the cumulative distribution function value at the
@@ -10380,7 +10169,7 @@ END SUBROUTINE GAMRAN
 
 SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp) :: Cdf , del , fintx , P , X
-INTEGER intx , ipr
+INTEGER intx
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -10429,17 +10218,15 @@ INTEGER intx , ipr
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
 !---------------------------------------------------------------------
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
-         WRITE (ipr,99004) P
+         WRITE (G_IO,99001)
+         WRITE (G_IO,99004) P
          Cdf = 0.0_wp
       ELSEIF ( X<0.0_wp ) THEN
-         WRITE (ipr,99002)
-         WRITE (ipr,99004) X
+         WRITE (G_IO,99002)
+         WRITE (G_IO,99004) X
          Cdf = 0.0_wp
       ELSE
          intx = X + 0.0001_wp
@@ -10447,8 +10234,8 @@ INTEGER intx , ipr
          del = X - fintx
          IF ( del<0.0_wp ) del = -del
          IF ( del>0.001_wp ) THEN
-            WRITE (ipr,99003)
-            WRITE (ipr,99004) X
+            WRITE (G_IO,99003)
+            WRITE (G_IO,99004) X
          ENDIF
          Cdf = 1.0_wp - (1.0_wp-P)**(X+1.0_wp)
       ENDIF
@@ -10465,7 +10252,7 @@ END SUBROUTINE GEOCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine geoplt (X, Y)
+!!       SUBROUTINE GEOPLT(X,N,P)
 !!
 !!##DESCRIPTION
 !!    geoplt(3f) generates a geometric probability plot (with 'bernoulli
@@ -10522,13 +10309,24 @@ END SUBROUTINE GEOCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 155-157, 210.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 929.
 !*==geoplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPLT(X,N,P)
 REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
      &     sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,    &
      &     yint
 REAL(kind=wp) :: yslope
-INTEGER i , ipr , iupper , N
+INTEGER i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -10550,16 +10348,6 @@ INTEGER i , ipr , iupper , N
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT, GEOPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 155-157, 210.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1976.
@@ -10573,32 +10361,31 @@ INTEGER i , ipr , iupper , N
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE GEOP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE GEOPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-            WRITE (ipr,99005) P
+            WRITE (G_IO,99005) P
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
             RETURN
@@ -10607,7 +10394,7 @@ INTEGER i , ipr , iupper , N
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99006) hold
+            WRITE (G_IO,99006) hold
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE GEOPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -10647,7 +10434,7 @@ INTEGER i , ipr , iupper , N
          q = 0.025_wp
          CALL GEOPPF(q,P,pp025)
          tau = (pp9975-pp0025)/(pp975-pp025)
-         WRITE (ipr,99007) P , tau , N
+         WRITE (G_IO,99007) P , tau , N
 !
 99007    FORMAT (' ','GEOMETRIC PROBABILITY PLOT WITH PROBABILITY ',    &
      &           'PARAMETER = ',E17.10,1X,'(TAU = ',E15.8,')',11X,      &
@@ -10677,7 +10464,7 @@ INTEGER i , ipr , iupper , N
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99008) cc , yint , yslope
+         WRITE (G_IO,99008) cc , yint , yslope
 99008    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -10691,7 +10478,7 @@ END SUBROUTINE GEOPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine geoppf (X, Y)
+!!       SUBROUTINE GEOPPF(P,Ppar,Ppf)
 !!
 !!##DESCRIPTION
 !!    geoppf(3f) computes the percent point function value for the geometric
@@ -10741,10 +10528,16 @@ END SUBROUTINE GEOPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 155-157, 210.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 929.
 !*==geoppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPPF(P,Ppar,Ppf)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
-INTEGER ipr , iratio
+INTEGER iratio
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -10790,33 +10583,26 @@ INTEGER ipr , iratio
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 155-157, 210.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GEOPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99003) P
+         WRITE (G_IO,99003) P
          Ppf = 0.0_wp
          RETURN
       ELSEIF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99003) Ppar
+         WRITE (G_IO,99003) Ppar
          Ppf = 0.0_wp
          RETURN
 !
@@ -10846,7 +10632,7 @@ INTEGER ipr , iratio
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine georan (X, Y)
+!!       SUBROUTINE GEORAN(N,P,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    GEORAN(3f) generates a random sample of size N from the geometric
@@ -10890,10 +10676,20 @@ INTEGER ipr , iratio
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 14-15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 36.
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 155-157, 210.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 929.
 !*==georan.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEORAN(N,P,Iseed,X)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
-      INTEGER i , ipr , iratio , Iseed , N
+INTEGER :: i , iratio , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -10939,15 +10735,6 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 155-157, 210.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -10961,32 +10748,24 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !
 !---------------------------------------------------------------------
 !
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
-!
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GEORAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEORAN SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99004) P
+         WRITE (G_IO,99004) P
 99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -11022,7 +10801,7 @@ END SUBROUTINE GEORAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine hfncdf (X, Y)
+!!       SUBROUTINE HFNCDF(X,Cdf)
 !!
 !!##DESCRIPTION
 !!    hfncdf(3f) computes the cumulative distribution function value for
@@ -11064,10 +10843,15 @@ END SUBROUTINE GEORAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
+!! !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
+!! !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
+!! !                 TECHNOMETRICS, 1959, PAGES 311-341.
 !*==hfncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -11083,26 +10867,19 @@ REAL(kind=wp) :: Cdf , X
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!                 TECHNOMETRICS, 1959, PAGES 311-341.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE HFNC&
      &DF SUBROUTINE IS NEGATIVE *****')
-         WRITE (ipr,99002) X
+         WRITE (G_IO,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          Cdf = 0.0_wp
@@ -11123,7 +10900,7 @@ END SUBROUTINE HFNCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine hfnplt (X, Y)
+!!       SUBROUTINE HFNPLT(X,N)
 !!
 !!##DESCRIPTION
 !!    hfnplt(3f) generates a halfnormal probability plot.
@@ -11178,6 +10955,17 @@ END SUBROUTINE HFNCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
+!! !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
+!! !                 TECHNOMETRICS, 1959, PAGES 311-341.
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -11187,7 +10975,7 @@ END SUBROUTINE HFNCDF
 SUBROUTINE HFNPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
-INTEGER i , ipr , iupper , N
+INTEGER i , iupper , N
 !*** End of declarations inserted by SPAG
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -11201,16 +10989,6 @@ INTEGER i , ipr , iupper , N
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!                 TECHNOMETRICS, 1959, PAGES 311-341.
-!               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
 !
 !---------------------------------------------------------------------
 !
@@ -11222,21 +11000,20 @@ INTEGER i , ipr , iupper , N
 !
       DATA tau/1.41223913_wp/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE HFNPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE HFNP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
@@ -11246,7 +11023,7 @@ INTEGER i , ipr , iupper , N
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE HFNPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -11276,7 +11053,7 @@ INTEGER i , ipr , iupper , N
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99005) tau , N
+         WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','HALFNORMAL PROBABILITY PLOT (TAU = ',E15.8,')',   &
      &           52X,'THE SAMPLE SIZE N = ',I7)
@@ -11305,7 +11082,7 @@ INTEGER i , ipr , iupper , N
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -11319,7 +11096,7 @@ END SUBROUTINE HFNPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine hfnppf (X, Y)
+!!       SUBROUTINE HFNPPF(P,Ppf)
 !!
 !!##DESCRIPTION
 !!    hfnppf(3f) computes the percent point function value for the halfnormal
@@ -11363,10 +11140,15 @@ END SUBROUTINE HFNPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
+!! !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
+!! !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
+!! !                 TECHNOMETRICS, 1959, PAGES 311-341.
 !*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
-INTEGER       :: ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -11384,22 +11166,16 @@ INTEGER       :: ipr
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!                 TECHNOMETRICS, 1959, PAGES 311-341.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 !
 !---------------------------------------------------------------------
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99001)
+         WRITE (G_IO,99002) P
          Ppf = 0.0_wp
       ELSE
          arg = (1.0_wp+P)/2.0_wp
@@ -11417,7 +11193,7 @@ END SUBROUTINE HFNPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine hfnran (X, Y)
+!!       SUBROUTINE HFNRAN(N,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    hfnran(3f) generates a random sample of size n from the halfnormal
@@ -11457,10 +11233,17 @@ END SUBROUTINE HFNPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 14-15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 36.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
 !*==hfnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
-      INTEGER i , ip1 , ipr , Iseed , N
+INTEGER :: i , ip1 , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -11479,12 +11262,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --JULY      1976.
@@ -11500,28 +11277,20 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !
 !---------------------------------------------------------------------
 !
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
 !-----DATA STATEMENTS-------------------------------------------------
 !
       DATA pi/3.14159265359_wp/
-!
-      ipr = 6
 !
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE HFNRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -11573,7 +11342,7 @@ END SUBROUTINE HFNRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine hist (X, Y)
+!!       SUBROUTINE HIST(X,N)
 !!
 !!##DESCRIPTION
 !!    hist(3f) produces 2 histograms (with differing class widths) of the
@@ -11610,14 +11379,17 @@ END SUBROUTINE HFNRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 4.
 !*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HIST(X,N)
 REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
      &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
-      INTEGER i , icoun2 , icount , ievodd , ihist , inc , ipr , irev , &
+INTEGER :: i , icoun2 , icount , ievodd , ihist , inc , irev , &
      &        itlabl , ixlabl , j , jmax , jp1 , jsum , maxfre , mt ,   &
      &        mx , N , numcla , numhis
-      INTEGER numout
+INTEGER :: numout
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
@@ -11633,8 +11405,6 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 4.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -11643,8 +11413,8 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 IGRaph
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: IGRaph
 !
       DIMENSION X(:)
       DIMENSION ixlabl(21)
@@ -11654,21 +11424,19 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
       DIMENSION tlable(13) , itlabl(13)
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE HIST   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE HIST&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -11678,7 +11446,7 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO T&
      &HE HIST   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -11828,18 +11596,18 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 !
             ievodd = ihist - 2*(ihist/2)
             IF ( ievodd==0 ) THEN
-               WRITE (ipr,99005)
+               WRITE (G_IO,99005)
 99005          FORMAT (' ')
             ELSE
-               WRITE (ipr,99006)
+               WRITE (G_IO,99006)
 99006          FORMAT ('1')
             ENDIF
-            WRITE (ipr,99013) (IGRaph(1,j),j=1,123)
+            WRITE (G_IO,99013) (IGRaph(1,j),j=1,123)
             DO i = 2 , 21
-               WRITE (ipr,99007) ixlabl(i) , (IGRaph(i,j),j=1,123)
+               WRITE (G_IO,99007) ixlabl(i) , (IGRaph(i,j),j=1,123)
 99007          FORMAT (' ',I5,1X,123A1)
             ENDDO
-            WRITE (ipr,99013) (IGRaph(22,j),j=1,123)
+            WRITE (G_IO,99013) (IGRaph(22,j),j=1,123)
             numcla = (120/inc) + 1
             tinc = inc
             cwidsd = tinc*0.1_wp
@@ -11854,19 +11622,19 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
                itlabl(i) = i - 7
                itlabl(irev) = 7 - i
             ENDDO
-            WRITE (ipr,99008) (tlable(i),i=1,13)
+            WRITE (G_IO,99008) (tlable(i),i=1,13)
 99008       FORMAT (' ',1X,12F10.4,F9.4)
-            WRITE (ipr,99009) (itlabl(i),i=1,13)
+            WRITE (G_IO,99009) (itlabl(i),i=1,13)
 99009       FORMAT (' ',13(1X,I7,2X))
-            WRITE (ipr,99010) numout
+            WRITE (G_IO,99010) numout
 99010       FORMAT (' ',I5,                                             &
      &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS ABOU&
      &T THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
-            WRITE (ipr,99011) numcla , cwidth , cwidsd
+            WRITE (G_IO,99011) numcla , cwidth , cwidsd
 99011       FORMAT (' ','HISTOGRAM      THE NUMBER OF CLASSES IS ',I6,  &
      &              8X,'THE CLASS WIDTH IS ',E15.8,' = ',F7.1,          &
      &              ' STANDARD DEVIATIONS')
-            WRITE (ipr,99012) N
+            WRITE (G_IO,99012) N
 99012       FORMAT (' ','THE SAMPLE SIZE N = ',I7)
          ENDDO
       ENDIF
@@ -11878,7 +11646,7 @@ END SUBROUTINE HIST
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine invxwx (X, Y)
+!!       SUBROUTINE INVXWX(N,K)
 !!
 !!##DESCRIPTION
 !!    invxwx(3f) computes the inverse of x'wx which is done by computing
@@ -12018,7 +11786,7 @@ END SUBROUTINE INVXWX
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lamcdf (X, Y)
+!!       SUBROUTINE LAMCDF(X,Alamba,Cdf)
 !!
 !!##DESCRIPTION
 !!    lamcdf(3f) computes the cumulative distribution function value for the
@@ -12054,11 +11822,25 @@ END SUBROUTINE INVXWX
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
+!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
+!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
+!! !                 MATHEMATICAL STATISTICS, 18, 1947,
+!! !                 PAGES 413-426.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --MAY       1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==lamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LAMCDF(X,Alamba,Cdf)
-REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
-     &     X , xcalc , xmax , xmin
-      INTEGER icount , ipr
+
+SUBROUTINE LAMCDF(X,Alamba,Cdf)
+REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , X , xcalc , xmax , xmin
+INTEGER :: icount
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
@@ -12070,28 +11852,12 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE TUKEY LAMBDA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+
 !     RESTRICTIONS--FOR ALAMBA NON-POSITIVE, NO RESTRICTIONS ON X.
 !                 --FOR ALAMBA POSITIVE, X SHOULD BE BETWEEN (-1/ALAMBA)
 !                   AND (+1/ALAMBA), INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!                 STUDY OF ORDER STATISTICS', ANNALS OF
-!                 MATHEMATICAL STATISTICS, 18, 1947,
-!                 PAGES 413-426.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --MAY       1974.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -12099,11 +11865,11 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
          xmax = 1.0_wp/Alamba
          xmin = -xmax
          IF ( X<xmin .OR. X>xmax ) THEN
-            WRITE (ipr,99001)
+            WRITE (G_IO,99001)
 99001       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO THE LAMCD&
      &F SUBROUTINE IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
-            WRITE (ipr,99002) X
+            WRITE (G_IO,99002) X
 99002       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
             IF ( X<xmin ) Cdf = 0.0_wp
@@ -12171,7 +11937,7 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lampdf (X, Y)
+!!       SUBROUTINE LAMPDF(X,Alamba,Pdf)
 !!
 !!##DESCRIPTION
 !!    lampdf(3f) computes the probability density function value for the
@@ -12208,10 +11974,23 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
+!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
+!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
+!! !                 MATHEMATICAL STATISTICS, 18, 1947,
+!! !                 PAGES 413-426.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --AUGUST    1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPDF(X,Alamba,Pdf)
 REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
@@ -12229,23 +12008,8 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !                   AND (+1/ALAMBA), INCLUSIVELY.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--LAMCDF.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!                 STUDY OF ORDER STATISTICS', ANNALS OF
-!                 MATHEMATICAL STATISTICS, 18, 1947,
-!                 PAGES 413-426.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --AUGUST    1974.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -12253,13 +12017,11 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
          xmax = 1.0_wp/Alamba
          xmin = -xmax
          IF ( X<xmin .OR. X>xmax ) THEN
-            WRITE (ipr,99001)
-99001       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO THE LAMPD&
-     &F SUBROUTINE IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
-            WRITE (ipr,99002) X
-99002       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
-     &              ' *****')
+            WRITE (G_IO,99001)
+            99001 FORMAT (&
+            &' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO LAMPDF(3f) IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
+            WRITE (G_IO,99002) X
+            99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
             IF ( X<xmin ) Pdf = 0.0_wp
             IF ( X>xmax ) Pdf = 1.0_wp
             RETURN
@@ -12282,7 +12044,7 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
             RETURN
          ENDIF
       ENDIF
-!
+
       CALL LAMCDF(X,Alamba,cdf)
       sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
       Pdf = 1.0_wp/sf
@@ -12295,7 +12057,7 @@ END SUBROUTINE LAMPDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lamplt (X, Y)
+!!       SUBROUTINE LAMPLT(X,N,Alamba)
 !!
 !!##DESCRIPTION
 !!    lamplt(3f) generates a (tukey) lambda distribution probability plot
@@ -12347,13 +12109,31 @@ END SUBROUTINE LAMPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY, 1969), PAGES 21-44, 229-231,
+!! !                 PAGES 53-58.
+!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
+!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
+!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
+!! !                 MATHEMATICAL STATISTICS, 18, 1947,
+!! !                 PAGES 413-426.
 !*==lamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
 REAL(kind=wp) :: yslope
-      INTEGER i , ipr , iupper , N
+INTEGER :: i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -12368,23 +12148,6 @@ REAL(kind=wp) :: yslope
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY, 1969), PAGES 21-44, 229-231,
-!                 PAGES 53-58.
-!               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!                 STUDY OF ORDER STATISTICS', ANNALS OF
-!                 MATHEMATICAL STATISTICS, 18, 1947,
-!                 PAGES 413-426.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -12398,21 +12161,20 @@ REAL(kind=wp) :: yslope
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LAMPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE LAMP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
@@ -12422,7 +12184,7 @@ REAL(kind=wp) :: yslope
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE LAMPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -12467,7 +12229,7 @@ REAL(kind=wp) :: yslope
             pp025 = (q**Alamba-(1.0_wp-q)**Alamba)/Alamba
             tau = (pp9975-pp0025)/(pp975-pp025)
          ENDIF
-         WRITE (ipr,99005) Alamba , tau , N
+         WRITE (G_IO,99005) Alamba , tau , N
 !
 99005    FORMAT (' ','LAMBDA PROBABILITY PLOT WITH LAMBDA = ',E17.10,1X,&
      &           '(TAU = ',E15.8,')',24X,'THE SAMPLE SIZE N = ',I7)
@@ -12494,7 +12256,7 @@ REAL(kind=wp) :: yslope
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -12508,7 +12270,7 @@ END SUBROUTINE LAMPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lamppf (X, Y)
+!!       SUBROUTINE LAMPPF(P,Alamba,Ppf)
 !!
 !!##DESCRIPTION
 !!    lamppf(3f) computes the percent point function value for the (tukey)
@@ -12549,10 +12311,22 @@ END SUBROUTINE LAMPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231,
+!! !                 PAGES 53-58.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
+!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
+!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
+!! !                 MATHEMATICAL STATISTICS, 18, 1947,
+!! !                 PAGES 413-426.
 !*==lamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , P , Ppf
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -12572,25 +12346,11 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231,
-!                 PAGES 53-58.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!                 STUDY OF ORDER STATISTICS', ANNALS OF
-!                 MATHEMATICAL STATISTICS, 18, 1947,
-!                 PAGES 413-426.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -12613,11 +12373,11 @@ REAL(kind=wp) :: Alamba , P , Ppf
             ENDIF
          ENDIF
       ENDIF
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT (' ',                                                      &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LAMPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-      WRITE (ipr,99002) P
+      WRITE (G_IO,99002) P
 99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
       RETURN
 !
@@ -12628,7 +12388,7 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lamran (X, Y)
+!!       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    lamran(3f) generates a random sample of size n from the (tukey)
@@ -12663,10 +12423,21 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 14-15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 36.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 53-58.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !*==lamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
 REAL(kind=wp) :: alamb2 , Alamba , q , X
-      INTEGER i , ipr , Iseed , N
+INTEGER :: i , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -12686,16 +12457,6 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 53-58.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -12709,27 +12470,17 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !
       DIMENSION X(:)
 !
-!---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
-!
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       alamb2 = Alamba
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LAMRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -12757,7 +12508,7 @@ END SUBROUTINE LAMRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lamsf (X, Y)
+!!       SUBROUTINE LAMSF(P,Alamba,Sf)
 !!
 !!##DESCRIPTION
 !!    lamsf(3f) computes the sparsity function value for the (tukey) lambda
@@ -12798,10 +12549,22 @@ END SUBROUTINE LAMRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231,
+!! !                 PAGES 53-58.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
+!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
+!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
+!! !                 MATHEMATICAL STATISTICS, 18, 1947,
+!! !                 PAGES 413-426.
 !*==lamsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMSF(P,Alamba,Sf)
 REAL(kind=wp) :: Alamba , P , Sf
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -12820,25 +12583,11 @@ REAL(kind=wp) :: Alamba , P , Sf
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231,
-!                 PAGES 53-58.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!                 STUDY OF ORDER STATISTICS', ANNALS OF
-!                 MATHEMATICAL STATISTICS, 18, 1947,
-!                 PAGES 413-426.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -12855,11 +12604,11 @@ REAL(kind=wp) :: Alamba , P , Sf
             ENDIF
          ENDIF
       ENDIF
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT (' ',                                                      &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LAMSF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-      WRITE (ipr,99002) P
+      WRITE (G_IO,99002) P
 99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
       RETURN
 !
@@ -12871,7 +12620,7 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lgncdf (X, Y)
+!!       SUBROUTINE LGNCDF(X,Cdf)
 !!
 !!##DESCRIPTION
 !!    lgncdf(3f) computes the cumulative distribution function value for
@@ -12911,10 +12660,14 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
+!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
+!! !                 1946, PAGES 219-220.
 !*==lgncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNCDF(X,Cdf)
 REAL(kind=wp) :: arg , Cdf , X
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -12931,24 +12684,18 @@ REAL(kind=wp) :: arg , Cdf , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!                 1946, PAGES 219-220.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<=0.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE LGNC&
      &DF SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) X
+         WRITE (G_IO,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          Cdf = 0.0_wp
@@ -12968,7 +12715,7 @@ END SUBROUTINE LGNCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lgnplt (X, Y)
+!!       SUBROUTINE LGNPLT(X,N)
 !!
 !!##DESCRIPTION
 !!    lgnplt(3f) generates a lognormal probability plot.
@@ -13022,11 +12769,23 @@ END SUBROUTINE LGNCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
+!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
+!! !                 1946, PAGES 219-220.
 !*==lgnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LGNPLT(X,N)
-REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
-     &     WS , X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
+
+SUBROUTINE LGNPLT(X,N)
+REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
+INTEGER :: i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -13036,20 +12795,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!                 1946, PAGES 219-220.
+
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13065,21 +12811,20 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !
       DATA tau/2.37134890_wp/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LGNPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE LGNP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
@@ -13089,7 +12834,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE LGNPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -13119,7 +12864,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99005) tau , N
+         WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','LOGNORMAL PROBABILITY PLOT (TAU = ',E15.8,')',53X,&
      &           'THE SAMPLE SIZE N = ',I7)
@@ -13148,7 +12893,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -13162,7 +12907,7 @@ END SUBROUTINE LGNPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lgnppf (X, Y)
+!!       SUBROUTINE LGNPPF(P,Ppf)
 !!
 !!##DESCRIPTION
 !!    LGNPPF(3f) computes the percent point function value for the lognormal
@@ -13206,11 +12951,13 @@ END SUBROUTINE LGNPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 112-136.
+!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !*==lgnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNPPF(P,Ppf)
-INTEGER ipr
 REAL(kind=wp) :: P , Ppf
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -13227,16 +12974,13 @@ REAL(kind=wp) :: P , Ppf
 !
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!               --CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !---------------------------------------------------------------------
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99001)
+         WRITE (G_IO,99002) P
          Ppf = 0.0_wp
       ELSE
          CALL NORPPF(P,Ppf)
@@ -13253,7 +12997,7 @@ END SUBROUTINE LGNPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine lgnran (X, Y)
+!!       SUBROUTINE LGNRAN(N,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    lgnran(3f) generates a random sample of size n from the lognormal
@@ -13294,10 +13038,29 @@ END SUBROUTINE LGNPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 14-15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 36.
+!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
+!! !                 1946, PAGES 219-220.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 88.
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --JULY      1976.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
 !*==lgnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LGNRAN(N,Iseed,X)
+
+SUBROUTINE LGNRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
-      INTEGER i , ip1 , ipr , Iseed , N
+INTEGER i , ip1 , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -13316,23 +13079,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS, EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!                 1946, PAGES 219-220.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 88.
-!     VERSION NUMBER--82.6
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --JULY      1976.
-!     UPDATED         --DECEMBER  1981.
-!     UPDATED         --MAY       1982.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -13340,16 +13086,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !
       DIMENSION X(:)
       DIMENSION y(2)
-!
-!---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
@@ -13360,11 +13096,11 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LGNRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -13416,11 +13152,11 @@ END SUBROUTINE LGNRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine loc (X, Y)
+!!       SUBROUTINE LOC(X,N)
 !!
 !!##DESCRIPTION
 !!    loc(3f) computes 4 estimates of the location (typical value, measure
-!!    of central tendancy) of the data in the input vector x.
+!!    of central tendency) of the data in the input vector x.
 !!
 !!    the 4 estimators employed are--
 !!
@@ -13458,11 +13194,17 @@ END SUBROUTINE LGNRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --DIXON AND MASSEY, PAGES 14, 70, AND 71
+!! !               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 PAGES 357 AND 387
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
 !*==loc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOC(X,N)
 REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
      &     xmidm , Y
-      INTEGER i , iflag , imax , imaxm1 , imin , iminp1 , ipr , iupper ,&
+INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
      &        N , nmid , nmidp1
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -13482,11 +13224,6 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--DIXON AND MASSEY, PAGES 14, 70, AND 71
-!               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 PAGES 357 AND 387
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -13498,7 +13235,6 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
-      ipr = 6
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -13508,16 +13244,16 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
       xmidm = 0.0_wp
       xmed = 0.0_wp
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LOC    SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE LOC &
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -13530,7 +13266,7 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 20
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE LOC    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -13583,23 +13319,23 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 !     WRITE EVERYTHING OUT
 !
          DO i = 1 , 5
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
          ENDDO
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 !
 99005    FORMAT (' ',30X,'ESTIMATES OF THE LOCATION PARAMETER')
-         WRITE (ipr,99011)
-         WRITE (ipr,99006) N
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99006) N
 99006    FORMAT (' ',34X,'(THE SAMPLE SIZE N = ',I5,')')
-         WRITE (ipr,99011)
-         WRITE (ipr,99011)
-         WRITE (ipr,99007) xmid
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99007) xmid
 99007    FORMAT (' ','THE SAMPLE MIDRANGE IS                ',E15.8)
-         WRITE (ipr,99008) xmean
+         WRITE (G_IO,99008) xmean
 99008    FORMAT (' ','THE SAMPLE MEAN IS                    ',E15.8)
-         WRITE (ipr,99009) xmidm
+         WRITE (G_IO,99009) xmidm
 99009    FORMAT (' ','THE SAMPLE 25 PERCENT TRIMMED MEAN IS ',E15.8)
-         WRITE (ipr,99010) xmed
+         WRITE (G_IO,99010) xmed
 99010    FORMAT (' ','THE SAMPLE MEDIAN IS                  ',E15.8)
       ENDIF
 99011 FORMAT (' ')
@@ -13612,7 +13348,7 @@ END SUBROUTINE LOC
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine logcdf (X, Y)
+!!       SUBROUTINE LOGCDF(X,Cdf)
 !!
 !!##DESCRIPTION
 !!    logcdf(3f) computes the cumulative distribution function value for
@@ -13648,10 +13384,16 @@ END SUBROUTINE LOC
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES--
+!! !               JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --MAY       1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==logcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LOGCDF(X,Cdf)
+
+SUBROUTINE LOGCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
@@ -13660,18 +13402,8 @@ REAL(kind=wp) :: Cdf , X
 !                                DISTRIBUTION FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --MAY       1974.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS.
 !     NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
@@ -13692,7 +13424,7 @@ END SUBROUTINE LOGCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine logpdf (X, Y)
+!!       SUBROUTINE LOGPDF(X,Pdf)
 !!
 !!##DESCRIPTION
 !!    logpdf(3f) computes the probability density function value for
@@ -13728,9 +13460,15 @@ END SUBROUTINE LOGCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !              --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==logpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LOGPDF(X,Pdf)
-      INTEGER ipr
+
+SUBROUTINE LOGPDF(X,Pdf)
 REAL(kind=wp) :: Pdf , X
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
@@ -13740,18 +13478,8 @@ REAL(kind=wp) :: Pdf , X
 !                                DENSITY FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
 !             FUNCTION VALUE PDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS.
 !     NO INPUT ARGUMENT ERRORS POSSIBLE
 !     FOR THIS DISTRIBUTION.
@@ -13768,7 +13496,7 @@ END SUBROUTINE LOGPDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine logplt (X, Y)
+!!       SUBROUTINE LOGPLT(X,N)
 !!
 !!##DESCRIPTION
 !!    logplt(3f) generates a logistic probability plot.
@@ -13817,11 +13545,25 @@ END SUBROUTINE LOGPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 !*==logplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LOGPLT(X,N)
-REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
-     &     X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
+
+SUBROUTINE LOGPLT(X,N)
+REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
+INTEGER :: i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -13831,95 +13573,76 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(:)
-      DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (W(1),WS(7501))
+DIMENSION X(:)
+DIMENSION Y(7500) , W(7500)
+COMMON /BLOCK2/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (W(1),WS(7501))
 !
-      DATA tau/1.63473745_wp/
+DATA tau/1.63473745_wp/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LOGPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         WRITE (G_IO,99001) iupper
+         99001    FORMAT (' ', &
+         & '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LOGPLT SUBROUTINE IS OUTSIDE THE ALLOWABLE (1,', &
+         & I6, &
+         & ') INTERVAL *****')
+         WRITE (G_IO,99002) N
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE LOGP&
-     &LT SUBROUTINE HAS THE VALUE 1 *****')
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE LOGPLT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE LOGPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-!
-!-----START POINT-----------------------------------------------------
-!
- 50      an = N
-!
-!     SORT THE DATA
-!
+         WRITE (G_IO,99004) hold
+         99004    FORMAT (' ', &
+         &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE LOGPLT SUBROUTINE HAS ALL ELEMENTS = ',&
+         & E15.8,&
+         & ' *****')
+      !
+      !-----START POINT-----------------------------------------------------
+         !
+          50      an = N
+         !
+         !     SORT THE DATA
+         !
          CALL SORT(X,N,Y)
-!
-!     GENERATE UNIFORM ORDER STATISTIC MEDIANS
-!
+         !
+         !     GENERATE UNIFORM ORDER STATISTIC MEDIANS
+         !
          CALL UNIMED(N,W)
-!
-!     COMPUTE LOGISTIC ORDER STATISTIC MEDIANS
-!
+         !
+         !     COMPUTE LOGISTIC ORDER STATISTIC MEDIANS
+         !
          DO i = 1 , N
             W(i) = LOG(W(i)/(1.0_wp-W(i)))
          ENDDO
-!
-!     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
-!     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
-!     AND THE SAMPLE SIZE.
-!
+         !
+         !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
+         !     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
+         !     AND THE SAMPLE SIZE.
+         !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99005) tau , N
-!
-99005    FORMAT (' ','LOGISTIC PROBABILITY PLOT (TAU = ',E15.8,')',54X, &
-     &           'THE SAMPLE SIZE N = ',I7)
-!
-!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
-!     COMPUTE LOCATION AND SCALE ESTIMATES
-!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
-!     THEN WRITE THEM OUT.
-!
+         WRITE (G_IO,99005) tau , N
+         99005    FORMAT (' ','LOGISTIC PROBABILITY PLOT (TAU = ',E15.8,')',54X, 'THE SAMPLE SIZE N = ',I7)
+         !
+         !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
+         !     COMPUTE LOCATION AND SCALE ESTIMATES
+         !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
+         !     THEN WRITE THEM OUT.
+         !
          sum1 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
@@ -13937,12 +13660,12 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
-99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
-     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
-     &           'ESTIMATED SLOPE = ',E15.8)
+         WRITE (G_IO,99006) cc , yint , yslope
+         99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
+         &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
+         &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
-!
+
 END SUBROUTINE LOGPLT
 !>
 !!##NAME
@@ -13951,9 +13674,9 @@ END SUBROUTINE LOGPLT
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE LOGPPF(P,Ppf)
+!!       SUBROUTINE LOGPPF(P,Ppf)
 !!
-!!      REAL(kind=wp) :: P , Ppf
+!!        REAL(kind=wp) :: P , Ppf
 !!
 !!##DESCRIPTION
 !!    LOGPPF(3f) computes the percent point function value for the logistic
@@ -13992,6 +13715,15 @@ END SUBROUTINE LOGPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13999,7 +13731,6 @@ END SUBROUTINE LOGPLT
 
 SUBROUTINE LOGPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
-INTEGER       :: ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -14011,23 +13742,14 @@ INTEGER       :: ipr
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
 !
 !---------------------------------------------------------------------
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99001)
+         WRITE (G_IO,99002) P
       ELSE
          Ppf = LOG(P/(1.0_wp-P))
       ENDIF
@@ -14041,7 +13763,7 @@ END SUBROUTINE LOGPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine logran (X, Y)
+!!       SUBROUTINE LOGRAN(N,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    LOGRAN(3f) generates a random sample of size N from the logistic
@@ -14076,6 +13798,19 @@ END SUBROUTINE LOGPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 14-15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 36.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGE 230.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -14083,8 +13818,9 @@ END SUBROUTINE LOGPPF
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
 !*==logran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LOGRAN(N,Iseed,X)
-      INTEGER i , ipr , Iseed , N
+
+SUBROUTINE LOGRAN(N,Iseed,X)
+INTEGER i , Iseed , N
 REAL(kind=wp) :: X
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
@@ -14103,34 +13839,21 @@ REAL(kind=wp) :: X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGE 230.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
 !
 !---------------------------------------------------------------------
       DIMENSION X(:)
 !---------------------------------------------------------------------
-      ipr = 6
 !
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -14154,7 +13877,7 @@ END SUBROUTINE LOGRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine logsf (X, Y)
+!!       SUBROUTINE LOGSF(P,Sf)
 !!
 !!##DESCRIPTION
 !!    logsf(3f) computes the sparsity function value for the logistic
@@ -14193,9 +13916,17 @@ END SUBROUTINE LOGRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
 !*==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGSF(P,Sf)
-      INTEGER ipr
 REAL(kind=wp) :: P , Sf
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -14209,30 +13940,20 @@ REAL(kind=wp) :: P , Sf
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGSF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -14250,7 +13971,7 @@ END SUBROUTINE LOGSF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine max (X, Y)
+!!       SUBROUTINE MAX(X,N,Iwrite,Xmax)
 !!
 !!##DESCRIPTION
 !!
@@ -14280,11 +14001,16 @@ END SUBROUTINE LOGSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 7.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==max.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE MAX(X,N,Iwrite,Xmax)
 REAL(kind=wp) :: hold , X(:) , Xmax
-INTEGER i , ipr , Iwrite , N
+INTEGER i , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -14310,26 +14036,20 @@ INTEGER i , ipr , Iwrite , N
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGE 7.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!
+
 !---------------------------------------------------------------------
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
 IF ( N<1 ) THEN
-   WRITE (ipr,99001)
+   WRITE (G_IO,99001)
    99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MAX    SUBROUTINE IS NON-POSITIVE *****')
-   WRITE (ipr,99002) N
+   WRITE (G_IO,99002) N
    99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
    RETURN
 ELSE
    IF ( N==1 ) THEN
-      WRITE (ipr,99003)
+      WRITE (G_IO,99003)
       99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MAX SUBROUTINE HAS THE VALUE 1 *****')
       Xmax = X(1)
    ELSE
@@ -14337,7 +14057,7 @@ ELSE
       DO i = 2 , N
          IF ( X(i)/=hold ) GOTO 50
       ENDDO
-      WRITE (ipr,99004) hold
+      WRITE (G_IO,99004) hold
       99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO THE MAX SUBROUTINE HAS ALL ELEMENTS = ', &
       & E15.8, &
       & ' *****')
@@ -14353,9 +14073,9 @@ ELSE
 ENDIF
 !
 100  IF ( Iwrite==0 ) RETURN
-   WRITE (ipr,99005)
+   WRITE (G_IO,99005)
    99005 FORMAT (' ')
-   WRITE (ipr,99006) N , Xmax
+   WRITE (G_IO,99006) N , Xmax
    99006 FORMAT (' ','THE MAXIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ', E15.8)
 END SUBROUTINE MAX
 !>
@@ -14364,7 +14084,7 @@ END SUBROUTINE MAX
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine mean (X, Y)
+!!       SUBROUTINE MEAN(X,N,Iwrite,Xmean)
 !!
 !!##DESCRIPTION
 !!    mean(3f) computes the sample mean of the data in the input vector x.
@@ -14395,10 +14115,17 @@ END SUBROUTINE MAX
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 4.
+!! !               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
+!! !                 OF STATISTICS, EDITION 2, 1963, PAGE 146.
+!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!! !                 ANALYSIS, EDITION 2, 1957, PAGE 14.
 !*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE MEAN(X,N,Iwrite,Xmean)
 REAL(kind=wp) :: an, hold, sum, X, Xmean
-INTEGER       :: i, ipr, Iwrite, N
+INTEGER       :: i, Iwrite, N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -14425,12 +14152,6 @@ INTEGER       :: i, ipr, Iwrite, N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 4.
-!               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
-!                 OF STATISTICS, EDITION 2, 1963, PAGE 146.
-!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!                 ANALYSIS, EDITION 2, 1957, PAGE 14.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !
@@ -14440,22 +14161,20 @@ INTEGER       :: i, ipr, Iwrite, N
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MEAN   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MEAN&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -14465,7 +14184,7 @@ INTEGER       :: i, ipr, Iwrite, N
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE MEAN   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -14483,9 +14202,9 @@ INTEGER       :: i, ipr, Iwrite, N
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xmean
+      WRITE (G_IO,99006) N , Xmean
 99006 FORMAT (' ','THE SAMPLE MEAN OF THE ',I6,' OBSERVATIONS IS ',     &
      &        E15.8)
 END SUBROUTINE MEAN
@@ -14495,7 +14214,7 @@ END SUBROUTINE MEAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine median (X, Y)
+!!       SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
 !!
 !!##DESCRIPTION
 !!    median(3f) computes the sample median of the data in the input
@@ -14528,10 +14247,20 @@ END SUBROUTINE MEAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 326.
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 49.
+!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 139.
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGE 123.
+!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!! !                 ANALYSIS, EDITION 2, 1957, PAGE 70.
 !*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
 REAL(kind=wp) :: hold , WS , X , Xmed , Y
-      INTEGER i , iflag , ipr , iupper , Iwrite , N , nmid , nmidp1
+INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -14559,15 +14288,6 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 326.
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 49.
-!               --DAVID, ORDER STATISTICS, 1970, PAGE 139.
-!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGE 123.
-!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!                 ANALYSIS, EDITION 2, 1957, PAGE 70.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14580,22 +14300,21 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
-      ipr = 6
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MEDIAN SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MEDI&
      &AN SUBROUTINE HAS THE VALUE 1 *****')
@@ -14605,7 +14324,7 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE MEDIAN SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -14624,9 +14343,9 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xmed
+      WRITE (G_IO,99006) N , Xmed
 99006 FORMAT (' ','THE SAMPLE MEDIAN OF THE ',I6,' OBSERVATIONS IS ',   &
      &        E15.8)
 END SUBROUTINE MEDIAN
@@ -14636,7 +14355,7 @@ END SUBROUTINE MEDIAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine midm (X, Y)
+!!       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
 !!
 !!##DESCRIPTION
 !!    midm(3f) computes the sample midmean = the sample 25% (on each side)
@@ -14666,11 +14385,20 @@ END SUBROUTINE MEDIAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
+!! !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
+!! !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 1967, PAGES 357, 387.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY, 1969).
 !*==midm.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
 REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
      &     X , Xmidm , Y
-      INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
+INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -14699,14 +14427,6 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
-!               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
-!                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 1967, PAGES 357, 387.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY, 1969).
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14721,23 +14441,22 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
       DATA p1 , p2 , perp1 , perp2 , perp3/0.25_wp , 0.25_wp , 25.0_wp , 25.0_wp ,  &
      &     50.0_wp/
 !
-      ipr = 6
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MIDM   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MIDM&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -14747,7 +14466,7 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE MIDM   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -14767,7 +14486,7 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
          sum = 0.0_wp
          k = 0
          IF ( istart>istop ) THEN
-            WRITE (ipr,99005)
+            WRITE (G_IO,99005)
 99005       FORMAT (' ','INTERNAL ERROR IN MIDM   SUBROUTINE--',        &
      &              'THE START INDEX IS HIGHER THAN THE STOP INDEX')
             Xmidm = 0.0_wp
@@ -14784,18 +14503,18 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ')
-      WRITE (ipr,99007) N , Xmidm
+      WRITE (G_IO,99007) N , Xmidm
 99007 FORMAT (' ','THE SAMPLE MIDMEAN OF THE ',I6,' OBSERVATIONS',      &
      &        ' IS ',E15.8)
-      WRITE (ipr,99008) perp1 , np1
+      WRITE (G_IO,99008) perp1 , np1
 99008 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
      &        'OF THE DATA WERE TRIMMED     FROM BELOW')
-      WRITE (ipr,99009) perp2 , np2
+      WRITE (G_IO,99009) perp2 , np2
 99009 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
      &        'OF THE DATA WERE TRIMMED     FROM ABOVE')
-      WRITE (ipr,99010) perp3 , k
+      WRITE (G_IO,99010) perp3 , k
 99010 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
      &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
 !
@@ -14806,7 +14525,7 @@ END SUBROUTINE MIDM
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine midr (X, Y)
+!!       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
 !!
 !!##DESCRIPTION
 !!    midr(3f) computes the sample midrange of the data in the input
@@ -14838,10 +14557,18 @@ END SUBROUTINE MIDM
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 91.
+!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 97.
+!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!! !                 ANALYSIS, EDITION 2, 1957, PAGE 71.
 !*==midr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
 REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
-      INTEGER i , ipr , Iwrite , N
+INTEGER :: i , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -14868,13 +14595,6 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 91.
-!               --DAVID, ORDER STATISTICS, 1970, PAGE 97.
-!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!                 ANALYSIS, EDITION 2, 1957, PAGE 71.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14883,21 +14603,19 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MIDR   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MIDR&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -14907,7 +14625,7 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE MIDR   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -14927,9 +14645,9 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xmidr
+      WRITE (G_IO,99006) N , Xmidr
 99006 FORMAT (' ','THE SAMPLE MIDRANGE OF THE ',I6,' OBSERVATIONS IS ', &
      &        E22.15)
 END SUBROUTINE MIDR
@@ -14939,7 +14657,7 @@ END SUBROUTINE MIDR
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine min (X, Y)
+!!       SUBROUTINE MIN(X,N,Iwrite,Xmin)
 !!
 !!##DESCRIPTION
 !!    min(3f) computes the sample minimum of the data in the input vector x.
@@ -14968,10 +14686,13 @@ END SUBROUTINE MIDR
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 7.
 !*==min.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE MIN(X,N,Iwrite,Xmin)
+
+SUBROUTINE MIN(X,N,Iwrite,Xmin)
 REAL(kind=wp) :: hold , X , Xmin
-      INTEGER i , ipr , Iwrite , N
+INTEGER :: i , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -14998,7 +14719,6 @@ REAL(kind=wp) :: hold , X , Xmin
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGE 7.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -15007,21 +14727,19 @@ REAL(kind=wp) :: hold , X , Xmin
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MIN    SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MIN &
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -15031,7 +14749,7 @@ REAL(kind=wp) :: hold , X , Xmin
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE MIN    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -15048,9 +14766,9 @@ REAL(kind=wp) :: hold , X , Xmin
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xmin
+      WRITE (G_IO,99006) N , Xmin
 99006 FORMAT (' ','THE MINIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ',  &
      &        E15.8)
 END SUBROUTINE MIN
@@ -15061,7 +14779,7 @@ END SUBROUTINE MIN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine move (X, Y)
+!!       SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
 !!
 !!##DESCRIPTION
 !!    move(3f) moves (copies) m elements of the single precision vector
@@ -15099,7 +14817,7 @@ END SUBROUTINE MIN
 SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
 IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Y
-INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
+INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS, PART (OR ALL)
@@ -15143,34 +14861,32 @@ INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
 !
       DIMENSION X(:) , Y(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( M<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MOVE   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99006) M
+         WRITE (G_IO,99006) M
          RETURN
       ELSEIF ( Ix1<1 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE MOVE   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99006) Ix1
+         WRITE (G_IO,99006) Ix1
          RETURN
       ELSEIF ( Iy1<1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE MOVE   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99006) Iy1
+         WRITE (G_IO,99006) Iy1
          RETURN
       ELSE
          IF ( M==1 ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MOVE&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -15181,7 +14897,7 @@ INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
             DO i = istart , iend
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99005) hold
+            WRITE (G_IO,99005) hold
 99005       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE MOVE   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -15205,7 +14921,7 @@ END SUBROUTINE MOVE
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine nbcdf (X, Y)
+!!       SUBROUTINE NBCDF(X,P,N,Cdf)
 !!
 !!##DESCRIPTION
 !!
@@ -15253,10 +14969,31 @@ END SUBROUTINE MOVE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 945, FORMULAE 26.5.24 AND
+!! !                 26.5.28, AND PAGE 929.
+!! !               --JOHNSON AND KOTZ, DISCRETE
+!! !                 DISTRIBUTIONS, 1969, PAGES 122-142,
+!! !                 ESPECIALLY PAGE 127.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 92-95.
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 155-157, 210.
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
+!! !               --WILLIAMSON AND BRETHERTON, TABLES OF
+!! !                 THE NEGATIVE BINOMIAL PROBABILITY
+!! !                 DISTRIBUTION, 1963.
+!! !               --OWEN, HANDBOOK OF STATISTICAL
+!! !                 TABLES, 1962, PAGE 304.
 !*==nbcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBCDF(X,P,N,Cdf)
 REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
-      INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
+INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
      &        k , N , n2 , nu1 , nu2
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
@@ -15313,26 +15050,6 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 945, FORMULAE 26.5.24 AND
-!                 26.5.28, AND PAGE 929.
-!               --JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 122-142,
-!                 ESPECIALLY PAGE 127.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 92-95.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 155-157, 210.
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
-!               --WILLIAMSON AND BRETHERTON, TABLES OF
-!                 THE NEGATIVE BINOMIAL PROBABILITY
-!                 DISTRIBUTION, 1963.
-!               --OWEN, HANDBOOK OF STATISTICAL
-!                 TABLES, 1962, PAGE 304.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -15344,34 +15061,32 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
       DOUBLE PRECISION DSQRT , DATAN
       DATA pi/3.14159265358979D0/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NBCDF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99006) P
+         WRITE (G_IO,99006) P
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( N<1 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE NBCDF  SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) N
+         WRITE (G_IO,99003) N
 99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( X<0.0_wp ) THEN
-         WRITE (ipr,99004)
+         WRITE (G_IO,99004)
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE NBCD&
      &F  SUBROUTINE IS NEGATIVE *****')
-         WRITE (ipr,99006) X
+         WRITE (G_IO,99006) X
          IF ( X<0.0_wp ) Cdf = 0.0_wp
          RETURN
       ELSE
@@ -15380,11 +15095,11 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
          del = X - fintx
          IF ( del<0.0_wp ) del = -del
          IF ( del>0.001_wp ) THEN
-            WRITE (ipr,99005)
+            WRITE (G_IO,99005)
 99005       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE NBCD&
      &F  SUBROUTINE IS NON-INTEGRAL *****')
-            WRITE (ipr,99006) X
+            WRITE (G_IO,99006) X
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
@@ -15531,7 +15246,7 @@ END SUBROUTINE NBCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine nbppf (X, Y)
+!!       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
 !!
 !!##DESCRIPTION
 !!    nbppf(3f) computes the percent point function value at the single
@@ -15585,12 +15300,32 @@ END SUBROUTINE NBCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, DISCRETE
+!! !                 DISTRIBUTIONS, 1969, PAGES 122-142,
+!! !                 ESPECIALLY PAGE 127, FORMULA 22.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 92-95.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 929.
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 155-157, 210.
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
+!! !               --WILLIAMSON AND BRETHERTON, TABLES OF
+!! !                 THE NEGATIVE BINOMIAL PROBABILITY
+!! !                 DISTRIBUTION, 1963.
+!! !               --OWEN, HANDBOOK OF STATISTICAL
+!! !                 TABLES, 1962, PAGE 304.
 !*==nbppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
 REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
      &     Ppar , Ppf , sd , sinh , x0 , x1 , x2 , ymean , yppf , ysd
 REAL(kind=wp) :: zppf
-      INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
+INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -15645,59 +15380,38 @@ REAL(kind=wp) :: zppf
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 122-142,
-!                 ESPECIALLY PAGE 127, FORMULA 22.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 92-95.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 155-157, 210.
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
-!               --WILLIAMSON AND BRETHERTON, TABLES OF
-!                 THE NEGATIVE BINOMIAL PROBABILITY
-!                 DISTRIBUTION, 1963.
-!               --OWEN, HANDBOOK OF STATISTICAL
-!                 TABLES, 1962, PAGE 304.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
       DOUBLE PRECISION dppar
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NBPPF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99019) P
+         WRITE (G_IO,99019) P
          Ppf = 0.0_wp
          RETURN
       ELSE
          IF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
-            WRITE (ipr,99002)
+            WRITE (G_IO,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NBPPF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-            WRITE (ipr,99019) Ppar
+            WRITE (G_IO,99019) Ppar
             Ppf = 0.0_wp
             RETURN
          ELSE
             IF ( N<1 ) THEN
-               WRITE (ipr,99003)
+               WRITE (G_IO,99003)
 99003          FORMAT (' ',                                             &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE NBPPF  SUBROU&
      &TINE IS NON-POSITIVE *****')
-               WRITE (ipr,99004) N
+               WRITE (G_IO,99004) N
 99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
      &                 ' *****')
                Ppf = 0.0_wp
@@ -15781,8 +15495,8 @@ REAL(kind=wp) :: zppf
                               IF ( p2>=P ) GOTO 20
                               ix0 = ix2
                            ENDDO
-                           WRITE (ipr,99020)
-                           WRITE (ipr,99005)
+                           WRITE (G_IO,99020)
+                           WRITE (G_IO,99005)
 !
 99005                      FORMAT (' ',                                 &
      &                     'NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS'&
@@ -15798,8 +15512,8 @@ REAL(kind=wp) :: zppf
                               IF ( p2<P ) GOTO 50
                               ix1 = ix2
                            ENDDO
-                           WRITE (ipr,99020)
-                           WRITE (ipr,99006)
+                           WRITE (G_IO,99020)
+                           WRITE (G_IO,99006)
 99006                      FORMAT (' ',                                 &
      &                     'NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS'&
      &                     )
@@ -15823,8 +15537,8 @@ REAL(kind=wp) :: zppf
          ELSEIF ( ix0==N ) THEN
             ix0 = ix0 - 1
          ELSE
-            WRITE (ipr,99020)
-            WRITE (ipr,99007)
+            WRITE (G_IO,99020)
+            WRITE (G_IO,99007)
 99007       FORMAT (' ','LOWER AND UPPER BOUND IDENTICAL')
             GOTO 200
          ENDIF
@@ -15860,8 +15574,8 @@ REAL(kind=wp) :: zppf
                ix2 = (ix0+ix1)/2
                IF ( ix2/=ix0 ) THEN
                   IF ( ix2==ix1 ) THEN
-                     WRITE (ipr,99020)
-                     WRITE (ipr,99021)
+                     WRITE (G_IO,99020)
+                     WRITE (G_IO,99021)
                      EXIT
                   ELSE
                      x2 = ix2
@@ -15876,15 +15590,15 @@ REAL(kind=wp) :: zppf
                         ENDIF
                         CYCLE
                      ELSEIF ( p2<=p0 ) THEN
-                        WRITE (ipr,99020)
-                        WRITE (ipr,99008)
+                        WRITE (G_IO,99020)
+                        WRITE (G_IO,99008)
 99008                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
      &                          'LESS THAN LOWER BOUND PROBABILITY (P0)'&
      &                          )
                         EXIT
                      ELSEIF ( p2>=p1 ) THEN
-                        WRITE (ipr,99020)
-                        WRITE (ipr,99009)
+                        WRITE (G_IO,99020)
+                        WRITE (G_IO,99009)
 99009                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
      &                       'GREATER THAN UPPER BOUND PROBABILITY (P1)'&
      &                       )
@@ -15892,8 +15606,8 @@ REAL(kind=wp) :: zppf
                      ENDIF
                   ENDIF
                ENDIF
-               WRITE (ipr,99020)
-               WRITE (ipr,99021)
+               WRITE (G_IO,99020)
+               WRITE (G_IO,99021)
                EXIT
             ENDIF
          ENDDO
@@ -15904,35 +15618,35 @@ REAL(kind=wp) :: zppf
          Ppf = ix1
          RETURN
       ELSEIF ( p0>p1 ) THEN
-         WRITE (ipr,99020)
-         WRITE (ipr,99010)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
      &           'UPPER BOUND PROBABILITY (P1)')
       ELSEIF ( p0>P ) THEN
-         WRITE (ipr,99020)
-         WRITE (ipr,99011)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
      &           'INPUT PROBABILITY (P)')
       ELSEIF ( p1<P ) THEN
-         WRITE (ipr,99020)
-         WRITE (ipr,99012)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ','UPPER BOUND PROBABILITY (P1) LESS    THAN ',      &
      &           'INPUT PROBABILITY (P)')
       ELSE
-         WRITE (ipr,99020)
-         WRITE (ipr,99013)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
       ENDIF
 !
- 200  WRITE (ipr,99014) ix0 , p0
+ 200  WRITE (G_IO,99014) ix0 , p0
 99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
-      WRITE (ipr,99015) ix1 , p1
+      WRITE (G_IO,99015) ix1 , p1
 99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
-      WRITE (ipr,99016) ix2 , p2
+      WRITE (G_IO,99016) ix2 , p2
 99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
-      WRITE (ipr,99017) P
+      WRITE (G_IO,99017) P
 99017 FORMAT (' ','P    = ',F14.7)
-      WRITE (ipr,99018) Ppar , N
+      WRITE (G_IO,99018) Ppar , N
 99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
       RETURN
 99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
@@ -15947,7 +15661,7 @@ END SUBROUTINE NBPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine nbran (X, Y)
+!!       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
 !!
 !!##DESCRIPTION
 !!    nbran(3f) generates a random sample of size n from the negative
@@ -15995,10 +15709,24 @@ END SUBROUTINE NBPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 95.
+!! !               --JOHNSON AND KOTZ, DISCRETE
+!! !                 DISTRIBUTIONS, 1969, PAGES 122-142.
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 155-157, 210.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 929.
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
 !*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
 REAL(kind=wp) :: b(1) , g(1) , P , X
-      INTEGER i , ib , ig , ipr , Istart , isum , j , N , Npar
+INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -16066,51 +15794,36 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 95.
-!               --JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 122-142.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 155-157, 210.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99005) N
+         WRITE (G_IO,99005) N
          RETURN
       ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99003) P
+         WRITE (G_IO,99003) P
 99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
       ELSEIF ( Npar<1 ) THEN
-         WRITE (ipr,99004)
+         WRITE (G_IO,99004)
 99004    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99005) Npar
+         WRITE (G_IO,99005) Npar
          RETURN
       ELSE
 !
@@ -16176,7 +15889,7 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine norcdf (X, Y)
+!!       SUBROUTINE NORCDF(X,Cdf)
 !!
 !!##DESCRIPTION
 !!    norcdf(3f) computes the cumulative distribution function value for the
@@ -16211,10 +15924,14 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 932, FORMULA 26.2.17.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
 !*==norcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE NORCDF(X,Cdf)
 REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
-INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
@@ -16225,10 +15942,6 @@ INTEGER ipr
 !             FUNCTION VALUE CDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 932, FORMULA 26.2.17.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16237,8 +15950,6 @@ INTEGER ipr
 !
       DATA b1 , b2 , b3 , b4 , b5 , p/.319381530_wp , -0.356563782_wp ,       &
      &     1.781477937_wp , -1.821255978_wp , 1.330274429_wp , .2316419_wp/
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS.
 !     NO INPUT ARGUMENT ERRORS POSSIBLE
@@ -16261,7 +15972,7 @@ END SUBROUTINE NORCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine norout (X, Y)
+!!       SUBROUTINE NOROUT(X,N)
 !!
 !!##DESCRIPTION
 !!
@@ -16311,6 +16022,8 @@ END SUBROUTINE NORCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
 !*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NOROUT(X,N)
 REAL(kind=wp) :: ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
@@ -16320,7 +16033,7 @@ REAL(kind=wp) :: ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
      &     sum , sum4
 REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
      &     xb4 , xline , XPOs , Y
-      INTEGER i , icount , iflag , ipr , irev , iupper , j , mx , N ,   &
+INTEGER :: i , icount , iflag , irev , iupper , j , mx , N ,   &
      &        nm1 , nm2 , nm3 , nm4 , nm5
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -16347,16 +16060,15 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !     THE NORMAL N(0,1) CUMULATIVE DISTRIBUTION FUNCTION VALUE
 !     OF THE STANDARDIZED RESIDUAL, AND
 !     THE POSITION NUMBER IN THE ORIGINAL DATA VECTOR X.
-!     REFERENCES--GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 iline1
-      CHARACTER*4 iline2
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: iline1
+CHARACTER(len=4) :: iline2
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , XPOs(7500)
@@ -16368,22 +16080,21 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NOROUT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE NORO&
      &UT SUBROUTINE HAS THE VALUE 1 *****')
@@ -16393,7 +16104,7 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE NOROUT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -16544,107 +16255,107 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !
 !     WRITE OUT THE OUTLIER STATISTICS
 !
-         WRITE (ipr,99041)
-         WRITE (ipr,99005)
+         WRITE (G_IO,99041)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ',48X,'NORMAL OUTLIER ANALYSIS')
-         WRITE (ipr,99042)
-         WRITE (ipr,99006) N
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99006) N
 99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I5,')')
-         WRITE (ipr,99042)
-         WRITE (ipr,99007)
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99007)
 99007    FORMAT (' ',39X,                                               &
      &           'REFERENCE--GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21')
          DO i = 1 , 6
-            WRITE (ipr,99042)
+            WRITE (G_IO,99042)
          ENDDO
-         WRITE (ipr,99008)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ',49X,'OUTLIER STATISTICS')
-         WRITE (ipr,99042)
-         WRITE (ipr,99042)
-         WRITE (ipr,99009)
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',                                                   &
      &'    OMIT             TEST                    FORM                &
      &  VALUE       PSEUDO-SAMPLE SIZE            TABLE')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ',                                                   &
      &'AS AN OUTLIER    AS AN OUTLIER           OF STATISTIC           O&
      &F STATISTIC   FOR TABLE LOOK-UP           REFERENCE')
-         WRITE (ipr,99042)
-         WRITE (ipr,99011) st1 , N
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99011) st1 , N
 99011    FORMAT (' ',                                                   &
      &'    NONE             X(1)              (XBAR - X(1))/S           &
      &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  4')
-         WRITE (ipr,99012) st2 , N
+         WRITE (G_IO,99012) st2 , N
 99012    FORMAT (' ',                                                   &
      &'    NONE             X(N)              (X(N) - XBAR)/S           &
      &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  4')
-         WRITE (ipr,99013) st3 , N
+         WRITE (G_IO,99013) st3 , N
 99013    FORMAT (' ',                                                   &
      &'    NONE         X(1) AND X(N)             RANGE/S               &
      &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  8')
-         WRITE (ipr,99014) st4 , N
+         WRITE (G_IO,99014) st4 , N
 99014    FORMAT (' ',                                                   &
      &'    X(1)             X(2)               SSQD(1,2)/SSQD           &
      &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P. 11')
-         WRITE (ipr,99015) st5 , N
+         WRITE (G_IO,99015) st5 , N
 99015    FORMAT (' ',                                                   &
      &'    X(N)            X(N-1)             SSQD(N-1,N)/SSQD          &
      &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P. 11')
-         WRITE (ipr,99016) st6 , nm2
+         WRITE (G_IO,99016) st6 , nm2
 99016    FORMAT (' ',                                                   &
      &'X(1) AND X(N)        X(2)          (XBAR(1,N) - X(2))/S(1,N)     &
      &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  4')
-         WRITE (ipr,99017) st7 , nm2
+         WRITE (G_IO,99017) st7 , nm2
 99017    FORMAT (' ',                                                   &
      &'X(1) AND X(N)       X(N-1)        (X(N-1) - XBAR(1,N))/S(1,N)    &
      &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  4')
-         WRITE (ipr,99018) st8 , nm2
+         WRITE (G_IO,99018) st8 , nm2
 99018    FORMAT (' ',                                                   &
      &'X(1) AND X(N)   X(2) AND X(N-1)       RANGE(1,N)/S(1,N)          &
      &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  8')
-         WRITE (ipr,99019) st9 , nm2
+         WRITE (G_IO,99019) st9 , nm2
 99019    FORMAT (' ',                                                   &
      &'X(1) AND X(N)   X(2) AND X(N-1)      SAMPLE KURTOSIS(1,N)        &
      &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P. 14')
          DO i = 1 , 10
-            WRITE (ipr,99042)
+            WRITE (G_IO,99042)
          ENDDO
 !
 !     WRITE OUT THE PARTIAL SAMPLE MEANS
 !     AND THE PARTIAL SAMPLE STANDARD DEVIATIONS.
 !
-         WRITE (ipr,99020)
+         WRITE (G_IO,99020)
 99020    FORMAT (' ',30X,                                               &
      &     'PARTIAL SAMPLE MEANS AND PARTIAL SAMPLE STANDARD DEVIATIONS'&
      &     )
-         WRITE (ipr,99042)
-         WRITE (ipr,99042)
-         WRITE (ipr,99021)
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99021)
 99021    FORMAT (' ',                                                   &
      &'            OMIT               PARTIAL SAMPLE      PARTIAL SAMPLE&
      &')
-         WRITE (ipr,99022)
+         WRITE (G_IO,99022)
 99022    FORMAT (' ',                                                   &
      &'        AS AN OUTLIER               MEAN         STANDARD DEVIATI&
      &ON')
-         WRITE (ipr,99042)
-         WRITE (ipr,99023) xb , s
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99023) xb , s
 99023    FORMAT (' ','            NONE             ',E15.8,5X,E15.8)
-         WRITE (ipr,99024) xb1 , s1
+         WRITE (G_IO,99024) xb1 , s1
 99024    FORMAT (' ','            X(1)             ',E15.8,5X,E15.8)
-         WRITE (ipr,99025) xb4 , s4
+         WRITE (G_IO,99025) xb4 , s4
 99025    FORMAT (' ','            X(N)             ',E15.8,5X,E15.8)
-         WRITE (ipr,99026) xb14 , s14
+         WRITE (G_IO,99026) xb14 , s14
 99026    FORMAT (' ','       X(1) AND X(N)         ',E15.8,5X,E15.8)
-         WRITE (ipr,99027) xb2 , s2
+         WRITE (G_IO,99027) xb2 , s2
 99027    FORMAT (' ','       X(1) AND X(2)         ',E15.8,5X,E15.8)
-         WRITE (ipr,99028) xb3 , s3
+         WRITE (G_IO,99028) xb3 , s3
 99028    FORMAT (' ','      X(N-1) AND X(N)        ',E15.8,5X,E15.8)
-         WRITE (ipr,99029) xb24 , s24
+         WRITE (G_IO,99029) xb24 , s24
 99029    FORMAT (' ','    X(1), X(2), AND X(N)     ',E15.8,5X,E15.8)
-         WRITE (ipr,99030) xb13 , s13
+         WRITE (G_IO,99030) xb13 , s13
 99030    FORMAT (' ','   X(1), X(N-1), AND X(N)    ',E15.8,5X,E15.8)
-         WRITE (ipr,99031) xb23 , s23
+         WRITE (G_IO,99031) xb23 , s23
 99031    FORMAT (' ','X(1), X(2), X(N-1), AND X(N) ',E15.8,5X,E15.8)
 !
 !     WRITE OUT THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS,
@@ -16654,39 +16365,39 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !     OF THE STANDARDIZED RESIDUAL, AND
 !     THE POSITION NUMBER IN THE ORIGINAL DATA VECTOR X.
 !
-         WRITE (ipr,99041)
-         WRITE (ipr,99032)
+         WRITE (G_IO,99041)
+         WRITE (G_IO,99032)
 99032    FORMAT (' ',                                                   &
      &'ORDER STATISTICS, RESIDUALS ABOUT THE SAMPLE MEAN, STANDARDIZED R&
      &ESIDUALS, AND NORMAL(0,1) CUMULATIVE DISTRIBUTION FUNCTION VALUES'&
      &)
-         WRITE (ipr,99042)
-         WRITE (ipr,99042)
-         WRITE (ipr,99033)
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99033)
 99033    FORMAT (' ',                                                   &
      &'  INDEX       ORDERED        RESIDUALS        STANDARDIZED       &
      &NORMAL(0,1)        OBSERVATION')
-         WRITE (ipr,99034)
+         WRITE (G_IO,99034)
 99034    FORMAT (' ',                                                   &
      &'            OBSERVATIONS     ABOUT THE         RESIDUALS      CDF&
      & VALUES OF THE       NUMBER')
-         WRITE (ipr,99035)
+         WRITE (G_IO,99035)
 99035    FORMAT (' ',                                                   &
      &'                            SAMPLE MEAN                         S&
      &TANDARDIZED')
-         WRITE (ipr,99036)
+         WRITE (G_IO,99036)
 99036    FORMAT (' ',                                                   &
      &'                                                                 &
      &RESIDUALS')
-         WRITE (ipr,99042)
+         WRITE (G_IO,99042)
          IF ( N<=80 ) THEN
             DO i = 1 , N
                res = Y(i) - xb
                stres = res/s
                CALL NORCDF(stres,cdf)
-               WRITE (ipr,99043) i , Y(i) , res , stres , cdf , XPOs(i)
+               WRITE (G_IO,99043) i , Y(i) , res , stres , cdf , XPOs(i)
                iflag = i - (i/10)*10
-               IF ( iflag==0 ) WRITE (ipr,99042)
+               IF ( iflag==0 ) WRITE (G_IO,99042)
             ENDDO
          ELSE
             DO i = 1 , 80
@@ -16695,13 +16406,13 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
                res = Y(j) - xb
                stres = res/s
                CALL NORCDF(stres,cdf)
-               WRITE (ipr,99043) j , Y(j) , res , stres , cdf , XPOs(j)
+               WRITE (G_IO,99043) j , Y(j) , res , stres , cdf , XPOs(j)
                iflag = i - (i/10)*10
-               IF ( iflag==0 ) WRITE (ipr,99042)
+               IF ( iflag==0 ) WRITE (G_IO,99042)
             ENDDO
          ENDIF
          DO i = 1 , 10
-            WRITE (ipr,99042)
+            WRITE (G_IO,99042)
          ENDDO
 !
 !     WRITE OUT THE LINE PLOT SHOWING THE DEVIATIONS
@@ -16709,23 +16420,23 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !     IN TERMS OF MULTIPLES OF THE (FULL) SAMPLE STANDARD
 !     DEVIATION.
 !
-         WRITE (ipr,99037)
+         WRITE (G_IO,99037)
 99037    FORMAT (' ',                                                   &
      &'LINE PLOT SHOWING THE DISTRIBUTION OF THE OBSERVATIONS ABOUT THE &
      &SAMPLE MEAN IN TERMS OF MULTIPLES OF THE SAMPLE STANDARD DEVIATION&
      &')
-         WRITE (ipr,99042)
-         WRITE (ipr,99042)
-         WRITE (ipr,99044) (iline1(i),i=1,130)
-         WRITE (ipr,99044) (iline2(i),i=1,130)
-         WRITE (ipr,99038)
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99044) (iline1(i),i=1,130)
+         WRITE (G_IO,99044) (iline2(i),i=1,130)
+         WRITE (G_IO,99038)
 99038    FORMAT (' ',                                                   &
      &'     -6        -5        -4        -3        -2        -1        &
      & 0         1         2         3         4         5         6')
-         WRITE (ipr,99039) (xline(i),i=1,13)
+         WRITE (G_IO,99039) (xline(i),i=1,13)
 99039    FORMAT (' ',13F10.4)
-         WRITE (ipr,99042)
-         WRITE (ipr,99040) icount
+         WRITE (G_IO,99042)
+         WRITE (G_IO,99040) icount
 99040    FORMAT (' ',10X,I5,                                            &
      &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
      & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
@@ -16748,7 +16459,7 @@ END SUBROUTINE NOROUT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine norpdf (X, Y)
+!!       SUBROUTINE NORPDF(X,Pdf)
 !!
 !!##DESCRIPTION
 !!    norpdf(3f) computes the probability density function value for the
@@ -16784,11 +16495,13 @@ END SUBROUTINE NOROUT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
 !*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE NORPDF(X,Pdf)
 IMPLICIT NONE
 REAL(kind=wp) :: c , Pdf , X
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
@@ -16799,8 +16512,6 @@ REAL(kind=wp) :: c , Pdf , X
 !             FUNCTION VALUE PDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16808,8 +16519,6 @@ REAL(kind=wp) :: c , Pdf , X
 !---------------------------------------------------------------------
 !
       DATA c/.3989422804_wp/
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS.
 !     NO INPUT ARGUMENT ERRORS POSSIBLE
@@ -16826,7 +16535,7 @@ END SUBROUTINE NORPDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine norplt (X, Y)
+!!       SUBROUTINE NORPLT(X,N)
 !!
 !!##DESCRIPTION
 !!    norplt(3f) generates a normal (gaussian) probability plot.
@@ -16873,11 +16582,30 @@ END SUBROUTINE NORPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
+!! !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!! !               --RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS
+!! !                 FOR NORMALITY'  PENNSYLVANIA
+!! !                 STATE UNIVERSITY REPORT.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 !*==norplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NORPLT(X,N)
-REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
-     &     X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
+
+SUBROUTINE NORPLT(X,N)
+REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
+INTEGER :: i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -16887,27 +16615,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
-!                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!               --RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS
-!                 FOR NORMALITY'  PENNSYLVANIA
-!                 STATE UNIVERSITY REPORT.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
@@ -16919,21 +16626,20 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !
       DATA tau/1.43218641_wp/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NORPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE NORP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
@@ -16943,7 +16649,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE NORPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -16971,7 +16677,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99005) tau , N
+         WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','NORMAL PROBABILITY PLOT (TAU = ',E15.8,')',56X,   &
      &           'THE SAMPLE SIZE N = ',I7)
@@ -16998,7 +16704,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -17011,7 +16717,7 @@ END SUBROUTINE NORPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine norppf (X, Y)
+!!       SUBROUTINE NORPPF(P,Ppf)
 !!
 !!##DESCRIPTION
 !!    norppf(3f) computes the percent point function value for the normal
@@ -17050,11 +16756,40 @@ END SUBROUTINE NORPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --ODEH AND EVANS, THE PERCENTAGE POINTS
+!! !                 OF THE NORMAL DISTRIBUTION, ALGORTIHM 70,
+!! !                 APPLIED STATISTICS, 1974, PAGES 96-97.
+!! !               --EVANS, ALGORITHMS FOR MINIMAL DEGREE
+!! !                 POLYNOMIAL AND RATIONAL APPROXIMATION,
+!! !                 M. SC. THESIS, 1972, UNIVERSITY
+!! !                 OF VICTORIA, B. C., CANADA.
+!! !               --HASTINGS, APPROXIMATIONS FOR DIGITAL
+!! !                 COMPUTERS, 1955, PAGES 113, 191, 192.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 933, FORMULA 26.2.23.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!! !               --THE KELLEY STATISTICAL TABLES, 1948.
+!! !               --OWEN, HANDBOOK OF STATISTICAL TABLES,
+!! !                 1962, PAGES 3-16.
+!! !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
+!! !                 FOR STATISTICIANS, VOLUME 1, 1954,
+!! !                 PAGES 104-113.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --OCTOBER   1976.
 !*==norppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NORPPF(P,Ppf)
-REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
-     &     q2 , q3 , q4 , r , t
-      INTEGER ipr
+
+SUBROUTINE NORPPF(P,Ppf)
+REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 , q3 , q4 , r , t
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -17066,32 +16801,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--ODEH AND EVANS, THE PERCENTAGE POINTS
-!                 OF THE NORMAL DISTRIBUTION, ALGORTIHM 70,
-!                 APPLIED STATISTICS, 1974, PAGES 96-97.
-!               --EVANS, ALGORITHMS FOR MINIMAL DEGREE
-!                 POLYNOMIAL AND RATIONAL APPROXIMATION,
-!                 M. SC. THESIS, 1972, UNIVERSITY
-!                 OF VICTORIA, B. C., CANADA.
-!               --HASTINGS, APPROXIMATIONS FOR DIGITAL
-!                 COMPUTERS, 1955, PAGES 113, 191, 192.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 933, FORMULA 26.2.23.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!               --THE KELLEY STATISTICAL TABLES, 1948.
-!               --OWEN, HANDBOOK OF STATISTICAL TABLES,
-!                 1962, PAGES 3-16.
-!               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
-!                 FOR STATISTICIANS, VOLUME 1, 1954,
-!                 PAGES 104-113.
+
 !     COMMENTS--THE CODING AS PRESENTED BELOW
 !               IS ESSENTIALLY IDENTICAL TO THAT
 !               PRESENTED BY ODEH AND EVANS
@@ -17109,10 +16819,6 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !               THE ACCURACY OF APPROXIMATION
 !               BEING IMPROVED FROM 4.5*(10**-4)
 !               TO 1.5*(10**-8).
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --OCTOBER   1976.
 !
 !---------------------------------------------------------------------
 !
@@ -17121,16 +16827,14 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
       DATA q0 , q1 , q2 , q3 , q4/.993484626060E-1_wp , .588581570495_wp ,    &
      &     .531103462366_wp , .103537752850_wp , .38560700634E-2_wp/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NORPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -17158,7 +16862,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine norran (X, Y)
+!!       SUBROUTINE NORRAN(N,Iseed,X)
 !!
 !!##DESCRIPTION
 !!
@@ -17194,10 +16898,21 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --BOX AND MULLER, 'A NOTE ON THE GENERATION
+!! !                 OF RANDOM NORMAL DEVIATES', JOURNAL OF THE
+!! !                 ASSOCIATION FOR COMPUTING MACHINERY, 1958,
+!! !                 PAGES 610-611.
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 33-34.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 39.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
 !*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
-      INTEGER i , ip1 , ipr , Iseed , N
+INTEGER :: i , ip1 , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -17217,16 +16932,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     METHOD--BOX-MULLER ALGORITHM.
-!     REFERENCES--BOX AND MULLER, 'A NOTE ON THE GENERATION
-!                 OF RANDOM NORMAL DEVIATES', JOURNAL OF THE
-!                 ASSOCIATION FOR COMPUTING MACHINERY, 1958,
-!                 PAGES 610-611.
-!               --TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 33-34.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 39.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -17244,14 +16949,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !
 !---------------------------------------------------------------------
 !
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
-!
 !-----DATA STATEMENTS-------------------------------------------------
 !
       DATA pi/3.14159265359_wp/
@@ -17261,11 +16958,11 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NORRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -17307,7 +17004,7 @@ END SUBROUTINE NORRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine norsf (X, Y)
+!!       SUBROUTINE NORSF(P,Sf)
 !!
 !!##DESCRIPTION
 !!    norsf(3f) computes the sparsity function value for the normal
@@ -17346,10 +17043,21 @@ END SUBROUTINE NORRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==norsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORSF(P,Sf)
 REAL(kind=wp) :: c , P , pdf , ppf , Sf
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -17361,37 +17069,18 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!
+
 !---------------------------------------------------------------------
 !
       DATA c/0.3989422804_wp/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NORSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO NORSF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (G_IO,99002) P
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          RETURN
       ELSE
 !
@@ -17410,7 +17099,7 @@ END SUBROUTINE NORSF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine parcdf (X, Y)
+!!       SUBROUTINE PARCDF(X,Gamma,Cdf)
 !!
 !!##DESCRIPTION
 !!
@@ -17447,12 +17136,18 @@ END SUBROUTINE NORSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 102.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !*==parcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -17472,32 +17167,24 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !                 --X SHOULD BE GREATER THAN
 !                   OR EQUAL TO 1.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 102.
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE PARC&
      &DF SUBROUTINE IS LESS THAN 1.0 *****')
-         WRITE (ipr,99003) X
+         WRITE (G_IO,99003) X
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARCDF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) Gamma
+         WRITE (G_IO,99003) Gamma
          Cdf = 0.0_wp
          RETURN
       ELSE
@@ -17515,7 +17202,7 @@ END SUBROUTINE PARCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine parplt (X, Y)
+!!       SUBROUTINE PARPLT(X,N,Gamma)
 !!
 !!##DESCRIPTION
 !!    parplt(3f) generates a pareto probability plot (with tail length
@@ -17565,13 +17252,22 @@ END SUBROUTINE PARCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
 !*==parplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE PARPLT(X,N,Gamma)
-REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
-     &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
-     &     yint
+REAL(kind=wp) :: an, cc, Gamma, hold, pp0025, pp025, pp975, pp9975,   q, sum1, sum2, sum3, tau, W, wbar, WS, X, Y, ybar, yint
 REAL(kind=wp) :: yslope
-      INTEGER i , ipr , iupper , N
+INTEGER       :: i, iupper, N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -17588,52 +17284,40 @@ REAL(kind=wp) :: yslope
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
 !---------------------------------------------------------------------
-!
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PARP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          IF ( Gamma<=0.0_wp ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE PARPLT SUBROU&
      &TINE IS NON-POSITIVE *****')
-            WRITE (ipr,99005) Gamma
+            WRITE (G_IO,99005) Gamma
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
             RETURN
@@ -17642,7 +17326,7 @@ REAL(kind=wp) :: yslope
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99006) hold
+            WRITE (G_IO,99006) hold
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE PARPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -17682,7 +17366,7 @@ REAL(kind=wp) :: yslope
          q = 0.025_wp
          pp025 = (1.0_wp-q)**(-1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
-         WRITE (ipr,99007) Gamma , tau , N
+         WRITE (G_IO,99007) Gamma , tau , N
 !
 99007    FORMAT (' ',                                                   &
      &           'PARETO PROBABILITY PLOT WITH EXPONENT PARAMETER = ',  &
@@ -17713,7 +17397,7 @@ REAL(kind=wp) :: yslope
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99008) cc , yint , yslope
+         WRITE (G_IO,99008) cc , yint , yslope
 99008    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -17726,7 +17410,7 @@ END SUBROUTINE PARPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine parppf (X, Y)
+!!       SUBROUTINE PARPPF(P,Gamma,Ppf)
 !!
 !!##DESCRIPTION
 !!    parppf(3f) computes the percent point function value for the pareto
@@ -17765,10 +17449,16 @@ END SUBROUTINE PARPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 102.
 !*==parppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
-      INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -17788,34 +17478,26 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 102.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE PARPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99003) P
+         WRITE (G_IO,99003) P
          Ppf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) Gamma
+         WRITE (G_IO,99003) Gamma
          Ppf = 0.0_wp
          RETURN
       ELSE
@@ -17833,7 +17515,7 @@ END SUBROUTINE PARPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine parran (X, Y)
+!!       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    parran(3f) generates a random sample of size n from the pareto
@@ -17868,10 +17550,21 @@ END SUBROUTINE PARPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 14-15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 36.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 104.
 !*==parran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
-      INTEGER i , ipr , Iseed , N
+INTEGER :: i , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -17892,16 +17585,6 @@ REAL(kind=wp) :: Gamma , X
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 104.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -17915,32 +17598,24 @@ REAL(kind=wp) :: Gamma , X
 !
 !---------------------------------------------------------------------
 !
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
-!
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE PARRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99004) Gamma
+         WRITE (G_IO,99004) Gamma
 99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -17966,7 +17641,8 @@ END SUBROUTINE PARRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plot10 (X, Y)
+!!       SUBROUTINE PLOT10( &
+!!       & Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
 !!
 !!##DESCRIPTION
 !!    plot10(3f) yields a one-page printer plot of y(i) versus x(i):
@@ -18047,6 +17723,14 @@ END SUBROUTINE PARRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
+!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
+!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
+!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot10.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
 IMPLICIT NONE
@@ -18055,7 +17739,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
      &     ratiox , ratioy , X , x25 , x75 , Xaxid , Xmax , xmid ,      &
      &     Xmin , Y , Yaxid , ylable
 REAL(kind=wp) :: Ymax , Ymin
-      INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
+INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -18136,13 +17820,6 @@ REAL(kind=wp) :: Ymax , Ymin
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
 !              SUBROUTINE.
-!     REFERENCES--FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !     ORIGINAL VERSION--JANUARY   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -18152,13 +17829,13 @@ REAL(kind=wp) :: Ymax , Ymin
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 iplotc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42 , alph91 , alph92
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: iplotc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42 , alph91 , alph92
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -18191,29 +17868,28 @@ REAL(kind=wp) :: Ymax , Ymin
      &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
      &     'Y' , 'Z' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99016)
-         WRITE (ipr,99017)
-         WRITE (ipr,99019) alph41 , alph42 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99019) alph41 , alph42 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99016)
+         WRITE (G_IO,99016)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99016)
-            WRITE (ipr,99017)
-            WRITE (ipr,99019) alph41 , alph42 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99016)
+            WRITE (G_IO,99017)
+            WRITE (G_IO,99019) alph41 , alph42 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99016)
+            WRITE (G_IO,99016)
             RETURN
          ELSE
 !
@@ -18221,97 +17897,97 @@ REAL(kind=wp) :: Ymax , Ymin
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99016)
-            WRITE (ipr,99017)
-            WRITE (ipr,99019) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99020) hold
-            WRITE (ipr,99016)
+            WRITE (G_IO,99016)
+            WRITE (G_IO,99017)
+            WRITE (G_IO,99019) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99020) hold
+            WRITE (G_IO,99016)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99016)
-         WRITE (ipr,99017)
-         WRITE (ipr,99019) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99020) hold
-         WRITE (ipr,99016)
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99019) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99020) hold
+         WRITE (G_IO,99016)
          RETURN
       ENDIF
  100  hold = Char(1)
       DO i = 2 , N
          IF ( Char(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99016)
-      WRITE (ipr,99018)
-      WRITE (ipr,99019) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99020) hold
-      WRITE (ipr,99016)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99018)
+      WRITE (G_IO,99019) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99020) hold
+      WRITE (G_IO,99016)
  200  hold = D(1)
       DO i = 2 , N
          IF ( D(i)/=hold ) GOTO 300
       ENDDO
-      WRITE (ipr,99016)
-      WRITE (ipr,99018)
-      WRITE (ipr,99019) alph91 , alph92 , sbnam1 , sbnam2
-      WRITE (ipr,99020) hold
-      WRITE (ipr,99016)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99018)
+      WRITE (G_IO,99019) alph91 , alph92 , sbnam1 , sbnam2
+      WRITE (G_IO,99020) hold
+      WRITE (G_IO,99016)
 !
  300  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99016)
-      WRITE (ipr,99017)
-      WRITE (ipr,99019) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99021)
-      WRITE (ipr,99022) cutoff
-      WRITE (ipr,99016)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017)
+      WRITE (G_IO,99019) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99021)
+      WRITE (G_IO,99022) cutoff
+      WRITE (G_IO,99016)
       RETURN
  400  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99016)
-      WRITE (ipr,99017)
-      WRITE (ipr,99019) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99021)
-      WRITE (ipr,99022) cutoff
-      WRITE (ipr,99016)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017)
+      WRITE (G_IO,99019) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99021)
+      WRITE (G_IO,99022) cutoff
+      WRITE (G_IO,99016)
       RETURN
  500  DO i = 1 , N
          IF ( Char(i)<cutoff ) GOTO 600
       ENDDO
-      WRITE (ipr,99016)
-      WRITE (ipr,99017)
-      WRITE (ipr,99019) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99021)
-      WRITE (ipr,99022) cutoff
-      WRITE (ipr,99016)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017)
+      WRITE (G_IO,99019) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99021)
+      WRITE (G_IO,99022) cutoff
+      WRITE (G_IO,99016)
       RETURN
  600  DO i = 1 , N
          IF ( D(i)<cutoff ) GOTO 700
       ENDDO
-      WRITE (ipr,99016)
-      WRITE (ipr,99017)
-      WRITE (ipr,99019) alph91 , alph92 , sbnam1 , sbnam2
-      WRITE (ipr,99021)
-      WRITE (ipr,99022) cutoff
-      WRITE (ipr,99016)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017)
+      WRITE (G_IO,99019) alph91 , alph92 , sbnam1 , sbnam2
+      WRITE (G_IO,99021)
+      WRITE (G_IO,99022) cutoff
+      WRITE (G_IO,99016)
       RETURN
 !
  700  DO i = 1 , N
          IF ( Dmin<D(i) .AND. D(i)<Dmax ) GOTO 800
       ENDDO
-      WRITE (ipr,99016)
-      WRITE (ipr,99017)
-      WRITE (ipr,99019) alph91 , alph92 , sbnam1 , sbnam2
-      WRITE (ipr,99004)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017)
+      WRITE (G_IO,99019) alph91 , alph92 , sbnam1 , sbnam2
+      WRITE (G_IO,99004)
 99004 FORMAT (' ','HAS ALL ELEMENTS OUTSIDE THE INTERVAL')
-      WRITE (ipr,99005) Dmin , Dmax
+      WRITE (G_IO,99005) Dmin , Dmax
 99005 FORMAT (' ','(',E15.8,',',E15.8,')',' AS DEFINED BY')
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ','THE TENTH  AND ELEVENTH INPUT ARGUMENTS.')
-      WRITE (ipr,99016)
+      WRITE (G_IO,99016)
       RETURN
 !
  800  n2 = 0
@@ -18322,19 +17998,19 @@ REAL(kind=wp) :: Ymax , Ymin
             IF ( n2>=2 ) GOTO 900
          ENDIF
       ENDDO
-      WRITE (ipr,99016)
-      WRITE (ipr,99017)
-      WRITE (ipr,99007) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017)
+      WRITE (G_IO,99007) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
      &                  alph32 , alph91 , alph92
 99007 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99008) sbnam1 , sbnam2
+      WRITE (G_IO,99008) sbnam1 , sbnam2
 99008 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99009)
+      WRITE (G_IO,99009)
 99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99010) n2
+      WRITE (G_IO,99010) n2
 99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99016)
+      WRITE (G_IO,99016)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -18435,20 +18111,20 @@ REAL(kind=wp) :: Ymax , Ymin
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99011) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99011) (IGRaph(i,j),j=1,109)
 !
 99011    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99012) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99012) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99012    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99013) Xmin , x25 , xmid , x75 , Xmax
+      WRITE (G_IO,99013) Xmin , x25 , xmid , x75 , Xmax
 99013 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
-      WRITE (ipr,99014) Yaxid , Xaxid , Plchid
+      WRITE (G_IO,99014) Yaxid , Xaxid , Plchid
 99014 FORMAT (' ',9X,A4,A4,' (VERTICAL AXIS) VERSUS ',A4,A4,            &
      &        ' (HORIZONTAL AXIS) ',20X,'THE PLOTTING CHARACTER IS ',A4,&
      &        A4)
-      WRITE (ipr,99015) N
+      WRITE (G_IO,99015) N
 99015 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I8)
 !
 99016 FORMAT (' ','**************************************************', &
@@ -18468,7 +18144,7 @@ END SUBROUTINE PLOT10
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plot6 (X, Y)
+!!       SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
 !!
 !!##DESCRIPTION
 !!    plot6(3f) yields a one-page printer plot of y(i) versus x(i):
@@ -18515,7 +18191,7 @@ END SUBROUTINE PLOT10
 SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
 IMPLICIT NONE
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
-INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
+INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
@@ -18564,11 +18240,11 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -18583,29 +18259,28 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
       DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
      &     'N' , '='/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph31 , alph32 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph31 , alph32 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
             RETURN
          ELSE
 !
@@ -18613,44 +18288,44 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99014) hold
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99014) hold
+            WRITE (G_IO,99011)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99014) hold
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99014) hold
+         WRITE (G_IO,99011)
          RETURN
       ENDIF
 !
  100  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 200
       ENDDO
-      WRITE (ipr,99011)
-      WRITE (ipr,99012)
-      WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99015)
-      WRITE (ipr,99016) cutoff
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) cutoff
+      WRITE (G_IO,99011)
       RETURN
  200  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 300
       ENDDO
-      WRITE (ipr,99011)
-      WRITE (ipr,99012)
-      WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99015)
-      WRITE (ipr,99016) cutoff
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) cutoff
+      WRITE (G_IO,99011)
       RETURN
 !
  300  n2 = 0
@@ -18660,18 +18335,18 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
             IF ( n2>=2 ) GOTO 400
          ENDIF
       ENDDO
-      WRITE (ipr,99011)
-      WRITE (ipr,99012)
-      WRITE (ipr,99004) alph11 , alph12 , alph21 , alph22
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99004) alph11 , alph12 , alph21 , alph22
 99004 FORMAT (' ','THE ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99005) sbnam1 , sbnam2
+      WRITE (G_IO,99005) sbnam1 , sbnam2
 99005 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99007) n2
+      WRITE (G_IO,99007) n2
 99007 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -18763,14 +18438,14 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99008) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99008) (IGRaph(i,j),j=1,109)
 !
 99008    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99009) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99009) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99009    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99010) Xmin , x25 , xmid , x75 , Xmax
+      WRITE (G_IO,99010) Xmin , x25 , xmid , x75 , Xmax
 99010 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
 99011 FORMAT (' ','**************************************************', &
@@ -18790,7 +18465,7 @@ END SUBROUTINE PLOT6
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plot7 (X, Y)
+!!       SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
 !!
 !!##DESCRIPTION
 !!    plot7(3f) yields a one-page printer plot of y(i) versus x(i):
@@ -18855,11 +18530,19 @@ END SUBROUTINE PLOT6
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
+!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
+!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
+!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
-      INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
+INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -18911,13 +18594,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
 !              SUBROUTINE.
-!     REFERENCES--FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JUNE      1974.
 !     UPDATED         --OCTOBER   1975.
@@ -18928,13 +18604,13 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 iplotc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: iplotc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -18965,29 +18641,28 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
      &     'Y' , 'Z' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99012)
-         WRITE (ipr,99013)
-         WRITE (ipr,99014) alph41 , alph42 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013)
+         WRITE (G_IO,99014) alph41 , alph42 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99012)
-            WRITE (ipr,99013)
-            WRITE (ipr,99014) alph41 , alph42 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013)
+            WRITE (G_IO,99014) alph41 , alph42 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99012)
+            WRITE (G_IO,99012)
             RETURN
          ELSE
 !
@@ -18995,64 +18670,64 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99012)
-            WRITE (ipr,99013)
-            WRITE (ipr,99014) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99015) hold
-            WRITE (ipr,99012)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013)
+            WRITE (G_IO,99014) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99015) hold
+            WRITE (G_IO,99012)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99012)
-         WRITE (ipr,99013)
-         WRITE (ipr,99014) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99015) hold
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013)
+         WRITE (G_IO,99014) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99015) hold
+         WRITE (G_IO,99012)
          RETURN
       ENDIF
  100  hold = Char(1)
       DO i = 2 , N
          IF ( Char(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99004)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99004)
 99004 FORMAT (' ','               NON-FATAL DIAGNOSTIC               ')
-      WRITE (ipr,99014) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99015) hold
-      WRITE (ipr,99012)
+      WRITE (G_IO,99014) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99015) hold
+      WRITE (G_IO,99012)
 !
  200  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 300
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99014) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) cutoff
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99014) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) cutoff
+      WRITE (G_IO,99012)
       RETURN
  300  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99014) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) cutoff
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99014) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) cutoff
+      WRITE (G_IO,99012)
       RETURN
  400  DO i = 1 , N
          IF ( Char(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99014) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) cutoff
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99014) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) cutoff
+      WRITE (G_IO,99012)
       RETURN
 !
  500  n2 = 0
@@ -19062,19 +18737,19 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
             IF ( n2>=2 ) GOTO 600
          ENDIF
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99005) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99005) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
      &                  alph32
 99005 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99006) sbnam1 , sbnam2
+      WRITE (G_IO,99006) sbnam1 , sbnam2
 99006 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99007)
+      WRITE (G_IO,99007)
 99007 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99008) n2
+      WRITE (G_IO,99008) n2
 99008 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -19171,14 +18846,14 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99009) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99009) (IGRaph(i,j),j=1,109)
 !
 99009    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99010) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99010    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99011) Xmin , x25 , xmid , x75 , Xmax
+      WRITE (G_IO,99011) Xmin , x25 , xmid , x75 , Xmax
 99011 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
 99012 FORMAT (' ','**************************************************', &
@@ -19198,7 +18873,7 @@ END SUBROUTINE PLOT7
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plot8 (X, Y)
+!!       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
 !!
 !!##DESCRIPTION
 !!    plot8(3f) yields a one-page printer plot of y(i) versus x(i):
@@ -19242,7 +18917,7 @@ END SUBROUTINE PLOT7
 !!    data analyst to control fully the plot axis limits, so as, for example,
 !!    to zero-in on an interesting sub-region of a previous plot.
 !!
-!!    the use of the subset defintion vector d gives the data analyst
+!!    the use of the subset definition vector d gives the data analyst
 !!    the capability of plotting subsets of the data, where the subset is
 !!    defined by values in the vector d.
 !!
@@ -19270,12 +18945,20 @@ END SUBROUTINE PLOT7
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
+!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
+!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
+!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot8.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable ,   &
      &     Ymax , Ymin
-      INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
+INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
@@ -19344,13 +19027,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
 !              SUBROUTINE.
-!     REFERENCES--FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !     ORIGINAL VERSION--JANUARY   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -19360,13 +19036,13 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 iplotc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42 , alph91 , alph92
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: iplotc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42 , alph91 , alph92
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -19399,29 +19075,28 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
      &     'Y' , 'Z' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99014)
-         WRITE (ipr,99015)
-         WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99014)
-            WRITE (ipr,99015)
-            WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99014)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99014)
+            WRITE (G_IO,99014)
             RETURN
          ELSE
 !
@@ -19429,97 +19104,97 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99014)
-            WRITE (ipr,99015)
-            WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99018) hold
-            WRITE (ipr,99014)
+            WRITE (G_IO,99014)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99018) hold
+            WRITE (G_IO,99014)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99014)
-         WRITE (ipr,99015)
-         WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99018) hold
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99018) hold
+         WRITE (G_IO,99014)
          RETURN
       ENDIF
  100  hold = Char(1)
       DO i = 2 , N
          IF ( Char(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99018) hold
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99018) hold
+      WRITE (G_IO,99014)
  200  hold = D(1)
       DO i = 2 , N
          IF ( D(i)/=hold ) GOTO 300
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph91 , alph92 , sbnam1 , sbnam2
-      WRITE (ipr,99018) hold
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph91 , alph92 , sbnam1 , sbnam2
+      WRITE (G_IO,99018) hold
+      WRITE (G_IO,99014)
 !
  300  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
  400  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
  500  DO i = 1 , N
          IF ( Char(i)<cutoff ) GOTO 600
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
  600  DO i = 1 , N
          IF ( D(i)<cutoff ) GOTO 700
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph91 , alph92 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph91 , alph92 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
 !
  700  DO i = 1 , N
          IF ( Dmin<D(i) .AND. D(i)<Dmax ) GOTO 800
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph91 , alph92 , sbnam1 , sbnam2
-      WRITE (ipr,99004)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph91 , alph92 , sbnam1 , sbnam2
+      WRITE (G_IO,99004)
 99004 FORMAT (' ','HAS ALL ELEMENTS OUTSIDE THE INTERVAL')
-      WRITE (ipr,99005) Dmin , Dmax
+      WRITE (G_IO,99005) Dmin , Dmax
 99005 FORMAT (' ','(',E15.8,',',E15.8,')',' AS DEFINED BY')
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ','THE FIFTH  AND SIXTH  INPUT ARGUMENTS.')
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
       RETURN
 !
  800  n2 = 0
@@ -19530,19 +19205,19 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
             IF ( n2>=2 ) GOTO 900
          ENDIF
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99007) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99007) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
      &                  alph32 , alph91 , alph92
 99007 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99008) sbnam1 , sbnam2
+      WRITE (G_IO,99008) sbnam1 , sbnam2
 99008 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99009)
+      WRITE (G_IO,99009)
 99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99010) n2
+      WRITE (G_IO,99010) n2
 99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -19643,14 +19318,14 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99011) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99011) (IGRaph(i,j),j=1,109)
 !
 99011    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99012) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99012) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99012    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99013) Xmin , x25 , xmid , x75 , Xmax
+      WRITE (G_IO,99013) Xmin , x25 , xmid , x75 , Xmax
 99013 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
 99014 FORMAT (' ','**************************************************', &
@@ -19666,21 +19341,21 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 END SUBROUTINE PLOT8
 !>
 !!##NAME
-!!    plot9(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plot9(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plot9 (X, Y)
+!!       SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,Plchid)
 !!
 !!##DESCRIPTION
 !!    plot9(3f) yields a one-page printer plot of y(i) versus x(i):
 !!
-!!      1) with special plot characters;
-!!      2) with the vertical (y) axis min and max
+!!      1. with special plot characters;
+!!      2. with the vertical (y) axis min and max
 !!         and the horizontal (x) axis min and max
 !!         values specified by the data analyst; and
-!!      3) with hollerith labels (at most 6 characters)
+!!      3. with hollerith labels (at most 6 characters)
 !!         for the vertical axis variable,
 !!         the horizontal axis variable, and
 !!         the plotting character variable
@@ -19745,13 +19420,20 @@ END SUBROUTINE PLOT8
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
+!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
+!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
+!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot9.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,      &
-     &                 Plchid)
+      SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,Plchid)
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
      &     x25 , x75 , Xaxid , Xmax , xmid , Xmin , Y , Yaxid , ylable ,&
      &     Ymax , Ymin
-      INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
+INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
@@ -19817,13 +19499,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
 !              SUBROUTINE.
-!     REFERENCES--FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JUNE      1974.
 !     UPDATED         --OCTOBER   1975.
@@ -19834,13 +19509,13 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 iplotc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: iplotc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -19871,29 +19546,28 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
      &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
      &     'Y' , 'Z' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99014)
-         WRITE (ipr,99015)
-         WRITE (ipr,99016) alph41 , alph42 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99016) alph41 , alph42 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99014)
-            WRITE (ipr,99015)
-            WRITE (ipr,99016) alph41 , alph42 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99014)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99016) alph41 , alph42 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99014)
+            WRITE (G_IO,99014)
             RETURN
          ELSE
 !
@@ -19901,64 +19575,64 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99014)
-            WRITE (ipr,99015)
-            WRITE (ipr,99016) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99017) hold
-            WRITE (ipr,99014)
+            WRITE (G_IO,99014)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99016) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99017) hold
+            WRITE (G_IO,99014)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99014)
-         WRITE (ipr,99015)
-         WRITE (ipr,99016) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99017) hold
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99016) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99017) hold
+         WRITE (G_IO,99014)
          RETURN
       ENDIF
  100  hold = Char(1)
       DO i = 2 , N
          IF ( Char(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99004)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99004)
 99004 FORMAT (' ','               NON-FATAL DIAGNOSTIC               ')
-      WRITE (ipr,99016) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99017) hold
-      WRITE (ipr,99014)
+      WRITE (G_IO,99016) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99017) hold
+      WRITE (G_IO,99014)
 !
  200  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 300
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99016) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99018)
-      WRITE (ipr,99019) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99018)
+      WRITE (G_IO,99019) cutoff
+      WRITE (G_IO,99014)
       RETURN
  300  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99016) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99018)
-      WRITE (ipr,99019) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99018)
+      WRITE (G_IO,99019) cutoff
+      WRITE (G_IO,99014)
       RETURN
  400  DO i = 1 , N
          IF ( Char(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99016) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99018)
-      WRITE (ipr,99019) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99018)
+      WRITE (G_IO,99019) cutoff
+      WRITE (G_IO,99014)
       RETURN
 !
  500  n2 = 0
@@ -19968,19 +19642,19 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
             IF ( n2>=2 ) GOTO 600
          ENDIF
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99005) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99005) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
      &                  alph32
 99005 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99006) sbnam1 , sbnam2
+      WRITE (G_IO,99006) sbnam1 , sbnam2
 99006 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99007)
+      WRITE (G_IO,99007)
 99007 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99008) n2
+      WRITE (G_IO,99008) n2
 99008 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -20077,20 +19751,20 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99009) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99009) (IGRaph(i,j),j=1,109)
 99009    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99010) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99010    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99011) Xmin , x25 , xmid , x75 , Xmax
+      WRITE (G_IO,99011) Xmin , x25 , xmid , x75 , Xmax
 99011 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
-      WRITE (ipr,99012) Yaxid , Xaxid , Plchid
+      WRITE (G_IO,99012) Yaxid , Xaxid , Plchid
 99012 FORMAT (' ',9X,A4,A4,' (VERTICAL AXIS) VERSUS ',A4,A4,            &
      &        ' (HORIZONTAL AXIS)',20X,'THE PLOTTING CHARACTER IS ',A4, &
      &        A4)
-      WRITE (ipr,99013) N
+      WRITE (G_IO,99013) N
 99013 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I8)
 !
 99014 FORMAT (' ','**************************************************', &
@@ -20110,7 +19784,7 @@ END SUBROUTINE PLOT9
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotc (X, Y)
+!!       SUBROUTINE PLOTC(Y,X,Char,N)
 !!
 !!##DESCRIPTION
 !!    plotc(3f) yields a one-page printer plot of y(i) versus x(i) with
@@ -20167,11 +19841,19 @@ END SUBROUTINE PLOT9
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
+!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
+!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
+!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plotc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTC(Y,X,Char,N)
-REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
-     &     x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
-      INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
+
+SUBROUTINE PLOTC(Y,X,Char,N)
+REAL(kind=wp) :: aim1, Char, cutoff, hold, ratiox, ratioy, X, x25,  x75, xmax, xmid, xmin, Y, ylable, ymax, ymin
+INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -20209,13 +19891,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
 !              SUBROUTINE.
-!     REFERENCES--FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !     ORIGINAL VERSION--OCTOBER   1974.
 !     UPDATED         --NOVEMBER  1974.
 !     UPDATED         --JANUARY   1975.
@@ -20228,13 +19903,13 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 iplotc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: iplotc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -20265,29 +19940,28 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
      &     'Y' , 'Z' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99012)
-         WRITE (ipr,99013)
-         WRITE (ipr,99014) alph41 , alph42 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013)
+         WRITE (G_IO,99014) alph41 , alph42 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99012)
-            WRITE (ipr,99013)
-            WRITE (ipr,99014) alph41 , alph42 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013)
+            WRITE (G_IO,99014) alph41 , alph42 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99012)
+            WRITE (G_IO,99012)
             RETURN
          ELSE
 !
@@ -20295,64 +19969,64 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99012)
-            WRITE (ipr,99013)
-            WRITE (ipr,99014) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99015) hold
-            WRITE (ipr,99012)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013)
+            WRITE (G_IO,99014) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99015) hold
+            WRITE (G_IO,99012)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99012)
-         WRITE (ipr,99013)
-         WRITE (ipr,99014) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99015) hold
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013)
+         WRITE (G_IO,99014) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99015) hold
+         WRITE (G_IO,99012)
          RETURN
       ENDIF
  100  hold = Char(1)
       DO i = 2 , N
          IF ( Char(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99004)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99004)
 99004 FORMAT (' ','               NON-FATAL DIAGNOSTIC               ')
-      WRITE (ipr,99014) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99015) hold
-      WRITE (ipr,99012)
+      WRITE (G_IO,99014) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99015) hold
+      WRITE (G_IO,99012)
 !
  200  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 300
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99014) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) cutoff
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99014) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) cutoff
+      WRITE (G_IO,99012)
       RETURN
  300  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99014) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) cutoff
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99014) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) cutoff
+      WRITE (G_IO,99012)
       RETURN
  400  DO i = 1 , N
          IF ( Char(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99014) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) cutoff
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99014) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) cutoff
+      WRITE (G_IO,99012)
       RETURN
 !
  500  n2 = 0
@@ -20362,19 +20036,19 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
             IF ( n2>=2 ) GOTO 600
          ENDIF
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99005) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99005) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
      &                  alph32
 99005 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99006) sbnam1 , sbnam2
+      WRITE (G_IO,99006) sbnam1 , sbnam2
 99006 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99007)
+      WRITE (G_IO,99007)
 99007 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99008) n2
+      WRITE (G_IO,99008) n2
 99008 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -20509,14 +20183,14 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99009) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99009) (IGRaph(i,j),j=1,109)
 !
 99009    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99010) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99010    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99011) xmin , x25 , xmid , x75 , xmax
+      WRITE (G_IO,99011) xmin , x25 , xmid , x75 , xmax
 99011 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
 99012 FORMAT (' ','**************************************************', &
@@ -20536,10 +20210,10 @@ END SUBROUTINE PLOTC
 !!
 !!##SYNOPSIS
 !!
-!!    SUBROUTINE PLOTCO(Y,N)
+!!       SUBROUTINE PLOTCO(Y,N)
 !!
-!!     REAL(kind=wp) :: Y(:)
-!!     INTEGER       :: N
+!!           REAL(kind=wp) :: Y(:)
+!!           INTEGER       :: N
 !!
 !!##DESCRIPTION
 !!    This routine yields a multi-page (if necessary) plot of the
@@ -20579,26 +20253,24 @@ END SUBROUTINE PLOTC
 
 SUBROUTINE PLOTCO(Y,N)
 REAL(kind=wp) :: hold, ratioy, Y(:), ylable(11), ymax, ymin
-INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix(25), ixmax, ixmin, iz, j, jmax, jmin, k, mx, my, N,  numpag
+INTEGER i, iaxdel, idel, iflag, imax, imin, ix(25), ixmax, ixmin, iz, j, jmax, jmin, k, mx, my, N,  numpag
 !
-CHARACTER*4 IGRaph
-CHARACTER*4 blank , star , hyphen , alphai
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: blank, star, hyphen, alphai
 COMMON /BLOCK1/ IGRaph(55,130)
 !
-DATA blank , star , hyphen , alphai/' ' , '*' , '-' , 'I'/
-!
-      ipr = 6
+DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
          99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
          99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
          99003    FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
@@ -20606,7 +20278,7 @@ DATA blank , star , hyphen , alphai/' ' , '*' , '-' , 'I'/
          DO i = 2 , N
             IF ( Y(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
          99004    FORMAT (' ', &
          &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
          &TO THE PLOTCO SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -20721,28 +20393,28 @@ DATA blank , star , hyphen , alphai/' ' , '*' , '-' , 'I'/
 !
 !     WRITE OUT THE GRAPH
 !
-            WRITE (ipr,99005)
+            WRITE (G_IO,99005)
 99005       FORMAT ('1')
-            IF ( iz==1 ) WRITE (ipr,99006) N
+            IF ( iz==1 ) WRITE (G_IO,99006) N
 99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS ',I5)
-            IF ( iz>=2 ) WRITE (ipr,99007)
+            IF ( iz>=2 ) WRITE (G_IO,99007)
 99007       FORMAT (' THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIOUS PAGE')
-            WRITE (ipr,99008)
+            WRITE (G_IO,99008)
 99008       FORMAT (' ')
-            IF ( N<=24 ) WRITE (ipr,99011) (ix(i),i=1,25)
-            IF ( 25<=N .AND. N<=40 ) WRITE (ipr,99012) (ix(i),i=1,9)
-            IF ( 41<=N ) WRITE (ipr,99013) (ix(i),i=1,13)
+            IF ( N<=24 ) WRITE (G_IO,99011) (ix(i),i=1,25)
+            IF ( 25<=N .AND. N<=40 ) WRITE (G_IO,99012) (ix(i),i=1,9)
+            IF ( 41<=N ) WRITE (G_IO,99013) (ix(i),i=1,13)
             DO i = 5 , 55
                iflag = i - (i/5)*5
                k = i/5
-               IF ( iflag/=0 ) WRITE (ipr,99009) (IGRaph(i,j),j=1,130)
+               IF ( iflag/=0 ) WRITE (G_IO,99009) (IGRaph(i,j),j=1,130)
 99009          FORMAT (' ',130A1)
-               IF ( iflag==0 ) WRITE (ipr,99010) ylable(k) , (IGRaph(i,j),j=10,130)
+               IF ( iflag==0 ) WRITE (G_IO,99010) ylable(k) , (IGRaph(i,j),j=10,130)
 99010          FORMAT (' ',F9.2,130A1)
             ENDDO
-            IF ( N<=24 ) WRITE (ipr,99011) (ix(i),i=1,25)
-            IF ( 25<=N .AND. N<=40 ) WRITE (ipr,99012) (ix(i),i=1,9)
-            IF ( 41<=N ) WRITE (ipr,99013) (ix(i),i=1,13)
+            IF ( N<=24 ) WRITE (G_IO,99011) (ix(i),i=1,25)
+            IF ( 25<=N .AND. N<=40 ) WRITE (G_IO,99012) (ix(i),i=1,9)
+            IF ( 41<=N ) WRITE (G_IO,99013) (ix(i),i=1,13)
          ENDDO
       ENDIF
 99011 FORMAT (' ',6X,24(I4,1X),I4)
@@ -20756,7 +20428,7 @@ END SUBROUTINE PLOTCO
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotct (X, Y)
+!!       SUBROUTINE PLOTCT(Y,X,Char,N)
 !!
 !!##DESCRIPTION
 !!
@@ -20816,13 +20488,21 @@ END SUBROUTINE PLOTCO
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
+!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
+!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
+!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plotct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTCT(Y,X,Char,N)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , delx , dely , hold , X , xlable , xmax , xmin ,     &
      &     xwidth , Y , ylable , ylower , ymax
 REAL(kind=wp) :: ymin , yupper , ywidth
-      INTEGER i , ia , icol , icolmx , ipr , irow , ixdel , N , n2 ,    &
+INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
@@ -20868,13 +20548,6 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 !              VERY SMALL.
 !              THIS IS DUE TO THE 'ONE LINE AT A TIME' ALGORITHM
 !              EMPLOYED FOR THE PLOT.
-!     REFERENCES--FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
 !     UPDATED         --OCTOBER   1974.
@@ -20884,14 +20557,14 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 iline
-      CHARACTER*4 iplotc
-      CHARACTER*4 jplotc
-      CHARACTER*4 iaxisc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42
-      CHARACTER*4 blank , hyphen , alphai
+CHARACTER(len=4) :: iline
+CHARACTER(len=4) :: iplotc
+CHARACTER(len=4) :: jplotc
+CHARACTER(len=4) :: iaxisc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42
+CHARACTER(len=4) :: blank , hyphen , alphai
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -20919,27 +20592,26 @@ REAL(kind=wp) :: ymin , yupper , ywidth
      &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
      &     'Y' , 'Z' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99012)
-         WRITE (ipr,99013)
-         WRITE (ipr,99014) alph41 , alph42 , sbnam1 , sbnam2
-         WRITE (ipr,99001) N
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013)
+         WRITE (G_IO,99014) alph41 , alph42 , sbnam1 , sbnam2
+         WRITE (G_IO,99001) N
 99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99012)
-            WRITE (ipr,99013)
-            WRITE (ipr,99014) alph41 , alph42 , sbnam1 , sbnam2
-            WRITE (ipr,99002) N
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013)
+            WRITE (G_IO,99014) alph41 , alph42 , sbnam1 , sbnam2
+            WRITE (G_IO,99002) N
 99002       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99012)
+            WRITE (G_IO,99012)
             RETURN
          ELSE
 !
@@ -20947,64 +20619,64 @@ REAL(kind=wp) :: ymin , yupper , ywidth
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99012)
-            WRITE (ipr,99013)
-            WRITE (ipr,99014) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99015) hold
-            WRITE (ipr,99012)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013)
+            WRITE (G_IO,99014) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99015) hold
+            WRITE (G_IO,99012)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99012)
-         WRITE (ipr,99013)
-         WRITE (ipr,99014) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99015) hold
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013)
+         WRITE (G_IO,99014) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99015) hold
+         WRITE (G_IO,99012)
          RETURN
       ENDIF
  100  hold = Char(1)
       DO i = 2 , N
          IF ( Char(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99003)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99003)
 99003 FORMAT (' ','               NON-FATAL DIAGNOSTIC               ')
-      WRITE (ipr,99014) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99015) hold
-      WRITE (ipr,99012)
+      WRITE (G_IO,99014) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99015) hold
+      WRITE (G_IO,99012)
 !
  200  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 300
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99014) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) cutoff
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99014) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) cutoff
+      WRITE (G_IO,99012)
       RETURN
  300  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99014) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) cutoff
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99014) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) cutoff
+      WRITE (G_IO,99012)
       RETURN
  400  DO i = 1 , N
          IF ( Char(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99014) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) cutoff
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99014) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) cutoff
+      WRITE (G_IO,99012)
       RETURN
 !
  500  n2 = 0
@@ -21014,19 +20686,19 @@ REAL(kind=wp) :: ymin , yupper , ywidth
             IF ( n2>=2 ) GOTO 600
          ENDIF
       ENDDO
-      WRITE (ipr,99012)
-      WRITE (ipr,99013)
-      WRITE (ipr,99004) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013)
+      WRITE (G_IO,99004) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
      &                  alph32
 99004 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99005) sbnam1 , sbnam2
+      WRITE (G_IO,99005) sbnam1 , sbnam2
 99005 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99007) n2
+      WRITE (G_IO,99007) n2
 99007 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -21050,9 +20722,9 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 !     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
 !     FOR A MARGIN WITHIN THE PLOT.
 !
-      WRITE (ipr,99008)
+      WRITE (G_IO,99008)
 99008 FORMAT (' ')
-      WRITE (ipr,99009)
+      WRITE (G_IO,99009)
 !
 99009 FORMAT (' ','THE FOLLOWING IS A PLOT OF Y(I) VERSUS X(I)')
       DO icol = 1 , numcol
@@ -21061,8 +20733,8 @@ REAL(kind=wp) :: ymin , yupper , ywidth
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99018) (iline(i),i=1,numcol)
-      WRITE (ipr,99019) blank
+      WRITE (G_IO,99018) (iline(i),i=1,numcol)
+      WRITE (G_IO,99019) blank
 !
 !     DETERMINE THE MIN AND MAX VALUES OF Y, AND OF X.
 !
@@ -21134,26 +20806,26 @@ REAL(kind=wp) :: ymin , yupper , ywidth
          IF ( irow==1 .OR. irow==numrow ) iaxisc = hyphen
          IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 )        &
      &        iaxisc = hyphen
-         WRITE (ipr,99010) ylable , iaxisc , (iline(icol),icol=1,icolmx)
+         WRITE (G_IO,99010) ylable , iaxisc , (iline(icol),icol=1,icolmx)
 99010    FORMAT (' ',E14.7,1X,A1,2X,50A1)
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
 !     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
-      WRITE (ipr,99019) blank
+      WRITE (G_IO,99019) blank
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99018) (iline(icol),icol=1,numcol)
+      WRITE (G_IO,99018) (iline(icol),icol=1,numcol)
       DO i = 1 , numlab
          aim1 = i - 1
          xlable(i) = xmin + (aim1/anumlm)*delx
       ENDDO
-      WRITE (ipr,99011) (xlable(i),i=1,numlab)
+      WRITE (G_IO,99011) (xlable(i),i=1,numlab)
 99011 FORMAT (' ',9X,5E12.4)
 !
 99012 FORMAT (' ','**************************************************', &
@@ -21230,15 +20902,6 @@ END SUBROUTINE PLOTCT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==plot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE PLOT(Y,X,N)
-IMPLICIT NONE
-REAL(kind=wp),intent(in) ::   X(:),  Y(:)
-integer,intent(in) ::  n
-REAL(kind=wp) :: aim1, cutoff, hold, ratiox, ratioy, x25, x75, xmax, xmid, xmin, ymax, ymin
-REAL(kind=wp) :: ylable(11)
-INTEGER i, iflag, ip2, ipr, j, k, mx, my, n2
-!
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --NOVEMBER  1974.
@@ -21249,6 +20912,15 @@ INTEGER i, iflag, ip2, ipr, j, k, mx, my, n2
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
+!*==plot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PLOT(Y,X,N)
+REAL(kind=wp),intent(in) ::   X(:),  Y(:)
+integer,intent(in) ::  n
+REAL(kind=wp) :: aim1, cutoff, hold, ratiox, ratioy, x25, x75, xmax, xmid, xmin, ymax, ymin
+REAL(kind=wp) :: ylable(11)
+INTEGER i, iflag, ip2, j, k, mx, my, n2
+!
 !---------------------------------------------------------------------
 !
 CHARACTER(len=4) ::   IGRaph
@@ -21265,29 +20937,28 @@ DATA alph31 , alph32/'THIR' , 'D   '/
 DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph31 , alph32 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph31 , alph32 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
             RETURN
          ELSE
 !
@@ -21295,44 +20966,44 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99014) hold
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99014) hold
+            WRITE (G_IO,99011)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99014) hold
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99014) hold
+         WRITE (G_IO,99011)
          RETURN
       ENDIF
 !
  100  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 200
       ENDDO
-      WRITE (ipr,99011)
-      WRITE (ipr,99012)
-      WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99015)
-      WRITE (ipr,99016) cutoff
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) cutoff
+      WRITE (G_IO,99011)
       RETURN
  200  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 300
       ENDDO
-      WRITE (ipr,99011)
-      WRITE (ipr,99012)
-      WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99015)
-      WRITE (ipr,99016) cutoff
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) cutoff
+      WRITE (G_IO,99011)
       RETURN
 !
  300  n2 = 0
@@ -21342,17 +21013,17 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
             IF ( n2>=2 ) GOTO 400
          ENDIF
       ENDDO
-      WRITE (ipr,99011)
-      WRITE (ipr,99012)
-      WRITE (ipr,99004) alph11 , alph12 , alph21 , alph22
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99004) alph11 , alph12 , alph21 , alph22
 99004 FORMAT (' ','THE ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99005) sbnam1 , sbnam2
+      WRITE (G_IO,99005) sbnam1 , sbnam2
 99005 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99007) n2
+      WRITE (G_IO,99007) n2
 99007 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -21474,13 +21145,13 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99008) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99008) (IGRaph(i,j),j=1,109)
 !
-         IF ( iflag==0 ) WRITE (ipr,99009) ylable(k) ,(IGRaph(i,j),j=1,109)
+         IF ( iflag==0 ) WRITE (G_IO,99009) ylable(k) ,(IGRaph(i,j),j=1,109)
       ENDDO
 99008 FORMAT (' ',20X,109A1)
 99009 FORMAT (' ',F20.7,109A1)
-      WRITE (ipr,99010) xmin , x25 , xmid , x75 , xmax
+      WRITE (G_IO,99010) xmin , x25 , xmid , x75 , xmax
 99010 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
 99011 FORMAT (' ','**********************************************************************')
@@ -21498,7 +21169,7 @@ END SUBROUTINE PLOT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotsc (X, Y)
+!!       SUBROUTINE PLOTSC(Y,X,Char,N,D,Dmin,Dmax)
 !!
 !!##DESCRIPTION
 !!    plotsc(3f) yields a one-page printer plot of y(i) versus x(i):
@@ -21535,7 +21206,7 @@ END SUBROUTINE PLOT
 !!      x if char(i) is any value outside the range
 !!                               0.5 to  36.5.
 !!
-!!    the use of the subset defintion vector d gives the data analyst
+!!    the use of the subset definition vector d gives the data analyst
 !!    the capability of plotting subsets of the data, where the subset is
 !!    defined by values in the vector d.
 !!
@@ -21564,12 +21235,21 @@ END SUBROUTINE PLOT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
+!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
+!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
+!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plotsc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE PLOTSC(Y,X,Char,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , xmax , xmid , xmin , Y , ylable ,   &
      &     ymax , ymin
-      INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
+INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -21623,13 +21303,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
 !              SUBROUTINE.
-!     REFERENCES--FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !     ORIGINAL VERSION--OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -21637,13 +21310,13 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 iplotc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42 , alph51 , alph52
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: iplotc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42 , alph51 , alph52
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -21676,29 +21349,28 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
      &     'Y' , 'Z' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99014)
-         WRITE (ipr,99015)
-         WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99014)
-            WRITE (ipr,99015)
-            WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99014)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99014)
+            WRITE (G_IO,99014)
             RETURN
          ELSE
 !
@@ -21706,97 +21378,97 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99014)
-            WRITE (ipr,99015)
-            WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99018) hold
-            WRITE (ipr,99014)
+            WRITE (G_IO,99014)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99018) hold
+            WRITE (G_IO,99014)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99014)
-         WRITE (ipr,99015)
-         WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99018) hold
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99018) hold
+         WRITE (G_IO,99014)
          RETURN
       ENDIF
  100  hold = Char(1)
       DO i = 2 , N
          IF ( Char(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99018) hold
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99018) hold
+      WRITE (G_IO,99014)
  200  hold = D(1)
       DO i = 2 , N
          IF ( D(i)/=hold ) GOTO 300
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph51 , alph52 , sbnam1 , sbnam2
-      WRITE (ipr,99018) hold
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph51 , alph52 , sbnam1 , sbnam2
+      WRITE (G_IO,99018) hold
+      WRITE (G_IO,99014)
 !
  300  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
  400  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
  500  DO i = 1 , N
          IF ( Char(i)<cutoff ) GOTO 600
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
  600  DO i = 1 , N
          IF ( D(i)<cutoff ) GOTO 700
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph51 , alph52 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph51 , alph52 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
 !
  700  DO i = 1 , N
          IF ( Dmin<D(i) .AND. D(i)<Dmax ) GOTO 800
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph51 , alph52 , sbnam1 , sbnam2
-      WRITE (ipr,99004)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph51 , alph52 , sbnam1 , sbnam2
+      WRITE (G_IO,99004)
 99004 FORMAT (' ','HAS ALL ELEMENTS OUTSIDE THE INTERVAL')
-      WRITE (ipr,99005) Dmin , Dmax
+      WRITE (G_IO,99005) Dmin , Dmax
 99005 FORMAT (' ','(',E15.8,',',E15.8,')',' AS DEFINED BY')
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ','THE SIXTH  AND SEVENTH INPUT ARGUMENTS.')
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
       RETURN
 !
  800  n2 = 0
@@ -21807,19 +21479,19 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
             IF ( n2>=2 ) GOTO 900
          ENDIF
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99007) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99007) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
      &                  alph32 , alph51 , alph52
 99007 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99008) sbnam1 , sbnam2
+      WRITE (G_IO,99008) sbnam1 , sbnam2
 99008 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99009)
+      WRITE (G_IO,99009)
 99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99010) n2
+      WRITE (G_IO,99010) n2
 99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -21974,14 +21646,14 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99011) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99011) (IGRaph(i,j),j=1,109)
 !
 99011    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99012) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99012) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99012    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99013) xmin , x25 , xmid , x75 , xmax
+      WRITE (G_IO,99013) xmin , x25 , xmid , x75 , xmax
 99013 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
 99014 FORMAT (' ','**************************************************', &
@@ -22001,7 +21673,7 @@ END SUBROUTINE PLOTSC
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plots (X, Y)
+!!       SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)
 !!
 !!##DESCRIPTION
 !!    plots(3f) yields a one-page printer plot of y(i) versus x(i):
@@ -22043,7 +21715,7 @@ END SUBROUTINE PLOTSC
 SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
      &     X , x25 , x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
-INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
+INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -22093,12 +21765,12 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -22115,29 +21787,28 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
       DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
      &     'N' , '='/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99015)
-         WRITE (ipr,99016)
-         WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99015)
+         WRITE (G_IO,99015)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99015)
-            WRITE (ipr,99016)
-            WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99016)
+            WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99015)
+            WRITE (G_IO,99015)
             RETURN
          ELSE
 !
@@ -22145,79 +21816,79 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99015)
-            WRITE (ipr,99016)
-            WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99018) hold
-            WRITE (ipr,99015)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99016)
+            WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99018) hold
+            WRITE (G_IO,99015)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99015)
-         WRITE (ipr,99016)
-         WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99018) hold
-         WRITE (ipr,99015)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99018) hold
+         WRITE (G_IO,99015)
          RETURN
       ENDIF
  100  hold = D(1)
       DO i = 2 , N
          IF ( D(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99004)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99004)
 99004 FORMAT (' ','               NON-FATAL DIAGNOSTIC               ')
-      WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-      WRITE (ipr,99018) hold
-      WRITE (ipr,99015)
+      WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+      WRITE (G_IO,99018) hold
+      WRITE (G_IO,99015)
 !
  200  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 300
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99015)
       RETURN
  300  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99015)
       RETURN
  400  DO i = 1 , N
          IF ( D(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99015)
       RETURN
 !
  500  DO i = 1 , N
          IF ( Dmin<D(i) .AND. D(i)<Dmax ) GOTO 600
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-      WRITE (ipr,99005)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+      WRITE (G_IO,99005)
 99005 FORMAT (' ','HAS ALL ELEMENTS OUTSIDE THE INTERVAL')
-      WRITE (ipr,99006) Dmin , Dmax
+      WRITE (G_IO,99006) Dmin , Dmax
 99006 FORMAT (' ','(',E15.8,',',E15.8,')',' AS DEFINED BY')
-      WRITE (ipr,99007)
+      WRITE (G_IO,99007)
 99007 FORMAT (' ','THE FIFTH  AND SIXTH  INPUT ARGUMENTS.')
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
       RETURN
 !
  600  n2 = 0
@@ -22227,19 +21898,19 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
             IF ( n2>=2 ) GOTO 700
          ENDIF
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99008) alph11 , alph12 , alph21 , alph22 , alph41 ,    &
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99008) alph11 , alph12 , alph21 , alph22 , alph41 ,    &
      &                  alph42
 99008 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99009) sbnam1 , sbnam2
+      WRITE (G_IO,99009) sbnam1 , sbnam2
 99009 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99010)
+      WRITE (G_IO,99010)
 99010 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99011) n2
+      WRITE (G_IO,99011) n2
 99011 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -22381,14 +22052,14 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99012) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99012) (IGRaph(i,j),j=1,109)
 !
 99012    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99013) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99013) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99013    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99014) xmin , x25 , xmid , x75 , xmax
+      WRITE (G_IO,99014) xmin , x25 , xmid , x75 , xmax
 99014 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
 99015 FORMAT (' ','**************************************************', &
@@ -22407,7 +22078,7 @@ END SUBROUTINE PLOTS
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotsp (X, Y)
+!!       SUBROUTINE PLOTSP(Y,N,Idf)
 !!
 !!##DESCRIPTION
 !!    this routine yields a one-page plot of the spectrum, along with upper
@@ -22447,25 +22118,20 @@ END SUBROUTINE PLOTS
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 !*==plotsp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTSP(Y,N,Idf)
 REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
      &     slower , spmax , spmin , supper , xi , Y , ylable , ymax ,   &
      &     ymin
-      INTEGER i , Idf , iflag , ipr , j , k , mx , my , N
+INTEGER :: i , Idf , iflag , j , k , mx , my , N
 !
 !     PRINTING--YES
-!     SUBROUTINES NEEDED--CHSPPF.
-!     WRITTEN BY JAMES J. FILLIBEN, STATISTICAL ENGINEERING LABORATORY (205.03)
-!     NATIONAL BUREAU OF STANDARDS, WASHINGTON, D.C. 20234     JUN 1972
-!                                                      UPDATED FEB 1975
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
-!
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 blank , hyphen , alphai , alphax , dot
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax , dot
 !
       DIMENSION Y(:)
       DIMENSION ylable(11)
@@ -22475,20 +22141,18 @@ REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
       DATA alphax/'X'/
       DATA dot/'.'/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTSP SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PLOT&
      &SP SUBROUTINE HAS THE VALUE 1 *****')
@@ -22498,7 +22162,7 @@ REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
          DO i = 2 , N
             IF ( Y(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE PLOTSP SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -22588,23 +22252,23 @@ REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
          ENDDO
 !
 !     WRITE OUT THE GRAPH
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT ('1')
          DO i = 5 , 55
             iflag = i - (i/5)*5
             k = i/5
-            IF ( iflag/=0 ) WRITE (ipr,99006) (IGRaph(i,j),j=1,130)
+            IF ( iflag/=0 ) WRITE (G_IO,99006) (IGRaph(i,j),j=1,130)
 99006       FORMAT (' ',130A1)
-            IF ( iflag==0 ) WRITE (ipr,99007) ylable(k) ,               &
+            IF ( iflag==0 ) WRITE (G_IO,99007) ylable(k) ,               &
      &                             (IGRaph(i,j),j=10,130)
 99007       FORMAT (' ',F9.2,130A1)
          ENDDO
-         WRITE (ipr,99008)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ',                                                   &
      &'FREQ   .000      .042      .083      .125      .167      .208    &
      &  .250      .292      .333      .375      .417      .458      .500&
      &')
-         WRITE (ipr,99009)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',                                                   &
      &'PERIOD INF       24.0      12.0      8.00      6.00      4.80    &
      &  4.00      3.43      3.00      2.67      2.40      2.18      2.00&
@@ -22618,7 +22282,7 @@ END SUBROUTINE PLOTSP
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotst (X, Y)
+!!       SUBROUTINE PLOTST(Y,X,N,D,Dmin,Dmax)
 !!
 !!##DESCRIPTION
 !!
@@ -22630,13 +22294,34 @@ END SUBROUTINE PLOTSP
 !!
 !!    its narrow width makes it appropriate for use on a terminal.
 !!
-!!    the use of the subset defintion vector d gives the data analyst
+!!    the use of the subset definition vector d gives the data analyst
 !!    the capability of plotting subsets of the data, where the subset is
 !!    defined by values in the vector d.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!! !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!! !                               (UNSORTED OR SORTED) OBSERVATIONS
+!! !                               TO BE PLOTTED VERTICALLY.
+!! !                    --X      = THE SINGLE PRECISION VECTOR OF
+!! !                               (UNSORTED OR SORTED) OBSERVATIONS
+!! !                               TO BE PLOTTED HORIZONTALLY.
+!! !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!! !                               IN THE VECTOR Y.
+!! !                    --D      = THE SINGLE PRECISION VECTOR
+!! !                               WHICH 'DEFINES' THE VARIOUS
+!! !                               POSSIBLE SUBSETS.
+!! !                    --DMIN   = THE SINGLE PRECISION VALUE
+!! !                               WHICH DEFINES THE LOWER BOUND
+!! !                               (INCLUSIVELY) OF THE PARTICULAR
+!! !                               SUBSET OF INTEREST TO BE PLOTTED.
+!! !                    --DMAX   = THE SINGLE PRECISION VALUE
+!! !                               WHICH DEFINES THE UPPER BOUND
+!! !                               (INCLUSIVELY) OF THE PARTICULAR
+!! !                               SUBSET OF INTEREST TO BE PLOTTED.
+!! !     OUTPUT--A NARROW-WIDTH (71-CHARACTER) TERMINAL PLOT
+!! !             OF Y(I) VERSUS X(I),
+!! !             FOR ONLY OF A SPECIFIED SUBSET OF THE DATA.
+!! !             THE BODY OF THE PLOT (NOT COUNTING AXIS VALUES
+!! !             AND MARGINS) IS 25 ROWS (LINES) AND 49 COLUMNS.
 !!
 !!##EXAMPLES
 !!
@@ -22664,38 +22349,12 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     D , delx , dely , Dmax , Dmin , hold , X , xlable , xmax ,   &
      &     xmin , xwidth , Y , ylable
 REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
-      INTEGER i , icol , icolmx , ipr , irow , ixdel , N , n2 , numcol ,&
+INTEGER :: i , icol , icolmx , irow , ixdel , N , n2 , numcol ,&
      &        numlab , numr25 , numr50 , numr75 , numrow
-!
-!
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED HORIZONTALLY.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR Y.
-!                    --D      = THE SINGLE PRECISION VECTOR
-!                               WHICH 'DEFINES' THE VARIOUS
-!                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
-!                               WHICH DEFINES THE LOWER BOUND
-!                               (INCLUSIVELY) OF THE PARTICULAR
-!                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
-!                               WHICH DEFINES THE UPPER BOUND
-!                               (INCLUSIVELY) OF THE PARTICULAR
-!                               SUBSET OF INTEREST TO BE PLOTTED.
-!     OUTPUT--A NARROW-WIDTH (71-CHARACTER) TERMINAL PLOT
-!             OF Y(I) VERSUS X(I),
-!             FOR ONLY OF A SPECIFIED SUBSET OF THE DATA.
-!             THE BODY OF THE PLOT (NOT COUNTING AXIS VALUES
-!             AND MARGINS) IS 25 ROWS (LINES) AND 49 COLUMNS.
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -22727,12 +22386,12 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 iline
-      CHARACTER*4 iaxisc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42
-      CHARACTER*4 blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: iline
+CHARACTER(len=4) :: iaxisc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -22746,27 +22405,26 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
       DATA alph41 , alph42/'FOUR' , 'TH  '/
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99015)
-         WRITE (ipr,99016)
-         WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-         WRITE (ipr,99001) N
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+         WRITE (G_IO,99001) N
 99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99015)
+         WRITE (G_IO,99015)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99015)
-            WRITE (ipr,99016)
-            WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-            WRITE (ipr,99002) N
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99016)
+            WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+            WRITE (G_IO,99002) N
 99002       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99015)
+            WRITE (G_IO,99015)
             RETURN
          ELSE
 !
@@ -22774,79 +22432,79 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99015)
-            WRITE (ipr,99016)
-            WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99018) hold
-            WRITE (ipr,99015)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99016)
+            WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99018) hold
+            WRITE (G_IO,99015)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99015)
-         WRITE (ipr,99016)
-         WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99018) hold
-         WRITE (ipr,99015)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99018) hold
+         WRITE (G_IO,99015)
          RETURN
       ENDIF
  100  hold = D(1)
       DO i = 2 , N
          IF ( D(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99003)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99003)
 99003 FORMAT (' ','               NON-FATAL DIAGNOSTIC               ')
-      WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-      WRITE (ipr,99018) hold
-      WRITE (ipr,99015)
+      WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+      WRITE (G_IO,99018) hold
+      WRITE (G_IO,99015)
 !
  200  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 300
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99015)
       RETURN
  300  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99015)
       RETURN
  400  DO i = 1 , N
          IF ( D(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99015)
       RETURN
 !
  500  DO i = 1 , N
          IF ( Dmin<D(i) .AND. D(i)<Dmax ) GOTO 600
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-      WRITE (ipr,99004)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+      WRITE (G_IO,99004)
 99004 FORMAT (' ','HAS ALL ELEMENTS OUTSIDE THE INTERVAL')
-      WRITE (ipr,99005) Dmin , Dmax
+      WRITE (G_IO,99005) Dmin , Dmax
 99005 FORMAT (' ','(',E15.8,',',E15.8,')',' AS DEFINED BY')
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ','THE FIFTH  AND SIXTH  INPUT ARGUMENTS.')
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
       RETURN
 !
  600  n2 = 0
@@ -22856,19 +22514,19 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
             IF ( n2>=2 ) GOTO 700
          ENDIF
       ENDDO
-      WRITE (ipr,99015)
-      WRITE (ipr,99016)
-      WRITE (ipr,99007) alph11 , alph12 , alph21 , alph22 , alph41 ,    &
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99007) alph11 , alph12 , alph21 , alph22 , alph41 ,    &
      &                  alph42
 99007 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99008) sbnam1 , sbnam2
+      WRITE (G_IO,99008) sbnam1 , sbnam2
 99008 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99009)
+      WRITE (G_IO,99009)
 99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99010) n2
+      WRITE (G_IO,99010) n2
 99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99015)
+      WRITE (G_IO,99015)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -22892,9 +22550,9 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
 !     FOR A MARGIN WITHIN THE PLOT.
 !
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
 99011 FORMAT (' ')
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
 !
 99012 FORMAT (' ',                                                      &
      &'THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZON&
@@ -22905,8 +22563,8 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99021) (iline(i),i=1,numcol)
-      WRITE (ipr,99022) blank
+      WRITE (G_IO,99021) (iline(i),i=1,numcol)
+      WRITE (G_IO,99022) blank
 !
 !     DETERMINE THE MIN AND MAX VALUES OF Y, AND OF X.
 !
@@ -22977,26 +22635,26 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
          IF ( irow==1 .OR. irow==numrow ) iaxisc = hyphen
          IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 )        &
      &        iaxisc = hyphen
-         WRITE (ipr,99013) ylable , iaxisc , (iline(icol),icol=1,icolmx)
+         WRITE (G_IO,99013) ylable , iaxisc , (iline(icol),icol=1,icolmx)
 99013    FORMAT (' ',E14.7,1X,A1,2X,50A1)
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
 !     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
-      WRITE (ipr,99022) blank
+      WRITE (G_IO,99022) blank
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99021) (iline(icol),icol=1,numcol)
+      WRITE (G_IO,99021) (iline(icol),icol=1,numcol)
       DO i = 1 , numlab
          aim1 = i - 1
          xlable(i) = xmin + (aim1/anumlm)*delx
       ENDDO
-      WRITE (ipr,99014) (xlable(i),i=1,numlab)
+      WRITE (G_IO,99014) (xlable(i),i=1,numlab)
 99014 FORMAT (' ',9X,5E12.4)
 !
 99015 FORMAT (' ','**************************************************', &
@@ -23018,15 +22676,44 @@ END SUBROUTINE PLOTST
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plott (X, Y)
+!!       SUBROUTINE PLOTT(Y,X,N)
 !!
 !!##DESCRIPTION
+!!
 !!    PLOTT(3f) yields a narrow-width (71-character) plot of Y(i) versus
 !!    X(i). Its narrow width makes it appropriate for use on a terminal.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Note values in the vertical axis vector (y) or the horizontal axis
+!!    vector (x) which are equal to or in excess of 10.0**10 will not
+!!    be plotted.
+!!
+!!    This convention greatly simplifies the problem of plotting when
+!!    some elements in the vector y (or x) are 'missing data', or when
+!!    we purposely want to ignore certain elements in the vector y (or x)
+!!    for plotting purposes (that is, we do not want certain elements in
+!!    y (or x) to be plotted). To cause specific elements in y (or x)
+!!    to be ignored, we replace the elements beforehand (by, for example,
+!!    use of the REPLAC(3f) subroutine) by some large value (like, say,
+!!    10.0**10) and they will subsequently be ignored in the plot subroutine.
+!!
+!!    Note that the storage requirements for this (and the other) terminal
+!!    plot subroutiness are very small. This is due to the 'one line at
+!!    a time' algorithm employed for the plot.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!   Y   The vector of (unsorted or sorted) observations to be plotted
+!!       vertically.
+!!   X   The single precision vector of (unsorted or sorted) observations
+!!       to be plotted horizontally.
+!!   N   The integer number of observations in the vector Y.
+!!       There is no restriction on the maximum value of N for this
+!!       subroutine.
+!!
+!!##OUTPUT
+!!    A narrow-width (71-character) terminal plot of y(i) versus x(i).
+!!    The body of the plot (not counting axis values and margins) is 25 rows
+!!    (lines) and 49 columns.
 !!
 !!##EXAMPLES
 !!
@@ -23035,7 +22722,6 @@ END SUBROUTINE PLOTST
 !!    program demo_plott
 !!    use M_datapac, only : plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plott(x,y)
 !!    end program demo_plott
 !!
@@ -23048,98 +22734,55 @@ END SUBROUTINE PLOTST
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==plott.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE PLOTT(Y,X,N)
-REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
-     &     delx , dely , hold , X , xlable , xmax , xmin , xwidth , Y , &
-     &     ylable , ylower , ymax , ymin
-REAL(kind=wp) :: yupper , ywidth
-      INTEGER i , icol , icolmx , ipr , irow , ixdel , N , n2 , numcol ,&
-     &        numlab , numr25 , numr50 , numr75 , numrow
-!
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED HORIZONTALLY.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR Y.
-!     OUTPUT--A NARROW-WIDTH (71-CHARACTER) TERMINAL PLOT
-!             OF Y(I) VERSUS X(I).
-!             THE BODY OF THE PLOT (NOT COUNTING AXIS VALUES
-!             AND MARGINS) IS 25 ROWS (LINES) AND 49 COLUMNS.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
-!              OR THE HORIZONTAL AXIS VECTOR (X) WHICH ARE
-!              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
-!              PLOTTED.
-!              THIS CONVENTION GREATLY SIMPLIFIES THE PROBLEM
-!              OF PLOTTING WHEN SOME ELEMENTS IN THE VECTOR Y
-!              (OR X) ARE 'MISSING DATA', OR WHEN WE PURPOSELY
-!              WANT TO IGNORE CERTAIN ELEMENTS IN THE VECTOR Y
-!              (OR X) FOR PLOTTING PURPOSES (THAT IS, WE DO NOT
-!              WANT CERTAIN ELEMENTS IN Y (OR X) TO BE PLOTTED).
-!              TO CAUSE SPECIFIC ELEMENTS IN Y (OR X) TO BE
-!              IGNORED, WE REPLACE THE ELEMENTS BEFOREHAND
-!              (BY, FOR EXAMPLE, USE OF THE   REPLAC   SUBROUTINE)
-!              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
-!              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOT
-!              SUBROUTINE.
-!            --NOTE THAT THE STORAGE REQUIREMENTS FOR THIS
-!              (AND THE OTHER) TERMINAL PLOT SUBROUTINESS ARE .
-!              VERY SMALL.
-!              THIS IS DUE TO THE 'ONE LINE AT A TIME' ALGORITHM
-!              EMPLOYED FOR THE PLOT.
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
+!*==plott.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PLOTT(Y,X,N)
+REAL(kind=wp),intent(in) :: X(:), Y(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp) :: aim1, airow, anumcm, anumlm, anumr, anumrm
+REAL(kind=wp) :: cutoff,  delx, dely, hold, xlable, xmax, xmin, xwidth, ylable, ylower, ymax, ymin
+REAL(kind=wp) :: yupper, ywidth
+INTEGER       :: i, icol, icolmx, irow, ixdel, n2, numcol, numlab, numr25, numr50, numr75, numrow
+CHARACTER(len=4) :: iline
+CHARACTER(len=4) :: iaxisc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+
+DIMENSION iline(72) , xlable(10)
+
+DATA sbnam1 , sbnam2/'PLOT' , 'T   '/
+DATA alph11 , alph12/'FIRS' , 'T   '/
+DATA alph21 , alph22/'SECO' , 'ND  '/
+DATA alph31 , alph32/'THIR' , 'D   '/
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
-!---------------------------------------------------------------------
-!
-      CHARACTER*4 iline
-      CHARACTER*4 iaxisc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 blank , hyphen , alphai , alphax
-!
-      DIMENSION Y(:)
-      DIMENSION X(:)
-      DIMENSION iline(72) , xlable(10)
-!
-      DATA sbnam1 , sbnam2/'PLOT' , 'T   '/
-      DATA alph11 , alph12/'FIRS' , 'T   '/
-      DATA alph21 , alph22/'SECO' , 'ND  '/
-      DATA alph31 , alph32/'THIR' , 'D   '/
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-!
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph31 , alph32 , sbnam1 , sbnam2
-         WRITE (ipr,99001) N
-99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
+         WRITE (G_IO,99001) N
+         99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+         WRITE (G_IO,99011)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph31 , alph32 , sbnam1 , sbnam2
-            WRITE (ipr,99002) N
-99002       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
+            WRITE (G_IO,99002) N
+            99002       FORMAT (' ','HAS THE VALUE 1')
+            WRITE (G_IO,99011)
             RETURN
          ELSE
 !
@@ -23147,65 +22790,68 @@ REAL(kind=wp) :: yupper , ywidth
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99014) hold
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99014) hold
+            WRITE (G_IO,99011)
             RETURN
          ENDIF
- 50      hold = X(1)
+ 50      continue
+         hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99014) hold
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99014) hold
+         WRITE (G_IO,99011)
          RETURN
       ENDIF
 !
- 100  DO i = 1 , N
+ 100  continue
+      DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 200
       ENDDO
-      WRITE (ipr,99011)
-      WRITE (ipr,99012)
-      WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99015)
-      WRITE (ipr,99016) cutoff
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) cutoff
+      WRITE (G_IO,99011)
       RETURN
- 200  DO i = 1 , N
+ 200  continue
+      DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 300
       ENDDO
-      WRITE (ipr,99011)
-      WRITE (ipr,99012)
-      WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99015)
-      WRITE (ipr,99016) cutoff
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99016) cutoff
+      WRITE (G_IO,99011)
       RETURN
 !
- 300  n2 = 0
+ 300  continue
+      n2 = 0
       DO i = 1 , N
          IF ( Y(i)<cutoff .AND. X(i)<cutoff ) THEN
             n2 = n2 + 1
             IF ( n2>=2 ) GOTO 400
          ENDIF
       ENDDO
-      WRITE (ipr,99011)
-      WRITE (ipr,99012)
-      WRITE (ipr,99003) alph11 , alph12 , alph21 , alph22
-99003 FORMAT (' ','THE ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99004) sbnam1 , sbnam2
-99004 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99005)
-99005 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
-     &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99006) n2
-99006 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99012)
+      WRITE (G_IO,99003) alph11 , alph12 , alph21 , alph22
+      99003 FORMAT (' ','THE ',A4,A4,', AND ',A4,A4)
+      WRITE (G_IO,99004) sbnam1 , sbnam2
+      99004 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
+      WRITE (G_IO,99005)
+      99005 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN', ' EXCLUDED FROM THE PLOT.')
+      WRITE (G_IO,99006) n2
+      99006 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+      WRITE (G_IO,99011)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -23213,7 +22859,8 @@ REAL(kind=wp) :: yupper , ywidth
 !     DEFINE THE NUMBER OF ROWS AND COLUMNS WITHIN THE PLOT--
 !     THIS HAS BEEN SET TO 25 ROWS AND 49 COLUMNS.
 !
- 400  numrow = 25
+ 400  continue
+      numrow = 25
       numcol = 49
       anumr = numrow
       anumrm = numrow - 1
@@ -23229,21 +22876,19 @@ REAL(kind=wp) :: yupper , ywidth
 !     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
 !     FOR A MARGIN WITHIN THE PLOT.
 !
-      WRITE (ipr,99007)
-99007 FORMAT (' ')
-      WRITE (ipr,99008)
+      WRITE (G_IO,99007)
+      99007 FORMAT (' ')
+      WRITE (G_IO,99008)
 !
-99008 FORMAT (' ',                                                      &
-     &'THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZON&
-     &TALLY)')
+      99008 FORMAT (' THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZONTALLY)')
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99017) (iline(i),i=1,numcol)
-      WRITE (ipr,99018) blank
+      WRITE (G_IO,99017) (iline(i),i=1,numcol)
+      WRITE (G_IO,99018) blank
 !
 !     DETERMINE THE MIN AND MAX VALUES OF Y, AND OF X.
 !
@@ -23300,41 +22945,38 @@ REAL(kind=wp) :: yupper , ywidth
          ENDDO
          iaxisc = alphai
          IF ( irow==1 .OR. irow==numrow ) iaxisc = hyphen
-         IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 )        &
-     &        iaxisc = hyphen
-         WRITE (ipr,99009) ylable , iaxisc , (iline(icol),icol=1,icolmx)
-99009    FORMAT (' ',E14.7,1X,A1,2X,50A1)
+         IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 ) iaxisc = hyphen
+         WRITE (G_IO,99009) ylable , iaxisc , (iline(icol),icol=1,icolmx)
+         99009 FORMAT (' ',E14.7,1X,A1,2X,50A1)
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
 !     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
-      WRITE (ipr,99018) blank
+      WRITE (G_IO,99018) blank
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99017) (iline(icol),icol=1,numcol)
+      WRITE (G_IO,99017) (iline(icol),icol=1,numcol)
       DO i = 1 , numlab
          aim1 = i - 1
          xlable(i) = xmin + (aim1/anumlm)*delx
       ENDDO
-      WRITE (ipr,99010) (xlable(i),i=1,numlab)
-99010 FORMAT (' ',9X,5E12.4)
-!
-99011 FORMAT (' ','**************************************************', &
-     &        '********************')
+      WRITE (G_IO,99010) (xlable(i),i=1,numlab)
+      99010 FORMAT (' ',9X,5E12.4)
+
+99011 FORMAT (' ','**********************************************************************')
 99012 FORMAT (' ','                   FATAL ERROR                    ')
-99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
-     &        ' SUBROUTINE')
+99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
 99014 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
 99015 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99016 FORMAT (' ','VALUE OF ',E15.8)
 99017 FORMAT (' ',18X,54A1)
 99018 FORMAT (' ',15X,A1)
-!
+
 END SUBROUTINE PLOTT
 !>
 !!##NAME
@@ -23342,7 +22984,7 @@ END SUBROUTINE PLOTT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotu (X, Y)
+!!       SUBROUTINE PLOTU(X,N)
 !!
 !!##DESCRIPTION
 !!    PLOTU(3f) produces the following 4 plots--
@@ -23384,6 +23026,14 @@ END SUBROUTINE PLOTT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES
+!! !                 FOR DATA ANALYSIS', (UNPUBLISHED MANUSCRIPT
+!! !                 AVAILABLE FROM AUTHOR), 1975.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
+!! !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
 !*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTU(X,N)
 REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
@@ -23393,13 +23043,13 @@ REAL(kind=wp) :: X2 , x25 , x75 , xmax , xmax2 , xmean , xmid , xmin , xmin2 ,&
      &     Y2 , ylable , ymax , ymin , z , zautoc , zdeva , zdevb ,     &
      &     zmax , zmean , zmean1
 REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
-      INTEGER i , ibax , ibaxis , ibaxm1 , ibaxm2 , ievodd , ilax ,     &
+INTEGER :: i , ibax , ibaxis , ibaxm1 , ibaxm2 , ievodd , ilax ,     &
      &        ilaxis , ilaxm1 , ilaxm2 , ilaxm3 , ilaxm4 , ilaxp2 ,     &
-     &        ilower , inc , ip1 , iplot , ipr , irax , iraxis
-      INTEGER iraxm2 , irev , iskipm , itax , itaxis , itaxp1 , itaxp2 ,&
+     &        ilower , inc , ip1 , iplot , irax , iraxis
+INTEGER :: iraxm2 , irev , iskipm , itax , itaxis , itaxp1 , itaxp2 ,&
      &        iupper , ixdel , ixmid , iy , iydel , iymid , j , j1 ,    &
      &        j2 , j3 , j4 , mt , mx
-      INTEGER my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
+INTEGER :: my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
      &        numdis , nummax , nummin , numout
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -23421,13 +23071,6 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION
-!     REFERENCES--FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES
-!                 FOR DATA ANALYSIS', (UNPUBLISHED MANUSCRIPT
-!                 AVAILABLE FROM AUTHOR), 1975.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
-!                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -23437,9 +23080,9 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION X(:)
       DIMENSION X2(7500) , Y2(7500)
@@ -23464,20 +23107,19 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
       DATA itaxis(4) , ibaxis(4) , ilaxis(4) , iraxis(4)/27 , 45 , 54 , &
      &     98/
 !
-      ipr = 6
       ilower = 2
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<ilower .OR. N>iupper ) THEN
-         WRITE (ipr,99002) ilower , iupper
+         WRITE (G_IO,99002) ilower , iupper
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTU  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (',I1,',',I6,') INTERVAL *****')
-         WRITE (ipr,99003) N
+         WRITE (G_IO,99003) N
 99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -23485,7 +23127,7 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE PL&
      &OTU  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -23818,29 +23460,29 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
          j2 = iraxis(1)
          j3 = ilaxis(2) - 4
          j4 = iraxis(2)
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 !
 99005    FORMAT (' ',20X,12X,'PLOT OF X(I) VERSUS I',41X,'PLOT OF ',    &
      &           'X(I) VERSUS X(I-1)')
-         WRITE (ipr,99018) (IGRaph(itax,j),j=j1,j2) ,                   &
+         WRITE (G_IO,99018) (IGRaph(itax,j),j=j1,j2) ,                   &
      &                     (IGRaph(itax,j),j=j3,j4)
-         WRITE (ipr,99018) (IGRaph(itaxp1,j),j=j1,j2) ,                 &
+         WRITE (G_IO,99018) (IGRaph(itaxp1,j),j=j1,j2) ,                 &
      &                     (IGRaph(itaxp1,j),j=j3,j4)
          DO i = itaxp2 , ibaxm2
-            WRITE (ipr,99019) ylable(i,1) , (IGRaph(i,j),j=j1,j2) ,     &
+            WRITE (G_IO,99019) ylable(i,1) , (IGRaph(i,j),j=j1,j2) ,     &
      &                        ylable(i,2) , (IGRaph(i,j),j=j3,j4)
          ENDDO
-         WRITE (ipr,99018) (IGRaph(ibaxm1,j),j=j1,j2) ,                 &
+         WRITE (G_IO,99018) (IGRaph(ibaxm1,j),j=j1,j2) ,                 &
      &                     (IGRaph(ibaxm1,j),j=j3,j4)
-         WRITE (ipr,99018) (IGRaph(ibax,j),j=j1,j2) ,                   &
+         WRITE (G_IO,99018) (IGRaph(ibax,j),j=j1,j2) ,                   &
      &                     (IGRaph(ibax,j),j=j3,j4)
-         WRITE (ipr,99020) xmin(1) , x25(1) , xmid(1) , x75(1) , xmax(1)&
+         WRITE (G_IO,99020) xmin(1) , x25(1) , xmid(1) , x75(1) , xmax(1)&
      &                     , xmin(2) , x25(2) , xmid(2) , x75(2) ,      &
      &                     xmax(2)
 !
          iskipm = 2
          DO i = 1 , iskipm
-            WRITE (ipr,99006)
+            WRITE (G_IO,99006)
 99006       FORMAT (' ')
          ENDDO
 !
@@ -23854,49 +23496,49 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
          j2 = iraxis(3)
          j3 = ilaxis(4) - 4
          j4 = iraxis(4)
-         WRITE (ipr,99007)
+         WRITE (G_IO,99007)
 99007    FORMAT (' ',38X,'HISTOGRAM',49X,'NORMAL PROBABILITY PLOT')
-         WRITE (ipr,99018) (IGRaph(itax,j),j=j1,j2) ,                   &
+         WRITE (G_IO,99018) (IGRaph(itax,j),j=j1,j2) ,                   &
      &                     (IGRaph(itax,j),j=j3,j4)
-         WRITE (ipr,99018) (IGRaph(itaxp1,j),j=j1,j2) ,                 &
+         WRITE (G_IO,99018) (IGRaph(itaxp1,j),j=j1,j2) ,                 &
      &                     (IGRaph(itaxp1,j),j=j3,j4)
          DO i = itaxp2 , ibaxm2
-            WRITE (ipr,99019) ylable(i,3) , (IGRaph(i,j),j=j1,j2) ,     &
+            WRITE (G_IO,99019) ylable(i,3) , (IGRaph(i,j),j=j1,j2) ,     &
      &                        ylable(i,4) , (IGRaph(i,j),j=j3,j4)
          ENDDO
-         WRITE (ipr,99018) (IGRaph(ibaxm1,j),j=j1,j2) ,                 &
+         WRITE (G_IO,99018) (IGRaph(ibaxm1,j),j=j1,j2) ,                 &
      &                     (IGRaph(ibaxm1,j),j=j3,j4)
-         WRITE (ipr,99018) (IGRaph(ibax,j),j=j1,j2) ,                   &
+         WRITE (G_IO,99018) (IGRaph(ibax,j),j=j1,j2) ,                   &
      &                     (IGRaph(ibax,j),j=j3,j4)
-         WRITE (ipr,99020) xmin(3) , x25(3) , xmid(3) , x75(3) , xmax(3)&
+         WRITE (G_IO,99020) xmin(3) , x25(3) , xmid(3) , x75(3) , xmax(3)&
      &                     , xmin(4) , x25(4) , xmid(4) , x75(4) ,      &
      &                     xmax(4)
-         WRITE (ipr,99008)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ',20X,' -6        -3         0         3         6')
-         WRITE (ipr,99009) numcla , N , numdis
+         WRITE (G_IO,99009) numcla , N , numdis
 99009    FORMAT (' ',20X,'NUMBER OF CLASSES = ',I3,42X,'SAMPLE SIZE =', &
      &           I9,' DISTINCT POINTS =',I6)
-         WRITE (ipr,99010) cwidth , cwidsd , zmin , nummin , promin
+         WRITE (G_IO,99010) cwidth , cwidsd , zmin , nummin , promin
 99010    FORMAT (' ',20X,'CLASS WIDTH = ',E14.7,' = ',F3.1,             &
      &           ' STANDARD DEVIATIONS',11X,'MINIMUM =',F13.6,          &
      &           ' COUNT =',I5,' (',F7.2,'%)')
-         WRITE (ipr,99011) numout , zmed
+         WRITE (G_IO,99011) numout , zmed
 99011    FORMAT (' ',16X,I5,' OBSERVATIONS WERE IN EXCESS OF 6 STANDARD'&
      &           ,' DEVIATIONS',11X,'MEDIAN =',F14.6)
-         WRITE (ipr,99012) zmean
+         WRITE (G_IO,99012) zmean
 99012    FORMAT (' ',20X,                                               &
      &      'ABOUT THE SAMPLE MEAN AND SO WERE NOT PRINTED IN HISTOGRAM'&
      &      ,7X,'MEAN =',F16.6)
-         WRITE (ipr,99013) zmax , nummax , promax
+         WRITE (G_IO,99013) zmax , nummax , promax
 99013    FORMAT (' ',85X,'MAXIMUM =',F13.6,' COUNT =',I5,' (',F7.2,'%)')
-         WRITE (ipr,99014) zsd , zrange
+         WRITE (G_IO,99014) zsd , zrange
 99014    FORMAT (' ',85X,'ST. DEV. =',F12.6,' RANGE =',F16.6)
-         WRITE (ipr,99015) zdevb , zrdevb
+         WRITE (G_IO,99015) zdevb , zrdevb
 99015    FORMAT (' ',20X,65X,'MAX DEV. BELOW MEAN =',F14.6,' (',F7.2,   &
      &           '%)')
-         WRITE (ipr,99016) zdeva , zrdeva
+         WRITE (G_IO,99016) zdeva , zrdeva
 99016    FORMAT (' ',85X,'MAX DEV. ABOVE MEAN =',F14.6,' (',F7.2,'%)')
-         WRITE (ipr,99017) zautoc
+         WRITE (G_IO,99017) zautoc
 99017    FORMAT (' ',85X,'AUTOCORR. =',F10.2,'%')
       ENDIF
 99018 FORMAT (' ',16X,4A1,45A1,16X,4A1,45A1)
@@ -23910,7 +23552,7 @@ END SUBROUTINE PLOTU
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotx (X, Y)
+!!       SUBROUTINE PLOTX(X,N)
 !!
 !!##DESCRIPTION
 !!    PLOTX(3f) yields a one-page printer plot of X(I) versus I.
@@ -23952,7 +23594,7 @@ END SUBROUTINE PLOTU
 SUBROUTINE PLOTX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
      &     xmax , xmid , xmin , ylable , ymax , ymin
-INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
+INTEGER i , iflag , ip2 , j , k , mx , my , N
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -23979,11 +23621,11 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION X(:)
       DIMENSION ylable(11)
@@ -23996,29 +23638,28 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
       DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
      &     'N' , '='/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
             RETURN
          ELSE
 !
@@ -24026,26 +23667,26 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
             RETURN
          ENDIF
 !
  50      DO i = 1 , N
             IF ( X(i)<cutoff ) GOTO 100
          ENDDO
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-         WRITE (ipr,99005)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+         WRITE (G_IO,99005)
 99005    FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
-         WRITE (ipr,99006) cutoff
+         WRITE (G_IO,99006) cutoff
 99006    FORMAT (' ','VALUE OF ',E15.8)
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
          RETURN
       ENDIF
 !
@@ -24144,7 +23785,7 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
 !
 !     WRITE OUT THE GRAPH
 !
-      WRITE (ipr,99007)
+      WRITE (G_IO,99007)
 !
 99007 FORMAT (' ',                                                      &
      &'THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTAL&
@@ -24153,13 +23794,13 @@ INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99008) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99008) (IGRaph(i,j),j=1,109)
 99008    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99009) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99009) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99009    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99010) xmin , x25 , xmid , x75 , xmax
+      WRITE (G_IO,99010) xmin , x25 , xmid , x75 , xmax
 99010 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
 99011 FORMAT (' ','**************************************************', &
@@ -24176,7 +23817,7 @@ END SUBROUTINE PLOTX
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotxt (X, Y)
+!!       SUBROUTINE PLOTXT(X,N)
 !!
 !!##DESCRIPTION
 !!    plotxt(3f) yields a narrow-width (71-character) plot of x(i) versus i.
@@ -24212,7 +23853,7 @@ REAL(kind=wp) :: ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
      &     anumcm , anumlm , anumr , anumrm , cutoff , delai , delx ,   &
      &     hold , X , xlable , xlower , xmax , xmin
 REAL(kind=wp) :: xupper , xwidth
-      INTEGER i , icol , icolmx , ipr , irow , ixdel , N , numcol ,     &
+INTEGER :: i , icol , icolmx , irow , ixdel , N , numcol ,     &
      &        numlab , numr25 , numr50 , numr75 , numrow
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -24257,11 +23898,11 @@ REAL(kind=wp) :: xupper , xwidth
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 iline
-      CHARACTER*4 iaxisc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22
-      CHARACTER*4 blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: iline
+CHARACTER(len=4) :: iaxisc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 !
       DIMENSION X(:)
       DIMENSION iline(72) , ailabl(10)
@@ -24271,27 +23912,26 @@ REAL(kind=wp) :: xupper , xwidth
       DATA alph21 , alph22/'SECO' , 'ND  '/
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99010)
-         WRITE (ipr,99011)
-         WRITE (ipr,99012) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99001) N
+         WRITE (G_IO,99010)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99001) N
 99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99010)
-            WRITE (ipr,99011)
-            WRITE (ipr,99012) alph21 , alph22 , sbnam1 , sbnam2
-            WRITE (ipr,99002) N
+            WRITE (G_IO,99010)
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
+            WRITE (G_IO,99002) N
 99002       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99010)
+            WRITE (G_IO,99010)
             RETURN
          ELSE
 !
@@ -24299,26 +23939,26 @@ REAL(kind=wp) :: xupper , xwidth
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99010)
-            WRITE (ipr,99011)
-            WRITE (ipr,99012) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99003) hold
+            WRITE (G_IO,99010)
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) hold
 99003       FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
-            WRITE (ipr,99010)
+            WRITE (G_IO,99010)
             RETURN
          ENDIF
 !
  50      DO i = 1 , N
             IF ( X(i)<cutoff ) GOTO 100
          ENDDO
-         WRITE (ipr,99010)
-         WRITE (ipr,99011)
-         WRITE (ipr,99012) alph11 , alph12 , sbnam1 , sbnam2
-         WRITE (ipr,99004)
+         WRITE (G_IO,99010)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
+         WRITE (G_IO,99004)
 99004    FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
-         WRITE (ipr,99005) cutoff
+         WRITE (G_IO,99005) cutoff
 99005    FORMAT (' ','VALUE OF ',E15.8)
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
          RETURN
       ENDIF
 !
@@ -24342,9 +23982,9 @@ REAL(kind=wp) :: xupper , xwidth
 !     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
 !     FOR A MARGIN WITHIN THE PLOT.
 !
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ')
-      WRITE (ipr,99007)
+      WRITE (G_IO,99007)
 !
 99007 FORMAT (' ','THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) ',      &
      &        'VERSUS I (HORIZONTALLY')
@@ -24354,8 +23994,8 @@ REAL(kind=wp) :: xupper , xwidth
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99013) (iline(i),i=1,numcol)
-      WRITE (ipr,99014) blank
+      WRITE (G_IO,99013) (iline(i),i=1,numcol)
+      WRITE (G_IO,99014) blank
 !
 !     DETERMINE THE MIN AND MAX VALUES OF X, AND OF I.
 !
@@ -24402,26 +24042,26 @@ REAL(kind=wp) :: xupper , xwidth
          IF ( irow==1 .OR. irow==numrow ) iaxisc = hyphen
          IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 )        &
      &        iaxisc = hyphen
-         WRITE (ipr,99008) xlable , iaxisc , (iline(icol),icol=1,icolmx)
+         WRITE (G_IO,99008) xlable , iaxisc , (iline(icol),icol=1,icolmx)
 99008    FORMAT (' ',E14.7,1X,A1,2X,50A1)
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
 !     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
-      WRITE (ipr,99014) blank
+      WRITE (G_IO,99014) blank
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99013) (iline(icol),icol=1,numcol)
+      WRITE (G_IO,99013) (iline(icol),icol=1,numcol)
       DO i = 1 , numlab
          aim1 = i - 1
          ailabl(i) = aimin + (aim1/anumlm)*delai
       ENDDO
-      WRITE (ipr,99009) (ailabl(i),i=1,numlab)
+      WRITE (G_IO,99009) (ailabl(i),i=1,numlab)
 99009 FORMAT (' ',9X,5E12.4)
 !
 99010 FORMAT (' ','**************************************************', &
@@ -24439,7 +24079,7 @@ END SUBROUTINE PLOTXT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine plotxx (X, Y)
+!!       SUBROUTINE PLOTXX(X,N)
 !!
 !!##DESCRIPTION
 !!    plotxx(3f) yields a one-page printer plot of x(i) versus x(i-1).
@@ -24476,11 +24116,26 @@ END SUBROUTINE PLOTXT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE
+!! !                 STATISTICAL ANALYSIS OF DATA', UNPUBLISHED
+!! !                 MANUSCRIPT (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE FALL CONFERENCE
+!! !                 OF THE CHEMICAL DIVISION OF THE AMERICAN
+!! !                 SOCIETY FOR QUALITY CONTROL, KNOXVILLE,
+!! !                 TENNESSEE, OCTOBER 19-20, 1972.
+!! !               --FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE
+!! !                 SUBROUTINES', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'STRATEGY FOR DATA ANALYSIS
+!! !                 BY COMPUTERS' SESSION AT THE NATIONAL
+!! !                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
 !*==plotxx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTXX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     xmax , xmid , xmin , ylable , ymax , ymin
-      INTEGER i , iflag , im1 , ip2 , ipr , j , k , mx , my , N
+INTEGER :: i , iflag , im1 , ip2 , j , k , mx , my , N
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS
@@ -24508,20 +24163,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTXX
 !              SUBROUTINE.
-!     REFERENCES--FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE
-!                 STATISTICAL ANALYSIS OF DATA', UNPUBLISHED
-!                 MANUSCRIPT (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE FALL CONFERENCE
-!                 OF THE CHEMICAL DIVISION OF THE AMERICAN
-!                 SOCIETY FOR QUALITY CONTROL, KNOXVILLE,
-!                 TENNESSEE, OCTOBER 19-20, 1972.
-!               --FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE
-!                 SUBROUTINES', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'STRATEGY FOR DATA ANALYSIS
-!                 BY COMPUTERS' SESSION AT THE NATIONAL
-!                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --NOVEMBER  1974.
@@ -24535,11 +24176,11 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 IGRaph
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22
-      CHARACTER*4 blank , hyphen , alphai , alphax
-      CHARACTER*4 alpham , alphaa , alphad , alphan , equal
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
       DIMENSION X(:)
       DIMENSION ylable(11)
@@ -24552,29 +24193,28 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
       DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
      &     'N' , '='/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      WRITE (ipr,99001)
+      WRITE (G_IO,99001)
 99001 FORMAT ('1')
       IF ( N<1 ) THEN
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph21 , alph22 , sbnam1 , sbnam2
-            WRITE (ipr,99003) N
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) N
 99003       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
             RETURN
          ELSE
 !
@@ -24582,26 +24222,26 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99011)
-            WRITE (ipr,99012)
-            WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012)
+            WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
             RETURN
          ENDIF
 !
  50      DO i = 1 , N
             IF ( X(i)<cutoff ) GOTO 100
          ENDDO
-         WRITE (ipr,99011)
-         WRITE (ipr,99012)
-         WRITE (ipr,99013) alph11 , alph12 , sbnam1 , sbnam2
-         WRITE (ipr,99005)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012)
+         WRITE (G_IO,99013) alph11 , alph12 , sbnam1 , sbnam2
+         WRITE (G_IO,99005)
 99005    FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
-         WRITE (ipr,99006) cutoff
+         WRITE (G_IO,99006) cutoff
 99006    FORMAT (' ','VALUE OF ',E15.8)
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
          RETURN
       ENDIF
 !
@@ -24702,7 +24342,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !
 !     WRITE OUT THE GRAPH
 !
-      WRITE (ipr,99007)
+      WRITE (G_IO,99007)
 !
 99007 FORMAT (' ',                                                      &
      &'THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS X(I-1) (HORIZ&
@@ -24711,13 +24351,13 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
          ip2 = i + 2
          iflag = ip2 - (ip2/5)*5
          k = ip2/5
-         IF ( iflag/=0 ) WRITE (ipr,99008) (IGRaph(i,j),j=1,109)
+         IF ( iflag/=0 ) WRITE (G_IO,99008) (IGRaph(i,j),j=1,109)
 99008    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (ipr,99009) ylable(k) ,                  &
+         IF ( iflag==0 ) WRITE (G_IO,99009) ylable(k) ,                  &
      &                          (IGRaph(i,j),j=1,109)
 99009    FORMAT (' ',F20.7,109A1)
       ENDDO
-      WRITE (ipr,99010) xmin , x25 , xmid , x75 , xmax
+      WRITE (G_IO,99010) xmin , x25 , xmid , x75 , xmax
 99010 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
 !
 99011 FORMAT (' ','**************************************************', &
@@ -24734,7 +24374,7 @@ END SUBROUTINE PLOTXX
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine pltsct (X, Y)
+!!       SUBROUTINE PLTSCT(Y,X,Char,N,D,Dmin,Dmax)
 !!
 !!##DESCRIPTION
 !!    pltsct(3f) yields a narrow-width (71-character) plot of y(i) versus
@@ -24774,7 +24414,7 @@ END SUBROUTINE PLOTXX
 !!      x if char(i) is any value outside the range
 !!                               0.5 to  36.5.
 !!
-!!    the use of the subset defintion vector d gives the data analyst
+!!    the use of the subset definition vector d gives the data analyst
 !!    the capability of plotting subsets of the data, where the subset is
 !!    defined by values in the vector d.
 !!
@@ -24802,13 +24442,21 @@ END SUBROUTINE PLOTXX
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
+!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
+!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
+!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==pltsct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTSCT(Y,X,Char,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , D , delx , dely , Dmax , Dmin , hold , X , xlable , &
      &     xmax , xmin , xwidth , Y
 REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
-      INTEGER i , ia , icol , icolmx , ipr , irow , ixdel , N , n2 ,    &
+INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !
 !
@@ -24866,26 +24514,19 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
 !              SUBROUTINE.
-!     REFERENCES--FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 NEW YORK CITY, DECEMBER 27-30, 1973.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 iline
-      CHARACTER*4 iaxisc
-      CHARACTER*4 iplotc
-      CHARACTER*4 jplotc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22 , alph31 , alph32
-      CHARACTER*4 alph41 , alph42 , alph51 , alph52
-      CHARACTER*4 blank , hyphen , alphai
+CHARACTER(len=4) :: iline
+CHARACTER(len=4) :: iaxisc
+CHARACTER(len=4) :: iplotc
+CHARACTER(len=4) :: jplotc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22 , alph31 , alph32
+CHARACTER(len=4) :: alph41 , alph42 , alph51 , alph52
+CHARACTER(len=4) :: blank , hyphen , alphai
 !
       DIMENSION Y(:)
       DIMENSION X(:)
@@ -24915,27 +24556,26 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
      &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
      &     'Y' , 'Z' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99014)
-         WRITE (ipr,99015)
-         WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-         WRITE (ipr,99001) N
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+         WRITE (G_IO,99001) N
 99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99014)
-            WRITE (ipr,99015)
-            WRITE (ipr,99017) alph41 , alph42 , sbnam1 , sbnam2
-            WRITE (ipr,99002) N
+            WRITE (G_IO,99014)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
+            WRITE (G_IO,99002) N
 99002       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99014)
+            WRITE (G_IO,99014)
             RETURN
          ELSE
 !
@@ -24943,97 +24583,97 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
             DO i = 2 , N
                IF ( Y(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99014)
-            WRITE (ipr,99015)
-            WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99018) hold
-            WRITE (ipr,99014)
+            WRITE (G_IO,99014)
+            WRITE (G_IO,99015)
+            WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99018) hold
+            WRITE (G_IO,99014)
             RETURN
          ENDIF
  50      hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99014)
-         WRITE (ipr,99015)
-         WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99018) hold
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
+         WRITE (G_IO,99015)
+         WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99018) hold
+         WRITE (G_IO,99014)
          RETURN
       ENDIF
  100  hold = Char(1)
       DO i = 2 , N
          IF ( Char(i)/=hold ) GOTO 200
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99018) hold
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99018) hold
+      WRITE (G_IO,99014)
  200  hold = D(1)
       DO i = 2 , N
          IF ( D(i)/=hold ) GOTO 300
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99016)
-      WRITE (ipr,99017) alph51 , alph52 , sbnam1 , sbnam2
-      WRITE (ipr,99018) hold
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99016)
+      WRITE (G_IO,99017) alph51 , alph52 , sbnam1 , sbnam2
+      WRITE (G_IO,99018) hold
+      WRITE (G_IO,99014)
 !
  300  DO i = 1 , N
          IF ( Y(i)<cutoff ) GOTO 400
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph11 , alph12 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph11 , alph12 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
  400  DO i = 1 , N
          IF ( X(i)<cutoff ) GOTO 500
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph21 , alph22 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph21 , alph22 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
  500  DO i = 1 , N
          IF ( Char(i)<cutoff ) GOTO 600
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph31 , alph32 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
  600  DO i = 1 , N
          IF ( D(i)<cutoff ) GOTO 700
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph51 , alph52 , sbnam1 , sbnam2
-      WRITE (ipr,99019)
-      WRITE (ipr,99020) cutoff
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph51 , alph52 , sbnam1 , sbnam2
+      WRITE (G_IO,99019)
+      WRITE (G_IO,99020) cutoff
+      WRITE (G_IO,99014)
       RETURN
 !
  700  DO i = 1 , N
          IF ( Dmin<D(i) .AND. D(i)<Dmax ) GOTO 800
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99017) alph51 , alph52 , sbnam1 , sbnam2
-      WRITE (ipr,99003)
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99017) alph51 , alph52 , sbnam1 , sbnam2
+      WRITE (G_IO,99003)
 99003 FORMAT (' ','HAS ALL ELEMENTS OUTSIDE THE INTERVAL')
-      WRITE (ipr,99004) Dmin , Dmax
+      WRITE (G_IO,99004) Dmin , Dmax
 99004 FORMAT (' ','(',E15.8,',',E15.8,')',' AS DEFINED BY')
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ','THE SIXTH  AND SEVENTH INPUT ARGUMENTS.')
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
       RETURN
 !
  800  n2 = 0
@@ -25044,19 +24684,19 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
             IF ( n2>=2 ) GOTO 900
          ENDIF
       ENDDO
-      WRITE (ipr,99014)
-      WRITE (ipr,99015)
-      WRITE (ipr,99006) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
+      WRITE (G_IO,99014)
+      WRITE (G_IO,99015)
+      WRITE (G_IO,99006) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
      &                  alph32 , alph51 , alph52
 99006 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', ',A4,A4,', AND ',A4,A4)
-      WRITE (ipr,99007) sbnam1 , sbnam2
+      WRITE (G_IO,99007) sbnam1 , sbnam2
 99007 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
-      WRITE (ipr,99008)
+      WRITE (G_IO,99008)
 99008 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
-      WRITE (ipr,99009) n2
+      WRITE (G_IO,99009) n2
 99009 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
-      WRITE (ipr,99014)
+      WRITE (G_IO,99014)
       RETURN
 !
 !-----START POINT-----------------------------------------------------
@@ -25080,9 +24720,9 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 !     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
 !     FOR A MARGIN WITHIN THE PLOT.
 !
-      WRITE (ipr,99010)
+      WRITE (G_IO,99010)
 99010 FORMAT (' ')
-      WRITE (ipr,99011)
+      WRITE (G_IO,99011)
 !
 99011 FORMAT (' ','THE FOLLOWING IS A PLOT OF Y(I) VERSUS X(I)')
       DO icol = 1 , numcol
@@ -25091,8 +24731,8 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99021) (iline(i),i=1,numcol)
-      WRITE (ipr,99022) blank
+      WRITE (G_IO,99021) (iline(i),i=1,numcol)
+      WRITE (G_IO,99022) blank
 !
 !     DETERMINE THE MIN AND MAX VALUES OF Y, AND OF X.
 !
@@ -25176,26 +24816,26 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
          IF ( irow==1 .OR. irow==numrow ) iaxisc = hyphen
          IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 )        &
      &        iaxisc = hyphen
-         WRITE (ipr,99012) ylable , iaxisc , (iline(icol),icol=1,icolmx)
+         WRITE (G_IO,99012) ylable , iaxisc , (iline(icol),icol=1,icolmx)
 99012    FORMAT (' ',E14.7,1X,A1,2X,50A1)
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
 !     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
-      WRITE (ipr,99022) blank
+      WRITE (G_IO,99022) blank
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99021) (iline(icol),icol=1,numcol)
+      WRITE (G_IO,99021) (iline(icol),icol=1,numcol)
       DO i = 1 , numlab
          aim1 = i - 1
          xlable(i) = xmin + (aim1/anumlm)*delx
       ENDDO
-      WRITE (ipr,99013) (xlable(i),i=1,numlab)
+      WRITE (G_IO,99013) (xlable(i),i=1,numlab)
 99013 FORMAT (' ',9X,5E12.4)
 !
 99014 FORMAT (' ','**************************************************', &
@@ -25218,7 +24858,7 @@ END SUBROUTINE PLTSCT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine pltxxt (X, Y)
+!!       SUBROUTINE PLTXXT(X,N)
 !!
 !!##DESCRIPTION
 !!
@@ -25257,12 +24897,27 @@ END SUBROUTINE PLTSCT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE
+!! !                 STATISTICAL ANALYSIS OF DATA', UNPUBLISHED
+!! !                 MANUSCRIPT (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE FALL CONFERENCE
+!! !                 OF THE CHEMICAL DIVISION OF THE AMERICAN
+!! !                 SOCIETY FOR QUALITY CONTROL, KNOXVILLE,
+!! !                 TENNESSEE, OCTOBER 19-20, 1972.
+!! !               --FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE
+!! !                 SUBROUTINES', UNPUBLISHED MANUSCRIPT
+!! !                 (AVAILABLE FROM AUTHOR)
+!! !                 PRESENTED AT THE 'STRATEGY FOR DATA ANALYSIS
+!! !                 BY COMPUTERS' SESSION AT THE NATIONAL
+!! !                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
 !*==pltxxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTXXT(X,N)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , hold , X , x2labl , xcwidt , xlable , xlower , xmax , &
      &     xmin , xrwidt , xupper
-      INTEGER i , icol , icolmx , im1 , ipr , irow , ixdel , N ,        &
+INTEGER :: i , icol , icolmx , im1 , irow , ixdel , N ,        &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -25299,20 +24954,6 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
 !              VERY SMALL.
 !              THIS IS DUE TO THE 'ONE LINE AT A TIME' ALGORITHM
 !              EMPLOYED FOR THE PLOT.
-!     REFERENCES--FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE
-!                 STATISTICAL ANALYSIS OF DATA', UNPUBLISHED
-!                 MANUSCRIPT (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE FALL CONFERENCE
-!                 OF THE CHEMICAL DIVISION OF THE AMERICAN
-!                 SOCIETY FOR QUALITY CONTROL, KNOXVILLE,
-!                 TENNESSEE, OCTOBER 19-20, 1972.
-!               --FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE
-!                 SUBROUTINES', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'STRATEGY FOR DATA ANALYSIS
-!                 BY COMPUTERS' SESSION AT THE NATIONAL
-!                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
 !     UPDATED         --OCTOBER   1974.
@@ -25322,11 +24963,11 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 iline
-      CHARACTER*4 iaxisc
-      CHARACTER*4 sbnam1 , sbnam2
-      CHARACTER*4 alph11 , alph12 , alph21 , alph22
-      CHARACTER*4 blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: iline
+CHARACTER(len=4) :: iaxisc
+CHARACTER(len=4) :: sbnam1 , sbnam2
+CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 !
       DIMENSION X(:)
       DIMENSION iline(72) , x2labl(10)
@@ -25336,27 +24977,26 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
       DATA alph21 , alph22/'SECO' , 'ND  '/
       DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
-      ipr = 6
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99010)
-         WRITE (ipr,99011)
-         WRITE (ipr,99012) alph21 , alph22 , sbnam1 , sbnam2
-         WRITE (ipr,99001) N
+         WRITE (G_IO,99010)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
+         WRITE (G_IO,99001) N
 99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99010)
-            WRITE (ipr,99011)
-            WRITE (ipr,99012) alph21 , alph22 , sbnam1 , sbnam2
-            WRITE (ipr,99002) N
+            WRITE (G_IO,99010)
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
+            WRITE (G_IO,99002) N
 99002       FORMAT (' ','HAS THE VALUE 1')
-            WRITE (ipr,99010)
+            WRITE (G_IO,99010)
             RETURN
          ELSE
 !
@@ -25364,26 +25004,26 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99010)
-            WRITE (ipr,99011)
-            WRITE (ipr,99012) alph11 , alph12 , sbnam1 , sbnam2
-            WRITE (ipr,99003) hold
+            WRITE (G_IO,99010)
+            WRITE (G_IO,99011)
+            WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
+            WRITE (G_IO,99003) hold
 99003       FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
-            WRITE (ipr,99010)
+            WRITE (G_IO,99010)
             RETURN
          ENDIF
 !
  50      DO i = 1 , N
             IF ( X(i)<cutoff ) GOTO 100
          ENDDO
-         WRITE (ipr,99010)
-         WRITE (ipr,99011)
-         WRITE (ipr,99012) alph11 , alph12 , sbnam1 , sbnam2
-         WRITE (ipr,99004)
+         WRITE (G_IO,99010)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
+         WRITE (G_IO,99004)
 99004    FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
-         WRITE (ipr,99005) cutoff
+         WRITE (G_IO,99005) cutoff
 99005    FORMAT (' ','VALUE OF ',E15.8)
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
          RETURN
       ENDIF
 !
@@ -25407,9 +25047,9 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
 !     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
 !     FOR A MARGIN WITHIN THE PLOT.
 !
-      WRITE (ipr,99006)
+      WRITE (G_IO,99006)
 99006 FORMAT (' ')
-      WRITE (ipr,99007)
+      WRITE (G_IO,99007)
 !
 99007 FORMAT (' ',                                                      &
      &'THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VS. ,  21HX(I-1) (HO&
@@ -25420,8 +25060,8 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99013) (iline(i),i=1,numcol)
-      WRITE (ipr,99014) blank
+      WRITE (G_IO,99013) (iline(i),i=1,numcol)
+      WRITE (G_IO,99014) blank
 !
 !     DETERMINE THE MIN AND MAX VALUES OF X.
 !
@@ -25467,26 +25107,26 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
          IF ( irow==1 .OR. irow==numrow ) iaxisc = hyphen
          IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 )        &
      &        iaxisc = hyphen
-         WRITE (ipr,99008) xlable , iaxisc , (iline(icol),icol=1,icolmx)
+         WRITE (G_IO,99008) xlable , iaxisc , (iline(icol),icol=1,icolmx)
 99008    FORMAT (' ',E14.7,1X,A1,2X,50A1)
       ENDDO
 !
 !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
 !     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
 !
-      WRITE (ipr,99014) blank
+      WRITE (G_IO,99014) blank
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
       DO icol = 1 , numcol , ixdel
          iline(icol) = alphai
       ENDDO
-      WRITE (ipr,99013) (iline(icol),icol=1,numcol)
+      WRITE (G_IO,99013) (iline(icol),icol=1,numcol)
       DO i = 1 , numlab
          aim1 = i - 1
          x2labl(i) = xmin + (aim1/anumlm)*delx
       ENDDO
-      WRITE (ipr,99009) (x2labl(i),i=1,numlab)
+      WRITE (G_IO,99009) (x2labl(i),i=1,numlab)
 99009 FORMAT (' ',9X,5E12.4)
 !
 99010 FORMAT (' ','**********************************************************************')
@@ -25503,7 +25143,7 @@ END SUBROUTINE PLTXXT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine poicdf (X, Y)
+!!       SUBROUTINE POICDF(X,Alamba,Cdf)
 !!
 !!##DESCRIPTION
 !!    poicdf(3f) computes the cumulative distribution function value at
@@ -25548,10 +25188,31 @@ END SUBROUTINE PLTXXT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, DISCRETE
+!! !                 DISTRIBUTIONS, 1969, PAGES 87-121,
+!! !                 ESPECIALLY PAGE 114, FORMULA 93.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 112.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5,
+!! !                 AND PAGE 929.
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 146-154.
+!! !               --COX AND MILLER, THE THEORY OF STOCHASTIC
+!! !                 PROCESSES, 1965, PAGE 7.
+!! !               --GENERAL ELECTRIC COMPANY, TABLES OF THE
+!! !                 INDIVIDUAL AND CUMULATIVE TERMS OF POISSON
+!! !                 DISTRIBUTION, 1962.
+!! !               --OWEN, HANDBOOK OF STATISTICAL
+!! !                 TABLES, 1962, PAGES 259-261.
 !*==poicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POICDF(X,Alamba,Cdf)
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
-      INTEGER i , ievodd , imax , imin , intx , ipr , nu
+INTEGER :: i , ievodd , imax , imin , intx , nu
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -25601,26 +25262,6 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 87-121,
-!                 ESPECIALLY PAGE 114, FORMULA 93.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 112.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5,
-!                 AND PAGE 929.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 146-154.
-!               --COX AND MILLER, THE THEORY OF STOCHASTIC
-!                 PROCESSES, 1965, PAGE 7.
-!               --GENERAL ELECTRIC COMPANY, TABLES OF THE
-!                 INDIVIDUAL AND CUMULATIVE TERMS OF POISSON
-!                 DISTRIBUTION, 1962.
-!               --OWEN, HANDBOOK OF STATISTICAL
-!                 TABLES, 1962, PAGES 259-261.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -25629,24 +25270,22 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
       DOUBLE PRECISION DSQRT , DEXP
       DATA pi/3.14159265358979D0/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( Alamba<=0.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POICDF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99005) Alamba
+         WRITE (G_IO,99005) Alamba
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( X<0.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE POIC&
      &DF SUBROUTINE IS NEGATIVE *****')
-         WRITE (ipr,99005) X
+         WRITE (G_IO,99005) X
          Cdf = 0.0_wp
          RETURN
       ELSE
@@ -25655,11 +25294,11 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
          del = X - fintx
          IF ( del<0.0_wp ) del = -del
          IF ( del>0.001_wp ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE POIC&
      &DF SUBROUTINE IS NON-INTEGRAL *****')
-            WRITE (ipr,99005) X
+            WRITE (G_IO,99005) X
 99004       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,       &
      &              ' *****')
          ENDIF
@@ -25720,7 +25359,7 @@ END SUBROUTINE POICDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine poiplt (X, Y)
+!!       SUBROUTINE POIPLT(X,N,Alamba)
 !!
 !!##DESCRIPTION
 !!    poiplt(3f) generates a poisson probability plot (with single precision
@@ -25784,12 +25423,22 @@ END SUBROUTINE POICDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, DISCRETE
+!! !                 DISTRIBUTIONS, 1969, PAGES 87-121.
 !*==poiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
      &     sum1 , sum2 , sum3 , W , wbar , WS , X , Y , ybar , yint ,   &
      &     yslope , Z
-      INTEGER i , iarg2 , ilamba , imax , ipr , irev , iupper , j ,     &
+INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
      &        jm1 , k , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -25813,15 +25462,6 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 !              THE POISSON.  THIS IS DONE TO SAVE EXECUTION TIME
 !              WHICH INCREASES AS A FUNCTION OF ALAMBA AND WOULD
 !              BE EXCESSIVE FOR LARGE VALUES OF ALAMBA.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 87-121.
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --AUGUST    1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -25838,32 +25478,31 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
       EQUIVALENCE (W(1),WS(5001))
       EQUIVALENCE (Z(1),WS(10001))
 !
-      ipr = 6
       iupper = 5000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE POIP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          IF ( Alamba<=0.0_wp ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE POIPLT SUBROU&
      &TINE IS NON-POSITIVE *****')
-            WRITE (ipr,99005) Alamba
+            WRITE (G_IO,99005) Alamba
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
             RETURN
@@ -25872,7 +25511,7 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99006) hold
+            WRITE (G_IO,99006) hold
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE POIPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -25977,7 +25616,7 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 !     WRITE OUT THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99007) Alamba , N
+         WRITE (G_IO,99007) Alamba , N
 !
 99007    FORMAT (' ','POISSON PROBABILITY PLOT WITH PARAMETER = ',9X,   &
      &           E17.10,1X,8X,11X,'THE SAMPLE SIZE N = ',I7)
@@ -26006,7 +25645,7 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99008) cc , yint , yslope
+         WRITE (G_IO,99008) cc , yint , yslope
 99008    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -26020,7 +25659,7 @@ END SUBROUTINE POIPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine poippf (X, Y)
+!!       SUBROUTINE POIPPF(P,Alamba,Ppf)
 !!
 !!##DESCRIPTION
 !!    poippf(3f) computes the percent point function value at the single
@@ -26067,11 +25706,31 @@ END SUBROUTINE POIPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, DISCRETE
+!! !                 DISTRIBUTIONS, 1969, PAGES 87-121,
+!! !                 ESPECIALLY PAGE 102, FORMULA 36.1.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 108-113.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 929.
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 146-154.
+!! !               --COX AND MILLER, THE THEORY OF STOCHASTIC
+!! !                 PROCESSES, 1965, PAGE 7.
+!! !               --GENERAL ELECTRIC COMPANY, TABLES OF THE
+!! !                 INDIVIDUAL AND CUMULATIVE TERMS OF POISSON
+!! !                 DISTRIBUTION, 1962.
+!! !               --OWEN, HANDBOOK OF STATISTICAL
+!! !                 TABLES, 1962, PAGES 259-261.
 !*==poippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
-      INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2
+INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -26119,50 +25778,29 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 87-121,
-!                 ESPECIALLY PAGE 102, FORMULA 36.1.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 108-113.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 146-154.
-!               --COX AND MILLER, THE THEORY OF STOCHASTIC
-!                 PROCESSES, 1965, PAGE 7.
-!               --GENERAL ELECTRIC COMPANY, TABLES OF THE
-!                 INDIVIDUAL AND CUMULATIVE TERMS OF POISSON
-!                 DISTRIBUTION, 1962.
-!               --OWEN, HANDBOOK OF STATISTICAL
-!                 TABLES, 1962, PAGES 259-261.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
       DOUBLE PRECISION dlamba
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE POIPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99017) P
+         WRITE (G_IO,99017) P
          Ppf = 0.0_wp
          RETURN
       ELSE
          IF ( Alamba<=0.0_wp ) THEN
-            WRITE (ipr,99002)
+            WRITE (G_IO,99002)
 99002       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
-            WRITE (ipr,99017) Alamba
+            WRITE (G_IO,99017) Alamba
             Ppf = 0.0_wp
             RETURN
          ELSE
@@ -26228,8 +25866,8 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
                         IF ( p2>=P ) GOTO 50
                         ix0 = ix2
                      ENDDO
-                     WRITE (ipr,99018)
-                     WRITE (ipr,99003)
+                     WRITE (G_IO,99018)
+                     WRITE (G_IO,99003)
 !
 99003                FORMAT (' ',                                       &
      &                     'NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS'&
@@ -26245,8 +25883,8 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
                         IF ( p2<P ) GOTO 100
                         ix1 = ix2
                      ENDDO
-                     WRITE (ipr,99018)
-                     WRITE (ipr,99004)
+                     WRITE (G_IO,99018)
+                     WRITE (G_IO,99004)
 99004                FORMAT (' ',                                       &
      &                     'NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS'&
      &                     )
@@ -26269,8 +25907,8 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
             ix0 = ix0 - 1
          ELSE
 !CCCC IF(IX0.EQ.N)GOTO290
-            WRITE (ipr,99018)
-            WRITE (ipr,99005)
+            WRITE (G_IO,99018)
+            WRITE (G_IO,99005)
 99005       FORMAT (' ','LOWER AND UPPER BOUND IDENTICAL')
             GOTO 400
          ENDIF
@@ -26306,8 +25944,8 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
                ix2 = (ix0+ix1)/2
                IF ( ix2/=ix0 ) THEN
                   IF ( ix2==ix1 ) THEN
-                     WRITE (ipr,99018)
-                     WRITE (ipr,99019)
+                     WRITE (G_IO,99018)
+                     WRITE (G_IO,99019)
                      EXIT
                   ELSE
                      x2 = ix2
@@ -26322,15 +25960,15 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
                         ENDIF
                         CYCLE
                      ELSEIF ( p2<=p0 ) THEN
-                        WRITE (ipr,99018)
-                        WRITE (ipr,99006)
+                        WRITE (G_IO,99018)
+                        WRITE (G_IO,99006)
 99006                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
      &                          'LESS THAN LOWER BOUND PROBABILITY (P0)'&
      &                          )
                         EXIT
                      ELSEIF ( p2>=p1 ) THEN
-                        WRITE (ipr,99018)
-                        WRITE (ipr,99007)
+                        WRITE (G_IO,99018)
+                        WRITE (G_IO,99007)
 99007                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
      &                       'GREATER THAN UPPER BOUND PROBABILITY (P1)'&
      &                       )
@@ -26338,8 +25976,8 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
                      ENDIF
                   ENDIF
                ENDIF
-               WRITE (ipr,99018)
-               WRITE (ipr,99019)
+               WRITE (G_IO,99018)
+               WRITE (G_IO,99019)
                EXIT
             ENDIF
          ENDDO
@@ -26350,35 +25988,35 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
          Ppf = ix1
          RETURN
       ELSEIF ( p0>p1 ) THEN
-         WRITE (ipr,99018)
-         WRITE (ipr,99008)
+         WRITE (G_IO,99018)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
      &           'UPPER BOUND PROBABILITY (P1)')
       ELSEIF ( p0>P ) THEN
-         WRITE (ipr,99018)
-         WRITE (ipr,99009)
+         WRITE (G_IO,99018)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
      &           'INPUT PROBABILITY (P)')
       ELSEIF ( p1<P ) THEN
-         WRITE (ipr,99018)
-         WRITE (ipr,99010)
+         WRITE (G_IO,99018)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ','UPPER BOUND PROBABILITY (P1) LESS    THAN ',      &
      &           'INPUT PROBABILITY (P)')
       ELSE
-         WRITE (ipr,99018)
-         WRITE (ipr,99011)
+         WRITE (G_IO,99018)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
       ENDIF
 !
- 400  WRITE (ipr,99012) ix0 , p0
+ 400  WRITE (G_IO,99012) ix0 , p0
 99012 FORMAT (' ','IX0    = ',I8,10X,'P0 = ',F14.7)
-      WRITE (ipr,99013) ix1 , p1
+      WRITE (G_IO,99013) ix1 , p1
 99013 FORMAT (' ','IX1    = ',I8,10X,'P1 = ',F14.7)
-      WRITE (ipr,99014) ix2 , p2
+      WRITE (G_IO,99014) ix2 , p2
 99014 FORMAT (' ','IX2    = ',I8,10X,'P2 = ',F14.7)
-      WRITE (ipr,99015) P
+      WRITE (G_IO,99015) P
 99015 FORMAT (' ','P      = ',F14.7)
-      WRITE (ipr,99016) Alamba
+      WRITE (G_IO,99016) Alamba
 99016 FORMAT (' ','ALAMBA = ',F14.7)
       RETURN
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
@@ -26393,7 +26031,7 @@ END SUBROUTINE POIPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine poiran (X, Y)
+!!       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    poiran(3f) generates a random sample of size n from the poisson
@@ -26437,10 +26075,26 @@ END SUBROUTINE POIPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --COX AND MILLER, THE THEORY OF STOCHASTIC
+!! !                 PROCESSES, 1965, PAGE 7.
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 36-37.
+!! !               --JOHNSON AND KOTZ, DISCRETE
+!! !                 DISTRIBUTIONS, 1969, PAGES 87-121.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 108-113.
+!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
+!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
+!! !                 EDITION 2, 1957, PAGES 146-154.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!! !                 SERIES 55, 1964, PAGE 929.
 !*==poiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
 REAL(kind=wp) :: Alamba , e , sum , u(1) , X
-      INTEGER i , ipr , Iseed , j , N
+INTEGER :: i , Iseed , j , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -26486,21 +26140,6 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !              (AS OPPOSED TO INTEGER ARITHMETIC)
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
-!     REFERENCES--COX AND MILLER, THE THEORY OF STOCHASTIC
-!                 PROCESSES, 1965, PAGE 7.
-!               --TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 36-37.
-!               --JOHNSON AND KOTZ, DISCRETE
-!                 DISTRIBUTIONS, 1969, PAGES 87-121.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 108-113.
-!               --FELLER, AN INTRODUCTION TO PROBABILITY
-!                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!                 EDITION 2, 1957, PAGES 146-154.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 929.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -26514,32 +26153,24 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !
 !---------------------------------------------------------------------
 !
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
-!
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE POIRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( Alamba<=0.0_wp ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99004) Alamba
+         WRITE (G_IO,99004) Alamba
 99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -26573,7 +26204,7 @@ END SUBROUTINE POIRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine poly (X, Y)
+!!       SUBROUTINE POLY(Y,X,W,N,Ideg,Iwrite,B,Sdb,S,Df,Pred,Res)
 !!
 !!##DESCRIPTION
 !!    poly(3f) computes a least squares polynomial fit (of degree = ideg)
@@ -26615,13 +26246,13 @@ REAL(kind=wp) :: eta , eta2 , etap1 , f , fitdf , fitms , fitss , fstat , g , &
      &     resdf , resms
 REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
      &     WS , X , Y , ymean
-      INTEGER i , iconv , Ideg , ifitdf , insing , IPIvot , ipr ,       &
+INTEGER :: i , iconv , Ideg , ifitdf , insing , IPIvot , &
      &        iqarg , iqarg1 , iqarg2 , iramax , iramin , irank ,       &
      &        irarg , irarg1 , irarg2 , irarg3 , irepdf , iresdf , is
-      INTEGER iset , ism1 , iwflag , Iwrite , j , jm1 , jp1 , js ,      &
+INTEGER :: iset , ism1 , iwflag , Iwrite , j , jm1 , jp1 , js ,      &
      &        jsp1 , k , kk , kmax , kp1 , l , m , N , ni , nk , nkm5 , &
      &        nkmax
-      INTEGER nm5 , nmax , numset
+INTEGER :: nm5 , nmax , numset
 !
 !     INPUT  ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
 !                                RESPONSE DATA (THAT IS, THE
@@ -26686,7 +26317,6 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
       EQUIVALENCE (D(1),WS(12501))
       EQUIVALENCE (IPIvot(1),WS(12551))
 !
-      ipr = 6
       an = N
       k = Ideg + 1
       ak = k
@@ -26701,13 +26331,13 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !     WRITE OUT THE TITLE
 !
       IF ( Iwrite/=0 ) THEN
-         WRITE (ipr,99037)
-         WRITE (ipr,99037)
-         WRITE (ipr,99001)
+         WRITE (G_IO,99037)
+         WRITE (G_IO,99037)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ','LEAST SQUARES POLYNOMIAL FIT')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ',10X,'SAMPLE SIZE N = ',I8)
-         WRITE (ipr,99003) Ideg
+         WRITE (G_IO,99003) Ideg
 99003    FORMAT (' ',10X,'DEGREE = ',I8)
       ENDIF
 !
@@ -26731,16 +26361,16 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !
 !     CHECK THE INPUT ARGUMENTS N AND K
 !
-      IF ( N<=0 .OR. N>nmax ) WRITE (ipr,99004) N , nmax
+      IF ( N<=0 .OR. N>nmax ) WRITE (G_IO,99004) N , nmax
 99004 FORMAT (' ','*****ERROR--THE SAMPLE SIZE N (= ',I8,               &
      &        ') IS NON-POSITIVE OR LARGER THAN NMAX = ',I8,' *****')
       IF ( N<=0 .OR. N>nmax ) RETURN
-      IF ( k<=0 .OR. k>kmax ) WRITE (ipr,99005) k , kmax
+      IF ( k<=0 .OR. k>kmax ) WRITE (G_IO,99005) k , kmax
 99005 FORMAT (' ','*****ERROR--THE DESIRED NUMBER OF COEFFICIENTS K (= '&
      &        ,I8,') IS NON-POSITIVE OR LARGER THAN KMAX = ',I8,        &
      &        ' *****')
       IF ( k<=0 .OR. k>kmax ) RETURN
-      IF ( k>N ) WRITE (ipr,99006) k , N
+      IF ( k>N ) WRITE (G_IO,99006) k , N
 99006 FORMAT (' ','*****ERROR--THE DESIRED NUMBER OF COEFFICIENTS K (= '&
      &        ,I8,') IS LARGER THAN THE SAMPLE SIZE N (= ',I8,') *****')
       IF ( k>N ) RETURN
@@ -26756,9 +26386,9 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
          IF ( W(i)/=whold ) GOTO 100
       ENDDO
       iwflag = 1
- 100  IF ( iwflag==0 .AND. Iwrite/=0 ) WRITE (ipr,99007)
+ 100  IF ( iwflag==0 .AND. Iwrite/=0 ) WRITE (G_IO,99007)
 99007 FORMAT (' ',10X,'UNEQUAL WEIGHTS CASE')
-      IF ( iwflag==1 .AND. Iwrite/=0 ) WRITE (ipr,99008)
+      IF ( iwflag==1 .AND. Iwrite/=0 ) WRITE (G_IO,99008)
 99008 FORMAT (' ',10X,'EQUAL WEIGHTS CASE')
 !
 !     COMPUTE THE ORIGINAL FORM FOR THE Q MATRIX
@@ -26811,21 +26441,21 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
             tol = eta*ak
             nm5 = N - 5
             nkm5 = nk - 5
-!CCCC WRITE(IPR,1505)(Y(I),I=1,6)
-!CCCC WRITE(IPR,1505)(Y(I),I=NM5,N)
-!CCCC WRITE(IPR,1505)(X(I),I=1,6)
-!CCCC WRITE(IPR,1505)(X(I),I=NM5,N)
-!CCCC WRITE(IPR,1505)(W(I),I=1,6)
-!CCCC WRITE(IPR,1505)(W(I),I=NM5,N)
-!CCCC WRITE(IPR,1505)(Q(IQARG),IQARG=1,6)
-!CCCC WRITE(IPR,1505)(Q(IQARG),IQARG=NKM5,NK)
-!CCCC WRITE(IPR,1505)(Q(IQARG),IQARG=1,NK)
+!CCCC WRITE(G_IO,1505)(Y(I),I=1,6)
+!CCCC WRITE(G_IO,1505)(Y(I),I=NM5,N)
+!CCCC WRITE(G_IO,1505)(X(I),I=1,6)
+!CCCC WRITE(G_IO,1505)(X(I),I=NM5,N)
+!CCCC WRITE(G_IO,1505)(W(I),I=1,6)
+!CCCC WRITE(G_IO,1505)(W(I),I=NM5,N)
+!CCCC WRITE(G_IO,1505)(Q(IQARG),IQARG=1,6)
+!CCCC WRITE(G_IO,1505)(Q(IQARG),IQARG=NKM5,NK)
+!CCCC WRITE(G_IO,1505)(Q(IQARG),IQARG=1,NK)
 !
             CALL DECOMP(N,k,eta,tol,irank,insing)
 !
-!CCCC WRITE(IPR,1505)(Q(IQARG),IQARG=1,NK)
-!CCCC WRITE(IPR,1505)(R(IRARG),IRARG=1,KK)
-!CCCC WRITE(IPR,1505)(D(J),J=1,K)
+!CCCC WRITE(G_IO,1505)(Q(IQARG),IQARG=1,NK)
+!CCCC WRITE(G_IO,1505)(R(IRARG),IRARG=1,KK)
+!CCCC WRITE(G_IO,1505)(D(J),J=1,K)
             IF ( insing==1 ) THEN
                kp1 = k + 1
 !
@@ -26863,7 +26493,7 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                amdr2 = 0.0_wp
                EXIT
             ELSE
-               WRITE (ipr,99009) irank , k
+               WRITE (G_IO,99009) irank , k
 99009          FORMAT (' ',                                             &
      &             '*****ERROR--THE MATRIX IS SINGULAR--IT HAS IRANK = '&
      &             ,I8,                                                 &
@@ -26904,11 +26534,11 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                      ENDDO
                   ENDIF
                ENDDO
-!CCCC WRITE(IPR,1505)(R(IRARG),IRARG=1,KK)
+!CCCC WRITE(G_IO,1505)(R(IRARG),IRARG=1,KK)
 !
                CALL INVXWX(N,k)
 !
-!CCCC WRITE(IPR,1505)(R(IRARG),IRARG=1,KK)
+!CCCC WRITE(G_IO,1505)(R(IRARG),IRARG=1,KK)
 !
 !     COMPUTE STATISTICAL CALCULATIONS AND THEN WRITE OUT COEFFICIENTS
 !     AND STANDARD DEVIATIONS OF COEFFICIENTS ALONG WITH THE
@@ -26920,7 +26550,7 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                DO i = 1 , N
                   IF ( Res(i)/=0.0_wp ) GOTO 210
                ENDDO
-               WRITE (ipr,99010)
+               WRITE (G_IO,99010)
 99010          FORMAT (' ',10X,                                         &
      &                 'NOTE THAT AN EXACT FIT HAS BEEN OBTAINED')
  210           sum = 0.0_wp
@@ -26934,7 +26564,7 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                   ENDDO
                   resss = sum
                ENDIF
-               IF ( k==N .AND. Iwrite/=0 ) WRITE (ipr,99011) k
+               IF ( k==N .AND. Iwrite/=0 ) WRITE (G_IO,99011) k
 99011          FORMAT (' ',10X,                                         &
      &'NOTE THAT THE NUMBER OF COEFFICIENTS K            = THE SAMPLE SI&
      &ZE N = ',I8)
@@ -26945,27 +26575,27 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                   resms = resss/resdf
                   S = SQRT(resms)
                ENDIF
-!CCCC WRITE(IPR,3205)
+!CCCC WRITE(G_IO,3205)
                DO i = 1 , N
                   Pred(i) = Y(i) - Res(i)
-!CCCC WRITE(IPR,3305)Y(I),PRED(I),RES(I)
+!CCCC WRITE(G_IO,3305)Y(I),PRED(I),RES(I)
                ENDDO
                IF ( k==N ) THEN
-                  IF ( Iwrite/=0 ) WRITE (ipr,99012)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99012)
 99012             FORMAT (' ','        J        B(J)')
                   DO i = 1 , k
-                     IF ( Iwrite/=0 ) WRITE (ipr,99038) j , B(j)
+                     IF ( Iwrite/=0 ) WRITE (G_IO,99038) j , B(j)
                   ENDDO
                   RETURN
                ELSE
-                  IF ( Iwrite/=0 ) WRITE (ipr,99013) S
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99013) S
 99013             FORMAT (' ',10X,'RESIDUAL STANDARD DEVIATION = ',     &
      &                    E15.8)
-                  IF ( Iwrite/=0 ) WRITE (ipr,99014) iresdf
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99014) iresdf
 99014             FORMAT (' ',10X,'RESIDUAL DEGREES OF FREEDOM = ',I8)
-                  IF ( Iwrite/=0 ) WRITE (ipr,99015)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99015)
 99015             FORMAT (' ',10X,'COEFFICIENTS:')
-                  IF ( Iwrite/=0 ) WRITE (ipr,99016)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99016)
 99016             FORMAT (' ',                                          &
      &      '          J        B(J)      SD(B(J))        B(J)/SD(B(J))'&
      &      )
@@ -26973,7 +26603,7 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                      irarg = (j-1)*k + j
                      Sdb(j) = S*SQRT(R(irarg))
                      t = B(j)/Sdb(j)
-                     IF ( Iwrite/=0 ) WRITE (ipr,99038) j , B(j) ,      &
+                     IF ( Iwrite/=0 ) WRITE (G_IO,99038) j , B(j) ,      &
      &                    Sdb(j) , t
                   ENDDO
 !
@@ -27000,11 +26630,11 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                      irarg = (j-1)*k + j
                      R(irarg) = 1.0_wp
                   ENDDO
-!CCCC WRITE(IPR,2405)
+!CCCC WRITE(G_IO,2405)
                   DO i = 1 , k
                      iramin = (i-1)*k + 1
                      iramax = i*k
-!CCCC WRITE(IPR,2505)(R(IRARG),IRARG=IRAMIN,IRAMAX)
+!CCCC WRITE(G_IO,2505)(R(IRARG),IRARG=IRAMIN,IRAMAX)
                   ENDDO
 !
 !     CHECK FOR REPLICATION.
@@ -27023,7 +26653,7 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                      numset = numset + 1
                      DUM1(numset) = X(i)
  215              ENDDO
-                  IF ( numset==0 ) WRITE (ipr,99017)
+                  IF ( numset==0 ) WRITE (G_IO,99017)
 99017             FORMAT (' ','ERROR IN POLY   SUBROUTINE--NUMSET = 0')
                   IF ( numset==0 ) RETURN
 !
@@ -27055,16 +26685,16 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                   repdf = irepdf
                   repv = repss/repdf
                   repsd = SQRT(repv)
-                  IF ( Iwrite/=0 ) WRITE (ipr,99037)
-                  IF ( Iwrite/=0 ) WRITE (ipr,99018) repsd
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99037)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99018) repsd
 99018             FORMAT (' ',                                          &
      &                    '          REPLICATION STANDARD DEVIATION  = '&
      &                    ,D15.7)
-                  IF ( Iwrite/=0 ) WRITE (ipr,99019) irepdf
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99019) irepdf
 99019             FORMAT (' ',                                          &
      &                    '          REPLICATION DEGREES OF FREEDOM  = '&
      &                    ,I8)
-                  IF ( Iwrite/=0 ) WRITE (ipr,99020) numset
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99020) numset
 99020             FORMAT (' ',                                          &
      &                    '          NUMBER OF DISTINCT SUBSETS      = '&
      &                    ,I8)
@@ -27076,10 +26706,10 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                   fstat = fitms/resms
                   CALL FCDF(fstat,ifitdf,irepdf,cdf)
                   cdf2 = 100.0*cdf
-                  IF ( Iwrite/=0 ) WRITE (ipr,99021) fstat , cdf2
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99021) fstat , cdf2
 99021             FORMAT (' ','          LACK OF FIT F RATIO = ',F10.4, &
      &                    ' = THE ',F8.4,'% POINT OF THE')
-                  IF ( Iwrite/=0 ) WRITE (ipr,99022) ifitdf , irepdf
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99022) ifitdf , irepdf
 99022             FORMAT (' ','          F DISTRIBUTION WITH ',I6,      &
      &                    ' AND ',I6,' DEGREES OF FREEDOM')
 99023             FORMAT (' ',6E15.8)
@@ -27094,7 +26724,7 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
                   GOTO 99999
                ENDIF
             ELSE
-               WRITE (ipr,99030)
+               WRITE (G_IO,99030)
 99030          FORMAT (' ',                                             &
      &             '*****ERROR--THE ITERATIONS ARE NOT CONVERGING *****'&
      &             )
@@ -27207,10 +26837,10 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
       IF ( m==0 ) THEN
          amb = amdb2
          amr = amdr2
-!CCCC WRITE(IPR,50505)M
-!CCCC WRITE(IPR,50506)(B2(I),I=1,K)
+!CCCC WRITE(G_IO,50505)M
+!CCCC WRITE(G_IO,50506)(B2(I),I=1,K)
 !CCCC DO5555I=1,N
-!CCCC WRITE(IPR,50506)Y(I),X(I),RES(I),WRES(I),F(I),G(I),H(I)
+!CCCC WRITE(G_IO,50506)Y(I),X(I),RES(I),WRES(I),F(I),G(I),H(I)
 !5555 CONTINUE
 99031    FORMAT (I8)
 99032    FORMAT (' ',8F10.5)
@@ -27220,15 +26850,15 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !
       m = m + 1
       GOTO 200
- 300  IF ( Iwrite/=0 ) WRITE (ipr,99033)
+ 300  IF ( Iwrite/=0 ) WRITE (G_IO,99033)
 99033 FORMAT (' ','          LACK OF FIT F TEST CANNOT BE DONE BECAUSE')
-      IF ( Iwrite/=0 ) WRITE (ipr,99034)
+      IF ( Iwrite/=0 ) WRITE (G_IO,99034)
 99034 FORMAT (' ','          HAVE ONLY 0 DEGREES OF FREEDOM IN ',       &
      &        'NUMERATOR OF F RATIO.')
-      IF ( Iwrite/=0 ) WRITE (ipr,99035)
+      IF ( Iwrite/=0 ) WRITE (G_IO,99035)
 99035 FORMAT (' ','          THIS HAPPENS WHEN NUMBER OF PARAMETERS ',  &
      &        'FITTED')
-      IF ( Iwrite/=0 ) WRITE (ipr,99036)
+      IF ( Iwrite/=0 ) WRITE (G_IO,99036)
 99036 FORMAT (' ','          IS IDENTICAL TO NUMBER OF DISTINCT ',      &
      &        'SUBSETS.')
       RETURN
@@ -27243,7 +26873,7 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine propor (X, Y)
+!!       SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 !!
 !!##DESCRIPTION
 !!    propor(3f) computes the the sample proportion which is the proportion
@@ -27277,10 +26907,15 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGES 207-213.
+!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!! !                 ANALYSIS, EDITION 2, 1957, PAGES 81-82, 228-231.
 !*==propor.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
-      INTEGER i , ipr , isum , Iwrite , N
+INTEGER :: i , isum , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -27317,10 +26952,6 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGES 207-213.
-!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!                 ANALYSIS, EDITION 2, 1957, PAGES 81-82, 228-231.
 !     ORIGINAL VERSION--JUNE      1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -27329,20 +26960,18 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PROPOR SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PROP&
      &OR SUBROUTINE HAS THE VALUE 1 *****')
@@ -27350,10 +26979,10 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
          RETURN
       ELSE
          IF ( Xmin==Xmax ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ','***** FATAL ERROR--THE THIRD AND FOURTH INPUT '&
      &              ,'ARGUMENTS TO THE PROPOR SUBROUTINE ARE IDENTICAL')
-            WRITE (ipr,99005) Xmin
+            WRITE (G_IO,99005) Xmin
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENTS ARE ',E15.7,  &
      &              ' *****')
             Xprop = 0.0_wp
@@ -27363,7 +26992,7 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99006) hold
+            WRITE (G_IO,99006) hold
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE PROPOR SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -27383,9 +27012,9 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
          Xprop = sum/an
 !
          IF ( Iwrite==0 ) RETURN
-         WRITE (ipr,99007)
+         WRITE (G_IO,99007)
 99007    FORMAT (' ')
-         WRITE (ipr,99008) N , Xmin , Xmax , Xprop
+         WRITE (G_IO,99008) N , Xmin , Xmax , Xprop
 99008    FORMAT (' ','THE PROPORTION OF THE ',I6,                       &
      &           ' OBSERVATIONS IN THE INTERVAL ',E15.7,' TO ',E15.7,   &
      &           ' IS ',E15.7)
@@ -27397,7 +27026,7 @@ END SUBROUTINE PROPOR
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine range (X, Y)
+!!       SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 !!
 !!##DESCRIPTION
 !!    range(3f) computes the sample range of the data in the input vector x.
@@ -27427,10 +27056,18 @@ END SUBROUTINE PROPOR
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
+!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGE 39.
+!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!! !                 ANALYSIS, EDITION 2, 1957, PAGE 21.
 !*==range.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
-      INTEGER i , ipr , Iwrite , N
+INTEGER :: i , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -27457,13 +27094,6 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
-!               --DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
-!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGE 39.
-!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!                 ANALYSIS, EDITION 2, 1957, PAGE 21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JUNE      1974.
 !     UPDATED         --APRIL     1975.
@@ -27474,21 +27104,19 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RANGE  SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
 !
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RANG&
      &E  SUBROUTINE HAS THE VALUE 1 *****')
@@ -27498,7 +27126,7 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE RANGE  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -27518,9 +27146,9 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xrange
+      WRITE (G_IO,99006) N , Xrange
 99006 FORMAT (' ','THE SAMPLE RANGE OF THE ',I6,' OBSERVATIONS IS ',    &
      &        E15.8)
 END SUBROUTINE RANGE
@@ -27530,7 +27158,7 @@ END SUBROUTINE RANGE
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine rank (X, Y)
+!!       SUBROUTINE RANK(X,N,Xr)
 !!
 !!##DESCRIPTION
 !!    rank(3f) ranks (in ascending order) the n elements of the single
@@ -27564,10 +27192,16 @@ END SUBROUTINE RANGE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
+!! !                 BY RICHARD C. SINGLETON).
+!! !               --CACM JANUARY 1970, PAGE 54.
+!! !               --CACM OCTOBER 1970, PAGE 624.
+!! !               --JACM JANUARY 1961, PAGE 41.
 !*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE RANK(X,N,Xr)
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
-      INTEGER i , ibran , ipr , iupper , j , jmin , jp1 , k , N , nm1
+INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE RANKED.
@@ -27645,11 +27279,6 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !                N = 1000               .141 SEC         4.332 SEC
 !                N = 3000               .476 SEC        37.683 SEC
 !                N = 10000             1.887 SEC      NOT COMPUTED
-!     REFERENCES--CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
-!                 BY RICHARD C. SINGLETON).
-!               --CACM JANUARY 1970, PAGE 54.
-!               --CACM OCTOBER 1970, PAGE 624.
-!               --JACM JANUARY 1961, PAGE 41.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -27661,22 +27290,21 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
       COMMON /BLOCK4/ XS(7500)
 !
       an = N
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RANK   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RANK&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -27687,7 +27315,7 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE RANK   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -27729,8 +27357,8 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
                IF ( jmin>=N ) THEN
                   IF ( jmin==N ) GOTO 60
                   ibran = 1
-                  WRITE (ipr,99007) ibran
-                  WRITE (ipr,99005) jmin
+                  WRITE (G_IO,99007) ibran
+                  WRITE (G_IO,99005) jmin
 99005             FORMAT (' ','JMIN = ',I8)
                   STOP
                ENDIF
@@ -27759,8 +27387,8 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
                Xr(i) = N
             ELSE
                ibran = 2
-               WRITE (ipr,99007) ibran
-               WRITE (ipr,99006) X(i) , XS(j)
+               WRITE (G_IO,99007) ibran
+               WRITE (G_IO,99006) X(i) , XS(j)
 99006          FORMAT (' ','X(I) = ',F15.7,'   XS(J) = ',F15.7)
                STOP
             ENDIF
@@ -27778,7 +27406,7 @@ END SUBROUTINE RANK
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ranper (X, Y)
+!!       SUBROUTINE RANPER(N,Istart,X)
 !!
 !!##DESCRIPTION
 !!    ranper(3f) generates a random permutation of size n of the values 1.0,
@@ -27811,7 +27439,7 @@ END SUBROUTINE RANK
 !*==ranper.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANPER(N,Istart,X)
 REAL(kind=wp) :: add , an , hold , u , X
-      INTEGER i , iadd , ipr , Istart , j , N
+INTEGER :: i , iadd , Istart , j , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER SIZE
 !                                OF THE RANDOM 1 TO N PERMUTATION.
@@ -27855,20 +27483,19 @@ REAL(kind=wp) :: add , an , hold , u , X
       DIMENSION u(1)
 !
       an = N
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE RANPER SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE RANP&
      &ER SUBROUTINE HAS THE VALUE 1 *****')
@@ -27905,7 +27532,7 @@ END SUBROUTINE RANPER
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine read (X, Y)
+!!       SUBROUTINE READ(Icol1,Icol2,X,N)
 !!
 !!##DESCRIPTION
 !!    read(3f) performs a format-free read of data from punched cards.
@@ -27946,10 +27573,10 @@ END SUBROUTINE RANPER
 !!    CC0-1.0
 !*==read.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE READ(Icol1,Icol2,X,N)
-INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ipr , ird ,    &
+INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ird ,    &
      &        istart , istop , j , jp1 , jp2 , jrev , k , l , locpt ,   &
      &        maxcol , mincol , N
-      INTEGER nc , ncp1 , ndp , numcrd , numdec , numint
+INTEGER :: nc , ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
 !
 !     INPUT  ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
@@ -28048,13 +27675,13 @@ REAL(kind=wp) :: sum , X , y
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 plus , minus , point , blank
-      CHARACTER*4 alphae , alphan , alphad
-      CHARACTER*4 ic
-      CHARACTER*4 ia
-      CHARACTER*4 ichar
-      CHARACTER*4 istor1
-      CHARACTER*4 istor2
+CHARACTER(len=4) :: plus , minus , point , blank
+CHARACTER(len=4) :: alphae , alphan , alphad
+CHARACTER(len=4) :: ic
+CHARACTER(len=4) :: ia
+CHARACTER(len=4) :: ichar
+CHARACTER(len=4) :: istor1
+CHARACTER(len=4) :: istor2
 !
       DIMENSION X(:)
       DIMENSION ia(80) , ichar(41) , ic(10)
@@ -28068,7 +27695,6 @@ REAL(kind=wp) :: sum , X , y
 !
       N = 0
       ird = 5
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -28077,13 +27703,13 @@ REAL(kind=wp) :: sum , X , y
       IF ( Icol2<Icol1 ) mincol = Icol2
       IF ( Icol2<Icol1 ) maxcol = Icol1
       IF ( mincol<1 .OR. maxcol>80 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST OR SECOND (OR BOTH) INPUT ARGUMENT T&
      &O THE READ   SUBROUTINE IS OUTSIDE THE')
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ','      ALLOWABLE (1,80) INTERVAL *****')
-         WRITE (ipr,99003) Icol1 , Icol2
+         WRITE (G_IO,99003) Icol1 , Icol2
 99003    FORMAT (' ','***** THE VALUE OF THE FIRST ARGUMENT IS ',I7,    &
      &           '  AND THE VALUE OF THE SECOND ARGUMENT IS ',I7,       &
      &           ' *****')
@@ -28135,27 +27761,27 @@ REAL(kind=wp) :: sum , X , y
                ichar(nc) = ia(i)
                i = i + 1
                IF ( i>maxcol ) THEN
-                  WRITE (ipr,99025)
-                  WRITE (ipr,99006)
+                  WRITE (G_IO,99025)
+                  WRITE (G_IO,99006)
 99006             FORMAT (' ',                                          &
      &'***** PUNCHED INPUT ERROR--THE LAST DATA VALUE ON THE CARD BELOW &
      &CONSISTS OF ONLY A PLUS *****')
-                  WRITE (ipr,99026)
-                  WRITE (ipr,99027) numcrd
-                  WRITE (ipr,99028) (ia(j),j=1,80)
-                  WRITE (ipr,99025)
+                  WRITE (G_IO,99026)
+                  WRITE (G_IO,99027) numcrd
+                  WRITE (G_IO,99028) (ia(j),j=1,80)
+                  WRITE (G_IO,99025)
                   GOTO 100
                ENDIF
             ELSE
-               WRITE (ipr,99025)
-               WRITE (ipr,99007)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99007)
 99007          FORMAT (' ',                                             &
      &'***** PUNCHED INPUT ERROR--A PLUS HAS OCCURRED IN THE MIDDLE OF S&
      &OME DATA VALUE ON THE CARD BELOW *****')
-               WRITE (ipr,99026)
-               WRITE (ipr,99027) numcrd
-               WRITE (ipr,99028) (ia(j),j=1,80)
-               WRITE (ipr,99025)
+               WRITE (G_IO,99026)
+               WRITE (G_IO,99027) numcrd
+               WRITE (G_IO,99028) (ia(j),j=1,80)
+               WRITE (G_IO,99025)
                GOTO 100
             ENDIF
          ELSEIF ( ia(i)==minus ) THEN
@@ -28165,27 +27791,27 @@ REAL(kind=wp) :: sum , X , y
                ichar(nc) = ia(i)
                i = i + 1
                IF ( i>maxcol ) THEN
-                  WRITE (ipr,99025)
-                  WRITE (ipr,99008)
+                  WRITE (G_IO,99025)
+                  WRITE (G_IO,99008)
 99008             FORMAT (' ',                                          &
      &'***** PUNCHED INPUT ERROR--THE LAST DATA VALUE ON THE CARD BELOW &
      &CONSISTS OF ONLY A MINUS *****')
-                  WRITE (ipr,99026)
-                  WRITE (ipr,99027) numcrd
-                  WRITE (ipr,99028) (ia(j),j=1,80)
-                  WRITE (ipr,99025)
+                  WRITE (G_IO,99026)
+                  WRITE (G_IO,99027) numcrd
+                  WRITE (G_IO,99028) (ia(j),j=1,80)
+                  WRITE (G_IO,99025)
                   GOTO 100
                ENDIF
             ELSE
-               WRITE (ipr,99025)
-               WRITE (ipr,99009)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99009)
 99009          FORMAT (' ',                                             &
      &'***** PUNCHED INPUT ERROR--A MINUS HAS OCCURRED IN THE MIDDLE OF &
      &SOME DATA VALUE ON THE CARD BELOW *****')
-               WRITE (ipr,99026)
-               WRITE (ipr,99027) numcrd
-               WRITE (ipr,99028) (ia(j),j=1,80)
-               WRITE (ipr,99025)
+               WRITE (G_IO,99026)
+               WRITE (G_IO,99027) numcrd
+               WRITE (G_IO,99028) (ia(j),j=1,80)
+               WRITE (G_IO,99025)
                GOTO 100
             ENDIF
          ELSEIF ( ia(i)==point ) THEN
@@ -28198,15 +27824,15 @@ REAL(kind=wp) :: sum , X , y
                ndp = ndp + 1
                i = i + 1
                IF ( i>maxcol ) THEN
-                  WRITE (ipr,99025)
-                  WRITE (ipr,99010)
+                  WRITE (G_IO,99025)
+                  WRITE (G_IO,99010)
 99010             FORMAT (' ',                                          &
      &'***** PUNCHED INPUT ERROR--THE LAST DATA VALUE ON THE CARD BELOW &
      &CONSISTS OF ONLY A DECIMAL POINT *****')
-                  WRITE (ipr,99026)
-                  WRITE (ipr,99027) numcrd
-                  WRITE (ipr,99028) (ia(j),j=1,80)
-                  WRITE (ipr,99025)
+                  WRITE (G_IO,99026)
+                  WRITE (G_IO,99027) numcrd
+                  WRITE (G_IO,99028) (ia(j),j=1,80)
+                  WRITE (G_IO,99025)
                   GOTO 100
                ENDIF
             ELSEIF ( nc==1 ) THEN
@@ -28215,15 +27841,15 @@ REAL(kind=wp) :: sum , X , y
                ndp = ndp + 1
                i = i + 1
                IF ( i>maxcol ) THEN
-                  WRITE (ipr,99025)
-                  WRITE (ipr,99011)
+                  WRITE (G_IO,99025)
+                  WRITE (G_IO,99011)
 99011             FORMAT (' ',                                          &
      &'***** PUNCHED INPUT ERROR--THE LAST DATA VALUE ON THE CARD BELOW &
      &CONSISTS OF ONLY A      +.     OR OF ONLY A      -.    *****')
-                  WRITE (ipr,99026)
-                  WRITE (ipr,99027) numcrd
-                  WRITE (ipr,99028) (ia(j),j=1,80)
-                  WRITE (ipr,99025)
+                  WRITE (G_IO,99026)
+                  WRITE (G_IO,99027) numcrd
+                  WRITE (G_IO,99028) (ia(j),j=1,80)
+                  WRITE (G_IO,99025)
                   GOTO 100
                ENDIF
             ELSEIF ( ndp==0 ) THEN
@@ -28236,15 +27862,15 @@ REAL(kind=wp) :: sum , X , y
                   GOTO 500
                ENDIF
             ELSE
-               WRITE (ipr,99025)
-               WRITE (ipr,99012)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99012)
 99012          FORMAT (' ',                                             &
      &'***** PUNCHED INPUT ERROR--SOME DATA VALUE ON THE CARD BELOW HAS &
      &MULTIPLE DECIMAL POINTS *****')
-               WRITE (ipr,99026)
-               WRITE (ipr,99027) numcrd
-               WRITE (ipr,99028) (ia(j),j=1,80)
-               WRITE (ipr,99025)
+               WRITE (G_IO,99026)
+               WRITE (G_IO,99027) numcrd
+               WRITE (G_IO,99028) (ia(j),j=1,80)
+               WRITE (G_IO,99025)
                GOTO 100
             ENDIF
          ELSEIF ( nc==0 ) THEN
@@ -28253,39 +27879,39 @@ REAL(kind=wp) :: sum , X , y
             IF ( i>maxcol ) GOTO 100
          ELSEIF ( nc==1 ) THEN
 !
-            WRITE (ipr,99025)
-            WRITE (ipr,99013)
+            WRITE (G_IO,99025)
+            WRITE (G_IO,99013)
 99013       FORMAT (' ',                                                &
      &'***** PUNCHED INPUT ERROR--SOME DATA VALUE ON THE CARD BELOW CONS&
      &ISTS OF ONLY A PLUS OR OF ONLY A MINUS *****')
-            WRITE (ipr,99026)
-            WRITE (ipr,99027) numcrd
-            WRITE (ipr,99028) (ia(j),j=1,80)
-            WRITE (ipr,99025)
+            WRITE (G_IO,99026)
+            WRITE (G_IO,99027) numcrd
+            WRITE (G_IO,99028) (ia(j),j=1,80)
+            WRITE (G_IO,99025)
             GOTO 100
          ELSEIF ( nc==2 ) THEN
 !
             IF ( ichar(1)==plus .AND. ichar(2)==point ) THEN
-               WRITE (ipr,99025)
-               WRITE (ipr,99014)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99014)
 99014          FORMAT (' ',                                             &
      &'***** PUNCHED INPUT ERROR--SOME DATA VALUE ON THE CARD BELOW CONS&
      &ISTS OF ONLY A      +.     *****')
-               WRITE (ipr,99026)
-               WRITE (ipr,99027) numcrd
-               WRITE (ipr,99028) (ia(j),j=1,80)
-               WRITE (ipr,99025)
+               WRITE (G_IO,99026)
+               WRITE (G_IO,99027) numcrd
+               WRITE (G_IO,99028) (ia(j),j=1,80)
+               WRITE (G_IO,99025)
                GOTO 100
             ELSEIF ( ichar(1)==minus .AND. ichar(2)==point ) THEN
-               WRITE (ipr,99025)
-               WRITE (ipr,99015)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99015)
 99015          FORMAT (' ',                                             &
      &'***** PUNCHED INPUT ERROR--SOME DATA VALUE ON THE CARD BELOW CONS&
      &ISTS OF ONLY A      -.     *****')
-               WRITE (ipr,99026)
-               WRITE (ipr,99027) numcrd
-               WRITE (ipr,99028) (ia(j),j=1,80)
-               WRITE (ipr,99025)
+               WRITE (G_IO,99026)
+               WRITE (G_IO,99027) numcrd
+               WRITE (G_IO,99028) (ia(j),j=1,80)
+               WRITE (G_IO,99025)
                GOTO 100
             ELSE
                iend = 0
@@ -28330,15 +27956,15 @@ REAL(kind=wp) :: sum , X , y
             DO k = 1 , 10
                IF ( ichar(jrev)==ic(k) ) GOTO 620
             ENDDO
-            WRITE (ipr,99025)
-            WRITE (ipr,99016)
+            WRITE (G_IO,99025)
+            WRITE (G_IO,99016)
 99016       FORMAT (' ',                                                &
      &'***** PROGRAMMING ERROR IN THE READ   SUBROUTINE-- A NON-NUMERIC &
      &CHARACTER WAS ENCOUNTERED IN CONVERTING THE INTEGER PART')
-            WRITE (ipr,99029) (ichar(l),l=1,41)
-            WRITE (ipr,99028) (ia(l),l=1,80)
-            WRITE (ipr,99027) numcrd
-            WRITE (ipr,99025)
+            WRITE (G_IO,99029) (ichar(l),l=1,41)
+            WRITE (G_IO,99028) (ia(l),l=1,80)
+            WRITE (G_IO,99027) numcrd
+            WRITE (G_IO,99025)
             RETURN
 !
  620        y = k - 1
@@ -28355,15 +27981,15 @@ REAL(kind=wp) :: sum , X , y
             DO k = 1 , 10
                IF ( ichar(j)==ic(k) ) GOTO 640
             ENDDO
-            WRITE (ipr,99025)
-            WRITE (ipr,99017)
+            WRITE (G_IO,99025)
+            WRITE (G_IO,99017)
 99017       FORMAT (' ',                                                &
      &'***** PROGRAMMING ERROR IN THE READ   SUBROUTINE-- A NON-NUMERIC &
      &CHARACTER WAS ENCOUNTERED IN CONVERTING THE DECIMAL PART')
-            WRITE (ipr,99029) (ichar(l),l=1,41)
-            WRITE (ipr,99028) (ia(l),l=1,80)
-            WRITE (ipr,99027) numcrd
-            WRITE (ipr,99025)
+            WRITE (G_IO,99029) (ichar(l),l=1,41)
+            WRITE (G_IO,99028) (ia(l),l=1,80)
+            WRITE (G_IO,99027) numcrd
+            WRITE (G_IO,99025)
             RETURN
 !
  640        y = k - 1
@@ -28379,27 +28005,27 @@ REAL(kind=wp) :: sum , X , y
       i = i + 1
       IF ( i>maxcol ) GOTO 100
       GOTO 200
- 700  WRITE (ipr,99025)
+ 700  WRITE (G_IO,99025)
       IF ( numcrd/=0 ) THEN
-         WRITE (ipr,99018)
+         WRITE (G_IO,99018)
 99018    FORMAT (' ','OUTPUT FROM THE READ   SUBROUTINE--')
-         WRITE (ipr,99019) ird
+         WRITE (G_IO,99019) ird
 99019    FORMAT (' ','THE INPUT UNIT DEVICE NUMBER = ',I7)
-         WRITE (ipr,99020) mincol , maxcol
+         WRITE (G_IO,99020) mincol , maxcol
 99020    FORMAT (' ',                                                   &
      &           'THE SCANNING INTERVAL FOR EACH DATA CARD WAS COLUMN  '&
      &           ,I3,' THROUGH COLUMN  ',I3,' (INCLUSIVE)')
-         WRITE (ipr,99021) (istor1(j),j=1,80)
+         WRITE (G_IO,99021) (istor1(j),j=1,80)
 99021    FORMAT (' ','THE (ENTIRE) FIRST  DATA CARD READ WAS   ',80A1)
-         WRITE (ipr,99022) (istor2(j),j=1,80)
+         WRITE (G_IO,99022) (istor2(j),j=1,80)
 99022    FORMAT (' ','THE (ENTIRE) LAST   DATA CARD READ WAS   ',80A1)
       ENDIF
-      WRITE (ipr,99023) numcrd
+      WRITE (G_IO,99023) numcrd
 99023 FORMAT (' ','THE TOTAL NUMBER OF DATA CARDS READ WAS        ',I7)
-      WRITE (ipr,99024) N
+      WRITE (G_IO,99024) N
 99024 FORMAT (' ','THE TOTAL NUMBER (= N) OF DATA VALUES READ WAS ',I7)
-      WRITE (ipr,99025)
-      WRITE (ipr,99025)
+      WRITE (G_IO,99025)
+      WRITE (G_IO,99025)
       RETURN
 !
 99025 FORMAT (' ')
@@ -28418,7 +28044,7 @@ END SUBROUTINE READ
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine readg (X, Y)
+!!       SUBROUTINE READG(Ird,Icol1,Icol2,X,N)
 !!
 !!##DESCRIPTION
 !!
@@ -28465,10 +28091,10 @@ END SUBROUTINE READ
 !!    CC0-1.0
 !*==readg.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE READG(Ird,Icol1,Icol2,X,N)
-      INTEGER i , Icol1 , Icol2 , iend , ipower , ipr , Ird , istart ,  &
+INTEGER :: i , Icol1 , Icol2 , iend , ipower , Ird , istart ,  &
      &        istop , j , jp1 , jp2 , jrev , k , l , locpt , maxcol ,   &
      &        mincol , N , nc
-      INTEGER ncp1 , ndp , numcrd , numdec , numint
+INTEGER :: ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
 !
 !     INPUT  ARGUMENTS--IRD    = THE INTEGER VALUE SPECIFYING
@@ -28570,13 +28196,13 @@ REAL(kind=wp) :: sum , X , y
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 plus , minus , point , blank
-      CHARACTER*4 alphae , alphan , alphad
-      CHARACTER*4 ic
-      CHARACTER*4 ia
-      CHARACTER*4 ichar
-      CHARACTER*4 istor1
-      CHARACTER*4 istor2
+CHARACTER(len=4) :: plus , minus , point , blank
+CHARACTER(len=4) :: alphae , alphan , alphad
+CHARACTER(len=4) :: ic
+CHARACTER(len=4) :: ia
+CHARACTER(len=4) :: ichar
+CHARACTER(len=4) :: istor1
+CHARACTER(len=4) :: istor2
 !
       DIMENSION X(:)
       DIMENSION ia(80) , ichar(41) , ic(10)
@@ -28589,7 +28215,6 @@ REAL(kind=wp) :: sum , X , y
      &     '6' , '7' , '8' , '9'/
 !
       N = 0
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -28598,13 +28223,13 @@ REAL(kind=wp) :: sum , X , y
       IF ( Icol2<Icol1 ) mincol = Icol2
       IF ( Icol2<Icol1 ) maxcol = Icol1
       IF ( mincol<1 .OR. maxcol>80 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST OR SECOND (OR BOTH) INPUT ARGUMENT T&
      &O THE READG  SUBROUTINE IS OUTSIDE THE')
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ','      ALLOWABLE (1,80) INTERVAL *****')
-         WRITE (ipr,99003) Icol1 , Icol2
+         WRITE (G_IO,99003) Icol1 , Icol2
 99003    FORMAT (' ','***** THE VALUE OF THE FIRST ARGUMENT IS ',I7,    &
      &           '  AND THE VALUE OF THE SECOND ARGUMENT IS ',I7,       &
      &           ' *****')
@@ -28656,27 +28281,27 @@ REAL(kind=wp) :: sum , X , y
                ichar(nc) = ia(i)
                i = i + 1
                IF ( i>maxcol ) THEN
-                  WRITE (ipr,99024)
-                  WRITE (ipr,99005)
+                  WRITE (G_IO,99024)
+                  WRITE (G_IO,99005)
 99005             FORMAT (' ',                                          &
      &'***** INPUT    DATA ERROR--THE LAST DATA VALUE ON THE CARD BELOW &
      &CONSISTS OF ONLY A PLUS *****')
-                  WRITE (ipr,99025)
-                  WRITE (ipr,99026) numcrd
-                  WRITE (ipr,99027) (ia(j),j=1,80)
-                  WRITE (ipr,99024)
+                  WRITE (G_IO,99025)
+                  WRITE (G_IO,99026) numcrd
+                  WRITE (G_IO,99027) (ia(j),j=1,80)
+                  WRITE (G_IO,99024)
                   GOTO 100
                ENDIF
             ELSE
-               WRITE (ipr,99024)
-               WRITE (ipr,99006)
+               WRITE (G_IO,99024)
+               WRITE (G_IO,99006)
 99006          FORMAT (' ',                                             &
      &'***** INPUT    DATA ERROR--A PLUS HAS OCCURRED IN THE MIDDLE OF S&
      &OME DATA VALUE ON THE CARD BELOW *****')
-               WRITE (ipr,99025)
-               WRITE (ipr,99026) numcrd
-               WRITE (ipr,99027) (ia(j),j=1,80)
-               WRITE (ipr,99024)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99026) numcrd
+               WRITE (G_IO,99027) (ia(j),j=1,80)
+               WRITE (G_IO,99024)
                GOTO 100
             ENDIF
          ELSEIF ( ia(i)==minus ) THEN
@@ -28686,27 +28311,27 @@ REAL(kind=wp) :: sum , X , y
                ichar(nc) = ia(i)
                i = i + 1
                IF ( i>maxcol ) THEN
-                  WRITE (ipr,99024)
-                  WRITE (ipr,99007)
+                  WRITE (G_IO,99024)
+                  WRITE (G_IO,99007)
 99007             FORMAT (' ',                                          &
      &'***** INPUT     DATA ERROR--THE LAST DATA VALUE ON HE CARD BELOW &
      &CONSISTS OF ONLY A MINUS *****')
-                  WRITE (ipr,99025)
-                  WRITE (ipr,99026) numcrd
-                  WRITE (ipr,99027) (ia(j),j=1,80)
-                  WRITE (ipr,99024)
+                  WRITE (G_IO,99025)
+                  WRITE (G_IO,99026) numcrd
+                  WRITE (G_IO,99027) (ia(j),j=1,80)
+                  WRITE (G_IO,99024)
                   GOTO 100
                ENDIF
             ELSE
-               WRITE (ipr,99024)
-               WRITE (ipr,99008)
+               WRITE (G_IO,99024)
+               WRITE (G_IO,99008)
 99008          FORMAT (' ',                                             &
      &'***** INPUT     DATA ERROR--A MINUS HAS OCCURRED INTHE MIDDLE OF &
      &SOME DATA VALUE ON THE CARD BELOW *****')
-               WRITE (ipr,99025)
-               WRITE (ipr,99026) numcrd
-               WRITE (ipr,99027) (ia(j),j=1,80)
-               WRITE (ipr,99024)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99026) numcrd
+               WRITE (G_IO,99027) (ia(j),j=1,80)
+               WRITE (G_IO,99024)
                GOTO 100
             ENDIF
          ELSEIF ( ia(i)==point ) THEN
@@ -28719,15 +28344,15 @@ REAL(kind=wp) :: sum , X , y
                ndp = ndp + 1
                i = i + 1
                IF ( i>maxcol ) THEN
-                  WRITE (ipr,99024)
-                  WRITE (ipr,99009)
+                  WRITE (G_IO,99024)
+                  WRITE (G_IO,99009)
 99009             FORMAT (' ',                                          &
      &'***** INPUT     DATA ERROR--THE LAST DATA VALUE ON HE CARD BELOW &
      &CONSISTS OF ONLY A DECIMAL POINT *****')
-                  WRITE (ipr,99025)
-                  WRITE (ipr,99026) numcrd
-                  WRITE (ipr,99027) (ia(j),j=1,80)
-                  WRITE (ipr,99024)
+                  WRITE (G_IO,99025)
+                  WRITE (G_IO,99026) numcrd
+                  WRITE (G_IO,99027) (ia(j),j=1,80)
+                  WRITE (G_IO,99024)
                   GOTO 100
                ENDIF
             ELSEIF ( nc==1 ) THEN
@@ -28736,15 +28361,15 @@ REAL(kind=wp) :: sum , X , y
                ndp = ndp + 1
                i = i + 1
                IF ( i>maxcol ) THEN
-                  WRITE (ipr,99024)
-                  WRITE (ipr,99010)
+                  WRITE (G_IO,99024)
+                  WRITE (G_IO,99010)
 99010             FORMAT (' ',                                          &
      &'***** INPUT     DATA ERROR--THE LAST DATA VALUE ON HE CARD BELOW &
      &CONSISTS OF ONLY A      +.     OR OF ONLY A      -.    *****')
-                  WRITE (ipr,99025)
-                  WRITE (ipr,99026) numcrd
-                  WRITE (ipr,99027) (ia(j),j=1,80)
-                  WRITE (ipr,99024)
+                  WRITE (G_IO,99025)
+                  WRITE (G_IO,99026) numcrd
+                  WRITE (G_IO,99027) (ia(j),j=1,80)
+                  WRITE (G_IO,99024)
                   GOTO 100
                ENDIF
             ELSEIF ( ndp==0 ) THEN
@@ -28757,15 +28382,15 @@ REAL(kind=wp) :: sum , X , y
                   GOTO 500
                ENDIF
             ELSE
-               WRITE (ipr,99024)
-               WRITE (ipr,99011)
+               WRITE (G_IO,99024)
+               WRITE (G_IO,99011)
 99011          FORMAT (' ',                                             &
      &'***** INPUT     DATA ERROR--SOME DATA VALUE ON THE ARD BELOW HAS &
      &MULTIPLE DECIMAL POINTS *****')
-               WRITE (ipr,99025)
-               WRITE (ipr,99026) numcrd
-               WRITE (ipr,99027) (ia(j),j=1,80)
-               WRITE (ipr,99024)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99026) numcrd
+               WRITE (G_IO,99027) (ia(j),j=1,80)
+               WRITE (G_IO,99024)
                GOTO 100
             ENDIF
          ELSEIF ( nc==0 ) THEN
@@ -28774,39 +28399,39 @@ REAL(kind=wp) :: sum , X , y
             IF ( i>maxcol ) GOTO 100
          ELSEIF ( nc==1 ) THEN
 !
-            WRITE (ipr,99024)
-            WRITE (ipr,99012)
+            WRITE (G_IO,99024)
+            WRITE (G_IO,99012)
 99012       FORMAT (' ',                                                &
      &'***** INPUT     DATA ERROR--SOME DATA VALUE ON THE ARD BELOW CONS&
      &ISTS OF ONLY A PLUS OR OF ONLY A MINUS *****')
-            WRITE (ipr,99025)
-            WRITE (ipr,99026) numcrd
-            WRITE (ipr,99027) (ia(j),j=1,80)
-            WRITE (ipr,99024)
+            WRITE (G_IO,99025)
+            WRITE (G_IO,99026) numcrd
+            WRITE (G_IO,99027) (ia(j),j=1,80)
+            WRITE (G_IO,99024)
             GOTO 100
          ELSEIF ( nc==2 ) THEN
 !
             IF ( ichar(1)==plus .AND. ichar(2)==point ) THEN
-               WRITE (ipr,99024)
-               WRITE (ipr,99013)
+               WRITE (G_IO,99024)
+               WRITE (G_IO,99013)
 99013          FORMAT (' ',                                             &
      &'***** INPUT     DATA ERROR--SOME DATA VALUE ON THE ARD BELOW CONS&
      &ISTS OF ONLY A      +.     *****')
-               WRITE (ipr,99025)
-               WRITE (ipr,99026) numcrd
-               WRITE (ipr,99027) (ia(j),j=1,80)
-               WRITE (ipr,99024)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99026) numcrd
+               WRITE (G_IO,99027) (ia(j),j=1,80)
+               WRITE (G_IO,99024)
                GOTO 100
             ELSEIF ( ichar(1)==minus .AND. ichar(2)==point ) THEN
-               WRITE (ipr,99024)
-               WRITE (ipr,99014)
+               WRITE (G_IO,99024)
+               WRITE (G_IO,99014)
 99014          FORMAT (' ',                                             &
      &'***** INPUT     DATA ERROR--SOME DATA VALUE ON THE ARD BELOW CONS&
      &ISTS OF ONLY A      -.     *****')
-               WRITE (ipr,99025)
-               WRITE (ipr,99026) numcrd
-               WRITE (ipr,99027) (ia(j),j=1,80)
-               WRITE (ipr,99024)
+               WRITE (G_IO,99025)
+               WRITE (G_IO,99026) numcrd
+               WRITE (G_IO,99027) (ia(j),j=1,80)
+               WRITE (G_IO,99024)
                GOTO 100
             ELSE
                iend = 0
@@ -28851,15 +28476,15 @@ REAL(kind=wp) :: sum , X , y
             DO k = 1 , 10
                IF ( ichar(jrev)==ic(k) ) GOTO 620
             ENDDO
-            WRITE (ipr,99024)
-            WRITE (ipr,99015)
+            WRITE (G_IO,99024)
+            WRITE (G_IO,99015)
 99015       FORMAT (' ',                                                &
      &'***** PROGRAMMING ERROR IN THE READG  SUBROUTINE-- A NON-NUMERIC &
      &CHARACTER WAS ENCOUNTERED IN CONVERTING THE INTEGER PART')
-            WRITE (ipr,99028) (ichar(l),l=1,41)
-            WRITE (ipr,99027) (ia(l),l=1,80)
-            WRITE (ipr,99026) numcrd
-            WRITE (ipr,99024)
+            WRITE (G_IO,99028) (ichar(l),l=1,41)
+            WRITE (G_IO,99027) (ia(l),l=1,80)
+            WRITE (G_IO,99026) numcrd
+            WRITE (G_IO,99024)
             RETURN
 !
  620        y = k - 1
@@ -28876,15 +28501,15 @@ REAL(kind=wp) :: sum , X , y
             DO k = 1 , 10
                IF ( ichar(j)==ic(k) ) GOTO 640
             ENDDO
-            WRITE (ipr,99024)
-            WRITE (ipr,99016)
+            WRITE (G_IO,99024)
+            WRITE (G_IO,99016)
 99016       FORMAT (' ',                                                &
      &'***** PROGRAMMING ERROR IN THE READG  SUBROUTINE-- A NON-NUMERIC &
      &CHARACTER WAS ENCOUNTERED IN CONVERTING THE DECIMAL PART')
-            WRITE (ipr,99028) (ichar(l),l=1,41)
-            WRITE (ipr,99027) (ia(l),l=1,80)
-            WRITE (ipr,99026) numcrd
-            WRITE (ipr,99024)
+            WRITE (G_IO,99028) (ichar(l),l=1,41)
+            WRITE (G_IO,99027) (ia(l),l=1,80)
+            WRITE (G_IO,99026) numcrd
+            WRITE (G_IO,99024)
             RETURN
 !
  640        y = k - 1
@@ -28900,29 +28525,29 @@ REAL(kind=wp) :: sum , X , y
       i = i + 1
       IF ( i>maxcol ) GOTO 100
       GOTO 200
- 700  WRITE (ipr,99024)
+ 700  WRITE (G_IO,99024)
       IF ( numcrd/=0 ) THEN
-         WRITE (ipr,99017)
+         WRITE (G_IO,99017)
 99017    FORMAT (' ','OUTPUT FROM THE READG  SUBROUTINE--')
-         WRITE (ipr,99018) Ird
+         WRITE (G_IO,99018) Ird
 99018    FORMAT (' ','THE INPUT UNIT DEVICE NUMBER = ',I7)
-         WRITE (ipr,99019) mincol , maxcol
+         WRITE (G_IO,99019) mincol , maxcol
 99019    FORMAT (' ',                                                   &
      &     'THE SCANNING INTERVAL FOR EACH DATA CARD IMAGE WAS COLUMN  '&
      &     ,I3,' THROUGH COLUMN  ',I3,' (INCLUSIVE)')
-         WRITE (ipr,99020) (istor1(j),j=1,80)
+         WRITE (G_IO,99020) (istor1(j),j=1,80)
 99020    FORMAT (' ','THE (ENTIRE) FIRST  DATA CARD IMAGE   READ WAS ', &
      &           80A1)
-         WRITE (ipr,99021) (istor2(j),j=1,80)
+         WRITE (G_IO,99021) (istor2(j),j=1,80)
 99021    FORMAT (' ','THE (ENTIRE) LAST   DATA CARD IMAGE   READ WAS ', &
      &           80A1)
       ENDIF
-      WRITE (ipr,99022) numcrd
+      WRITE (G_IO,99022) numcrd
 99022 FORMAT (' ','THE TOTAL NUMBER OF DATA CARD IMAGES  READ WAS ',I7)
-      WRITE (ipr,99023) N
+      WRITE (G_IO,99023) N
 99023 FORMAT (' ','THE TOTAL NUMBER (= N) OF DATA VALUES READ WAS ',I7)
-      WRITE (ipr,99024)
-      WRITE (ipr,99024)
+      WRITE (G_IO,99024)
+      WRITE (G_IO,99024)
       RETURN
 !
 99024 FORMAT (' ')
@@ -28942,7 +28567,7 @@ END SUBROUTINE READG
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine relsd (X, Y)
+!!       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
 !!
 !!##DESCRIPTION
 !!    relsd(3f) computes the sample relative standard deviation of the data
@@ -28980,10 +28605,15 @@ END SUBROUTINE READG
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 47, 233.
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGES 62-65.
 !*==relsd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
 REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
-      INTEGER i , ipr , Iwrite , N
+INTEGER :: i , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -29012,10 +28642,6 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 47, 233.
-!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGES 62-65.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MARCH     1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -29025,22 +28651,20 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RELSD  SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RELS&
      &D  SUBROUTINE HAS THE VALUE 1 *****')
@@ -29050,7 +28674,7 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE RELSD  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -29075,9 +28699,9 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xrelsd
+      WRITE (G_IO,99006) N , Xrelsd
 99006 FORMAT (' THE RELATIVE STANDARD DEVIATION (= STANDARD ',          &
      &        'DEVIATION/MEAN) FOR THE ',I6,' OBSERVATIONS IS ',E12.8,  &
      &        ' PERCENT')
@@ -29089,7 +28713,7 @@ END SUBROUTINE RELSD
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine replac (X, Y)
+!!       SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
 !!
 !!##DESCRIPTION
 !!    REPLAC(3f) replaces (with the value xnew) all observations in the
@@ -29133,7 +28757,7 @@ END SUBROUTINE RELSD
 !*==replac.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
-      INTEGER i , ipr , k , N , ndel
+INTEGER :: i , k , N , ndel
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -29199,21 +28823,19 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE REPLAC SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE REPL&
      &AC SUBROUTINE HAS THE VALUE 1 *****')
@@ -29222,7 +28844,7 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE REPLAC SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -29246,26 +28868,26 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 !
 !     WRITE OUT A BRIEF SUMMARY
 !
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ')
-         WRITE (ipr,99006)
+         WRITE (G_IO,99006)
 99006    FORMAT (' ','OUTPUT FROM THE REPLAC SUBROUTINE--')
-         WRITE (ipr,99007) pointl , pointu
+         WRITE (G_IO,99007) pointl , pointu
 99007    FORMAT (' ',7X,'ONLY OBSERVATIONS BETWEEN ',E15.8,' AND ',     &
      &           E15.8)
-         WRITE (ipr,99008)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ',7X,'(INCLUSIVE) HAVE BEEN REPLACED.')
-         WRITE (ipr,99009)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',7X,'ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ',7X,'HAVE BEEN LEFT UNCHANGED.')
-         WRITE (ipr,99011) Xnew
+         WRITE (G_IO,99011) Xnew
 99011    FORMAT (' ',7X,'THE REPLACEMENT VALUE IS ',E15.8)
-         WRITE (ipr,99012) N
+         WRITE (G_IO,99012) N
 99012    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS    IS ',I6)
-         WRITE (ipr,99013) k
+         WRITE (G_IO,99013) k
 99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS REPLACED  IS ',I6)
-         WRITE (ipr,99014) ndel
+         WRITE (G_IO,99014) ndel
 99014    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS UNCHANGED IS ',I6)
       ENDIF
 !
@@ -29277,7 +28899,7 @@ END SUBROUTINE REPLAC
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine retain (X, Y)
+!!       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 !!
 !!##DESCRIPTION
 !!    retain(3f) retains all observations in the single precision vector
@@ -29318,7 +28940,7 @@ END SUBROUTINE REPLAC
 !*==retain.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
-      INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
+INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -29383,21 +29005,19 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RETAIN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RETA&
      &IN SUBROUTINE HAS THE VALUE 1 *****')
@@ -29406,7 +29026,7 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE RETAIN SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -29439,26 +29059,26 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !
 !     WRITE OUT A BRIEF SUMMARY
 !
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ')
-         WRITE (ipr,99006)
+         WRITE (G_IO,99006)
 99006    FORMAT (' ','OUTPUT FROM THE RETAIN SUBROUTINE--')
-         WRITE (ipr,99007) pointl , pointu
+         WRITE (G_IO,99007) pointl , pointu
 99007    FORMAT (' ',7X,'ONLY OBSERVATIONS BETWEEN ',E15.8,' AND ',     &
      &           E15.8)
-         WRITE (ipr,99008)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ',7X,'(INCLUSIVE) HAVE BEEN RETAINED.')
-         WRITE (ipr,99009)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',7X,'ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ',7X,'HAVE BEEN DELETED.')
-         WRITE (ipr,99011) nold
+         WRITE (G_IO,99011) nold
 99011    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
      &           I6)
-         WRITE (ipr,99012) Newn
+         WRITE (G_IO,99012) Newn
 99012    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', &
      &           I6)
-         WRITE (ipr,99013) ndel
+         WRITE (G_IO,99013) ndel
 99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
      &           I6)
       ENDIF
@@ -29470,27 +29090,34 @@ END SUBROUTINE RETAIN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine runs (X, Y)
+!!       SUBROUTINE RUNS(X,N)
 !!
 !!##DESCRIPTION
 !!
-!!    runs(3f) performs a runs analysis of the data in the input vector x.
+!!    RUNS(3f) performs a runs analysis of the data in the input vector x.
 !!
-!!    the analysis consists of first determining the observed number of
+!!    The analysis consists of first determining the observed number of
 !!    runs from the data, and then computing the expected number of runs,
-!!
 !!    the standard deviation of the number of runs, and the resulting
 !!    standardized statistic for the number of runs for runs of various
 !!    lengths.
 !!
-!!    this is done for runs up, runs down, and runs up and down.
+!!    This is done for runs up, runs down, and runs up and down.
 !!
-!!    this runs anslysis is a useful distribution-free test of the randomness
+!!    This runs analysis is a useful distribution-free test of the randomness
 !!    of a data set.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X  The single precision vector of (unsorted or sorted) observations.
+!!
+!!    N  The integer number of observations in the vector x.
+!!
+!!       restrictions-- The maximum allowable value of n for this subroutine
+!!       is 15000.
+!!##OUTPUT
+!!    4 pages of automatic printout consisting of the observed number,
+!!    expected number, standard deviation and resulting standardized
+!!    statistic for runs of various lengths, and the cumulative frequency.
 !!
 !!##EXAMPLES
 !!
@@ -29512,60 +29139,38 @@ END SUBROUTINE RETAIN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==runs.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE RUNS(X,N)
-REAL(kind=wp) :: ai , an , anrdl , anrdlg , anrtl , anrtlg , anrul , anrulg , &
-     &     c1 , c2 , c3 , c4 , den , enrtl , enrtlg , enrul , enrulg ,  &
-     &     hold , snrtl , snrtlg
-REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
-     &     znrtlg , znrul , znrulg
-      INTEGER i , imax , ip1 , ipr , iupper , j , jp1 , lendn , lenup , &
-     &        maxlnd , maxlnt , maxlnu , N , nm1 , nneg , npos , nrdl , &
-     &        nrdlg , nrtl , nrtlg
-      INTEGER nrul , nrulg , nzer
-!
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--4 PAGES OF AUTOMATIC PRINTOUT
-!             CONSISTING OF THE OBSERVED NUMBER,
-!             EXPECTED NUMBER, STANDARD DEVIATION
-!             AND RESULTING STANDARDIZED STATISTIC
-!             FOR RUNS OF VARIOUS LENGTHS.
-!             AND THE CUMULATIVE FREQUENCY.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--LEVENE AND WOLFOWITZ, ANNALS OF MATHEMATICAL
-!                 STATISTICS, 1944, PAGES 58-69;
-!                 ESPECIALLY PAGES 60, 63, AND 64.
-!     REFERENCES--BRADLEY, DISTRIBUTION-FREE STATISTICAL TESTS,
-!                 1968, CHAPTER 12, PAGES 271-282.
+!!##REFERENCES
+!!  o Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, Pages
+!!    58-69; especially pages 60, 63, and 64.
+!!  o Bradley, Distribution-free Statistical Tests, 1968, Chapter 12,
+!!    Pages 271-282.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      DIMENSION nrul(16) , nrdl(16) , nrtl(16) , nrulg(16) , nrdlg(16)
-      DIMENSION nrtlg(16)
-      DIMENSION enrul(16) , enrtl(16) , enrulg(16) , enrtlg(16)
-      DIMENSION snrul(16) , snrtl(16) , snrulg(16) , snrtlg(16)
-      DIMENSION znrul(16) , znrdl(16) , znrtl(16) , znrulg(16) ,        &
-     &          znrdlg(16)
-      DIMENSION znrtlg(16)
-      DIMENSION c1(15) , c2(15) , c3(15) , c4(15)
-      DIMENSION anrul(16) , anrdl(16) , anrtl(16)
-      DIMENSION anrulg(16) , anrdlg(16) , anrtlg(16)
-      COMMON /BLOCK2/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-!
+!*==runs.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE RUNS(X,N)
+REAL(kind=wp) :: X(:)
+INTEGER       :: N
+REAL(kind=wp) :: ai, an, anrdl, anrdlg, anrtl, anrtlg, anrul, anrulg
+REAL(kind=wp) :: c1, c2, c3, c4, den, enrtl, enrtlg, enrul, enrulg, hold, snrtl, snrtlg
+REAL(kind=wp) :: snrul, snrulg, stat, WS, Y, znrdl, znrdlg, znrtl, znrtlg, znrul, znrulg
+INTEGER       :: i, imax, ip1, iupper, j, jp1, lendn, lenup, maxlnd, maxlnt, maxlnu, nm1, nneg, npos, nrdl, nrdlg, nrtl, nrtlg
+INTEGER       :: nrul, nrulg, nzer
+
+DIMENSION Y(15000)
+DIMENSION nrul(16) , nrdl(16) , nrtl(16) , nrulg(16) , nrdlg(16)
+DIMENSION nrtlg(16)
+DIMENSION enrul(16) , enrtl(16) , enrulg(16) , enrtlg(16)
+DIMENSION snrul(16) , snrtl(16) , snrulg(16) , snrtlg(16)
+DIMENSION znrul(16) , znrdl(16) , znrtl(16) , znrulg(16) , znrdlg(16)
+DIMENSION znrtlg(16)
+DIMENSION c1(15) , c2(15) , c3(15) , c4(15)
+DIMENSION anrul(16) , anrdl(16) , anrtl(16)
+DIMENSION anrulg(16) , anrdlg(16) , anrtlg(16)
+COMMON /BLOCK2/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+
       DATA c1(1) , c1(2) , c1(3) , c1(4) , c1(5) , c1(6) , c1(7) ,      &
      &     c1(8) , c1(9) , c1(10) , c1(11) , c1(12) , c1(13) , c1(14) , &
      &     c1(15)/0.4236111111E+00_wp , .1126675485E+00_wp , .4191688713E-01_wp , &
@@ -29597,34 +29202,27 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
      &     -.3555931110E-08_wp , -.2768273269E-09_wp , -.1997821525E-10_wp ,     &
      &     -.1343876568E-11_wp/
 !
-      ipr = 6
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RUNS   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99001) iupper
+99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO RUNS(3f) IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE RUNS&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+         WRITE (G_IO,99003)
+99003    FORMAT (' ***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE RUNS SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = X(1)
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE RUNS   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         WRITE (G_IO,99004) hold
+99004    FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO RUNS(3f) HAS ALL ELEMENTS = ',E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -29661,28 +29259,19 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
          DO i = 1 , nm1
             IF ( Y(i)==0.0_wp .AND. lenup>=1 ) lenup = lenup + 1
             IF ( Y(i)==0.0_wp .AND. lendn>=1 ) lendn = lendn + 1
-            IF ( Y(i)==0.0_wp .AND. lenup==0 .AND. lendn==0 )              &
-     &           lenup = lenup + 1
-            IF ( Y(i)>0.0_wp .AND. lendn>=1 .AND. lendn<=15 ) nrdl(lendn)  &
-     &           = nrdl(lendn) + 1
-            IF ( Y(i)>0.0_wp .AND. lendn>=1 .AND. lendn>=16 ) nrdl(16)     &
-     &           = nrdl(16) + 1
+            IF ( Y(i)==0.0_wp .AND. lenup==0 .AND. lendn==0 )              lenup = lenup + 1
+            IF ( Y(i)>0.0_wp .AND. lendn>=1 .AND. lendn<=15 ) nrdl(lendn)  = nrdl(lendn) + 1
+            IF ( Y(i)>0.0_wp .AND. lendn>=1 .AND. lendn>=16 ) nrdl(16)     = nrdl(16) + 1
             IF ( Y(i)>0.0_wp ) lendn = 0
             IF ( Y(i)>0.0_wp ) lenup = lenup + 1
-            IF ( Y(i)<0.0_wp .AND. lenup>=1 .AND. lenup<=15 ) nrul(lenup)  &
-     &           = nrul(lenup) + 1
-            IF ( Y(i)<0.0 .AND. lenup>=1 .AND. lenup>=16 ) nrul(16)     &
-     &           = nrul(16) + 1
+            IF ( Y(i)<0.0_wp .AND. lenup>=1 .AND. lenup<=15 ) nrul(lenup)  = nrul(lenup) + 1
+            IF ( Y(i)<0.0 .AND. lenup>=1 .AND. lenup>=16 ) nrul(16)     = nrul(16) + 1
             IF ( Y(i)<0.0 ) lenup = 0
             IF ( Y(i)<0.0 ) lendn = lendn + 1
-            IF ( i==nm1 .AND. lendn>=1 .AND. lendn<=15 ) nrdl(lendn)    &
-     &           = nrdl(lendn) + 1
-            IF ( i==nm1 .AND. lendn>=1 .AND. lendn>=16 ) nrdl(16)       &
-     &           = nrdl(16) + 1
-            IF ( i==nm1 .AND. lenup>=1 .AND. lenup<=15 ) nrul(lenup)    &
-     &           = nrul(lenup) + 1
-            IF ( i==nm1 .AND. lenup>=1 .AND. lenup>=16 ) nrul(16)       &
-     &           = nrul(16) + 1
+            IF ( i==nm1 .AND. lendn>=1 .AND. lendn<=15 ) nrdl(lendn)    = nrdl(lendn) + 1
+            IF ( i==nm1 .AND. lendn>=1 .AND. lendn>=16 ) nrdl(16)       = nrdl(16) + 1
+            IF ( i==nm1 .AND. lenup>=1 .AND. lenup<=15 ) nrul(lenup)    = nrul(lenup) + 1
+            IF ( i==nm1 .AND. lenup>=1 .AND. lenup>=16 ) nrul(16)       = nrul(16) + 1
             IF ( lenup>maxlnu ) maxlnu = lenup
             IF ( lendn>maxlnd ) maxlnd = lendn
          ENDDO
@@ -29731,8 +29320,7 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
          den = 6.0_wp
          DO i = 1 , 15
             ai = i
-            enrul(i) = an*(ai*ai+3.0_wp*ai+1.0_wp)                            &
-     &                 - (ai*ai*ai+3.0_wp*ai*ai-ai-4.0_wp)
+            enrul(i) = an*(ai*ai+3.0_wp*ai+1.0_wp) - (ai*ai*ai+3.0_wp*ai*ai-ai-4.0_wp)
             den = den*(ai+3.0_wp)
             enrul(i) = enrul(i)/den
             enrtl(i) = 2.0_wp*enrul(i)
@@ -29798,131 +29386,117 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
 !     WRITE EVERYTHING OUT
 !
          imax = 15
-         WRITE (ipr,99024)
-         WRITE (ipr,99005)
+         WRITE (G_IO,99024)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ',48X,'RUNS UP')
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99006)
-99006    FORMAT (' ',27X,                                               &
-     &           'STATISTIC = NUMBER OF RUNS UP    OF LENGTH EXACTLY I')
+         WRITE (G_IO,99006)
+99006    FORMAT (' ',27X, 'STATISTIC = NUMBER OF RUNS UP    OF LENGTH EXACTLY I')
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99022)
-         WRITE (ipr,99025)
+         WRITE (G_IO,99022)
+         WRITE (G_IO,99025)
          DO i = 1 , imax
-            WRITE (ipr,99023) i , anrul(i) , enrul(i) , snrul(i) ,      &
-     &                        znrul(i)
+            WRITE (G_IO,99023) i , anrul(i) , enrul(i) , snrul(i) , znrul(i)
          ENDDO
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99007)
-99007    FORMAT (' ',27X,                                               &
-     &           'STATISTIC = NUMBER OF RUNS UP    OF LENGTH I OR MORE')
+         WRITE (G_IO,99007)
+99007    FORMAT (' ',27X, 'STATISTIC = NUMBER OF RUNS UP    OF LENGTH I OR MORE')
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99022)
-         WRITE (ipr,99025)
+         WRITE (G_IO,99022)
+         WRITE (G_IO,99025)
          DO i = 1 , imax
-            WRITE (ipr,99023) i , anrulg(i) , enrulg(i) , snrulg(i) ,   &
-     &                        znrulg(i)
+            WRITE (G_IO,99023) i , anrulg(i) , enrulg(i) , snrulg(i) ,   znrulg(i)
          ENDDO
-         WRITE (ipr,99024)
-         WRITE (ipr,99008)
+         WRITE (G_IO,99024)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ',48X,'RUNS DOWN')
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99009)
-99009    FORMAT (' ',27X,                                               &
-     &           'STATISTIC = NUMBER OF RUNS DOWN  OF LENGTH EXACTLY I')
+         WRITE (G_IO,99009)
+99009    FORMAT (' ',27X, 'STATISTIC = NUMBER OF RUNS DOWN  OF LENGTH EXACTLY I')
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99022)
-         WRITE (ipr,99025)
+         WRITE (G_IO,99022)
+         WRITE (G_IO,99025)
          DO i = 1 , imax
-            WRITE (ipr,99023) i , anrdl(i) , enrul(i) , snrul(i) ,      &
-     &                        znrdl(i)
+            WRITE (G_IO,99023) i , anrdl(i) , enrul(i) , snrul(i) , znrdl(i)
          ENDDO
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99010)
-99010    FORMAT (' ',27X,                                               &
-     &           'STATISTIC = NUMBER OF RUNS DOWN  OF LENGTH I OR MORE')
+         WRITE (G_IO,99010)
+99010    FORMAT (' ',27X, 'STATISTIC = NUMBER OF RUNS DOWN  OF LENGTH I OR MORE')
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99022)
-         WRITE (ipr,99025)
+         WRITE (G_IO,99022)
+         WRITE (G_IO,99025)
          DO i = 1 , imax
-            WRITE (ipr,99023) i , anrdlg(i) , enrulg(i) , snrulg(i) ,   &
-     &                        znrdlg(i)
+            WRITE (G_IO,99023) i , anrdlg(i) , enrulg(i) , snrulg(i) , znrdlg(i)
          ENDDO
-         WRITE (ipr,99024)
-         WRITE (ipr,99011)
+         WRITE (G_IO,99024)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ',40X,'RUNS TOTAL = RUNS UP + RUNS DOWN')
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99012)
-99012    FORMAT (' ',27X,                                               &
-     &           'STATISTIC = NUMBER OF RUNS TOTAL OF LENGTH EXACTLY I')
+         WRITE (G_IO,99012)
+99012    FORMAT (' ',27X, 'STATISTIC = NUMBER OF RUNS TOTAL OF LENGTH EXACTLY I')
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99022)
-         WRITE (ipr,99025)
+         WRITE (G_IO,99022)
+         WRITE (G_IO,99025)
          DO i = 1 , imax
-            WRITE (ipr,99023) i , anrtl(i) , enrtl(i) , snrtl(i) ,      &
-     &                        znrtl(i)
+            WRITE (G_IO,99023) i , anrtl(i) , enrtl(i) , snrtl(i) , znrtl(i)
          ENDDO
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99013)
-99013    FORMAT (' ',27X,                                               &
-     &           'STATISTIC = NUMBER OF RUNS TOTAL OF LENGTH I OR MORE')
+         WRITE (G_IO,99013)
+99013    FORMAT (' ',27X,'STATISTIC = NUMBER OF RUNS TOTAL OF LENGTH I OR MORE')
          WRITE (6,99025)
          WRITE (6,99025)
-         WRITE (ipr,99022)
-         WRITE (ipr,99025)
+         WRITE (G_IO,99022)
+         WRITE (G_IO,99025)
          DO i = 1 , imax
-            WRITE (ipr,99023) i , anrtlg(i) , enrtlg(i) , snrtlg(i) ,   &
-     &                        znrtlg(i)
+            WRITE (G_IO,99023) i , anrtlg(i) , enrtlg(i) , snrtlg(i) ,   znrtlg(i)
          ENDDO
-         WRITE (ipr,99024)
-         WRITE (ipr,99014) maxlnu
+         WRITE (G_IO,99024)
+         WRITE (G_IO,99014) maxlnu
 99014    FORMAT (' ','LENGTH OF THE LONGEST RUN UP         = ',I5)
-         WRITE (ipr,99015) maxlnd
+         WRITE (G_IO,99015) maxlnd
 99015    FORMAT (' ','LENGTH OF THE LONGEST RUN DOWN       = ',I5)
-         WRITE (ipr,99016) maxlnt
+         WRITE (G_IO,99016) maxlnt
 99016    FORMAT (' ','LENGTH OF THE LONGEST RUN UP OR DOWN = ',I5)
-         WRITE (ipr,99025)
-         WRITE (ipr,99017) npos
+         WRITE (G_IO,99025)
+         WRITE (G_IO,99017) npos
 99017    FORMAT (' ','NUMBER OF POSITIVE DIFFERENCES = ',I5)
-         WRITE (ipr,99018) nneg
+         WRITE (G_IO,99018) nneg
 99018    FORMAT (' ','NUMBER OF NEGATIVE DIFFERENCES = ',I5)
-         WRITE (ipr,99019) nzer
+         WRITE (G_IO,99019) nzer
 99019    FORMAT (' ','NUMBER OF ZERO     DIFFERENCES = ',I5)
 99020    FORMAT (' ',2(I4,2X,F7.1,2X,F8.4,2X,F8.4,2X,F8.2,8X))
 99021    FORMAT (' ',I6,2X,I6,2X,I6)
       ENDIF
-99022 FORMAT (' ',                                                      &
-     &'I = LENGTH OF RUN         VALUE OF STAT        EXP(STAT)         &
-     &   SD(STAT)    (STAT-EXP(STAT))/SD(STAT)')
+99022 FORMAT (' ', 'I = LENGTH OF RUN         VALUE OF STAT        EXP(STAT)            SD(STAT)    (STAT-EXP(STAT))/SD(STAT)')
 99023 FORMAT (' ',4X,I4,13X,6X,F7.1,13X,F8.4,12X,F8.4,11X,F8.2)
 99024 FORMAT ('1')
 99025 FORMAT (' ')
@@ -29934,7 +29508,7 @@ END SUBROUTINE RUNS
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine sampp (X, Y)
+!!       SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
 !!
 !!##DESCRIPTION
 !!    SAMPP(3f) computes the sample 100p percent point (where p is between
@@ -29967,11 +29541,19 @@ END SUBROUTINE RUNS
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 236-239,
+!! !                 243.
+!! !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
+!! !                 OF STATISTICS, EDITION 2, 1963, PAGES 406-407.
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGE 125.
 !*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
 REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
-      INTEGER i , ipr , iupper , Iwrite , j , jp1 , N
+INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -30013,13 +29595,6 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !                   IF(N+1)P IS LARGER THAN N, AN ERROR MESSAGE WILL
 !                   BE PRINTED OUT AND PP WILL BE SET TO 999999999.0.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 236-239,
-!                 243.
-!               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!                 OF STATISTICS, EDITION 2, 1963, PAGES 406-407.
-!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGE 125.
 !     ORIGINAL VERSION--DECEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -30032,7 +29607,6 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
-      ipr = 6
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -30043,33 +29617,33 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
       j = aj
       jp1 = j + 1
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SAMPP  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SAMP&
      &P  SUBROUTINE HAS THE VALUE 1 *****')
          Pp = X(1)
          RETURN
       ELSEIF ( j<1 ) THEN
-         WRITE (ipr,99004)
+         WRITE (G_IO,99004)
 99004    FORMAT (' ','THE THIRD INPUT ARGUMENT IS SMALLER THAN 1/(N+1)',&
      &           ' = 1/(SECOND INPUT ARGUMENT + 1)')
-         WRITE (ipr,99008) N , P
+         WRITE (G_IO,99008) N , P
          Pp = -999999999.0_wp
          RETURN
       ELSEIF ( jp1>N ) THEN
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ','THE THIRD INPUT ARGUMENT IS LARGER THAN N/(N+1)', &
      &          ' = (SECOND INPUT ARGUMENT)/(SECOND INPUT ARGUMENT + 1)'&
      &          )
-         WRITE (ipr,99008) N , P
+         WRITE (G_IO,99008) N , P
          Pp = 999999999.0_wp
          RETURN
       ELSE
@@ -30077,7 +29651,7 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99006) hold
+         WRITE (G_IO,99006) hold
 99006    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE SAMPP  SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -30092,7 +29666,7 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !
          hunp = 100.0*P
          IF ( Iwrite==0 ) RETURN
-         WRITE (ipr,99007) hunp , N , Pp
+         WRITE (G_IO,99007) hunp , N , Pp
 99007    FORMAT (' ','THE EMPIRICAL ',F9.5,' PERCENT POINT OF THE ',I6, &
      &           ' OBSERVATIONS IS ',F16.7)
       ENDIF
@@ -30109,7 +29683,7 @@ END SUBROUTINE SAMPP
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine scale (X, Y)
+!!       SUBROUTINE SCALE(X,N)
 !!
 !!##DESCRIPTION
 !!    scale(3f) computes 4 estimates of the scale (variation, scatter,
@@ -30150,11 +29724,19 @@ END SUBROUTINE SAMPP
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --DIXON AND MASSEY, PAGES 19 AND 21
+!! !               --SNEDECOR AND COCHRAN, PAGE 62
+!! !               --DIXON AND MASSEY, PAGES 14, 70, AND 71
+!! !               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 PAGES 357 AND 387
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
 !*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SCALE(X,N)
 
 REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd , xsd , xvar
-INTEGER i , ipr , N
+INTEGER i , N
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
@@ -30181,21 +29763,12 @@ INTEGER i , ipr , N
 !              THE RELATIVE SAMPLE STANDARD DEVIATION
 !              IS EQUIVALENTLY CALLED THE
 !              SAMPLE COEFFICIENT OF VARIATION.
-!     REFERENCES--DIXON AND MASSEY, PAGES 19 AND 21
-!               --SNEDECOR AND COCHRAN, PAGE 62
-!               --DIXON AND MASSEY, PAGES 14, 70, AND 71
-!               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 PAGES 357 AND 387
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -30204,16 +29777,16 @@ INTEGER i , ipr , N
       xrelsd = 0.0_wp
       xvar = 0.0_wp
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SCALE  SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SCAL&
      &E  SUBROUTINE HAS THE VALUE 1 *****')
@@ -30225,7 +29798,7 @@ INTEGER i , ipr , N
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 20
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE SCALE  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -30273,23 +29846,23 @@ INTEGER i , ipr , N
 !     WRITE EVERYTHING OUT
 !
          DO i = 1 , 5
-            WRITE (ipr,99011)
+            WRITE (G_IO,99011)
          ENDDO
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 !
 99005    FORMAT (' ',30X,'ESTIMATES OF THE SCALE PARAMETER')
-         WRITE (ipr,99011)
-         WRITE (ipr,99006) N
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99006) N
 99006    FORMAT (' ',34X,'(THE SAMPLE SIZE N = ',I5,')')
-         WRITE (ipr,99011)
-         WRITE (ipr,99011)
-         WRITE (ipr,99007) xrange
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99007) xrange
 99007    FORMAT (' ','THE SAMPLE RANGE IS                       ',E15.8)
-         WRITE (ipr,99008) xsd
+         WRITE (G_IO,99008) xsd
 99008    FORMAT (' ','THE SAMPLE STANDARD DEVIATION IS          ',E15.8)
-         WRITE (ipr,99009) xvar
+         WRITE (G_IO,99009) xvar
 99009    FORMAT (' ','THE SAMPLE VARIANCE IS                    ',E15.8)
-         WRITE (ipr,99010) xrelsd
+         WRITE (G_IO,99010) xrelsd
 99010    FORMAT (' ','THE SAMPLE RELATIVE STANDARD DEVIATION IS ',E15.8,&
      &           ' PERCENT')
       ENDIF
@@ -30303,7 +29876,7 @@ END SUBROUTINE SCALE
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine sd (X, Y)
+!!       SUBROUTINE SD(X,N,Iwrite,Xsd)
 !!
 !!##DESCRIPTION
 !!    sd(3f) computes the sample standard deviation (with denominator n-1)
@@ -30336,10 +29909,15 @@ END SUBROUTINE SCALE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGE 44.
+!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!! !                 ANALYSIS, EDITION 2, 1957, PAGES 19, 76.
 !*==sd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SD(X,N,Iwrite,Xsd)
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
-      INTEGER i , ipr , Iwrite , N
+INTEGER :: i , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -30367,10 +29945,6 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGE 44.
-!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!                 ANALYSIS, EDITION 2, 1957, PAGES 19, 76.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -30379,22 +29953,20 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SD     SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SD  &
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -30404,7 +29976,7 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE SD     SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -30428,9 +30000,9 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xsd
+      WRITE (G_IO,99006) N , Xsd
 99006 FORMAT (' ','THE SAMPLE STANDARD DEVIATION OF THE ',I6,           &
      &        ' OBSERVATIONS IS ',E15.8)
 END SUBROUTINE SD
@@ -30441,7 +30013,7 @@ END SUBROUTINE SD
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine skipr (X, Y)
+!!       SUBROUTINE SKIPR(Nlhead)
 !!
 !!##DESCRIPTION
 !!    skipr(3f) reads through (skips over) nlhead lines from input unit = 5.
@@ -30476,7 +30048,7 @@ END SUBROUTINE SD
 !!    CC0-1.0
 !*==skipr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SKIPR(Nlhead)
-INTEGER i , ia , ipr , ird , Nlhead
+INTEGER i , ia , ird , Nlhead
 !
 !     INPUT  ARGUMENTS--NLHEAD = THE INTEGER NUMBER OF CARD
 !                                IMAGES TO BE READ THROUGH
@@ -30492,16 +30064,15 @@ INTEGER i , ia , ipr , ird , Nlhead
 !---------------------------------------------------------------------
 !
       ird = 5
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( Nlhead<0 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE SKIPR  SUBROU&
      &TINE IS NEGATIVE *****')
-         WRITE (ipr,99002) Nlhead
+         WRITE (G_IO,99002) Nlhead
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -30520,8 +30091,8 @@ INTEGER i , ia , ipr , ird , Nlhead
 END SUBROUTINE SKIPR
 !>
 !!##NAME
-!!    sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample observations
-!!    and "carry" a second vector
+!!    sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample
+!!    observations and "carry" a second vector
 !!
 !!##SYNOPSIS
 !!
@@ -30536,34 +30107,59 @@ END SUBROUTINE SKIPR
 !!##DESCRIPTION
 !!
 !!    SORTC(3f) sorts (in ascending order) the N elements of the vector X,
-!!    puts the resulting N sorted values into the single precision vector XS,
+!!    puts the resulting N sorted values into the vector XS,
 !!    rearranges the elements of the vector Y (according to the sort on X),
-!!    and puts the rearranged Y values into the single precision vector YC.
+!!    and puts the rearranged Y values into the vector YC.
 !!    This subroutine gives the data analyst the ability to sort one data
 !!    vector while 'carrying along' the elements of a second data vector.
 !!
+!!    The smallest element of the vector X will be placed in the first
+!!    position of the vector XS, the second smallest element in the vector
+!!    X will be placed in the second position of the vector XS, etc.
+!!
+!!    The element in the vector Y corresponding to the smallest element in
+!!    X will be placed in the first position of the vector YC, the element
+!!    in the vector Y corresponding to the second smallest element in X
+!!    will be placed in the second position of the vector YC, etc.
+!!
+!!    The input vector X remains unaltered.
+!!
+!!    If the analyst desires a sort 'in place', this is done by having the
+!!    same output vector as input vector in the calling sequence. Thus,
+!!    for example, the calling sequence CALL SORTC(X,Y,N,X,YC) is allowable
+!!    and will result in the desired 'in-place' sort.
+!!
+!!    The sorting algorthm used herein is the binary sort. This algorthim
+!!    is extremely fast as the following time trials indicate. These time
+!!    trials were carried out on the UNIVAC 1108 EXEC 8 system at NBS in
+!!    August of 1974. By way of comparison, the time trial values for the
+!!    easy-to-program but extremely inefficient bubble sort algorithm have
+!!    also been included--
+!!
+!!      Number of Random        Binary Sort       Bubble Sort
+!!      Numbers Sorted
+!!        N = 10                 .002 sec          .002 sec
+!!        N = 100                .011 sec          .045 sec
+!!        N = 1000               .141 sec         4.332 sec
+!!        N = 3000               .476 sec        37.683 sec
+!!        N = 10000             1.887 sec      NOT COMPUTED
+!!
 !!##INPUT ARGUMENTS
-!!      x   the single precision vector of
-!!          observations to be sorted.
+!!      X   The vector of observations to be sorted.
 !!
-!!      y   the single precision vector of
-!!          observations to be 'carried along',
-!!          that is, to be rearranged according
-!!          to the sort on x.
+!!      Y   The vector of
+!!          observations to be 'carried along', that is, to be rearranged
+!!          according to the sort on X.
 !!
-!!      n   the integer number of observations
-!!          in the vector x.
+!!      N   The integer number of observations in the vector X.
+!!
 !!##OUTPUT ARGUMENTS
 !!
-!!      xs  the single precision vector
-!!          into which the sorted data values
-!!          from x will be placed.
+!!      XS  The vector into which the sorted data values from X will be
+!!          placed in ascending order.
 !!
-!!      yc  the single precision vector
-!!          into which the rearranged
-!!          (according to the sort of the
-!!          vector x) values of the vector y
-!!          will be placed.
+!!      YC  The vector into which the rearranged (according to the sort of
+!!          the vector X) values of the vector Y will be placed.
 !!
 !!##EXAMPLES
 !!
@@ -30578,11 +30174,11 @@ END SUBROUTINE SKIPR
 !!    real                         :: cc(isz)
 !!    real                         :: dd(isz)
 !!    integer                      :: i
-!!       write(*,*)'initializing array with ',isz,' random numbers'
-!!       call random_seed()
-!!       CALL RANDOM_NUMBER(aa)
-!!       aa=aa*450000.0
-!!       bb=real([(i,i=1,isz)])
+!!      write(*,*)'initializing array with ',isz,' random numbers'
+!!      call random_seed()
+!!      CALL RANDOM_NUMBER(aa)
+!!      aa=aa*450000.0
+!!      bb=real([(i,i=1,isz)])
 !!      call sortc(aa,bb,size(aa),cc,dd)
 !!
 !!      write(*,*)'checking if real values are sorted(3f)'
@@ -30612,21 +30208,14 @@ END SUBROUTINE SKIPR
 !!   4. JACM JANUARY 1961, PAGE 41.
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
 !*==sortc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTC(X,Y,N,Xs,Yc)
 
 REAL(kind=wp) :: amed, bmed, hold, tx, ty, X(:), Xs(:), Y(:), Yc(:)
-INTEGER i, il(36), ip1, ipr, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
+INTEGER i, il(36), ip1, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
 !
-!     OUTPUT--THE SINGLE PRECISION VECTOR XS
-!             CONTAINING THE SORTED
-!             (IN ASCENDING ORDER) VALUES
-!             OF THE SINGLE PRECISION VECTOR X, AND
-!             THE SINGLE PRECISION VECTOR YC
-!             CONTAINING THE REARRANGED
-!             (ACCORDING TO THE SORT ON X)
-!             VALUES OF THE VECTOR Y.
-
 !     RESTRICTIONS--THE DIMENSIONS OF THE VECTORS IL AND IU
 !                   (DEFINED AND USED INTERNALLY WITHIN
 !                   THIS SUBROUTINE) DICTATE THE MAXIMUM
@@ -30646,90 +30235,42 @@ INTEGER i, il(36), ip1, ipr, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
 !                   (IN LIGHT OF THE ABOVE, NO CHECK OF THE
 !                   UPPER LIMIT OF N HAS BEEN INCORPORATED
 !                   INTO THIS SUBROUTINE.)
-
-!     COMMENT--THE SMALLEST ELEMENT OF THE VECTOR X
-!              WILL BE PLACED IN THE FIRST POSITION
-!              OF THE VECTOR XS,
-!              THE SECOND SMALLEST ELEMENT IN THE VECTOR X
-!              WILL BE PLACED IN THE SECOND POSITION
-!              OF THE VECTOR XS,
-!              ETC.
-!     COMMENT--THE ELEMENT IN THE VECTOR Y CORRESPONDING
-!              TO THE SMALLEST ELEMENT IN X
-!              WILL BE PLACED IN THE FIRST POSITION
-!              OF THE VECTOR YC,
-!              THE ELEMENT IN THE VECTOR Y CORRESPONDING
-!              TO THE SECOND SMALLEST ELEMENT IN X
-!              WILL BE PLACED IN THE SECOND POSITION
-!              OF THE VECTOR YC,
-!              ETC.
-!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     COMMENT--IF THE ANALYST DESIRES A SORT 'IN PLACE',
-!              THIS IS DONE BY HAVING THE SAME
-!              OUTPUT VECTOR AS INPUT VECTOR IN THE CALLING SEQUENCE.
-!              THUS, FOR EXAMPLE, THE CALLING SEQUENCE
-!              CALL SORTC(X,Y,N,X,YC)
-!              IS ALLOWABLE AND WILL RESULT IN
-!              THE DESIRED 'IN-PLACE' SORT.
-!     COMMENT--THE SORTING ALGORTHM USED HEREIN
-!              IS THE BINARY SORT.
-!              THIS ALGORTHIM IS EXTREMELY FAST AS THE
-!              FOLLOWING TIME TRIALS INDICATE.
-!              THESE TIME TRIALS WERE CARRIED OUT ON THE
-!              UNIVAC 1108 EXEC 8 SYSTEM AT NBS
-!              IN AUGUST OF 1974.
-!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES
-!              FOR THE EASY-TO-PROGRAM BUT EXTREMELY
-!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE
-!              ALSO BEEN INCLUDED--
-!              NUMBER OF RANDOM        BINARY SORT       BUBBLE SORT
-!               NUMBERS SORTED
-!                N = 10                 .002 SEC          .002 SEC
-!                N = 100                .011 SEC          .045 SEC
-!                N = 1000               .141 SEC         4.332 SEC
-!                N = 3000               .476 SEC        37.683 SEC
-!                N = 10000             1.887 SEC      NOT COMPUTED
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      ipr = 6
-      IF ( N<1 ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTC  SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ','***** FATAL ERROR--The second input argument to SORTC(3f)  is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ','***** The value of the argument is ',I8,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ','***** NON-FATAL DIAGNOSTIC--The second input argument to SORTC(3f) has the value 1 *****')
+         Xs(1) = X(1)
+         Yc(1) = Y(1)
          RETURN
       ELSE
-         IF ( N==1 ) THEN
-            WRITE (ipr,99003)
-99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORTC  SUBROUTINE HAS THE VALUE 1 *****')
-            Xs(1) = X(1)
-            Yc(1) = Y(1)
-            RETURN
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (ipr,99004) hold
-99004       FORMAT (' ',                                                &
-             & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORTC  SUBROUTINE HAS ALL ELEMENTS =', &
-             & E15.8, &
-             & ' *****')
-            DO i = 1 , N
-               Xs(i) = X(i)
-               Yc(i) = Y(i)
-            ENDDO
-            RETURN
-         ENDIF
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+          99004       FORMAT (' ',                                                &
+          & '***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to SORTC(3f) has all elements =', &
+          & E15.8, &
+          & ' *****')
+         DO i = 1 , N
+            Xs(i) = X(i)
+            Yc(i) = Y(i)
+         ENDDO
+         RETURN
+      ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-!     COPY THE VECTOR X INTO THE VECTOR XS
+!  COPY THE VECTOR X INTO THE VECTOR XS
  50      continue
          DO i = 1 , N
             Xs(i) = X(i)
@@ -30934,7 +30475,7 @@ END SUBROUTINE SORTC
 !*==sort.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORT(X,N,Y)
 REAL(kind=wp) :: amed, hold, tt, X, Y
-integer i, il, ip1, ipr, iu, j, jmi, jmk, k, l, lmi,   m, mid, n, nm1
+integer i, il, ip1, iu, j, jmi, jmk, k, l, lmi,   m, mid, n, nm1
 DIMENSION X(:), Y(:)
 DIMENSION iu(36), il(36)
 
@@ -30994,21 +30535,19 @@ DIMENSION iu(36), il(36)
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORT   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORT SUBROUTINE HAS THE VALUE 1 *****')
             Y(1) = X(1)
             RETURN
@@ -31017,7 +30556,7 @@ DIMENSION iu(36), il(36)
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',&
             & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORT   SUBROUTINE HAS ALL ELEMENTS =',&
             & E15.8,&
@@ -31131,12 +30670,11 @@ END SUBROUTINE SORT
 !!##SYNOPSIS
 !!
 !!     SUBROUTINE SORTP(X,N,Y,Xpos)
-!!     Subroutine sortp (X, Y)
 !!
-!!      Integer, Intent (In) ::  N
-!!    Real(kind=wp) :: (In)    ::  X(N)
-!!    Real(kind=wp) :: (Out)   ::  Y(N)
-!!    Real(kind=wp) :: (Out)   ::  XPOS(N)
+!!      Real(kind=wp) :: (In)    ::  X(N)
+!!      Integer, Intent (In)     ::  N
+!!      Real(kind=wp) :: (Out)   ::  Y(N)
+!!      Real(kind=wp) :: (Out)   ::  XPOS(N)
 !!
 !!##DESCRIPTION
 !!
@@ -31175,10 +30713,15 @@ END SUBROUTINE SORT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
+!! !               --CACM JANUARY 1970, PAGE 54.
+!! !               --CACM OCTOBER 1970, PAGE 624.
+!! !               --JACM JANUARY 1961, PAGE 41.
 !*==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
-      INTEGER i , il , ip1 , ipr , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
+INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE SORTED.
@@ -31272,10 +30815,6 @@ REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 !                N = 1000               .141 SEC         4.332 SEC
 !                N = 3000               .476 SEC        37.683 SEC
 !                N = 10000             1.887 SEC      NOT COMPUTED
-!     REFERENCES--CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
-!               --CACM JANUARY 1970, PAGE 54.
-!               --CACM OCTOBER 1970, PAGE 624.
-!               --JACM JANUARY 1961, PAGE 41.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -31286,16 +30825,15 @@ REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      ipr = 6
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTP  SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ','***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SORTP SUBROUTINE HAS THE VALUE 1 *****')
             Y(1) = X(1)
             Xpos(1) = 1.0_wp
@@ -31305,7 +30843,7 @@ REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',&
              & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORTP  SUBROUTINE HAS ALL ELEMENTS =',&
              & E15.8,&
@@ -31442,7 +30980,7 @@ END SUBROUTINE SORTP
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine spcorr (X, Y)
+!!       SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
 !!
 !!##DESCRIPTION
 !!    spcorr(3f) computes the spearman rank correlation coefficient between
@@ -31475,10 +31013,19 @@ END SUBROUTINE SORTP
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGES 193-195.
+!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!! !                 ANALYSIS, EDITION 2, 1957, PAGES 294-295.
+!! !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
+!! !                 OF STATISTICS, EDITION 2, 1963, PAGE 424.
 !*==spcorr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
-      INTEGER i , iflag , ipr , iupper , Iwrite , N
+INTEGER :: i , iflag , iupper , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
@@ -31520,14 +31067,6 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--RANK AND SORT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
-!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGES 193-195.
-!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!                 ANALYSIS, EDITION 2, 1957, PAGES 294-295.
-!               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!                 OF STATISTICS, EDITION 2, 1963, PAGE 424.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --JANUARY   1975.
@@ -31543,7 +31082,6 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
       EQUIVALENCE (XR(1),WS(1))
       EQUIVALENCE (YR(1),WS(7501))
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -31552,17 +31090,17 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
       Spc = 0.0_wp
       iflag = 0
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (                                                       &
      &         ' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE SP'&
      &         ,                                                        &
      & 'CORR SUBROUTINE IS OUTSIDE THE ALLOWABLE (1,,I6,16H) INTERVAL *'&
      & ,'****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO THE SPCO&
      &RR SUBROUTINE HAS THE VALUE 1 *****')
@@ -31572,7 +31110,7 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE SPCORR SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -31581,7 +31119,7 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
          DO i = 2 , N
             IF ( Y(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99005) hold
+         WRITE (G_IO,99005) hold
 99005    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT (A VECTOR) &
      &TO THE SPCORR SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -31598,7 +31136,7 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
          ENDDO
          Spc = 1.0_wp - (6.0_wp*sum/((an-1.0_wp)*an*(an+1.0_wp)))
 !
-         IF ( Iwrite/=0 ) WRITE (ipr,99006) N , Spc
+         IF ( Iwrite/=0 ) WRITE (G_IO,99006) N , Spc
 99006    FORMAT (' ',                                                   &
      &     'THE SPEARMAN RANK CORRELATION COEFFICIENT OF THE 2 SETS OF '&
      &     ,I6,' OBSERVATIONS IS ',F14.5)
@@ -31611,7 +31149,7 @@ END SUBROUTINE SPCORR
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine stmom3 (X, Y)
+!!       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
 !!
 !!##DESCRIPTION
 !!    stmom3(3f) computes the sample standardized third central moment of
@@ -31648,10 +31186,16 @@ END SUBROUTINE SPCORR
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85,
+!! !                 234, 243, 297-298, 305.
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGES 86-90.
 !*==stmom3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
-      INTEGER i , ipr , Iwrite , N
+INTEGER :: i , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -31679,11 +31223,6 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85,
-!                 234, 243, 297-298, 305.
-!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGES 86-90.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -31691,22 +31230,21 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE STMOM3 SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE STMO&
      &M3 SUBROUTINE HAS THE VALUE 1 *****')
@@ -31716,7 +31254,7 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE STMOM3 SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -31743,9 +31281,9 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xsmom3
+      WRITE (G_IO,99006) N , Xsmom3
 99006 FORMAT (' ',                                                      &
      &        'THE SAMPLE STANDARDIZED THIRD  CENTRAL MOMENT FOR THE ', &
      &        I6,' OBSERVATIONS IS ',E15.8)
@@ -31757,7 +31295,7 @@ END SUBROUTINE STMOM3
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine stmom4 (X, Y)
+!!       SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
 !!
 !!##DESCRIPTION
 !!
@@ -31795,10 +31333,15 @@ END SUBROUTINE STMOM3
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85, 243.
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGES 86-90.
 !*==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
-      INTEGER i , ipr , Iwrite , N
+INTEGER :: i , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -31826,10 +31369,6 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85, 243.
-!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGES 86-90.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -31838,22 +31377,20 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE STMOM4 SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE STMO&
      &M4 SUBROUTINE HAS THE VALUE 1 *****')
@@ -31863,7 +31400,7 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE STMOM4 SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -31890,9 +31427,9 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xsmom4
+      WRITE (G_IO,99006) N , Xsmom4
 99006 FORMAT (' ',                                                      &
      &        'THE SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT FOR THE ', &
      &        I6,' OBSERVATIONS IS ',E15.8)
@@ -31906,10 +31443,10 @@ END SUBROUTINE STMOM4
 !!##SYNOPSIS
 !!
 !!
-!!     SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
+!!       SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
 !!
-!!      REAL(kind=wp) :: D(:), Dmax, Dmin, X(:), Y(:)
-!!      INTEGER N, Ny
+!!        REAL(kind=wp) :: D(:), Dmax, Dmin, X(:), Y(:)
+!!        INTEGER       :: N, Ny
 !!
 !!##DESCRIPTION
 !!
@@ -31975,7 +31512,7 @@ END SUBROUTINE STMOM4
 !*==subse1.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
 REAL(kind=wp) :: D(:) , Dmax , Dmin , hold , pointl , pointu , X(:) , Y(:)
-INTEGER i , ipr , k , N , ndel , Ny
+INTEGER i , k , N , ndel , Ny
 
 !     OUTPUT--THE VECTOR Y
 !             INTO WHICH HAVE BEEN COPIED
@@ -32034,22 +31571,19 @@ INTEGER i , ipr , k , N , ndel , Ny
 !     UPDATED         --NOVEMBER  1975.
 !---------------------------------------------------------------------
 !
-!
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSE1 SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SUBS&
      &E1 SUBROUTINE HAS THE VALUE 1 *****')
@@ -32058,7 +31592,7 @@ INTEGER i , ipr , k , N , ndel , Ny
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE SUBSE1 SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -32083,31 +31617,31 @@ INTEGER i , ipr , k , N , ndel , Ny
 !
 !     WRITE OUT A BRIEF SUMMARY
 !
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ')
-         WRITE (ipr,99006)
+         WRITE (G_IO,99006)
 99006    FORMAT (' ','OUTPUT FROM THE SUBSE1 SUBROUTINE--')
-         WRITE (ipr,99007) pointl , pointu
+         WRITE (G_IO,99007) pointl , pointu
 99007    FORMAT (' ',7X,'D1 LIMITS (INCLUSIVE)--   ',E15.8,' AND ', E15.8)
-         WRITE (ipr,99008)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ',7X,'ONLY THOSE OBSERVATIONS IN X')
-         WRITE (ipr,99009)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',7X,'WILL BE CARRIED OVER INTO Y')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ',7X,'FOR WHICH THE CORRESPONDING ELEMENTS OF ','D1')
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ',7X,'ARE SIMULTANEOUSLY WITHIN (INCLUSIVE)')
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ',7X,'EACH SPECIFIED LIMIT.')
-         WRITE (ipr,99013)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ',7X,'NO OBSERVATIONS OUTSIDE OF THIS INTERVAL')
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
 99014    FORMAT (' ',7X,'HAVE BEEN CARRIED OVER INTO Y.')
-         WRITE (ipr,99015) N
+         WRITE (G_IO,99015) N
 99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
-         WRITE (ipr,99016) Ny
+         WRITE (G_IO,99016) Ny
 99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', I6)
-         WRITE (ipr,99017) ndel
+         WRITE (G_IO,99017) ndel
 99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
@@ -32145,7 +31679,7 @@ END SUBROUTINE SUBSE1
 !!    are not copied over into Y.
 !!
 !!    The use of subse2(3f) gives the data analyst the capability
-!!    to easily extract subsets of the datA prior to data analysis on
+!!    to easily extract subsets of the data prior to data analysis on
 !!    each subset.
 !!
 !!##INPUT ARGUMENTS
@@ -32154,7 +31688,7 @@ END SUBROUTINE SUBSE1
 !!
 !!    N      The integer number of observations in the vector x.
 !!
-!!    D1     A vector which (in conjunction with d2) 'defines' the various
+!!    D1     A vector which (in conjunction with d2) "defines" the various
 !!           possible subsets of x.
 !!
 !!    D1MIN  The value which defines in d1 the lower limit
@@ -32165,8 +31699,8 @@ END SUBROUTINE SUBSE1
 !!           (inclusively) of the particular subset of interest to be
 !!           retained.
 !!
-!!    D2     A vector which (in conjunction with d2)
-!!           'defines' the various possible subsets of x.
+!!    D2     A vector which (in conjunction with d2) "defines" the various
+!!           possible subsets of x.
 !!
 !!    D2MIN  The value which defines in d2 the lower limit
 !!           (inclusively) of the particular subset of interest to be retained.
@@ -32205,10 +31739,12 @@ END SUBROUTINE SUBSE1
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--FEBRUARY  1976.
 !*==subse2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE SUBSE2(X,N,D1,D1min,D1max,D2,D2min,D2max,Y,Ny)
 REAL(kind=wp) :: D1(:), D1max, D1min, D2(:), D2max, D2min, hold, poin1l, poin1u, poin2l, poin2u, X(:), Y(:)
-INTEGER       :: i, ipr, k, N, ndel, Ny
+INTEGER       :: i, k, N, ndel, Ny
 
 !     OUTPUT--THE VECTOR Y
 !             INTO WHICH HAVE BEEN COPIED
@@ -32257,24 +31793,21 @@ INTEGER       :: i, ipr, k, N, ndel, Ny
 !              (DUE TO THE PACKING OF
 !              THE RETAINED ELEMENTS IN Y)
 !              AFTER APPLICATION OF THIS SUBROUTINE.
-!     ORIGINAL VERSION--FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSE2 SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SUBSE2 SUBROUTINE HAS THE VALUE 1 *****')
          ELSE
@@ -32282,7 +31815,7 @@ INTEGER       :: i, ipr, k, N, ndel, Ny
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SUBSE2 SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
          ENDIF
@@ -32313,33 +31846,33 @@ INTEGER       :: i, ipr, k, N, ndel, Ny
 !
 !     WRITE OUT A BRIEF SUMMARY
 !
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ')
-         WRITE (ipr,99006)
+         WRITE (G_IO,99006)
 99006    FORMAT (' ','OUTPUT FROM THE SUBSE2 SUBROUTINE--')
-         WRITE (ipr,99007) poin1l , poin1u
+         WRITE (G_IO,99007) poin1l , poin1u
 99007    FORMAT (' ',7X,'D1 LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     E15.8)
-         WRITE (ipr,99008) poin2l , poin2u
+         WRITE (G_IO,99008) poin2l , poin2u
 99008    FORMAT (' ',7X,'D2 LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     E15.8)
-         WRITE (ipr,99009)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',7X,'ONLY THOSE OBSERVATIONS IN X')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ',7X,'WILL BE CARRIED OVER INTO Y')
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ',7X,'FOR WHICH THE CORRESPONDING ELEMENTS OF ',     'D1 AND D2')
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ',7X,'ARE SIMULTANEOUSLY WITHIN (INCLUSIVE)')
-         WRITE (ipr,99013)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ',7X,'EACH SPECIFIED LIMIT.')
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
 99014    FORMAT (' ',7X,'NO OBSERVATIONS OUTSIDE OF THIS INTERVAL')
-         WRITE (ipr,99015)
+         WRITE (G_IO,99015)
 99015    FORMAT (' ',7X,'HAVE BEEN CARRIED OVER INTO Y.')
-         WRITE (ipr,99016) N
+         WRITE (G_IO,99016) N
 99016    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
-         WRITE (ipr,99017) Ny
+         WRITE (G_IO,99017) Ny
 99017    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', I6)
-         WRITE (ipr,99018) ndel
+         WRITE (G_IO,99018) ndel
 99018    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
@@ -32421,7 +31954,7 @@ END SUBROUTINE SUBSE2
 !*==subset.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
 REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
-      INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
+INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
       DIMENSION X(:)
       DIMENSION D(:)
 !
@@ -32494,22 +32027,19 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !
 !---------------------------------------------------------------------
 !
-!
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSET SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SUBS&
      &ET SUBROUTINE HAS THE VALUE 1 *****')
@@ -32518,7 +32048,7 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE SUBSET SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
@@ -32552,31 +32082,31 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !
 !     WRITE OUT A BRIEF SUMMARY
 !
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 99005    FORMAT (' ')
-         WRITE (ipr,99006)
+         WRITE (G_IO,99006)
 99006    FORMAT (' ','OUTPUT FROM THE SUBSET SUBROUTINE--')
-         WRITE (ipr,99007) pointl , pointu
+         WRITE (G_IO,99007) pointl , pointu
 99007    FORMAT (' ',7X,'D  LIMITS (INCLUSIVE)--   ',E15.8,' AND ',     E15.8)
-         WRITE (ipr,99008)
+         WRITE (G_IO,99008)
 99008    FORMAT (' ',7X,'ONLY THOSE OBSERVATIONS IN X')
-         WRITE (ipr,99009)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',7X,'WILL BE RETAINED')
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ',7X,'FOR WHICH THECORRESPONDING ELEMENTS OF D')
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ',7X,'ARE WITHIN (INCLUSIVE)')
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ',7X,'THE SPECIFIED LIMITS.')
-         WRITE (ipr,99013)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ',7X,'ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL')
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
 99014    FORMAT (' ',7X,'HAVE BEEN DELETED IN X.')
-         WRITE (ipr,99015) nold
+         WRITE (G_IO,99015) nold
 99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
-         WRITE (ipr,99016) Newn
+         WRITE (G_IO,99016) Newn
 99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', I6)
-         WRITE (ipr,99017) ndel
+         WRITE (G_IO,99017) ndel
 99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
       ENDIF
 !
@@ -32588,10 +32118,10 @@ END SUBROUTINE SUBSET
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine tail (X, Y)
+!!       SUBROUTINE TAIL(X,N)
 !!
 !!##DESCRIPTION
-!!    tail(3f) perfoms a symmetric distribution tail length analysis on
+!!    tail(3f) performs a symmetric distribution tail length analysis on
 !!    the data in the input vector x.
 !!
 !!    the analysis consists of the following--
@@ -32600,19 +32130,19 @@ END SUBROUTINE SUBSET
 !!         the specific hypothesis of normality;
 !!      2. a uniform probability plot
 !!         (a short-tailed distribution);
-!!      3. a normal probaiblity plot
+!!      3. a normal probability plot
 !!         (a moderate-tailed distribution);
-!!      4. a tukey lambda = -0.5 probabilty plot
-!!         (a moderate-long-tailed distribtion);
+!!      4. a tukey lambda = -0.5 probability plot
+!!         (a moderate-long-tailed distribution);
 !!      5. a cauchy probability plot
 !!         (a long-tailed distribution);
 !!      6. a determination of the best-fit
 !!         symmetric distribution
 !!         to the data set from an
-!!         admissable set consisting of
+!!         admissible set consisting of
 !!         43 symmetric distributions.
 !!
-!!    the admissable set of symmetric distributions considered includes
+!!    the admissible set of symmetric distributions considered includes
 !!    the uniform, normal, logistic, double exponential, cauchy, and 37
 !!    distributions drawn from the the tukey lambda distributional family.
 !!
@@ -32643,6 +32173,14 @@ END SUBROUTINE SUBSET
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
+!! !                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
+!! !                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
+!! !                ARMY RESEARCH AND TESTING, PAGES 425-450.
+!! !              --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                UNPUBLISHED MANUSCRIPT.
+!! !              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
+!! !                DISTRIBUTIONS-1, PAGES 250-271.
 !*==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TAIL(X,N)
 REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
@@ -32651,7 +32189,7 @@ REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, p
 REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS, X
 REAL(kind=wp) :: xbar
 REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
-INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
+INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
@@ -32660,8 +32198,8 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !     OUTPUT--6 PAGES OF AUTOMATIC PRINTOUT--
 !             1) VARIOUS TEST STATISTICS FOR NORMALITY;
 !             2) A UNIFORM PROBABILITY PLOT;
-!             3) A NORMAL PROBAIBLITY PLOT;
-!             4) A TUKEY LAMBDA = -0.5 PROBABILTY PLOT;
+!             3) A NORMAL PROBABILITY PLOT;
+!             4) A TUKEY LAMBDA = -0.5 PROBABILITY PLOT;
 !             5) A CAUCHY PROBABILITY PLOT;
 !             6) A DETERMINATION OF THE BEST-FIT
 !                SYMMETRIC DISTRIBUTION
@@ -32673,32 +32211,24 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG, LOG10, EXP,
 !                                         SIN, COS, ATAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!                ARMY RESEARCH AND TESTING, PAGES 425-450.
-!              --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                UNPUBLISHED MANUSCRIPT.
-!              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!                DISTRIBUTIONS-1, PAGES 250-271.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 iflag1
-      CHARACTER*4 iflag2
-      CHARACTER*4 iflag3
-      CHARACTER*4 iline1
-      CHARACTER*4 iline2
+CHARACTER(len=4) :: iflag1
+CHARACTER(len=4) :: iflag2
+CHARACTER(len=4) :: iflag3
+CHARACTER(len=4) :: iline1
+CHARACTER(len=4) :: iline2
 !
-      CHARACTER*4 alpham
-      CHARACTER*4 alphaa
-      CHARACTER*4 blank
-      CHARACTER*4 hyphen
-      CHARACTER*4 alphai
-      CHARACTER*4 alphax
+CHARACTER(len=4) :: alpham
+CHARACTER(len=4) :: alphaa
+CHARACTER(len=4) :: blank
+CHARACTER(len=4) :: hyphen
+CHARACTER(len=4) :: alphai
+CHARACTER(len=4) :: alphax
 !
       DIMENSION X(:)
       DIMENSION Y(3000) , Z(3000) , YM(3000)
@@ -32718,22 +32248,21 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
       DATA picons/3.14159265358979_wp/
       DATA constn/.3989422804_wp/
 !
-      ipr = 6
       iupper = 3000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TAIL   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TAIL&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -32743,7 +32272,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE TAIL   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -33066,80 +32595,80 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !
 !     WRITE OUT THE NORMAL TAIL LENGTH STATISTICS PAGE
 !
-         WRITE (ipr,99044)
-         WRITE (ipr,99005)
+         WRITE (G_IO,99044)
+         WRITE (G_IO,99005)
 !
 99005    FORMAT (' ',48X,'TAIL LENGTH ANALYSIS')
-         WRITE (ipr,99045)
-         WRITE (ipr,99006) N
+         WRITE (G_IO,99045)
+         WRITE (G_IO,99006) N
 99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I5,')')
-         WRITE (ipr,99007) xbar
+         WRITE (G_IO,99007) xbar
 99007    FORMAT (' ',40X,'(THE SAMPLE MEAN = ',E15.8,')')
-         WRITE (ipr,99008) s
+         WRITE (G_IO,99008) s
 99008    FORMAT (' ',35X,'(THE SAMPLE STANDARD DEVIATION = ',E15.8,')')
-         WRITE (ipr,99045)
-         WRITE (ipr,99009)
+         WRITE (G_IO,99045)
+         WRITE (G_IO,99009)
 99009    FORMAT (' ',35X,                                               &
      & 'REFERENCE--SHAPIRO, WILK, AND CHEN, JASA, 1968, PAGES 1343-1372'&
      & )
-         WRITE (ipr,99010)
+         WRITE (G_IO,99010)
 99010    FORMAT (' ',35X,'REFERENCE--CRAMER, PAGES 386-387')
-         WRITE (ipr,99011)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ',35X,                                               &
      &           'REFERENCE--GEARY, BIOMETRIKA, 1947, PAGES 209-242')
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ',35X,                                               &
      &'REFERENCE--BIOMETRIKA TABLES, VOLUME 1, PAGES 67-69, 59-60, 207-2&
      &08, AND 200')
-         WRITE (ipr,99013)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ',35X,                                               &
      &    'REFERENCE--SHAPIRO AND WILK, BIOMETRIKA, 1965, PAGES 591-611'&
      &    )
          DO i = 1 , 6
-            WRITE (ipr,99045)
+            WRITE (G_IO,99045)
          ENDDO
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
 99014    FORMAT (' ',49X,'TAIL LENGTH STATISTICS')
-         WRITE (ipr,99015)
+         WRITE (G_IO,99015)
 99015    FORMAT (' ',5X,                                                &
      &'THE EXPECTED VALUE AND STANDARD DEVIATION OF STATISTICS ON THIS P&
      &AGE ARE BASED ON THE NORMALITY ASSUMPTION')
-         WRITE (ipr,99045)
-         WRITE (ipr,99045)
-         WRITE (ipr,99016)
+         WRITE (G_IO,99045)
+         WRITE (G_IO,99045)
+         WRITE (G_IO,99016)
 99016    FORMAT (' ',                                                   &
      &'          FORM OF STATISTIC               VALUE OF STAT    EXP(ST&
      &AT)    SD(STAT)    (STAT-EXP(STAT))/SD(STAT)    TABLE REFERENCE')
-         WRITE (ipr,99045)
-         WRITE (ipr,99017) b1 , eb1 , sdb1 , zb1
+         WRITE (G_IO,99045)
+         WRITE (G_IO,99017) b1 , eb1 , sdb1 , zb1
 99017    FORMAT (' ','STANDARDIZED THIRD CENTRAL MOMENT        ',F10.5, &
      &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
-         WRITE (ipr,99018)
+         WRITE (G_IO,99018)
 99018    FORMAT (' ',111X,'VOL. 1, PAGE 207')
-         WRITE (ipr,99019) b2 , eb2 , sdb2 , zb2
+         WRITE (G_IO,99019) b2 , eb2 , sdb2 , zb2
 99019    FORMAT (' ','STANDARDIZED FOURTH CENTRAL MOMENT       ',F10.5, &
      &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
-         WRITE (ipr,99020)
+         WRITE (G_IO,99020)
 99020    FORMAT (' ',111X,'VOL. 1, PAGE 208')
-         WRITE (ipr,99021) geary , egeary , sdgear , zgeary
+         WRITE (G_IO,99021) geary , egeary , sdgear , zgeary
 99021    FORMAT (' ','GEARY STATISTIC (MEAN DEVIATION/S)       ',F10.5, &
      &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
-         WRITE (ipr,99022)
+         WRITE (G_IO,99022)
 99022    FORMAT (' ',111X,'VOL. 1, PAGE 207')
-         WRITE (ipr,99023) rs , ers , sdrs , zrs
+         WRITE (G_IO,99023) rs , ers , sdrs , zrs
 99023    FORMAT (' ','RANGE/S                                  ',F10.5, &
      &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
-         WRITE (ipr,99024)
+         WRITE (G_IO,99024)
 99024    FORMAT (' ',111X,'VOL. 1, PAGE 200')
-         WRITE (ipr,99025) wilksh , ewilks , sdwilk , zwilks
+         WRITE (G_IO,99025) wilksh , ewilks , sdwilk , zwilks
 99025    FORMAT (' ','WILK-SHAPIRO STATISTIC (BLUE FOR SCALE/S)',F10.5, &
      &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA (1965)')
-         WRITE (ipr,99026)
+         WRITE (G_IO,99026)
 99026    FORMAT (' ',111X,'PAGE 605')
-         WRITE (ipr,99027) cc , ecc , sdcc , zcc
+         WRITE (G_IO,99027) cc , ecc , sdcc , zcc
 99027    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT ',F10.5, &
      &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'UNPUBLISHED JJF')
-         WRITE (ipr,99028)
+         WRITE (G_IO,99028)
 99028    FORMAT (' ',111X,'MANUSCRIPT')
 !
 !     COMPUTE THE LINE PLOT WHICH SHOWS THE DISTRIBUTION OF THE OBSERVED
@@ -33176,25 +32705,25 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !     DEVIATION
 !
          DO i = 1 , 8
-            WRITE (ipr,99045)
+            WRITE (G_IO,99045)
          ENDDO
-         WRITE (ipr,99029)
+         WRITE (G_IO,99029)
 99029    FORMAT (' ',                                                   &
      &'LINE PLOT SHOWING THE DISTRIBUTION OF THE OBSERVATIONS ABOUT THE &
      &SAMPLE MEAN IN TERMS OF MULTIPLES OF THE SAMPLE STANDARD DEVIATION&
      &')
-         WRITE (ipr,99045)
-         WRITE (ipr,99045)
-         WRITE (ipr,99042) (iline1(i),i=1,130)
-         WRITE (ipr,99042) (iline2(i),i=1,130)
-         WRITE (ipr,99030)
+         WRITE (G_IO,99045)
+         WRITE (G_IO,99045)
+         WRITE (G_IO,99042) (iline1(i),i=1,130)
+         WRITE (G_IO,99042) (iline2(i),i=1,130)
+         WRITE (G_IO,99030)
 99030    FORMAT (' ',                                                   &
      &'     -6        -5        -4        -3        -2        -1        &
      & 0         1         2         3         4         5         6')
-         WRITE (ipr,99031) (xline(i),i=1,13)
+         WRITE (G_IO,99031) (xline(i),i=1,13)
 99031    FORMAT (' ',13F10.4)
-         WRITE (ipr,99045)
-         WRITE (ipr,99032) icount
+         WRITE (G_IO,99045)
+         WRITE (G_IO,99032) icount
 99032    FORMAT (' ',10X,I5,                                            &
      &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
      & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
@@ -33203,22 +32732,22 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !
          nhalf = (N/2) + 1
          CALL PLOT(Y,Z,N)
-         WRITE (ipr,99033) N
+         WRITE (G_IO,99033) N
 99033    FORMAT (' ',35X,                                               &
      &           'UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,  &
      &           ')')
-         WRITE (ipr,99043) corr(11)
+         WRITE (G_IO,99043) corr(11)
          DO i = 1 , nhalf
             irev = N - i + 1
             CALL NORPPF(Z(i),YM(i))
             YM(irev) = -YM(i)
          ENDDO
          CALL PLOT(Y,YM,N)
-         WRITE (ipr,99034) N
+         WRITE (G_IO,99034) N
 99034    FORMAT (' ',35X,                                               &
      &           'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,   &
      &           ')')
-         WRITE (ipr,99043) corr(20)
+         WRITE (G_IO,99043) corr(20)
          alamba = -0.5_wp
          DO i = 1 , nhalf
             irev = N - i + 1
@@ -33227,10 +32756,10 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
             YM(irev) = -YM(i)
          ENDDO
          CALL PLOT(Y,YM,N)
-         WRITE (ipr,99035) alamba , N
+         WRITE (G_IO,99035) alamba , N
 99035    FORMAT (' ',35X,'LAMBDA = ',F4.1,                              &
      &           ' PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,')')
-         WRITE (ipr,99043) corr(28)
+         WRITE (G_IO,99043) corr(28)
          DO i = 1 , nhalf
             irev = N - i + 1
             arg = picons*Z(i)
@@ -33238,36 +32767,36 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
             YM(irev) = -YM(i)
          ENDDO
          CALL PLOT(Y,YM,N)
-         WRITE (ipr,99036) N
+         WRITE (G_IO,99036) N
 99036    FORMAT (' ',35X,                                               &
      &           'CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,   &
      &           ')')
-         WRITE (ipr,99043) corr(33)
+         WRITE (G_IO,99043) corr(33)
 !
 !      WRITE OUT THE PROBABILITY PLOT CORRELATION COEFFICIENT PAGE
 !
-         WRITE (ipr,99044)
+         WRITE (G_IO,99044)
          DO idis = 1 , numdis
             IF ( idis==20 ) THEN
-               WRITE (ipr,99037) N , corr(idis) , iflag1(idis) ,        &
+               WRITE (G_IO,99037) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
 99037          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE NORMAL DISTRIB&
      &UTION IS ',F8.5,1X,3A1)
             ELSEIF ( idis==22 ) THEN
-               WRITE (ipr,99038) N , corr(idis) , iflag1(idis) ,        &
+               WRITE (G_IO,99038) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
 99038          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LOGISTIC DIST.&
      &      IS ',F8.5,1X,3A1)
             ELSEIF ( idis==23 ) THEN
-               WRITE (ipr,99039) N , corr(idis) , iflag1(idis) ,        &
+               WRITE (G_IO,99039) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
 99039          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE DOUBLE EXP. DI&
      &ST.   IS ',F8.5,1X,3A1)
             ELSEIF ( idis==33 ) THEN
-               WRITE (ipr,99040) N , corr(idis) , iflag1(idis) ,        &
+               WRITE (G_IO,99040) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
 99040          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE CAUCHY DISTRIB&
@@ -33278,7 +32807,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
                IF ( 23<idis .AND. idis<33 ) idis2 = idis - 2
                IF ( 33<idis ) idis2 = idis - 3
                alamba = -(0.1)*FLOAT(idis2) + 2.1
-               WRITE (ipr,99041) N , alamba , corr(idis) , iflag1(idis) &
+               WRITE (G_IO,99041) N , alamba , corr(idis) , iflag1(idis) &
      &                           , iflag2(idis) , iflag3(idis)
 99041          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
      &    ' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LAMBDA = '&
@@ -33301,7 +32830,7 @@ END SUBROUTINE TAIL
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine tcdf (X, Y)
+!!       SUBROUTINE TCDF(X,Nu,Cdf)
 !!
 !!##DESCRIPTION
 !!    tcdf(3f) computes the cumulative distribution function value for
@@ -33334,10 +32863,25 @@ END SUBROUTINE TAIL
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!! !                 SERIES 55, 1964, PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 94-129.
+!! !               --FEDERIGHI, EXTENDED TABLES OF THE
+!! !                 PERCENTAGE POINTS OF STUDENT'S
+!! !                 T-DISTRIBUTION, JOURNAL OF THE
+!! !                 AMERICAN STATISTICAL ASSOCIATION,
+!! !                 1959, PAGES 683-688.
+!! !               --OWEN, HANDBOOK OF STATISTICAL TABLES,
+!! !                 1962, PAGES 27-30.
+!! !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
+!! !                 FOR STATISTICIANS, VOLUME 1, 1954,
+!! !                 PAGES 132-134.
 !*==tcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TCDF(X,Nu,Cdf)
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
-      INTEGER i , ievodd , imax , imin , ipr , Nu , nucut
+INTEGER :: i , ievodd , imax , imin , Nu , nucut
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
@@ -33356,20 +32900,6 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
-!                 SERIES 55, 1964, PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 94-129.
-!               --FEDERIGHI, EXTENDED TABLES OF THE
-!                 PERCENTAGE POINTS OF STUDENT'S
-!                 T-DISTRIBUTION, JOURNAL OF THE
-!                 AMERICAN STATISTICAL ASSOCIATION,
-!                 1959, PAGES 683-688.
-!               --OWEN, HANDBOOK OF STATISTICAL TABLES,
-!                 1962, PAGES 27-30.
-!               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
-!                 FOR STATISTICIANS, VOLUME 1, 1954,
-!                 PAGES 132-134.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -33398,16 +32928,14 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
       DATA b32 , b33 , b34 , b35 , b36 , b37/1.0D0 , -11.0D0 , 14.0D0 , &
      &     6.0D0 , -3.0D0 , -15.0D0/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( Nu<=0 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TCDF   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) Nu
+         WRITE (G_IO,99002) Nu
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          Cdf = 0.0_wp
          RETURN
@@ -33521,7 +33049,7 @@ END SUBROUTINE TCDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine time (X, Y)
+!!       SUBROUTINE TIME(X,N)
 !!
 !!##DESCRIPTION
 !!    time(3f) performs a time series analysis on the data in the input
@@ -33571,17 +33099,18 @@ END SUBROUTINE TCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JENKINS AND WATTS, ESPECIALLY PAGE 290.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1977.
 !*==time.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE TIME(X,N)
-REAL(kind=wp) :: absr , ak , al , all , almax , an , an2 , arg1 , arg2 , bw , &
-     &     df , dfroun , hold , p , perout , pi , pmsq , ps , pssq , r
-REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
-     &     sum2 , var , varb , wk , X , xbar
-      INTEGER i , i2 , iarg1 , iarg2 , idf , ilower , imin , ipr ,      &
-     &        irev , j , jmax , jmin , k , kmax , krev , l , ll , llp1 ,&
-     &        lm1 , lmax
-      INTEGER maxlag , N , n2 , ndiv , nmk , numout , numsp
-!
+REAL(kind=wp) :: absr, ak, al, all, almax, an, an2, arg1, arg2, bw, df, dfroun, hold, p, perout, pi, pmsq, ps, pssq, r
+REAL(kind=wp) :: r025, r975, rk, rmax, s, sd, sdr, ssq, sum, sum1,  sum2, var, varb, wk, X, xbar
+INTEGER :: i, i2, iarg1, iarg2, idf, ilower, imin, irev, j, jmax, jmin, k, kmax, krev, l, ll, llp1, lm1, lmax
+INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
@@ -33610,9 +33139,7 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !                   OF N FOR THIS SUBROUTINE.
 !                 --THE SAMPLE SIZE N MUST BE GREATER
 !                   THAN OR EQUAL TO 3.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTC0, PLOTSP, AND CHSPPF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+
 !     COMMENT--THE 'FAST FOURIER TRANSFORM' IS NOT USED
 !              IN THIS VERSION OF TIME, BUT WILL BE
 !              IMPLEMENTED IN A FUTURE VERSION.
@@ -33652,10 +33179,6 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !              THIS CORRESPONDS TO THE FACT THAT THE
 !              SMALLEST DETECTABLE CYCLE IN THE DATA
 !              IS 2 DATA POINTS PER CYCLE.
-!     REFERENCES--JENKINS AND WATTS, ESPECIALLY PAGE 290.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1977.
 !
 !---------------------------------------------------------------------
 !
@@ -33665,19 +33188,18 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
       DIMENSION pssq(6) , pmsq(6) , ps(6) , p(5) , l(4)
       DATA pi/3.14159265358979_wp/
 !
-      ipr = 6
       ilower = 3
       maxlag = 500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<ilower ) THEN
-         WRITE (ipr,99001) ilower
+         WRITE (G_IO,99001) ilower
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TIME   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (',I6,',INFINITY) ',                &
      &'INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
@@ -33685,7 +33207,7 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 100
          ENDDO
-         WRITE (ipr,99003) hold
+         WRITE (G_IO,99003) hold
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE TIME   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -33735,11 +33257,11 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !     PLOT THE SAMPLE AUTOCORRELATIONS
 !
       CALL PLOTCO(r,kmax)
-      WRITE (ipr,99004)
+      WRITE (G_IO,99004)
 99004 FORMAT (' ',30X,                                                  &
      & 'AUTOCORRELATION PLOT--PLOT OF SAMPLE AUTOCORRELATION VERSUS LAG'&
      & )
-      WRITE (ipr,99005) N , kmax
+      WRITE (G_IO,99005) N , kmax
 99005 FORMAT (' ',10X,'THE NUMBER OF OBSERVATIONS = ',I6,10X,           &
      &        'THE NUMBER OF COMPUTED (AND PLOTTED) AUTOCORRELATIONS = '&
      &        ,I6)
@@ -33758,33 +33280,33 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
       ENDDO
       perout = FLOAT(numout)/FLOAT(kmax)
       perout = 100.0_wp*perout
-      WRITE (ipr,99017)
-      WRITE (ipr,99006) r025 , r975
+      WRITE (G_IO,99017)
+      WRITE (G_IO,99006) r025 , r975
 !
 99006 FORMAT (' ',                                                      &
      &'UNDER THE NULL HYPOTHESIS OF WHITE NOISE (AND NORMALITY), A 2-SID&
      &ED 95 PERCENT ACCEPTANCE INTERVAL IS (',F6.4,',',F6.4,')')
-      WRITE (ipr,99007)
+      WRITE (G_IO,99007)
 99007 FORMAT (' ',                                                      &
      &'UNDER THE NULL HYPOTHESIS, ONLY 5 PERCENT (ON THE AVERAGE) OF THE&
      & OBSERVED AUTOCORRELATIONS SHOULD FALL OUTSIDE THIS INTERVAL')
-      WRITE (ipr,99008) numout , kmax , perout
+      WRITE (G_IO,99008) numout , kmax , perout
 99008 FORMAT (' ','IT IS OBSERVED THAT ',I5,' OUT OF THE ',I5,          &
      &        ' (THAT IS, ',F5.1,                                       &
      &' PERCENT) OF THE COMPUTED AUTOCORRELATIONS FALL OUTSIDE OF THIS I&
      &NTERVAL')
       DO i = 1 , 5
-         WRITE (ipr,99017)
+         WRITE (G_IO,99017)
       ENDDO
-      WRITE (ipr,99009) N
+      WRITE (G_IO,99009) N
 99009 FORMAT (' ','THE SAMPLE SIZE = ',I6)
-      WRITE (ipr,99010) xbar
+      WRITE (G_IO,99010) xbar
 99010 FORMAT (' ','THE SAMPLE MEAN = ',E15.8)
-      WRITE (ipr,99011) var
+      WRITE (G_IO,99011) var
 99011 FORMAT (' ','THE SAMPLE VARIANCE = ',E15.8)
-      WRITE (ipr,99012) sd
+      WRITE (G_IO,99012) sd
 99012 FORMAT (' ','THE SAMPLE STANDARD DEVIATION = ',E15.8)
-      WRITE (ipr,99013) varb
+      WRITE (G_IO,99013) varb
 99013 FORMAT (' ','THE BIASED SAMPLE VARIANCE = ',E15.8)
 !
 !     COMPUTE THE PILOT SPECTRUM FOR THE REDUCED (2**J) SAMPLE
@@ -33831,8 +33353,8 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
          ENDDO
       ENDDO
       CALL PLOTSP(s,120,0)
-      WRITE (ipr,99017)
-      WRITE (ipr,99014)
+      WRITE (G_IO,99017)
+      WRITE (G_IO,99014)
 99014 FORMAT (' ',50X,'PILOT SPECTRUM')
 !
 !     DEFINE 4 LAG WINDOW TRUNCATION POINTS
@@ -33881,7 +33403,7 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
             IF ( l(2)<3 ) THEN
                IF ( l(1)>=3 ) numsp = 1
                IF ( l(1)<3 ) THEN
-                  WRITE (ipr,99015) N
+                  WRITE (G_IO,99015) N
 99015             FORMAT (' ',                                          &
      &                   'DUE TO THE SMALL NUMBER OF OBSERVATIONS (N = '&
      &                   ,I6,                                           &
@@ -33932,8 +33454,8 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
          idf = df + 0.5
          CALL PLOTSP(s,121,idf)
          dfroun = idf
-         WRITE (ipr,99017)
-         WRITE (ipr,99016) l(i) , bw , dfroun
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99016) l(i) , bw , dfroun
 99016    FORMAT (' ','NUMBER OF LAGS = ',I5,10X,'BANDWIDTH =',F10.3,10X,&
      &           'DEGREES OF FREEDOM = ',F10.3)
       ENDDO
@@ -33947,7 +33469,7 @@ END SUBROUTINE TIME
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine tol (X, Y)
+!!       SUBROUTINE TOL(X,N)
 !!
 !!##DESCRIPTION
 !!    tol(3f) computes normal and distribution-free tolerance limits for
@@ -33980,6 +33502,10 @@ END SUBROUTINE TIME
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
+!! !               --WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
+!! !               --MOOD AND GRABLE, PAGES 416-417
 !*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TOL(X,N)
 REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
@@ -33988,7 +33514,7 @@ REAL(kind=wp) :: d , d1 , d2 , d3 , d4 , d5 , d6 , d7 , f , hold , p , pa ,   &
      &     pc , q , r , rsmall , sd , t , tmax , tmin
 REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
      &     xmin , xmin2 , xmin3 , z , z1
-      INTEGER i , ipr , j , k , locmax , locmin , locmn2 , locmn3 ,     &
+INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
      &        locmx2 , locmx3 , N , numsec
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
@@ -34003,9 +33529,6 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
-!               --WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
-!               --MOOD AND GRABLE, PAGES 416-417
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -34056,21 +33579,19 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
      &     p(9) , p(10)/50.0_wp , 75.0_wp , 90.0_wp , 95.0_wp , 97.5 , 99.0_wp , 99.5_wp ,     &
      &     99.9_wp , 99.95_wp , 99.99_wp/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TOL    SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TOL &
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -34080,7 +33601,7 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE TOL    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -34142,34 +33663,34 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 !
 !     WRITE OUT THE NORMAL TOLERANCE LIMITS
 !
-         WRITE (ipr,99016)
-         WRITE (ipr,99005) N
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99005) N
 !
 99005    FORMAT (' ','             NORMAL TOLERANCE LIMITS FOR THE ',I6,&
      &           ' OBSERVATIONS')
-         WRITE (ipr,99017)
-         WRITE (ipr,99006)
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99006)
 99006    FORMAT (' ','             REFERENCE--CRC HANDBOOK, PAGES 32-35'&
      &           )
-         WRITE (ipr,99007)
+         WRITE (G_IO,99007)
 99007    FORMAT (' ',                                                   &
      &'             REFERENCE--GARDINER AND HULL, TECHNOMETRICS, 1966, P&
      &AGES 115-122')
-         WRITE (ipr,99017)
-         WRITE (ipr,99008) xbar , sd
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99008) xbar , sd
 99008    FORMAT (' ','             SAMPLE MEAN = ',E15.8,               &
      &           '         SAMPLE STANDARD DEVIATION = ',E15.8)
-         WRITE (ipr,99017)
-         WRITE (ipr,99017)
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99017)
          DO i = 1 , 3
             DO j = 1 , 6
-               WRITE (ipr,99009) pc(i) , pa(j) , tmin(i,j) , tmax(i,j)
+               WRITE (G_IO,99009) pc(i) , pa(j) , tmin(i,j) , tmax(i,j)
 99009          FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',   &
      &                 F5.2,                                            &
      &               ' PERCENT OF THE POPULATION IS BETWEEN XBAR-K*S = '&
      &               ,E12.5,' AND XBAR+K*S = ',E12.5)
             ENDDO
-            WRITE (ipr,99017)
+            WRITE (G_IO,99017)
          ENDDO
 !
 !
@@ -34280,43 +33801,43 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 !
 !     WRITE OUT THE DISTRIBUTION-FREE TOLERANCE LIMITS
 !
-         WRITE (ipr,99016)
-         WRITE (ipr,99010) N
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99010) N
 99010    FORMAT (' ',                                                   &
      &         '            DISTRIBUTION-FREE TOLERANCE LIMITS FOR THE '&
      &         ,I6,' OBSERVATIONS')
-         WRITE (ipr,99017)
-         WRITE (ipr,99011)
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99011)
 99011    FORMAT (' ',                                                   &
      &           '            REFERENCE--WILKS, ANNALS, 1941, PAGE 92')
-         WRITE (ipr,99012)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ',                                                   &
      &           '            REFERENCE--MOOD AND GRABLE, PAGES 416-417'&
      &           )
-         WRITE (ipr,99017)
-         WRITE (ipr,99017)
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99017)
          IF ( numsec/=1 ) THEN
             IF ( numsec/=2 ) THEN
                DO i = 1 , 10
-                  WRITE (ipr,99013) c3(i) , p(i) , xmin3 , xmax3
+                  WRITE (G_IO,99013) c3(i) , p(i) , xmin3 , xmax3
 99013             FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',&
      &                    F5.2,                                         &
      &                   ' PERCENT OF THE POPULATION IS BETWEEN X3   = '&
      &                   ,F8.3,' AND X(N-2) = ',F8.3)
                ENDDO
-               WRITE (ipr,99017)
+               WRITE (G_IO,99017)
             ENDIF
             DO i = 1 , 10
-               WRITE (ipr,99014) c2(i) , p(i) , xmin2 , xmax2
+               WRITE (G_IO,99014) c2(i) , p(i) , xmin2 , xmax2
 99014          FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',   &
      &                 F5.2,                                            &
      &                 ' PERCENT OF THE POPULATION IS BETWEEN X2   = ', &
      &                 F8.3,' AND X(N-1) = ',F8.3)
             ENDDO
-            WRITE (ipr,99017)
+            WRITE (G_IO,99017)
          ENDIF
          DO i = 1 , 10
-            WRITE (ipr,99015) c1(i) , p(i) , xmin , xmax
+            WRITE (G_IO,99015) c1(i) , p(i) , xmin , xmax
 99015       FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',F5.2, &
      &              ' PERCENT OF THE POPULATION IS BETWEEN XMIN = ',    &
      &              F8.3,' AND XMAX   = ',F8.3)
@@ -34334,7 +33855,7 @@ END SUBROUTINE TOL
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine tplt (X, Y)
+!!       SUBROUTINE TPLT(X,N,Nu)
 !!
 !!##DESCRIPTION
 !!    tplt(3f) generates a student's t probability plot (with integer
@@ -34383,12 +33904,34 @@ END SUBROUTINE TOL
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!! !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGE 102,
+!! !                 FORMULA 11.
+!! !               --FEDERIGHI, 'EXTENDED TABLES OF THE
+!! !                 PERCENTAGE POINTS OF STUDENT'S T
+!! !                 DISTRIBUTION, JOURNAL OF THE
+!! !                 AMERICAN STATISTICAL ASSOCIATION,
+!! !                 1969, PAGES 683-688.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 120-123.
 !*==tplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TPLT(X,N,Nu)
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope
-      INTEGER i , ipr , iupper , N , Nu
+INTEGER :: i , iupper , N , Nu
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -34406,27 +33949,6 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !                                         PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
-!                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGE 102,
-!                 FORMULA 11.
-!               --FEDERIGHI, 'EXTENDED TABLES OF THE
-!                 PERCENTAGE POINTS OF STUDENT'S T
-!                 DISTRIBUTION, JOURNAL OF THE
-!                 AMERICAN STATISTICAL ASSOCIATION,
-!                 1969, PAGES 683-688.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 120-123.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
@@ -34439,38 +33961,37 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TPLT   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99007) N
+         WRITE (G_IO,99007) N
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TPLT&
      &   SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          IF ( Nu<=0 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE TPLT   SUBROU&
      &TINE IS NON-POSITIVE *****')
-            WRITE (ipr,99007) Nu
+            WRITE (G_IO,99007) Nu
             RETURN
          ELSE
             hold = X(1)
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE TPLT   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -34510,7 +34031,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
          q = .025_wp
          CALL TPPF(q,Nu,pp025)
          tau = (pp9975-pp0025)/(pp975-pp025)
-         WRITE (ipr,99005) Nu , tau , N
+         WRITE (G_IO,99005) Nu , tau , N
 !
 99005    FORMAT (' ',                                                   &
      &        'STUDENT''S T PROBABILITY PLOT WITH DEGREES OF FREEDOM = '&
@@ -34540,7 +34061,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -34555,7 +34076,7 @@ END SUBROUTINE TPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine tppf (X, Y)
+!!       SUBROUTINE TPPF(P,Nu,Ppf)
 !!
 !!##DESCRIPTION
 !!
@@ -34592,9 +34113,24 @@ END SUBROUTINE TPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!! !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGE 102,
+!! !                 FORMULA 11.
+!! !               --FEDERIGHI, 'EXTENDED TABLES OF THE
+!! !                 PERCENTAGE POINTS OF STUDENT'S T
+!! !                 DISTRIBUTION, JOURNAL OF THE
+!! !                 AMERICAN STATISTICAL ASSOCIATION,
+!! !                 1969, PAGES 683-688.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGES 120-123.
 !*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TPPF(P,Nu,Ppf)
-INTEGER ipass , ipr , maxit , Nu
+INTEGER ipass , maxit , Nu
 REAL(kind=wp) :: P , Ppf , ppfn
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
@@ -34627,20 +34163,6 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !              ROOT DETERMINATION.
 !              THIS IMPROVES THE ACCURACY--ESPECIALLY FOR
 !              VALUES OF P NEAR 0 OR 1.
-!     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
-!                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGE 102,
-!                 FORMULA 11.
-!               --FEDERIGHI, 'EXTENDED TABLES OF THE
-!                 PERCENTAGE POINTS OF STUDENT'S T
-!                 DISTRIBUTION, JOURNAL OF THE
-!                 AMERICAN STATISTICAL ASSOCIATION,
-!                 1969, PAGES 683-688.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 120-123.
 !     ORIGINAL VERSION--OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -34668,16 +34190,14 @@ REAL(kind=wp) :: P , Ppf , ppfn
       DATA b51 , b52 , b53 , b54 , b55 , b56/0.00001085069444D0 ,       &
      &     79.0D0 , 776.0D0 , 1482.0D0 , -1920.0D0 , -945.0D0/
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE TPPF   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -34784,7 +34304,7 @@ REAL(kind=wp) :: P , Ppf , ppfn
             Ppf = term1*term2/term3
             RETURN
          ELSE
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ','INTERNAL ERROR IN TPPF SUBROUTINE')
             Ppf = 0.0_wp
             RETURN
@@ -34800,7 +34320,7 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine tran (X, Y)
+!!       SUBROUTINE TRAN(N,Nu,Iseed,X)
 !!
 !!##DESCRIPTION
 !!
@@ -34831,10 +34351,19 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --MOOD AND GRABLE, INTRODUCTION TO THE
+!! !                 THEORY OF STATISTICS, 1963, PAGE 233.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGE 94.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 121.
 !*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
-INTEGER i , ipr , Iseed , j , N , Nu
+INTEGER i , Iseed , j , N , Nu
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -34856,14 +34385,6 @@ INTEGER i , ipr , Iseed , j , N , Nu
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--MOOD AND GRABLE, INTRODUCTION TO THE
-!                 THEORY OF STATISTICS, 1963, PAGE 233.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGE 94.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 121.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -34878,35 +34399,27 @@ INTEGER i , ipr , Iseed , j , N , Nu
 !
 !---------------------------------------------------------------------
 !
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
 !-----DATA STATEMENTS-------------------------------------------------
 !
       DATA pi/3.14159265359_wp/
-!
-      ipr = 6
 !
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE TRAN   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) N
+         WRITE (G_IO,99003) N
          RETURN
       ELSEIF ( Nu<=0 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TRAN   SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) Nu
+         WRITE (G_IO,99003) Nu
          RETURN
       ELSE
 !
@@ -34954,7 +34467,7 @@ END SUBROUTINE TRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine trim (X, Y)
+!!       SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 !!
 !!##DESCRIPTION
 !!    trim(3f) computes the sample trimmed mean of the data in the input
@@ -34987,10 +34500,19 @@ END SUBROUTINE TRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
+!! !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
+!! !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 1967, PAGES 357, 387.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY, 1969).
 !*==trim.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
-INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
+INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -35045,14 +34567,6 @@ INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                   SMALLER THAN 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
-!               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
-!                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 1967, PAGES 357, 387.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY, 1969).
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !
@@ -35063,23 +34577,22 @@ INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
-      ipr = 6
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TRIM   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TRIM&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -35089,7 +34602,7 @@ INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE TRIM   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -35097,36 +34610,36 @@ INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
          ENDIF
          GOTO 100
  50      IF ( P1<0.0_wp .OR. P1>=1.0_wp ) THEN
-            WRITE (ipr,99005)
+            WRITE (G_IO,99005)
 99005       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE TRIM   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
-            WRITE (ipr,99017) P1
+            WRITE (G_IO,99017) P1
             Xtrim = 0.0_wp
             RETURN
          ELSEIF ( P2<0.0_wp .OR. P2>=1.0_wp ) THEN
-            WRITE (ipr,99006)
+            WRITE (G_IO,99006)
 99006       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE TRIM   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
-            WRITE (ipr,99017) P2
+            WRITE (G_IO,99017) P2
             Xtrim = 0.0_wp
             RETURN
          ELSE
             psum = P1 + P2
             IF ( psum<0.0_wp .OR. psum>=1.0_wp ) THEN
-               WRITE (ipr,99007)
+               WRITE (G_IO,99007)
 99007          FORMAT (' ',                                             &
      &                 '***** FATAL ERROR--THE SUM OF INPUT ARGUMENTS ',&
      &      '3 AND 4 TO THE TRIM   SUBROUTINE IS OUTSIDE THE ALLOWABLE '&
      &      ,'(0.0,1.0) INTERVAL *****')
-               WRITE (ipr,99008) P1
+               WRITE (G_IO,99008) P1
 99008          FORMAT (' ','                  INPUT ARGUMENT 3   ',     &
      &                 '                 = ',E15.8)
-               WRITE (ipr,99009) P2
+               WRITE (G_IO,99009) P2
 99009          FORMAT (' ','                  INPUT ARGUMENT 4   ',     &
      &                 '                 = ',E15.8)
-               WRITE (ipr,99010) psum
+               WRITE (G_IO,99010) psum
 99010          FORMAT (' ','                  INPUT ARGUMENT 3 + ',     &
      &                 'INPUT ARGUMENT 4 = ',E15.8)
                Xtrim = 0.0_wp
@@ -35145,7 +34658,7 @@ INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
                sum = 0.0_wp
                k = 0
                IF ( istart>istop ) THEN
-                  WRITE (ipr,99011)
+                  WRITE (G_IO,99011)
 99011             FORMAT (' ','INTERNAL ERROR IN TRIM   SUBROUTINE--',  &
      &                   'THE START INDEX IS HIGHER THAN THE STOP INDEX'&
      &                   )
@@ -35167,18 +34680,18 @@ INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
       perp1 = 100.0_wp*P1
       perp2 = 100.0_wp*P2
       perp3 = 100.0_wp - perp1 - perp2
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
 99012 FORMAT (' ')
-      WRITE (ipr,99013) N , Xtrim
+      WRITE (G_IO,99013) N , Xtrim
 99013 FORMAT (' ','THE SAMPLE TRIMMED MEAN OF THE ',I6,' OBSERVATIONS', &
      &        ' IS ',E15.8)
-      WRITE (ipr,99014) perp1 , np1
+      WRITE (G_IO,99014) perp1 , np1
 99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
      &        'OF THE DATA WERE TRIMMED     FROM BELOW')
-      WRITE (ipr,99015) perp2 , np2
+      WRITE (G_IO,99015) perp2 , np2
 99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
      &        'OF THE DATA WERE TRIMMED     FROM ABOVE')
-      WRITE (ipr,99016) perp3 , k
+      WRITE (G_IO,99016) perp3 , k
 99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
      &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
@@ -35186,92 +34699,127 @@ INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
 END SUBROUTINE TRIM
 !>
 !!##NAME
-!!    unicdf(3f) - [M_datapac:STATISTICS:CD] compute the Uniform cumulative
-!!    distribution function
+!!    unicdf(3f) - [M_datapac:STATISTICS:CD] trivially compute the Uniform
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine unicdf (X, Y)
+!!     subroutine unicdf(X,Cdf)
+!!
+!!      real(kind=wp), intent(in)  :: X
+!!      real(kind=wp), intent(out) :: Cdf
 !!
 !!##DESCRIPTION
-!!    unicdf(3f) computes the cumulative distribution function value for
+!!    UNICDF(3f) computes the cumulative distribution function value for
 !!    the uniform (rectangular) distribution on the unit interval (0,1).
 !!
-!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
 !!    = 0.28867513.
 !!
-!!    this distribution has the probability density function f(x) = 1.
+!!    This distribution has the probability density function f(x) = x.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    That is, this is a trivial function as the output equals the input.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X    The value at which the cumulative distribution function is to
+!!         be evaluated. X should be between 0 and 1, inclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!   CDF   the single precision cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
-!!   Sample program:
+!!  Sample program:
 !!
 !!    program demo_unicdf
-!!    use M_datapac, only : unicdf
+!!    !@(#) line plotter graph of function
+!!    use M_datapac, only : unicdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call unicdf(x,y)
+!!    integer,parameter :: n=40
+!!    real              :: x(0:n), y(0:n)
+!!    integer           :: i
+!!       x=[(real(i)/real(n),i=0,n)]
+!!       do i=0,n
+!!          call unicdf(x(i),y(i))
+!!       enddo
+!!       call plott(x,y,n+1)
 !!    end program demo_unicdf
 !!
-!!   Results:
+!!  Result:
+!!
+!!   THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZONTALLY)
+!!                     I-----------I-----------I-----------I-----------I
+!!
+!!    0.1000000E+01 -                                                  X
+!!    0.9583333E+00 I                                                XX
+!!    0.9166667E+00 I                                             XX
+!!    0.8750000E+00 I                                            X
+!!    0.8333333E+00 I                                          XX
+!!    0.7916666E+00 I                                       XX
+!!    0.7500000E+00 -                                      X
+!!    0.7083333E+00 I                                    XX
+!!    0.6666666E+00 I                                 XX
+!!    0.6250000E+00 I                                X
+!!    0.5833333E+00 I                              XX
+!!    0.5416666E+00 I                           XX
+!!    0.5000000E+00 -                          X
+!!    0.4583333E+00 I                        XX
+!!    0.4166666E+00 I                     XX
+!!    0.3750000E+00 I                    X
+!!    0.3333333E+00 I                  XX
+!!    0.2916666E+00 I               XX
+!!    0.2500000E+00 -              X
+!!    0.2083333E+00 I            XX
+!!    0.1666666E+00 I         XX
+!!    0.1250000E+00 I        X
+!!    0.8333331E-01 I      XX
+!!    0.4166663E-01 I   XX
+!!    0.0000000E+00 -  X
+!!
+!!                     I-----------I-----------I-----------I-----------I
+!!              0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!*==unicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE UNICDF(X,Cdf)
-REAL(kind=wp) :: Cdf , X
-      INTEGER ipr
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE BETWEEN 0 AND 1, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions -- 2, 1970, Pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      ipr = 6
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( X<0.0_wp .OR. X>1.0_wp ) THEN
-         WRITE (ipr,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE UNIC&
-     &DF SUBROUTINE IS OUTSIDE THE USUAL (0,1) INTERVAL *****')
-         WRITE (ipr,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         IF ( X<0.0_wp ) Cdf = 0.0_wp
-         IF ( X>1.0_wp ) Cdf = 1.0_wp
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Cdf = X
-      ENDIF
-!
-END SUBROUTINE UNICDF
+!     UPDATED         --JUNE      2022.
+!*==unicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine unicdf(X,Cdf)
+real(kind=wp), intent(in)  :: X
+real(kind=wp), intent(out) :: Cdf
+
+   if ( X < 0.0_wp .or. X > 1.0_wp ) then ! CHECK THE INPUT ARGUMENTS FOR ERRORS
+      write (g_io,99001)
+      99001 format (' ***** NON-FATAL DIAGNOSTIC--The first input argument to UNICDF(3f) is outside the usual (0,1) interval *****')
+      write (g_io,99002) X
+      99002 format (' ***** The value of the argument is ',E15.8,' *****')
+      if ( X < 0.0_wp ) then
+         Cdf = 0.0_wp
+      else if ( X > 1.0_wp ) then
+         Cdf = 1.0_wp
+      else
+         stop '**unicdf** should not get here'
+      endif
+   else
+      Cdf = X
+   endif
+
+end subroutine unicdf
 !>
 !!##NAME
 !!    unimed(3f) - [M_datapac:STATISTICS] generates the N order statistic
@@ -35280,7 +34828,7 @@ END SUBROUTINE UNICDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine unimed (X, Y)
+!!       SUBROUTINE UNIMED(N,X)
 !!
 !!##DESCRIPTION
 !!    UNIMED(3f) generates the N order statistic medians from the uniform
@@ -35301,7 +34849,7 @@ END SUBROUTINE UNICDF
 !!    point function of the desired distribution--hence the importance of
 !!    being able to generate uniform order statistic medians.
 !!
-!!    It is of theroetical interest to note that the i-th uniform order
+!!    It is of theoretical interest to note that the i-th uniform order
 !!    statistic median in a sample of size n is identically the median of
 !!    the beta distribution with parameters i and n-i+1.
 !!
@@ -35329,10 +34877,16 @@ END SUBROUTINE UNICDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
+!! !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==unimed.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIMED(N,X)
 REAL(kind=wp) :: ai , an , gam , X(:)
-INTEGER i , imax , ipr , irev , N , nevodd , nhalf
+INTEGER i , imax , irev , N , nevodd , nhalf
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF UNIFORM ORDER STATISTIC MEDIANS
@@ -35347,30 +34901,22 @@ INTEGER i , imax , ipr , irev , N , nevodd , nhalf
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
-!                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNIMED SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE UNIM&
      &ED SUBROUTINE HAS THE VALUE 1 *****')
@@ -35412,7 +34958,7 @@ END SUBROUTINE UNIMED
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine unipdf (X, Y)
+!!       SUBROUTINE UNIPDF(X,Pdf)
 !!
 !!##DESCRIPTION
 !!    unipdf(3f) computes the probability density function value for the
@@ -35446,10 +34992,15 @@ END SUBROUTINE UNIMED
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==unipdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIPDF(X,Pdf)
 REAL(kind=wp) :: Pdf , X
-INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
@@ -35461,24 +35012,16 @@ INTEGER ipr
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE BETWEEN 0 AND 1, INCLUSIVELY.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
-!
-      ipr = 6
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp .OR. X>1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE UNIP&
-     &DF SUBROUTINE IS OUTSIDE THE USUAL (0,1) INTERVAL *****')
-         WRITE (ipr,99002) X
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO UNIPDF(3f) IS OUTSIDE THE USUAL (0,1) INTERVAL *****')
+         WRITE (G_IO,99002) X
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          Pdf = 0.0_wp
@@ -35498,31 +35041,31 @@ END SUBROUTINE UNIPDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine uniplt (X, Y)
+!!       SUBROUTINE UNIPLT(X,N)
 !!
 !!##DESCRIPTION
-!!    uniplt(3f) generates a uniform probability plot.
+!!    UNIPLT(3f) generates a uniform probability plot.
 !!
-!!    the prototype uniform distribution used herein is defined on the
+!!    The prototype uniform distribution used herein is defined on the
 !!    unit interval (0,1). This distribution has mean = 0.5 and standard
 !!    deviation = sqrt(1/12) = 0.28867513.
 !!
-!!    this distribution has the probability density function
+!!    This distribution has the probability density function
 !!
 !!        f(x) = 1.
 !!
-!!    as used herein, a probability plot for a distribution is a plot
+!!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the uniform probability plot is useful in graphically testing
+!!    The uniform probability plot is useful in graphically testing
 !!    the composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which
 !!    the data have been randomly drawn is the uniform distribution.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
-!!    a measure of such linearity is given by the calculated probability
+!!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
 !!##OPTIONS
@@ -35549,36 +35092,34 @@ END SUBROUTINE UNIPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 !*==uniplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
-      INTEGER i , ipr , iupper , N
+INTEGER :: i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
 !     OUTPUT--A ONE-PAGE UNIFORM PROBABILITY PLOT.
-!     PRINTING--YES.
+
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
@@ -35590,21 +35131,20 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !
       DATA tau/1.04736842_wp/
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE UNIPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE UNIP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
@@ -35614,7 +35154,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
          DO i = 2 , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         WRITE (ipr,99004) hold
+         WRITE (G_IO,99004) hold
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE UNIPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -35636,7 +35176,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     AND THE SAMPLE SIZE.
 !
          CALL PLOT(Y,W,N)
-         WRITE (ipr,99005) tau , N
+         WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','UNIFORM PROBABILITY PLOT (TAU = ',E15.8,')',55X,  &
      &           'THE SAMPLE SIZE N = ',I7)
@@ -35663,7 +35203,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99006) cc , yint , yslope
+         WRITE (G_IO,99006) cc , yint , yslope
 99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -35677,7 +35217,7 @@ END SUBROUTINE UNIPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine unippf (X, Y)
+!!       SUBROUTINE UNIPPF(P,Ppf)
 !!
 !!##DESCRIPTION
 !!    unippf(3f) computes the percent point function value for the uniform
@@ -35716,10 +35256,18 @@ END SUBROUTINE UNIPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
 !*==unippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
-INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -35732,30 +35280,20 @@ INTEGER ipr
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNIPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -35773,7 +35311,7 @@ END SUBROUTINE UNIPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine uniran (X, Y)
+!!       SUBROUTINE UNIRAN(N,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    uniran(3f) generates a random sample of size n from the uniform
@@ -35826,10 +35364,15 @@ END SUBROUTINE UNIPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --MARSAGLIA G., "COMMENTS ON THE PERFECT UNIFORM RANDOM
+!! !                 NUMBER GENERATOR", UNPUBLISHED NOTES, WASH S. U.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
 !*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIRAN(N,Iseed,X)
 REAL(kind=wp) :: ak , am1 , X(:)
-INTEGER i, ipr, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
+INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
 INTEGER m(17)
 
 !
@@ -35920,10 +35463,6 @@ INTEGER m(17)
 !           NEED TO USE PRIMES, NOR TO USE EXCEPTIONALLY
 !           LARGE NUMBERS, ETC.
 !
-!     REFERENCES--MARSAGLIA G., "COMMENTS ON THE PERFECT UNIFORM RANDOM
-!                 NUMBER GENERATOR", UNPUBLISHED NOTES, WASH S. U.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
 !
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     ORIGINAL VERSION--JUNE      1972.
@@ -35948,8 +35487,6 @@ INTEGER m(17)
      &     23975 , 19049 , 10949 , 19693 , 29746 , 26748 , 2796 ,       &
      &     23890 , 29168 , 31924 , 16499/
       DATA m1 , m2 , i , j/32767 , 256 , 5 , 17/
-!
-      ipr = 6
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -36031,13 +35568,13 @@ INTEGER m(17)
 !
          Iseed = (-1)
       ELSE
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ')
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ','***** ERROR IN UNIRAN--')
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS NON-POSITIVE.')
-         WRITE (ipr,99004) N
+         WRITE (G_IO,99004) N
 99004    FORMAT (' ','      N = ',I8)
       ENDIF
 !
@@ -36053,7 +35590,7 @@ END SUBROUTINE UNIRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine unisf (X, Y)
+!!       SUBROUTINE UNISF(P,Sf)
 !!
 !!##DESCRIPTION
 !!    UNISF(3f) computes the sparsity function value for the uniform
@@ -36092,10 +35629,18 @@ END SUBROUTINE UNIRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
 !*==unisf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNISF(P,Sf)
 REAL(kind=wp) :: P , Sf
-INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
@@ -36108,30 +35653,20 @@ INTEGER ipr
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNISF  SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99002) P
+         WRITE (G_IO,99002) P
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -36150,7 +35685,7 @@ END SUBROUTINE UNISF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine var (X, Y)
+!!       SUBROUTINE VAR(X,N,Iwrite,Xvar)
 !!
 !!##DESCRIPTION
 !!    var(3f) computes the sample variance (with denominator n-1) of the
@@ -36183,10 +35718,17 @@ END SUBROUTINE UNISF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
+!! !                 EDITION 6, 1967, PAGE 44.
+!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
+!! !                 ANALYSIS, EDITION 2, 1957, PAGE 38.
+!! !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
+!! !                 OF STATISTICS, EDITION 2, 1963, PAGE 171.
 !*==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
-INTEGER i , ipr , Iwrite , N
+INTEGER i , Iwrite , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -36213,12 +35755,6 @@ INTEGER i , ipr , Iwrite , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGE 44.
-!               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!                 ANALYSIS, EDITION 2, 1957, PAGE 38.
-!               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!                 OF STATISTICS, EDITION 2, 1963, PAGE 171.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -36227,22 +35763,20 @@ INTEGER i , ipr , Iwrite , N
 !
       DIMENSION X(:)
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE VAR    SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE VAR &
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -36252,7 +35786,7 @@ INTEGER i , ipr , Iwrite , N
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE VAR    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -36275,9 +35809,9 @@ INTEGER i , ipr , Iwrite , N
       ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
-      WRITE (ipr,99005)
+      WRITE (G_IO,99005)
 99005 FORMAT (' ')
-      WRITE (ipr,99006) N , Xvar
+      WRITE (G_IO,99006) N , Xvar
 99006 FORMAT (' ','THE SAMPLE VARIANCE OF THE ',I6,' OBSERVATIONS IS ', &
      &        E15.8)
 END SUBROUTINE VAR
@@ -36288,10 +35822,10 @@ END SUBROUTINE VAR
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine weib (X, Y)
+!!       SUBROUTINE WEIB(X,N)
 !!
 !!##DESCRIPTION
-!!    weib(3f) perfoms a weibull distribution analysis on the data in the
+!!    weib(3f) performs a weibull distribution analysis on the data in the
 !!    input vector x.
 !!
 !!    this analysis consists of determining that particular weibull
@@ -36333,13 +35867,20 @@ END SUBROUTINE VAR
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
+!! !                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
+!! !                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
+!! !                ARMY RESEARCH AND TESTING, PAGES 425-450.
+!! !              --FILLIBEN, 'THE PERCENT POINT FUNCTION',
+!! !                UNPUBLISHED MANUSCRIPT.
+!! !              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
+!! !                DISTRIBUTIONS-1, PAGES 250-271.
 !*==weib.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIB(X,N)
-IMPLICIT NONE
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
      &     sum2 , sum3 , sy , t , w , wbar , WS , X , xmax , xmin , Y
 REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
-      INTEGER i , idis , idismx , ipr , iupper , N , numdis , numdm1
+INTEGER i , idis , idismx , iupper , N , numdis , numdm1
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
@@ -36353,14 +35894,6 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !                                         EV1PLT, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!                ARMY RESEARCH AND TESTING, PAGES 425-450.
-!              --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                UNPUBLISHED MANUSCRIPT.
-!              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!                DISTRIBUTIONS-1, PAGES 250-271.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -36368,21 +35901,21 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !
 !---------------------------------------------------------------------
 !
-      CHARACTER*4 iflag1
-      CHARACTER*4 iflag2
-      CHARACTER*4 iflag3
+CHARACTER(len=4) :: iflag1
+CHARACTER(len=4) :: iflag2
+CHARACTER(len=4) :: iflag3
 !
-      CHARACTER*4 blank
-      CHARACTER*4 alpham
-      CHARACTER*4 alphaa
-      CHARACTER*4 alphax
-      CHARACTER*4 alphai
-      CHARACTER*4 alphan
-      CHARACTER*4 alphaf
-      CHARACTER*4 alphat
-      CHARACTER*4 alphay
-      CHARACTER*4 alphag
-      CHARACTER*4 equal
+CHARACTER(len=4) :: blank
+CHARACTER(len=4) :: alpham
+CHARACTER(len=4) :: alphaa
+CHARACTER(len=4) :: alphax
+CHARACTER(len=4) :: alphai
+CHARACTER(len=4) :: alphan
+CHARACTER(len=4) :: alphaf
+CHARACTER(len=4) :: alphat
+CHARACTER(len=4) :: alphay
+CHARACTER(len=4) :: alphag
+CHARACTER(len=4) :: equal
 !
       DIMENSION w(3000)
       DIMENSION X(:)
@@ -36444,23 +35977,22 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
      &     34.0_wp, 35.0_wp, 36.0_wp, 37.0_wp, 38.0_wp, 39.0_wp, 40.0_wp, 41.0_wp, 42.0_wp, 43.0_wp,  &
      &     44.0_wp, 45.0_wp, 46.0_wp, 47.0_wp, 48.0_wp, 49.0_wp, 50.0_wp/
 !
-      ipr = 6
       iupper = 7500
       numdis = 43
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIB   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE WEIB&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -36470,7 +36002,7 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE WEIB   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -36554,39 +36086,39 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !
 !     WRITE OUT THE TABLE OF PROB PLOT CORR COEFFICIENTS FOR VARIOUS GAMMA
 !
-         WRITE (ipr,99005)
+         WRITE (G_IO,99005)
 !
 99005    FORMAT ('1')
-         WRITE (ipr,99006)
+         WRITE (G_IO,99006)
 99006    FORMAT (' ',40X,'WEIBULL ANALYSIS')
-         WRITE (ipr,99020)
-         WRITE (ipr,99007) N
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99007) N
 99007    FORMAT (' ',37X,'THE SAMPLE SIZE N = ',I7)
-         WRITE (ipr,99008) ybar
+         WRITE (G_IO,99008) ybar
 99008    FORMAT (' ',34X,'THE SAMPLE MEAN = ',F14.7)
-         WRITE (ipr,99009) sy
+         WRITE (G_IO,99009) sy
 99009    FORMAT (' ',28X,'THE SAMPLE STANDARD DEVIATION = ',F14.7)
-         WRITE (ipr,99010) xmin
+         WRITE (G_IO,99010) xmin
 99010    FORMAT (' ',32X,'THE SAMPLE MINIMUM = ',F14.7)
-         WRITE (ipr,99011) xmax
+         WRITE (G_IO,99011) xmax
 99011    FORMAT (' ',32X,'THE SAMPLE MAXIMUM = ',F14.7)
-         WRITE (ipr,99020)
-         WRITE (ipr,99012)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99012)
 99012    FORMAT (' ',                                                   &
      &'       WEIBULL          PROBABILITY PLOT     LOCATION         SCA&
      &LE       TAIL LENGTH')
-         WRITE (ipr,99013)
+         WRITE (G_IO,99013)
 99013    FORMAT (' ',                                                   &
      &'     TAIL LENGTH          CORRELATION        ESTIMATE        ESTI&
      &MATE       MEASURE')
-         WRITE (ipr,99014)
+         WRITE (G_IO,99014)
 99014    FORMAT (' ','   PARAMETER (GAMMA)      COEFFICIENT')
-         WRITE (ipr,99020)
+         WRITE (G_IO,99020)
 !
          numdm1 = numdis - 1
          IF ( numdm1>=1 ) THEN
             DO i = 1 , numdm1
-               WRITE (ipr,99015) gamtab(i) , corr(i) , iflag1(i) ,      &
+               WRITE (G_IO,99015) gamtab(i) , corr(i) , iflag1(i) ,      &
      &                           iflag2(i) , iflag3(i) , yi(i) , ys(i) ,&
      &                           t(i)
 99015          FORMAT (' ',3X,F10.2,13X,F8.5,1X,3A1,2X,F14.7,2X,F14.7,  &
@@ -36594,7 +36126,7 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
             ENDDO
          ENDIF
          i = numdis
-         WRITE (ipr,99016) alphai , alphan , alphaf , alphai , alphan , &
+         WRITE (G_IO,99016) alphai , alphan , alphaf , alphai , alphan , &
      &                     alphai , alphat , alphay , corr(i) ,         &
      &                     iflag1(i) , iflag2(i) , iflag3(i) , yi(i) ,  &
      &                     ys(i) , t(i)
@@ -36603,18 +36135,18 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !     PLOT THE PROB PLOT CORR COEFFICIENT VERSUS GAMMA VALUE INDEX
 !
          CALL PLOT(corr,aindex,numdis)
-         WRITE (ipr,99017) alphag , alphaa , alpham , alpham , alphaa , &
+         WRITE (G_IO,99017) alphag , alphaa , alpham , alpham , alphaa , &
      &                     equal , gamtab(1) , gamtab(12) , gamtab(23) ,&
      &                     gamtab(34) , alphai , alphan , alphaf ,      &
      &                     alphai , alphan , alphai , alphat , alphay
 99017    FORMAT (' ',12X,5A1,1X,A1,F14.7,11X,F14.7,11X,F14.7,11X,F14.7, &
      &           15X,8A1)
-         WRITE (ipr,99020)
-         WRITE (ipr,99018)
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99018)
 99018    FORMAT (' ',                                                   &
      &'THE ABOVE IS A PLOT OF THE 46 PROBABILITY PLOT CORRELATION COEFFI&
      &CIENTS (FROM THE PREVIOUS PAGE)')
-         WRITE (ipr,99019)
+         WRITE (G_IO,99019)
 99019    FORMAT (' ',16X,'VERSUS THE 46 WEIBULL DISTRIBUTIONS')
 !
 !     IF THE OPTIMAL GAMMA IS FINITE, PLOT OUT THE WEIBULL
@@ -36639,7 +36171,7 @@ END SUBROUTINE WEIB
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine weicdf (X, Y)
+!!       SUBROUTINE WEICDF(X,Gamma,Cdf)
 !!
 !!##DESCRIPTION
 !!    weicdf(3f) computes the cumulative distribution function value for
@@ -36675,10 +36207,16 @@ END SUBROUTINE WEIB
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 124.
 !*==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
-INTEGER ipr
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -36696,34 +36234,26 @@ INTEGER ipr
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE POSITIVE.
 
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 124.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<=0.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE WEIC&
      &DF SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) X
+         WRITE (G_IO,99003) X
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEICDF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) Gamma
+         WRITE (G_IO,99003) Gamma
          Cdf = 0.0_wp
          RETURN
       ELSE
@@ -36742,7 +36272,7 @@ END SUBROUTINE WEICDF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine weiplt (X, Y)
+!!       SUBROUTINE WEIPLT(X,N,Gamma)
 !!
 !!##DESCRIPTION
 !!    weiplt(3f) generates a weibull probability plot (with tail length
@@ -36792,6 +36322,16 @@ END SUBROUTINE WEICDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!! !                 OCTOBER, 1972), PAGES 425-450.
+!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!! !                 1967, PAGES 260-308.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
 !*==weiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE WEIPLT(X,N,Gamma)
@@ -36799,7 +36339,7 @@ REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
 REAL(kind=wp) :: yslope
-INTEGER i , ipr , iupper , N
+INTEGER i , iupper , N
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -36816,15 +36356,6 @@ INTEGER i , ipr , iupper , N
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --MARCH     1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -36839,32 +36370,31 @@ INTEGER i , ipr , iupper , N
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
-      ipr = 6
       iupper = 7500
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIPLT SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE WEIP&
      &LT SUBROUTINE HAS THE VALUE 1 *****')
          RETURN
       ELSE
          IF ( Gamma<=0.0_wp ) THEN
-            WRITE (ipr,99004)
+            WRITE (G_IO,99004)
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WEIPLT SUBROU&
      &TINE IS NON-POSITIVE *****')
-            WRITE (ipr,99005) Gamma
+            WRITE (G_IO,99005) Gamma
 99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
      &              ' *****')
             RETURN
@@ -36873,7 +36403,7 @@ INTEGER i , ipr , iupper , N
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99006) hold
+            WRITE (G_IO,99006) hold
 99006       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE WEIPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -36913,7 +36443,7 @@ INTEGER i , ipr , iupper , N
          q = 0.025_wp
          pp025 = (-LOG(1.0_wp-q))**(1.0_wp/Gamma)
          tau = (pp9975-pp0025)/(pp975-pp025)
-         WRITE (ipr,99007) Gamma , tau , N
+         WRITE (G_IO,99007) Gamma , tau , N
 !
 99007    FORMAT (' ',                                                   &
      &           'WEIBULL PROBABILITY PLOT WITH EXPONENT PARAMETER = ', &
@@ -36944,7 +36474,7 @@ INTEGER i , ipr , iupper , N
          cc = sum2/SQRT(sum3*sum1)
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
-         WRITE (ipr,99008) cc , yint , yslope
+         WRITE (G_IO,99008) cc , yint , yslope
 99008    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
@@ -36958,7 +36488,7 @@ END SUBROUTINE WEIPLT
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine weippf (X, Y)
+!!       SUBROUTINE WEIPPF(P,Gamma,Ppf)
 !!
 !!##DESCRIPTION
 !!    weippf(3f) computes the percent point function value for the weibull
@@ -36996,10 +36526,16 @@ END SUBROUTINE WEIPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 124.
 !*==weippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
-INTEGER ipr
 !
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -37020,34 +36556,26 @@ INTEGER ipr
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 124.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      ipr = 6
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE WEIPPF SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (ipr,99003) P
+         WRITE (G_IO,99003) P
          Ppf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99003) Gamma
+         WRITE (G_IO,99003) Gamma
          Ppf = 0.0_wp
          RETURN
       ELSE
@@ -37065,7 +36593,7 @@ END SUBROUTINE WEIPPF
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine weiran (X, Y)
+!!       SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 !!
 !!##DESCRIPTION
 !!    weiran(3f) generates a random sample of size n from the weibull
@@ -37100,10 +36628,21 @@ END SUBROUTINE WEIPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --TOCHER, THE ART OF SIMULATION,
+!! !                 1963, PAGES 14-15.
+!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!! !                 1964, PAGE 36.
+!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
+!! !               --HASTINGS AND PEACOCK, STATISTICAL
+!! !                 DISTRIBUTIONS--A HANDBOOK FOR
+!! !                 STUDENTS AND PRACTITIONERS, 1975,
+!! !                 PAGE 128.
 !*==weiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
-INTEGER i , ipr , Iseed , N
+INTEGER i , Iseed , N
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -37125,16 +36664,6 @@ INTEGER i , ipr , Iseed , N
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     REFERENCES--TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 14-15.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGE 36.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 128.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -37146,34 +36675,24 @@ INTEGER i , ipr , Iseed , N
 !
       DIMENSION X(:)
 !
-!---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
-!
-      ipr = 6
-!
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE WEIRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (ipr,99003)
+         WRITE (G_IO,99003)
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
-         WRITE (ipr,99004) Gamma
+         WRITE (G_IO,99004) Gamma
 99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
      &           ' *****')
          RETURN
@@ -37199,7 +36718,7 @@ END SUBROUTINE WEIRAN
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine wind (X, Y)
+!!       SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
 !!
 !!##DESCRIPTION
 !!
@@ -37235,12 +36754,21 @@ END SUBROUTINE WEIRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!! !     REFERENCES
+!! !               --DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
+!! !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
+!! !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+!! !                 1967, PAGES 357, 387.
+!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!! !                 PRINCETON UNIVERSITY, 1969).
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
 REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
-INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
+INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !
 !     INPUT  ARGUMENTS--X      = THE VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
@@ -37293,14 +36821,6 @@ INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !                 --THE SUM OF P1 AND P2 SHOULD BE
 !                   SMALLER THAN 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
-!               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
-!                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 1967, PAGES 357, 387.
-!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!                 PRINCETON UNIVERSITY, 1969).
 !
 !---------------------------------------------------------------------
 !
@@ -37309,23 +36829,22 @@ INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
       COMMON /BLOCK2/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
-      ipr = 6
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (ipr,99001) iupper
+         WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WIND   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (ipr,99002) N
+         WRITE (G_IO,99002) N
 99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
-            WRITE (ipr,99003)
+            WRITE (G_IO,99003)
 99003       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE WIND&
      &   SUBROUTINE HAS THE VALUE 1 *****')
@@ -37335,7 +36854,7 @@ INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
-            WRITE (ipr,99004) hold
+            WRITE (G_IO,99004) hold
 99004       FORMAT (' ',                                                &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
      &TO THE WIND   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
@@ -37343,36 +36862,36 @@ INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
          ENDIF
          GOTO 100
  50      IF ( P1<0.0_wp .OR. P1>=1.0_wp ) THEN
-            WRITE (ipr,99005)
+            WRITE (G_IO,99005)
 99005       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WIND   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
-            WRITE (ipr,99017) P1
+            WRITE (G_IO,99017) P1
             Xwind = 0.0_wp
             RETURN
          ELSEIF ( P2<0.0_wp .OR. P2>=1.0_wp ) THEN
-            WRITE (ipr,99006)
+            WRITE (G_IO,99006)
 99006       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE WIND   SUBROU&
      &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
-            WRITE (ipr,99017) P2
+            WRITE (G_IO,99017) P2
             Xwind = 0.0_wp
             RETURN
          ELSE
             psum = P1 + P2
             IF ( psum<0.0_wp .OR. psum>=1.0_wp ) THEN
-               WRITE (ipr,99007)
+               WRITE (G_IO,99007)
 99007          FORMAT (' ',                                             &
      &                 '***** FATAL ERROR--THE SUM OF INPUT ARGUMENTS ',&
      &      '3 AND 4 TO THE WIND   SUBROUTINE IS OUTSIDE THE ALLOWABLE '&
      &      ,'(0.0,1.0) INTERVAL *****')
-               WRITE (ipr,99008) P1
+               WRITE (G_IO,99008) P1
 99008          FORMAT (' ','                  INPUT ARGUMENT 3   ',     &
      &                 '                 = ',E15.8)
-               WRITE (ipr,99009) P2
+               WRITE (G_IO,99009) P2
 99009          FORMAT (' ','                  INPUT ARGUMENT 4   ',     &
      &                 '                 = ',E15.8)
-               WRITE (ipr,99010) psum
+               WRITE (G_IO,99010) psum
 99010          FORMAT (' ','                  INPUT ARGUMENT 3 + ',     &
      &                 'INPUT ARGUMENT 4 = ',E15.8)
                Xwind = 0.0_wp
@@ -37391,7 +36910,7 @@ INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
                sum = 0.0_wp
                k = 0
                IF ( istart>istop ) THEN
-                  WRITE (ipr,99011)
+                  WRITE (G_IO,99011)
 99011             FORMAT (' ','INTERNAL ERROR IN WIND   SUBROUTINE--',  &
      &                   'THE START INDEX IS HIGHER THAN THE STOP INDEX'&
      &                   )
@@ -37417,15 +36936,15 @@ INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
       perp1 = 100.0_wp*P1
       perp2 = 100.0_wp*P2
       perp3 = 100.0_wp - perp1 - perp2
-      WRITE (ipr,99012)
+      WRITE (G_IO,99012)
 99012 FORMAT (' ')
-      WRITE (ipr,99013) N , Xwind
+      WRITE (G_IO,99013) N , Xwind
 99013 FORMAT (' ','THE SAMPLE WINDSORIZED MEAN OF THE ',I6, ' OBSERVATIONS IS ',E15.8)
-      WRITE (ipr,99014) perp1 , np1
+      WRITE (G_IO,99014) perp1 , np1
 99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED BELOW')
-      WRITE (ipr,99015) perp2 , np2
+      WRITE (G_IO,99015) perp2 , np2
 99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED ABOVE')
-      WRITE (ipr,99016) perp3 , k
+      WRITE (G_IO,99016) perp3 , k
 99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS)  OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -37507,7 +37026,7 @@ END SUBROUTINE WIND
 !     UPDATED         --NOVEMBER  1975.
 !*==write.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
-INTEGER i, i10, i50, Idec, idecp1, ipr, iwidm2, iwidp1, Iwidth, j, jmax, jmin, maxcha, maxwid, N, nlines, Nnline, numcha
+INTEGER i, i10, i50, Idec, idecp1, iwidm2, iwidp1, Iwidth, j, jmax, jmin, maxcha, maxwid, N, nlines, Nnline, numcha
 REAL(kind=wp) :: X(:)
 !
 !     RESTRICTIONS--NNLINE MUST BE 1 OR LARGER;
@@ -37525,49 +37044,48 @@ REAL(kind=wp) :: X(:)
 !              ETC.
 
 !---------------------------------------------------------------------
-      ipr = 6
       maxwid = 12
       maxcha = 131
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
-         WRITE (ipr,99001)
+         WRITE (G_IO,99001)
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WRITE SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99075) N
+         WRITE (G_IO,99075) N
          RETURN
       ELSEIF ( Nnline<1 ) THEN
-         WRITE (ipr,99002)
+         WRITE (G_IO,99002)
 99002    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WRITE SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (ipr,99075) Nnline
+         WRITE (G_IO,99075) Nnline
          RETURN
       ELSEIF ( Iwidth<2 .OR. maxwid<Iwidth ) THEN
-         WRITE (ipr,99003) maxwid
+         WRITE (G_IO,99003) maxwid
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE WRITE SUBROUTINE IS OUTSIDE THE ALLOWABLE (2,',I4,') INTERVAL *****')
-         WRITE (ipr,99075) Iwidth
+         WRITE (G_IO,99075) Iwidth
          RETURN
       ELSE
          iwidm2 = Iwidth - 2
          IF ( Idec<0 .OR. iwidm2<Idec ) THEN
-            WRITE (ipr,99004) Iwidth , iwidm2
+            WRITE (G_IO,99004) Iwidth , iwidm2
 99004       FORMAT (' ',                                                &
      &'***** FATAL ERROR--THE FIFTH INPUT ARGUMENT TO THE WRITE SUBROUTINE IS NEGATIVE OR EXCEEDS IWIDTH-2 (= ', &
      & I6,'-2 = ',I6,') *****')
-            WRITE (ipr,99075) Idec
+            WRITE (G_IO,99075) Idec
             RETURN
          ELSE
             iwidp1 = Iwidth + 1
             numcha = Nnline*iwidp1
             IF ( numcha>maxcha ) THEN
-               WRITE (ipr,99005) maxcha
+               WRITE (G_IO,99005) maxcha
 99005          FORMAT (' ',                                             &
      &'***** FATAL ERROR--THE PRODUCT OF THE 3RD INPUT ARGUMENT TO THE W&
      &RITE SUBROUTINE AND THE (4TH INPUT ARGUMENT + 1) EXCEEDS ',I3,    &
      &' ****')
-               WRITE (ipr,99006) Nnline , Iwidth , Nnline , iwidp1 ,    &
+               WRITE (G_IO,99006) Nnline , Iwidth , Nnline , iwidp1 ,    &
      &                           numcha
 99006          FORMAT (' ','***** THE VALUE OF THE PRODUCT = ',I8,      &
      &                 ' X (',I8,' + 1) = ',I8,' X ',I8,' = ',I8,       &
@@ -37578,14 +37096,14 @@ REAL(kind=wp) :: X(:)
 !-----START POINT-----------------------------------------------------
 !
                nlines = ((N-1)/Nnline) + 1
-               WRITE (ipr,99076)
-               WRITE (ipr,99007) N
+               WRITE (G_IO,99076)
+               WRITE (G_IO,99007) N
 99007          FORMAT (' ',                                             &
      &              'THE TOTAL NUMBER OF OBSERVATIONS PRINTED BELOW IS '&
      &              ,I7)
-               WRITE (ipr,99008) nlines , Nnline
+               WRITE (G_IO,99008) nlines , Nnline
 99008          FORMAT (' ','THERE ARE ',I7,' ROWS AND ',I7,' COLUMNS')
-               WRITE (ipr,99077)
+               WRITE (G_IO,99077)
                DO i = 1 , nlines
                   jmax = Nnline*i
                   jmin = jmax - Nnline + 1
@@ -37593,17 +37111,17 @@ REAL(kind=wp) :: X(:)
                   idecp1 = Idec + 1
                   IF ( Iwidth==2 ) THEN
 !
-                     WRITE (ipr,99009) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99009) (X(j),j=jmin,jmax)
 !
 !
 99009                FORMAT (' ',43(F2.0,1X))
                      GOTO 50
                   ELSEIF ( Iwidth==3 ) THEN
                      IF ( idecp1==1 ) THEN
-                        WRITE (ipr,99010) (X(j),j=jmin,jmax)
+                        WRITE (G_IO,99010) (X(j),j=jmin,jmax)
 99010                   FORMAT (' ',32(F3.0,1X))
                      ELSEIF ( idecp1==2 ) THEN
-                        WRITE (ipr,99011) (X(j),j=jmin,jmax)
+                        WRITE (G_IO,99011) (X(j),j=jmin,jmax)
 99011                   FORMAT (' ',32(F3.1,1X))
                      ELSE
                         GOTO 5
@@ -37630,235 +37148,235 @@ REAL(kind=wp) :: X(:)
                      RETURN
                   ENDIF
  5                IF ( idecp1==1 ) THEN
-                     WRITE (ipr,99012) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99012) (X(j),j=jmin,jmax)
 99012                FORMAT (' ',26(F4.0,1X))
                   ELSEIF ( idecp1==2 ) THEN
-                     WRITE (ipr,99013) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99013) (X(j),j=jmin,jmax)
 99013                FORMAT (' ',26(F4.1,1X))
                   ELSEIF ( idecp1==3 ) THEN
-                     WRITE (ipr,99014) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99014) (X(j),j=jmin,jmax)
 99014                FORMAT (' ',26(F4.2,1X))
                   ELSE
                      GOTO 10
                   ENDIF
                   GOTO 50
  10               IF ( idecp1==1 ) THEN
-                     WRITE (ipr,99015) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99015) (X(j),j=jmin,jmax)
 99015                FORMAT (' ',21(F5.0,1X))
                   ELSEIF ( idecp1==2 ) THEN
-                     WRITE (ipr,99016) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99016) (X(j),j=jmin,jmax)
 99016                FORMAT (' ',21(F5.1,1X))
                   ELSEIF ( idecp1==3 ) THEN
-                     WRITE (ipr,99017) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99017) (X(j),j=jmin,jmax)
 99017                FORMAT (' ',21(F5.2,1X))
                   ELSEIF ( idecp1==4 ) THEN
-                     WRITE (ipr,99018) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99018) (X(j),j=jmin,jmax)
 99018                FORMAT (' ',21(F5.3,1X))
                   ELSE
                      GOTO 15
                   ENDIF
                   GOTO 50
  15               IF ( idecp1==1 ) THEN
-                     WRITE (ipr,99019) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99019) (X(j),j=jmin,jmax)
 99019                FORMAT (' ',18(F6.0,1X))
                   ELSEIF ( idecp1==2 ) THEN
-                     WRITE (ipr,99020) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99020) (X(j),j=jmin,jmax)
 99020                FORMAT (' ',18(F6.1,1X))
                   ELSEIF ( idecp1==3 ) THEN
-                     WRITE (ipr,99021) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99021) (X(j),j=jmin,jmax)
 99021                FORMAT (' ',18(F6.2,1X))
                   ELSEIF ( idecp1==4 ) THEN
-                     WRITE (ipr,99022) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99022) (X(j),j=jmin,jmax)
 99022                FORMAT (' ',18(F6.3,1X))
                   ELSEIF ( idecp1==5 ) THEN
-                     WRITE (ipr,99023) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99023) (X(j),j=jmin,jmax)
 99023                FORMAT (' ',18(F6.4,1X))
                   ELSE
                      GOTO 20
                   ENDIF
                   GOTO 50
  20               IF ( idecp1==1 ) THEN
-                     WRITE (ipr,99024) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99024) (X(j),j=jmin,jmax)
 99024                FORMAT (' ',16(F7.0,1X))
                   ELSEIF ( idecp1==2 ) THEN
-                     WRITE (ipr,99025) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99025) (X(j),j=jmin,jmax)
 99025                FORMAT (' ',16(F7.1,1X))
                   ELSEIF ( idecp1==3 ) THEN
-                     WRITE (ipr,99026) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99026) (X(j),j=jmin,jmax)
 99026                FORMAT (' ',16(F7.2,1X))
                   ELSEIF ( idecp1==4 ) THEN
-                     WRITE (ipr,99027) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99027) (X(j),j=jmin,jmax)
 99027                FORMAT (' ',16(F7.3,1X))
                   ELSEIF ( idecp1==5 ) THEN
-                     WRITE (ipr,99028) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99028) (X(j),j=jmin,jmax)
 99028                FORMAT (' ',16(F7.4,1X))
                   ELSEIF ( idecp1==6 ) THEN
-                     WRITE (ipr,99029) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99029) (X(j),j=jmin,jmax)
 99029                FORMAT (' ',16(F7.5,1X))
                   ELSE
                      GOTO 25
                   ENDIF
                   GOTO 50
  25               IF ( idecp1==1 ) THEN
-                     WRITE (ipr,99030) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99030) (X(j),j=jmin,jmax)
 99030                FORMAT (' ',14(F8.0,1X))
                   ELSEIF ( idecp1==2 ) THEN
-                     WRITE (ipr,99031) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99031) (X(j),j=jmin,jmax)
 99031                FORMAT (' ',14(F8.1,1X))
                   ELSEIF ( idecp1==3 ) THEN
-                     WRITE (ipr,99032) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99032) (X(j),j=jmin,jmax)
 99032                FORMAT (' ',14(F8.2,1X))
                   ELSEIF ( idecp1==4 ) THEN
-                     WRITE (ipr,99033) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99033) (X(j),j=jmin,jmax)
 99033                FORMAT (' ',14(F8.3,1X))
                   ELSEIF ( idecp1==5 ) THEN
-                     WRITE (ipr,99034) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99034) (X(j),j=jmin,jmax)
 99034                FORMAT (' ',14(F8.4,1X))
                   ELSEIF ( idecp1==6 ) THEN
-                     WRITE (ipr,99035) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99035) (X(j),j=jmin,jmax)
 99035                FORMAT (' ',14(F8.5,1X))
                   ELSEIF ( idecp1==7 ) THEN
-                     WRITE (ipr,99036) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99036) (X(j),j=jmin,jmax)
 99036                FORMAT (' ',14(F8.6,1X))
                   ELSE
                      GOTO 30
                   ENDIF
                   GOTO 50
  30               IF ( idecp1==1 ) THEN
-                     WRITE (ipr,99037) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99037) (X(j),j=jmin,jmax)
 99037                FORMAT (' ',13(F9.0,1X))
                   ELSEIF ( idecp1==2 ) THEN
-                     WRITE (ipr,99038) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99038) (X(j),j=jmin,jmax)
 99038                FORMAT (' ',13(F9.1,1X))
                   ELSEIF ( idecp1==3 ) THEN
-                     WRITE (ipr,99039) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99039) (X(j),j=jmin,jmax)
 99039                FORMAT (' ',13(F9.2,1X))
                   ELSEIF ( idecp1==4 ) THEN
-                     WRITE (ipr,99040) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99040) (X(j),j=jmin,jmax)
 99040                FORMAT (' ',13(F9.3,1X))
                   ELSEIF ( idecp1==5 ) THEN
-                     WRITE (ipr,99041) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99041) (X(j),j=jmin,jmax)
 99041                FORMAT (' ',13(F9.4,1X))
                   ELSEIF ( idecp1==6 ) THEN
-                     WRITE (ipr,99042) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99042) (X(j),j=jmin,jmax)
 99042                FORMAT (' ',13(F9.5,1X))
                   ELSEIF ( idecp1==7 ) THEN
-                     WRITE (ipr,99043) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99043) (X(j),j=jmin,jmax)
 99043                FORMAT (' ',13(F9.6,1X))
                   ELSEIF ( idecp1==8 ) THEN
-                     WRITE (ipr,99044) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99044) (X(j),j=jmin,jmax)
 99044                FORMAT (' ',13(F9.7,1X))
                   ELSE
                      GOTO 35
                   ENDIF
                   GOTO 50
  35               IF ( idecp1==1 ) THEN
-                     WRITE (ipr,99045) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99045) (X(j),j=jmin,jmax)
 99045                FORMAT (' ',11(F10.0,1X))
                   ELSEIF ( idecp1==2 ) THEN
-                     WRITE (ipr,99046) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99046) (X(j),j=jmin,jmax)
 99046                FORMAT (' ',11(F10.1,1X))
                   ELSEIF ( idecp1==3 ) THEN
-                     WRITE (ipr,99047) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99047) (X(j),j=jmin,jmax)
 99047                FORMAT (' ',11(F10.2,1X))
                   ELSEIF ( idecp1==4 ) THEN
-                     WRITE (ipr,99048) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99048) (X(j),j=jmin,jmax)
 99048                FORMAT (' ',11(F10.3,1X))
                   ELSEIF ( idecp1==5 ) THEN
-                     WRITE (ipr,99049) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99049) (X(j),j=jmin,jmax)
 99049                FORMAT (' ',11(F10.4,1X))
                   ELSEIF ( idecp1==6 ) THEN
-                     WRITE (ipr,99050) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99050) (X(j),j=jmin,jmax)
 99050                FORMAT (' ',11(F10.5,1X))
                   ELSEIF ( idecp1==7 ) THEN
-                     WRITE (ipr,99051) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99051) (X(j),j=jmin,jmax)
 99051                FORMAT (' ',11(F10.6,1X))
                   ELSEIF ( idecp1==8 ) THEN
-                     WRITE (ipr,99052) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99052) (X(j),j=jmin,jmax)
 99052                FORMAT (' ',11(F10.7,1X))
                   ELSEIF ( idecp1==9 ) THEN
-                     WRITE (ipr,99053) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99053) (X(j),j=jmin,jmax)
 99053                FORMAT (' ',11(F10.8,1X))
                   ELSE
                      GOTO 40
                   ENDIF
                   GOTO 50
  40               IF ( idecp1==1 ) THEN
-                     WRITE (ipr,99054) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99054) (X(j),j=jmin,jmax)
 99054                FORMAT (' ',10(F11.0,1X))
                   ELSEIF ( idecp1==2 ) THEN
-                     WRITE (ipr,99055) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99055) (X(j),j=jmin,jmax)
 99055                FORMAT (' ',10(F11.1,1X))
                   ELSEIF ( idecp1==3 ) THEN
-                     WRITE (ipr,99056) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99056) (X(j),j=jmin,jmax)
 99056                FORMAT (' ',10(F11.2,1X))
                   ELSEIF ( idecp1==4 ) THEN
-                     WRITE (ipr,99057) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99057) (X(j),j=jmin,jmax)
 99057                FORMAT (' ',10(F11.3,1X))
                   ELSEIF ( idecp1==5 ) THEN
-                     WRITE (ipr,99058) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99058) (X(j),j=jmin,jmax)
 99058                FORMAT (' ',10(F11.4,1X))
                   ELSEIF ( idecp1==6 ) THEN
-                     WRITE (ipr,99059) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99059) (X(j),j=jmin,jmax)
 99059                FORMAT (' ',10(F11.5,1X))
                   ELSEIF ( idecp1==7 ) THEN
-                     WRITE (ipr,99060) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99060) (X(j),j=jmin,jmax)
 99060                FORMAT (' ',10(F11.6,1X))
                   ELSEIF ( idecp1==8 ) THEN
-                     WRITE (ipr,99061) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99061) (X(j),j=jmin,jmax)
 99061                FORMAT (' ',10(F11.7,1X))
                   ELSEIF ( idecp1==9 ) THEN
-                     WRITE (ipr,99062) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99062) (X(j),j=jmin,jmax)
 99062                FORMAT (' ',10(F11.8,1X))
                   ELSEIF ( idecp1==10 ) THEN
-                     WRITE (ipr,99063) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99063) (X(j),j=jmin,jmax)
 99063                FORMAT (' ',10(F11.9,1X))
                   ELSE
                      GOTO 45
                   ENDIF
                   GOTO 50
  45               IF ( idecp1==1 ) THEN
-                     WRITE (ipr,99064) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99064) (X(j),j=jmin,jmax)
 99064                FORMAT (' ',10(F12.0,1X))
                   ELSEIF ( idecp1==2 ) THEN
-                     WRITE (ipr,99065) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99065) (X(j),j=jmin,jmax)
 99065                FORMAT (' ',10(F12.1,1X))
                   ELSEIF ( idecp1==3 ) THEN
-                     WRITE (ipr,99066) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99066) (X(j),j=jmin,jmax)
 99066                FORMAT (' ',10(F12.2,1X))
                   ELSEIF ( idecp1==4 ) THEN
-                     WRITE (ipr,99067) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99067) (X(j),j=jmin,jmax)
 99067                FORMAT (' ',10(F12.3,1X))
                   ELSEIF ( idecp1==5 ) THEN
-                     WRITE (ipr,99068) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99068) (X(j),j=jmin,jmax)
 99068                FORMAT (' ',10(F12.4,1X))
                   ELSEIF ( idecp1==6 ) THEN
-                     WRITE (ipr,99069) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99069) (X(j),j=jmin,jmax)
 99069                FORMAT (' ',10(F12.5,1X))
                   ELSEIF ( idecp1==7 ) THEN
-                     WRITE (ipr,99070) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99070) (X(j),j=jmin,jmax)
 99070                FORMAT (' ',10(F12.6,1X))
                   ELSEIF ( idecp1==8 ) THEN
-                     WRITE (ipr,99071) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99071) (X(j),j=jmin,jmax)
 99071                FORMAT (' ',10(F12.7,1X))
                   ELSEIF ( idecp1==9 ) THEN
-                     WRITE (ipr,99072) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99072) (X(j),j=jmin,jmax)
 99072                FORMAT (' ',10(F12.8,1X))
                   ELSEIF ( idecp1==10 ) THEN
-                     WRITE (ipr,99073) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99073) (X(j),j=jmin,jmax)
 99073                FORMAT (' ',10(F12.9,1X))
                   ELSEIF ( idecp1==11 ) THEN
-                     WRITE (ipr,99074) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99074) (X(j),j=jmin,jmax)
 99074                FORMAT (' ',10(F12.10,1X))
                   ELSE
-                     WRITE (ipr,99009) (X(j),j=jmin,jmax)
+                     WRITE (G_IO,99009) (X(j),j=jmin,jmax)
                   ENDIF
 !
  50               i50 = i - 50*(i/50)
-                  IF ( i50==0 ) WRITE (ipr,99076)
+                  IF ( i50==0 ) WRITE (G_IO,99076)
                   IF ( i50/=0 ) THEN
                      i10 = i - 10*(i/10)
-                     IF ( i10==0 ) WRITE (ipr,99077)
+                     IF ( i10==0 ) WRITE (G_IO,99077)
                   ENDIF
                ENDDO
             ENDIF

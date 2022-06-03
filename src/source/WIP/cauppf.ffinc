@@ -1,0 +1,99 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file cauppf.3m_datapac.man
+NAME
+   cauppf(3f) - [M_datapac:STATISTICS:PP] compute the Cauchy percent point
+   function
+
+SYNOPSIS
+    SUBROUTINE CAUPPF(P,Ppf)
+
+DESCRIPTION
+   CAUPPF(3f) computes the percent point function value for the cauchy
+   distribution with median = 0 and 75% point = 1.
+
+   This distribution is defined for all x and has the probability
+   density function
+
+       f(X) = (1/pi)*(1/(1+X*X))
+
+   Note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
+
+INPUT ARGUMENTS
+
+   P    The value (between 0.0 and 1.0) at which the percent point
+        function is to be evaluated.
+
+        P should be between 0.0 and 1.0, exclusively.
+
+OUTPUT ARGUMENTS
+
+   PPF  The percent point function value.
+
+EXAMPLES
+  Sample program:
+
+   program demo_cauppf
+   use M_datapac, only : cauppf
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call cauppf(x,y)
+   end program demo_cauppf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+
+   o Filliben, Simple and Robust Linear Estimation
+     of the Location Parameter of a Symmetric
+     Distribution (Unpublished PH.D. Dissertation,
+     Princeton University), 1969, Pages 21-44, 229-231.
+   o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+     1970, Pages 28-31.
+   o Johnson and Kotz, Continuous Univariate Distributions 
+     -- 1, 1970, PAGES 154-165.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CAUPPF(P,Ppf)
+REAL(kind=wp) :: arg , P , pi , Ppf
+!
+!---------------------------------------------------------------------
+!
+   DATA pi/3.14159265358979_wp/
+!
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001    FORMAT (' ',&
+      & '***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      WRITE (G_IO,99002) P
+      99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      RETURN
+   ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+      arg = pi*P
+      Ppf = -COS(arg)/SIN(arg)
+   ENDIF
+!
+END SUBROUTINE CAUPPF

@@ -1,0 +1,569 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file plotu.3m_datapac.man
+NAME
+   plotu(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer 4-plot
+
+SYNOPSIS
+      SUBROUTINE PLOTU(X,N)
+
+DESCRIPTION
+   PLOTU(3f) produces the following 4 plots--
+   all on the same printer page--
+
+     1. data plot--x(i) versus i
+     2. autoregression plot--x(i) versus x(i-1)
+     3. histogram
+     4. normal probability plot
+
+   In addition, location, scale, and autocorrelation summary statistics
+   are printed out automatically on the same page.
+
+   These plots give the data analyst a quick first-pass check at some of
+   the underlying assumptions typically made-- constant location, constant
+   scale, no outliers, unautocorrelated data, symmetry, normality.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_plotu
+   use M_datapac, only : plotu
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call plotu(x,y)
+   end program demo_plotu
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES
+!                 FOR DATA ANALYSIS', (UNPUBLISHED MANUSCRIPT
+!                 AVAILABLE FROM AUTHOR), 1975.
+!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!                 1967, PAGES 260-308.
+!               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
+!                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE PLOTU(X,N)
+REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
+     &     promin , ratiox , ratioy , s , sum , sum1 , sum2 , sum23 ,   &
+     &     sum3 , width , WS , X
+REAL(kind=wp) :: X2 , x25 , x75 , xmax , xmax2 , xmean , xmid , xmin , xmin2 ,&
+     &     Y2 , ylable , ymax , ymin , z , zautoc , zdeva , zdevb ,     &
+     &     zmax , zmean , zmean1
+REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
+INTEGER :: i , ibax , ibaxis , ibaxm1 , ibaxm2 , ievodd , ilax ,     &
+     &        ilaxis , ilaxm1 , ilaxm2 , ilaxm3 , ilaxm4 , ilaxp2 ,     &
+     &        ilower , inc , ip1 , iplot , irax , iraxis
+INTEGER :: iraxm2 , irev , iskipm , itax , itaxis , itaxp1 , itaxp2 ,&
+     &        iupper , ixdel , ixmid , iy , iydel , iymid , j , j1 ,    &
+     &        j2 , j3 , j4 , mt , mx
+INTEGER :: my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
+     &        numdis , nummax , nummin , numout
+!
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED) OBSERVATIONS.
+!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR X.
+!     OUTPUT--4 PLOTS (ALL ON THE SAME PRINTER PAGE)--
+!             1) DATA PLOT--X(I) VERSUS I
+!             2) AUTOREGRESSION PLOT--X(I) VERSUS X(I-1)
+!             3) HISTOGRAM
+!             4) NORMAL PROBABILITY PLOT
+!             PLUS LOCATION, SCALE, AND
+!             AUTOCORRELATION SUMMARY STATISTICS.
+!     PRINTING--YES
+!     RESTRICTIONS--THE MINIMUM ALLOWABLE VALUE OF N
+!                   FOR THIS SUBROUTINE IS 2.
+!                 --THE MAXIMUM ALLOWABLE VALUE OF N
+!                   FOR THIS SUBROUTINE IS 7500.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION
+!     ORIGINAL VERSION--NOVEMBER  1974.
+!     UPDATED         --JANUARY   1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --MAY       1976.
+!     UPDATED         --FEBRUARY  1977.
+!
+!---------------------------------------------------------------------
+!
+CHARACTER(len=4) :: IGRaph
+CHARACTER(len=4) :: blank , hyphen , alphai , alphax
+CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
+!
+      DIMENSION X(:)
+      DIMENSION X2(7500) , Y2(7500)
+      DIMENSION ylable(45,4)
+      DIMENSION xmin(4) , xmax(4) , xmid(4) , x25(4) , x75(4)
+      DIMENSION itaxis(4) , ibaxis(4) , ilaxis(4) , iraxis(4)
+      COMMON /BLOCK1/ IGRaph(55,130)
+      COMMON /BLOCK2/ WS(15000)
+!CCCC COMMON IGRAPH(45,110)
+      EQUIVALENCE (X2(1),WS(1))
+      EQUIVALENCE (Y2(1),WS(7501))
+!
+      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
+     &     'N' , '='/
+      DATA itaxis(1) , ibaxis(1) , ilaxis(1) , iraxis(1)/1 , 19 , 5 ,   &
+     &     49/
+      DATA itaxis(2) , ibaxis(2) , ilaxis(2) , iraxis(2)/1 , 19 , 54 ,  &
+     &     98/
+      DATA itaxis(3) , ibaxis(3) , ilaxis(3) , iraxis(3)/27 , 45 , 5 ,  &
+     &     49/
+      DATA itaxis(4) , ibaxis(4) , ilaxis(4) , iraxis(4)/27 , 45 , 54 , &
+     &     98/
+!
+      ilower = 2
+      iupper = 7500
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      WRITE (G_IO,99001)
+99001 FORMAT ('1')
+      IF ( N<ilower .OR. N>iupper ) THEN
+         WRITE (G_IO,99002) ilower , iupper
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTU  SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (',I1,',',I6,') INTERVAL *****')
+         WRITE (G_IO,99003) N
+99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 100
+         ENDDO
+         WRITE (G_IO,99004) hold
+99004    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE PL&
+     &OTU  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         RETURN
+      ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+!     PRODUCE THE FIRST PLOT (UPPER LEFT)--X(I) VERSUS I
+!
+!     DETERMINE THE VERTICAL AXIS VECTOR Y2, THE HORIZONTAL
+!     AXIS VECTOR X2, AND THE PLOT SAMPLE SIZE N2 FOR THIS
+!     PARTICUAR PLOT.
+!
+ 100  n2 = N
+      DO i = 1 , n2
+         Y2(i) = X(i)
+         X2(i) = i
+      ENDDO
+!
+      iplot = 1
+!
+!
+!*********************************************************************
+!
+!     OPERATE ON A PARTICULAR PLOT
+!
+ 200  itax = itaxis(iplot)
+      ibax = ibaxis(iplot)
+      ilax = ilaxis(iplot)
+      irax = iraxis(iplot)
+!
+      itaxp2 = itax + 2
+      ibaxm2 = ibax - 2
+      ilaxp2 = ilax + 2
+      iraxm2 = irax - 2
+      ilaxm4 = ilax - 4
+      ilaxm3 = ilax - 3
+      ilaxm2 = ilax - 2
+      ilaxm1 = ilax - 1
+      iymid = (itaxp2+ibaxm2)/2
+      ixmid = (ilaxp2+iraxm2)/2
+      height = ibaxm2 - itaxp2
+      width = iraxm2 - ilaxp2
+!
+!     BLANK OUT THE GRAPH
+!
+      DO i = itax , ibax
+         DO j = ilaxm4 , irax
+            IGRaph(i,j) = blank
+         ENDDO
+      ENDDO
+!
+!     PRODUCE THE Y AXIS
+!
+      DO i = itaxp2 , ibaxm2
+         IGRaph(i,ilax) = alphai
+         IGRaph(i,irax) = alphai
+      ENDDO
+      iydel = (ibaxm2-itaxp2)/2
+      DO i = itaxp2 , ibaxm2 , iydel
+         IGRaph(i,ilax) = hyphen
+         IGRaph(i,irax) = hyphen
+      ENDDO
+      IGRaph(itaxp2,ilaxm4) = equal
+      IGRaph(itaxp2,ilaxm3) = alpham
+      IGRaph(itaxp2,ilaxm2) = alphaa
+      IGRaph(itaxp2,ilaxm1) = alphax
+      IGRaph(iymid,ilaxm4) = equal
+      IGRaph(iymid,ilaxm3) = alpham
+      IGRaph(iymid,ilaxm2) = alphai
+      IGRaph(iymid,ilaxm1) = alphad
+      IGRaph(ibaxm2,ilaxm4) = equal
+      IGRaph(ibaxm2,ilaxm3) = alpham
+      IGRaph(ibaxm2,ilaxm2) = alphai
+      IGRaph(ibaxm2,ilaxm1) = alphan
+!
+!     PRODUCE THE X AXIS
+!
+      DO j = ilaxp2 , iraxm2
+         IGRaph(itax,j) = hyphen
+         IGRaph(ibax,j) = hyphen
+      ENDDO
+      ixdel = (iraxm2-ilaxp2)/4
+      DO j = ilaxp2 , iraxm2 , ixdel
+         IGRaph(itax,j) = alphai
+         IGRaph(ibax,j) = alphai
+      ENDDO
+!
+!     DETERMINE THE VALUES TO BE LISTED ON THE LEFT VERTICAL AXIS
+!
+      ymin = Y2(1)
+      ymax = Y2(1)
+      DO i = 1 , n2
+         IF ( Y2(i)<ymin ) ymin = Y2(i)
+         IF ( Y2(i)>ymax ) ymax = Y2(i)
+      ENDDO
+      IF ( iplot==3 ) ymin = 1.0_wp
+      DO i = itaxp2 , ibaxm2
+         anum = i - itaxp2
+         ylable(i,iplot) = ymax - (anum/height)*(ymax-ymin)
+      ENDDO
+!
+!     DETERMINE XMIN, XMAX, XMID, X25 (=THE 25% POINT), AND
+!     X75 (=THE 75% POINT)
+!
+      xmin2 = X2(1)
+      xmax2 = X2(1)
+      DO i = 1 , n2
+         IF ( X2(i)<xmin2 ) xmin2 = X2(i)
+         IF ( X2(i)>xmax2 ) xmax2 = X2(i)
+      ENDDO
+      xmin(iplot) = xmin2
+      xmax(iplot) = xmax2
+      xmid(iplot) = (xmin2+xmax2)/2.0_wp
+      x25(iplot) = 0.75_wp*xmin2 + 0.25_wp*xmax2
+      x75(iplot) = 0.25_wp*xmin2 + 0.75_wp*xmax2
+!
+!     DETERMINE THE (X,Y) PLOT POSITIONS
+!
+      ratioy = 0.0_wp
+      ratiox = 0.0_wp
+      IF ( ymax>ymin ) ratioy = height/(ymax-ymin)
+      IF ( xmax(iplot)>xmin(iplot) )                                    &
+     &     ratiox = width/(xmax(iplot)-xmin(iplot))
+      IF ( iplot==3 ) THEN
+!
+         DO i = 1 , n2
+            IF ( Y2(i)>0.5_wp ) THEN
+               mx = ratiox*(X2(i)-xmin(iplot)) + 0.5_wp
+               mx = mx + ilaxp2
+               my = ratioy*(Y2(i)-ymin) + 0.5_wp
+               my = ibaxm2 - my
+               IGRaph(my,mx) = alphax
+               DO iy = my , ibaxm2
+                  IGRaph(iy,mx) = alphax
+               ENDDO
+            ENDIF
+         ENDDO
+      ELSE
+         DO i = 1 , n2
+            mx = ratiox*(X2(i)-xmin(iplot)) + 0.5_wp
+            mx = mx + ilaxp2
+            my = ratioy*(Y2(i)-ymin) + 0.5_wp
+            my = ibaxm2 - my
+            IGRaph(my,mx) = alphax
+         ENDDO
+      ENDIF
+!
+      IF ( iplot==1 ) THEN
+!
+!*********************************************************************
+!
+!     PRODUCE THE SECOND PLOT (UPPER RIGHT)--X(I) VERSUS X(I-1)
+!
+!     DETERMINE THE VERTICAL AXIS VECTOR Y2, THE HORIZONTAL
+!     AXIS VECTOR X2, AND THE PLOT SAMPLE SIZE N2 FOR THIS
+!     PARTICULAR PLOT.
+!
+         n2 = N - 1
+         DO i = 1 , n2
+            ip1 = i + 1
+            Y2(i) = X(ip1)
+            X2(i) = X(i)
+         ENDDO
+!
+         iplot = 2
+         GOTO 200
+      ELSEIF ( iplot==2 ) THEN
+!
+!*********************************************************************
+!
+!     PRODUCE THE THIRD PLOT (LOWER LEFT)-A HISTOGRAM
+!
+         n2 = 41
+         inc = 3
+!
+!     COMPUTE THE SAMPLE MEAN AND SAMPLE STANDARD DEVIATION
+!
+         an = N
+         sum = 0.0_wp
+         DO i = 1 , N
+            sum = sum + X(i)
+         ENDDO
+         xmean = sum/an
+         sum = 0.0_wp
+         DO i = 1 , N
+            sum = sum + (X(i)-xmean)**2
+         ENDDO
+         s = SQRT(sum/(an-1.0_wp))
+!
+!     FORM THE FREQUENCY TABLE (Y2) WHICH CORRESPONDS TO A HISTOGRAM
+!     WITH 41 CLASSES AND A CLASS WIDTH OF THREE TENTHS OF A SAMPLE STANDARD
+!     DEVIATION.
+!
+         DO i = 1 , 41
+            Y2(i) = 0.0_wp
+         ENDDO
+!
+         numout = 0
+         DO i = 1 , N
+            z = (X(i)-xmean)/s
+            IF ( -6.0_wp<=z .AND. z<=6.0_wp ) THEN
+               mt = ((z+6.0_wp)/0.3_wp) + 1.5_wp
+               Y2(mt) = Y2(mt) + 1.0_wp
+            ELSE
+               numout = numout + 1
+            ENDIF
+         ENDDO
+!
+         DO i = 1 , 41
+            ai = i
+            X2(i) = xmean + ((ai-21.0_wp)*0.3_wp)*s
+         ENDDO
+!
+         numcla = 41
+         cwidsd = 0.3_wp
+         cwidth = cwidsd*s
+!
+         iplot = 3
+         GOTO 200
+      ELSEIF ( iplot==3 ) THEN
+!
+!*********************************************************************
+!
+!     PRODUCE THE FOURTH PLOT (LOWER RIGHT)--A NORMAL PROBABILITY PLOT
+!
+!     DETERMINE THE VERTICAL AXIS VECTOR Y2, THE HORIZONTAL
+!     AXIS VECTOR X2, AND THE PLOT SAMPLE SIZE N2 FOR THIS
+!     PARTICUAR PLOT.
+!
+         n2 = N
+         CALL SORT(X,N,Y2)
+         CALL UNIMED(N,X2)
+         DO i = 1 , N
+            CALL NORPPF(X2(i),X2(i))
+         ENDDO
+!
+         iplot = 4
+         GOTO 200
+      ELSE
+!
+!********************************************************************
+!
+!     COMPUTE SUMMARY STATISTICS
+!
+         zmin = Y2(1)
+         zmax = Y2(N)
+         zrange = zmax - zmin
+         zmean = xmean
+         zsd = s
+         zdevb = zmean - zmin
+         zrdevb = 0.0_wp
+         IF ( zmean/=0.0_wp ) zrdevb = 100.0_wp*zdevb/zmean
+         IF ( zrdevb<0.0_wp ) zrdevb = -zrdevb
+         zdeva = zmax - zmean
+         zrdeva = 0.0_wp
+         IF ( zmean/=0.0_wp ) zrdeva = 100.0_wp*zdeva/zmean
+         IF ( zrdeva<0.0_wp ) zrdeva = -zrdeva
+!
+!     DETERMINE THE NUMBER OF DISTINCT POINTS
+!
+         numdis = 1
+         nm1 = N - 1
+         DO i = 1 , nm1
+            ip1 = i + 1
+            IF ( Y2(i)/=Y2(ip1) ) numdis = numdis + 1
+         ENDDO
+!
+!     COMPUTE THE SAMPLE MEDIAN
+!
+         nhalf = N/2
+         ievodd = N - 2*(N/2)
+         IF ( ievodd==0 ) THEN
+            nhalfp = nhalf + 1
+            zmed = (Y2(nhalf)+Y2(nhalfp))/2.0_wp
+         ELSE
+            zmed = Y2(nhalf)
+         ENDIF
+!
+!     DETERMINE THE FREQUENCY OF THE SAMPLE MIN AND MAX
+!
+         nummin = 1
+         nm1 = N - 1
+         DO i = 1 , nm1
+            ip1 = i + 1
+            IF ( Y2(i)==Y2(ip1) ) nummin = nummin + 1
+            IF ( Y2(i)/=Y2(ip1) ) EXIT
+         ENDDO
+         nummax = 1
+         DO i = 1 , nm1
+            irev = N - i + 1
+            nmi = N - i
+            IF ( Y2(irev)==Y2(nmi) ) nummax = nummax + 1
+            IF ( Y2(irev)/=Y2(nmi) ) EXIT
+         ENDDO
+         promin = nummin
+         promin = 100.0_wp*promin/an
+         promax = nummax
+         promax = 100.0_wp*promax/an
+!
+!     COMPUTE THE AUTOCORRELATION
+!
+         zmean1 = (an*zmean-X(N))/(an-1.0_wp)
+         zmean2 = (an*zmean-X(1))/(an-1.0_wp)
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
+         nm1 = N - 1
+         DO i = 1 , nm1
+            ip1 = i + 1
+            sum1 = sum1 + (X(i)-zmean1)*(X(ip1)-zmean2)
+            sum2 = sum2 + (X(i)-zmean1)**2
+            sum3 = sum3 + (X(ip1)-zmean2)**2
+         ENDDO
+         sum23 = sum2*sum3
+         zautoc = 9999.99_wp
+         IF ( sum23>0.0_wp ) zautoc = sum1/(SQRT(sum23))
+         zautoc = 100.0_wp*zautoc
+!
+!     WRITE EVERYTHING OUT
+!
+         itax = itaxis(1)
+         ibax = ibaxis(1)
+         itaxp1 = itax + 1
+         itaxp2 = itax + 2
+         ibaxm1 = ibax - 1
+         ibaxm2 = ibax - 2
+         j1 = ilaxis(1) - 4
+         j2 = iraxis(1)
+         j3 = ilaxis(2) - 4
+         j4 = iraxis(2)
+         WRITE (G_IO,99005)
+!
+99005    FORMAT (' ',20X,12X,'PLOT OF X(I) VERSUS I',41X,'PLOT OF ',    &
+     &           'X(I) VERSUS X(I-1)')
+         WRITE (G_IO,99018) (IGRaph(itax,j),j=j1,j2) ,                   &
+     &                     (IGRaph(itax,j),j=j3,j4)
+         WRITE (G_IO,99018) (IGRaph(itaxp1,j),j=j1,j2) ,                 &
+     &                     (IGRaph(itaxp1,j),j=j3,j4)
+         DO i = itaxp2 , ibaxm2
+            WRITE (G_IO,99019) ylable(i,1) , (IGRaph(i,j),j=j1,j2) ,     &
+     &                        ylable(i,2) , (IGRaph(i,j),j=j3,j4)
+         ENDDO
+         WRITE (G_IO,99018) (IGRaph(ibaxm1,j),j=j1,j2) ,                 &
+     &                     (IGRaph(ibaxm1,j),j=j3,j4)
+         WRITE (G_IO,99018) (IGRaph(ibax,j),j=j1,j2) ,                   &
+     &                     (IGRaph(ibax,j),j=j3,j4)
+         WRITE (G_IO,99020) xmin(1) , x25(1) , xmid(1) , x75(1) , xmax(1)&
+     &                     , xmin(2) , x25(2) , xmid(2) , x75(2) ,      &
+     &                     xmax(2)
+!
+         iskipm = 2
+         DO i = 1 , iskipm
+            WRITE (G_IO,99006)
+99006       FORMAT (' ')
+         ENDDO
+!
+         itax = itaxis(3)
+         ibax = ibaxis(3)
+         itaxp1 = itax + 1
+         itaxp2 = itax + 2
+         ibaxm1 = ibax - 1
+         ibaxm2 = ibax - 2
+         j1 = ilaxis(3) - 4
+         j2 = iraxis(3)
+         j3 = ilaxis(4) - 4
+         j4 = iraxis(4)
+         WRITE (G_IO,99007)
+99007    FORMAT (' ',38X,'HISTOGRAM',49X,'NORMAL PROBABILITY PLOT')
+         WRITE (G_IO,99018) (IGRaph(itax,j),j=j1,j2) ,                   &
+     &                     (IGRaph(itax,j),j=j3,j4)
+         WRITE (G_IO,99018) (IGRaph(itaxp1,j),j=j1,j2) ,                 &
+     &                     (IGRaph(itaxp1,j),j=j3,j4)
+         DO i = itaxp2 , ibaxm2
+            WRITE (G_IO,99019) ylable(i,3) , (IGRaph(i,j),j=j1,j2) ,     &
+     &                        ylable(i,4) , (IGRaph(i,j),j=j3,j4)
+         ENDDO
+         WRITE (G_IO,99018) (IGRaph(ibaxm1,j),j=j1,j2) ,                 &
+     &                     (IGRaph(ibaxm1,j),j=j3,j4)
+         WRITE (G_IO,99018) (IGRaph(ibax,j),j=j1,j2) ,                   &
+     &                     (IGRaph(ibax,j),j=j3,j4)
+         WRITE (G_IO,99020) xmin(3) , x25(3) , xmid(3) , x75(3) , xmax(3)&
+     &                     , xmin(4) , x25(4) , xmid(4) , x75(4) ,      &
+     &                     xmax(4)
+         WRITE (G_IO,99008)
+99008    FORMAT (' ',20X,' -6        -3         0         3         6')
+         WRITE (G_IO,99009) numcla , N , numdis
+99009    FORMAT (' ',20X,'NUMBER OF CLASSES = ',I3,42X,'SAMPLE SIZE =', &
+     &           I9,' DISTINCT POINTS =',I6)
+         WRITE (G_IO,99010) cwidth , cwidsd , zmin , nummin , promin
+99010    FORMAT (' ',20X,'CLASS WIDTH = ',E14.7,' = ',F3.1,             &
+     &           ' STANDARD DEVIATIONS',11X,'MINIMUM =',F13.6,          &
+     &           ' COUNT =',I5,' (',F7.2,'%)')
+         WRITE (G_IO,99011) numout , zmed
+99011    FORMAT (' ',16X,I5,' OBSERVATIONS WERE IN EXCESS OF 6 STANDARD'&
+     &           ,' DEVIATIONS',11X,'MEDIAN =',F14.6)
+         WRITE (G_IO,99012) zmean
+99012    FORMAT (' ',20X,                                               &
+     &      'ABOUT THE SAMPLE MEAN AND SO WERE NOT PRINTED IN HISTOGRAM'&
+     &      ,7X,'MEAN =',F16.6)
+         WRITE (G_IO,99013) zmax , nummax , promax
+99013    FORMAT (' ',85X,'MAXIMUM =',F13.6,' COUNT =',I5,' (',F7.2,'%)')
+         WRITE (G_IO,99014) zsd , zrange
+99014    FORMAT (' ',85X,'ST. DEV. =',F12.6,' RANGE =',F16.6)
+         WRITE (G_IO,99015) zdevb , zrdevb
+99015    FORMAT (' ',20X,65X,'MAX DEV. BELOW MEAN =',F14.6,' (',F7.2,   &
+     &           '%)')
+         WRITE (G_IO,99016) zdeva , zrdeva
+99016    FORMAT (' ',85X,'MAX DEV. ABOVE MEAN =',F14.6,' (',F7.2,'%)')
+         WRITE (G_IO,99017) zautoc
+99017    FORMAT (' ',85X,'AUTOCORR. =',F10.2,'%')
+      ENDIF
+99018 FORMAT (' ',16X,4A1,45A1,16X,4A1,45A1)
+99019 FORMAT (' ',F16.7,4A1,45A1,F16.7,4A1,45A1)
+99020 FORMAT (' ',17X,5F10.4,15X,4F10.4,F9.3)
+!
+END SUBROUTINE PLOTU

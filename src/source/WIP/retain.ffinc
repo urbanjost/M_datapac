@@ -1,0 +1,193 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file retain.3m_datapac.man
+NAME
+   retain(3f) - [M_datapac:STATISTICS] retain all observations in a
+   vector within a user-specified interval
+
+SYNOPSIS
+      SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
+
+DESCRIPTION
+   retain(3f) retains all observations in the single precision vector
+   x which are inside the closed (inclusive) interval defined by xmin
+   and xmax, while deleting all observations outside of this interval.
+
+   thus all observations in x which are smaller than xmin or larger
+   than xmax are deleted from x. retain(3f) (and the replac and delete
+   subroutines) gives the data analyst the ability to easily 'clean up' a
+   data set which has missing and/or outlying observations so that a more
+   appropriate subsequent data analysis may be performed. for example,
+   a trimmed sample can easily be constructed by use of retain(3f).
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_retain
+   use M_datapac, only : retain
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call retain(x,y)
+   end program demo_retain
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==retain.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
+REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
+INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                                WHICH DEFINES THE LOWER LIMIT
+!                                (INCLUSIVELY) OF THE PARTICULAR
+!                                INTERVAL OF INTEREST TO BE RETAINED.
+!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                                WHICH DEFINES THE UPPER LIMIT
+!                                (INCLUSIVELY) OF THE PARTICULAR
+!                                INTERVAL OF INTEREST TO BE RETAINED.
+!     OUTPUT ARGUMENTS--NEWN   = THE INTEGER NUMBER OF OBSERVATIONS
+!                                REMAINING (RETAINED) IN X AFTER ALL
+!                                OF THE OBSERVATIONS OUTSIDE THE
+!                                INTERVAL OF INTEREST HAVE BEEN
+!                                DELETED.
+!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!             IN WHICH ONLY THOSE VALUES INSIDE
+!             (INCLUSIVELY) THE INTERVAL OF INTEREST
+!             HAVE BEEN RETAINED, AND
+!             THE INTEGER VALUE NEWN
+!             WHICH GIVES THE NUMBER OF
+!             OBSERVATIONS RETAINED IN X.
+!             ALSO, 6 LINES OF SUMMARY INFORMATION
+!             WILL BE GENERATED INDICATING
+!             1) WHAT THE INTERVAL OF INTEREST WAS;
+!             2) HOW MANY OBSERVATIONS WERE DELETED;
+!             3) WHAT THE OLD (ORIGINAL) SAMPLE SIZE WAS (N);
+!             4) WHAT THE NEW SAMPLE SIZE IS (NEWN).
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
+!              MADE WHATEVER DELETIONS ARE APPROPRIATE,
+!              THE OUTPUT VECTOR X WILL BE 'PACKED';
+!              THAT IS, NO 'HOLES' WILL EXIST IN THE
+!              VECTOR X--ALL OF THE RETAINED ELEMENTS
+!              OF X WILL BE PACKED INTO THE FIRST AVAILABLE
+!              LOCATIONS IN X, WHILE THE REMAINDER
+!              OF THE N LOCATIONS IN X WILL BE ZERO-FILLED.
+!     COMMENT--IN THE MAIN (CALLING) ROUTINE, IT IS
+!              PERMISSABLE (IF THE ANALYST SO DESIRES)
+!              TO USE THE SAME VARIABLE NAME
+!              IN THE FIFTH ARGUMENT AS USED IN THE SECOND
+!              ARGUMENT IN THE CALLING SEQUENCE TO THIS
+!              RETAIN SUBROUTINE--NO CONFLICT WILL RESULT
+!              IN THE INTERNAL OPERATION OF THE     RETAIN
+!              SUBROUTINE.  FOR EXAMPLE, IT IS PERMISSIBLE
+!              TO HAVE     CALL RETAIN(X,N,-10.0,10.0,N)
+!              IN WHICH THE VARIABLE NAME      N    IS USED
+!              AS BOTH THE SECOND AND FIFTH ARGUMENTS.
+!     COMMENT--THIS IS ONE OF THE FEW SUBROUTINES IN DATAPAC
+!              IN WHICH THE INPUT VECTOR X IS ALTERED.
+!     ORIGINAL VERSION--NOVEMBER  1972.
+!     UPDATED         --JULY      1974.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RETAIN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (G_IO,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RETA&
+     &IN SUBROUTINE HAS THE VALUE 1 *****')
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE RETAIN SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      pointl = Xmin
+         pointu = Xmax
+         IF ( Xmin>Xmax ) pointl = Xmax
+         IF ( Xmin>Xmax ) pointu = Xmin
+!
+         nold = N
+         k = 0
+         DO i = 1 , nold
+            IF ( X(i)>=pointl .AND. X(i)<=pointu ) THEN
+               k = k + 1
+               X(k) = X(i)
+            ENDIF
+         ENDDO
+         Newn = k
+         ndel = nold - Newn
+!
+         newnp1 = Newn + 1
+         IF ( newnp1<=nold ) THEN
+            DO i = newnp1 , nold
+               X(i) = 0.0_wp
+            ENDDO
+         ENDIF
+!
+!     WRITE OUT A BRIEF SUMMARY
+!
+         WRITE (G_IO,99005)
+99005    FORMAT (' ')
+         WRITE (G_IO,99006)
+99006    FORMAT (' ','OUTPUT FROM THE RETAIN SUBROUTINE--')
+         WRITE (G_IO,99007) pointl , pointu
+99007    FORMAT (' ',7X,'ONLY OBSERVATIONS BETWEEN ',E15.8,' AND ',     &
+     &           E15.8)
+         WRITE (G_IO,99008)
+99008    FORMAT (' ',7X,'(INCLUSIVE) HAVE BEEN RETAINED.')
+         WRITE (G_IO,99009)
+99009    FORMAT (' ',7X,'ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL')
+         WRITE (G_IO,99010)
+99010    FORMAT (' ',7X,'HAVE BEEN DELETED.')
+         WRITE (G_IO,99011) nold
+99011    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
+     &           I6)
+         WRITE (G_IO,99012) Newn
+99012    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', &
+     &           I6)
+         WRITE (G_IO,99013) ndel
+99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
+     &           I6)
+      ENDIF
+!
+END SUBROUTINE RETAIN

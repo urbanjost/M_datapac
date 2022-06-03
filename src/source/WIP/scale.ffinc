@@ -1,0 +1,195 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file scale.3m_datapac.man
+NAME
+   scale(3f) - [M_datapac:STATISTICS] compute the sample range, sample
+   standard deviation, sample relative standard deviation, and sample
+   variance
+
+SYNOPSIS
+      SUBROUTINE SCALE(X,N)
+
+DESCRIPTION
+   scale(3f) computes 4 estimates of the scale (variation, scatter,
+   dispersion) of the data in the input vector x.
+
+   the 4 estimators employed are--
+
+     1. the sample range;
+     2. the sample standard deviation;
+     3. the sample relative standard deviation; and
+     4. the sample variance.
+
+   note that n-1 (rather than n) is used in the divisor in the computation
+   of the sample standard deviation, the sample relative standard
+   deviation, and the sample variance.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_scale
+   use M_datapac, only : scale
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call scale(x,y)
+   end program demo_scale
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --DIXON AND MASSEY, PAGES 19 AND 21
+!               --SNEDECOR AND COCHRAN, PAGE 62
+!               --DIXON AND MASSEY, PAGES 14, 70, AND 71
+!               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+!                 PAGES 357 AND 387
+!               --KENDALL AND STUART, THE ADVANCED THEORY OF
+!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE SCALE(X,N)
+
+REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd , xsd , xvar
+INTEGER i , N
+!
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS.
+!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR X.
+!     OUTPUT--1/4 PAGE OF AUTOMATIC OUTPUT
+!             CONSISTING OF THE FOLLOWING 4
+!             ESTIMATES OF SCALE
+!             FOR THE DATA IN THE INPUT VECTOR X--
+!             1) THE SAMPLE RANGE;
+!             2) THE SAMPLE STANDARD DEVIATION;
+!             3) THE SAMPLE RELATIVE STANDARD DEVIATION; AND
+!             4) THE SAMPLE VARIANCE.
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     COMMENT--THE SAMPLE RELATIVE STANDARD DEVIATION
+!              IS THE SAMPLE STANDARD DEVIATION RELATIVE
+!              TO THE MAGNITUDE OF THE SAMPLE MEAN.
+!              THE RELATIVE SAMPLE STANDARD DEVIATION
+!              IS EXPRESSED AS A PERCENT.
+!              THE RELATIVE SAMPLE STANDARD DEVIATION
+!              IS EQUIVALENTLY CALLED THE
+!              SAMPLE COEFFICIENT OF VARIATION.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      xrange = 0.0_wp
+      xsd = 0.0_wp
+      xrelsd = 0.0_wp
+      xvar = 0.0_wp
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SCALE  SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (G_IO,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SCAL&
+     &E  SUBROUTINE HAS THE VALUE 1 *****')
+            xrange = 0.0_wp
+            xsd = 0.0_wp
+            xrelsd = 0.0_wp
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 20
+            ENDDO
+            WRITE (G_IO,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE SCALE  SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+!
+!-----START POINT-----------------------------------------------------
+!
+ 20         an = N
+!
+!     DETERMINE THE SAMPLE MINIMUM AND THE SAMPLE MAXIMUM,
+!     THEN COMPUTE THE SAMPLE RANGE.
+!
+            xmin = X(1)
+            xmax = X(1)
+            DO i = 1 , N
+               IF ( X(i)<xmin ) xmin = X(i)
+               IF ( X(i)>xmax ) xmax = X(i)
+            ENDDO
+            xrange = xmax - xmin
+!
+!     COMPUTE THE SAMPLE VARIANCE,
+!     AND THEN THE SAMPLE STANDARDD DEVIATION.
+!
+            sum = 0.0_wp
+            DO i = 1 , N
+               sum = sum + X(i)
+            ENDDO
+            xmean = sum/an
+            sum = 0.0_wp
+            DO i = 1 , N
+               sum = sum + (X(i)-xmean)**2
+            ENDDO
+            xvar = sum/(an-1.0_wp)
+            xsd = SQRT(xvar)
+!
+!     COMPUTE THE SAMPLE RELATIVE STANDARD DEVIATION;
+!     THAT IS, THE SAMPLE STANDARD DEVIATION RELATIVE
+!     TO THE MAGNITUDE OF THE SAMPLE MEAN.
+!     THE RESULTING SAMPLE STANDARD DEVIATION IS EXPRESSED
+!     AS A PERCENT.
+!
+            xrelsd = 100.0_wp*xsd/xmean
+            IF ( xrelsd<0.0_wp ) xrelsd = -xrelsd
+         ENDIF
+!
+!     WRITE EVERYTHING OUT
+!
+         DO i = 1 , 5
+            WRITE (G_IO,99011)
+         ENDDO
+         WRITE (G_IO,99005)
+!
+99005    FORMAT (' ',30X,'ESTIMATES OF THE SCALE PARAMETER')
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99006) N
+99006    FORMAT (' ',34X,'(THE SAMPLE SIZE N = ',I5,')')
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99011)
+         WRITE (G_IO,99007) xrange
+99007    FORMAT (' ','THE SAMPLE RANGE IS                       ',E15.8)
+         WRITE (G_IO,99008) xsd
+99008    FORMAT (' ','THE SAMPLE STANDARD DEVIATION IS          ',E15.8)
+         WRITE (G_IO,99009) xvar
+99009    FORMAT (' ','THE SAMPLE VARIANCE IS                    ',E15.8)
+         WRITE (G_IO,99010) xrelsd
+99010    FORMAT (' ','THE SAMPLE RELATIVE STANDARD DEVIATION IS ',E15.8,&
+     &           ' PERCENT')
+      ENDIF
+99011 FORMAT (' ')
+!
+END SUBROUTINE SCALE

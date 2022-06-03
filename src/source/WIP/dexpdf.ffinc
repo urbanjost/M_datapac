@@ -1,0 +1,80 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file dexpdf.3m_datapac.man
+NAME
+   dexpdf(3f) - [M_datapac:STATISTICS:PD] compute the double exponential
+   probability density function
+
+SYNOPSIS
+      SUBROUTINE DEXPDF(X,Pdf)
+
+DESCRIPTION
+   dexpdf(3f) computes the probability density function value for the
+   double exponential (laplace) distribution with mean = 0 and standard
+   deviation = sqrt(2).
+
+   this distribution is defined for all x and has the probability
+   density function
+
+       f(x) = 0.5*exp(-abs(x)).
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_dexpdf
+   use M_datapac, only : dexpdf
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call dexpdf(x,y)
+   end program demo_dexpdf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE DEXPDF(X,Pdf)
+REAL(kind=wp) :: arg , Pdf , X
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!                                WHICH THE PROBABILITY DENSITY
+!                                FUNCTION IS TO BE EVALUATED.
+!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
+!                                DENSITY FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
+!             FUNCTION VALUE PDF.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --SEPTEMBER 1978.
+!
+!---------------------------------------------------------------------
+!
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
+!     NO INPUT ARGUMENT ERRORS POSSIBLE
+!     FOR THIS DISTRIBUTION.
+!
+!-----START POINT-----------------------------------------------------
+!
+      arg = X
+      IF ( X<0.0_wp ) arg = -X
+      Pdf = 0.5_wp*EXP(-arg)
+!
+END SUBROUTINE DEXPDF

@@ -1,0 +1,380 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file fcdf.3m_datapac.man
+NAME
+   fcdf(3f) - [M_datapac:STATISTICS:CD] compute the F cumulative distribution
+   function
+
+SYNOPSIS
+      SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
+
+DESCRIPTION
+   fcdf(3f) computes the cumulative distribution function value for the f
+   distribution with integer degrees of freedom parameters = nu1 and nu2.
+
+   this distribution is defined for all non-negative x. the probability
+   density function is given in the references below.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_fcdf
+   use M_datapac, only : fcdf
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call fcdf(x,y)
+   end program demo_fcdf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!                 SERIES 55, 1964, PAGES 946-947,
+!                 FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--2, 1970, PAGE 83, FORMULA 20,
+!                 AND PAGE 84, THIRD FORMULA.
+!               --PAULSON, AN APPROXIMATE NORMAILIZATION
+!                 OF THE ANALYSIS OF VARIANCE DISTRIBUTION,
+!                 ANNALS OF MATHEMATICAL STATISTICS, 1942,
+!                 NUMBER 13, PAGES 233-135.
+!               --SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES
+!                 FOR POPULATION TOLERANCE LIMITS, 1944,
+!                 NUMBER 15, PAGE 217.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
+REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
+     &     zratio
+INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
+     &        m , n , Nu1 , Nu2 , nucut1 , nucut2
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!                                WHICH THE CUMULATIVE DISTRIBUTION
+!                                FUNCTION IS TO BE EVALUATED.
+!                                X SHOULD BE NON-NEGATIVE.
+!                     --NU1    = THE INTEGER DEGREES OF FREEDOM
+!                                FOR THE NUMERATOR OF THE F RATIO.
+!                                NU1 SHOULD BE POSITIVE.
+!                     --NU2    = THE INTEGER DEGREES OF FREEDOM
+!                                FOR THE DENOMINATOR OF THE F RATIO.
+!                                NU2 SHOULD BE POSITIVE.
+!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!                                DISTRIBUTION FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!             FUNCTION VALUE CDF FOR THE F DISTRIBUTION
+!             WITH DEGREES OF FREEDOM
+!             PARAMETERS = NU1 AND NU2.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
+!                 --NU1 SHOULD BE A POSITIVE INTEGER VARIABLE.
+!                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF,CHSCDF.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
+!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+!     ORIGINAL VERSION--AUGUST    1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --OCTOBER   1976.
+!
+!---------------------------------------------------------------------
+!
+      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai ,    &
+     &                 coef1 , coef2 , arg
+      DOUBLE PRECISION coef
+      DOUBLE PRECISION theta , sinth , costh , a , b
+      DOUBLE PRECISION DSQRT , DATAN
+      DOUBLE PRECISION dfact1 , dfact2 , dnum , dden
+      DOUBLE PRECISION dpow1 , dpow2
+      DOUBLE PRECISION dnu1 , dnu2
+      DOUBLE PRECISION term1 , term2 , term3
+      DATA pi/3.14159265358979D0/
+      DATA dpow1 , dpow2/0.33333333333333D0 , 0.66666666666667D0/
+      DATA nucut1 , nucut2/100 , 1000/
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( Nu1<=0 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FCDF   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99006) Nu1
+         Cdf = 0.0_wp
+         RETURN
+      ELSE
+         IF ( Nu2<=0 ) THEN
+            WRITE (G_IO,99002)
+99002       FORMAT (' ',                                                &
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FCDF   SUBROU&
+     &TINE IS NON-POSITIVE *****')
+            WRITE (G_IO,99006) Nu2
+            Cdf = 0.0_wp
+            RETURN
+         ELSE
+            IF ( X<0.0 ) THEN
+               WRITE (G_IO,99003)
+99003          FORMAT (' ',                                             &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE FCDF&
+     &   SUBROUTINE IS NEGATIVE *****')
+               WRITE (G_IO,99004) X
+99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, &
+     &                 ' *****')
+               Cdf = 0.0_wp
+               RETURN
+            ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+               dx = X
+               m = Nu1
+               n = Nu2
+               anu1 = Nu1
+               anu2 = Nu2
+               dnu1 = Nu1
+               dnu2 = Nu2
+!
+!     IF X IS NON-POSITIVE, SET CDF = 0.0 AND RETURN.
+!     IF NU2 IS 5 THROUGH 9 AND X IS MORE THAN 3000
+!     STANDARD DEVIATIONS BELOW THE MEAN,
+!     SET CDF = 0.0 AND RETURN.
+!     IF NU2 IS 10 OR LARGER AND X IS MORE THAN 150
+!     STANDARD DEVIATIONS BELOW THE MEAN,
+!     SET CDF = 0.0 AND RETURN.
+!     IF NU2 IS 5 THROUGH 9 AND X IS MORE THAN 3000
+!     STANDARD DEVIATIONS ABOVE THE MEAN,
+!     SET CDF = 1.0 AND RETURN.
+!     IF NU2 IS 10 OR LARGER AND X IS MORE THAN 150
+!     STANDARD DEVIATIONS ABOVE THE MEAN,
+!     SET CDF = 1.0 AND RETURN.
+!
+               IF ( X>0.0_wp ) THEN
+                  IF ( Nu2<=4 ) GOTO 50
+                  t1 = 2.0_wp/anu1
+                  t2 = anu2/(anu2-2.0_wp)
+                  t3 = (anu1+anu2-2.0_wp)/(anu2-4.0_wp)
+                  amean = t2
+                  sd = SQRT(t1*t2*t2*t3)
+                  zratio = (X-amean)/sd
+                  IF ( Nu2>=10 .OR. zratio>=-3000.0_wp ) THEN
+                     IF ( Nu2<10 .OR. zratio>=-150.0_wp ) THEN
+                        IF ( Nu2<10 .AND. zratio>3000.0_wp ) GOTO 20
+                        IF ( Nu2<10 .OR. zratio<=150.0_wp ) GOTO 50
+                        GOTO 20
+                     ENDIF
+                  ENDIF
+               ENDIF
+               Cdf = 0.0_wp
+               RETURN
+            ENDIF
+ 20         Cdf = 1.0_wp
+            RETURN
+         ENDIF
+!
+!     DISTINGUISH BETWEEN 6 SEPARATE REGIONS
+!     OF THE (NU1,NU2) SPACE.
+!     BRANCH TO THE PROPER COMPUTATIONAL METHOD
+!     DEPENDING ON THE REGION.
+!     NUCUT1 HAS THE VALUE 100.
+!     NUCUT2 HAS THE VALUE 1000.
+!
+ 50      IF ( Nu1<nucut2 .AND. Nu2<nucut2 ) THEN
+!
+!     TREAT THE CASE WHEN NU1 AND NU2
+!     ARE BOTH SMALL OR MODERATE
+!     (THAT IS, BOTH ARE SMALLER THAN 1000).
+!     METHOD UTILIZED--EXACT FINITE SUM
+!     (SEE AMS 55, PAGE 946, FORMULAE 26.6.4, 26.6.5,
+!     AND 26.6.8).
+!
+            z = anu2/(anu2+anu1*dx)
+            iflag1 = Nu1 - 2*(Nu1/2)
+            iflag2 = Nu2 - 2*(Nu2/2)
+            IF ( iflag1==0 ) THEN
+!
+!     DO THE NU1 EVEN AND NU2 EVEN OR ODD CASE
+!
+               sum = 0.0D0
+               term = 1.0D0
+               imax = (m-2)/2
+               IF ( imax>0 ) THEN
+                  DO i = 1 , imax
+                     ai = i
+                     coef1 = 2.0D0*(ai-1.0D0)
+                     coef2 = 2.0D0*ai
+                     term = term*((anu2+coef1)/coef2)*(1.0D0-z)
+                     sum = sum + term
+                  ENDDO
+               ENDIF
+!
+               sum = sum + 1.0D0
+               sum = (z**(anu2/2.0D0))*sum
+               Cdf = 1.0D0 - sum
+               RETURN
+            ELSEIF ( iflag2==0 ) THEN
+!
+!     DO THE NU1 ODD AND NU2 EVEN CASE
+!
+               sum = 0.0D0
+               term = 1.0D0
+               imax = (n-2)/2
+               IF ( imax>0 ) THEN
+                  DO i = 1 , imax
+                     ai = i
+                     coef1 = 2.0D0*(ai-1.0D0)
+                     coef2 = 2.0D0*ai
+                     term = term*((anu1+coef1)/coef2)*z
+                     sum = sum + term
+                  ENDDO
+               ENDIF
+!
+               sum = sum + 1.0D0
+               Cdf = ((1.0D0-z)**(anu1/2.0D0))*sum
+               RETURN
+            ELSE
+!
+!     DO THE NU1 ODD AND NU2 ODD CASE
+!
+               sum = 0.0D0
+               term = 1.0D0
+               arg = DSQRT((anu1/anu2)*dx)
+               theta = DATAN(arg)
+               sinth = arg/DSQRT(1.0D0+arg*arg)
+               costh = 1.0D0/DSQRT(1.0D0+arg*arg)
+               IF ( n/=1 ) THEN
+                  IF ( n/=3 ) THEN
+                     imax = n - 2
+                     DO i = 3 , imax , 2
+                        ai = i
+                        coef1 = ai - 1.0D0
+                        coef2 = ai
+                        term = term*(coef1/coef2)*(costh*costh)
+                        sum = sum + term
+                     ENDDO
+                  ENDIF
+!
+                  sum = sum + 1.0D0
+                  sum = sum*sinth*costh
+               ENDIF
+!
+               a = (2.0D0/pi)*(theta+sum)
+               sum = 0.0D0
+               term = 1.0D0
+               IF ( m==1 ) b = 0.0D0
+               IF ( m/=1 ) THEN
+                  IF ( m/=3 ) THEN
+                     imax = m - 3
+                     DO i = 1 , imax , 2
+                        ai = i
+                        coef1 = ai
+                        coef2 = ai + 2.0D0
+                        term = term*((anu2+coef1)/coef2)*(sinth*sinth)
+                        sum = sum + term
+                     ENDDO
+                  ENDIF
+!
+                  sum = sum + 1.0D0
+                  sum = sum*sinth*(costh**n)
+                  coef = 1.0D0
+                  ievodd = n - 2*(n/2)
+                  imin = 3
+                  IF ( ievodd==0 ) imin = 2
+                  IF ( imin<=n ) THEN
+                     DO i = imin , n , 2
+                        ai = i
+                        coef = ((ai-1.0D0)/ai)*coef
+                     ENDDO
+                  ENDIF
+!
+                  coef = coef*anu2
+                  IF ( ievodd/=0 ) coef = coef*(2.0D0/pi)
+!
+                  b = coef*sum
+               ENDIF
+!
+               Cdf = a - b
+               RETURN
+            ENDIF
+         ELSEIF ( Nu1<nucut2 .OR. Nu2<nucut2 ) THEN
+            IF ( Nu1<nucut1 .AND. Nu2>=nucut2 ) THEN
+!
+!     TREAT THE CASE WHEN NU1 IS SMALL
+!     AND NU2 IS LARGE
+!     (THAT IS, WHEN NU1 IS SMALLER THAN 100,
+!     AND NU2 IS EQUAL TO OR LARGER THAN 1000).
+!     METHOD UTILIZED--SHEFFE-TUKEY APPROXIMATION
+!     (SEE JOHNSON AND KOTZ, VOLUME 2, PAGE 84, THIRD FORMULA).
+!
+               term1 = dnu1
+               term2 = (dnu1/dnu2)*(0.5D0*dnu1-1.0D0)
+               term3 = -(dnu1/dnu2)*0.5D0
+               u = (term1+term2)/((1.0D0/dx)-term3)
+               CALL CHSCDF(u,Nu1,ccdf)
+               Cdf = ccdf
+               RETURN
+            ELSEIF ( Nu1<nucut1 .OR. Nu2<nucut2 ) THEN
+               IF ( Nu1>=nucut2 .AND. Nu2<nucut1 ) THEN
+!
+!     TREAT THE CASE WHEN NU2 IS SMALL
+!     AND NU1 IS LARGE
+!     (THAT IS, WHEN NU2 IS SMALLER THAN 100,
+!     AND NU1 IS EQUAL TO OR LARGER THAN 1000).
+!     METHOD UTILIZED--SHEFFE-TUKEY APPROXIMATION
+!     (SEE JOHNSON AND KOTZ, VOLUME 2, PAGE 84, THIRD FORMULA).
+!
+                  term1 = dnu2
+                  term2 = (dnu2/dnu1)*(0.5D0*dnu2-1.0D0)
+                  term3 = -(dnu2/dnu1)*0.5D0
+                  u = (term1+term2)/(dx-term3)
+                  CALL CHSCDF(u,Nu2,ccdf)
+                  Cdf = 1.0_wp - ccdf
+                  GOTO 99999
+               ELSEIF ( Nu1<nucut2 .OR. Nu2<nucut1 ) THEN
+                  ibran = 5
+                  WRITE (G_IO,99005) ibran
+99005             FORMAT (' ',                                          &
+     &                    '*****INTERNAL ERROR IN   FCDF SUBROUTINE--', &
+     &                  'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = '&
+     &                  ,I8)
+                  RETURN
+               ENDIF
+            ENDIF
+         ENDIF
+      ENDIF
+!
+!     TREAT THE CASE WHEN NU1 AND NU2
+!     ARE BOTH LARGE
+!     (THAT IS, BOTH ARE EQUAL TO OR LARGER THAN 1000);
+!     OR WHEN NU1 IS MODERATE AND NU2 IS LARGE
+!     (THAT IS, WHEN NU1 IS EQUAL TO OR GREATER THAN 100
+!     BUT SMALLER THAN 1000,
+!     AND NU2 IS EQUAL TO OR LARGER THAN 1000);
+!     OR WHEN NU2 IS MODERATE AND NU1 IS LARGE
+!     (THAT IS WHEN NU2 IS EQUAL TO OR GREATER THAN 100
+!     BUT SMALLER THAN 1000,
+!     AND NU1 IS EQUAL TO OR LARGER THAN 1000).
+!     METHOD UTILIZED--PAULSON APPROXIMATION
+!     (SEE AMS 55, PAGE 947, FORMULA 26.6.15).
+!
+      dfact1 = 1.0D0/(4.5D0*dnu1)
+      dfact2 = 1.0D0/(4.5D0*dnu2)
+      dnum = ((1.0D0-dfact2)*(dx**dpow1)) - (1.0D0-dfact1)
+      dden = DSQRT((dfact2*(dx**dpow2))+dfact1)
+      u = dnum/dden
+      CALL NORCDF(u,gcdf)
+      Cdf = gcdf
+      RETURN
+99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+!
+99999 END SUBROUTINE FCDF

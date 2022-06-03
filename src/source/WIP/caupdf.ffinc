@@ -1,0 +1,72 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file caupdf.3m_datapac.man
+NAME
+   caupdf(3f) - [M_datapac:STATISTICS:PD] compute the Cauchy probability
+   density function
+
+SYNOPSIS
+    SUBROUTINE CAUPDF(X,Pdf)
+
+DESCRIPTION
+   CAUPDF(3f) computes the probability density function value for the
+   Cauchy distribution with median = 0 and 75% point = 1.
+
+   This distribution is defined for all X and has the probability
+   density function
+
+       f(x) = (1/pi)*(1/(1+x*x)).
+
+INPUT ARGUMENTS
+
+   X    The value at which the probability density
+        function is to be evaluated.
+
+OUTPUT ARGUMENTS
+
+  PDF   The probability density function value.
+
+EXAMPLES
+  Sample program:
+
+   program demo_caupdf
+   use M_datapac, only : caupdf
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call caupdf(x,y)
+   end program demo_caupdf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+
+ o Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970, 
+   Pages 154-165.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CAUPDF(X,Pdf)
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out):: Pdf
+REAL(kind=wp),parameter :: c = 0.31830988618379_wp
+!
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
+!
+   Pdf = c*(1.0_wp/(1.0_wp+X*X))
+!
+END SUBROUTINE CAUPDF

@@ -1,0 +1,106 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file ev2ppf.3m_datapac.man
+NAME
+   ev2ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 2
+   (Frechet) percent point function
+
+SYNOPSIS
+      SUBROUTINE EV2PPF(P,Gamma,Ppf)
+
+DESCRIPTION
+   ev2ppf(3f) computes the percent point function value for the extreme
+   value type 2 distribution with single precision tail length parameter
+   = gamma.
+
+   the extreme value type 2 distribution used herein is defined for all
+   non-negative x, and has the probability density function
+
+       f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+
+   note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_ev2ppf
+   use M_datapac, only : ev2ppf
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call ev2ppf(x,y)
+   end program demo_ev2ppf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EV2PPF(P,Gamma,Ppf)
+REAL(kind=wp) :: Gamma , P , Ppf
+!
+!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!                                (BETWEEN 0.0 (EXCLUSIVELY)
+!                                AND 1.0 (EXCLUSIVELY))
+!                                AT WHICH THE PERCENT POINT
+!                                FUNCTION IS TO BE EVALUATED.
+!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                                OF THE TAIL LENGTH PARAMETER.
+!                                GAMMA SHOULD BE POSITIVE.
+!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!                                POINT FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!             VALUE PPF FOR THE EXTREME VALUE TYPE 2 DISTRIBUTION
+!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
+!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
+!                   AND 1.0 (EXCLUSIVELY).
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV2PPF SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (G_IO,99003) P
+         Ppf = 0.0_wp
+         RETURN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
+         WRITE (G_IO,99002)
+99002    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2PPF SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99003) Gamma
+         Ppf = 0.0_wp
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         Ppf = (-LOG(P))**(-1.0_wp/Gamma)
+      ENDIF
+99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+!
+END SUBROUTINE EV2PPF

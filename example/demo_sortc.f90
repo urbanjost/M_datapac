@@ -7,11 +7,11 @@
      real                         :: cc(isz)
      real                         :: dd(isz)
      integer                      :: i
-        write(*,*)'initializing array with ',isz,' random numbers'
-        call random_seed()
-        CALL RANDOM_NUMBER(aa)
-        aa=aa*450000.0
-        bb=real([(i,i=1,isz)])
+       write(*,*)'initializing array with ',isz,' random numbers'
+       call random_seed()
+       CALL RANDOM_NUMBER(aa)
+       aa=aa*450000.0
+       bb=real([(i,i=1,isz)])
        call sortc(aa,bb,size(aa),cc,dd)
 
        write(*,*)'checking if real values are sorted(3f)'

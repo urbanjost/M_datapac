@@ -1,0 +1,121 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file lampdf.3m_datapac.man
+NAME
+   lampdf(3f) - [M_datapac:STATISTICS:PD] compute the Tukey-Lambda
+   probability density function
+
+SYNOPSIS
+      SUBROUTINE LAMPDF(X,Alamba,Pdf)
+
+DESCRIPTION
+   lampdf(3f) computes the probability density function value for the
+   (tukey) lambda distribution with tail length parameter value = alamba.
+
+   in general, the probability density function for this distribution
+   is not simple.
+
+   the percent point function for this distribution is
+
+      g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_lampdf
+   use M_datapac, only : lampdf
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call lampdf(x,y)
+   end program demo_lampdf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
+!                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
+!                 STUDY OF ORDER STATISTICS', ANNALS OF
+!                 MATHEMATICAL STATISTICS, 18, 1947,
+!                 PAGES 413-426.
+!               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
+!                 OF THE LOCATION PARAMETER OF A SYMMETRIC
+!                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --AUGUST    1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE LAMPDF(X,Alamba,Pdf)
+REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!                                WHICH THE PROBABILITY DENSITY
+!                                FUNCTION IS TO BE EVALUATED.
+!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                                (THE TAIL LENGTH PARAMETER).
+!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
+!                                DENSITY FUNCTION VALUE.
+!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
+!             FUNCTION VALUE PDF FOR THE TUKEY LAMBDA DISTRIBUTION
+!             WITH TAIL LENGTH PARAMETER = ALAMBA.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--FOR ALAMBA NON-POSITIVE, NO RESTRICTIONS ON X.
+!                 --FOR ALAMBA POSITIVE, X SHOULD BE BETWEEN (-1/ALAMBA)
+!                   AND (+1/ALAMBA), INCLUSIVELY.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--LAMCDF.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( Alamba>0.0_wp ) THEN
+         xmax = 1.0_wp/Alamba
+         xmin = -xmax
+         IF ( X<xmin .OR. X>xmax ) THEN
+            WRITE (G_IO,99001)
+            99001 FORMAT (&
+            &' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO LAMPDF(3f) IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
+            WRITE (G_IO,99002) X
+            99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+            IF ( X<xmin ) Pdf = 0.0_wp
+            IF ( X>xmax ) Pdf = 1.0_wp
+            RETURN
+         ENDIF
+      ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+      IF ( Alamba>0.0_wp ) THEN
+         xmax = 1.0_wp/Alamba
+         xmin = -xmax
+         IF ( X<=xmin .OR. X>=xmax ) THEN
+            IF ( X<xmin .OR. X>xmax ) Pdf = 0.0_wp
+            IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0_wp
+            IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0_wp
+            IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5_wp
+            IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5_wp
+            IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0_wp
+            IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0_wp
+            RETURN
+         ENDIF
+      ENDIF
+ 
+      CALL LAMCDF(X,Alamba,cdf)
+      sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
+      Pdf = 1.0_wp/sf
+!
+END SUBROUTINE LAMPDF

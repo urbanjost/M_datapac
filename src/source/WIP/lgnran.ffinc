@@ -1,0 +1,155 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file lgnran.3m_datapac.man
+NAME
+   lgnran(3f) - [M_datapac:STATISTICS:RANDOM] generate lognormal random numbers
+
+SYNOPSIS
+      SUBROUTINE LGNRAN(N,Iseed,X)
+
+DESCRIPTION
+   lgnran(3f) generates a random sample of size n from the lognormal
+   distribution.
+
+   the prototype lognormal distribution used herein has mean = sqrt(e)
+   = 1.64872127 and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+   this distribution is defined for all positive x and has the probability
+   density function
+
+       f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+
+   the prototype lognormal distribution used herein is the distribution
+   of the variate x = exp(z) where the variate z is normally distributed
+   with mean = 0 and standard deviation = 1.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_lgnran
+   use M_datapac, only : lgnran
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call lgnran(x,y)
+   end program demo_lgnran
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --TOCHER, THE ART OF SIMULATION,
+!                 1963, PAGES 14-15.
+!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!                 1964, PAGE 36.
+!               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
+!                 1946, PAGES 219-220.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGE 88.
+$ENDBLOCK
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --JULY      1976.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==lgnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LGNRAN(N,Iseed,X)
+REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
+INTEGER i , ip1 , Iseed , N
+!
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE LOGNORMAL DISTRIBUTION
+!             WITH MEAN = SQRT(E) = 1.64872127
+!             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS, EXP.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION y(2)
+!
+!-----DATA STATEMENTS-------------------------------------------------
+!
+      DATA pi/3.14159265359_wp/
+!
+!-----START POINT-----------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LGNRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+!
+!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+!     THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
+!     (TO BE USED BELOW IN FORMING THE N-TH NORMAL
+!     RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N
+!     HAPPENS TO BE ODD).
+!
+         CALL UNIRAN(N,Iseed,X)
+         CALL UNIRAN(2,Iseed,y)
+!
+!     GENERATE N NORMAL RANDOM NUMBERS
+!     USING THE BOX-MULLER METHOD.
+!
+         DO i = 1 , N , 2
+            ip1 = i + 1
+            u1 = X(i)
+            IF ( i==N ) THEN
+               u2 = y(2)
+            ELSE
+               u2 = X(ip1)
+            ENDIF
+            arg1 = -2.0_wp*LOG(u1)
+            arg2 = 2.0_wp*pi*u2
+            sqrt1 = SQRT(arg1)
+            z1 = sqrt1*COS(arg2)
+            z2 = sqrt1*SIN(arg2)
+            X(i) = z1
+            IF ( i/=N ) X(ip1) = z2
+         ENDDO
+!
+!     GENERATE N LOGNORMAL RANDOM NUMBERS
+!     USING THE DEFINITION THAT
+!     A LOGNORMAL VARIATE
+!     EQUALS AN EXPONETIATED NORMAL VARIATE.
+!
+         DO i = 1 , N
+            X(i) = EXP(X(i))
+         ENDDO
+      ENDIF
+!
+END SUBROUTINE LGNRAN

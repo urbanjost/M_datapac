@@ -1,0 +1,670 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file poly.3m_datapac.man
+NAME
+   poly(3f) - [M_datapac:STATISTICS] compute a least squares polynomial fit
+
+SYNOPSIS
+      SUBROUTINE POLY(Y,X,W,N,Ideg,Iwrite,B,Sdb,S,Df,Pred,Res)
+
+DESCRIPTION
+   poly(3f) computes a least squares polynomial fit (of degree = ideg)
+   of the response variable data in the single precision vector y as
+   a function of the independent variable data in the single precision
+   vector x.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_poly
+   use M_datapac, only : poly
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call poly(x,y)
+   end program demo_poly
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==poly.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE POLY(Y,X,W,N,Ideg,Iwrite,B,Sdb,S,Df,Pred,Res)
+REAL(kind=wp) :: ak , amb , amdb1 , amdb2 , amdr1 , amdr2 , amr , an ,        &
+     &     aneggi , aneggj , ani , B , b2 , cdf , cdf2 , D , Df , DUM1 ,&
+     &     DUM2 , e
+REAL(kind=wp) :: eta , eta2 , etap1 , f , fitdf , fitms , fitss , fstat , g , &
+     &     h , Pred , Q , R , repdf , repsd , repss , repv , Res ,      &
+     &     resdf , resms
+REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
+     &     WS , X , Y , ymean
+INTEGER :: i , iconv , Ideg , ifitdf , insing , IPIvot , &
+     &        iqarg , iqarg1 , iqarg2 , iramax , iramin , irank ,       &
+     &        irarg , irarg1 , irarg2 , irarg3 , irepdf , iresdf , is
+INTEGER :: iset , ism1 , iwflag , Iwrite , j , jm1 , jp1 , js ,      &
+     &        jsp1 , k , kk , kmax , kp1 , l , m , N , ni , nk , nkm5 , &
+     &        nkmax
+INTEGER :: nm5 , nmax , numset
+!
+!     INPUT  ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
+!                                RESPONSE DATA (THAT IS, THE
+!                                DEPENDENT VARIABLE).
+!                     --X      = SINGLE PRECISION VECTOR OF
+!                                THE INDEPENDENT VARIABLE.
+!                     --W      = THE SINGLE PRECISION VECTOR
+!                                OF WEIGHTS FOR THE RESPONSE
+!                                VARIABLE.
+!                     --N      = THE INTEGER VALUE OF THE SAMPLE SIZE.
+!                     --IDEG   = THE INTEGER VALUE OF THE DESIRED
+!                                DEGREE OF THE POLYNOMIAL
+!                                TO BE FIT.
+!                     --IWRITE = THE INTEGER VALUE WHICH IF ZERO WILL
+!                                RESULT IN NO PRINTED OUTPUT, AND IF
+!                                NON-ZERO (E.G., 1) WILL RESULT IN
+!                                SOME LIMITED PRINTED OUTPUT
+!                                (COEFFICIENTS, STANDARD DEVIATIONS OF
+!                                COEFFICIENTS, RESIDUAL STANDARD DEVIATION).
+!     OUTPUT ARGUMENTS--B      = THE SINGLE PRECISION VECTOR OF
+!                                ESTIMATED REGRESSION COEFFICIENTS.
+!                     --SDB    = THE SINGLE PRECISION VECTOR OF
+!                                ESTIMATED STANDARD DEVIATIONS OF THE
+!                                ESTIMATED REGRESSION COEFFICIENTS.
+!                     --S      = THE ESTIMATED RESIDUAL STANDARD
+!                                DEVIATION.
+!                     --DF     = THE DEGREES OF FREEDOM
+!                                ASSOCIATED WITH THE RESIDUAL
+!                                STANDARD DEVIATION =
+!                                NUMBER OF OBSERVATIONS MINUS
+!                                NUMBER OF PARAMETERS =
+!                                N - (IDEG + 1).
+!                     --PRED   = THE SINGLE PRECISION VECTOR OF
+!                                PREDICTED VALUES FROM THE
+!                                LEAST SQUARES FIT.
+!                     --RES    = THE SINGLE PRECISION VECTOR OF
+!                                RESIDUALS FROM THE LEAST SQUARES FIT.
+!     SUBROUTINES NEEDED--DECOMP, INVXWX, DOT, FCDF.
+!     ORIGINAL VERSION--MARCH     1974
+!     UPDATED--OCTOBER   1974
+!     UPDATED--MARCH     1975
+!     UPDATED--MAY       1975
+!     UPDATED--JULY      1975
+!     UPDATED--SEPTEMBER 1975
+!     UPDATED--NOVEMBER  1975.
+!     UPDATED--FEBRUARY  1976.
+!     UPDATED--JUNE      1976.
+!     UPDATED--OCTOBER   1976.
+!     UPDATED--MAY       1977.
+!     UPDATED--JUNE      1977.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION Y(:) , X(:) , W(:) , B(:) , Sdb(:) , Pred(:) , Res(:)
+      DIMENSION b2(50)
+      DIMENSION f(3000) , wres(3000) , g(50) , h(50)
+      DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
+      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+      EQUIVALENCE (Q(1),WS(1))
+      EQUIVALENCE (R(1),WS(10001))
+      EQUIVALENCE (D(1),WS(12501))
+      EQUIVALENCE (IPIvot(1),WS(12551))
+!
+      an = N
+      k = Ideg + 1
+      ak = k
+      nk = N*k
+      kk = k*k
+      nmax = 3000
+      kmax = 50
+      nkmax = 10000
+!
+!-----START POINT-----------------------------------------------------
+!
+!     WRITE OUT THE TITLE
+!
+      IF ( Iwrite/=0 ) THEN
+         WRITE (G_IO,99037)
+         WRITE (G_IO,99037)
+         WRITE (G_IO,99001)
+99001    FORMAT (' ','LEAST SQUARES POLYNOMIAL FIT')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ',10X,'SAMPLE SIZE N = ',I8)
+         WRITE (G_IO,99003) Ideg
+99003    FORMAT (' ',10X,'DEGREE = ',I8)
+      ENDIF
+!
+!     PRE-SET THE OUTPUT VARIABLES AND VECTORS
+!     TO A LARGE VALUE
+!     IN CASE A PREMATURE EXIT OCCURS DUE TO NUMERICAL INSTABILITY.
+!
+      value = (10.0_wp**10) + 1000.0_wp
+      S = value
+      IF ( k>0 ) THEN
+         DO i = 1 , k
+            B(i) = value
+            Sdb(i) = value
+         ENDDO
+      ENDIF
+      IF ( N>0 ) THEN
+         DO i = 1 , N
+            Res(i) = value
+         ENDDO
+      ENDIF
+!
+!     CHECK THE INPUT ARGUMENTS N AND K
+!
+      IF ( N<=0 .OR. N>nmax ) WRITE (G_IO,99004) N , nmax
+99004 FORMAT (' ','*****ERROR--THE SAMPLE SIZE N (= ',I8,               &
+     &        ') IS NON-POSITIVE OR LARGER THAN NMAX = ',I8,' *****')
+      IF ( N<=0 .OR. N>nmax ) RETURN
+      IF ( k<=0 .OR. k>kmax ) WRITE (G_IO,99005) k , kmax
+99005 FORMAT (' ','*****ERROR--THE DESIRED NUMBER OF COEFFICIENTS K (= '&
+     &        ,I8,') IS NON-POSITIVE OR LARGER THAN KMAX = ',I8,        &
+     &        ' *****')
+      IF ( k<=0 .OR. k>kmax ) RETURN
+      IF ( k>N ) WRITE (G_IO,99006) k , N
+99006 FORMAT (' ','*****ERROR--THE DESIRED NUMBER OF COEFFICIENTS K (= '&
+     &        ,I8,') IS LARGER THAN THE SAMPLE SIZE N (= ',I8,') *****')
+      IF ( k>N ) RETURN
+!
+!     INSPECT THE WEIGHT VECTOR W--IF ALL ELEMENTS ARE IDENTICAL,
+!     THEN RESET ALL ELEMENTS TO 1.0.  THIS AVOIDS THE
+!     PROBLEM OF AN UNDEFINED EMPTY WEIGHT VECTOR W WHEN
+!     IN FACT AN EQUAL WEIGHTING SCHEME IS DESIRED.
+!
+      iwflag = 0
+      whold = W(1)
+      DO i = 1 , N
+         IF ( W(i)/=whold ) GOTO 100
+      ENDDO
+      iwflag = 1
+ 100  IF ( iwflag==0 .AND. Iwrite/=0 ) WRITE (G_IO,99007)
+99007 FORMAT (' ',10X,'UNEQUAL WEIGHTS CASE')
+      IF ( iwflag==1 .AND. Iwrite/=0 ) WRITE (G_IO,99008)
+99008 FORMAT (' ',10X,'EQUAL WEIGHTS CASE')
+!
+!     COMPUTE THE ORIGINAL FORM FOR THE Q MATRIX
+!     WHICH WILL BE IDENTICAL TO THE DATA MATRIX X
+!     OF INDEPENDENT VARIABLES IF THE WEIGHTS
+!     SPECIFIED ARE ALL EQUAL.  NOTE THAT THE
+!     DATA MATRIX X IS NEVER COMPUTED AS SUCH.
+!     NOTE THAT THE DATA MATRIX X IS NOT TO BE
+!     CONFUSED WITH THE SINGLE INDEPENDENT
+!     VARIABLE VECTOR X.
+!     THE Q MATRIX WILL BE CHANGED IN THE DECOMP SUBROUTINE.
+!
+      DO j = 1 , k
+         IF ( j==1 ) THEN
+            DO i = 1 , N
+               iqarg = (i-1)*k + 1
+               Q(iqarg) = 1.0_wp
+            ENDDO
+         ELSEIF ( j==2 ) THEN
+            DO i = 1 , N
+               iqarg = (i-1)*k + 2
+               Q(iqarg) = X(i)
+            ENDDO
+         ELSE
+            jm1 = j - 1
+            DO i = 1 , N
+               iqarg1 = (i-1)*k + j
+               iqarg2 = (i-1)*k + jm1
+               Q(iqarg1) = Q(iqarg2)*X(i)
+            ENDDO
+         ENDIF
+      ENDDO
+      IF ( iwflag/=1 ) THEN
+         DO i = 1 , N
+            DO j = 1 , k
+               iqarg = (i-1)*k + j
+               Q(iqarg) = Q(iqarg)*SQRT(W(i))
+            ENDDO
+         ENDDO
+      ENDIF
+!
+!     COMPUTE ETA AND TOL (FOR THE UNIVAC 1108, ETA = 2**-27)
+!     WHICH WILL BE USED IN THE DECOMP SUBROUTINE
+!
+      eta = 1.0_wp
+      DO
+         eta = 0.5_wp*eta
+         etap1 = eta + 1.0_wp
+         IF ( etap1<=1.0_wp ) THEN
+            tol = eta*ak
+            nm5 = N - 5
+            nkm5 = nk - 5
+!CCCC WRITE(G_IO,1505)(Y(I),I=1,6)
+!CCCC WRITE(G_IO,1505)(Y(I),I=NM5,N)
+!CCCC WRITE(G_IO,1505)(X(I),I=1,6)
+!CCCC WRITE(G_IO,1505)(X(I),I=NM5,N)
+!CCCC WRITE(G_IO,1505)(W(I),I=1,6)
+!CCCC WRITE(G_IO,1505)(W(I),I=NM5,N)
+!CCCC WRITE(G_IO,1505)(Q(IQARG),IQARG=1,6)
+!CCCC WRITE(G_IO,1505)(Q(IQARG),IQARG=NKM5,NK)
+!CCCC WRITE(G_IO,1505)(Q(IQARG),IQARG=1,NK)
+!
+            CALL DECOMP(N,k,eta,tol,irank,insing)
+!
+!CCCC WRITE(G_IO,1505)(Q(IQARG),IQARG=1,NK)
+!CCCC WRITE(G_IO,1505)(R(IRARG),IRARG=1,KK)
+!CCCC WRITE(G_IO,1505)(D(J),J=1,K)
+            IF ( insing==1 ) THEN
+               kp1 = k + 1
+!
+!     ***************************************************************
+!
+!     THE PURPOSE OF THIS NEXT SEGMENT (BETWEEN THE STARRED LINES)
+!     IS TO SOLVE FOR THE DESIRED REGRESSION COEFFICIENTS.
+!     ITERATIVE REFINEMENT IS USED.
+!     A SECOND OUTPUT FROM THIS SEGMENT IS THE RESIDUALS FROM THE
+!     FINAL FIT.
+!     A THIRD OUTPUT FROM THIS SEGMENT IS AN INDICATION (IN THE
+!     VARIABLE ICONV) AS TO WHETHER THE ITERATIVE REFINEMENT
+!     CONVERGED OR NOT.
+!     X--USED IN THIS SEGMENT
+!     Q--USED IN THIS SEGMENT
+!     R--USED IN THIS SEGMENT
+!     D--USED IN THIS SEGMENT
+!     IPIVOT--USED IN THIS SEGMENT
+!
+!
+               eta2 = eta*eta
+               b2(kp1) = -1.0_wp
+               DO i = 1 , N
+                  f(i) = Y(i)
+                  wres(i) = 0.0_wp
+                  Res(i) = 0.0_wp
+               ENDDO
+               DO j = 1 , k
+                  b2(j) = 0.0_wp
+                  g(j) = 0.0_wp
+                  h(j) = 0.0_wp
+               ENDDO
+               m = 0
+               amdb2 = 0.0_wp
+               amdr2 = 0.0_wp
+               EXIT
+            ELSE
+               WRITE (G_IO,99009) irank , k
+99009          FORMAT (' ',                                             &
+     &             '*****ERROR--THE MATRIX IS SINGULAR--IT HAS IRANK = '&
+     &             ,I8,                                                 &
+     &             ' WHICH IS LESS THAN THE NUMBER OF COEFFICIENTS K = '&
+     &             ,I8,' *****')
+               RETURN
+            ENDIF
+         ENDIF
+      ENDDO
+!
+!     BEGIN THE M-TH ITERATION STEP IN THE ITERATIVE REFINEMENT
+!
+ 200  IF ( m>=2 ) THEN
+         IF ( .NOT.(((64.0_wp*amdb2<amdb1) .AND. (amdb2>eta2*amb)) .OR.     &
+     &        ((64.0_wp*amdr2<amdr1) .AND. (amdr2>eta2*amr))) ) THEN
+            IF ( (amdr2>4.0_wp*eta2*amr) .AND. (amdb2>4.0_wp*eta2*amb) ) THEN
+               iconv = 0
+            ELSE
+               iconv = 1
+            ENDIF
+!
+!     ***************************************************************
+!
+            IF ( iconv==1 ) THEN
+!
+!     ADJUST THE R MATRIX
+!     WHICH WILL BE USED IN THE INVERT (INVRR) SUBROUTINE.
+!
+               DO j = 1 , k
+                  irarg = (j-1)*k + j
+                  R(irarg) = SQRT(D(j))
+                  IF ( j/=k ) THEN
+                     jp1 = j + 1
+                     DO l = jp1 , k
+                        irarg1 = (j-1)*k + l
+                        irarg2 = (j-1)*k + j
+                        R(irarg1) = R(irarg1)*R(irarg2)
+                     ENDDO
+                  ENDIF
+               ENDDO
+!CCCC WRITE(G_IO,1505)(R(IRARG),IRARG=1,KK)
+!
+               CALL INVXWX(N,k)
+!
+!CCCC WRITE(G_IO,1505)(R(IRARG),IRARG=1,KK)
+!
+!     COMPUTE STATISTICAL CALCULATIONS AND THEN WRITE OUT COEFFICIENTS
+!     AND STANDARD DEVIATIONS OF COEFFICIENTS ALONG WITH THE
+!     RESIDUAL STANDARD DEVIATION.
+!
+               DO i = 1 , k
+                  B(i) = b2(i)
+               ENDDO
+               DO i = 1 , N
+                  IF ( Res(i)/=0.0_wp ) GOTO 210
+               ENDDO
+               WRITE (G_IO,99010)
+99010          FORMAT (' ',10X,                                         &
+     &                 'NOTE THAT AN EXACT FIT HAS BEEN OBTAINED')
+ 210           sum = 0.0_wp
+               IF ( iwflag==0 ) THEN
+                  DO i = 1 , N
+                     sum = sum + Res(i)*Res(i)*W(i)
+                  ENDDO
+               ELSE
+                  DO i = 1 , N
+                     sum = sum + Res(i)*Res(i)
+                  ENDDO
+                  resss = sum
+               ENDIF
+               IF ( k==N .AND. Iwrite/=0 ) WRITE (G_IO,99011) k
+99011          FORMAT (' ',10X,                                         &
+     &'NOTE THAT THE NUMBER OF COEFFICIENTS K            = THE SAMPLE SI&
+     &ZE N = ',I8)
+               IF ( k/=N ) THEN
+                  resdf = an - ak
+                  Df = resdf
+                  iresdf = an - ak + 0.5_wp
+                  resms = resss/resdf
+                  S = SQRT(resms)
+               ENDIF
+!CCCC WRITE(G_IO,3205)
+               DO i = 1 , N
+                  Pred(i) = Y(i) - Res(i)
+!CCCC WRITE(G_IO,3305)Y(I),PRED(I),RES(I)
+               ENDDO
+               IF ( k==N ) THEN
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99012)
+99012             FORMAT (' ','        J        B(J)')
+                  DO i = 1 , k
+                     IF ( Iwrite/=0 ) WRITE (G_IO,99038) j , B(j)
+                  ENDDO
+                  RETURN
+               ELSE
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99013) S
+99013             FORMAT (' ',10X,'RESIDUAL STANDARD DEVIATION = ',     &
+     &                    E15.8)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99014) iresdf
+99014             FORMAT (' ',10X,'RESIDUAL DEGREES OF FREEDOM = ',I8)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99015)
+99015             FORMAT (' ',10X,'COEFFICIENTS:')
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99016)
+99016             FORMAT (' ',                                          &
+     &      '          J        B(J)      SD(B(J))        B(J)/SD(B(J))'&
+     &      )
+                  DO j = 1 , k
+                     irarg = (j-1)*k + j
+                     Sdb(j) = S*SQRT(R(irarg))
+                     t = B(j)/Sdb(j)
+                     IF ( Iwrite/=0 ) WRITE (G_IO,99038) j , B(j) ,      &
+     &                    Sdb(j) , t
+                  ENDDO
+!
+!     COMPUTE THE COVARIANCE AND CORRELATION MATRIX OF THE COEFFICIENTS
+!
+                  DO i = 1 , k
+                     DO j = 1 , k
+                        irarg = (i-1)*k + j
+                        R(irarg) = R(irarg)*S*S
+                     ENDDO
+                  ENDDO
+                  DO i = 1 , k
+                     DO j = 1 , k
+                        IF ( i/=j ) THEN
+                           irarg1 = (i-1)*k + j
+                           irarg2 = (i-1)*k + i
+                           irarg3 = (j-1)*k + j
+                           R(irarg1) = R(irarg1)                        &
+     &                                 /SQRT(R(irarg2)*R(irarg3))
+                        ENDIF
+                     ENDDO
+                  ENDDO
+                  DO j = 1 , k
+                     irarg = (j-1)*k + j
+                     R(irarg) = 1.0_wp
+                  ENDDO
+!CCCC WRITE(G_IO,2405)
+                  DO i = 1 , k
+                     iramin = (i-1)*k + 1
+                     iramax = i*k
+!CCCC WRITE(G_IO,2505)(R(IRARG),IRARG=IRAMIN,IRAMAX)
+                  ENDDO
+!
+!     CHECK FOR REPLICATION.
+!     IF SO, COMPUTE A POOLED STANDARD DEVIATION.
+!     THEN COMPUTE A LACK OF FIT F TEST.
+!
+!     DETERMINE THE NUMBER OF DISTINCT SUBSETS
+!
+                  numset = 0
+                  DO i = 1 , N
+                     IF ( numset/=0 ) THEN
+                        DO j = 1 , numset
+                           IF ( X(i)==DUM1(j) ) GOTO 215
+                        ENDDO
+                     ENDIF
+                     numset = numset + 1
+                     DUM1(numset) = X(i)
+ 215              ENDDO
+                  IF ( numset==0 ) WRITE (G_IO,99017)
+99017             FORMAT (' ','ERROR IN POLY   SUBROUTINE--NUMSET = 0')
+                  IF ( numset==0 ) RETURN
+!
+!     COPY OUT EACH SUBSET INTO THE DUM2 VECTOR
+!     AND ANALYZE IT THEREIN
+!
+                  irepdf = 0
+                  repss = 0.0_wp
+                  DO iset = 1 , numset
+                     ni = 0
+                     DO i = 1 , N
+                        IF ( X(i)==DUM1(iset) ) ni = ni + 1
+                        IF ( X(i)==DUM1(iset) ) DUM2(ni) = Y(i)
+                     ENDDO
+                     ani = ni
+                     sum = 0.0_wp
+                     DO i = 1 , ni
+                        sum = sum + DUM2(i)
+                     ENDDO
+                     ymean = sum/ani
+                     sum = 0.0_wp
+                     DO i = 1 , ni
+                        sum = sum + (DUM2(i)-ymean)**2
+                     ENDDO
+                     irepdf = irepdf + ni - 1
+                     repss = repss + sum
+                  ENDDO
+                  IF ( irepdf<=0 ) RETURN
+                  repdf = irepdf
+                  repv = repss/repdf
+                  repsd = SQRT(repv)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99037)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99018) repsd
+99018             FORMAT (' ',                                          &
+     &                    '          REPLICATION STANDARD DEVIATION  = '&
+     &                    ,D15.7)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99019) irepdf
+99019             FORMAT (' ',                                          &
+     &                    '          REPLICATION DEGREES OF FREEDOM  = '&
+     &                    ,I8)
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99020) numset
+99020             FORMAT (' ',                                          &
+     &                    '          NUMBER OF DISTINCT SUBSETS      = '&
+     &                    ,I8)
+                  ifitdf = iresdf - irepdf
+                  IF ( ifitdf<1 ) GOTO 300
+                  fitdf = ifitdf
+                  fitss = resss - repss
+                  fitms = fitss/fitdf
+                  fstat = fitms/resms
+                  CALL FCDF(fstat,ifitdf,irepdf,cdf)
+                  cdf2 = 100.0*cdf
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99021) fstat , cdf2
+99021             FORMAT (' ','          LACK OF FIT F RATIO = ',F10.4, &
+     &                    ' = THE ',F8.4,'% POINT OF THE')
+                  IF ( Iwrite/=0 ) WRITE (G_IO,99022) ifitdf , irepdf
+99022             FORMAT (' ','          F DISTRIBUTION WITH ',I6,      &
+     &                    ' AND ',I6,' DEGREES OF FREEDOM')
+99023             FORMAT (' ',6E15.8)
+99024             FORMAT (' ',I8,5X,E15.8)
+99025             FORMAT (' ',8E15.8)
+99026             FORMAT (' ','CORRELATION MATRIX OF COEFFICIENTS')
+99027             FORMAT (' ',8E15.8)
+99028             FORMAT (' ',                                          &
+     &                    '      OBSERVED      PREDICTED      RESIDUALS'&
+     &                    )
+99029             FORMAT (' ',8E15.8)
+                  GOTO 99999
+               ENDIF
+            ELSE
+               WRITE (G_IO,99030)
+99030          FORMAT (' ',                                             &
+     &             '*****ERROR--THE ITERATIONS ARE NOT CONVERGING *****'&
+     &             )
+               RETURN
+            ENDIF
+         ENDIF
+      ENDIF
+      amdb1 = amdb2
+      amdr1 = amdr2
+      amdb2 = 0.0_wp
+      amdr2 = 0.0_wp
+      IF ( m/=0 ) THEN
+!
+!     BEGIN FORMING NEW RESIDUALS
+!
+         IF ( iwflag==0 ) THEN
+            DO i = 1 , N
+               wres(i) = wres(i) + f(i)*SQRT(W(i))
+               Res(i) = Res(i) + f(i)/SQRT(W(i))
+            ENDDO
+         ELSE
+            DO i = 1 , N
+               wres(i) = wres(i) + f(i)
+               Res(i) = Res(i) + f(i)
+            ENDDO
+         ENDIF
+         DO is = 1 , irank
+            j = IPIvot(is)
+            b2(j) = b2(j) + g(is)
+            DO l = 1 , N
+               IF ( j>=2 ) THEN
+                  DUM1(l) = X(l)**(j-1)
+               ELSE
+                  DUM1(l) = 1.0_wp
+               ENDIF
+            ENDDO
+!
+            CALL DOT(DUM1,wres,1,N,0.0_wp,g(is))
+            g(is) = -g(is)
+         ENDDO
+!
+         DO i = 1 , N
+            e = Res(i)
+            DO l = 1 , k
+               IF ( l>=2 ) THEN
+                  DUM1(l) = X(i)**(l-1)
+               ELSE
+                  DUM1(l) = 1.0_wp
+               ENDIF
+            ENDDO
+            DUM1(kp1) = Y(i)
+!
+            CALL DOT(DUM1,b2,1,kp1,e,f(i))
+            IF ( iwflag==0 ) f(i) = -f(i)*SQRT(W(i))
+            IF ( iwflag==1 ) f(i) = -f(i)
+         ENDDO
+      ENDIF
+!
+!     END FORMING NEW RESIDUALS
+!
+      DO is = 1 , irank
+         j = IPIvot(is)
+         IF ( is/=1 ) THEN
+         ENDIF
+         ism1 = is - 1
+         DO l = 1 , ism1
+            irarg = (l-1)*k + is
+            DUM1(l) = R(irarg)
+         ENDDO
+         aneggi = -g(is)
+!
+         CALL DOT(DUM1,h,1,ism1,aneggi,h(is))
+         h(is) = -h(is)
+!
+         e = -h(is)
+         DO l = 1 , N
+            iqarg = (l-1)*k + j
+            DUM1(l) = Q(iqarg)
+         ENDDO
+!
+         CALL DOT(DUM1,f,1,N,e,e)
+         e = e/D(is)
+!
+         g(is) = e
+         DO i = 1 , N
+            iqarg = (i-1)*k + j
+            f(i) = f(i) - e*Q(iqarg)
+         ENDDO
+      ENDDO
+!
+      DO is = 1 , irank
+         js = irank + 1 - is
+         jsp1 = js + 1
+         DO l = jsp1 , irank
+            irarg = (js-1)*k + l
+            DUM1(l) = R(irarg)
+         ENDDO
+         aneggj = -g(js)
+!
+         CALL DOT(DUM1,g,jsp1,irank,aneggj,g(js))
+         g(js) = -g(js)
+      ENDDO
+!
+      DO is = 1 , irank
+         amdb2 = amdb2 + g(is)*g(is)
+      ENDDO
+      DO i = 1 , N
+         amdr2 = amdr2 + f(i)*f(i)
+      ENDDO
+      IF ( m==0 ) THEN
+         amb = amdb2
+         amr = amdr2
+!CCCC WRITE(G_IO,50505)M
+!CCCC WRITE(G_IO,50506)(B2(I),I=1,K)
+!CCCC DO5555I=1,N
+!CCCC WRITE(G_IO,50506)Y(I),X(I),RES(I),WRES(I),F(I),G(I),H(I)
+!5555 CONTINUE
+99031    FORMAT (I8)
+99032    FORMAT (' ',8F10.5)
+      ENDIF
+!
+!     END THE M-TH ITERATION STEP IN THE ITERATIVE REFINEMENT
+!
+      m = m + 1
+      GOTO 200
+ 300  IF ( Iwrite/=0 ) WRITE (G_IO,99033)
+99033 FORMAT (' ','          LACK OF FIT F TEST CANNOT BE DONE BECAUSE')
+      IF ( Iwrite/=0 ) WRITE (G_IO,99034)
+99034 FORMAT (' ','          HAVE ONLY 0 DEGREES OF FREEDOM IN ',       &
+     &        'NUMERATOR OF F RATIO.')
+      IF ( Iwrite/=0 ) WRITE (G_IO,99035)
+99035 FORMAT (' ','          THIS HAPPENS WHEN NUMBER OF PARAMETERS ',  &
+     &        'FITTED')
+      IF ( Iwrite/=0 ) WRITE (G_IO,99036)
+99036 FORMAT (' ','          IS IDENTICAL TO NUMBER OF DISTINCT ',      &
+     &        'SUBSETS.')
+      RETURN
+!
+99037 FORMAT (' ')
+99038 FORMAT (' ',3X,I8,8E15.8)
+!
+99999 END SUBROUTINE POLY

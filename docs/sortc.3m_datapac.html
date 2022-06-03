@@ -53,8 +53,8 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>sortc</B>(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample observations
-and "carry" a second vector
+<B>sortc</B>(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample
+observations and "carry" a second vector
 <P>
 </BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
@@ -94,11 +94,45 @@ Subroutine <B>sortc</B>(X,Y,N,Xs,Yc)
 <BLOCKQUOTE>
 <P>
 <B>SORTC</B>(3f) sorts (in ascending order) the N elements of the vector X,
-puts the resulting N sorted values into the single precision vector XS,
+puts the resulting N sorted values into the vector XS,
 rearranges the elements of the vector Y (according to the sort on X),
-and puts the rearranged Y values into the single precision vector YC.
+and puts the rearranged Y values into the vector YC.
 This subroutine gives the data analyst the ability to sort one data
 vector while &#146;carrying along&#146; the elements of a second data vector.
+<P>
+The smallest element of the vector X will be placed in the first
+position of the vector XS, the second smallest element in the vector
+X will be placed in the second position of the vector XS, etc.
+<P>
+The element in the vector Y corresponding to the smallest element in
+X will be placed in the first position of the vector YC, the element
+in the vector Y corresponding to the second smallest element in X
+will be placed in the second position of the vector YC, etc.
+<P>
+The input vector X remains unaltered.
+<P>
+If the analyst desires a sort &#146;in place&#146;, this is done by having the
+same output vector as input vector in the calling sequence. Thus,
+for example, the calling sequence CALL <B>SORTC</B>(X,Y,N,X,YC) is allowable
+and will result in the desired &#146;in-place&#146; sort.
+<P>
+The sorting algorthm used herein is the binary sort. This algorthim
+is extremely fast as the following time trials indicate. These time
+trials were carried out on the UNIVAC 1108 EXEC 8 system at NBS in
+August of 1974. By way of comparison, the time trial values for the
+easy-to-program but extremely inefficient bubble sort algorithm have
+also been included--
+<P>
+<PRE>
+     Number of Random        Binary Sort       Bubble Sort
+     Numbers Sorted
+       N = 10                 .002 sec          .002 sec
+       N = 100                .011 sec          .045 sec
+       N = 1000               .141 sec         4.332 sec
+       N = 3000               .476 sec        37.683 sec
+       N = 10000             1.887 sec      NOT COMPUTED
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=3>
 
@@ -108,21 +142,18 @@ vector while &#146;carrying along&#146; the elements of a second data vector.
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>x</B> </TD><TD valign=bottom>
-the single precision vector of
-observations to be sorted.
+<B>X</B> </TD><TD valign=bottom>
+The vector of observations to be sorted.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>y</B> </TD><TD valign=bottom>
-the single precision vector of
-observations to be &#146;carried along&#146;,
-that is, to be rearranged according
-to the sort on x.
+<B>Y</B> </TD><TD valign=bottom>
+The vector of
+observations to be &#146;carried along&#146;, that is, to be rearranged
+according to the sort on X.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>n</B> </TD><TD valign=bottom>
-the integer number of observations
-in the vector x.
+<B>N</B> </TD><TD valign=bottom>
+The integer number of observations in the vector X.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
@@ -134,18 +165,14 @@ in the vector x.
 <P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>xs</B> </TD><TD valign=bottom>
-the single precision vector
-into which the sorted data values
-from x will be placed.
+<B>XS</B> </TD><TD valign=bottom>
+The vector into which the sorted data values from X will be
+placed in ascending order.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>yc</B> </TD><TD valign=bottom>
-the single precision vector
-into which the rearranged
-(according to the sort of the
-vector x) values of the vector y
-will be placed.
+<B>YC</B> </TD><TD valign=bottom>
+The vector into which the rearranged (according to the sort of
+the vector X) values of the vector Y will be placed.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>
@@ -166,11 +193,11 @@ Sample program:
    real                         :: cc(isz)
    real                         :: dd(isz)
    integer                      :: i
-      write(*,*)&#146;initializing array with &#146;,isz,&#146; random numbers&#146;
-      call random_seed()
-      CALL RANDOM_NUMBER(aa)
-      aa=aa*450000.0
-      bb=real([(i,i=1,isz)])
+     write(*,*)&#146;initializing array with &#146;,isz,&#146; random numbers&#146;
+     call random_seed()
+     CALL RANDOM_NUMBER(aa)
+     aa=aa*450000.0
+     bb=real([(i,i=1,isz)])
      call sortc(aa,bb,size(aa),cc,dd)
 <P>
      write(*,*)&#146;checking if real values are sorted(3f)&#146;
@@ -243,7 +270,7 @@ JACM JANUARY 1961, PAGE 41.
 CC0-1.0
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>sortc (3m_datapac)</TD> <TD align=right width=33%><I>June 03, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 35a509cd-dea2-4c89-a3fb-1b3029ad5943 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>sortc (3m_datapac)</TD> <TD align=right width=33%><I>June 03, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 5a67e406-9659-45e9-bab6-d196e7dea83c using man macros.</FONT>
 <br><br><center><img src="images/sortc.gif"></center>
 </div>
 </div>

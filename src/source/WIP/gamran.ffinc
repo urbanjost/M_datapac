@@ -1,0 +1,192 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file gamran.3m_datapac.man
+NAME
+   gamran(3f) - [M_datapac:STATISTICS:RANDOM] generate gamma random numbers
+
+SYNOPSIS
+      SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
+
+DESCRIPTION
+   gamran(3f) generates a random sample of size n from the gamma
+   distribution with tail length parameter value = gamma.
+
+   the prototype gamma distribution used herein has mean = gamma and
+   standard deviation = sqrt(gamma). this distribution is defined for
+   all positive x, and has the probability density function
+
+       f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+
+   where the constant = the gamma function evaluated at the value gamma.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_gamran
+   use M_datapac, only : gamran
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call gamran(x,y)
+   end program demo_gamran
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --GREENWOOD, 'A FAST GENERATOR FOR
+!                 GAMMA-DISTRIBUTED RANDOM VARIABLES',
+!                 COMPSTAT 1974, PROCEEDINGS IN
+!                 COMPUTATIONAL STATISTICS, VIENNA,
+!                 SEPTEMBER, 1974, PAGES 19-27.
+!               --TOCHER, THE ART OF SIMULATION,
+!                 1963, PAGES 24-27.
+!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
+!                 1964, PAGES 36-37.
+!               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
+!                 PLOTS FOR THE GAMMA DISTRIBUTION',
+!                 TECHNOMETRICS, 1962, PAGES 1-15.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+!               --HASTINGS AND PEACOCK, STATISTICAL
+!                 DISTRIBUTIONS--A HANDBOOK FOR
+!                 STUDENTS AND PRACTITIONERS, 1975,
+!                 PAGES 68-73.
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
+!                 SERIES 55, 1964, PAGE 952.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
+REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
+     &     X , xg , xg0 , xn(1) , xn0
+INTEGER :: i , Iseed , N
+!     ******STILL NEEDS ALGORITHM WORK ******
+!
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                                TAIL LENGTH PARAMETER.
+!                                GAMMA SHOULD BE POSITIVE.
+!                                GAMMA SHOULD BE LARGER
+!                                THAN 1/3 (ALGORITHMIC RESTRICTION).
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE GAMMA DISTRIBUTION
+!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!                 --GAMMA SHOULD BE POSITIVE.
+!                 --GAMMA SHOULD BE LARGER
+!                   THAN 1/3 (ALGORITHMIC RESTRICTION).
+!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --JUNE      1978.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MARCH     1982.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+!
+!---------------------------------------------------------------------
+!
+!-----DATA STATEMENTS-------------------------------------------------
+!
+      DATA athird/0.3333333_wp/
+      DATA sqrt3/1.73205081_wp/
+!
+!-----START POINT-----------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GAMRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
+         WRITE (G_IO,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMRAN SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99006) Gamma
+         RETURN
+      ELSEIF ( Gamma<=0.33333333_wp ) THEN
+         WRITE (G_IO,99004)
+99004    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMRAN SUBROU&
+     &TINE IS SMALLER THAN OR EQUAL TO 0.33333333 *****')
+         WRITE (G_IO,99005)
+99005    FORMAT (' ','                   (ALGORITHMIC RESTIRCTION)')
+         WRITE (G_IO,99006) Gamma
+         RETURN
+      ELSE
+!
+!     GENERATE N GAMMA DISTRIBUTION RANDOM NUMBERS
+!     USING GREENWOOD'S REJECTION ALGORITHM--
+!     1) GENERATE A NORMAL RANDOM NUMBER;
+!     2) TRANSFORM THE NORMAL VARIATE TO AN APPROXIMATE
+!        GAMMA VARIATE USING THE WILSON-HILFERTY
+!        APPROXIMATION (SEE THE JOHNSON AND KOTZ
+!        REFERENCE, PAGE 176);
+!     3) FORM THE REJECTION FUNCTION VALUE, BASED
+!        ON THE PROBABILITY DENSITY FUNCTION VALUE
+!        OF THE ACTUAL DISTRIBUTION OF THE PSEUDO-GAMMA
+!        VARIATE, AND THE PROBABILITY DENSITY FUNCTION VALUE
+!        OF A TRUE GAMMA VARIATE.
+!     4) GENERATE A UNIFORM RANDOM NUMBER;
+!     5) IF THE UNIFORM RANDOM NUMBER IS LESS THAN
+!        THE REJECTION FUNCTION VALUE, THEN ACCEPT
+!        THE PSEUDO-RANDOM NUMBER AS A GAMMA VARIATE;
+!        IF THE UNIFORM RANDOM NUMBER IS LARGER THAN
+!        THE REJECTION FUNCTION VALUE, THEN REJECT
+!        THE PSEUDO-RANDOM NUMBER AS A GAMMA VARIATE.
+!
+         a1 = 1.0_wp/(9.0_wp*Gamma)
+         b1 = SQRT(a1)
+         xn0 = -sqrt3 + b1
+         xg0 = Gamma*(1.0_wp-a1+b1*xn0)**3
+         DO i = 1 , N
+            DO
+               CALL NORRAN(1,Iseed,xn)
+               xg = Gamma*(1.0_wp-a1+b1*xn(1))**3
+               IF ( xg>=0.0_wp ) THEN
+                  term = (xg/xg0)**(Gamma-athird)
+                  arg = 0.5_wp*xn(1)*xn(1) - xg - 0.5_wp*xn0*xn0 + xg0
+                  funct = term*EXP(arg)
+                  CALL UNIRAN(1,Iseed,u(1:1))
+                  IF ( u(1)<=funct ) THEN
+                     X(i) = xg
+                     EXIT
+                  ENDIF
+               ENDIF
+            ENDDO
+         ENDDO
+      ENDIF
+99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+!
+END SUBROUTINE GAMRAN

@@ -1,0 +1,280 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file uniran.3m_datapac.man
+NAME
+   uniran(3f) - [M_datapac:STATISTICS:RANDOM] generate Uniform random numbers
+
+SYNOPSIS
+      SUBROUTINE UNIRAN(N,Iseed,X)
+
+DESCRIPTION
+   uniran(3f) generates a random sample of size n from the uniform
+   (rectangular) distribution on the unit interval (0,1).
+
+   this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+   = 0.28867513. This distribution has the probability density function
+
+       f(x) = 1
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_uniran
+   use M_datapac, only : uniran
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call uniran(x,y)
+   end program demo_uniran
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+
+WRITTEN BY
+     --james blue
+                 scientific computing division
+                 center for applied mathematics
+                 national bureau of standards
+                 washington, d. c. 20234
+     --david kahaner
+                 scientific computing division
+                 center for applied mathematics
+                 national bureau of standards
+     --george marsaglia
+                 computer science department
+                 washington state university
+     --james j. filliben
+                 statistical engineering division
+                 center for applied mathematics
+                 national bureau of standards
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --MARSAGLIA G., "COMMENTS ON THE PERFECT UNIFORM RANDOM
+!                 NUMBER GENERATOR", UNPUBLISHED NOTES, WASH S. U.
+!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+!                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE UNIRAN(N,Iseed,X)
+REAL(kind=wp) :: ak , am1 , X(:)
+INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
+INTEGER m(17)
+
+!
+!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!                                OF RANDOM NUMBERS TO BE
+!                                GENERATED.
+!                     --ISEED  = AN INTEGER ISEED VALUE
+!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!                                (OF DIMENSION AT LEAST N)
+!                                INTO WHICH THE GENERATED
+!                                RANDOM SAMPLE WILL BE PLACED.
+!     OUTPUT--A RANDOM SAMPLE OF SIZE N
+!             FROM THE RECTANGULAR DISTRIBUTION ON (0,1).
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!
+!     ALGORITHM--FIBONACCI GENERATOR
+!                AS DEFINED BY GEORGE MARSAGLIA.
+!
+!     NOTE--THIS GENERATOR IS TRANSPORTABLE.
+!           IT IS NOT MACHINE-INDEPENDENT
+!           IN THE SENSE THAT FOR A GIVEN VALUE
+!           OF THE INPUT SEED ISEED AND FOR A GIVEN VALUE
+!           OF MDIG (TO BE DEFINED BELOW),
+!           THE SAME SEQUENCE OF UNIFORM RANDOM
+!           NUMBERS WILL RESULT ON DIFFERENT COMPUTERS
+!           (VAX, PRIME, PERKIN-ELMER, IBM, UNIVAC, HONEYWELL, ETC.)
+!
+!     NOTE--IF MDIG = 32 AND IF ISEED = 305,
+!           THEN THE OUTPUT FROM THIS GENERATOR SHOULD BE AS FOLLOWS--
+!           THE FIRST      NUMBER TO RESULT IS .4771580...
+!           THE SECOND     NUMBER TO RESULT IS .4219293...
+!           THE THIRD      NUMBER TO RESULT IS .6646181...
+!           ...
+!           THE THOUSANDTH NUMBER TO RESULT IS .2036834...
+!
+!     NOTE--IF MDIG = 16 AND IF ISEED = 305,
+!           THEN THE OUTPUT FROM THIS GENERATOR SHOULD BE AS FOLLOWS--
+!           THE FIRST      NUMBER TO RESULT IS .027832881...
+!           THE SECOND     NUMBER TO RESULT IS .56102176...
+!           THE THIRD      NUMBER TO RESULT IS .41456343...
+!           ...
+!           THE THOUSANDTH NUMBER TO RESULT IS .19797357...
+!
+!     NOTE--IT IS RECOMMENDED THAT UPON
+!           IMPLEMENTATION OF DATAPLOT, THE OUTPUT
+!           FROM UNIRAN BE CHECKED FOR AGREEMENT
+!           WITH THE ABOVE SAMPLE OUTPUT.
+!           ALSO, THERE ARE MANY ANALYSIS AND DIAGNOSTIC
+!           TOOLS IN DATAPLOT THAT WILL ALLOW THE
+!           TESTING OF THE RANDOMNESS AND UNIFORMITY
+!           OF THIS GENERATOR.
+!           SUCH CHECKING IS ESPECIALLY IMPORTANT
+!           IN LIGHT OF THE FACT THAT OTHER DATAPLOT RANDOM
+!           NUMBER GENERATOR SUBROUTINES (NORRAN--NORMAL,
+!           LOGRAN--LOGISTIC, ETC.) ALL MAKE USE OF INTERMEDIATE
+!           OUTPUT FROM UNIRAN.
+!
+!     NOTE--THE OUTPUT FROM THIS SUBROUTINE DEPENDS
+!           ON THE INPUT SEED (ISEED) AND ON THE
+!           VALUE OF MDIG.
+!           MDIG MAY NOT BE SMALLER THAN 16.
+!           MDIG MAY NOT BE LARGER THAN MAX INTEGER ON YOUR COMPUTER.
+!
+!     NOTE--BECAUSE OF THE PREPONDERANCE OF MAINFRAMES
+!           WHICH HAVE WORDS OF 32 BITS AND LARGER
+!           (E.G, VAX (= 32 BITS), UNIVAC (= 36 BITS), CDC (= 60 BITS), ETC.)
+!           MDIG HAS BEEN SET TO 32.
+!           THUS THE SAME SEQUENCE OF RANDOM NUMBERS SHOULD RESULT
+!           ON ALL OF THESE COMPUTERS.
+!
+!     NOTE--FOR SMALLER WORD SIZE COMPUTERS (E.G., 24-BIT AND 16-BIT),
+!           THE VALUE OF MDIG SHOULD BE CHANGED TO 24 OR 16.
+!           IN SUCH CASE, THE OUTPUT WILL NOT BE IDENTICAL TO
+!           THE OUTPUT WHEN MDIG = 32.
+!
+!     NOTE--THE CYCLE OF THE RANDOM NUMBERS DEPENDS ON MDIG.
+!           THE CYCLE FROM MDIG = 32 IS LONG ENOUGH FOR MOST
+!           PRACTICAL APPLICATIONS.
+!           IF A LONGER CYCLE IS DESIRED, THEN INCREASE MDIG.
+!
+!     NOTE--THE SEED MAY BE ANY POSITIVE INTEGER.
+!           NO APPRECIABLE DIFFERENCE IN THE QUALITY
+!           OF THE RANDOM NUMBERS HAS BEEN NOTED
+!           BY THE CHOICE OF THE SEED.  THERE IS NO
+!           NEED TO USE PRIMES, NOR TO USE EXCEPTIONALLY
+!           LARGE NUMBERS, ETC.
+!
+!
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --AUGUST    1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --NOVEMBER  1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --MARCH     1984.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!-----SAVE STATEMENTS-------------------------------------------------
+!
+      SAVE i , j , m , m1 , m2
+!
+!-----DATA STATEMENTS-------------------------------------------------
+!
+      DATA m(1) , m(2) , m(3) , m(4) , m(5) , m(6) , m(7) , m(8) ,      &
+     &     m(9) , m(10) , m(11) , m(12) , m(13) , m(14) , m(15) ,       &
+     &     m(16) , m(17)/30788 , 23052 , 2053 , 19346 , 10646 , 19427 , &
+     &     23975 , 19049 , 10949 , 19693 , 29746 , 26748 , 2796 ,       &
+     &     23890 , 29168 , 31924 , 16499/
+      DATA m1 , m2 , i , j/32767 , 256 , 5 , 17/
+!
+!-----START POINT-----------------------------------------------------
+!
+!               ********************************************
+!               **  STEP 1--                              **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      IF ( N>=1 ) THEN
+!
+!               *******************************************************
+!               **  STEP 2--                                         **
+!               **  IF A POSITIVE INPUT SEED HAS BEEN GIVEN,         **
+!               **  THEN THIS INDICATES THAT THE GENERATOR           **
+!               **  SHOULD HAVE ITS INTERNAL M(.) ARRAY REDEFINED--  **
+!               **  DO SO IN THIS SECTION.                           **
+!               **  IF A NON-POSITIVE INPUT SEED HAS BEEN GIVEN,     **
+!               **  THEN THIS INDICATES THAT THE GENERATOR           **
+!               **  SHOULD CONTINUE ON FROM WHERE IT LEFT OFF,       **
+!               **  AND THEREFORE THIS SECTION IS SKIPPED.           **
+!               *******************************************************
+!
+         IF ( Iseed>0 ) THEN
+!
+!CCCC MDIG=16
+            mdig = 32
+!
+            m1 = 2**(mdig-2) + (2**(mdig-2)-1)
+            m2 = 2**(mdig/2)
+!CCCC ISEED3=MIN0(IABS(ISEED),M1)
+            iseed3 = IABS(Iseed)
+            IF ( m1<IABS(Iseed) ) iseed3 = m1
+            IF ( MOD(iseed3,2)==0 ) iseed3 = iseed3 - 1
+            k0 = MOD(9069,m2)
+            k1 = 9069/m2
+            j0 = MOD(iseed3,m2)
+            j1 = iseed3/m2
+!
+            DO i = 1 , 17
+               iseed3 = j0*k0
+               j1 = MOD(iseed3/m2+j0*k1+j1*k0,m2/2)
+               j0 = MOD(iseed3,m2)
+               m(i) = j0 + m2*j1
+            ENDDO
+!
+            i = 5
+            j = 17
+         ENDIF
+!
+!
+!               *************************************
+!               **  STEP 3--                       **
+!               **  GENERATE THE N RANDOM NUMBERS  **
+!               *************************************
+!
+         DO l = 1 , N
+            k = m(i) - m(j)
+            IF ( k<0 ) k = k + m1
+            m(j) = k
+            i = i - 1
+            IF ( i==0 ) i = 17
+            j = j - 1
+            IF ( j==0 ) j = 17
+            ak = k
+            am1 = m1
+            X(l) = ak/am1
+         ENDDO
+!
+!               *****************************************************
+!               **  STEP 4--                                       **
+!               **  REGARDLESS OF THE VALUE OF THE INPUT SEED,     **
+!               **  REDEFINE THE VALUE OF ISEED UPON EXIT HERE     **
+!               **  TO -1 WITH THE NET EFFECT THAT                 **
+!               **  IF THE USER DOES NOT REDEFINE THE SEED         **
+!               **  VALUE BEFORE THE NEXT CALL TO THIS GENERATOR,  **
+!               **  THEN THIS GENERATOR WILL PICK UP               **
+!               **  WHERE IT LEFT OFF.                             **
+!               *****************************************************
+!
+         Iseed = (-1)
+      ELSE
+         WRITE (G_IO,99001)
+99001    FORMAT (' ')
+         WRITE (G_IO,99002)
+99002    FORMAT (' ','***** ERROR IN UNIRAN--')
+         WRITE (G_IO,99003)
+99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS NON-POSITIVE.')
+         WRITE (G_IO,99004) N
+99004    FORMAT (' ','      N = ',I8)
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+END SUBROUTINE UNIRAN

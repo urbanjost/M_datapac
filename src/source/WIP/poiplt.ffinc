@@ -1,0 +1,301 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file poiplt.3m_datapac.man
+NAME
+   poiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Poisson probability plot
+   (line printer graph)
+
+SYNOPSIS
+      SUBROUTINE POIPLT(X,N,Alamba)
+
+DESCRIPTION
+   poiplt(3f) generates a poisson probability plot (with single precision
+   tail length parameter = alamba).
+
+   the prototype poisson distribution used herein has mean = alamba and
+   standard deviation = sqrt(alamba).
+
+   this distribution is defined for all discrete non-negative integer
+   x--x = 0, 1, 2, ... .
+
+   this distribution has the probability function
+
+       f(x) = exp(-alamba) * alamba**x / x!.
+
+   the poisson distribution is the distribution of the number of events
+   in the interval (0,alamba) when the waiting time between events is
+   exponentially distributed with mean = 1 and standard deviation = 1.
+
+   the prototype distribution restrictions of discreteness and
+   non-negativeness mentioned above do not carry over to the input vector
+   x of observations to be analyzed.
+
+   the input observations in x may be discrete, continuous, non-negative,
+   or negative.
+
+   as used herein, a probability plot for a distribution is a plot of
+   the ordered observations versus the order statistic medians for that
+   distribution.  the poisson probability plot is useful in graphically
+   testing the composite (that is, location and scale parameters need
+   not be specified) hypothesis that the underlying distribution from
+   which the data have been randomly drawn is the poisson distribution
+   with tail length parameter value = alamba.
+
+   if the hypothesis is true, the probability plot should be near-linear.
+
+   a measure of such linearity is given by the calculated probability
+   plot correlation coefficient.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_poiplt
+   use M_datapac, only : poiplt
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call poiplt(x,y)
+   end program demo_poiplt
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
+!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
+!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
+!                 OCTOBER, 1972), PAGES 425-450.
+!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
+!                 1967, PAGES 260-308.
+!               --JOHNSON AND KOTZ, DISCRETE
+!                 DISTRIBUTIONS, 1969, PAGES 87-121.
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==poiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+      SUBROUTINE POIPLT(X,N,Alamba)
+REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
+     &     sum1 , sum2 , sum3 , W , wbar , WS , X , Y , ybar , yint ,   &
+     &     yslope , Z
+INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
+     &        jm1 , k , N
+!
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!                     --ALAMBA = THE SINGLE PRECISION VALUE OF THE
+!                                TAIL LENGTH PARAMETER.
+!                                ALAMBA SHOULD BE POSITIVE.
+!     OUTPUT--A ONE-PAGE POISSON PROBABILITY PLOT.
+!     PRINTING--YES.
+!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
+!                   FOR THIS SUBROUTINE IS 5000.
+!                 --ALAMBA SHOULD BE POSITIVE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT,
+!                                         CHSCDF, NORPPF.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     COMMENT--FOR LARGE VALUES OF ALAMBA (IN EXCESS OF 500.)
+!              THIS SUBROUTINE USES THE NORMAL APPROXIMATION TO
+!              THE POISSON.  THIS IS DONE TO SAVE EXECUTION TIME
+!              WHICH INCREASES AS A FUNCTION OF ALAMBA AND WOULD
+!              BE EXCESSIVE FOR LARGE VALUES OF ALAMBA.
+!     ORIGINAL VERSION--NOVEMBER  1974.
+!     UPDATED         --AUGUST    1975.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION Y(5000) , W(5000)
+      DIMENSION Z(5000)
+      COMMON /BLOCK2/ WS(15000)
+      EQUIVALENCE (Y(1),WS(1))
+      EQUIVALENCE (W(1),WS(5001))
+      EQUIVALENCE (Z(1),WS(10001))
+!
+      iupper = 5000
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 .OR. N>iupper ) THEN
+         WRITE (G_IO,99001) iupper
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIPLT SUBROU&
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSEIF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+99003    FORMAT (' ',                                                   &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE POIP&
+     &LT SUBROUTINE HAS THE VALUE 1 *****')
+         RETURN
+      ELSE
+         IF ( Alamba<=0.0_wp ) THEN
+            WRITE (G_IO,99004)
+99004       FORMAT (' ',                                                &
+     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE POIPLT SUBROU&
+     &TINE IS NON-POSITIVE *****')
+            WRITE (G_IO,99005) Alamba
+99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
+     &              ' *****')
+            RETURN
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99006) hold
+99006       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE POIPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      an = N
+         cutoff = 500.0_wp
+!
+!     SORT THE DATA
+!
+         CALL SORT(X,N,Y)
+!
+!     GENERATE UNIFORM ORDER STATISTIC MEDIANS
+!
+         CALL UNIMED(N,W)
+!
+!     COMPUTE POISSON ORDER STATISTIC MEDIANS.
+!     IF THE INPUT ALAMBA VALUE IS LARGE (IN EXCESS OF
+!     CUTOFF VALUE OF 500.0), THEN USE THE NORMAL APPROXIMATION
+!     TO THE POISSON.
+!
+         IF ( Alamba<=cutoff ) THEN
+!
+!     DETERMINE WHICH UNIFORM ORDER STATISTIC MEDIAN IS ASSOCIATED WITH
+!     THE CLOSEST INTEGER TO ALAMBA.
+!
+            DO i = 1 , N
+               Z(i) = -1.0_wp
+            ENDDO
+!
+            ilamba = Alamba + 0.5_wp
+            arg1 = 2.0_wp*Alamba
+            iarg2 = 2*(ilamba+1)
+            CALL CHSCDF(arg1,iarg2,cdf)
+            cdf = 1.0_wp - cdf
+            DO j = 1 , N
+               IF ( W(j)>cdf ) EXIT
+            ENDDO
+            jm1 = j - 1
+            Z(jm1) = ilamba
+!
+!     FILL IN THE POISSON ORDER STATISTIC MEDIANS BELOW ALAMBA
+!
+            imax = 6.0_wp*SQRT(Alamba)
+            DO i = 1 , imax
+               k = ilamba - i
+               IF ( k<0 ) EXIT
+               iarg2 = 2*(k+1)
+               CALL CHSCDF(arg1,iarg2,cdf)
+               cdf = 1.0_wp - cdf
+               DO j = 1 , N
+                  IF ( W(j)>cdf ) EXIT
+               ENDDO
+               jm1 = j - 1
+               IF ( jm1<=0 ) EXIT
+               IF ( Z(jm1)<-0.5_wp ) Z(jm1) = k
+            ENDDO
+!
+!     FILL IN THE POISSON ORDER STATISTIC MEDIANS ABOVE ALAMBA
+!
+            DO i = 1 , imax
+               k = ilamba + i
+               iarg2 = 2*(k+1)
+               CALL CHSCDF(arg1,iarg2,cdf)
+               cdf = 1.0_wp - cdf
+               DO j = 1 , N
+                  IF ( W(j)>cdf ) GOTO 60
+               ENDDO
+               Z(N) = k
+               EXIT
+ 60            jm1 = j - 1
+               IF ( Z(jm1)<-0.5_wp ) Z(jm1) = k
+            ENDDO
+!
+!     FILL IN THE EMPTY HOLES IN THE POISSON ORDER STATISTIC MEDIAN
+!     Z MATRIX WITH THE PROPER VALUES.
+!     THEN FOR SAKE OF CONSISTENCY WITH OTHER DATAPAC
+!     PROBABILITY PLOT SUBROUTINES, COPY THE Z VECTOR
+!     INTO THE W VECTOR.
+!
+            hold = Z(N)
+            DO irev = 1 , N
+               i = N - irev + 1
+               IF ( Z(i)>=-0.5_wp ) hold = Z(i)
+               IF ( Z(i)<-0.5_wp ) Z(i) = hold
+            ENDDO
+            DO i = 1 , N
+               W(i) = Z(i)
+            ENDDO
+         ELSE
+            sqalam = SQRT(Alamba)
+            DO i = 1 , N
+               CALL NORPPF(W(i),W(i))
+               W(i) = Alamba + W(i)*sqalam
+            ENDDO
+         ENDIF
+!
+!     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
+!     WRITE OUT THE SAMPLE SIZE.
+!
+         CALL PLOT(Y,W,N)
+         WRITE (G_IO,99007) Alamba , N
+!
+99007    FORMAT (' ','POISSON PROBABILITY PLOT WITH PARAMETER = ',9X,   &
+     &           E17.10,1X,8X,11X,'THE SAMPLE SIZE N = ',I7)
+!
+!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
+!     COMPUTE LOCATION AND SCALE ESTIMATES
+!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
+!     THEN WRITE THEM OUT.
+!
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         DO i = 1 , N
+            sum1 = sum1 + Y(i)
+            sum2 = sum2 + W(i)
+         ENDDO
+         ybar = sum1/an
+         wbar = sum2/an
+         sum1 = 0.0_wp
+         sum2 = 0.0_wp
+         sum3 = 0.0_wp
+         DO i = 1 , N
+            sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
+            sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
+            sum3 = sum3 + (W(i)-wbar)*(W(i)-wbar)
+         ENDDO
+         cc = sum2/SQRT(sum3*sum1)
+         yslope = sum2/sum3
+         yint = ybar - yslope*wbar
+         WRITE (G_IO,99008) cc , yint , yslope
+99008    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
+     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
+     &           'ESTIMATED SLOPE = ',E15.8)
+      ENDIF
+!
+END SUBROUTINE POIPLT

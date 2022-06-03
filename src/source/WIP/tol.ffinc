@@ -1,0 +1,386 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file tol.3m_datapac.man
+NAME
+   tol(3f) - [M_datapac:STATISTICS] compute normal and distribution-free
+   tolerance limits
+
+SYNOPSIS
+      SUBROUTINE TOL(X,N)
+
+DESCRIPTION
+   tol(3f) computes normal and distribution-free tolerance limits for
+   the data in the input vector x.
+
+   15 normal tolerance limits are computed; and 30 distribution-free
+   tolerance limits are computed.
+
+OPTIONS
+    X   description of parameter
+    Y   description of parameter
+
+EXAMPLES
+  Sample program:
+
+   program demo_tol
+   use M_datapac, only : tol
+   implicit none
+   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! call tol(x,y)
+   end program demo_tol
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+!     REFERENCES
+!               --GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
+!               --WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
+!               --MOOD AND GRABLE, PAGES 416-417
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE TOL(X,N)
+REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
+     &     an4 , an5 , an6 , b , c , c1 , c2 , c3
+REAL(kind=wp) :: d , d1 , d2 , d3 , d4 , d5 , d6 , d7 , f , hold , p , pa ,   &
+     &     pc , q , r , rsmall , sd , t , tmax , tmin
+REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
+     &     xmin , xmin2 , xmin3 , z , z1
+INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
+     &        locmx2 , locmx3 , N , numsec
+!
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS.
+!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR X.
+!     OUTPUT--2 PAGES OF AUTOMATIC PRINTOUT--
+!             1 PAGE GIVING NORMAL TOLERANCE LIMITS; AND
+!             1 PAGE GIVING DISTRIBUTION-FREE TOLERANCE LIMITS.
+!     PRINTING--YES.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(:)
+      DIMENSION pa(6) , pc(6) , z1(3) , a(6) , b(6) , c(6) , rsmall(5,6), usmall(6,6)
+      DIMENSION tmin(3,6) , tmax(3,6)
+      DIMENSION p(10) , c1(10) , c2(10) , c3(10)
+!
+      DATA pa(1) , pa(2) , pa(3) , pa(4) , pa(5) , pa(6)/50.0_wp , 75.0_wp , 90.0_wp , 95.0_wp , 99.0_wp , 99.9_wp/
+      DATA pc(1) , pc(2) , pc(3)/90.0_wp , 95.0_wp , 99.0_wp/
+      DATA z1(1) , z1(2) , z1(3)/ - 1.28155157_wp , -1.64485363_wp ,          &
+     &     -2.32634787_wp/
+      DATA a(1) , a(2) , a(3) , a(4) , a(5) , a(6)/.6745_wp , 1.1504_wp ,     &
+     &     1.6449_wp , 1.9600_wp , 2.5758_wp , 3.2905_wp/
+      DATA b(1) , b(2) , b(3) , b(4) , b(5) , b(6)/.33734_wp , .57335_wp ,    &
+     &     .82140_wp , .97910_wp , 1.2889_wp , 1.64038_wp/
+      DATA c(1) , c(2) , c(3) , c(4) , c(5) , c(6)/ - 0.15460_wp ,         &
+     &     -0.02991_wp , .22044_wp , .40675_wp , .85514_wp , 1.42601_wp/
+      DATA rsmall(1,1) , rsmall(1,2) , rsmall(1,3) , rsmall(1,4) ,      &
+     &     rsmall(1,5) , rsmall(1,6)/1.0505_wp , 1.6859_wp , 2.2844_wp , 2.6463_wp ,&
+     &     3.3266_wp , 4.0903_wp/
+      DATA rsmall(2,1) , rsmall(2,2) , rsmall(2,3) , rsmall(2,4) ,      &
+     &     rsmall(2,5) , rsmall(2,6)/0.8557_wp , 1.4333_wp , 2.0078_wp , 2.3624_wp ,&
+     &     3.0368_wp , 3.7983_wp/
+      DATA rsmall(3,1) , rsmall(3,2) , rsmall(3,3) , rsmall(3,4) ,      &
+     &     rsmall(3,5) , rsmall(3,6)/0.7929_wp , 1.3412_wp , 1.8979_wp , 2.2457_wp ,&
+     &     2.9128_wp , 3.6708_wp/
+      DATA rsmall(4,1) , rsmall(4,2) , rsmall(4,3) , rsmall(4,4) ,      &
+     &     rsmall(4,5) , rsmall(4,6)/0.7622_wp , 1.2940_wp , 1.8388_wp , 2.1815_wp ,&
+     &     2.8422_wp , 3.5965_wp/
+      DATA rsmall(5,1) , rsmall(5,2) , rsmall(5,3) , rsmall(5,4) ,      &
+     &     rsmall(5,5) , rsmall(5,6)/0.7442_wp , 1.2654_wp , 1.8019_wp , 2.1408_wp ,&
+     &     2.7963_wp , 3.5472_wp/
+      DATA usmall(1,1) , usmall(1,2) , usmall(1,3)/0.0_wp , 0.0_wp , 0._wp/
+      DATA usmall(2,1) , usmall(2,2) , usmall(2,3)/7.9579_wp , 15.9472_wp ,   &
+     &     79.7863_wp/
+      DATA usmall(3,1) , usmall(3,2) , usmall(3,3)/3.0808_wp , 4.4154_wp ,    &
+     &     9.9749_wp/
+      DATA usmall(4,1) , usmall(4,2) , usmall(4,3)/2.2658_wp , 2.9200_wp ,    &
+     &     5.1113_wp/
+      DATA usmall(5,1) , usmall(5,2) , usmall(5,3)/1.9393_wp , 2.3724_wp ,    &
+     &     3.6692_wp/
+      DATA usmall(6,1) , usmall(6,2) , usmall(6,3)/1.7621_wp , 2.0893_wp ,    &
+     &     3.0034_wp/
+      DATA p(1) , p(2) , p(3) , p(4) , p(5) , p(6) , p(7) , p(8) ,      &
+     &     p(9) , p(10)/50.0_wp , 75.0_wp , 90.0_wp , 95.0_wp , 97.5 , 99.0_wp , 99.5_wp ,     &
+     &     99.9_wp , 99.95_wp , 99.99_wp/
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+99001    FORMAT (' ',                                                   &
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TOL    SUBROU&
+     &TINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99002) N
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (G_IO,99003)
+99003       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TOL &
+     &   SUBROUTINE HAS THE VALUE 1 *****')
+            RETURN
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99004) hold
+99004       FORMAT (' ',                                                &
+     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
+     &TO THE TOL    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            RETURN
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      an = N
+!
+!     COMPUTE NORMAL TOLERANCE LIMITS
+!
+!     COMPUTE THE SAMPLE MEAN
+!
+         xbar = 0.0_wp
+         DO i = 1 , N
+            xbar = xbar + X(i)
+         ENDDO
+         xbar = xbar/an
+!
+!     COMPUTE THE SAMPLE STANDARD DEVIATION
+!
+         var = 0.0_wp
+         DO i = 1 , N
+            var = var + (X(i)-xbar)**2
+         ENDDO
+         var = var/(an-1.0_wp)
+         sd = SQRT(var)
+!
+!     COMPUTE THE NORMAL TOLERANCE LIMITS
+!
+         DO i = 1 , 3
+            z = z1(i)
+            f = N - 1
+            IF ( N<=6 ) u = usmall(N,i)
+            IF ( N>6 ) THEN
+               d1 = 1.0_wp + z*SQRT(2.0_wp)/SQRT(f)
+               d2 = 2.0_wp*(z**2-1.0_wp)/(3.0_wp*f)
+               d3 = (z**3-7.0_wp*z)/(9.0_wp*SQRT(2.0_wp)*f**1.5_wp)
+               d4 = (6.0_wp*z**4+14.0_wp*z**2-32.0_wp)/(405.0_wp*f**2.0_wp)
+               d5 = (9.0_wp*z**5+256.0_wp*z**3-433.0_wp*z)                       &
+     &              /(4860.0_wp*SQRT(2.0_wp)*f**2.5_wp)
+               d6 = (12.0_wp*z**6-243.0_wp*z**4-923.0_wp*z**2+1472.0_wp)            &
+     &              /(25515.0_wp*f**3.0_wp)
+               d7 = (3753.0_wp*z**7+4353.0_wp*z**5-289517.0_wp*z**3-289717.0_wp*z)  &
+     &              /(9185400.0_wp*SQRT(2.0_wp)*f**3.5_wp)
+               univ = d1 + d2 + d3 - d4 + d5 + d6 - d7
+               u = 1.0_wp/univ
+               u = SQRT(u)
+            ENDIF
+            DO j = 1 , 6
+               r = a(j) + (b(j)/(c(j)+an))
+               IF ( N<=5 ) r = rsmall(N,j)
+               ak = r*u
+               tmin(i,j) = xbar - ak*sd
+               tmax(i,j) = xbar + ak*sd
+            ENDDO
+         ENDDO
+!
+!     WRITE OUT THE NORMAL TOLERANCE LIMITS
+!
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99005) N
+!
+99005    FORMAT (' ','             NORMAL TOLERANCE LIMITS FOR THE ',I6,&
+     &           ' OBSERVATIONS')
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99006)
+99006    FORMAT (' ','             REFERENCE--CRC HANDBOOK, PAGES 32-35'&
+     &           )
+         WRITE (G_IO,99007)
+99007    FORMAT (' ',                                                   &
+     &'             REFERENCE--GARDINER AND HULL, TECHNOMETRICS, 1966, P&
+     &AGES 115-122')
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99008) xbar , sd
+99008    FORMAT (' ','             SAMPLE MEAN = ',E15.8,               &
+     &           '         SAMPLE STANDARD DEVIATION = ',E15.8)
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99017)
+         DO i = 1 , 3
+            DO j = 1 , 6
+               WRITE (G_IO,99009) pc(i) , pa(j) , tmin(i,j) , tmax(i,j)
+99009          FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',   &
+     &                 F5.2,                                            &
+     &               ' PERCENT OF THE POPULATION IS BETWEEN XBAR-K*S = '&
+     &               ,E12.5,' AND XBAR+K*S = ',E12.5)
+            ENDDO
+            WRITE (G_IO,99017)
+         ENDDO
+!
+!
+!
+!
+!     COMPUTE DISTRIBUTION-FREE TOLERANCE LIMITS
+!
+         k = N/2
+         numsec = 3
+         IF ( k<numsec ) numsec = k
+!
+!     DETERMINE THE SMALLEST 3 AND LARGEST 3 OBSERVATIONS
+!
+         locmin = 1
+         xmin = X(1)
+         DO i = 1 , N
+            IF ( X(i)<=xmin ) locmin = i
+            IF ( X(i)<=xmin ) xmin = X(i)
+         ENDDO
+         locmax = 1
+         xmax = X(1)
+         DO i = 1 , N
+            IF ( X(i)>=xmax ) locmax = i
+            IF ( X(i)>=xmax ) xmax = X(i)
+         ENDDO
+         DO i = 1 , N
+            IF ( i/=locmin ) EXIT
+         ENDDO
+         locmn2 = i
+         xmin2 = X(i)
+         DO i = 1 , N
+            IF ( i/=locmin ) THEN
+               IF ( X(i)<=xmin2 ) locmn2 = i
+               IF ( X(i)<=xmin2 ) xmin2 = X(i)
+            ENDIF
+         ENDDO
+         DO i = 1 , N
+            IF ( i/=locmax ) EXIT
+         ENDDO
+         locmx2 = i
+         xmax2 = X(i)
+         DO i = 1 , N
+            IF ( i/=locmax ) THEN
+               IF ( X(i)>=xmax2 ) locmx2 = i
+               IF ( X(i)>=xmax2 ) xmax2 = X(i)
+            ENDIF
+         ENDDO
+         DO i = 1 , N
+            IF ( i/=locmin .AND. i/=locmn2 ) EXIT
+         ENDDO
+         locmn3 = i
+         xmin3 = X(i)
+         DO i = 1 , N
+            IF ( i/=locmin .AND. i/=locmn2 ) THEN
+               IF ( X(i)<=xmin3 ) locmn3 = i
+               IF ( X(i)<=xmin3 ) xmin3 = X(i)
+            ENDIF
+         ENDDO
+         DO i = 1 , N
+            IF ( i/=locmax .AND. i/=locmx2 ) EXIT
+         ENDDO
+         locmx3 = i
+         xmax3 = X(i)
+         DO i = 1 , N
+            IF ( i/=locmax .AND. i/=locmx2 ) THEN
+               IF ( X(i)>=xmax3 ) locmx3 = i
+               IF ( X(i)>=xmax3 ) xmax3 = X(i)
+            ENDIF
+         ENDDO
+         an1 = an - 1.0_wp
+         an2 = an - 2.0_wp
+         an3 = an - 3.0_wp
+         an4 = an - 4.0_wp
+         an5 = an - 5.0_wp
+         an6 = an - 6.0_wp
+         DO i = 1 , 10
+            d = p(i)/100.0_wp
+            c1(i) = (d**an1)*(-an+an1*d)
+            c1(i) = 1.0_wp - c1(i)
+            q = 1.0_wp - d
+            t = q*an
+            c1(i) = 1.0_wp + an1*q
+            c1(i) = 1.0_wp - (d**an1)*c1(i)
+            c1(i) = c1(i)*100.0_wp
+            IF ( numsec/=1 ) THEN
+               a0 = 6.0_wp*d*d*d
+               a1 = 2.0_wp - 7.0_wp*d + 11.0_wp*d*d
+               a2 = -3.0_wp + 6.0_wp*d
+               a3 = 1.0_wp
+               c2(i) = a0 + a1*t + a2*t*t + a3*t*t*t
+               c2(i) = 1.0_wp - (d**an3)*c2(i)/6.0_wp
+               c2(i) = c2(i)*100.0_wp
+               IF ( numsec/=2 ) THEN
+                  a0 = 120.0_wp*d*d*d*d*d
+                  a1 = 24.0_wp - 126.0_wp*d + 274.0_wp*d*d - 326.0_wp*d*d*d +       &
+     &                 274.0_wp*d*d*d*d
+                  a2 = -50.0_wp + 205.0_wp*d - 320.0_wp*d*d + 225.0_wp*d*d*d
+                  a3 = 35.0_wp - 100.0_wp*d + 85.0_wp*d*d
+                  a4 = -10.0_wp + 15.0_wp*d
+                  a5 = 1.0D0
+                  c3(i) = a0 + a1*t + a2*t*t + a3*t*t*t + a4*t*t*t*t +  &
+     &                    a5*t*t*t*t*t
+                  c3(i) = 1.0_wp - (d**an5)*c3(i)/120.0_wp
+                  c3(i) = c3(i)*100.0_wp
+               ENDIF
+            ENDIF
+         ENDDO
+!
+!     WRITE OUT THE DISTRIBUTION-FREE TOLERANCE LIMITS
+!
+         WRITE (G_IO,99016)
+         WRITE (G_IO,99010) N
+99010    FORMAT (' ',                                                   &
+     &         '            DISTRIBUTION-FREE TOLERANCE LIMITS FOR THE '&
+     &         ,I6,' OBSERVATIONS')
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99011)
+99011    FORMAT (' ',                                                   &
+     &           '            REFERENCE--WILKS, ANNALS, 1941, PAGE 92')
+         WRITE (G_IO,99012)
+99012    FORMAT (' ',                                                   &
+     &           '            REFERENCE--MOOD AND GRABLE, PAGES 416-417'&
+     &           )
+         WRITE (G_IO,99017)
+         WRITE (G_IO,99017)
+         IF ( numsec/=1 ) THEN
+            IF ( numsec/=2 ) THEN
+               DO i = 1 , 10
+                  WRITE (G_IO,99013) c3(i) , p(i) , xmin3 , xmax3
+99013             FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',&
+     &                    F5.2,                                         &
+     &                   ' PERCENT OF THE POPULATION IS BETWEEN X3   = '&
+     &                   ,F8.3,' AND X(N-2) = ',F8.3)
+               ENDDO
+               WRITE (G_IO,99017)
+            ENDIF
+            DO i = 1 , 10
+               WRITE (G_IO,99014) c2(i) , p(i) , xmin2 , xmax2
+99014          FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',   &
+     &                 F5.2,                                            &
+     &                 ' PERCENT OF THE POPULATION IS BETWEEN X2   = ', &
+     &                 F8.3,' AND X(N-1) = ',F8.3)
+            ENDDO
+            WRITE (G_IO,99017)
+         ENDIF
+         DO i = 1 , 10
+            WRITE (G_IO,99015) c1(i) , p(i) , xmin , xmax
+99015       FORMAT (' ','WE ARE ',F6.2,' PERCENT CONFIDENT THAT ',F5.2, &
+     &              ' PERCENT OF THE POPULATION IS BETWEEN XMIN = ',    &
+     &              F8.3,' AND XMAX   = ',F8.3)
+         ENDDO
+      ENDIF
+99016 FORMAT ('1')
+99017 FORMAT (' ')
+!
+END SUBROUTINE TOL

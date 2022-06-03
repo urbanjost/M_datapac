@@ -1,6 +1,13 @@
      program demo_unicdf
-     use M_datapac, only : unicdf
+     !@(#) line plotter graph of function
+     use M_datapac, only : unicdf, plott
      implicit none
-     character(len=*),parameter ::  g='(*(g0,1x))'
-     ! call unicdf(x,y)
+     integer,parameter :: n=40
+     real              :: x(0:n), y(0:n)
+     integer           :: i
+        x=[(real(i)/real(n),i=0,n)]
+        do i=0,n
+           call unicdf(x(i),y(i))
+        enddo
+        call plott(x,y,n+1)
      end program demo_unicdf
