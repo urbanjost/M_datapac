@@ -8,7 +8,16 @@ SYNOPSIS
     Subroutine lamppf (X, Y)
 
 DESCRIPTION
-  Description
+   lamppf(3f) computes the percent point
+   function value for the (tukey) lambda distribution
+   with tail length parameter value = alamba.
+   in general, the probability density function
+   for this distribution is not simple.
+   the percent point function for this distribution is
+   g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+   note that the percent point function of a distribution
+   is identically the same as the inverse cumulative
+   distribution function of the distribution.
 
 OPTIONS
     X   description of parameter
@@ -38,24 +47,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==lamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
       IMPLICIT NONE
-!*--LAMPPF10925
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , P , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LAMPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE (TUKEY) LAMBDA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
-!              IN GENERAL, THE PROBABILITY DENSITY FUNCTION
-!              FOR THIS DISTRIBUTION IS NOT SIMPLE.
-!              THE PERCENT POINT FUNCTION FOR THIS DISTRIBUTION IS
-!              G(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -72,10 +66,8 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -88,11 +80,6 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !                 STUDY OF ORDER STATISTICS', ANNALS OF
 !                 MATHEMATICAL STATISTICS, 18, 1947,
 !                 PAGES 413-426.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

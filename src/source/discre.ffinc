@@ -8,7 +8,31 @@ SYNOPSIS
     Subroutine discre (X, Y)
 
 DESCRIPTION
-  Description
+   discre(3f) 'discretizes' the data
+   of the single precision vector x.
+   the first class interval is from
+   xmin to xmin + xdel;
+   the second class interval is from
+   xmin+ xdel to xmin + 2*xdel;
+   etc.
+   all values in the vector x within a given class
+   will be mapped into the midpoint of that class.
+   all values in the vector x smaller than xmin
+   will be mapped into xmin - (xdel/2.0).
+   all values in the vector x larger than xmax
+   will be mapped into xmax + (xdel/2.0).
+   the use of discre(3f)
+   (and the discr2 and discr3 subroutines)
+   gives the data analyst the capability of
+   constructing a discrete variate from
+   a continuous one.
+   the resulting discrete variate might then
+   (for example) be analyzed in itself for
+   gross structure, or for adherence to some
+   theroetical discrete probability model,
+   or the discrete variate might be used
+   as a subset definition vector for some
+   other variate.
 
 OPTIONS
     X   description of parameter
@@ -38,40 +62,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==discre.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
       IMPLICIT NONE
-!*--DISCRE4903
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
       INTEGER i , icounl , icount , icounu , ip , ipr , N , numcla
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DISCRE
 !
-!     PURPOSE--THIS SUBROUTINE 'DISCRETIZES' THE DATA
-!              OF THE SINGLE PRECISION VECTOR X.
-!              THE FIRST CLASS INTERVAL IS FROM
-!              XMIN TO XMIN + XDEL;
-!              THE SECOND CLASS INTERVAL IS FROM
-!              XMIN+ XDEL TO XMIN + 2*XDEL;
-!              ETC.
-!              ALL VALUES IN THE VECTOR X WITHIN A GIVEN CLASS
-!              WILL BE MAPPED INTO THE MIDPOINT OF THAT CLASS.
-!              ALL VALUES IN THE VECTOR X SMALLER THAN XMIN
-!              WILL BE MAPPED INTO XMIN - (XDEL/2.0).
-!              ALL VALUES IN THE VECTOR X LARGER THAN XMAX
-!              WILL BE MAPPED INTO XMAX + (XDEL/2.0).
-!              THE USE OF THIS SUBROUTINE
-!              (AND THE DISCR2 AND DISCR3 SUBROUTINES)
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              CONSTRUCTING A DISCRETE VARIATE FROM
-!              A CONTINUOUS ONE.
-!              THE RESULTING DISCRETE VARIATE MIGHT THEN
-!              (FOR EXAMPLE) BE ANALYZED IN ITSELF FOR
-!              GROSS STRUCTURE, OR FOR ADHERENCE TO SOME
-!              THEROETICAL DISCRETE PROBABILITY MODEL,
-!              OR THE DISCRETE VARIATE MIGHT BE USED
-!              AS A SUBSET DEFINITION VECTOR FOR SOME
-!              OTHER VARIATE.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
@@ -111,10 +105,7 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
 !                   OF N FOR THIS SUBROUTINE.
 !                 --XDEL SHOULD BE POSITIVE.
 !                 --(XMAX-XMIN)/XDEL SHOULD NOT EXCEED 999.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--IT IS SUGGESTED THAT XMIN, XDEL,
 !              AND XMAX HAVE AT LEAST 1 MORE
 !              DECIMAL PLACE THAN THE DATA VALUES
@@ -135,12 +126,6 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
 !              TO HAVE     CALL DISCRE(X,N,0.5,1.0,20.5,X)
 !              IN WHICH THE VARIABLE NAME      X    IS USED
 !              AS BOTH THE FIRST AND SIXTH ARGUMENTS.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --NOVEMBER  1975.
 !

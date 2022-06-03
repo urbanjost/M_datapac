@@ -8,7 +8,57 @@ SYNOPSIS
     Subroutine plot8 (X, Y)
 
 DESCRIPTION
-  Description
+   plot8(3f) yields a one-page printer plot
+   of y(i) versus x(i):
+
+     1. with special plot characters;
+     2. with the vertical (y) axis min and max
+        and the horizontal (x) axis min and max
+        values specified by the data analyst; and
+     3. with only those points (x(i),y(i)) plotted
+        for which the corresponding value of d(i)
+        is between the specified values of dmin and dmax.
+
+   the 'special plotting character' capability
+   allows the data analyst to incorporate information
+   from a third variable (aside from y and x) into
+   the plot.
+
+   the plot character used at the i-th plotting
+   position (that is, at the coordinate (x(i),y(i)))
+   will be
+
+     1 if char(i) is between  0.5 and  1.5
+     2 if char(i) is between  1.5 and  2.5
+       .
+       .
+       .
+     9 if char(i) is between  8.5 and  9.5
+     0 if char(i) is between  9.5 and 10.5
+     a if char(i) is between 10.5 and 11.5
+     b if char(i) is between 11.5 and 12.5
+     c if char(i) is between 12.5 and 13.5
+       .
+       .
+       .
+     w if char(i) is between 32.5 and 33.5
+     x if char(i) is between 33.5 and 34.5
+     y if char(i) is between 34.5 and 35.5
+     z if char(i) is between 35.5 and 36.5
+     x if char(i) is any value outside the range
+                              0.5 to  36.5.
+   
+   the use of the ymin, ymax, xmin, and xmax
+   specifications allows the data analyst
+   to control fully the plot axis limits,
+   so as, for example, to zero-in on an
+   interesting sub-region of a previous plot.
+   
+   the use of the subset defintion vector d
+   gives the data analyst the capability of
+   plotting subsets of the data,
+   where the subset is defined
+   by values in the vector d.
 
 OPTIONS
     X   description of parameter
@@ -38,64 +88,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plot8.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
       IMPLICIT NONE
-!*--PLOT817214
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable ,   &
      &     Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOT8
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I):
-!              1) WITH SPECIAL PLOT CHARACTERS;
-!              2) WITH THE VERTICAL (Y) AXIS MIN AND MAX
-!                 AND THE HORIZONTAL (X) AXIS MIN AND MAX
-!                 VALUES SPECIFIED BY THE DATA ANALYST; AND
-!              3) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
-!                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
-!                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX.
-!
-!              THE 'SPECIAL PLOTTING CHARACTER' CAPABILITY
-!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
-!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
-!              THE PLOT.
-!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
-!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
-!              WILL BE
-!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
-!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
-!                .
-!                .
-!                .
-!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
-!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
-!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
-!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
-!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
-!                .
-!                .
-!                .
-!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
-!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
-!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
-!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
-!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
-!                                       0.5 TO  36.5.
-!
-!              THE USE OF THE YMIN, YMAX, XMIN, AND XMAX
-!              SPECIFICATIONS ALLOWS THE DATA ANALYST
-!              TO CONTROL FULLY THE PLOT AXIS LIMITS,
-!              SO AS, FOR EXAMPLE, TO ZERO-IN ON AN
-!              INTERESTING SUB-REGION OF A PREVIOUS PLOT.
-!
-!              THE USE OF THE SUBSET DEFINTION VECTOR D
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              PLOTTING SUBSETS OF THE DATA,
-!              WHERE THE SUBSET IS DEFINED
-!              BY VALUES IN THE VECTOR D.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -135,10 +132,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -173,11 +167,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
 !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 NEW YORK CITY, DECEMBER 27-30, 1973.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JANUARY   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.

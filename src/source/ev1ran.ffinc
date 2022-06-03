@@ -8,7 +8,14 @@ SYNOPSIS
     Subroutine ev1ran (X, Y)
 
 DESCRIPTION
-  Description
+   ev1ran(3f) generates a random sample of size n
+   from the extreme value type 1 distribution.
+   the prototype extreme value type 1 distribution used
+   herein has mean = euler's number = 0.57721566
+   and standard deviation = pi/sqrt(6) = 1.28254983.
+   this distribution is defined for all x
+   and has the probability density function
+   f(x) = (exp(-x)) * (exp(-(exp(-x))))
 
 OPTIONS
     X   description of parameter
@@ -38,22 +45,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==ev1ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1RAN(N,Iseed,X)
       IMPLICIT NONE
-!*--EV1RAN5499
-!*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV1RAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE EXTREME VALUE TYPE 1 DISTRIBUTION.
-!              THE PROTOTYPE EXTREME VALUE TYPE 1 DISTRIBUTION USED
-!              HEREIN HAS MEAN = EULER'S NUMBER = 0.57721566
-!              AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (EXP(-X)) * (EXP(-(EXP(-X))))
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -71,7 +65,6 @@ REAL(kind=wp) :: X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,

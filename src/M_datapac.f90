@@ -216,11 +216,11 @@ contains
 !!
 !!##DESCRIPTION
 !!
-!! This subroutine computes the sample autocorrelation coefficient of the
-!! data in the input vector X. The sample autocorrelation coefficient
-!! equals the correlation between X(I) and X(I+1) over the entire sample.
-!! The autocorrelation coefficient coefficient will be a single precision
-!! value between -1.0 and 1.0 (inclusively).
+!!    AUTOCO(3f) computes the sample autocorrelation coefficient of the
+!!    data in the input vector X. The sample autocorrelation coefficient
+!!    equals the correlation between X(I) and X(I+1) over the entire sample.
+!!    The autocorrelation coefficient coefficient will be a single precision
+!!    value between -1.0 and 1.0 (inclusively).
 !!
 !!##INPUT  ARGUMENTS
 !!    X        The single precision vector of (unsorted) observations.
@@ -341,11 +341,10 @@ end subroutine autoco
 !!
 !!##DESCRIPTION
 !!
-!!    BETRAN(3f) generates a random sample of size N from the beta distribution
-!!    with single precision shape parameters ALPHA and BETA.
+!!    BETRAN(3f) generates a random sample of size N from the beta
+!!    distribution with single precision shape parameters ALPHA and BETA.
 !!
-!!    The prototype beta distribution used
-!!    herein has
+!!    The prototype beta distribution used herein has
 !!
 !!       mean = ALPHA/(ALPHA+BETA)
 !!
@@ -353,8 +352,8 @@ end subroutine autoco
 !!
 !!       standard_deviation=sqrt((ALPHA*BETA)/((ALPHA+BETA)**2)*(ALPHA+BETA+1))
 !!
-!!    This distribution is defined for all X between 0.0 (inclusively) and 1.0
-!!    (inclusively) and has the probability density function
+!!    This distribution is defined for all X between 0.0 (inclusively)
+!!    and 1.0 (inclusively) and has the probability density function
 !!
 !!       f(x) = (1/constant) * x**(alpha-1) * (1.0-x)**(beta-1)
 !!
@@ -561,10 +560,30 @@ END SUBROUTINE BETRAN
 !!     Subroutine bincdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    BINCDF(3f) computes the cumulative distribution function value
+!!    at the single precision value x for the binomial distribution with
+!!    single precision 'bernoulli probability' parameter = p, and integer
+!!    'number of bernoulli trials' parameter = n.
+!!
+!!    the binomial distribution used herein has mean = n*p and standard
+!!    deviation = sqrt(n*p*(1-p)).
+!!
+!!    this distribution is defined for all discrete integer x between 0
+!!    (inclusively) and n (inclusively).
+!!
+!!    this distribution has the probability function
+!!
+!!        f(x) = c(n,x) * p**x * (1-p)**(n-x).
+!!
+!!    where c(n,x) is the combinatorial function equaling the number of
+!!    combinations of n items taken x at a time.
+!!
+!!    the binomial distribution is the distribution of the number of
+!!    successes in n bernoulli (0,1) trials where the probability of success
+!!    in a single trial = p.
 !!
 !!##OPTIONS
-!!     X   description of parameter
+!!     x   description of parameter
 !!     Y   description of parameter
 !!
 !!##EXAMPLES
@@ -587,41 +606,15 @@ END SUBROUTINE BETRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --MAY       1977.
 !*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE BINCDF(X,P,N,Cdf)
 IMPLICIT NONE
-!*--BINCDF356
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , Cdf , del , fintx , P , X
       INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
      &        N , nu1 , nu2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT BINCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE X
-!              FOR THE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = P,
-!              AND INTEGER 'NUMBER OF BERNOULLI TRIALS'
-!              PARAMETER = N.
-!              THE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = N*P
-!              AND STANDARD DEVIATION = SQRT(N*P*(1-P)).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL
-!              DISCRETE INTEGER X BETWEEN 0 (INCLUSIVELY)
-!              AND N (INCLUSIVELY).
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(N,X) * P**X * (1-P)**(N-X).
-!              WHERE C(N,X) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF N ITEMS
-!              TAKEN X AT A TIME.
-!              THE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF
-!              SUCCESSES IN N BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -653,10 +646,8 @@ REAL(kind=wp) :: an , Cdf , del , fintx , P , X
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --N SHOULD BE A POSITIVE INTEGER.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
 !              DISTRIBUTION FUNCTION SUBROUTINE
@@ -704,8 +695,6 @@ REAL(kind=wp) :: an , Cdf , del , fintx , P , X
 !                 NATIONAL BUREAU OF STANDARDS
 !                 WASHINGTON, D. C. 20234
 !                 PHONE:  301-921-2315
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --MAY       1977.
 !
 !---------------------------------------------------------------------
 !
@@ -913,7 +902,31 @@ END SUBROUTINE BINCDF
 !!     Subroutine binppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    binppf(3f) computes the percent point function value at the single
+!!    precision value p for the binomial distribution with single precision
+!!    'bernoulli probability' parameter = ppar, and integer 'number of
+!!    bernoulli trials' parameter = n.
+!!
+!!    the binomial distribution used herein has mean = n*ppar and standard
+!!    deviation = sqrt(n*ppar*(1-ppar)).
+!!
+!!    this distribution is defined for all discrete integer x between 0
+!!    (inclusively) and n (inclusively).
+!!
+!!    this distribution has the probability function
+!!
+!!       f(x) = c(n,x) * ppar**x * (1-ppar)**(n-x).
+!!
+!!    where c(n,x) is the combinatorial function equaling the number of
+!!    combinations of n items taken x at a time.
+!!
+!!    the binomial distribution is the distribution of the number of
+!!    successes in n bernoulli (0,1) trials where the probability of success
+!!    in a single trial = ppar.
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -939,41 +952,15 @@ END SUBROUTINE BINCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--NOVEMBER  1975.
 !*==binppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE BINPPF(P,Ppar,N,Ppf)
 
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
      &     x0 , x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
 
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE P
-!              FOR THE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = PPAR,
-!              AND INTEGER 'NUMBER OF BERNOULLI TRIALS'
-!              PARAMETER = N.
-!              THE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = N*PPAR
-!              AND STANDARD DEVIATION = SQRT(N*PPAR*(1-PPAR)).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL
-!              DISCRETE INTEGER X BETWEEN 0 (INCLUSIVELY)
-!              AND N (INCLUSIVELY).
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(N,X) * PPAR**X * (1-PPAR)**(N-X).
-!              WHERE C(N,X) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF N ITEMS
-!              TAKEN X AT A TIME.
-!              THE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF
-!              SUCCESSES IN N BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = PPAR.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (INCLUSIVELY))
@@ -1006,7 +993,6 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, BINCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -1045,13 +1031,6 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
 !                 OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
 !               --OWEN, HANDBOOK OF STATISTICAL
 !                 TABLES, 1962, PAGES 264-272.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
       DOUBLE PRECISION dppar
@@ -1332,7 +1311,25 @@ END SUBROUTINE BINPPF
 !!     Subroutine binran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    binran(3f) generates a random sample of size n from the binomial
+!!    distribution with single precision 'bernoulli probability' parameter =
+!!    p, and integer 'number of bernoulli trials' parameter = npar.
+!!
+!!    the binomial distribution used herein has mean = npar*p and standard
+!!    deviation = sqrt(npar*p*(1-p)).
+!!
+!!    this distribution is defined for all discrete integer x between 0
+!!    (inclusively) and npar (inclusively).  this distribution has the
+!!    probability function
+!!
+!!        f(x) = c(npar,x) * p**x * (1-p)**(npar-x).
+!!
+!!    where c(npar,x) is the combinatorial function equaling the number of
+!!    combinations of npar items taken x at a time.
+!!
+!!    the binomial distribution is the distribution of the number of
+!!    successes in npar bernoulli (0,1) trials where the probability of
+!!    success in a single trial = p.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -1358,39 +1355,16 @@ END SUBROUTINE BINPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
 !*==binran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
-      IMPLICIT NONE
-!*--BINRAN1061
-!*** Start of declarations inserted by SPAG
+SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
+IMPLICIT NONE
 REAL(kind=wp) :: g(1) , P , u(1) , X
       INTEGER i , ig , ipr , Iseed , isum , j , N , Npar
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT BINRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = P,
-!              AND INTEGER 'NUMBER OF BERNOULLI TRIALS'
-!              PARAMETER = NPAR.
-!              THE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = NPAR*P
-!              AND STANDARD DEVIATION = SQRT(NPAR*P*(1-P)).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL
-!              DISCRETE INTEGER X BETWEEN 0 (INCLUSIVELY)
-!              AND NPAR (INCLUSIVELY).
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(NPAR,X) * P**X * (1-P)**(NPAR-X).
-!              WHERE C(NPAR,X) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF NPAR ITEMS
-!              TAKEN X AT A TIME.
-!              THE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF
-!              SUCCESSES IN NPAR BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -1420,9 +1394,7 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --NPAR SHOULD BE A POSITIVE INTEGER.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, GEORAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -1459,16 +1431,6 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !                 OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
 !               --TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 39-40.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING DIVISION
-!                 CENTER FOR APPLIED MATHEMATICS
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-3651
-!     VERSION NUMBER--82/7
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --DECEMBER  1981.
-!     UPDATED         --MAY       1982.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -1571,7 +1533,13 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !!     Subroutine caucdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    caucdf(3f) computes the cumulative distribution function value for
+!!    the cauchy distribution with median = 0 and 75% point = 1.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/pi)*(1/(1+x*x))
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -1597,23 +1565,16 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==caucdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUCDF(X,Cdf)
       IMPLICIT NONE
 !*--CAUCDF1272
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , pi , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CAUCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE CAUCHY DISTRIBUTION
-!              WITH MEDIAN = 0 AND 75% POINT = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/PI)*(1/(1+X*X)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -1621,12 +1582,7 @@ REAL(kind=wp) :: Cdf , pi , X
 !                                DISTRIBUTION FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
-!     PRINTING--NONE.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--ATAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
 !     WRITTEN BY--JAMES F. FILLIBEN
@@ -1634,9 +1590,6 @@ REAL(kind=wp) :: Cdf , pi , X
 !                 NATIONAL BUREAU OF STANDARDS
 !                 WASHINGTON, D. C. 20234
 !                 PHONE:  301-921-2315
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
@@ -1663,7 +1616,13 @@ REAL(kind=wp) :: Cdf , pi , X
 !!     Subroutine caupdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    caupdf(3f) computes the probability density function value for the
+!!    cauchy distribution with median = 0 and 75% point = 1.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/pi)*(1/(1+x*x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -1689,23 +1648,16 @@ REAL(kind=wp) :: Cdf , pi , X
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUPDF(X,Pdf)
       IMPLICIT NONE
 !*--CAUPDF1328
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: c , Pdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CAUPDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
-!              FUNCTION VALUE FOR THE CAUCHY DISTRIBUTION
-!              WITH MEDIAN = 0 AND 75% POINT = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/PI)*(1/(1+X*X)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -1713,26 +1665,12 @@ REAL(kind=wp) :: c , Pdf , X
 !                                DENSITY FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
 !             FUNCTION VALUE PDF.
-!     PRINTING--NONE.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
-      DATA c/.31830988618379_wp/
+      DATA c/0.31830988618379_wp/
 !
       ipr = 6
 !
@@ -1754,7 +1692,29 @@ END SUBROUTINE CAUPDF
 !!     Subroutine cauplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    cauplt(3f) generates a Cauchy probability plot.
+!!
+!!    the prototype Cauchy distribution used herein has median = 0 and 75%
+!!    point = 1.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/pi) * (1/(1+x*x)).
+!!
+!!    as used herein, a probability plot for a distribution is a plot
+!!    of the ordered observations versus the order statistic medians for
+!!    that distribution.
+!!
+!!    the Cauchy probability plot is useful in graphically testing the
+!!    composite (that is, location and scale parameters need not be
+!!    specified) hypothesis that the underlying distribution from which
+!!    the data have been randomly drawn is the Cauchy distribution.
+!!
+!!    if the hypothesis is true, the probability plot should be near-linear.
+!!
+!!    a measure of such linearity is given by the calculated probability
+!!    plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -1783,35 +1743,10 @@ END SUBROUTINE CAUPDF
 !*==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUPLT(X,N)
       IMPLICIT NONE
-!*--CAUPLT1384
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
      &     wbar , WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CAUPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A CAUCHY
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE CAUCHY DISTRIBUTION USED HEREIN
-!              HAS MEDIAN = 0 AND 75% POINT = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/PI) * (1/(1+X*X)).
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE CAUCHY PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE CAUCHY DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -1823,7 +1758,6 @@ REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -1833,11 +1767,7 @@ REAL(kind=wp) :: an , arg , cc , hold , pi , sum1 , sum2 , sum3 , tau , W ,   &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
+
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -1951,7 +1881,17 @@ END SUBROUTINE CAUPLT
 !!     Subroutine cauppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    cauppf(3f) computes the percent point function value for the cauchy
+!!    distribution with median = 0 and 75% point = 1.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/pi)*(1/(1+x*x)).
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -1980,23 +1920,9 @@ END SUBROUTINE CAUPLT
 !*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUPPF(P,Ppf)
       IMPLICIT NONE
-!*--CAUPPF1545
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg , P , pi , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CAUPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE CAUCHY DISTRIBUTION
-!              WITH MEDIAN = 0 AND 75% POINT = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/PI)*(1/(1+X*X)).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -2007,10 +1933,8 @@ REAL(kind=wp) :: arg , P , pi , Ppf
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -2061,7 +1985,13 @@ REAL(kind=wp) :: arg , P , pi , Ppf
 !!     Subroutine cauran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    CAURAN(3f) generates a random sample of size N from the Cauchy
+!!    distribution with median = 0 and 75% point = 1.
+!!
+!!    This distribution is defined for all X and has the probability
+!!    density function
+!!
+!!        f(X) = (1/pi)*(1/(1+X*X))
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2090,20 +2020,9 @@ REAL(kind=wp) :: arg , P , pi , Ppf
 !*==cauran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAURAN(N,Iseed,X)
       IMPLICIT NONE
-!*--CAURAN1622
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg , pi , X
       INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CAUPPF
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE CAUCHY DISTRIBUTION
-!              WITH MEDIAN = 0 AND 75% POINT = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/PI)*(1/(1+X*X)).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -2120,7 +2039,6 @@ REAL(kind=wp) :: arg , pi , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGE 15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -2198,7 +2116,16 @@ REAL(kind=wp) :: arg , pi , X
 !!     Subroutine causf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    causf(3f) computes the sparsity
+!!    function value for the cauchy distribution
+!!    with median = 0 and 75% point = 1.
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = (1/pi)*(1/(1+x*x)).
+!!    note that the sparsity function of a distribution
+!!    is the derivative of the percent point function,
+!!    and also is the reciprocal of the probability
+!!    density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2227,24 +2154,9 @@ REAL(kind=wp) :: arg , pi , X
 !*==causf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUSF(P,Sf)
       IMPLICIT NONE
-!*--CAUSF1738
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg , P , pi , Sf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CAUSF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE SPARSITY
-!              FUNCTION VALUE FOR THE CAUCHY DISTRIBUTION
-!              WITH MEDIAN = 0 AND 75% POINT = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/PI)*(1/(1+X*X)).
-!              NOTE THAT THE SPARSITY FUNCTION OF A DISTRIBUTION
-!              IS THE DERIVATIVE OF THE PERCENT POINT FUNCTION,
-!              AND ALSO IS THE RECIPROCAL OF THE PROBABILITY
-!              DENSITY FUNCTION (BUT IN UNITS OF P RATHER THAN X).
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
@@ -2255,10 +2167,8 @@ REAL(kind=wp) :: arg , P , pi , Sf
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -2267,11 +2177,6 @@ REAL(kind=wp) :: arg , P , pi , Sf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -2312,7 +2217,12 @@ REAL(kind=wp) :: arg , P , pi , Sf
 !!     Subroutine chscdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    chscdf(3f) computes the cumulative distribution
+!!    function value for the chi-squared distribution
+!!    with integer degrees of freedom parameter = nu.
+!!    this distribution is defined for all non-negative x.
+!!    the probability density function is given
+!!    in the references below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2341,20 +2251,9 @@ REAL(kind=wp) :: arg , P , pi , Sf
 !*==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSCDF(X,Nu,Cdf)
       IMPLICIT NONE
-!*--CHSCDF1816
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
       INTEGER i , ibran , ievodd , imax , imin , ipr , Nu , nucut
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CHSCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE CHI-SQUARED DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X.
-!              THE PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -2373,7 +2272,6 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DEXP.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -2384,11 +2282,6 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
 !                 FOR STATISTICIANS, VOLUME 1, 1954,
 !                 PAGES 122-131.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -2590,7 +2483,27 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !!     Subroutine chsplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    chsplt(3f) generates a chi-squared
+!!    probability plot (with integer
+!!    degrees of freedom parameter value = nu).
+!!    the prototype chi-squared distribution used
+!!    herein is defined for all non-negative x,
+!!    and its probability density function is given
+!!    in the references below.
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the chi-squared probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the  chi-squared distribution
+!!    with degrees of freedom parameter value = nu.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2619,37 +2532,11 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !*==chsplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSPLT(X,N,Nu)
       IMPLICIT NONE
-!*--CHSPLT2058
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope
       INTEGER i , ipr , iupper , N , Nu
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CHSPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A CHI-SQUARED
-!              PROBABILITY PLOT (WITH INTEGER
-!              DEGREES OF FREEDOM PARAMETER VALUE = NU).
-!              THE PROTOTYPE CHI-SQUARED DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND ITS PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE CHI-SQUARED PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE  CHI-SQUARED DISTRIBUTION
-!              WITH DEGREES OF FREEDOM PARAMETER VALUE = NU.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -2665,7 +2552,6 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, CHSPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
 !                 PLOTS FOR THE GAMMA DISTRIBUTION',
 !                 TECHNOMETRICS, 1962, PAGES 1-15.
@@ -2682,11 +2568,6 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 46-51.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
@@ -2818,7 +2699,17 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !!     Subroutine chsppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    chsppf(3f) computes the percent point function value for the
+!!    chi-squared distribution with integer degrees of freedom parameter
+!!    = nu.
+!!
+!!    the chi-squared distribution used herein is defined for all
+!!    non-negative x, and its probability density function is given in
+!!    references 2, 3, and 4 below.
+!!
+!!    note that the percent point function of a distribution is identically
+!!    the same as the inverse cumulative distribution function of the
+!!    distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2847,24 +2738,9 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !*==chsppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSPPF(P,Nu,Ppf)
       IMPLICIT NONE
-!*--CHSPPF2250
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit , Nu
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CHSPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE CHI-SQUARED DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
-!              THE CHI-SQUARED DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND ITS PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN REFERENCES 2, 3, AND 4 BELOW.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -2882,10 +2758,8 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !     RESTRICTIONS--NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
 !               COMPARED TO THE KNOWN NU = 2 (EXPONENTIAL)
 !               RESULTS, AGREEMENT WAS HAD OUT TO 6 SIGNIFICANT
@@ -2911,11 +2785,6 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 46-51.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -3089,7 +2958,9 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !!     Subroutine chsran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    chsran(3f) generates a random sample of size n
+!!    from the chi-squared distribution
+!!    with integer degrees of freedom parameter = nu.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3118,17 +2989,9 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !*==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSRAN(N,Nu,Iseed,X)
       IMPLICIT NONE
-!*--CHSRAN2486
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
       INTEGER i , ipr , Iseed , j , N , Nu
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CHSRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE CHI-SQUARED DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -3149,7 +3012,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 34-35.
 !               --MOOD AND GRABLE, INTRODUCTION TO THE
@@ -3244,7 +3106,14 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !!     Subroutine code (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    code(3f) codes the elements
+!!    of the input vector x
+!!    and puts the coded values into the output vector y.
+!!    the coding is as follows--
+!!    the minimum is coded as 1.0.
+!!    the next larger value as 2.0,
+!!    the next larger value as 3.0,
+!!    etc.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3273,22 +3142,9 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !*==code.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CODE(X,N,Y)
       IMPLICIT NONE
-!*--CODE2619
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
       INTEGER i , ipr , iupper , j , N , numdis
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CODE
 !
-!     PURPOSE--THIS SUBROUTINE CODES THE ELEMENTS
-!              OF THE INPUT VECTOR X
-!              AND PUTS THE CODED VALUES INTO THE OUTPUT VECTOR Y.
-!              THE CODING IS AS FOLLOWS--
-!              THE MINIMUM IS CODED AS 1.0.
-!              THE NEXT LARGER VALUE AS 2.0,
-!              THE NEXT LARGER VALUE AS 3.0,
-!              ETC.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
 !                                OF OBSERVATIONS TO BE CODED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -3304,21 +3160,13 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--ALL OCCURRANCES OF THE MINIMUM ARE CODED AS 1.0;
 !              ALL OCCURANCES OF THE NEXT LARGER VALUE
 !              ARE CODED AS 2.0;
 !              ALL OCCURANCES OF THE NEXT LARGER VALUE
 !              ARE CODED AS 3.0, ETC.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--OCTOBER  1975.
 !     UPDATED         --NOVEMBER 1975.
 !     UPDATED         --JUNE     1977.
@@ -3427,7 +3275,9 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 !!     Subroutine copy (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    copy(3f) copies the contents
+!!    of the single precision vector x into the
+!!    single precision vector y.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3456,17 +3306,9 @@ REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 !*==copy.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE COPY(X,N,Y)
       IMPLICIT NONE
-!*--COPY2766
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , X , Y
       INTEGER i , ipr , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT COPY
 !
-!     PURPOSE--THIS SUBROUTINE COPIES THE CONTENTS
-!              OF THE SINGLE PRECISION VECTOR X INTO THE
-!              SINGLE PRECISION VECTOR Y.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE COPIED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -3481,20 +3323,11 @@ REAL(kind=wp) :: hold , X , Y
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE FIRST ELEMENT OF X IS COPIED INTO THE FIRST
 !              ELEMENT OF Y; THE SECOND ELEMENT OF X IS COPIED INTO
 !              THE SECOND ELEMENT OF Y, ETC.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -3549,7 +3382,11 @@ REAL(kind=wp) :: hold , X , Y
 !!     Subroutine corr (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    corr(3f) computes the
+!!    sample correlation coefficient
+!!    between the 2 sets of data in the input vectors x and y.
+!!    the sample correlation coefficient will be a single
+!!    precision value between -1.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3578,19 +3415,9 @@ REAL(kind=wp) :: hold , X , Y
 !*==corr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CORR(X,Y,N,Iwrite,C)
       IMPLICIT NONE
-!*--CORR2852
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
       INTEGER i , iflag , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CORR
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE CORRELATION COEFFICIENT
-!              BETWEEN THE 2 SETS OF DATA IN THE INPUT VECTORS X AND Y.
-!              THE SAMPLE CORRELATION COEFFICIENT WILL BE A SINGLE
-!              PRECISION VALUE BETWEEN -1.0 AND 1.0 (INCLUSIVELY).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
@@ -3629,21 +3456,14 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 235-236.
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 292-293.
 !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGES 172-198.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -3733,7 +3553,10 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 !!     Subroutine count (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    count(3f) computes
+!!    the number of observations
+!!    between xmin and xmax (inclusively)
+!!    in the input vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3762,18 +3585,9 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 !*==count.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
       IMPLICIT NONE
-!*--COUNT3000
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
       INTEGER i , ipr , isum , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT COUNT
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES
-!              THE NUMBER OF OBSERVATIONS
-!              BETWEEN XMIN AND XMAX (INCLUSIVELY)
-!              IN THE INPUT VECTOR X.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -3806,19 +3620,11 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGES 207-213.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGES 81-82, 228-231.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
@@ -3896,7 +3702,20 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 !!     Subroutine decomp (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    decomp(3f) decomposes the weighted data matrix q which originally
+!!    = the n by k data matrix x times the square root of the weights (in w).
+!!
+!!    the original q is decomposed into a new q times the inverse of a
+!!    diagonal matrix d times the diagonal matrix d times an upper triangular
+!!    matrix r.
+!!
+!!    the new n by k q has orthogonal columns.
+!!
+!!    a second output from decomp(3f) is the rank and status
+!!    (non-singular or singular) of the data matrix x.
+!!
+!!    a third output from decomp(3f) is the numerically optimal pivot
+!!    points for the decomposition.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3925,8 +3744,6 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 !*==decomp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
       IMPLICIT NONE
-!*--DECOMP3127
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
      &     Tol , tol2 , WS
       INTEGER i , Insing , ip , IPIvot , iqarg , iqarg1 , iqarg2 ,      &
@@ -3934,17 +3751,6 @@ REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
      &        K , l , m , N
 
 !
-!     PURPOSE--THIS SUBROUTINE DECOMPOSES THE WEIGHTED DATA
-!     MATRIX Q WHICH ORIGINALLY = THE N BY K DATA MATRIX X
-!     TIMES THE SQUARE ROOT OF THE WEIGHTS (IN W).
-!     THE ORIGINAL Q IS DECOMPOSED INTO A NEW Q TIMES THE
-!     INVERSE OF A DIAGONAL MATRIX D TIMES THE DIAGONAL MATRIX D
-!     TIMES AN UPPER TRIANGULAR MATRIX R.
-!     THE NEW N BY K Q HAS ORTHOGONAL COLUMNS.
-!     A SECOND OUTPUT FROM THIS SUBROUTINE IS THE RANK AND
-!     STATUS (NON-SINGULAR OR SINGULAR) OF THE DATA MATRIX X.
-!     A THIRD OURPUT FROM THIS SUBROUTINE IS THE NUMERICALLY
-!     OPTIMAL PIVOT POINTS FOR THE DECOMPOSITION.
 !     X--NOT USED
 !     Q--USED AND CHANGED
 !     R--DEFINED
@@ -4103,7 +3909,20 @@ REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
 !!     Subroutine define (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    define(3f) sets all of the elements
+!!    in the single precision vector x
+!!    equal to xnew.
+!!    define(3f) is useful in defining a
+!!    vector of constants.
+!!    for example, if the data analyst wishes
+!!    to treat the equal weights case in doing
+!!    a polynomial regression, this could
+!!    be done by defining as, say, 1.0
+!!    the input weight vector w to the
+!!    datapac poly subroutine;
+!!    such defining could be done
+!!    by use of the define subroutine
+!!    with xnew = 1.0.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4132,28 +3951,9 @@ REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
 !*==define.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEFINE(X,N,Xnew)
       IMPLICIT NONE
-!*--DEFINE3301
-!*** Start of declarations inserted by SPAG
       INTEGER i , ipr , N
 REAL(kind=wp) :: X , Xnew
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DEFINE
 !
-!     PURPOSE--THIS SUBROUTINE SETS ALL OF THE ELEMENTS
-!              IN THE SINGLE PRECISION VECTOR X
-!              EQUAL TO XNEW.
-!              THIS SUBROUTINE IS USEFUL IN DEFINING A
-!              VECTOR OF CONSTANTS.
-!              FOR EXAMPLE, IF THE DATA ANALYST WISHES
-!              TO TREAT THE EQUAL WEIGHTS CASE IN DOING
-!              A POLYNOMIAL REGRESSION, THIS COULD
-!              BE DONE BY DEFINING AS, SAY, 1.0
-!              THE INPUT WEIGHT VECTOR W TO THE
-!              DATAPAC POLY SUBROUTINE;
-!              SUCH DEFINING COULD BE DONE
-!              BY USE OF THE DEFINE SUBROUTINE
-!              WITH XNEW = 1.0.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -4172,16 +3972,7 @@ REAL(kind=wp) :: X , Xnew
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED  VERSION--JULY      1976.
 !
@@ -4238,7 +4029,22 @@ REAL(kind=wp) :: X , Xnew
 !!     Subroutine delete (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    delete(3f) deletes all observations in the
+!!    single precision vector x which are inside
+!!    the closed (inclusive) interval
+!!    defined by xmin and xmax,
+!!    while retaining all observations outside of
+!!    this interval.
+!!    thus all observations in x which are larger
+!!    than or equal to xmin and smaller than or
+!!    equal to xmax are deleted from x.
+!!    delete(3f) (and the
+!!    replac and retain subroutines)
+!!    gives the data analyst the ability to
+!!    easily 'clean up' a data set which has
+!!    missing and/or outlying observations
+!!    so that a more appropriate subsequent
+!!    data analysis may be performed.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4267,30 +4073,9 @@ REAL(kind=wp) :: X , Xnew
 !*==delete.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
       IMPLICIT NONE
-!*--DELETE3400
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DELETE
 !
-!     PURPOSE--THIS SUBROUTINE DELETES ALL OBSERVATIONS IN THE
-!              SINGLE PRECISION VECTOR X WHICH ARE INSIDE
-!              THE CLOSED (INCLUSIVE) INTERVAL
-!              DEFINED BY XMIN AND XMAX,
-!              WHILE RETAINING ALL OBSERVATIONS OUTSIDE OF
-!              THIS INTERVAL.
-!              THUS ALL OBSERVATIONS IN X WHICH ARE LARGER
-!              THAN OR EQUAL TO XMIN AND SMALLER THAN OR
-!              EQUAL TO XMAX ARE DELETED FROM X.
-!              THIS SUBROUTINE (AND THE
-!              REPLAC AND RETAIN SUBROUTINES)
-!              GIVES THE DATA ANALYST THE ABILITY TO
-!              EASILY 'CLEAN UP' A DATA SET WHICH HAS
-!              MISSING AND/OR OUTLYING OBSERVATIONS
-!              SO THAT A MORE APPROPRIATE SUBSEQUENT
-!              DATA ANALYSIS MAY BE PERFORMED.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -4324,10 +4109,7 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
 !              MADE WHATEVER DELETIONS ARE APPROPRIATE,
 !              THE OUTPUT VECTOR X WILL BE 'PACKED';
@@ -4349,12 +4131,6 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !              AS BOTH THE SECOND AND FIFTH ARGUMENTS.
 !     COMMENT--THIS IS ONE OF THE FEW SUBROUTINES IN DATAPAC
 !              IN WHICH THE INPUT VECTOR X IS ALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JULY      1975.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -4451,7 +4227,27 @@ END SUBROUTINE DELETE
 !!     Subroutine demod (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    demod(3f) performs a complex demodulation
+!!    on the data in the input vector x
+!!    at the input demodulation frequency = f.
+!!    the complex demodulation consists of the following--
+!!    1) an amplitude versus time plot;
+!!    2) a phase versus time plot;
+!!    3) an updated demodulation frequency estimate
+!!    to assist the analyst in determining a
+!!    more appropriate frequency at which
+!!    to demodulate in case the specified
+!!    input demodulation frequency f
+!!    does not flatten sufficiently the
+!!    phase plot.
+!!
+!!    the allowable range of the input demodulation
+!!    frequency f is 0.0 to 0.5 (exclusively).
+!!    the input demodulation frequency f is measured  of
+!!    in units of cycles per 'data point' or,
+!!    more precisely, in cycles per unit time where
+!!    'unit time' is defined as the
+!!    elapsed time between adjacent observations.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4480,8 +4276,6 @@ END SUBROUTINE DELETE
 !*==demod.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEMOD(X,N,F)
       IMPLICIT NONE
-!*--DEMOD3578
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , aiflag , aimax2 , alen1 , alen2 , an , del , F , fest , &
      &     fmin , hold , pi , range , slopeh , sloper , sum , WS , X ,  &
      &     Y1 , Y2
@@ -4489,31 +4283,6 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
       INTEGER i , iend , iendp1 , iflag , ilower , imax1 , imax2 ,      &
      &        imax2m , ip1 , ipr , istart , iupper , j , lenma1 ,       &
      &        lenma2 , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DEMOD
-!
-!     PURPOSE--THIS SUBROUTINE PERFORMS A COMPLEX DEMODULATION
-!              ON THE DATA IN THE INPUT VECTOR X
-!              AT THE INPUT DEMODULATION FREQUENCY = F.
-!              THE COMPLEX DEMODULATION CONSISTS OF THE FOLLOWING--
-!              1) AN AMPLITUDE VERSUS TIME PLOT;
-!              2) A PHASE VERSUS TIME PLOT;
-!              3) AN UPDATED DEMODULATION FREQUENCY ESTIMATE
-!                 TO ASSIST THE ANALYST IN DETERMINING A
-!                 MORE APPROPRIATE FREQUENCY AT WHICH
-!                 TO DEMODULATE IN CASE THE SPECIFIED
-!                 INPUT DEMODULATION FREQUENCY F
-!                 DOES NOT FLATTEN SUFFICIENTLY THE
-!                 PHASE PLOT.
-!
-!              THE ALLOWABLE RANGE OF THE INPUT DEMODULATION
-!              FREQUENCY F IS 0.0 TO 0.5 (EXCLUSIVELY).
-!              THE INPUT DEMODULATION FREQUENCY F IS MEASURED  OF
-!              IN UNITS OF CYCLES PER 'DATA POINT' OR,
-!              MORE PRECISELY, IN CYCLES PER UNIT TIME WHERE
-!              'UNIT TIME' IS DEFINED AS THE
-!              ELAPSED TIME BETWEEN ADJACENT OBSERVATIONS.
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
@@ -4539,7 +4308,6 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTX.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--IN ORDER THAT THE RESULTS OF THE COMPLEX DEMODULATION
 !              BE VALID AND PROPERLY INTERPRETED, THE INPUT DATA
 !              IN X SHOULD BE EQUI-SPACED IN TIME
@@ -4587,11 +4355,6 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
 !              SO THAT N - 2/F MUST BE GREATER THAN 1.
 !     REFERENCES--GRANGER AND HATANAKA, PAGES 170 TO 189,
 !                 ESPECIALLY PAGES 173, 177, AND 182.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -4802,7 +4565,13 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
 !!     Subroutine dexcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    dexcdf(3f) computes the cumulative distribution
+!!    function value for the double exponential
+!!    (laplace) distribution with mean = 0 and
+!!    standard deviation = sqrt(2).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = 0.5*exp(-abs(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4831,21 +4600,9 @@ REAL(kind=wp) :: Z , zmax , zmin , znew
 !*==dexcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXCDF(X,Cdf)
       IMPLICIT NONE
-!*--DEXCDF3893
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DEXCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE DOUBLE EXPONENTIAL
-!              (LAPLACE) DISTRIBUTION WITH MEAN = 0 AND
-!              STANDARD DEVIATION = SQRT(2).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = 0.5*EXP(-ABS(X)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -4853,19 +4610,10 @@ REAL(kind=wp) :: Cdf , X
 !                                DISTRIBUTION FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
-!     PRINTING--NONE.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4894,7 +4642,13 @@ REAL(kind=wp) :: Cdf , X
 !!     Subroutine dexpdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    dexpdf(3f) computes the probability density
+!!    function value for the double exponential
+!!    (laplace) distribution with mean = 0 and
+!!    standard deviaiton = sqrt(2).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = 0.5*exp(-abs(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -4923,21 +4677,9 @@ REAL(kind=wp) :: Cdf , X
 !*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXPDF(X,Pdf)
       IMPLICIT NONE
-!*--DEXPDF3949
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg , Pdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DEXPDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
-!              FUNCTION VALUE FOR THE DOUBLE EXPONENTIAL
-!              (LAPLACE) DISTRIBUTION WITH MEAN = 0 AND
-!              STANDARD DEVIAITON = SQRT(2).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = 0.5*EXP(-ABS(X)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -4945,19 +4687,10 @@ REAL(kind=wp) :: arg , Pdf , X
 !                                DENSITY FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
 !             FUNCTION VALUE PDF.
-!     PRINTING--NONE.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4988,7 +4721,26 @@ REAL(kind=wp) :: arg , Pdf , X
 !!     Subroutine dexplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    dexplt(3f) generates a double exponential (laplace)
+!!    probability plot.
+!!    the prototype double exponential distribution used herein
+!!    has mean = 0 and standard deviation = sqrt(2).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = 0.5 * exp(-abs(x)).
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the double exponential probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the double exponential distribution.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5017,35 +4769,10 @@ REAL(kind=wp) :: arg , Pdf , X
 !*==dexplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXPLT(X,N)
       IMPLICIT NONE
-!*--DEXPLT4007
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DEXPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A DOUBLE EXPONENTIAL (LAPLACE)
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE DOUBLE EXPONENTIAL DISTRIBUTION USED HEREIN
-!              HAS MEAN = 0 AND STANDARD DEVIATION = SQRT(2).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = 0.5 * EXP(-ABS(X)).
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE DOUBLE EXPONENTIAL PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE DOUBLE EXPONENTIAL DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -5057,7 +4784,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -5067,11 +4793,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5185,7 +4906,16 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!     Subroutine dexppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    dexppf(3f) computes the percent point
+!!    function value for the double exponential
+!!    (laplace) distribution with mean = 0 and
+!!    standard deviation = sqrt(2).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = 0.5*exp(-abs(x)).
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5214,24 +4944,9 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !*==dexppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXPPF(P,Ppf)
       IMPLICIT NONE
-!*--DEXPPF4168
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Ppf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DEXPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE DOUBLE EXPONENTIAL
-!              (LAPLACE) DISTRIBUTION WITH MEAN = 0 AND
-!              STANDARD DEVIATION = SQRT(2).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = 0.5*EXP(-ABS(X)).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -5242,10 +4957,8 @@ REAL(kind=wp) :: P , Ppf
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -5254,11 +4967,6 @@ REAL(kind=wp) :: P , Ppf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5297,7 +5005,13 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine dexran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    dexran(3f) generates a random sample of size n
+!!    from the double exponential
+!!    (laplace) distribution with mean = 0 and
+!!    standard deviation = sqrt(2).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = 0.5*exp(-abs(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5326,21 +5040,9 @@ REAL(kind=wp) :: P , Ppf
 !*==dexran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXRAN(N,Istart,X)
       IMPLICIT NONE
-!*--DEXRAN4244
-!*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Istart , N
 REAL(kind=wp) :: q , X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DEXRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE DOUBLE EXPONENTIAL
-!              (LAPLACE) DISTRIBUTION WITH MEAN = 0 AND
-!              STANDARD DEVIATION = SQRT(2).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = 0.5*EXP(-ABS(X)).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -5374,7 +5076,6 @@ REAL(kind=wp) :: q , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -5387,11 +5088,6 @@ REAL(kind=wp) :: q , X
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5441,7 +5137,17 @@ END SUBROUTINE DEXRAN
 !!     Subroutine dexsf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    dexsf(3f) computes the sparsity
+!!    function value for the double exponential
+!!    (laplace) distribution with mean = 0 and
+!!    standard deviation = sqrt(2).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = 0.5*exp(-abs(x)).
+!!    note that the sparsity function of a distribution
+!!    is the derivative of the percent point function,
+!!    and also is the reciprocal of the probability
+!!    density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5470,25 +5176,9 @@ END SUBROUTINE DEXRAN
 !*==dexsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXSF(P,Sf)
       IMPLICIT NONE
-!*--DEXSF4352
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Sf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DEXSF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE SPARSITY
-!              FUNCTION VALUE FOR THE DOUBLE EXPONENTIAL
-!              (LAPLACE) DISTRIBUTION WITH MEAN = 0 AND
-!              STANDARD DEVIATION = SQRT(2).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = 0.5*EXP(-ABS(X)).
-!              NOTE THAT THE SPARSITY FUNCTION OF A DISTRIBUTION
-!              IS THE DERIVATIVE OF THE PERCENT POINT FUNCTION,
-!              AND ALSO IS THE RECIPROCAL OF THE PROBABILITY
-!              DENSITY FUNCTION (BUT IN UNITS OF P RATHER THAN X).
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
@@ -5499,10 +5189,7 @@ REAL(kind=wp) :: P , Sf
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -5511,11 +5198,6 @@ REAL(kind=wp) :: P , Sf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5554,7 +5236,35 @@ REAL(kind=wp) :: P , Sf
 !!     Subroutine discr2 (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    discr2(3f) 'discretizes' the data
+!!    of the single precision vector x
+!!    into numcla classes.
+!!    all values in the vector x within a given class
+!!    will be mapped into the midpoint of that class.
+!!    the sample minimum and sample maximum
+!!    are automatically computed internally
+!!    and the class width (xdel) is computed as
+!!    the (sample max - sample min)/numcla.
+!!    the first class interval is from
+!!    the sample min to the sample min + xdel;
+!!    the second class interval is from
+!!    the sample min + xdel to
+!!    the sample min + 2*xdel;
+!!    ...;
+!!    the last class interval is from
+!!    the sample max - xdel to the sample max.
+!!    the use of discr2(3f)
+!!    (and the discre and discr3 subroutines)
+!!    gives the data analyst the capability of
+!!    constructing a discrete variate from
+!!    a continuous one.
+!!    the resulting discrete variate might then
+!!    (for example) be analyzed in itself for
+!!    gross structure, or for adherence to some
+!!    theroetical discrete probability model,
+!!    or the discrete variate might be used
+!!    as a subset definition vector for some
+!!    other variate.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5583,44 +5293,10 @@ REAL(kind=wp) :: P , Sf
 !*==discr2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCR2(X,N,Numcla,Y)
       IMPLICIT NONE
-!*--DISCR24429
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
      &     xmax , xmin , Y
       INTEGER i , icount , ip , ipr , iupncl , N , Numcla
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DISCR2
 !
-!     PURPOSE--THIS SUBROUTINE 'DISCRETIZES' THE DATA
-!              OF THE SINGLE PRECISION VECTOR X
-!              INTO NUMCLA CLASSES.
-!              ALL VALUES IN THE VECTOR X WITHIN A GIVEN CLASS
-!              WILL BE MAPPED INTO THE MIDPOINT OF THAT CLASS.
-!              THE SAMPLE MINIMUM AND SAMPLE MAXIMUM
-!              ARE AUTOMATICALLY COMPUTED INTERNALLY
-!              AND THE CLASS WIDTH (XDEL) IS COMPUTED AS
-!              THE (SAMPLE MAX - SAMPLE MIN)/NUMCLA.
-!              THE FIRST CLASS INTERVAL IS FROM
-!              THE SAMPLE MIN TO THE SAMPLE MIN + XDEL;
-!              THE SECOND CLASS INTERVAL IS FROM
-!              THE SAMPLE MIN + XDEL TO
-!              THE SAMPLE MIN + 2*XDEL;
-!              ...;
-!              THE LAST CLASS INTERVAL IS FROM
-!              THE SAMPLE MAX - XDEL TO THE SAMPLE MAX.
-!              THE USE OF THIS SUBROUTINE
-!              (AND THE DISCRE AND DISCR3 SUBROUTINES)
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              CONSTRUCTING A DISCRETE VARIATE FROM
-!              A CONTINUOUS ONE.
-!              THE RESULTING DISCRETE VARIATE MIGHT THEN
-!              (FOR EXAMPLE) BE ANALYZED IN ITSELF FOR
-!              GROSS STRUCTURE, OR FOR ADHERENCE TO SOME
-!              THEROETICAL DISCRETE PROBABILITY MODEL,
-!              OR THE DISCRETE VARIATE MIGHT BE USED
-!              AS A SUBSET DEFINITION VECTOR FOR SOME
-!              OTHER VARIATE.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
@@ -5651,10 +5327,7 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NUMCLA SHOULD BE POSITIVE AND NOT EXCEED 1000
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THIS SUBROUTINE DIFFERS FROM THE DISCR3
 !              SUBROUTINE INASMUCH AS THIS SUBROUTINE
 !              PERFORMS ITS DISCRETIZATION BY OUTPUTING
@@ -5673,12 +5346,6 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !              TO HAVE        CALL DISCR2(X,N,10,X)
 !              IN WHICH THE VARIABLE NAME      X    IS USED
 !              AS BOTH THE FIRST AND FOURTH ARGUMENTS.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --APRIL     1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5828,7 +5495,45 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !!     Subroutine discr3 (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    discr3(3f) 'discretizes' the data
+!!    on the single precision vector x
+!!    into numcla classes.
+!!    all values in the vector x within a given class
+!!    will be mapped into the class number
+!!    (1, 2, ... , numcla).
+!!    thus all the elements in the lowermost class
+!!    will be mapped into the value 1.0;
+!!    all the elements of x in the next higher class
+!!    will be mapped into 2.0;
+!!    etc.
+!!    the sample minimum and sample maximum
+!!    are automatically computed internally
+!!    and the class width (xdel) is computed as
+!!    the (sample max - sample min)/numcla.
+!!    the first class interval is from
+!!    the sample min to the sample min + xdel;
+!!    the second class interval is from
+!!    the sample min + xdel to
+!!    the sample min + 2*xdel;
+!!    ...;
+!!    the last class interval is from
+!!    the sample max - xdel to the sample max.
+!!    the use of discr3(3f)
+!!    (and the discre and discr2 subroutines)
+!!    gives the data analyst the capability of
+!!    constructing a discrete variate from
+!!    a continuous one.
+!!    the resulting discrete variate might then
+!!    (for example) be analyzed in itself for
+!!    gross structure, or for adherence to some
+!!    theroetical discrete probability model,
+!!    or the discrete variate might be used
+!!    as a subset definition vector for some
+!!    other variate.
+!!    this discr3 subroutine is particularly
+!!    suited to this last purpose inasmuch
+!!    as it output's 1's, 2's, etc.
+!!    rather than midpoints.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -5857,54 +5562,10 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !*==discr3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCR3(X,N,Numcla,Y)
       IMPLICIT NONE
-!*--DISCR34667
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
      &     xmin , Y
       INTEGER i , icount , ip , ipr , iupncl , N , Numcla
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DISCR3
 !
-!     PURPOSE--THIS SUBROUTINE 'DISCRETIZES' THE DATA
-!              ON THE SINGLE PRECISION VECTOR X
-!              INTO NUMCLA CLASSES.
-!              ALL VALUES IN THE VECTOR X WITHIN A GIVEN CLASS
-!              WILL BE MAPPED INTO THE CLASS NUMBER
-!              (1, 2, ... , NUMCLA).
-!              THUS ALL THE ELEMENTS IN THE LOWERMOST CLASS
-!              WILL BE MAPPED INTO THE VALUE 1.0;
-!              ALL THE ELEMENTS OF X IN THE NEXT HIGHER CLASS
-!              WILL BE MAPPED INTO 2.0;
-!              ETC.
-!              THE SAMPLE MINIMUM AND SAMPLE MAXIMUM
-!              ARE AUTOMATICALLY COMPUTED INTERNALLY
-!              AND THE CLASS WIDTH (XDEL) IS COMPUTED AS
-!              THE (SAMPLE MAX - SAMPLE MIN)/NUMCLA.
-!              THE FIRST CLASS INTERVAL IS FROM
-!              THE SAMPLE MIN TO THE SAMPLE MIN + XDEL;
-!              THE SECOND CLASS INTERVAL IS FROM
-!              THE SAMPLE MIN + XDEL TO
-!              THE SAMPLE MIN + 2*XDEL;
-!              ...;
-!              THE LAST CLASS INTERVAL IS FROM
-!              THE SAMPLE MAX - XDEL TO THE SAMPLE MAX.
-!              THE USE OF THIS SUBROUTINE
-!              (AND THE DISCRE AND DISCR2 SUBROUTINES)
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              CONSTRUCTING A DISCRETE VARIATE FROM
-!              A CONTINUOUS ONE.
-!              THE RESULTING DISCRETE VARIATE MIGHT THEN
-!              (FOR EXAMPLE) BE ANALYZED IN ITSELF FOR
-!              GROSS STRUCTURE, OR FOR ADHERENCE TO SOME
-!              THEROETICAL DISCRETE PROBABILITY MODEL,
-!              OR THE DISCRETE VARIATE MIGHT BE USED
-!              AS A SUBSET DEFINITION VECTOR FOR SOME
-!              OTHER VARIATE.
-!              THIS DISCR3 SUBROUTINE IS PARTICULARLY
-!              SUITED TO THIS LAST PURPOSE INASMUCH
-!              AS IT OUTPUT'S 1'S, 2'S, ETC.
-!              RATHER THAN MIDPOINTS.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
@@ -5933,10 +5594,7 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NUMCLA SHOULD BE POSITIVE AND NOT EXCEED 1000
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THIS SUBROUTINE DIFFERS FROM THE DISCR2
 !              SUBROUTINE INASMUCH AS THIS SUBROUTINE
 !              PERFORMS ITS DISCRETIZATION BY OUTPUTING
@@ -5955,12 +5613,6 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 !              TO HAVE        CALL DISCR3(X,N,10,X)
 !              IN WHICH THE VARIABLE NAME      X    IS USED
 !              AS BOTH THE FIRST AND FOURTH ARGUMENTS.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --APRIL     1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -6100,7 +5752,31 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 !!     Subroutine discre (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    discre(3f) 'discretizes' the data
+!!    of the single precision vector x.
+!!    the first class interval is from
+!!    xmin to xmin + xdel;
+!!    the second class interval is from
+!!    xmin+ xdel to xmin + 2*xdel;
+!!    etc.
+!!    all values in the vector x within a given class
+!!    will be mapped into the midpoint of that class.
+!!    all values in the vector x smaller than xmin
+!!    will be mapped into xmin - (xdel/2.0).
+!!    all values in the vector x larger than xmax
+!!    will be mapped into xmax + (xdel/2.0).
+!!    the use of discre(3f)
+!!    (and the discr2 and discr3 subroutines)
+!!    gives the data analyst the capability of
+!!    constructing a discrete variate from
+!!    a continuous one.
+!!    the resulting discrete variate might then
+!!    (for example) be analyzed in itself for
+!!    gross structure, or for adherence to some
+!!    theroetical discrete probability model,
+!!    or the discrete variate might be used
+!!    as a subset definition vector for some
+!!    other variate.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6129,40 +5805,10 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 !*==discre.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
       IMPLICIT NONE
-!*--DISCRE4903
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
       INTEGER i , icounl , icount , icounu , ip , ipr , N , numcla
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DISCRE
 !
-!     PURPOSE--THIS SUBROUTINE 'DISCRETIZES' THE DATA
-!              OF THE SINGLE PRECISION VECTOR X.
-!              THE FIRST CLASS INTERVAL IS FROM
-!              XMIN TO XMIN + XDEL;
-!              THE SECOND CLASS INTERVAL IS FROM
-!              XMIN+ XDEL TO XMIN + 2*XDEL;
-!              ETC.
-!              ALL VALUES IN THE VECTOR X WITHIN A GIVEN CLASS
-!              WILL BE MAPPED INTO THE MIDPOINT OF THAT CLASS.
-!              ALL VALUES IN THE VECTOR X SMALLER THAN XMIN
-!              WILL BE MAPPED INTO XMIN - (XDEL/2.0).
-!              ALL VALUES IN THE VECTOR X LARGER THAN XMAX
-!              WILL BE MAPPED INTO XMAX + (XDEL/2.0).
-!              THE USE OF THIS SUBROUTINE
-!              (AND THE DISCR2 AND DISCR3 SUBROUTINES)
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              CONSTRUCTING A DISCRETE VARIATE FROM
-!              A CONTINUOUS ONE.
-!              THE RESULTING DISCRETE VARIATE MIGHT THEN
-!              (FOR EXAMPLE) BE ANALYZED IN ITSELF FOR
-!              GROSS STRUCTURE, OR FOR ADHERENCE TO SOME
-!              THEROETICAL DISCRETE PROBABILITY MODEL,
-!              OR THE DISCRETE VARIATE MIGHT BE USED
-!              AS A SUBSET DEFINITION VECTOR FOR SOME
-!              OTHER VARIATE.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
@@ -6202,10 +5848,7 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
 !                   OF N FOR THIS SUBROUTINE.
 !                 --XDEL SHOULD BE POSITIVE.
 !                 --(XMAX-XMIN)/XDEL SHOULD NOT EXCEED 999.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--IT IS SUGGESTED THAT XMIN, XDEL,
 !              AND XMAX HAVE AT LEAST 1 MORE
 !              DECIMAL PLACE THAN THE DATA VALUES
@@ -6226,12 +5869,6 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
 !              TO HAVE     CALL DISCRE(X,N,0.5,1.0,20.5,X)
 !              IN WHICH THE VARIABLE NAME      X    IS USED
 !              AS BOTH THE FIRST AND SIXTH ARGUMENTS.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -6403,7 +6040,10 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
 !!     Subroutine dot (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    to compute the dot product between 2 vectors--a and b.
+!!    only elements imin through imax of the 2 vectors are considered.
+!!    the computed dot product is added to the input value parpro
+!!    to yield a final answer for dotpro.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6432,19 +6072,9 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
 !*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
       IMPLICIT NONE
-!*--DOT5171
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: A , B , Dotpro , Parpro
       INTEGER i , Imax , Imin
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DOT
-!     PURPOSE--TO COMPUTE THE DOT PRODUCT BETWEEN 2 VECTORS--A AND B.
-!     ONLY ELEMENTS IMIN THROUGH IMAX OF THE 2 VECTORS ARE CONSIDERED.
-!     THE COMPUTED DOT PRODUCT IS ADDED TO THE INPUT VALUE PARPRO
-!     TO YIELD A FINAL ANSWER FOR DOTPRO.
 !     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
       DOUBLE PRECISION sum , prod , dparpr
@@ -6473,7 +6103,15 @@ REAL(kind=wp) :: A , B , Dotpro , Parpro
 !!     Subroutine ev1cdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    ev1cdf(3f) computes the cumulative distribution
+!!    function value for the extreme value type 1
+!!    distribution.
+!!    the extreme value type 1 distribution used
+!!    herein has mean = euler's number = 0.57721566
+!!    and standard deviation = pi/sqrt(6) = 1.28254983.
+!!    this distribution is defined for all x
+!!    and has the probability density function
+!!    f(x) = (exp(-x)) * (exp(-(exp(-x))))
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6502,23 +6140,9 @@ REAL(kind=wp) :: A , B , Dotpro , Parpro
 !*==ev1cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1CDF(X,Cdf)
       IMPLICIT NONE
-!*--EV1CDF5205
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV1CDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE EXTREME VALUE TYPE 1
-!              DISTRIBUTION.
-!              THE EXTREME VALUE TYPE 1 DISTRIBUTION USED
-!              HEREIN HAS MEAN = EULER'S NUMBER = 0.57721566
-!              AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (EXP(-X)) * (EXP(-(EXP(-X))))
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -6529,18 +6153,10 @@ REAL(kind=wp) :: Cdf , X
 !             DISTRIBUTION WITH MEAN = EULER'S NUMBER = 0.57721566
 !             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6566,7 +6182,27 @@ REAL(kind=wp) :: Cdf , X
 !!     Subroutine ev1plt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    ev1plt(3f) generates an extreme value type 1
+!!    probability plot.
+!!    the prototype extreme value type 1 distribution used here
+!!    has mean = euler's number = 0.57721566
+!!    and standard deviation = pi/sqrt(6) = 1.28254983.
+!!    this distribution is defined for all x
+!!    and has the probability density function
+!!    f(x) = (exp(-x)) * (exp(-(exp(-x))))
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the extreme value type 1 probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the extreme value type 1 distribution.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6595,36 +6231,10 @@ REAL(kind=wp) :: Cdf , X
 !*==ev1plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1PLT(X,N)
       IMPLICIT NONE
-!*--EV1PLT5262
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV1PLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES AN EXTREME VALUE TYPE 1
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE EXTREME VALUE TYPE 1 DISTRIBUTION USED HERE
-!              HAS MEAN = EULER'S NUMBER = 0.57721566
-!              AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (EXP(-X)) * (EXP(-(EXP(-X))))
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE EXTREME VALUE TYPE 1 PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE EXTREME VALUE TYPE 1 DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -6636,7 +6246,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -6646,11 +6255,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -6765,7 +6369,18 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!     Subroutine ev1ppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    ev1ppf(3f) computes the percent point
+!!    function value for the extreme value type 1
+!!    distribution.
+!!    the extreme value type 1 distribution used
+!!    herein has mean = euler's number = 0.57721566
+!!    and standard deviation = pi/sqrt(6) = 1.28254983.
+!!    this distribution is defined for all x
+!!    and has the probability density function
+!!    f(x) = (exp(-x)) * (exp(-(exp(-x))))
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6794,26 +6409,9 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !*==ev1ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1PPF(P,Ppf)
       IMPLICIT NONE
-!*--EV1PPF5425
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Ppf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV1PPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE EXTREME VALUE TYPE 1
-!              DISTRIBUTION.
-!              THE EXTREME VALUE TYPE 1 DISTRIBUTION USED
-!              HEREIN HAS MEAN = EULER'S NUMBER = 0.57721566
-!              AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (EXP(-X)) * (EXP(-(EXP(-X))))
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -6828,17 +6426,10 @@ REAL(kind=wp) :: P , Ppf
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6875,7 +6466,14 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine ev1ran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    ev1ran(3f) generates a random sample of size n
+!!    from the extreme value type 1 distribution.
+!!    the prototype extreme value type 1 distribution used
+!!    herein has mean = euler's number = 0.57721566
+!!    and standard deviation = pi/sqrt(6) = 1.28254983.
+!!    this distribution is defined for all x
+!!    and has the probability density function
+!!    f(x) = (exp(-x)) * (exp(-(exp(-x))))
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -6904,22 +6502,9 @@ REAL(kind=wp) :: P , Ppf
 !*==ev1ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV1RAN(N,Iseed,X)
       IMPLICIT NONE
-!*--EV1RAN5499
-!*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV1RAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE EXTREME VALUE TYPE 1 DISTRIBUTION.
-!              THE PROTOTYPE EXTREME VALUE TYPE 1 DISTRIBUTION USED
-!              HEREIN HAS MEAN = EULER'S NUMBER = 0.57721566
-!              AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (EXP(-X)) * (EXP(-(EXP(-X))))
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -6937,7 +6522,6 @@ REAL(kind=wp) :: X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -7002,7 +6586,14 @@ REAL(kind=wp) :: X
 !!     Subroutine ev2cdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    ev2cdf(3f) computes the cumulative distribution
+!!    function value for the extreme value type 2
+!!    distribution with single precision
+!!    tail length parameter = gamma.
+!!    the extreme value type 2 distribution used
+!!    herein is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7031,22 +6622,9 @@ REAL(kind=wp) :: X
 !*==ev2cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2CDF(X,Gamma,Cdf)
       IMPLICIT NONE
-!*--EV2CDF5604
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV2CDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE EXTREME VALUE TYPE 2
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE EXTREME VALUE TYPE 2 DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(-GAMMA-1)) * EXP(-(X**(-GAMMA))).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -7062,17 +6640,10 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE NON-NEGATIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -7118,7 +6689,27 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!     Subroutine ev2plt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    ev2plt(3f) generates a extreme value type 2
+!!    probability plot
+!!    (with tail length parameter value = gamma).
+!!    the prototype extreme value type 2 distribution used     n
+!!    herein is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the extreme value type 2 probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the  extreme value type 2 distribution
+!!    with tail length parameter value = gamma.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7147,38 +6738,12 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !*==ev2plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2PLT(X,N,Gamma)
       IMPLICIT NONE
-!*--EV2PLT5684
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
 REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV2PLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A EXTREME VALUE TYPE 2
-!              PROBABILITY PLOT
-!              (WITH TAIL LENGTH PARAMETER VALUE = GAMMA).
-!              THE PROTOTYPE EXTREME VALUE TYPE 2 DISTRIBUTION USED     N
-!              HEREIN IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(-GAMMA-1)) * EXP(-(X**(-GAMMA))).
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE EXTREME VALUE TYPE 2 PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE  EXTREME VALUE TYPE 2 DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -7194,7 +6759,6 @@ REAL(kind=wp) :: yslope
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -7204,11 +6768,6 @@ REAL(kind=wp) :: yslope
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7343,7 +6902,17 @@ REAL(kind=wp) :: yslope
 !!     Subroutine ev2ppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    ev2ppf(3f) computes the percent point
+!!    function value for the extreme value type 2
+!!    distribution with single precision
+!!    tail length parameter = gamma.
+!!    the extreme value type 2 distribution used
+!!    herein is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7372,25 +6941,9 @@ REAL(kind=wp) :: yslope
 !*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2PPF(P,Gamma,Ppf)
       IMPLICIT NONE
-!*--EV2PPF5873
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV2PPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE EXTREME VALUE TYPE 2
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE EXTREME VALUE TYPE 2 DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(-GAMMA-1)) * EXP(-(X**(-GAMMA))).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -7408,17 +6961,10 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -7462,7 +7008,13 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!     Subroutine ev2ran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    ev2ran(3f) generates a random sample of size n
+!!    from the extreme value type 2 distribution
+!!    with tail length parameter value = gamma.
+!!    the prototype extreme value type 2 distribution used
+!!    herein is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7491,21 +7043,9 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !*==ev2ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
-!*--EV2RAN5956
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV2RAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE EXTREME VALUE TYPE 2 DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              THE PROTOTYPE EXTREME VALUE TYPE 2 DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(-GAMMA-1)) * EXP(-(X**(-GAMMA))).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -7526,7 +7066,6 @@ REAL(kind=wp) :: Gamma , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -7600,7 +7139,12 @@ REAL(kind=wp) :: Gamma , X
 !!     Subroutine expcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    expcdf(3f) computes the cumulative distribution
+!!    function value for the exponential distribution
+!!    with mean = 1 and standard deviation = 1.
+!!    this distribution is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x) = exp(-x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7627,22 +7171,11 @@ REAL(kind=wp) :: Gamma , X
 !!##LICENSE
 !!    CC0-1.0
 !*==expcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EXPCDF(X,Cdf)
-      IMPLICIT NONE
-!*--EXPCDF6072
-!*** Start of declarations inserted by SPAG
+SUBROUTINE EXPCDF(X,Cdf)
+IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
-      INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXPCDF
+INTEGER ipr
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE EXPONENTIAL DISTRIBUTION
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(-X).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -7652,17 +7185,10 @@ REAL(kind=wp) :: Cdf , X
 !             FUNCTION VALUE CDF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7701,7 +7227,12 @@ REAL(kind=wp) :: Cdf , X
 !!     Subroutine exppdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    exppdf(3f) computes the probability density
+!!    function value for the exponential distribution
+!!    with mean = 1 and standard deviation = 1.
+!!    this distribution is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x) = exp(-x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7730,20 +7261,9 @@ REAL(kind=wp) :: Cdf , X
 !*==exppdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPPDF(X,Pdf)
       IMPLICIT NONE
-!*--EXPPDF6137
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: Pdf , X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXPPDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
-!              FUNCTION VALUE FOR THE EXPONENTIAL DISTRIBUTION
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(-X).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -7753,17 +7273,10 @@ REAL(kind=wp) :: Pdf , X
 !             FUNCTION VALUE PDF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7802,7 +7315,26 @@ REAL(kind=wp) :: Pdf , X
 !!     Subroutine expplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    expplt(3f) generates an exponential
+!!    probability plot.
+!!    the prototype exponential distribution used herein
+!!    has mean = 1 and standard deviation = 1.
+!!    this distribution is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x)=exp(-x).
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the exponential probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the exponential distribution.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -7831,35 +7363,10 @@ REAL(kind=wp) :: Pdf , X
 !*==expplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPPLT(X,N)
       IMPLICIT NONE
-!*--EXPPLT6202
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXPPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES AN EXPONENTIAL
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE EXPONENTIAL DISTRIBUTION USED HEREIN
-!              HAS MEAN = 1 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X)=EXP(-X).
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE EXPONENTIAL PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE EXPONENTIAL DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -7871,7 +7378,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -7881,11 +7387,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7999,7 +7500,15 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!     Subroutine expppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    expppf(3f) computes the percent point
+!!    function value for the exponential distribution
+!!    with mean = 1 and standard deviation = 1.
+!!    this distribution is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x) = exp(-x).
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -8028,23 +7537,9 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !*==expppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPPPF(P,Ppf)
       IMPLICIT NONE
-!*--EXPPPF6363
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Ppf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXPPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE EXPONENTIAL DISTRIBUTION
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(-X).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -8056,10 +7551,8 @@ REAL(kind=wp) :: P , Ppf
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -8068,11 +7561,6 @@ REAL(kind=wp) :: P , Ppf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -8109,7 +7597,12 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine expran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    expran(3f) generates a random sample of size n
+!!    from the exponential distribution
+!!    with mean = 1 and standard deviation = 1.
+!!    this distribution is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x) = exp(-x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -8138,20 +7631,9 @@ REAL(kind=wp) :: P , Ppf
 !*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPRAN(N,Iseed,X)
       IMPLICIT NONE
-!*--EXPRAN6438
-!*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXPRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE EXPONENTIAL DISTRIBUTION
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(-X).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -8168,7 +7650,6 @@ REAL(kind=wp) :: X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14, 35-36.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -8242,7 +7723,16 @@ REAL(kind=wp) :: X
 !!
 !!
 !!##DESCRIPTION
-!!   Description
+!!    expsf(3f) computes the sparsity
+!!    function value for the exponential distribution
+!!    with mean = 1 and standard deviation = 1.
+!!    this distribution is defined for all non-negative x,
+!!    and has the probability density function
+!!    f(x) = exp(-x).
+!!    note that the sparsity function of a distribution
+!!    is the derivative of the percent point function,
+!!    and also is the reciprocal of the probability
+!!    density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -8271,24 +7761,9 @@ REAL(kind=wp) :: X
 !*==expsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPSF(P,Sf)
       IMPLICIT NONE
-!*--EXPSF6549
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Sf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXPSF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE SPARSITY
-!              FUNCTION VALUE FOR THE EXPONENTIAL DISTRIBUTION
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(-X).
-!              NOTE THAT THE SPARSITY FUNCTION OF A DISTRIBUTION
-!              IS THE DERIVATIVE OF THE PERCENT POINT FUNCTION,
-!              AND ALSO IS THE RECIPROCAL OF THE PROBABILITY
-!              DENSITY FUNCTION (BUT IN UNITS OF P RATHER THAN X).
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
@@ -8300,10 +7775,7 @@ REAL(kind=wp) :: P , Sf
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -8312,11 +7784,6 @@ REAL(kind=wp) :: P , Sf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -8354,7 +7821,22 @@ REAL(kind=wp) :: P , Sf
 !!     Subroutine extrem (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    extrem(3f) performs an extreme value analysis
+!!    on the data in the input vector x.
+!!    this analysis consists of determining that particular
+!!    extreme value type 1 or extreme value type 2 distribution
+!!    which best fits the data set.
+!!    the goodness of fit criterion is the maximum probability
+!!    plot correlation coefficient criterion.
+!!    after the best-fit distribution is determined,
+!!    estimates are computed and printed out for the
+!!    location and scale parameters.
+!!    two probability plots are also printed out--
+!!    the best-fit type 2 probability plot
+!!    (if the best fit was in fact a type 2),
+!!    and the type 1 probability plot.
+!!    predicted extremes for various return periods are
+!!    also computed and printed out.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -8383,34 +7865,13 @@ REAL(kind=wp) :: P , Sf
 !*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXTREM(X,N)
       IMPLICIT NONE
-!*--EXTREM6625
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: a , aindex , am , an , arg , cc , corr , corrmx , gamtab ,   &
      &     h , hold , p , r , scrat , sum1 , sum2 , sum3 , sy , t , w
 REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
      &     yslope , Z
       INTEGER i , idis , idismx , ipr , iupper , j , jskip , k , N ,    &
      &        numam , numdis , numdm1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXTREM
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS AN EXTREME VALUE ANALYSIS
-!              ON THE DATA IN THE INPUT VECTOR X.
-!              THIS ANALYSIS CONSISTS OF DETERMINING THAT PARTICULAR
-!              EXTREME VALUE TYPE 1 OR EXTREME VALUE TYPE 2 DISTRIBUTION
-!              WHICH BEST FITS THE DATA SET.
-!              THE GOODNESS OF FIT CRITERION IS THE MAXIMUM PROBABILITY
-!              PLOT CORRELATION COEFFICIENT CRITERION.
-!              AFTER THE BEST-FIT DISTRIBUTION IS DETERMINED,
-!              ESTIMATES ARE COMPUTED AND PRINTED OUT FOR THE
-!              LOCATION AND SCALE PARAMETERS.
-!              TWO PROBABILITY PLOTS ARE ALSO PRINTED OUT--
-!              THE BEST-FIT TYPE 2 PROBABILITY PLOT
-!              (IF THE BEST FIT WAS IN FACT A TYPE 2),
-!              AND THE TYPE 1 PROBABILITY PLOT.
-!              PREDICTED EXTREMES FOR VARIOUS RETURN PERIODS ARE
-!              ALSO COMPUTED AND PRINTED OUT.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -8423,7 +7884,6 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !                                         EV2PLT, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
 !                 ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
 !                 CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
@@ -8432,11 +7892,6 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !                 UNPUBLISHED MANUSCRIPT.
 !               --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS-1, 1970, PAGES 272-295.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --DECEMBER  1974.
 !     UPDATED         --NOVEMBER  1975.
@@ -8822,7 +8277,13 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !!     Subroutine fcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    fcdf(3f) computes the cumulative distribution
+!!    function value for the f distribution
+!!    with integer degrees of freedom
+!!    parameters = nu1 and nu2.
+!!    this distribution is defined for all non-negative x.
+!!    the probability density function is given
+!!    in the references below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -8851,23 +8312,11 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
       IMPLICIT NONE
-!*--FCDF7056
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
      &     zratio
       INTEGER i , ibran , ievodd , iflag1 , iflag2 , imax , imin , ipr ,&
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT FCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE F DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM
-!              PARAMETERS = NU1 AND NU2.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X.
-!              THE PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -8891,7 +8340,6 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF,CHSCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGES 946-947,
 !                 FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
@@ -8905,11 +8353,6 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !               --SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES
 !                 FOR POPULATION TOLERANCE LIMITS, 1944,
 !                 NUMBER 15, PAGE 217.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--AUGUST    1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -9216,7 +8659,37 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !!     Subroutine fourie (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    fourie(3f) performs a Fourier analysis
+!!    of the data in the input vector X.
+!!    the analysis consists of the following--
+!!
+!!               1. computing (and printing)
+!!                  (for each of the harmonic frequencies
+!!                  1/n, 2/n, 3/n, ..., 1/2)
+!!                  the corresponding fourier coeficients,
+!!                  the amplitude, the phase,
+!!                  the contribution to the total variance,
+!!                  and the relative contribution to the total
+!!                  variance.
+!!               2. plotting out a fourier line spectrum =
+!!                  the periodogram = the plot of relative
+!!                  contribution to total variance
+!!                  (at each fourier frequency) versus
+!!                  the fourier frequency.
+!!
+!!    in order that the results of the Fourier analysis
+!!    be valid and properly interpreted, the input data
+!!    in X should be equi-spaced in time
+!!    (or whatever variable corresponds to time).
+!!
+!!    the horizontal axis of the spectra produced
+!!    by fourie(3f) is frequency.
+!!    this frequency is measured in units of
+!!    cycles per 'data point' or, more precisely, in
+!!    cycles per unit time where
+!!    'unit time' is defined as the
+!!    elapsed time between adjacent observations.
+!!    the range of the frequency axis is 0.0 to 0.5.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -9245,48 +8718,13 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !*==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FOURIE(X,N)
       IMPLICIT NONE
-!*--FOURIE7415
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
      &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
      &     suma , sumb , t
 REAL(kind=wp) :: vbias , WS , X , xbar
       INTEGER i , ievodd , ilower , ipage , ipr , iskip , iupper , j ,  &
      &        maxpag , N , nhalf , nnpage
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT FOURIE
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A FOURIER ANALYSIS
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE ANALYSIS CONSISTS OF THE FOLLOWING--
-!              1) COMPUTING (AND PRINTING)
-!                 (FOR EACH OF THE HARMONIC FREQUENCIES
-!                 1/N, 2/N, 3/N, ..., 1/2)
-!                 THE CORRESPONDING FOURIER COEFICIENTS,
-!                 THE AMPLITUDE, THE PHASE,
-!                 THE CONTRIBUTION TO THE TOTAL VARIANCE,
-!                 AND THE RELATIVE CONTRIBUTION TO THE TOTAL
-!                 VARIANCE.
-!              2) PLOTTING OUT A FOURIER LINE SPECTRUM =
-!                 THE PERIODOGRAM = THE PLOT OF RELATIVE
-!                 CONTRIBUTION TO TOTAL VARIANCE
-!                 (AT EACH FOURIER FREQUENCY) VERSUS
-!                 THE FOURIER FREQUENCY.
-!
-!              IN ORDER THAT THE RESULTS OF THE FOURIER ANALYSIS
-!              BE VALID AND PROPERLY INTERPRETED, THE INPUT DATA
-!              IN X SHOULD BE EQUI-SPACED IN TIME
-!              (OR WHATEVER VARIABLE CORRESPONDS TO TIME).
-!
-!              THE HORIZONTAL AXIS OF THE SPECTRA PRODUCED
-!              BY THIS SUBROUTINE IS FREQUENCY.
-!              THIS FREQUENCY IS MEASURED IN UNITS OF
-!              CYCLES PER 'DATA POINT' OR, MORE PRECISELY, IN
-!              CYCLES PER UNIT TIME WHERE
-!              'UNIT TIME' IS DEFINED AS THE
-!              ELAPSED TIME BETWEEN ADJACENT OBSERVATIONS.
-!              THE RANGE OF THE FREQUENCY AXIS IS 0.0 TO 0.5.
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
@@ -9324,7 +8762,6 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTSP AND CHSPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOURIER ANALYSIS DIFFERS FROM SPECTRAL ANALYSIS
 !              (AS, FOR EXAMPLE, PRODUCED BY THE DATAPAC
 !              TIMESE SUBROUTINE) IN THAT A
@@ -9376,11 +8813,6 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !              SMALLEST DETECTABLE CYCLE IN THE DATA
 !              IS 2 DATA POINTS PER CYCLE.
 !     REFERENCES--JENKINS AND WATTS, ESPECIALLY PAGE 290.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -9571,7 +9003,13 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !!     Subroutine fran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    fran(3f) generates a random sample of size n
+!!    from the f distribution
+!!    with integer degrees of freedom
+!!    parameters = nu1 and nu2.
+!!    this distribution is defined for all non-negative x.
+!!    the probability density function is given
+!!    in the references below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -9600,22 +9038,10 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !*==fran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
       IMPLICIT NONE
-!*--FRAN7735
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
      &     z
       INTEGER i , ipr , Istart , j , N , Nu1 , Nu2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT FRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE F DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM
-!              PARAMETERS = NU1 AND NU2.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X.
-!              THE PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -9655,7 +9081,6 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--MOOD AND GRABLE, INTRODUCTION TO THE
 !                 THEORY OF STATISTICS, 1963, PAGES 231-232.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -9664,11 +9089,6 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGE 64.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -9769,7 +9189,9 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
 !!     Subroutine freq (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    freq(3f) computes the sample frequency
+!!    and sample cumulative frequency
+!!    for the data in the input vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -9798,19 +9220,11 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
 !*==freq.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FREQ(X,N)
       IMPLICIT NONE
-!*--FREQ7897
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
      &     WS , X , xbar , Y
       INTEGER i , icfreq , iflag , ifreq , ip1 , ipr , iupper , N ,     &
      &        ndv , nm1 , numseq
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT FREQ
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE SAMPLE FREQUENCY
-!              AND SAMPLE CUMULATIVE FREQUENCY
-!              FOR THE DATA IN THE INPUT VECTOR X.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -9827,14 +9241,8 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -9971,7 +9379,18 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
 !!     Subroutine gamcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    gamcdf(3f) computes the cumulative distribution
+!!    function value for the gamma
+!!    distribution with single precision
+!!    tail length parameter = gamma.
+!!    the gamma distribution used
+!!    herein has mean = gamma
+!!    and standard deviation = sqrt(gamma).
+!!    this distribution is defined for all positive x,
+!!    and has the probability density function
+!!    f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!    where the constant = the gamma function evaluated
+!!    at the value gamma.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -10000,26 +9419,9 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
 !*==gamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMCDF(X,Gamma,Cdf)
       IMPLICIT NONE
-!*--GAMCDF8063
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER i , ipr , maxit
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GAMCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE GAMMA
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE GAMMA DISTRIBUTION USED
-!              HEREIN HAS MEAN = GAMMA
-!              AND STANDARD DEVIATION = SQRT(GAMMA).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/CONSTANT) * (X**(GAMMA-1)) * EXP(-X)
-!              WHERE THE CONSTANT = THE GAMMA FUNCTION EVALUATED
-!              AT THE VALUE GAMMA.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -10035,10 +9437,8 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
 !               COMPARED TO THE KNOWN GAMMA = 1 (EXPONENTIAL)
 !               RESULTS, AGREEMENT WAS HAD OUT TO 7 SIGNIFICANT
@@ -10059,11 +9459,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 68-73.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -10171,7 +9566,31 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!     Subroutine gamplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    gamplt(3f) generates a gamma
+!!    probability plot
+!!    (with tail length parameter value = gamma).
+!!    the prototype gamma distribution used
+!!    herein has mean = gamma
+!!    and standard deviation = sqrt(gamma).
+!!    this distribution is defined for all positive x,
+!!    and has the probability density function
+!!    f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!    where the constant = the gamma function evaluated
+!!    at the value gamma.
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the gamma probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the  gamma distribution
+!!    with tail length parameter value = gamma.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -10200,8 +9619,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !*==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPLT(X,N,Gamma)
       IMPLICIT NONE
-!*--GAMPLT8228
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
      &     dx , g , Gamma , hold , pcalc , pp0025 , pp025 , pp975 ,     &
      &     pp9975 , sum , sum1
@@ -10210,35 +9627,7 @@ REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
      &     yint
 REAL(kind=wp) :: yslope
       INTEGER i , icount , iloop , ip1 , ipr , itail , iupper , j , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GAMPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A GAMMA
-!              PROBABILITY PLOT
-!              (WITH TAIL LENGTH PARAMETER VALUE = GAMMA).
-!              THE PROTOTYPE GAMMA DISTRIBUTION USED
-!              HEREIN HAS MEAN = GAMMA
-!              AND STANDARD DEVIATION = SQRT(GAMMA).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/CONSTANT) * (X**(GAMMA-1)) * EXP(-X)
-!              WHERE THE CONSTANT = THE GAMMA FUNCTION EVALUATED
-!              AT THE VALUE GAMMA.
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE GAMMA PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE  GAMMA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -10254,7 +9643,6 @@ REAL(kind=wp) :: yslope
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ABS, EXP, DEXP, DLOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
 !                 PLOTS FOR THE GAMMA DISTRIBUTION',
 !                 TECHNOMETRICS, 1962, PAGES 1-15.
@@ -10269,11 +9657,6 @@ REAL(kind=wp) :: yslope
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -10566,7 +9949,21 @@ REAL(kind=wp) :: yslope
 !!     Subroutine gamppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    gamppf(3f) computes the percent point
+!!    function value for the gamma distribution
+!!    with single precision
+!!    tail length parameter = gamma.
+!!    the gamma distribution used
+!!    herein has mean = gamma
+!!    and standard deviation = sqrt(gamma).
+!!    this distribution is defined for all positive x,
+!!    and has the probability density function
+!!    f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!    where the constant = the gamma function evaluated
+!!    at the value gamma.
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -10595,29 +9992,9 @@ REAL(kind=wp) :: yslope
 !*==gamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPPF(P,Gamma,Ppf)
       IMPLICIT NONE
-!*--GAMPPF8588
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GAMPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE GAMMA DISTRIBUTION
-!              WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE GAMMA DISTRIBUTION USED
-!              HEREIN HAS MEAN = GAMMA
-!              AND STANDARD DEVIATION = SQRT(GAMMA).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/CONSTANT) * (X**(GAMMA-1)) * EXP(-X)
-!              WHERE THE CONSTANT = THE GAMMA FUNCTION EVALUATED
-!              AT THE VALUE GAMMA.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -10635,10 +10012,8 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
 !               COMPARED TO THE KNOWN GAMMA = 1 (EXPONENTIAL)
 !               RESULTS, AGREEMENT WAS HAD OUT TO 6 SIGNIFICANT
@@ -10663,11 +10038,6 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 68-73.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -10832,7 +10202,17 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!     Subroutine gamran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    gamran(3f) generates a random sample of size n
+!!    from the gamma distribution
+!!    with tail length parameter value = gamma.
+!!    the prototype gamma distribution used
+!!    herein has mean = gamma
+!!    and standard deviation = sqrt(gamma).
+!!    this distribution is defined for all positive x,
+!!    and has the probability density function
+!!    f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!    where the constant = the gamma function evaluated
+!!    at the value gamma.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -10861,27 +10241,11 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
-!*--GAMRAN8819
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
      &     X , xg , xg0 , xn(1) , xn0
       INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GAMRAN
 !     ******STILL NEEDS ALGORITHM WORK ******
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE GAMMA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              THE PROTOTYPE GAMMA DISTRIBUTION USED
-!              HEREIN HAS MEAN = GAMMA
-!              AND STANDARD DEVIATION = SQRT(GAMMA).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/CONSTANT) * (X**(GAMMA-1)) * EXP(-X)
-!              WHERE THE CONSTANT = THE GAMMA FUNCTION EVALUATED
-!              AT THE VALUE GAMMA.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -10906,7 +10270,6 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--GREENWOOD, 'A FAST GENERATOR FOR
 !                 GAMMA-DISTRIBUTED RANDOM VARIABLES',
 !                 COMPSTAT 1974, PROCEEDINGS IN
@@ -11040,7 +10403,24 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !!     Subroutine geocdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    geocdf(3f) computes the cumulative distribution
+!!    function value at the single precision value x
+!!    for the geometric distribution
+!!    with single precision
+!!    'bernoulli probability' parameter = p.
+!!    the geometric distribution used herein
+!!    herein has mean = (1-p)/p
+!!    and standard deviation = sqrt((1-p)/(p*p))).
+!!    this distribution is defined for
+!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = p * (1-p)**x.
+!!    the geometric distribution is the
+!!    distribution of the number of failures
+!!    before obtaining 1 success in an
+!!    indefinite sequence of bernoulli (0,1)
+!!    trials where the probability of success
+!!    in a single trial = p.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11069,32 +10449,9 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !*==geocdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEOCDF(X,P,Cdf)
       IMPLICIT NONE
-!*--GEOCDF9005
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , del , fintx , P , X
       INTEGER intx , ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GEOCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE X
-!              FOR THE GEOMETRIC DISTRIBUTION
-!              WITH SINGLE PRECISION
-!              'BERNOULLI PROBABILITY' PARAMETER = P.
-!              THE GEOMETRIC DISTRIBUTION USED HEREIN
-!              HEREIN HAS MEAN = (1-P)/P
-!              AND STANDARD DEVIATION = SQRT((1-P)/(P*P))).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = P * (1-P)**X.
-!              THE GEOMETRIC DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF FAILURES
-!              BEFORE OBTAINING 1 SUCCESS IN AN
-!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -11117,10 +10474,7 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
 !              DISTRIBUTION FUNCTION SUBROUTINE
@@ -11149,11 +10503,6 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
 !                 EDITION 2, 1957, PAGES 155-157, 210.
 !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 929.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -11208,7 +10557,36 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
 !!     Subroutine geoplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    geoplt(3f) generates a geometric
+!!    probability plot
+!!    (with 'bernoulli probability' parameter value = p).
+!!    the geometric distribution used
+!!    herein has mean = (1-p)/p
+!!    and standard deviation = sqrt((1-p)/(p*p))).
+!!    this distribution is defined for
+!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = p * (1-p)**x.
+!!    the geometric distribution is the
+!!    distribution of the number of failures
+!!    before obtaining 1 success in an
+!!    indefinite sequence of bernoulli (0,1)
+!!    trials where the probability of success
+!!    in a single trial = p.
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the geometric probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the  geometric distribution
+!!    with probability parameter value = p.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11237,47 +10615,12 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
 !*==geoplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEOPLT(X,N,P)
       IMPLICIT NONE
-!*--GEOPLT9137
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
      &     sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,    &
      &     yint
 REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GEOPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A GEOMETRIC
-!              PROBABILITY PLOT
-!              (WITH 'BERNOULLI PROBABILITY' PARAMETER VALUE = P).
-!              THE GEOMETRIC DISTRIBUTION USED
-!              HEREIN HAS MEAN = (1-P)/P
-!              AND STANDARD DEVIATION = SQRT((1-P)/(P*P))).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = P * (1-P)**X.
-!              THE GEOMETRIC DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF FAILURES
-!              BEFORE OBTAINING 1 SUCCESS IN AN
-!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE GEOMETRIC PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE  GEOMETRIC DISTRIBUTION
-!              WITH PROBABILITY PARAMETER VALUE = P.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -11298,7 +10641,6 @@ REAL(kind=wp) :: yslope
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT, GEOPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -11309,11 +10651,6 @@ REAL(kind=wp) :: yslope
 !                 EDITION 2, 1957, PAGES 155-157, 210.
 !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 929.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1976.
@@ -11448,7 +10785,26 @@ REAL(kind=wp) :: yslope
 !!     Subroutine geoppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    geoppf(3f) computes the percent point
+!!    function value for the geometric
+!!    distribution with single precision
+!!    'bernoulli probability' parameter = ppar.
+!!    the geometric distribution used
+!!    herein has mean = (1-ppar)/ppar
+!!    and standard deviation = sqrt((1-ppar)/(ppar*ppar))).
+!!    this distribution is defined for
+!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = ppar * (1-ppar)**x.
+!!    the geometric distribution is the
+!!    distribution of the number of failures
+!!    before obtaining 1 success in an
+!!    indefinite sequence of bernoulli (0,1)
+!!    trials where the probability of success
+!!    in a single trial = ppar.
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11477,34 +10833,9 @@ REAL(kind=wp) :: yslope
 !*==geoppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEOPPF(P,Ppar,Ppf)
       IMPLICIT NONE
-!*--GEOPPF9341
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
       INTEGER ipr , iratio
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GEOPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE GEOMETRIC
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              'BERNOULLI PROBABILITY' PARAMETER = PPAR.
-!              THE GEOMETRIC DISTRIBUTION USED
-!              HEREIN HAS MEAN = (1-PPAR)/PPAR
-!              AND STANDARD DEVIATION = SQRT((1-PPAR)/(PPAR*PPAR))).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = PPAR * (1-PPAR)**X.
-!              THE GEOMETRIC DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF FAILURES
-!              BEFORE OBTAINING 1 SUCCESS IN AN
-!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = PPAR.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -11527,10 +10858,8 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -11556,11 +10885,6 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !                 EDITION 2, 1957, PAGES 155-157, 210.
 !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 929.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -11615,7 +10939,23 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !!     Subroutine georan (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    georan(3f) generates a random sample of size n
+!!    from the geometric distribution
+!!    with single precision 'bernoulli probability'
+!!    parameter = p.
+!!    the geometric distribution used
+!!    herein has mean = (1-p)/p
+!!    and standard deviation = sqrt((1-p)/(p*p))).
+!!    this distribution is defined for
+!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = p * (1-p)**x.
+!!    the geometric distribution is the
+!!    distribution of the number of failures
+!!    before obtaining 1 success in an
+!!    indefinite sequence of bernoulli (0,1)
+!!    trials where the probability of success
+!!    in a single trial = p.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11644,31 +10984,9 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 !*==georan.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEORAN(N,P,Iseed,X)
       IMPLICIT NONE
-!*--GEORAN9473
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
       INTEGER i , ipr , iratio , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GEORAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE GEOMETRIC DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = P.
-!              THE GEOMETRIC DISTRIBUTION USED
-!              HEREIN HAS MEAN = (1-P)/P
-!              AND STANDARD DEVIATION = SQRT((1-P)/(P*P))).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = P * (1-P)**X.
-!              THE GEOMETRIC DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF FAILURES
-!              BEFORE OBTAINING 1 SUCCESS IN AN
-!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -11694,7 +11012,6 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -11800,7 +11117,19 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !!     Subroutine hfncdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    hfncdf(3f) computes the cumulative distribution
+!!    function value for the halfnormal
+!!    distribution.
+!!    the halfnormal distribution used
+!!    herein has mean = sqrt(2/pi) = 0.79788456
+!!    and standard deviation = 1.
+!!    this distribution is defined for all non-negative x
+!!    and has the probability density function
+!!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!    the halfnormal distribution used herein
+!!    is the distribution of the variate x = abs(z) where
+!!    the variate z is normally distributed
+!!    with mean = 0 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11829,27 +11158,9 @@ REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 !*==hfncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNCDF(X,Cdf)
       IMPLICIT NONE
-!*--HFNCDF9636
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT HFNCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE HALFNORMAL
-!              DISTRIBUTION.
-!              THE HALFNORMAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = SQRT(2/PI) = 0.79788456
-!              AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (2/SQRT(2*PI)) * EXP(-X*X/2).
-!              THE HALFNORMAL DISTRIBUTION USED HEREIN
-!              IS THE DISTRIBUTION OF THE VARIATE X = ABS(Z) WHERE
-!              THE VARIATE Z IS NORMALLY DISTRIBUTED
-!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -11863,19 +11174,12 @@ REAL(kind=wp) :: Cdf , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
 !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
 !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
 !                 TECHNOMETRICS, 1959, PAGES 311-341.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 !
@@ -11914,7 +11218,31 @@ REAL(kind=wp) :: Cdf , X
 !!     Subroutine hfnplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    hfnplt(3f) generates a halfnormal
+!!    probability plot.
+!!    the prototype halfnormal distribution used herein
+!!    has mean = sqrt(2/pi) = 0.79788456
+!!    and standard deviation = 1.
+!!    this distribution is defined for all non-negative x
+!!    and has the probability density function
+!!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!    the prototype halfnormal distribution used herein
+!!    is the distribution of the variate x = abs(z) where
+!!    the variate z is normally distributed
+!!    with mean = 0 and standard deviation = 1.
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the halfnormal probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the halfnormal distribution.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11943,38 +11271,11 @@ REAL(kind=wp) :: Cdf , X
 !*==hfnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNPLT(X,N)
       IMPLICIT NONE
-!*--HFNPLT9714
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
 !*** End of declarations inserted by SPAG
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A HALFNORMAL
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE HALFNORMAL DISTRIBUTION USED HEREIN
-!              HAS MEAN = SQRT(2/PI) = 0.79788456
-!              AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (2/SQRT(2*PI)) * EXP(-X*X/2).
-!              THE PROTOTYPE HALFNORMAL DISTRIBUTION USED HEREIN
-!              IS THE DISTRIBUTION OF THE VARIATE X = ABS(Z) WHERE
-!              THE VARIATE Z IS NORMALLY DISTRIBUTED
-!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE HALFNORMAL PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE HALFNORMAL DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -11986,7 +11287,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DANIEL, 'USE OF HALF-NORMAL PLOTS IN
 !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
 !                 TECHNOMETRICS, 1959, PAGES 311-341.
@@ -11999,11 +11299,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -12119,7 +11414,22 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!     Subroutine hfnppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    hfnppf(3f) computes the percent point
+!!    function value for the halfnormal
+!!    distribution.
+!!    the halfnormal distribution used
+!!    herein has mean = sqrt(2/pi) = 0.79788456
+!!    and standard deviation = 1.
+!!    this distribution is defined for all non-negative x
+!!    and has the probability density function
+!!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!    the halfnormal distribution used herein
+!!    is the distribution of the variate x = abs(z) where
+!!    the variate z is normally distributed
+!!    with mean = 0 and standard deviation = 1.
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12148,30 +11458,9 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNPPF(P,Ppf)
       IMPLICIT NONE
-!*--HFNPPF9883
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg , P , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT HFNPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE HALFNORMAL
-!              DISTRIBUTION.
-!              THE HALFNORMAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = SQRT(2/PI) = 0.79788456
-!              AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (2/SQRT(2*PI)) * EXP(-X*X/2).
-!              THE HALFNORMAL DISTRIBUTION USED HEREIN
-!              IS THE DISTRIBUTION OF THE VARIATE X = ABS(Z) WHERE
-!              THE VARIATE Z IS NORMALLY DISTRIBUTED
-!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -12187,19 +11476,12 @@ REAL(kind=wp) :: arg , P , Ppf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
 !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
 !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
 !                 TECHNOMETRICS, 1959, PAGES 311-341.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 !
@@ -12238,7 +11520,18 @@ REAL(kind=wp) :: arg , P , Ppf
 !!     Subroutine hfnran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    hfnran(3f) generates a random sample of size n
+!!    from the halfnormal distribution.
+!!    the prototype halfnormal distribution used
+!!    herein has mean = sqrt(2/pi) = 0.79788456
+!!    and standard deviation = 1.
+!!    this distribution is defined for all non-negative x
+!!    and has the probability density function
+!!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!    the prototype halfnormal distribution used herein
+!!    is the distribution of the variate x = abs(z) where
+!!    the variate z is normally distributed
+!!    with mean = 0 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12267,26 +11560,9 @@ REAL(kind=wp) :: arg , P , Ppf
 !*==hfnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNRAN(N,Iseed,X)
       IMPLICIT NONE
-!*--HFNRAN9967
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT HFNRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE HALFNORMAL DISTRIBUTION.
-!              THE PROTOTYPE HALFNORMAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = SQRT(2/PI) = 0.79788456
-!              AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (2/SQRT(2*PI)) * EXP(-X*X/2).
-!              THE PROTOTYPE HALFNORMAL DISTRIBUTION USED HEREIN
-!              IS THE DISTRIBUTION OF THE VARIATE X = ABS(Z) WHERE
-!              THE VARIATE Z IS NORMALLY DISTRIBUTED
-!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -12304,7 +11580,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -12402,7 +11677,18 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!     Subroutine hist (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    hist(3f) produces 2 histograms
+!!    (with differing class widths)
+!!    of the data in the input vector x.
+!!    the first  histogram has class width = 0.1
+!!    sample standard deviations;
+!!    the second histogram has class width = 0.2
+!!    sample standard deviations.
+!!    two histograms of the same data set
+!!    are printed out so as to give the data
+!!    analyst some feel for how dependent
+!!    the histogram shape is as a function
+!!    of the class width and number of classes.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12431,30 +11717,13 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HIST(X,N)
       IMPLICIT NONE
-!*--HIST10109
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
      &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
       INTEGER i , icoun2 , icount , ievodd , ihist , inc , ipr , irev , &
      &        itlabl , ixlabl , j , jmax , jp1 , jsum , maxfre , mt ,   &
      &        mx , N , numcla , numhis
       INTEGER numout
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT HIST
 !
-!     PURPOSE--THIS SUBROUTINE PRODUCES 2 HISTOGRAMS
-!              (WITH DIFFERING CLASS WIDTHS)
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE FIRST  HISTOGRAM HAS CLASS WIDTH = 0.1
-!              SAMPLE STANDARD DEVIATIONS;
-!              THE SECOND HISTOGRAM HAS CLASS WIDTH = 0.2
-!              SAMPLE STANDARD DEVIATIONS.
-!              TWO HISTOGRAMS OF THE SAME DATA SET
-!              ARE PRINTED OUT SO AS TO GIVE THE DATA
-!              ANALYST SOME FEEL FOR HOW DEPENDENT
-!              THE HISTOGRAM SHAPE IS AS A FUNCTION
-!              OF THE CLASS WIDTH AND NUMBER OF CLASSES.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -12467,17 +11736,10 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 4.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -12724,7 +11986,24 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 !!     Subroutine invxwx (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    invxwx(3f) computes the inverse of x'wx
+!!    which is done by computing the inverse of r'r (where
+!!    r has just recently been modified before calling this
+!!    subroutine.  the input r = the square root of
+!!    the diagonal matrix d times the old matrix r.
+!!    the inverse of x'wx will be identical
+!!    (except for the absence of s**2 = the residual
+!!    variance) to the covariance matrix of the coefficients.
+!!    the only reason invxwx(3f) exists is for the
+!!    calculation of such covariances.
+!!    unpivoting has also been done herein so as to undo
+!!    the pivoting done in the decomposition subroutine (decomp).
+!!    the matrix c used herein is an intermediate result matrix.
+!!    x--not used
+!!    q--not used
+!!    r--used and changed
+!!    d--not used
+!!    ipivot--used
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12757,24 +12036,6 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
       INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
 
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE INVERSE OF X'WX
-!     WHICH IS DONE BY COMPUTING THE INVERSE OF R'R (WHERE
-!     R HAS JUST RECENTLY BEEN MODIFIED BEFORE CALLING THIS
-!     SUBROUTINE.  THE INPUT R = THE SQUARE ROOT OF
-!     THE DIAGONAL MATRIX D TIMES THE OLD MATRIX R.
-!     THE INVERSE OF X'WX WILL BE IDENTICAL
-!     (EXCEPT FOR THE ABSENCE OF S**2 = THE RESIDUAL
-!     VARIANCE) TO THE COVARIANCE MATRIX OF THE COEFFICIENTS.
-!     THE ONLY REASON THIS SUBROUTINE EXISTS IS FOR THE
-!     CALCULATION OF SUCH COVARIANCES.
-!     UNPIVOTING HAS ALSO BEEN DONE HEREIN SO AS TO UNDO
-!     THE PIVOTING DONE IN THE DECOMPOSITION SUBROUTINE (DECOMP).
-!     THE MATRIX C USED HEREIN IS AN INTERMEDIATE RESULT MATRIX.
-!     X--NOT USED
-!     Q--NOT USED
-!     R--USED AND CHANGED
-!     D--NOT USED
-!     IPIVOT--USED
 !     INVERSION ALGORITHM USED--CHOLESKI DECOMPOSITION
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -12866,7 +12127,14 @@ REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
 !!     Subroutine lamcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lamcdf(3f) computes the cumulative distribution
+!!    function value for the (tukey) lambda distribution
+!!    with tail length parameter value = alamba.
+!!    in general, the probability density function
+!!    for this distribution is not simple.
+!!    the percent point function for this distribution is
+!!
+!!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -12895,22 +12163,10 @@ REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
 !*==lamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMCDF(X,Alamba,Cdf)
       IMPLICIT NONE
-!*--LAMCDF10507
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
      &     X , xcalc , xmax , xmin
       INTEGER icount , ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LAMCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE (TUKEY) LAMBDA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
-!              IN GENERAL, THE PROBABILITY DENSITY FUNCTION
-!              FOR THIS DISTRIBUTION IS NOT SIMPLE.
-!              THE PERCENT POINT FUNCTION FOR THIS DISTRIBUTION IS
-!              G(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -12925,10 +12181,7 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !     RESTRICTIONS--FOR ALAMBA NON-POSITIVE, NO RESTRICTIONS ON X.
 !                 --FOR ALAMBA POSITIVE, X SHOULD BE BETWEEN (-1/ALAMBA)
 !                   AND (+1/ALAMBA), INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
 !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
 !                 STUDY OF ORDER STATISTICS', ANNALS OF
@@ -12938,11 +12191,6 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -13033,7 +12281,13 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !!     Subroutine lampdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lampdf(3f) computes the probability density
+!!    function value for the (tukey) lambda distribution
+!!    with tail length parameter value = alamba.
+!!    in general, the probability density function
+!!    for this distribution is not simple.
+!!    the percent point function for this distribution is
+!!    g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13062,21 +12316,9 @@ REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , &
 !*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPDF(X,Alamba,Pdf)
       IMPLICIT NONE
-!*--LAMPDF10638
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LAMPDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
-!              FUNCTION VALUE FOR THE (TUKEY) LAMBDA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
-!              IN GENERAL, THE PROBABILITY DENSITY FUNCTION
-!              FOR THIS DISTRIBUTION IS NOT SIMPLE.
-!              THE PERCENT POINT FUNCTION FOR THIS DISTRIBUTION IS
-!              G(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -13092,9 +12334,7 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !                 --FOR ALAMBA POSITIVE, X SHOULD BE BETWEEN (-1/ALAMBA)
 !                   AND (+1/ALAMBA), INCLUSIVELY.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--LAMCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
 !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
 !                 STUDY OF ORDER STATISTICS', ANNALS OF
@@ -13104,11 +12344,6 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -13169,7 +12404,27 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !!     Subroutine lamplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lamplt(3f) generates a (tukey) lambda distribution
+!!    probability plot
+!!    (with tail length parameter value = alamba).
+!!    in general, the probability density function
+!!    for this distribution is not simple.
+!!    the percent point function for this distribution is
+!!    g(p) = ((p**alamba)-((1-p)**alamba)) / alamba
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the lambda probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the lambda distribution
+!!    with tail length parameter value = alamba.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13198,38 +12453,12 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !*==lamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPLT(X,N,Alamba)
       IMPLICIT NONE
-!*--LAMPLT10738
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
 REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LAMPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A (TUKEY) LAMBDA DISTRIBUTION
-!              PROBABILITY PLOT
-!              (WITH TAIL LENGTH PARAMETER VALUE = ALAMBA).
-!              IN GENERAL, THE PROBABILITY DENSITY FUNCTION
-!              FOR THIS DISTRIBUTION IS NOT SIMPLE.
-!              THE PERCENT POINT FUNCTION FOR THIS DISTRIBUTION IS
-!              G(P) = ((P**ALAMBA)-((1-P)**ALAMBA)) / ALAMBA
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE LAMBDA PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE LAMBDA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -13243,7 +12472,6 @@ REAL(kind=wp) :: yslope
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -13261,11 +12489,6 @@ REAL(kind=wp) :: yslope
 !                 STUDY OF ORDER STATISTICS', ANNALS OF
 !                 MATHEMATICAL STATISTICS, 18, 1947,
 !                 PAGES 413-426.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13392,7 +12615,16 @@ REAL(kind=wp) :: yslope
 !!     Subroutine lamppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lamppf(3f) computes the percent point
+!!    function value for the (tukey) lambda distribution
+!!    with tail length parameter value = alamba.
+!!    in general, the probability density function
+!!    for this distribution is not simple.
+!!    the percent point function for this distribution is
+!!    g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13421,24 +12653,9 @@ REAL(kind=wp) :: yslope
 !*==lamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
       IMPLICIT NONE
-!*--LAMPPF10925
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , P , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LAMPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE (TUKEY) LAMBDA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
-!              IN GENERAL, THE PROBABILITY DENSITY FUNCTION
-!              FOR THIS DISTRIBUTION IS NOT SIMPLE.
-!              THE PERCENT POINT FUNCTION FOR THIS DISTRIBUTION IS
-!              G(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -13455,10 +12672,8 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -13471,11 +12686,6 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !                 STUDY OF ORDER STATISTICS', ANNALS OF
 !                 MATHEMATICAL STATISTICS, 18, 1947,
 !                 PAGES 413-426.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13523,7 +12733,13 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!     Subroutine lamran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lamran(3f) generates a random sample of size n
+!!    from the (tukey) lambda distribution
+!!    with tail length parameter value = alamba.
+!!    in general, the probability density function
+!!    for this distribution is not simple.
+!!    the percent point function for this distribution is
+!!    g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13552,21 +12768,9 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !*==lamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
       IMPLICIT NONE
-!*--LAMRAN11021
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: alamb2 , Alamba , q , X
       INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LAMRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE (TUKEY) LAMBDA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
-!              IN GENERAL, THE PROBABILITY DENSITY FUNCTION
-!              FOR THIS DISTRIBUTION IS NOT SIMPLE.
-!              THE PERCENT POINT FUNCTION FOR THIS DISTRIBUTION IS
-!              G(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -13585,7 +12789,6 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -13660,7 +12863,17 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !!     Subroutine lamsf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lamsf(3f) computes the sparsity
+!!    function value for the (tukey) lambda distribution
+!!    with tail length parameter value = alamba.
+!!    in general, the probability density function
+!!    for this distribution is not simple.
+!!    the percent point function for this distribution is
+!!    g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!    note that the sparsity function of a distribution
+!!    is the derivative of the percent point function,
+!!    and also is the reciprocal of the probability
+!!    density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13689,25 +12902,9 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
 !*==lamsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMSF(P,Alamba,Sf)
       IMPLICIT NONE
-!*--LAMSF11137
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , P , Sf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LAMSF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE SPARSITY
-!              FUNCTION VALUE FOR THE (TUKEY) LAMBDA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
-!              IN GENERAL, THE PROBABILITY DENSITY FUNCTION
-!              FOR THIS DISTRIBUTION IS NOT SIMPLE.
-!              THE PERCENT POINT FUNCTION FOR THIS DISTRIBUTION IS
-!              G(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
-!              NOTE THAT THE SPARSITY FUNCTION OF A DISTRIBUTION
-!              IS THE DERIVATIVE OF THE PERCENT POINT FUNCTION,
-!              AND ALSO IS THE RECIPROCAL OF THE PROBABILITY
-!              DENSITY FUNCTION (BUT IN UNITS OF P RATHER THAN X).
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
@@ -13724,10 +12921,7 @@ REAL(kind=wp) :: Alamba , P , Sf
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -13740,11 +12934,6 @@ REAL(kind=wp) :: Alamba , P , Sf
 !                 STUDY OF ORDER STATISTICS', ANNALS OF
 !                 MATHEMATICAL STATISTICS, 18, 1947,
 !                 PAGES 413-426.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13787,7 +12976,19 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!     Subroutine lgncdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lgncdf(3f) computes the cumulative distribution
+!!    function value for the lognormal
+!!    distribution.
+!!    the lognormal distribution used
+!!    herein has mean = sqrt(e) = 1.64872127
+!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+!!    this distribution is defined for all positive x
+!!    and has the probability density function
+!!    f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!    the lognormal distribution used herein
+!!    is the distribution of the variate x = exp(z) where
+!!    the variate z is normally distributed
+!!    with mean = 0 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13816,27 +13017,9 @@ REAL(kind=wp) :: Alamba , P , Sf
 !*==lgncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNCDF(X,Cdf)
       IMPLICIT NONE
-!*--LGNCDF11228
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg , Cdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LGNCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE LOGNORMAL
-!              DISTRIBUTION.
-!              THE LOGNORMAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = SQRT(E) = 1.64872127
-!              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
-!              THE LOGNORMAL DISTRIBUTION USED HEREIN
-!              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
-!              THE VARIATE Z IS NORMALLY DISTRIBUTED
-!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -13852,16 +13035,10 @@ REAL(kind=wp) :: arg , Cdf , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
 !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
 !                 1946, PAGES 219-220.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -13898,7 +13075,31 @@ REAL(kind=wp) :: arg , Cdf , X
 !!     Subroutine lgnplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lgnplt(3f) generates a lognormal
+!!    probability plot.
+!!    the prototype lognormal distribution used herein
+!!    has mean = sqrt(e) = 1.64872127
+!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+!!    this distribution is defined for all positive x
+!!    and has the probability density function
+!!    f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!    the prototype lognormal distribution used herein
+!!    is the distribution of the variate x = exp(z) where
+!!    the variate z is normally distributed
+!!    with mean = 0 and standard deviation = 1.
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the lognormal probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the lognormal distribution.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -13927,40 +13128,10 @@ REAL(kind=wp) :: arg , Cdf , X
 !*==lgnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNPLT(X,N)
       IMPLICIT NONE
-!*--LGNPLT11304
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LGNPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A LOGNORMAL
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE LOGNORMAL DISTRIBUTION USED HEREIN
-!              HAS MEAN = SQRT(E) = 1.64872127
-!              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
-!              THE PROTOTYPE LOGNORMAL DISTRIBUTION USED HEREIN
-!              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
-!              THE VARIATE Z IS NORMALLY DISTRIBUTED
-!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE LOGNORMAL PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE LOGNORMAL DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -13972,7 +13143,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -13984,11 +13154,6 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
 !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
 !                 1946, PAGES 219-220.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14104,7 +13269,22 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !!     Subroutine lgnppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lgnppf(3f) computes the percent point
+!!    function value for the lognormal
+!!    distribution.
+!!    the lognormal distribution used
+!!    herein has mean = sqrt(e) = 1.64872127
+!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+!!    this distribution is defined for all positive x
+!!    and has the probability density function
+!!    f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!    the lognormal distribution used herein
+!!    is the distribution of the variate x = exp(z) where
+!!    the variate z is normally distributed
+!!    with mean = 0 and standard deviation = 1.
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14133,30 +13313,9 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 !*==lgnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNPPF(P,Ppf)
       IMPLICIT NONE
-!*--LGNPPF11474
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Ppf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LGNPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE LOGNORMAL
-!              DISTRIBUTION.
-!              THE LOGNORMAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = SQRT(E) = 1.64872127
-!              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
-!              THE LOGNORMAL DISTRIBUTION USED HEREIN
-!              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
-!              THE VARIATE Z IS NORMALLY DISTRIBUTED
-!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -14174,16 +13333,10 @@ REAL(kind=wp) :: P , Ppf
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
 !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
 !                 1946, PAGES 219-220.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -14220,7 +13373,18 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine lgnran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    lgnran(3f) generates a random sample of size n
+!!    from the lognormal distribution.
+!!    the prototype lognormal distribution used
+!!    herein has mean = sqrt(e) = 1.64872127
+!!    and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+!!    this distribution is defined for all positive x
+!!    and has the probability density function
+!!    f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!    the prototype lognormal distribution used herein
+!!    is the distribution of the variate x = exp(z) where
+!!    the variate z is normally distributed
+!!    with mean = 0 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14249,26 +13413,9 @@ REAL(kind=wp) :: P , Ppf
 !*==lgnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNRAN(N,Iseed,X)
       IMPLICIT NONE
-!*--LGNRAN11555
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LGNRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE LOGNORMAL DISTRIBUTION.
-!              THE PROTOTYPE LOGNORMAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = SQRT(E) = 1.64872127
-!              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
-!              THE PROTOTYPE LOGNORMAL DISTRIBUTION USED HEREIN
-!              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
-!              THE VARIATE Z IS NORMALLY DISTRIBUTED
-!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -14286,7 +13433,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS, EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -14390,7 +13536,23 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!     Subroutine loc (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    loc(3f) computes 4 estimates of the
+!!    location (typical value, measure of central
+!!    tendancy) of the data in the input vector x.
+!!    the 4 estimators employed are--
+!!
+!!            1. the sample midrange;
+!!            2. the sample mean;
+!!            3. the sample midmean; and
+!!            4. the sample median.
+!!
+!!    the above 4 estimators are near-optimal
+!!    estimators of location
+!!    for shorter-tailed symmetric distributions,
+!!    moderate-tailed distributions,
+!!    moderate-long-tailed distributions,
+!!    and long-tailed distributions,
+!!    respectively.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14419,31 +13581,11 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !*==loc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOC(X,N)
       IMPLICIT NONE
-!*--LOC11703
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
      &     xmidm , Y
       INTEGER i , iflag , imax , imaxm1 , imin , iminp1 , ipr , iupper ,&
      &        N , nmid , nmidp1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOC
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES 4 ESTIMATES OF THE
-!              LOCATION (TYPICAL VALUE, MEASURE OF CENTRAL
-!              TENDANCY) OF THE DATA IN THE INPUT VECTOR X.
-!              THE 4 ESTIMATORS EMPLOYED ARE--
-!              1) THE SAMPLE MIDRANGE;
-!              2) THE SAMPLE MEAN;
-!              3) THE SAMPLE MIDMEAN; AND
-!              4) THE SAMPLE MEDIAN.
-!              THE ABOVE 4 ESTIMATORS ARE NEAR-OPTIMAL
-!              ESTIMATORS OF LOCATION
-!              FOR SHORTER-TAILED SYMMETRIC DISTRIBUTIONS,
-!              MODERATE-TAILED DISTRIBUTIONS,
-!              MODERATE-LONG-TAILED DISTRIBUTIONS,
-!              AND LONG-TAILED DISTRIBUTIONS,
-!              RESPECTIVELY.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -14460,19 +13602,12 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DIXON AND MASSEY, PAGES 14, 70, AND 71
 !               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 PAGES 357 AND 387
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -14601,7 +13736,12 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 !!     Subroutine logcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    logcdf(3f) computes the cumulative distribution
+!!    function value for the logistic distribution
+!!    with mean = 0 and standard deviation = pi/sqrt(3).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = exp(x)/(1+exp(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14630,20 +13770,9 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 !*==logcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGCDF(X,Cdf)
       IMPLICIT NONE
-!*--LOGCDF11878
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOGCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE LOGISTIC DISTRIBUTION
-!              WITH MEAN = 0 AND STANDARD DEVIATION = PI/SQRT(3).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(X)/(1+EXP(X)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -14651,19 +13780,10 @@ REAL(kind=wp) :: Cdf , X
 !                                DISTRIBUTION FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
-!     PRINTING--NONE.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -14695,7 +13815,12 @@ END SUBROUTINE LOGCDF
 !!     Subroutine logpdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    logpdf(3f) computes the probability density
+!!    function value for the logistic distribution
+!!    with mean = 0 and standard deviation = pi/sqrt(3).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = exp(x)/(1+exp(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14724,20 +13849,9 @@ END SUBROUTINE LOGCDF
 !*==logpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGPDF(X,Pdf)
       IMPLICIT NONE
-!*--LOGPDF11938
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: Pdf , X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOGPDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
-!              FUNCTION VALUE FOR THE LOGISTIC DISTRIBUTION
-!              WITH MEAN = 0 AND STANDARD DEVIATION = PI/SQRT(3).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(X)/(1+EXP(X)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -14745,19 +13859,10 @@ REAL(kind=wp) :: Pdf , X
 !                                DENSITY FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
 !             FUNCTION VALUE PDF.
-!     PRINTING--NONE.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14785,7 +13890,26 @@ REAL(kind=wp) :: Pdf , X
 !!     Subroutine logplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    logplt(3f) generates a logistic
+!!    probability plot.
+!!    the prototype logistic distribution used herein
+!!    has mean = 0 and standard deviation = pi/sqrt(3).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = exp(x) / (1+exp(x)).
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the logistic probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the logistic distribution.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -14814,35 +13938,10 @@ REAL(kind=wp) :: Pdf , X
 !*==logplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGPLT(X,N)
       IMPLICIT NONE
-!*--LOGPLT11992
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOGPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A LOGISTIC
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE LOGISTIC DISTRIBUTION USED HEREIN
-!              HAS MEAN = 0 AND STANDARD DEVIATION = PI/SQRT(3).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(X) / (1+EXP(X)).
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE LOGISTIC PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE LOGISTIC DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -14854,7 +13953,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -14864,11 +13962,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14980,7 +14073,15 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!     Subroutine logppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    logppf(3f) computes the percent point
+!!    function value for the logistic distribution
+!!    with mean = 0 and standard deviation = pi/sqrt(3).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = exp(x)/(1+exp(x)).
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15009,23 +14110,9 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !*==logppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGPPF(P,Ppf)
       IMPLICIT NONE
-!*--LOGPPF12151
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Ppf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOGPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE LOGISTIC DISTRIBUTION
-!              WITH MEAN = 0 AND STANDARD DEVIATION = PI/SQRT(3).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(X)/(1+EXP(X)).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -15036,10 +14123,8 @@ REAL(kind=wp) :: P , Ppf
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -15048,11 +14133,6 @@ REAL(kind=wp) :: P , Ppf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -15091,7 +14171,12 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine logran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    logran(3f) generates a random sample of size n
+!!    from the logistic distribution
+!!    with mean = 0 and standard deviation = pi/sqrt(3).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = exp(x)/(1+exp(x)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15120,20 +14205,9 @@ REAL(kind=wp) :: P , Ppf
 !*==logran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGRAN(N,Iseed,X)
       IMPLICIT NONE
-!*--LOGRAN12227
-!*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOGRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE LOGISTIC DISTRIBUTION
-!              WITH MEAN = 0 AND STANDARD DEVIATION = PI/SQRT(3).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(X)/(1+EXP(X)).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -15150,7 +14224,6 @@ REAL(kind=wp) :: X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -15222,7 +14295,16 @@ REAL(kind=wp) :: X
 !!     Subroutine logsf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    logsf(3f) computes the sparsity
+!!    function value for the logistic distribution
+!!    with mean = 0 and standard deviation = pi/sqrt(3).
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = exp(x)/(1+exp(x)).
+!!    note that the sparsity function of a distribution
+!!    is the derivative of the percent point function,
+!!    and also is the reciprocal of the probability
+!!    density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15251,24 +14333,9 @@ REAL(kind=wp) :: X
 !*==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGSF(P,Sf)
       IMPLICIT NONE
-!*--LOGSF12337
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Sf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOGSF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE SPARSITY
-!              FUNCTION VALUE FOR THE LOGISTIC DISTRIBUTION
-!              WITH MEAN = 0 AND STANDARD DEVIATION = PI/SQRT(3).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(X)/(1+EXP(X)).
-!              NOTE THAT THE SPARSITY FUNCTION OF A DISTRIBUTION
-!              IS THE DERIVATIVE OF THE PERCENT POINT FUNCTION,
-!              AND ALSO IS THE RECIPROCAL OF THE PROBABILITY
-!              DENSITY FUNCTION (BUT IN UNITS OF P RATHER THAN X).
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
@@ -15279,10 +14346,7 @@ REAL(kind=wp) :: P , Sf
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -15291,11 +14355,6 @@ REAL(kind=wp) :: P , Sf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -15332,7 +14391,9 @@ REAL(kind=wp) :: P , Sf
 !!     Subroutine max (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    max(3f) computes the
+!!    sample maximum
+!!    of the data in the input vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15361,17 +14422,9 @@ REAL(kind=wp) :: P , Sf
 !*==max.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MAX(X,N,Iwrite,Xmax)
       IMPLICIT NONE
-!*--MAX12412
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , X , Xmax
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MAX
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE MAXIMUM
-!              OF THE DATA IN THE INPUT VECTOR X.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -15396,16 +14449,8 @@ REAL(kind=wp) :: hold , X , Xmax
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGE 7.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -15470,7 +14515,9 @@ REAL(kind=wp) :: hold , X , Xmax
 !!     Subroutine mean (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    mean(3f) computes the sample mean
+!!    of the data in the input vector x.
+!!    the sample mean = (sum of the observations)/n.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15499,18 +14546,9 @@ REAL(kind=wp) :: hold , X , Xmax
 !*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MEAN(X,N,Iwrite,Xmean)
       IMPLICIT NONE
-!*--MEAN12515
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , sum , X , Xmean
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MEAN
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE MEAN
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE MEAN = (SUM OF THE OBSERVATIONS)/N.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -15535,21 +14573,13 @@ REAL(kind=wp) :: an , hold , sum , X , Xmean
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 4.
 !               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
 !                 OF STATISTICS, EDITION 2, 1963, PAGE 146.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGE 14.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !
@@ -15617,7 +14647,11 @@ REAL(kind=wp) :: an , hold , sum , X , Xmean
 !!     Subroutine median (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    median(3f) computes the
+!!    sample median
+!!    of the data in the input vector x.
+!!    the sample median = that value such that half the
+!!    data set is below it and half above it.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15646,19 +14680,9 @@ REAL(kind=wp) :: an , hold , sum , X , Xmean
 !*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
       IMPLICIT NONE
-!*--MEDIAN12627
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , WS , X , Xmed , Y
       INTEGER i , iflag , ipr , iupper , Iwrite , N , nmid , nmidp1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MEDIAN
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE MEDIAN
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE MEDIAN = THAT VALUE SUCH THAT HALF THE
-!              DATA SET IS BELOW IT AND HALF ABOVE IT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -15684,9 +14708,7 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 326.
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
@@ -15696,11 +14718,6 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !                 EDITION 6, 1967, PAGE 123.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGE 70.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -15772,7 +14789,10 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !!     Subroutine midm (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    midm(3f) computes the
+!!    sample midmean = the
+!!    sample 25% (on each side) trimmed mean
+!!    of the data in the input vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15801,20 +14821,11 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !*==midm.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
       IMPLICIT NONE
-!*--MIDM12747
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
      &     X , Xmidm , Y
       INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MIDM
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE MIDMEAN = THE
-!              SAMPLE 25% (ON EACH SIDE) TRIMMED MEAN
-!              OF THE DATA IN THE INPUT VECTOR X.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -15840,9 +14851,7 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
 !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
 !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
@@ -15851,11 +14860,6 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !                 PRINCETON UNIVERSITY, 1969).
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -15958,7 +14962,10 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 !!     Subroutine midr (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    midr(3f) computes the
+!!    sample midrange
+!!    of the data in the input vector x.
+!!    the sample midrange = (sample min + sample max)/2.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15987,18 +14994,9 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 !*==midr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
       IMPLICIT NONE
-!*--MIDR12898
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MIDR
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE MIDRANGE
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE MIDRANGE = (SAMPLE MIN + SAMPLE MAX)/2.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -16023,10 +15021,7 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
@@ -16034,11 +15029,6 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 !               --DAVID, ORDER STATISTICS, 1970, PAGE 97.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGE 71.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16106,7 +15096,8 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 !!     Subroutine min (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    min(3f) computes the sample minimum
+!!    of the data in the input vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -16135,17 +15126,9 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 !*==min.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIN(X,N,Iwrite,Xmin)
       IMPLICIT NONE
-!*--MIN13011
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , X , Xmin
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MIN
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE MINIMUM
-!              OF THE DATA IN THE INPUT VECTOR X.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -16170,16 +15153,8 @@ REAL(kind=wp) :: hold , X , Xmin
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGE 7.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16245,7 +15220,14 @@ REAL(kind=wp) :: hold , X , Xmin
 !!     Subroutine move (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    move(3f) moves (copies) m elements of the
+!!    single precision vector x
+!!    (starting with position ix1)
+!!    into the single precision vector y
+!!    (starting with position iy1).
+!!    this allows the data analyst
+!!    to take any subvector in x and place it
+!!    anywhere in the vector y.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -16272,24 +15254,11 @@ REAL(kind=wp) :: hold , X , Xmin
 !!##LICENSE
 !!    CC0-1.0
 !*==move.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
-      IMPLICIT NONE
-!*--MOVE13114
-!*** Start of declarations inserted by SPAG
+SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
+IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Y
-      INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MOVE
+INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
 !
-!     PURPOSE--THIS SUBROUTINE MOVES (COPIES) M ELEMENTS OF THE
-!              SINGLE PRECISION VECTOR X
-!              (STARTING WITH POSITION IX1)
-!              INTO THE SINGLE PRECISION VECTOR Y
-!              (STARTING WITH POSITION IY1).
-!              THIS ALLOWS THE DATA ANALYST
-!              TO TAKE ANY SUBVECTOR IN X AND PLACE IT
-!              ANYWHERE IN THE VECTOR Y.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS, PART (OR ALL)
 !                                OF WHICH IS TO BE MOVED
@@ -16316,10 +15285,7 @@ REAL(kind=wp) :: hold , X , Y
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF M FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE ELEMENT IN POSITION IX1 OF THE VECTOR X
 !            IS COPIED INTO POSITION IY1 OF THE VECTOR Y,
 !            THE ELEMENT IN POSITION (IX1+1) OF THE VECTOR X
@@ -16328,12 +15294,6 @@ REAL(kind=wp) :: hold , X , Y
 !            THE ELEMENT IN POSITION (IX1+M-1) OF THE VECTOR X
 !            IS COPIED INTO POSITION (IY1+M-1) OF THE VECTOR Y.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -16406,7 +15366,29 @@ REAL(kind=wp) :: hold , X , Y
 !!     Subroutine nbcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    nbcdf(3f) computes the cumulative distribution
+!!    function value at the single precision value x
+!!    for the negative binomial distribution
+!!    with single precision 'bernoulli probability'
+!!    parameter = p,
+!!    and integer 'number of successes in bernoulli trials'
+!!    parameter = n.
+!!    the negative binomial distribution used
+!!    herein has mean = n*(1-p)/p
+!!    and standard deviation = sqrt(n*(1-p)/(p*p))).
+!!    this distribution is defined for
+!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = c(n+x-1,n) * p**n * (1-p)**x.
+!!    where c(n+x-1,n) is the combinatorial function
+!!    equaling the number of combinations of n+x-1 items
+!!    taken n at a time.
+!!    the negative binomial distribution is the
+!!    distribution of the number of failures
+!!    before obtaining n successes in an
+!!    indefinite sequence of bernoulli (0,1)
+!!    trials where the probability of success
+!!    in a single trial = p.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -16435,38 +15417,10 @@ REAL(kind=wp) :: hold , X , Y
 !*==nbcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBCDF(X,P,N,Cdf)
       IMPLICIT NONE
-!*--NBCDF13239
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
       INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
      &        k , N , n2 , nu1 , nu2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NBCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE X
-!              FOR THE NEGATIVE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = P,
-!              AND INTEGER 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
-!              PARAMETER = N.
-!              THE NEGATIVE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = N*(1-P)/P
-!              AND STANDARD DEVIATION = SQRT(N*(1-P)/(P*P))).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(N+X-1,N) * P**N * (1-P)**X.
-!              WHERE C(N+X-1,N) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF N+X-1 ITEMS
-!              TAKEN N AT A TIME.
-!              THE NEGATIVE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF FAILURES
-!              BEFORE OBTAINING N SUCCESSES IN AN
-!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -16496,10 +15450,8 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --N SHOULD BE A POSITIVE INTEGER.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
 !              DISTRIBUTION FUNCTION SUBROUTINE
@@ -16543,11 +15495,6 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 !                 DISTRIBUTION, 1963.
 !               --OWEN, HANDBOOK OF STATISTICAL
 !                 TABLES, 1962, PAGE 304.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -16749,7 +15696,32 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 !!     Subroutine nbppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    nbppf(3f) computes the percent point
+!!    function value at the single precision value p
+!!    for the negative binomial distribution
+!!    with single precision 'bernoulli probability'
+!!    parameter = ppar,
+!!    and integer 'number of successes in bernoulli trials'
+!!    parameter = n.
+!!    the negative binomial distribution used
+!!    herein has mean = n*(1-ppar)/ppar
+!!    and standard deviation = sqrt(n*(1-ppar)/(ppar*ppar))).
+!!    this distribution is defined for
+!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = c(n+x-1,n) * ppar**n * (1-ppar)**x.
+!!    where c(n+x-1,n) is the combinatorial function
+!!    equaling the number of combinations of n+x-1 items
+!!    taken n at a time.
+!!    the negative binomial distribution is the
+!!    distribution of the number of failures
+!!    before obtaining n successes in an
+!!    indefinite sequence of bernoulli (0,1)
+!!    trials where the probability of success
+!!    in a single trial = ppar.
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -16778,42 +15750,11 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 !*==nbppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
       IMPLICIT NONE
-!*--NBPPF13546
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
      &     Ppar , Ppf , sd , sinh , x0 , x1 , x2 , ymean , yppf , ysd
 REAL(kind=wp) :: zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NBPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE P
-!              FOR THE NEGATIVE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = PPAR,
-!              AND INTEGER 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
-!              PARAMETER = N.
-!              THE NEGATIVE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = N*(1-PPAR)/PPAR
-!              AND STANDARD DEVIATION = SQRT(N*(1-PPAR)/(PPAR*PPAR))).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(N+X-1,N) * PPAR**N * (1-PPAR)**X.
-!              WHERE C(N+X-1,N) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF N+X-1 ITEMS
-!              TAKEN N AT A TIME.
-!              THE NEGATIVE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF FAILURES
-!              BEFORE OBTAINING N SUCCESSES IN AN
-!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = PPAR.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -16847,7 +15788,6 @@ REAL(kind=wp) :: zppf
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, NBCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -16887,11 +15827,6 @@ REAL(kind=wp) :: zppf
 !                 DISTRIBUTION, 1963.
 !               --OWEN, HANDBOOK OF STATISTICAL
 !                 TABLES, 1962, PAGE 304.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -17178,7 +16113,28 @@ REAL(kind=wp) :: zppf
 !!     Subroutine nbran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    nbran(3f) generates a random sample of size n
+!!    from the negative binomial distribution
+!!    with single precision 'bernoulli probability'
+!!    parameter = p,
+!!    and integer 'number of successes in bernoulli trials'
+!!    parameter = npar.
+!!    the negative binomial distribution used
+!!    herein has mean = npar*(1-p)/p
+!!    and standard deviation = sqrt(npar*(1-p)/(p*p))).
+!!    this distribution is defined for
+!!    all non-negative integer x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = c(npar+x-1,npar) * p**npar * (1-p)**x.
+!!    where c(npar+x-1,npar) is the combinatorial function
+!!    equaling the number of combinations of npar+x-1 items
+!!    taken npar at a time.
+!!    the negative binomial distribution is the
+!!    distribution of the number of failures
+!!    before obtaining npar successes in an
+!!    indefinite sequence of bernoulli (0,1)
+!!    trials where the probability of success
+!!    in a single trial = p.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -17207,36 +16163,9 @@ REAL(kind=wp) :: zppf
 !*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
       IMPLICIT NONE
-!*--NBRAN13940
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: b(1) , g(1) , P , X
       INTEGER i , ib , ig , ipr , Istart , isum , j , N , Npar
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NBRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE NEGATIVE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = P,
-!              AND INTEGER 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
-!              PARAMETER = NPAR.
-!              THE NEGATIVE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = NPAR*(1-P)/P
-!              AND STANDARD DEVIATION = SQRT(NPAR*(1-P)/(P*P))).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(NPAR+X-1,NPAR) * P**NPAR * (1-P)**X.
-!              WHERE C(NPAR+X-1,NPAR) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF NPAR+X-1 ITEMS
-!              TAKEN NPAR AT A TIME.
-!              THE NEGATIVE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF FAILURES
-!              BEFORE OBTAINING NPAR SUCCESSES IN AN
-!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -17283,9 +16212,7 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --NPAR SHOULD BE A POSITIVE INTEGER.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, BINRAN, GEORAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -17318,11 +16245,6 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !                 SERIES 55, 1964, PAGE 929.
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -17423,7 +16345,12 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !!     Subroutine norcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    norcdf(3f) computes the cumulative distribution
+!!    function value for the normal (gaussian)
+!!    distribution with mean = 0 and standard deviation = 1.
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -17452,20 +16379,9 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !*==norcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORCDF(X,Cdf)
       IMPLICIT NONE
-!*--NORCDF14149
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NORCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE NORMAL (GAUSSIAN)
-!              DISTRIBUTION WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/SQRT(2*PI))*EXP(-X*X/2).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -17473,21 +16389,12 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !                                DISTRIBUTION FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
-!     PRINTING--NONE.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 932, FORMULA 26.2.17.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -17523,7 +16430,32 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !!     Subroutine norout (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    norout(3f) performs a normal outlier analysis
+!!    on the data in the input vector x.
+!!    this analysis consists of--
+!!
+!!      1. various normal outlier statistics;
+!!      2. various partial sample means
+!!      3. various partial sample standard deviations;
+!!      4. the first 40 and last 40 ordered observations;
+!!      5. a line plot; and
+!!      6. a normal probability plot.
+!!
+!!    when the first 40 and last 40 ordered observations
+!!    are printed out, also included for each
+!!    of the 40+40 = 80 listed data values
+!!    is the corresponding residual about
+!!    the (full) sample mean,
+!!    the standardized residual,
+!!    the normal n(0,1) value for the standardized
+!!    residual,
+!!    and the position number
+!!    in the original data vector x.
+!!    this last piece of information allows
+!!    the data analyst to easily locate
+!!    back in the original data vector .
+!!    a suspected outlier or otherwise
+!!    interesting observation.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -17552,8 +16484,6 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NOROUT(X,N)
       IMPLICIT NONE
-!*--NOROUT14213
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
      &     res , s , s1 , s13 , s14 , s2 , s23 , s24 , s3 , s4 , ssq
 REAL(kind=wp) :: ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
@@ -17563,34 +16493,7 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
      &     xb4 , xline , XPOs , Y
       INTEGER i , icount , iflag , ipr , irev , iupper , j , mx , N ,   &
      &        nm1 , nm2 , nm3 , nm4 , nm5
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NOROUT
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A NORMAL OUTLIER ANALYSIS
-!              ON THE DATA IN THE INPUT VECTOR X.
-!              THIS ANALYSIS CONSISTS OF--
-!              1) VARIOUS NORMAL OUTLIER STATISTICS;
-!              2) VARIOUS PARTIAL SAMPLE MEANS
-!              3) VARIOUS PARTIAL SAMPLE STANDARD DEVIATIONS;
-!              4) THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS;
-!              5) A LINE PLOT; AND
-!              6) A NORMAL PROBABILITY PLOT.
-!              WHEN THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS
-!              ARE PRINTED OUT, ALSO INCLUDED FOR EACH
-!              OF THE 40+40 = 80 LISTED DATA VALUES
-!              IS THE CORRESPONDING RESIDUAL ABOUT
-!              THE (FULL) SAMPLE MEAN,
-!              THE STANDARDIZED RESIDUAL,
-!              THE NORMAL N(0,1) VALUE FOR THE STANDARDIZED
-!              RESIDUAL,
-!              AND THE POSITION NUMBER
-!              IN THE ORIGINAL DATA VECTOR X.
-!              THIS LAST PIECE OF INFORMATION ALLOWS
-!              THE DATA ANALYST TO EASILY LOCATE
-!              BACK IN THE ORIGINAL DATA VECTOR .
-!              A SUSPECTED OUTLIER OR OTHERWISE
-!              INTERESTING OBSERVATION.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -17609,7 +16512,6 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !                                         SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     WRITE OUT THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS,
 !     INCLUDING THEIR RESIDUALS ABOUT THE (FULL) SAMPLE MEAN,
 !     THE STANDARDIZED RESIDUALS,
@@ -17617,11 +16519,6 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !     OF THE STANDARDIZED RESIDUAL, AND
 !     THE POSITION NUMBER IN THE ORIGINAL DATA VECTOR X.
 !     REFERENCES--GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -18025,7 +16922,12 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !!     Subroutine norpdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    norpdf(3f) computes the probability density
+!!    function value for the normal (gaussian)
+!!    distribution with mean = 0 and standard deviation = 1.
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18052,22 +16954,11 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !!##LICENSE
 !!    CC0-1.0
 !*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NORPDF(X,Pdf)
-      IMPLICIT NONE
-!*--NORPDF14679
-!*** Start of declarations inserted by SPAG
+SUBROUTINE NORPDF(X,Pdf)
+IMPLICIT NONE
 REAL(kind=wp) :: c , Pdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NORPDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
-!              FUNCTION VALUE FOR THE NORMAL (GAUSSIAN)
-!              DISTRIBUTION WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/SQRT(2*PI))*EXP(-X*X/2).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -18075,19 +16966,10 @@ REAL(kind=wp) :: c , Pdf , X
 !                                DENSITY FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
 !             FUNCTION VALUE PDF.
-!     PRINTING--NONE.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -18116,7 +16998,26 @@ REAL(kind=wp) :: c , Pdf , X
 !!     Subroutine norplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    norplt(3f) generates a normal (gaussian)
+!!    probability plot.
+!!    the prototype normal distribution used herein
+!!    has mean = 0 and standard deviation = 1.
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = (1/sqrt(2*pi)) * exp(-x*x/2).
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the normal probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the normal distribution.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18145,35 +17046,10 @@ REAL(kind=wp) :: c , Pdf , X
 !*==norplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORPLT(X,N)
       IMPLICIT NONE
-!*--NORPLT14735
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NORPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A NORMAL (GAUSSIAN)
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE NORMAL DISTRIBUTION USED HEREIN
-!              HAS MEAN = 0 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/SQRT(2*PI)) * EXP(-X*X/2).
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE NORMAL PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE NORMAL DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -18185,7 +17061,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -18200,11 +17075,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -18315,7 +17185,15 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!     Subroutine norppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    norppf(3f) computes the percent point
+!!    function value for the normal (gaussian)
+!!    distribution with mean = 0 and standard deviation = 1.
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18344,24 +17222,10 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !*==norppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORPPF(P,Ppf)
       IMPLICIT NONE
-!*--NORPPF14899
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
      &     q2 , q3 , q4 , r , t
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NORPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE NORMAL (GAUSSIAN)
-!              DISTRIBUTION WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/SQRT(2*PI))*EXP(-X*X/2).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -18372,10 +17236,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--ODEH AND EVANS, THE PERCENTAGE POINTS
 !                 OF THE NORMAL DISTRIBUTION, ALGORTIHM 70,
 !                 APPLIED STATISTICS, 1974, PAGES 96-97.
@@ -18418,11 +17279,6 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !               THE ACCURACY OF APPROXIMATION
 !               BEING IMPROVED FROM 4.5*(10**-4)
 !               TO 1.5*(10**-8).
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -18475,7 +17331,14 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !!     Subroutine norran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!
+!!    norran(3f) generates a random sample of size n from the the normal
+!!    (gaussian) distribution with mean = 0 and standard deviation = 1.
+!!
+!!    this distribution is defined for all x and has the probability
+!!    density function
+!!
+!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18504,20 +17367,9 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORRAN(N,Iseed,X)
       IMPLICIT NONE
-!*--NORRAN15024
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NORRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE THE NORMAL (GAUSSIAN)
-!              DISTRIBUTION WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/SQRT(2*PI))*EXP(-X*X/2).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -18629,7 +17481,16 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !!     Subroutine norsf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    norsf(3f) computes the sparsity
+!!    function value for the normal (gaussian)
+!!    distribution with mean = 0 and standard deviation = 1.
+!!    this distribution is defined for all x and has
+!!    the probability density function
+!!    f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!    note that the sparsity function of a distribution
+!!    is the derivative of the percent point function,
+!!    and also is the reciprocal of the probability
+!!    density function (but in units of p rather than x).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18658,24 +17519,9 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 !*==norsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORSF(P,Sf)
       IMPLICIT NONE
-!*--NORSF15157
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: c , P , pdf , ppf , Sf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NORSF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE SPARSITY
-!              FUNCTION VALUE FOR THE NORMAL (GAUSSIAN)
-!              DISTRIBUTION WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/SQRT(2*PI))*EXP(-X*X/2).
-!              NOTE THAT THE SPARSITY FUNCTION OF A DISTRIBUTION
-!              IS THE DERIVATIVE OF THE PERCENT POINT FUNCTION,
-!              AND ALSO IS THE RECIPROCAL OF THE PROBABILITY
-!              DENSITY FUNCTION (BUT IN UNITS OF P RATHER THAN X).
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
@@ -18689,7 +17535,6 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -18698,11 +17543,6 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -18744,7 +17584,15 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !!     Subroutine parcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    parcdf(3f) computes the cumulative distribution
+!!    function value for the pareto
+!!    distribution with single precision
+!!    tail length parameter = gamma.
+!!    the pareto distribution used
+!!    herein is defined for all x greater than
+!!    or equal to 1,
+!!    and has the probability density function
+!!    f(x) = gamma / (x**(gamma+1)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18773,23 +17621,9 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !*==parcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARCDF(X,Gamma,Cdf)
       IMPLICIT NONE
-!*--PARCDF15236
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PARCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE PARETO
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE PARETO DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL X GREATER THAN
-!              OR EQUAL TO 1,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA / (X**(GAMMA+1)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -18807,21 +17641,13 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE GREATER THAN
 !                   OR EQUAL TO 1.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
 !               --HASTINGS AND PEACOCK, STATISTICAL
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGE 102.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -18864,7 +17690,28 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!     Subroutine parplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    parplt(3f) generates a pareto
+!!    probability plot
+!!    (with tail length parameter value = gamma).
+!!    the prototype pareto distribution used
+!!    herein is defined for all x equal to
+!!    or greater than 1,
+!!    and has the probability density function
+!!    f(x) = gamma / (x**(gamma+1)).
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the pareto probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the  pareto distribution
+!!    with tail length parameter value = gamma.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -18893,39 +17740,12 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !*==parplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPLT(X,N,Gamma)
       IMPLICIT NONE
-!*--PARPLT15321
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
 REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PARPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A PARETO
-!              PROBABILITY PLOT
-!              (WITH TAIL LENGTH PARAMETER VALUE = GAMMA).
-!              THE PROTOTYPE PARETO DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL X EQUAL TO
-!              OR GREATER THAN 1,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA / (X**(GAMMA+1)).
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE PARETO PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE  PARETO DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -18941,7 +17761,6 @@ REAL(kind=wp) :: yslope
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -18951,11 +17770,6 @@ REAL(kind=wp) :: yslope
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !
@@ -19088,7 +17902,18 @@ REAL(kind=wp) :: yslope
 !!     Subroutine parppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    parppf(3f) computes the percent point
+!!    function value for the pareto
+!!    distribution with single precision
+!!    tail length parameter = gamma.
+!!    the pareto distribution used
+!!    herein is defined for all x greater than
+!!    or equal to 1,
+!!    and has the probability density function
+!!    f(x) = gamma / (x**(gamma+1)).
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -19117,26 +17942,9 @@ REAL(kind=wp) :: yslope
 !*==parppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPPF(P,Gamma,Ppf)
       IMPLICIT NONE
-!*--PARPPF15510
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PARPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE PARETO
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE PARETO DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL X GREATER THAN
-!              OR EQUAL TO 1,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA / (X**(GAMMA+1)).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -19154,21 +17962,13 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
 !               --HASTINGS AND PEACOCK, STATISTICAL
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGE 102.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -19211,7 +18011,14 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!     Subroutine parran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    parran(3f) generates a random sample of size n
+!!    from the pareto distribution
+!!    with tail length parameter value = gamma.
+!!    the prototype pareto distribution used
+!!    herein is defined for all x greater than
+!!    or equal to 1,
+!!    and has the probability density function
+!!    f(x) = gamma / (x**(gamma+1)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -19240,22 +18047,9 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !*==parran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
-!*--PARRAN15598
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PARRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE PARETO DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              THE PROTOTYPE PARETO DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL X GREATER THAN
-!              OR EQUAL TO 1,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA / (X**(GAMMA+1)).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -19274,9 +18068,7 @@ REAL(kind=wp) :: Gamma , X
 !                   OF N FOR THIS SUBROUTINE.
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -19354,7 +18146,67 @@ REAL(kind=wp) :: Gamma , X
 !!     Subroutine plot10 (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plot10(3f) yields a one-page printer plot
+!!    of y(i) versus x(i):
+!!
+!!               1. with special plot characters;
+!!               2. with the vertical (y) axis min and max
+!!                  and the horizontal (x) axis min and max
+!!                  values specified by the data analyst;
+!!               3. with only those points (x(i),y(i)) plotted
+!!                  for which the corresponding value of d(i)
+!!                  is between the specified values of dmin and dmax; and
+!!               4. with hollerith labels (at most 6 characters)
+!!                 for the vertical axis variable,
+!!                  the horizontal axis variable, and
+!!                  the plotting character variable
+!!                  also being provided by the data analyst.
+!!
+!!    the 'special plotting character' capability
+!!    allows the data analyst to incorporate information
+!!    from a third variable (aside from y and x) into
+!!    the plot.
+!!    the plot character used at the i-th plotting
+!!    position (that is, at the coordinate (x(i),y(i)))
+!!    will be
+!!
+!!               1 if char(i) is between  0.5 and  1.5
+!!               2 if char(i) is between  1.5 and  2.5
+!!                 .
+!!                .
+!!                 .
+!!               9 if char(i) is between  8.5 and  9.5
+!!               0 if char(i) is between  9.5 and 10.5
+!!               a if char(i) is between 10.5 and 11.5
+!!               b if char(i) is between 11.5 and 12.5
+!!               c if char(i) is between 12.5 and 13.5
+!!                .
+!!                 .
+!!                 .
+!!               w if char(i) is between 32.5 and 33.5
+!!               x if char(i) is between 33.5 and 34.5
+!!               y if char(i) is between 34.5 and 35.5
+!!               z if char(i) is between 35.5 and 36.5
+!!               x if char(i) is any value outside the range
+!!                                        0.5 to  36.5.
+!!
+!!    the use of the ymin, ymax, xmin, and xmax
+!!    specifications allows the data analyst
+!!    to control fully the plot axis limits,
+!!    so as, for example, to zero-in on an
+!!    interesting sub-region of a previous plot.
+!!
+!!    the use of the subset definition vector d
+!!    gives the data analyst the capability of
+!!    plotting subsets of the data,
+!!    where the subset is defined
+!!    by values in the vector d.
+!!
+!!    the use of hollerith identifying labels
+!!    allows the data analyst to automatically
+!!    have the plots labeled.  this is particularly
+!!    useful in a large analysis when many
+!!    plots are being generated.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -19381,79 +18233,14 @@ REAL(kind=wp) :: Gamma , X
 !!##LICENSE
 !!    CC0-1.0
 !*==plot10.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-      SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,     &
-     &                  Yaxid,Xaxid,Plchid)
-      IMPLICIT NONE
-!*--PLOT1016034
-!*** Start of declarations inserted by SPAG
+SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
+IMPLICIT NONE
+
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
      &     ratiox , ratioy , X , x25 , x75 , Xaxid , Xmax , xmid ,      &
      &     Xmin , Y , Yaxid , ylable
 REAL(kind=wp) :: Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!      DLL_EXPORT PLOT10
-!
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I):
-!              1) WITH SPECIAL PLOT CHARACTERS;
-!              2) WITH THE VERTICAL (Y) AXIS MIN AND MAX
-!                 AND THE HORIZONTAL (X) AXIS MIN AND MAX
-!                 VALUES SPECIFIED BY THE DATA ANALYST;
-!              3) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
-!                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
-!                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX; AND
-!              3) WITH HOLLERITH LABELS (AT MOST 6 CHARACTERS)
-!                 FOR THE VERTICAL AXIS VARIABLE,
-!                 THE HORIZONTAL AXIS VARIABLE, AND
-!                 THE PLOTTING CHARACTER VARIABLE
-!                 ALSO BEING PROVIDED BY THE DATA ANALYST.
-!
-!              THE 'SPECIAL PLOTTING CHARACTER' CAPABILITY
-!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
-!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
-!              THE PLOT.
-!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
-!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
-!              WILL BE
-!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
-!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
-!                .
-!                .
-!                .
-!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
-!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
-!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
-!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
-!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
-!                .
-!                .
-!                .
-!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
-!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
-!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
-!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
-!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
-!                                       0.5 TO  36.5.
-!
-!              THE USE OF THE YMIN, YMAX, XMIN, AND XMAX
-!              SPECIFICATIONS ALLOWS THE DATA ANALYST
-!              TO CONTROL FULLY THE PLOT AXIS LIMITS,
-!              SO AS, FOR EXAMPLE, TO ZERO-IN ON AN
-!              INTERESTING SUB-REGION OF A PREVIOUS PLOT.
-!
-!              THE USE OF THE SUBSET DEFINTION VECTOR D
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              PLOTTING SUBSETS OF THE DATA,
-!              WHERE THE SUBSET IS DEFINED
-!              BY VALUES IN THE VECTOR D.
-!
-!              THE USE OF HOLLERITH IDENTIFYING LABELS
-!              ALLOWS THE DATA ANALYST TO AUTOMATICALLY
-!              HAVE THE PLOTS LABELED.  THIS IS PARTICULARLY
-!              USEFUL IN A LARGE ANALYSIS WHEN MANY
-!              PLOTS ARE BEING GENERATED.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -19506,10 +18293,7 @@ REAL(kind=wp) :: Ymax , Ymin
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -19544,11 +18328,6 @@ REAL(kind=wp) :: Ymax , Ymin
 !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
 !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 NEW YORK CITY, DECEMBER 27-30, 1973.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JANUARY   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -19877,7 +18656,18 @@ REAL(kind=wp) :: Ymax , Ymin
 !!     Subroutine plot6 (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plot6(3f) yields a one-page printer plot
+!!    of y(i) versus x(i):
+!!
+!!      1. with the vertical (y) axis min and max
+!!         and the horizontal (x) axis min and max
+!!         values specified by the data analyst.
+!!
+!!    the use of the ymin, ymax, xmin, and xmax
+!!    specifications allows the data analyst
+!!    to control fully the plot axis limits,
+!!    so as, for example, to zero-in on an
+!!    interesting sub-region of a previous plot.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -19903,29 +18693,18 @@ REAL(kind=wp) :: Ymax , Ymin
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --OCTOBER   1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --FEBRUARY  1977.
+!     UPDATED         --JUNE      1977.
 !*==plot6.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
-      IMPLICIT NONE
-!*--PLOT616520
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
-     &     Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
-      INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOT6
+SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
+IMPLICIT NONE
+REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
+INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I):
-!              1) WITH THE VERTICAL (Y) AXIS MIN AND MAX
-!                 AND THE HORIZONTAL (X) AXIS MIN AND MAX
-!                 VALUES SPECIFIED BY THE DATA ANALYST.
-!
-!              THE USE OF THE YMIN, YMAX, XMIN, AND XMAX
-!              SPECIFICATIONS ALLOWS THE DATA ANALYST
-!              TO CONTROL FULLY THE PLOT AXIS LIMITS,
-!              SO AS, FOR EXAMPLE, TO ZERO-IN ON AN
-!              INTERESTING SUB-REGION OF A PREVIOUS PLOT.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -19948,10 +18727,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -19973,18 +18749,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOT
 !              SUBROUTINE.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --OCTOBER   1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
-!     UPDATED         --FEBRUARY  1977.
-!     UPDATED         --JUNE      1977.
 !
 !---------------------------------------------------------------------
 !
@@ -20217,7 +18981,47 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !!     Subroutine plot7 (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plot7(3f) yields a one-page printer plot
+!!    of y(i) versus x(i):
+!!      1. with special plot characters; and
+!!      2. with the vertical (y) axis min and max
+!!         and the horizontal (x) axis min and max
+!!         values specified by the data analyst.
+!!
+!!    the 'special plotting character' capability
+!!    allows the data analyst to incorporate information
+!!    from a third variable (aside from y and x) into
+!!    the plot.
+!!    the plot character used at the i-th plotting
+!!    position (that is, at the coordinate (x(i),y(i)))
+!!    will be
+!!
+!!      1 if char(i) is between  0.5 and  1.5
+!!      2 if char(i) is between  1.5 and  2.5
+!!        .
+!!        .
+!!        .
+!!      9 if char(i) is between  8.5 and  9.5
+!!      0 if char(i) is between  9.5 and 10.5
+!!      a if char(i) is between 10.5 and 11.5
+!!      b if char(i) is between 11.5 and 12.5
+!!      c if char(i) is between 12.5 and 13.5
+!!        .
+!!        .
+!!        .
+!!      w if char(i) is between 32.5 and 33.5
+!!      x if char(i) is between 33.5 and 34.5
+!!      y if char(i) is between 34.5 and 35.5
+!!      z if char(i) is between 35.5 and 36.5
+!!      x if char(i) is any value outside the range
+!!                               0.5 to  36.5.
+!!
+!!    the use of the ymin, ymax, xmin, and xmax
+!!    specifications allows the data analyst
+!!    to control fully the plot axis limits,
+!!    so as, for example, to zero-in on an
+!!    interesting sub-region of a previous plot.
+!!
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -20246,54 +19050,9 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !*==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
       IMPLICIT NONE
-!*--PLOT716824
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOT7
-!
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I):
-!              1) WITH SPECIAL PLOT CHARACTERS; AND
-!              2) WITH THE VERTICAL (Y) AXIS MIN AND MAX
-!                 AND THE HORIZONTAL (X) AXIS MIN AND MAX
-!                 VALUES SPECIFIED BY THE DATA ANALYST.
-!
-!              THE 'SPECIAL PLOTTING CHARACTER' CAPABILITY
-!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
-!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
-!              THE PLOT.
-!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
-!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
-!              WILL BE
-!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
-!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
-!                .
-!                .
-!                .
-!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
-!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
-!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
-!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
-!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
-!                .
-!                .
-!                .
-!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
-!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
-!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
-!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
-!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
-!                                       0.5 TO  36.5.
-!
-!              THE USE OF THE YMIN, YMAX, XMIN, AND XMAX
-!              SPECIFICATIONS ALLOWS THE DATA ANALYST
-!              TO CONTROL FULLY THE PLOT AXIS LIMITS,
-!              SO AS, FOR EXAMPLE, TO ZERO-IN ON AN
-!              INTERESTING SUB-REGION OF A PREVIOUS PLOT.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -20321,10 +19080,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -20355,11 +19111,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
 !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 NEW YORK CITY, DECEMBER 27-30, 1973.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JUNE      1974.
 !     UPDATED         --OCTOBER   1975.
@@ -20643,7 +19394,57 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!     Subroutine plot8 (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plot8(3f) yields a one-page printer plot
+!!    of y(i) versus x(i):
+!!
+!!      1. with special plot characters;
+!!      2. with the vertical (y) axis min and max
+!!         and the horizontal (x) axis min and max
+!!         values specified by the data analyst; and
+!!      3. with only those points (x(i),y(i)) plotted
+!!         for which the corresponding value of d(i)
+!!         is between the specified values of dmin and dmax.
+!!
+!!    the 'special plotting character' capability
+!!    allows the data analyst to incorporate information
+!!    from a third variable (aside from y and x) into
+!!    the plot.
+!!
+!!    the plot character used at the i-th plotting
+!!    position (that is, at the coordinate (x(i),y(i)))
+!!    will be
+!!
+!!      1 if char(i) is between  0.5 and  1.5
+!!      2 if char(i) is between  1.5 and  2.5
+!!        .
+!!        .
+!!        .
+!!      9 if char(i) is between  8.5 and  9.5
+!!      0 if char(i) is between  9.5 and 10.5
+!!      a if char(i) is between 10.5 and 11.5
+!!      b if char(i) is between 11.5 and 12.5
+!!      c if char(i) is between 12.5 and 13.5
+!!        .
+!!        .
+!!        .
+!!      w if char(i) is between 32.5 and 33.5
+!!      x if char(i) is between 33.5 and 34.5
+!!      y if char(i) is between 34.5 and 35.5
+!!      z if char(i) is between 35.5 and 36.5
+!!      x if char(i) is any value outside the range
+!!                               0.5 to  36.5.
+!!
+!!    the use of the ymin, ymax, xmin, and xmax
+!!    specifications allows the data analyst
+!!    to control fully the plot axis limits,
+!!    so as, for example, to zero-in on an
+!!    interesting sub-region of a previous plot.
+!!
+!!    the use of the subset defintion vector d
+!!    gives the data analyst the capability of
+!!    plotting subsets of the data,
+!!    where the subset is defined
+!!    by values in the vector d.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -20672,64 +19473,11 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !*==plot8.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
       IMPLICIT NONE
-!*--PLOT817214
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable ,   &
      &     Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOT8
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I):
-!              1) WITH SPECIAL PLOT CHARACTERS;
-!              2) WITH THE VERTICAL (Y) AXIS MIN AND MAX
-!                 AND THE HORIZONTAL (X) AXIS MIN AND MAX
-!                 VALUES SPECIFIED BY THE DATA ANALYST; AND
-!              3) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
-!                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
-!                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX.
-!
-!              THE 'SPECIAL PLOTTING CHARACTER' CAPABILITY
-!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
-!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
-!              THE PLOT.
-!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
-!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
-!              WILL BE
-!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
-!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
-!                .
-!                .
-!                .
-!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
-!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
-!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
-!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
-!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
-!                .
-!                .
-!                .
-!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
-!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
-!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
-!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
-!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
-!                                       0.5 TO  36.5.
-!
-!              THE USE OF THE YMIN, YMAX, XMIN, AND XMAX
-!              SPECIFICATIONS ALLOWS THE DATA ANALYST
-!              TO CONTROL FULLY THE PLOT AXIS LIMITS,
-!              SO AS, FOR EXAMPLE, TO ZERO-IN ON AN
-!              INTERESTING SUB-REGION OF A PREVIOUS PLOT.
-!
-!              THE USE OF THE SUBSET DEFINTION VECTOR D
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              PLOTTING SUBSETS OF THE DATA,
-!              WHERE THE SUBSET IS DEFINED
-!              BY VALUES IN THE VECTOR D.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -20769,10 +19517,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -20807,11 +19552,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
 !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 NEW YORK CITY, DECEMBER 27-30, 1973.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JANUARY   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -21135,7 +19875,59 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !!     Subroutine plot9 (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plot9(3f) yields a one-page printer plot
+!!    of y(i) versus x(i):
+!!
+!!      1) with special plot characters;
+!!      2) with the vertical (y) axis min and max
+!!         and the horizontal (x) axis min and max
+!!         values specified by the data analyst; and
+!!      3) with hollerith labels (at most 6 characters)
+!!         for the vertical axis variable,
+!!         the horizontal axis variable, and
+!!         the plotting character variable
+!!         also being provided by the data analyst.
+!!
+!!    the 'special plotting character' capability
+!!    allows the data analyst to incorporate information
+!!    from a third variable (aside from y and x) into
+!!    the plot.
+!!
+!!    the plot character used at the i-th plotting
+!!    position (that is, at the coordinate (x(i),y(i)))
+!!    will be
+!!
+!!      1 if char(i) is between  0.5 and  1.5
+!!      2 if char(i) is between  1.5 and  2.5
+!!        .
+!!        .
+!!        .
+!!      9 if char(i) is between  8.5 and  9.5
+!!      0 if char(i) is between  9.5 and 10.5
+!!      a if char(i) is between 10.5 and 11.5
+!!      b if char(i) is between 11.5 and 12.5
+!!      c if char(i) is between 12.5 and 13.5
+!!        .
+!!        .
+!!        .
+!!      w if char(i) is between 32.5 and 33.5
+!!      x if char(i) is between 33.5 and 34.5
+!!      y if char(i) is between 34.5 and 35.5
+!!      z if char(i) is between 35.5 and 36.5
+!!      x if char(i) is any value outside the range
+!!                               0.5 to  36.5.
+!!
+!!    the use of the ymin, ymax, xmin, and xmax
+!!    specifications allows the data analyst
+!!    to control fully the plot axis limits,
+!!    so as, for example, to zero-in on an
+!!    interesting sub-region of a previous plot.
+!!
+!!    the use of hollerith identifying labels
+!!    allows the data analyst to automatically
+!!    have the plots labeled.  this is particularly
+!!    useful in a large analysis when many
+!!    plots are being generated.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -21165,66 +19957,11 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
       SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,      &
      &                 Plchid)
       IMPLICIT NONE
-!*--PLOT917671
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
      &     x25 , x75 , Xaxid , Xmax , xmid , Xmin , Y , Yaxid , ylable ,&
      &     Ymax , Ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOT9
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I):
-!              1) WITH SPECIAL PLOT CHARACTERS;
-!              2) WITH THE VERTICAL (Y) AXIS MIN AND MAX
-!                 AND THE HORIZONTAL (X) AXIS MIN AND MAX
-!                 VALUES SPECIFIED BY THE DATA ANALYST; AND
-!              3) WITH HOLLERITH LABELS (AT MOST 6 CHARACTERS)
-!                 FOR THE VERTICAL AXIS VARIABLE,
-!                 THE HORIZONTAL AXIS VARIABLE, AND
-!                 THE PLOTTING CHARACTER VARIABLE
-!                 ALSO BEING PROVIDED BY THE DATA ANALYST.
-!
-!              THE 'SPECIAL PLOTTING CHARACTER' CAPABILITY
-!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
-!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
-!              THE PLOT.
-!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
-!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
-!              WILL BE
-!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
-!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
-!                .
-!                .
-!                .
-!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
-!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
-!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
-!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
-!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
-!                .
-!                .
-!                .
-!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
-!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
-!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
-!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
-!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
-!                                       0.5 TO  36.5.
-!
-!              THE USE OF THE YMIN, YMAX, XMIN, AND XMAX
-!              SPECIFICATIONS ALLOWS THE DATA ANALYST
-!              TO CONTROL FULLY THE PLOT AXIS LIMITS,
-!              SO AS, FOR EXAMPLE, TO ZERO-IN ON AN
-!              INTERESTING SUB-REGION OF A PREVIOUS PLOT.
-!
-!              THE USE OF HOLLERITH IDENTIFYING LABELS
-!              ALLOWS THE DATA ANALYST TO AUTOMATICALLY
-!              HAVE THE PLOTS LABELED.  THIS IS PARTICULARLY
-!              USEFUL IN A LARGE ANALYSIS WHEN MANY
-!              PLOTS ARE BEING GENERATED.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -21265,10 +20002,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -21299,11 +20033,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
 !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 NEW YORK CITY, DECEMBER 27-30, 1973.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JUNE      1974.
 !     UPDATED         --OCTOBER   1975.
@@ -21593,7 +20322,35 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 !!     Subroutine plotc (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plotc(3f) yields a one-page printer plot
+!!    of y(i) versus x(i) with special plotting
+!!    characters.
+!!    this 'special plotting character' capability
+!!    allows the data analyst to incorporate information
+!!    from a third variable (aside from y and x) into
+!!    the plot.
+!!    the plot character used at the i-th plotting
+!!    position (that is, at the coordinate (x(i),y(i)))
+!!    will be
+!!      1 if char(i) is between  0.5 and  1.5
+!!      2 if char(i) is between  1.5 and  2.5
+!!        .
+!!        .
+!!        .
+!!      9 if char(i) is between  8.5 and  9.5
+!!      0 if char(i) is between  9.5 and 10.5
+!!      a if char(i) is between 10.5 and 11.5
+!!      b if char(i) is between 11.5 and 12.5
+!!      c if char(i) is between 12.5 and 13.5
+!!        .
+!!        .
+!!        .
+!!      w if char(i) is between 32.5 and 33.5
+!!      x if char(i) is between 33.5 and 34.5
+!!      y if char(i) is between 34.5 and 35.5
+!!      z if char(i) is between 35.5 and 36.5
+!!      x if char(i) is any value outside the range
+!!                               0.5 to  36.5.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -21622,44 +20379,10 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 !*==plotc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTC(Y,X,Char,N)
       IMPLICIT NONE
-!*--PLOTC18092
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTC
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I) WITH SPECIAL PLOTTING
-!              CHARACTERS.
-!              THIS 'SPECIAL PLOTTING CHARACTER' CAPABILITY
-!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
-!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
-!              THE PLOT.
-!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
-!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
-!              WILL BE
-!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
-!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
-!                .
-!                .
-!                .
-!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
-!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
-!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
-!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
-!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
-!                .
-!                .
-!                .
-!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
-!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
-!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
-!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
-!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
-!                                       0.5 TO  36.5.
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
@@ -21677,10 +20400,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y),
 !              THE HORIZONTAL AXIS VECTOR (X),
 !              OR THE PLOT CHARACTER VECTOR (CHAR) WHICH ARE
@@ -21706,11 +20426,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
 !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 NEW YORK CITY, DECEMBER 27-30, 1973.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--OCTOBER   1974.
 !     UPDATED         --NOVEMBER  1974.
 !     UPDATED         --JANUARY   1975.
@@ -22034,7 +20749,9 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!     Subroutine plotco (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    this routine yields a multi-page (if necessary) plot of the autocorrelatio
+!!    coefficient r(k) versus the lag k
+!!    there is no restriction on the maximum value of n for this routine.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -22061,28 +20778,17 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
 !!##LICENSE
 !!    CC0-1.0
 !*==plotco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTCO(Y,N)
-      IMPLICIT NONE
-!*--PLOTCO18497
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: hold , ratioy , Y , ylable , ymax , ymin
-      INTEGER i , iaxdel , idel , iflag , imax , imin , ipr , ix ,      &
-     &        ixmax , ixmin , iz , j , jmax , jmin , k , mx , my , N ,  &
-     &        numpag
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTCO
-!
-!     THIS ROUTINE YIELDS A MULTI-PAGE (IF NECESSARY) PLOT OF THE AUTOCORRELATIO
-!     COEFFICIENT R(K) VERSUS THE LAG K
-!     THERE IS NO RESTRICTION ON THE MAXIMUM VALUE OF N FOR THIS ROUTINE.
+SUBROUTINE PLOTCO(Y,N)
+IMPLICIT NONE
+
+REAL(kind=wp) :: hold, ratioy, Y, ylable, ymax, ymin
+INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, jmin, k, mx, my, N,  numpag
+
 !     PRINTING--YES
-!     SUBROUTINES NEEDED--NONE
-!     WRITTEN BY JAMES J. FILLIBEN, STATISTICAL ENGINEERING LABORATORY (205.03)
-!     NATIONAL BUREAU OF STANDARDS, WASHINGTON, D.C. 20234     JUN 1972
-!                                                      UPDATED FEB 1975
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
+!     UPDATED  -- JUN 1972
+!     UPDATED  -- UPDATED FEB 1975
+!     UPDATED  -- NOVEMBER  1975.
+!     UPDATED  -- FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
@@ -22265,7 +20971,7 @@ REAL(kind=wp) :: hold , ratioy , Y , ylable , ymax , ymin
 99011 FORMAT (' ',6X,24(I4,1X),I4)
 99012 FORMAT (' ',6X,8(I4,11X),I4)
 99013 FORMAT (' ',6X,12(I4,6X),I4)
-      END SUBROUTINE PLOTCO
+END SUBROUTINE PLOTCO
 !>
 !!##NAME
 !!    plotct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot for
@@ -22276,7 +20982,37 @@ REAL(kind=wp) :: hold , ratioy , Y , ylable , ymax , ymin
 !!     Subroutine plotct (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plotct(3f) yields a narrow-width (71-character)
+!!    plot of y(i) versus x(i) with special plotting
+!!    characters.
+!!    its narrow width makes it appropriate for use on a
+!!    terminal.
+!!    this 'special plotting character' capability
+!!    allows the data analyst to incorporate information
+!!    from a third variable (aside from y and x) into
+!!    the plot.
+!!    the plot character used at the i-th plotting
+!!    position (that is, at the coordinate (x(i),y(i)))
+!!    will be
+!!      1 if char(i) is between  0.5 and  1.5
+!!      2 if char(i) is between  1.5 and  2.5
+!!        .
+!!        .
+!!        .
+!!      9 if char(i) is between  8.5 and  9.5
+!!      0 if char(i) is between  9.5 and 10.5
+!!      a if char(i) is between 10.5 and 11.5
+!!      b if char(i) is between 11.5 and 12.5
+!!      c if char(i) is between 12.5 and 13.5
+!!        .
+!!        .
+!!        .
+!!      w if char(i) is between 32.5 and 33.5
+!!      x if char(i) is between 33.5 and 34.5
+!!      y if char(i) is between 34.5 and 35.5
+!!      z if char(i) is between 35.5 and 36.5
+!!      x if char(i) is any value outside the range
+!!                               0.5 to  36.5.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -22305,49 +21041,13 @@ REAL(kind=wp) :: hold , ratioy , Y , ylable , ymax , ymin
 !*==plotct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTCT(Y,X,Char,N)
       IMPLICIT NONE
-!*--PLOTCT18703
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , delx , dely , hold , X , xlable , xmax , xmin ,     &
      &     xwidth , Y , ylable , ylower , ymax
 REAL(kind=wp) :: ymin , yupper , ywidth
       INTEGER i , ia , icol , icolmx , ipr , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTCT
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A NARROW-WIDTH (71-CHARACTER)
-!              PLOT OF Y(I) VERSUS X(I) WITH SPECIAL PLOTTING
-!              CHARACTERS.
-!              ITS NARROW WIDTH MAKES IT APPROPRIATE FOR USE ON A
-!              TERMINAL.
-!              THIS 'SPECIAL PLOTTING CHARACTER' CAPABILITY
-!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
-!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
-!              THE PLOT.
-!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
-!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
-!              WILL BE
-!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
-!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
-!                .
-!                .
-!                .
-!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
-!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
-!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
-!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
-!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
-!                .
-!                .
-!                .
-!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
-!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
-!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
-!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
-!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
-!                                       0.5 TO  36.5.
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
@@ -22367,10 +21067,7 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y),
 !              THE HORIZONTAL AXIS VECTOR (X),
 !              OR THE PLOT CHARACTER VECTOR (CHAR) WHICH ARE
@@ -22401,11 +21098,6 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
 !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 NEW YORK CITY, DECEMBER 27-30, 1973.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
 !     UPDATED         --OCTOBER   1974.
@@ -23032,7 +21724,47 @@ END SUBROUTINE PLOT
 !!     Subroutine plotsc (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plotsc(3f) yields a one-page printer plot
+!!    of y(i) versus x(i):
+!!
+!!      1. with special plot characters; and
+!!      2. with only those points (x(i),y(i)) plotted
+!!         for which the corresponding value of d(i)
+!!         is between the specified values of dmin and dmax.
+!!
+!!    the 'special plotting character' capability
+!!    allows the data analyst to incorporate information
+!!    from a third variable (aside from y and x) into
+!!    the plot.
+!!    the plot character used at the i-th plotting
+!!    position (that is, at the coordinate (x(i),y(i)))
+!!    will be
+!!
+!!      1 if char(i) is between  0.5 and  1.5
+!!      2 if char(i) is between  1.5 and  2.5
+!!        .
+!!        .
+!!        .
+!!      9 if char(i) is between  8.5 and  9.5
+!!      0 if char(i) is between  9.5 and 10.5
+!!      a if char(i) is between 10.5 and 11.5
+!!      b if char(i) is between 11.5 and 12.5
+!!      c if char(i) is between 12.5 and 13.5
+!!        .
+!!        .
+!!        .
+!!      w if char(i) is between 32.5 and 33.5
+!!      x if char(i) is between 33.5 and 34.5
+!!      y if char(i) is between 34.5 and 35.5
+!!      z if char(i) is between 35.5 and 36.5
+!!      x if char(i) is any value outside the range
+!!                               0.5 to  36.5.
+!!    the use of the subset defintion vector d
+!!    gives the data analyst the capability of
+!!    plotting subsets of the data,
+!!    where the subset is defined
+!!    by values in the vector d.
+!!
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -23059,56 +21791,12 @@ END SUBROUTINE PLOT
 !!##LICENSE
 !!    CC0-1.0
 !*==plotsc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTSC(Y,X,Char,N,D,Dmin,Dmax)
-      IMPLICIT NONE
-!*--PLOTSC19492
-!*** Start of declarations inserted by SPAG
+SUBROUTINE PLOTSC(Y,X,Char,N,D,Dmin,Dmax)
+IMPLICIT NONE
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , xmax , xmid , xmin , Y , ylable ,   &
      &     ymax , ymin
       INTEGER i , iarg , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTSC
-!
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I):
-!              1) WITH SPECIAL PLOT CHARACTERS; AND
-!              2) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
-!                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
-!                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX.
-!
-!              THE 'SPECIAL PLOTTING CHARACTER' CAPABILITY
-!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
-!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
-!              THE PLOT.
-!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
-!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
-!              WILL BE
-!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
-!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
-!                .
-!                .
-!                .
-!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
-!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
-!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
-!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
-!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
-!                .
-!                .
-!                .
-!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
-!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
-!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
-!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
-!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
-!                                       0.5 TO  36.5.
-!              THE USE OF THE SUBSET DEFINTION VECTOR D
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              PLOTTING SUBSETS OF THE DATA,
-!              WHERE THE SUBSET IS DEFINED
-!              BY VALUES IN THE VECTOR D.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -23139,10 +21827,7 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -23172,11 +21857,6 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
 !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 NEW YORK CITY, DECEMBER 27-30, 1973.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -23551,7 +22231,19 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !!     Subroutine plots (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plots(3f) yields a one-page printer plot
+!!    of y(i) versus x(i):
+!!
+!!      1. with only those points (x(i),y(i)) plotted
+!!         for which the corresponding value of d(i)
+!!         is between the specified values of dmin and dmax.
+!!
+!!    the use of the subset definition vector d
+!!    gives the data analyst the capability of
+!!    plotting subsets of the data,
+!!    where the subset is defined
+!!    by values in the vector d.
+!!
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -23580,26 +22272,9 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 !*==plots.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)
       IMPLICIT NONE
-!*--PLOTS19100
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
      &     X , x25 , x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
       INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N , n2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTS
-!
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF Y(I) VERSUS X(I):
-!              1) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
-!                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
-!                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX.
-!
-!              THE USE OF THE SUBSET DEFINITION VECTOR D
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              PLOTTING SUBSETS OF THE DATA,
-!              WHERE THE SUBSET IS DEFINED
-!              BY VALUES IN THE VECTOR D.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -23625,10 +22300,7 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -23649,12 +22321,6 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOT
 !              SUBROUTINE.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
@@ -23978,7 +22644,15 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 !!     Subroutine plotsp (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    this routine yields a one-page plot of the spectrum, along with upper
+!!    and lower limits of the spectrum.
+!!    the convention has been followed that if the integer input parameter idf
+!!    has the value 0, then no confidence limits will be computed and only the
+!!    spectrum itself will be plotted out.
+!!    multiple plot points are not indicated.
+!!    the first point will be plotted on the left vertical axis
+!!    the last point will be plotted on the right vertical axis
+!!    there is no restriction on the maximum value of n for this routine.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -24007,25 +22681,11 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 !*==plotsp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTSP(Y,N,Idf)
       IMPLICIT NONE
-!*--PLOTSP19976
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
      &     slower , spmax , spmin , supper , xi , Y , ylable , ymax ,   &
      &     ymin
       INTEGER i , Idf , iflag , ipr , j , k , mx , my , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTSP
 !
-!     THIS ROUTINE YIELDS A ONE-PAGE PLOT OF THE SPECTRUM, ALONG WITH UPPER
-!     AND LOWER LIMITS OF THE SPECTRUM.
-!     THE CONVENTION HAS BEEN FOLLOWED THAT IF THE INTEGER INPUT PARAMETER IDF
-!     HAS THE VALUE 0, THEN NO CONFIDENCE LIMITS WILL BE COMPUTED AND ONLY THE
-!     SPECTRUM ITSELF WILL BE PLOTTED OUT.
-!     MULTIPLE PLOT POINTS ARE NOT INDICATED.
-!     THE FIRST POINT WILL BE PLOTTED ON THE LEFT VERTICAL AXIS
-!     THE LAST POINT WILL BE PLOTTED ON THE RIGHT VERTICAL AXIS
-!     THERE IS NO RESTRICTION ON THE MAXIMUM VALUE OF N FOR THIS ROUTINE.
 !     PRINTING--YES
 !     SUBROUTINES NEEDED--CHSPPF.
 !     WRITTEN BY JAMES J. FILLIBEN, STATISTICAL ENGINEERING LABORATORY (205.03)
@@ -24193,7 +22853,21 @@ REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
 !!     Subroutine plotst (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plotst(3f) yields a narrow-width (71-character)
+!!    of y(i) versus x(i):
+!!
+!!      1. with only those points (x(i),y(i)) plotted
+!!         for which the corresponding value of d(i)
+!!         is between the specified values of dmin and dmax.
+!!
+!!    its narrow width makes it
+!!    appropriate for use on a terminal.
+!!
+!!    the use of the subset defintion vector d
+!!    gives the data analyst the capability of
+!!    plotting subsets of the data,
+!!    where the subset is defined
+!!    by values in the vector d.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -24222,32 +22896,13 @@ REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
 !*==plotst.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTST(Y,X,N,D,Dmin,Dmax)
       IMPLICIT NONE
-!*--PLOTST20155
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     D , delx , dely , Dmax , Dmin , hold , X , xlable , xmax ,   &
      &     xmin , xwidth , Y , ylable
 REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
       INTEGER i , icol , icolmx , ipr , irow , ixdel , N , n2 , numcol ,&
      &        numlab , numr25 , numr50 , numr75 , numrow
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTST
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A NARROW-WIDTH (71-CHARACTER)
-!              OF Y(I) VERSUS X(I):
-!              1) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
-!                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
-!                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX.
-!
-!              ITS NARROW WIDTH MAKES IT
-!              APPROPRIATE FOR USE ON A TERMINAL.
-!
-!              THE USE OF THE SUBSET DEFINTION VECTOR D
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              PLOTTING SUBSETS OF THE DATA,
-!              WHERE THE SUBSET IS DEFINED
-!              BY VALUES IN THE VECTOR D.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -24276,10 +22931,7 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -24305,12 +22957,6 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !              VERY SMALL.
 !              THIS IS DUE TO THE 'ONE LINE AT A TIME' ALGORITHM
 !              EMPLOYED FOR THE PLOT.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
@@ -24611,7 +23257,9 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !!     Subroutine plott (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plott(3f) yields a narrow-width (71-character)
+!!    plot of y(i) versus x(i).  its narrow width makes it
+!!    appropriate for use on a terminal.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -24640,21 +23288,13 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !*==plott.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTT(Y,X,N)
       IMPLICIT NONE
-!*--PLOTT20537
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , dely , hold , X , xlable , xmax , xmin , xwidth , Y , &
      &     ylable , ylower , ymax , ymin
 REAL(kind=wp) :: yupper , ywidth
       INTEGER i , icol , icolmx , ipr , irow , ixdel , N , n2 , numcol ,&
      &        numlab , numr25 , numr50 , numr75 , numrow
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTT
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A NARROW-WIDTH (71-CHARACTER)
-!              PLOT OF Y(I) VERSUS X(I).  ITS NARROW WIDTH MAKES IT
-!              APPROPRIATE FOR USE ON A TERMINAL.
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
@@ -24670,10 +23310,7 @@ REAL(kind=wp) :: yupper , ywidth
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              OR THE HORIZONTAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
@@ -24695,12 +23332,6 @@ REAL(kind=wp) :: yupper , ywidth
 !              VERY SMALL.
 !              THIS IS DUE TO THE 'ONE LINE AT A TIME' ALGORITHM
 !              EMPLOYED FOR THE PLOT.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
 !     UPDATED         --OCTOBER   1974.
@@ -24952,7 +23583,23 @@ REAL(kind=wp) :: yupper , ywidth
 !!     Subroutine plotu (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plotu(3f) produces the following 4 plots--
+!!    all on the same printer page--
+!!
+!!      1. data plot--x(i) versus i
+!!      2. autoregression plot--x(i) versus x(i-1)
+!!      3. histogram
+!!      4. normal probability plot
+!!
+!!    in addition, location, scale, and autocorrelation
+!!    summary statistics are printed out automatically
+!!    on the same page.
+!!
+!!    these plots give the data analyst a quick
+!!    first-pass check at some of
+!!    the underlying assumptions typically made--
+!!    constant location, constant scale, no outliers,
+!!    unautocorrelated data, symmetry, normality.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -24981,8 +23628,6 @@ REAL(kind=wp) :: yupper , ywidth
 !*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTU(X,N)
       IMPLICIT NONE
-!*--PLOTU20843
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
      &     promin , ratiox , ratioy , s , sum , sum1 , sum2 , sum23 ,   &
      &     sum3 , width , WS , X
@@ -24998,24 +23643,7 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
      &        j2 , j3 , j4 , mt , mx
       INTEGER my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
      &        numdis , nummax , nummin , numout
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTU
 !
-!     PURPOSE--THIS SUBROUTINE PRODUCES THE FOLLOWING 4 PLOTS--
-!              ALL ON THE SAME PRINTER PAGE--
-!              1) DATA PLOT--X(I) VERSUS I
-!              2) AUTOREGRESSION PLOT--X(I) VERSUS X(I-1)
-!              3) HISTOGRAM
-!              4) NORMAL PROBABILITY PLOT
-!              IN ADDITION, LOCATION, SCALE, AND AUTOCORRELATION
-!              SUMMARY STATISTICS ARE PRINTED OUT AUTOMATICALLY
-!              ON THE SAME PAGE.
-!              THESE PLOTS GIVE THE DATA ANALYST A QUICK
-!              FIRST-PASS CHECK AT SOME OF
-!              THE UNDERLYING ASSUMPTIONS TYPICALLY MADE--
-!              CONSTANT LOCATION, CONSTANT SCALE, NO OUTLIERS,
-!              UNAUTOCORRELATED DATA, SYMMETRY, NORMALITY.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -25035,7 +23663,6 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES
 !                 FOR DATA ANALYSIS', (UNPUBLISHED MANUSCRIPT
 !                 AVAILABLE FROM AUTHOR), 1975.
@@ -25043,11 +23670,6 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !                 1967, PAGES 260-308.
 !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
 !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -25533,7 +24155,8 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !!     Subroutine plotx (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plotx(3f) yields a one-page printer plot
+!!    of x(i) versus i.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -25562,17 +24185,10 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !*==plotx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTX(X,N)
       IMPLICIT NONE
-!*--PLOTX21389
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
      &     xmax , xmid , xmin , ylable , ymax , ymin
       INTEGER i , iflag , ip2 , ipr , j , k , mx , my , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTX
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF X(I) VERSUS I.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
@@ -25582,10 +24198,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -25601,12 +24214,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 !              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
 !              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTX
 !              SUBROUTINE.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --JULY      1975.
@@ -25818,7 +24425,9 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 !!     Subroutine plotxt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plotxt(3f) yields a narrow-width (71-character)
+!!    plot of x(i) versus i.  its narrow width makes it
+!!    appropriate for use on a terminal.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -25847,21 +24456,13 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
 !*==plotxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTXT(X,N)
       IMPLICIT NONE
-!*--PLOTXT21638
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
      &     anumcm , anumlm , anumr , anumrm , cutoff , delai , delx ,   &
      &     hold , X , xlable , xlower , xmax , xmin
 REAL(kind=wp) :: xupper , xwidth
       INTEGER i , icol , icolmx , ipr , irow , ixdel , N , numcol ,     &
      &        numlab , numr25 , numr50 , numr75 , numrow
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTXT
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A NARROW-WIDTH (71-CHARACTER)
-!              PLOT OF X(I) VERSUS I.  ITS NARROW WIDTH MAKES IT
-!              APPROPRIATE FOR USE ON A TERMINAL.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
@@ -25874,10 +24475,7 @@ REAL(kind=wp) :: xupper , xwidth
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -25898,12 +24496,6 @@ REAL(kind=wp) :: xupper , xwidth
 !              VERY SMALL.
 !              THIS IS DUE TO THE 'ONE LINE AT A TIME' ALGORITHM
 !              EMPLOYED FOR THE PLOT.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
 !     UPDATED         --OCTOBER   1974.
@@ -26098,7 +24690,16 @@ REAL(kind=wp) :: xupper , xwidth
 !!     Subroutine plotxx (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    plotxx(3f) yields a one-page printer plot
+!!    of x(i) versus x(i-1).
+!!    this type of plot (which is called an
+!!    autocorrelation plot or a lag 1 plot)
+!!    is useful in examining for
+!!    autocorrelation in a sequence of observations.
+!!    uncorrelated data will produce an autocorrelation
+!!    plot with no apparent structure; autocorrelated
+!!    data will produce an autocorrelation plot with
+!!    linear, elliptical, or other kinds of structure.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26127,25 +24728,10 @@ REAL(kind=wp) :: xupper , xwidth
 !*==plotxx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTXX(X,N)
       IMPLICIT NONE
-!*--PLOTXX21883
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     xmax , xmid , xmin , ylable , ymax , ymin
       INTEGER i , iflag , im1 , ip2 , ipr , j , k , mx , my , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTXX
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A ONE-PAGE PRINTER PLOT
-!              OF X(I) VERSUS X(I-1).
-!              THIS TYPE OF PLOT (WHICH IS CALLED AN
-!              AUTOCORRELATION PLOT OR A LAG 1 PLOT)
-!              IS USEFUL IN EXAMINING FOR
-!              AUTOCORRELATION IN A SEQUENCE OF OBSERVATIONS.
-!              UNCORRELATED DATA WILL PRODUCE AN AUTOCORRELATION
-!              PLOT WITH NO APPARENT STRUCTURE; AUTOCORRELATED
-!              DATA WILL PRODUCE AN AUTOCORRELATION PLOT WITH
-!              LINEAR, ELLIPTICAL, OR OTHER KINDS OF STRUCTURE.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS
 !                               TO BE GRAPHICALLY TESTED FOR
@@ -26156,10 +24742,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE INPUT VECTOR X WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -26189,11 +24772,6 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !                 BY COMPUTERS' SESSION AT THE NATIONAL
 !                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --NOVEMBER  1974.
@@ -26409,7 +24987,48 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !!     Subroutine pltsct (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    pltsct(3f) yields a narrow-width (71-character)
+!!    plot of y(i) versus x(i):
+!!
+!!      1. with special plot characters; and
+!!      2. with only those points (x(i),y(i)) plotted
+!!         for which the corresponding value of d(i)
+!!         is between the specified values of dmin and dmax.
+!!
+!!    its narrow width makes it appropriate for use on a
+!!    terminal.
+!!    the 'special plotting character' capability
+!!    allows the data analyst to incorporate information
+!!    from a third variable (aside from y and x) into
+!!    the plot.
+!!    the plot character used at the i-th plotting
+!!    position (that is, at the coordinate (x(i),y(i)))
+!!    will be
+!!
+!!      1 if char(i) is between  0.5 and  1.5
+!!      2 if char(i) is between  1.5 and  2.5
+!!        .
+!!        .
+!!        .
+!!      9 if char(i) is between  8.5 and  9.5
+!!      0 if char(i) is between  9.5 and 10.5
+!!      a if char(i) is between 10.5 and 11.5
+!!      b if char(i) is between 11.5 and 12.5
+!!      c if char(i) is between 12.5 and 13.5
+!!        .
+!!        .
+!!        .
+!!      w if char(i) is between 32.5 and 33.5
+!!      x if char(i) is between 33.5 and 34.5
+!!      y if char(i) is between 34.5 and 35.5
+!!      z if char(i) is between 35.5 and 36.5
+!!      x if char(i) is any value outside the range
+!!                               0.5 to  36.5.
+!!    the use of the subset defintion vector d
+!!    gives the data analyst the capability of
+!!    plotting subsets of the data,
+!!    where the subset is defined
+!!    by values in the vector d.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26438,58 +25057,13 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 !*==pltsct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTSCT(Y,X,Char,N,D,Dmin,Dmax)
       IMPLICIT NONE
-!*--PLTSCT22158
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , D , delx , dely , Dmax , Dmin , hold , X , xlable , &
      &     xmax , xmin , xwidth , Y
 REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
       INTEGER i , ia , icol , icolmx , ipr , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLTSCT
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A NARROW-WIDTH (71-CHARACTER)
-!              PLOT OF Y(I) VERSUS X(I):
-!              1) WITH SPECIAL PLOT CHARACTERS; AND
-!              2) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
-!                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
-!                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX.
-!
-!              ITS NARROW WIDTH MAKES IT APPROPRIATE FOR USE ON A
-!              TERMINAL.
-!              THE 'SPECIAL PLOTTING CHARACTER' CAPABILITY
-!              ALLOWS THE DATA ANALYST TO INCORPORATE INFORMATION
-!              FROM A THIRD VARIABLE (ASIDE FROM Y AND X) INTO
-!              THE PLOT.
-!              THE PLOT CHARACTER USED AT THE I-TH PLOTTING
-!              POSITION (THAT IS, AT THE COORDINATE (X(I),Y(I)))
-!              WILL BE
-!              1 IF CHAR(I) IS BETWEEN  0.5 AND  1.5
-!              2 IF CHAR(I) IS BETWEEN  1.5 AND  2.5
-!                .
-!                .
-!                .
-!              9 IF CHAR(I) IS BETWEEN  8.5 AND  9.5
-!              0 IF CHAR(I) IS BETWEEN  9.5 AND 10.5
-!              A IF CHAR(I) IS BETWEEN 10.5 AND 11.5
-!              B IF CHAR(I) IS BETWEEN 11.5 AND 12.5
-!              C IF CHAR(I) IS BETWEEN 12.5 AND 13.5
-!                .
-!                .
-!                .
-!              W IF CHAR(I) IS BETWEEN 32.5 AND 33.5
-!              X IF CHAR(I) IS BETWEEN 33.5 AND 34.5
-!              Y IF CHAR(I) IS BETWEEN 34.5 AND 35.5
-!              Z IF CHAR(I) IS BETWEEN 35.5 AND 36.5
-!              X IF CHAR(I) IS ANY VALUE OUTSIDE THE RANGE
-!                                       0.5 TO  36.5.
-!              THE USE OF THE SUBSET DEFINTION VECTOR D
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              PLOTTING SUBSETS OF THE DATA,
-!              WHERE THE SUBSET IS DEFINED
-!              BY VALUES IN THE VECTOR D.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -26522,10 +25096,7 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -26555,11 +25126,6 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
 !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 NEW YORK CITY, DECEMBER 27-30, 1973.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
 !
@@ -26908,7 +25474,17 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 !!     Subroutine pltxxt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    pltxxt(3f) yields a narrow-width (71-character)
+!!    plot of x(i) versus x(i-1).  its narrow width makes it
+!!    appropriate for use on a terminal.
+!!    this type of plot (which is called an
+!!    autocorrelation plot or a lag 1 plot)
+!!    is useful in examining for
+!!    autocorrelation in a sequence of observations.
+!!    uncorrelated data will produce an autocorrelation
+!!    plot with no apparent structure; autocorrelated
+!!    data will produce an autocorrelation plot with
+!!    linear, elliptical, or other kinds of structure.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26937,28 +25513,12 @@ REAL(kind=wp) :: ylable , ylower , ymax , ymin , yupper , ywidth
 !*==pltxxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTXXT(X,N)
       IMPLICIT NONE
-!*--PLTXXT22621
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , hold , X , x2labl , xcwidt , xlable , xlower , xmax , &
      &     xmin , xrwidt , xupper
       INTEGER i , icol , icolmx , im1 , ipr , irow , ixdel , N ,        &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLTXXT
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A NARROW-WIDTH (71-CHARACTER)
-!              PLOT OF X(I) VERSUS X(I-1).  ITS NARROW WIDTH MAKES IT
-!              APPROPRIATE FOR USE ON A TERMINAL.
-!              THIS TYPE OF PLOT (WHICH IS CALLED AN
-!              AUTOCORRELATION PLOT OR A LAG 1 PLOT)
-!              IS USEFUL IN EXAMINING FOR
-!              AUTOCORRELATION IN A SEQUENCE OF OBSERVATIONS.
-!              UNCORRELATED DATA WILL PRODUCE AN AUTOCORRELATION
-!              PLOT WITH NO APPARENT STRUCTURE; AUTOCORRELATED
-!              DATA WILL PRODUCE AN AUTOCORRELATION PLOT WITH
-!              LINEAR, ELLIPTICAL, OR OTHER KINDS OF STRUCTURE.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS
 !                               TO BE GRAPHICALLY TESTED FOR
@@ -26972,10 +25532,7 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -27010,11 +25567,6 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
 !                 BY COMPUTERS' SESSION AT THE NATIONAL
 !                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
 !     UPDATED         --OCTOBER   1974.
@@ -27208,7 +25760,24 @@ END SUBROUTINE PLTXXT
 !!     Subroutine poicdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    poicdf(3f) computes the cumulative distribution
+!!    function value at the single precision value x
+!!    for the poisson distribution
+!!    with single precision
+!!    tail length parameter = alamba.
+!!    the poisson distribution used
+!!    herein has mean = alamba
+!!    and standard deviation = sqrt(alamba).
+!!    this distribution is defined for
+!!    all discrete non-negative integer  x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = exp(-alamba) * alamba**x / x!.
+!!    the poisson distribution is the
+!!    distribution of the number of events
+!!    in the interval (0,alamba) when
+!!    the waiting time between events
+!!    is exponentially distributed
+!!    with mean = 1 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -27237,32 +25806,9 @@ END SUBROUTINE PLTXXT
 !*==poicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POICDF(X,Alamba,Cdf)
       IMPLICIT NONE
-!*--POICDF22887
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
       INTEGER i , ievodd , imax , imin , intx , ipr , nu
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT POICDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE X
-!              FOR THE POISSON DISTRIBUTION
-!              WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = ALAMBA.
-!              THE POISSON DISTRIBUTION USED
-!              HEREIN HAS MEAN = ALAMBA
-!              AND STANDARD DEVIATION = SQRT(ALAMBA).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL DISCRETE NON-NEGATIVE INTEGER  X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = EXP(-ALAMBA) * ALAMBA**X / X!.
-!              THE POISSON DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF EVENTS
-!              IN THE INTERVAL (0,ALAMBA) WHEN
-!              THE WAITING TIME BETWEEN EVENTS
-!              IS EXPONENTIALLY DISTRIBUTED
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -27283,7 +25829,6 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE SINGLE PRECISION TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
@@ -27332,11 +25877,6 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 !                 DISTRIBUTION, 1962.
 !               --OWEN, HANDBOOK OF STATISTICAL
 !                 TABLES, 1962, PAGES 259-261.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -27439,7 +25979,43 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 !!     Subroutine poiplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    poiplt(3f) generates a poisson
+!!    probability plot
+!!    (with single precision
+!!    tail length parameter = alamba).
+!!    the prototype poisson distribution used
+!!    herein has mean = alamba
+!!    and standard deviation = sqrt(alamba).
+!!    this distribution is defined for
+!!    all discrete non-negative integer  x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = exp(-alamba) * alamba**x / x!.
+!!    the poisson distribution is the
+!!    distribution of the number of events
+!!    in the interval (0,alamba) when
+!!    the waiting time between events
+!!    is exponentially distributed
+!!    with mean = 1 and standard deviation = 1.
+!!    the prototype distribution restrictions of
+!!    discreteness and non-negativeness
+!!    mentioned above do not carry over to the
+!!    input vector x of observations to be analyzed.
+!!    the input observations in x may be discrete, continuous,
+!!    non-negative, or negative.
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the poisson probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the poisson distribution
+!!    with tail length parameter value = alamba.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -27468,54 +26044,12 @@ REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 !*==poiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPLT(X,N,Alamba)
       IMPLICIT NONE
-!*--POIPLT23082
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
      &     sum1 , sum2 , sum3 , W , wbar , WS , X , Y , ybar , yint ,   &
      &     yslope , Z
       INTEGER i , iarg2 , ilamba , imax , ipr , irev , iupper , j ,     &
      &        jm1 , k , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT POIPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A POISSON
-!              PROBABILITY PLOT
-!              (WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = ALAMBA).
-!              THE PROTOTYPE POISSON DISTRIBUTION USED
-!              HEREIN HAS MEAN = ALAMBA
-!              AND STANDARD DEVIATION = SQRT(ALAMBA).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL DISCRETE NON-NEGATIVE INTEGER  X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = EXP(-ALAMBA) * ALAMBA**X / X!.
-!              THE POISSON DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF EVENTS
-!              IN THE INTERVAL (0,ALAMBA) WHEN
-!              THE WAITING TIME BETWEEN EVENTS
-!              IS EXPONENTIALLY DISTRIBUTED
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              THE PROTOTYPE DISTRIBUTION RESTRICTIONS OF
-!              DISCRETENESS AND NON-NEGATIVENESS
-!              MENTIONED ABOVE DO NOT CARRY OVER TO THE
-!              INPUT VECTOR X OF OBSERVATIONS TO BE ANALYZED.
-!              THE INPUT OBSERVATIONS IN X MAY BE DISCRETE, CONTINUOUS,
-!              NON-NEGATIVE, OR NEGATIVE.
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE POISSON PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE POISSON DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -27532,7 +26066,6 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 !                                         CHSCDF, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOR LARGE VALUES OF ALAMBA (IN EXCESS OF 500.)
 !              THIS SUBROUTINE USES THE NORMAL APPROXIMATION TO
 !              THE POISSON.  THIS IS DONE TO SAVE EXECUTION TIME
@@ -27547,11 +26080,6 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, DISCRETE
 !                 DISTRIBUTIONS, 1969, PAGES 87-121.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --AUGUST    1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -27753,7 +26281,27 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 !!     Subroutine poippf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    poippf(3f) computes the percent point
+!!    function value at the single precision value p
+!!    for the poisson distribution
+!!    with single precision
+!!    tail length parameter = alamba.
+!!    the poisson distribution used
+!!    herein has mean = alamba
+!!    and standard deviation = sqrt(alamba).
+!!    this distribution is defined for
+!!    all discrete non-negative integer  x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = exp(-alamba) * alamba**x / x!.
+!!    the poisson distribution is the
+!!    distribution of the number of events
+!!    in the interval (0,alamba) when
+!!    the waiting time between events
+!!    is exponentially distributed
+!!    with mean = 1 and standard deviation = 1.
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -27782,36 +26330,10 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 !*==poippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
       IMPLICIT NONE
-!*--POIPPF23360
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT POIPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE P
-!              FOR THE POISSON DISTRIBUTION
-!              WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = ALAMBA.
-!              THE POISSON DISTRIBUTION USED
-!              HEREIN HAS MEAN = ALAMBA
-!              AND STANDARD DEVIATION = SQRT(ALAMBA).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL DISCRETE NON-NEGATIVE INTEGER  X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = EXP(-ALAMBA) * ALAMBA**X / X!.
-!              THE POISSON DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF EVENTS
-!              IN THE INTERVAL (0,ALAMBA) WHEN
-!              THE WAITING TIME BETWEEN EVENTS
-!              IS EXPONENTIALLY DISTRIBUTED
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -27833,7 +26355,6 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, POICDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, DEXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE SINGLE PRECISION TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
@@ -27878,11 +26399,6 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !                 DISTRIBUTION, 1962.
 !               --OWEN, HANDBOOK OF STATISTICAL
 !                 TABLES, 1962, PAGES 259-261.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -28141,7 +26657,23 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !!     Subroutine poiran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    poiran(3f) generates a random sample of size n
+!!    from the poisson distribution
+!!    with single precision
+!!    tail length parameter = alamba.
+!!    the poisson distribution used
+!!    herein has mean = alamba
+!!    and standard deviation = sqrt(alamba).
+!!    this distribution is defined for
+!!    all discrete non-negative integer  x--x = 0, 1, 2, ... .
+!!    this distribution has the probability function
+!!    f(x) = exp(-alamba) * alamba**x / x!.
+!!    the poisson distribution is the
+!!    distribution of the number of events
+!!    in the interval (0,alamba) when
+!!    the waiting time between events
+!!    is exponentially distributed
+!!    with mean = 1 and standard deviation = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -28170,31 +26702,9 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !*==poiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
       IMPLICIT NONE
-!*--POIRAN23713
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , e , sum , u(1) , X
       INTEGER i , ipr , Iseed , j , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT POIRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE POISSON DISTRIBUTION
-!              WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = ALAMBA.
-!              THE POISSON DISTRIBUTION USED
-!              HEREIN HAS MEAN = ALAMBA
-!              AND STANDARD DEVIATION = SQRT(ALAMBA).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL DISCRETE NON-NEGATIVE INTEGER  X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = EXP(-ALAMBA) * ALAMBA**X / X!.
-!              THE POISSON DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF EVENTS
-!              IN THE INTERVAL (0,ALAMBA) WHEN
-!              THE WAITING TIME BETWEEN EVENTS
-!              IS EXPONENTIALLY DISTRIBUTED
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -28215,7 +26725,6 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     COMMENT--THE SINGLE PRECISION TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
@@ -28330,7 +26839,12 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !!     Subroutine poly (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    poly(3f) computes a least squares
+!!    polynomial fit (of degree = ideg) of the
+!!    response variable data in the single precision
+!!    vector y as a function of the independent
+!!    variable data in the single precision
+!!    vector x.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -28359,8 +26873,6 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !*==poly.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POLY(Y,X,W,N,Ideg,Iwrite,B,Sdb,S,Df,Pred,Res)
       IMPLICIT NONE
-!*--POLY23881
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ak , amb , amdb1 , amdb2 , amdr1 , amdr2 , amr , an ,        &
      &     aneggi , aneggj , ani , B , b2 , cdf , cdf2 , D , Df , DUM1 ,&
      &     DUM2 , e
@@ -28377,12 +26889,6 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
      &        nkmax
       INTEGER nm5 , nmax , numset
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES A LEAST SQUARES
-!              POLYNOMIAL FIT (OF DEGREE = IDEG) OF THE
-!              RESPONSE VARIABLE DATA IN THE SINGLE PRECISION
-!              VECTOR Y AS A FUNCTION OF THE INDEPENDENT
-!              VARIABLE DATA IN THE SINGLE PRECISION
-!              VECTOR X.
 !     INPUT  ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
 !                                RESPONSE DATA (THAT IS, THE
 !                                DEPENDENT VARIABLE).
@@ -28420,11 +26926,6 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !                     --RES    = THE SINGLE PRECISION VECTOR OF
 !                                RESIDUALS FROM THE LEAST SQUARES FIT.
 !     SUBROUTINES NEEDED--DECOMP, INVXWX, DOT, FCDF.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--MARCH     1974
 !     UPDATED--OCTOBER   1974
 !     UPDATED--MARCH     1975
@@ -29011,7 +27512,14 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !!     Subroutine propor (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    propor(3f) computes the
+!!    the sample proportion which is the
+!!    proportion of data between xmin and xmax (inclusively)
+!!    in the input vector x.
+!!    the sample proportion = (the number of observations
+!!    in the sample between xmin and xmax, inclusively) / n.
+!!    the sample proportion will be a single precision
+!!    value between 0.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -29040,22 +27548,9 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !*==propor.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
       IMPLICIT NONE
-!*--PROPOR24531
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
       INTEGER i , ipr , isum , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PROPOR
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              THE SAMPLE PROPORTION WHICH IS THE
-!              PROPORTION OF DATA BETWEEN XMIN AND XMAX (INCLUSIVELY)
-!              IN THE INPUT VECTOR X.
-!              THE SAMPLE PROPORTION = (THE NUMBER OF OBSERVATIONS
-!              IN THE SAMPLE BETWEEN XMIN AND XMAX, INCLUSIVELY) / N.
-!              THE SAMPLE PROPORTION WILL BE A SINGLE PRECISION
-!              VALUE BETWEEN 0.0 AND 1.0 (INCLUSIVELY).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -29090,19 +27585,11 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGES 207-213.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGES 81-82, 228-231.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -29182,7 +27669,10 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 !!     Subroutine range (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    range(3f) computes the
+!!    sample range
+!!    of the data in the input vector x.
+!!    the sample range = sample max - sample min.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -29211,18 +27701,9 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 !*==range.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANGE(X,N,Iwrite,Xrange)
       IMPLICIT NONE
-!*--RANGE24667
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT RANGE
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE RANGE
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE RANGE = SAMPLE MAX - SAMPLE MIN.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -29247,10 +27728,7 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
 !               --DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
@@ -29258,11 +27736,6 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 !                 EDITION 6, 1967, PAGE 39.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGE 21.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JUNE      1974.
 !     UPDATED         --APRIL     1975.
@@ -29332,7 +27805,14 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 !!     Subroutine rank (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    rank(3f) ranks (in ascending order)
+!!    the n elements of the single precision vector x,
+!!    and puts the resulting n ranks into the
+!!    single precision vector xr.
+!!    rank(3f) gives the data analyst
+!!    the ability to (for example) rank the data
+!!    preliminary to certain distribution-free
+!!    analyses.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -29365,14 +27845,6 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
       INTEGER i , ibran , ipr , iupper , j , jmin , jp1 , k , N , nm1
 !
-!     PURPOSE--THIS SUBROUTINE RANKS (IN ASCENDING ORDER)
-!              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X,
-!              AND PUTS THE RESULTING N RANKS INTO THE
-!              SINGLE PRECISION VECTOR XR.
-!              THIS SUBROUTINE GIVES THE DATA ANALYST
-!              THE ABILITY TO (FOR EXAMPLE) RANK THE DATA
-!              PRELIMINARY TO CERTAIN DISTRIBUTION-FREE
-!              ANALYSES.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE RANKED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -29389,9 +27861,7 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE RANK OF THE FIRST ELEMENT
 !              OF THE VECTOR X
 !              WILL BE PLACED IN THE FIRST POSITION
@@ -29456,11 +27926,6 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !               --CACM JANUARY 1970, PAGE 54.
 !               --CACM OCTOBER 1970, PAGE 624.
 !               --JACM JANUARY 1961, PAGE 41.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -29592,7 +28057,8 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !!     Subroutine ranper (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    ranper(3f) generates a random permutation of size n
+!!    of the values 1.0, 2.0, 3.0, ..., n-1, n.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -29621,16 +28087,9 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !*==ranper.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANPER(N,Istart,X)
       IMPLICIT NONE
-!*--RANPER25011
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: add , an , hold , u , X
       INTEGER i , iadd , ipr , Istart , j , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT RANPER
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM PERMUTATION OF SIZE N
-!              OF THE VALUES 1.0, 2.0, 3.0, ..., N-1, N.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER SIZE
 !                                OF THE RANDOM 1 TO N PERMUTATION.
 !                     --ISTART = AN INTEGER FLAG CODE WHICH
@@ -29659,17 +28118,9 @@ REAL(kind=wp) :: add , an , hold , u , X
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--ALGORITHM SUGGESTED BY DAN LOZIER,
 !              NATIONAL BUREAU OF STANDARDS (205.01).
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -29734,7 +28185,17 @@ REAL(kind=wp) :: add , an , hold , u , X
 !!     Subroutine read (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    read(3f) performs a format-free read
+!!    of data from punched cards.
+!!    only the card columns between icol1 and icol2
+!!    (inclusively) are scanned for the read.
+!!    read(3f) gives the data analyst the ability
+!!    to get data into the machine without having
+!!    to worry about and specify formats.
+!!    the data cards may be punched up
+!!    without regard to any particular format
+!!    and may be entered into the machine
+!!    without defining any formats.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -29763,28 +28224,12 @@ REAL(kind=wp) :: add , an , hold , u , X
 !*==read.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE READ(Icol1,Icol2,X,N)
       IMPLICIT NONE
-!*--READ25117
-!*** Start of declarations inserted by SPAG
       INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ipr , ird ,    &
      &        istart , istop , j , jp1 , jp2 , jrev , k , l , locpt ,   &
      &        maxcol , mincol , N
       INTEGER nc , ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT READ
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A FORMAT-FREE READ
-!              OF DATA FROM PUNCHED CARDS.
-!              ONLY THE CARD COLUMNS BETWEEN ICOL1 AND ICOL2
-!              (INCLUSIVELY) ARE SCANNED FOR THE READ.
-!              THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY
-!              TO GET DATA INTO THE MACHINE WITHOUT HAVING
-!              TO WORRY ABOUT AND SPECIFY FORMATS.
-!              THE DATA CARDS MAY BE PUNCHED UP
-!              WITHOUT REGARD TO ANY PARTICULAR FORMAT
-!              AND MAY BE ENTERED INTO THE MACHINE
-!              WITHOUT DEFINING ANY FORMATS.
 !     INPUT  ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
 !                                WHICH DEFINES THE LOWER BOUND
 !                                (INCLUSIVELY) OF THE INTERVAL
@@ -29818,10 +28263,7 @@ REAL(kind=wp) :: sum , X , y
 !     PRINTING--YES.
 !     RESTRICTIONS--ICOL1 AND ICOL2 MUST BE BETWEEN 1 AND 80,
 !                   INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--ADJACENT DATA VALUES ON THE SAME CARD
 !              MUST BE SEPARATED BY AT LEAST 1 BLANK
 !              OR 1 ALPHABETIC CHARACTER, OR BY  ANY
@@ -29877,12 +28319,6 @@ REAL(kind=wp) :: sum , X , y
 !              FAILURE TO DO SO WILL RESULT IN AN INCOMPLETE
 !              DATA SET OR (ON SOME COMPUTERS) AN
 !              UNPREDICTABLE RUN TERMINATION.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --AUGUST    1974.
 !     UPDATED         --NOVEMBER  1975.
@@ -30263,7 +28699,24 @@ REAL(kind=wp) :: sum , X , y
 !!     Subroutine readg (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    readg(3f) performs a format-free read
+!!    of data from input unit = ird.
+!!    only the card columns between icol1 and icol2
+!!    (inclusively) are scanned for the read.
+!!    readg(3f) is identical to the read subroutine
+!!    except that the read subroutine assumes input unit 5,
+!!    whereas this readg subroutine allows the analyst
+!!    to specify the input unit.
+!!    readg(3f) gives the data analyst the ability
+!!    to get data into the machine
+!!    from a variety of input sources
+!!    (card, tape, disc, etc.)
+!!    without having
+!!    to worry about and specify formats.
+!!    the data card images may be made
+!!    without regard to any particular format
+!!    and may be entered into the machine
+!!    without defining any formats.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -30292,35 +28745,12 @@ REAL(kind=wp) :: sum , X , y
 !*==readg.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE READG(Ird,Icol1,Icol2,X,N)
       IMPLICIT NONE
-!*--READG25610
-!*** Start of declarations inserted by SPAG
       INTEGER i , Icol1 , Icol2 , iend , ipower , ipr , Ird , istart ,  &
      &        istop , j , jp1 , jp2 , jrev , k , l , locpt , maxcol ,   &
      &        mincol , N , nc
       INTEGER ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT READG
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A FORMAT-FREE READ
-!              OF DATA FROM INPUT UNIT = IRD.
-!              ONLY THE CARD COLUMNS BETWEEN ICOL1 AND ICOL2
-!              (INCLUSIVELY) ARE SCANNED FOR THE READ.
-!              THIS SUBROUTINE IS IDENTICAL TO THE READ SUBROUTINE
-!              EXCEPT THAT THE READ SUBROUTINE ASSUMES INPUT UNIT 5,
-!              WHEREAS THIS READG SUBROUTINE ALLOWS THE ANALYST
-!              TO SPECIFY THE INPUT UNIT.
-!              THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY
-!              TO GET DATA INTO THE MACHINE
-!              FROM A VARIETY OF INPUT SOURCES
-!              (CARD, TAPE, DISC, ETC.)
-!              WITHOUT HAVING
-!              TO WORRY ABOUT AND SPECIFY FORMATS.
-!              THE DATA CARD IMAGES MAY BE MADE
-!              WITHOUT REGARD TO ANY PARTICULAR FORMAT
-!              AND MAY BE ENTERED INTO THE MACHINE
-!              WITHOUT DEFINING ANY FORMATS.
 !     INPUT  ARGUMENTS--IRD    = THE INTEGER VALUE SPECIFYING
 !                                THE INPUT UNIT FROM WHICH
 !                                THE CARD IMAGES WILL COME.
@@ -30357,10 +28787,7 @@ REAL(kind=wp) :: sum , X , y
 !     PRINTING--YES.
 !     RESTRICTIONS--ICOL1 AND ICOL2 MUST BE BETWEEN 1 AND 80,
 !                   INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--ADJACENT DATA VALUES ON THE SAME CARD
 !              MUST BE SEPARATED BY AT LEAST 1 BLANK
 !              OR 1 ALPHABETIC CHARACTER, OR BY  ANY
@@ -30416,12 +28843,6 @@ REAL(kind=wp) :: sum , X , y
 !              FAILURE TO DO SO WILL RESULT IN AN INCOMPLETE
 !              DATA SET OR (ON SOME COMPUTERS) AN
 !              UNPREDICTABLE RUN TERMINATION.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --AUGUST    1974.
 !     UPDATED         --NOVEMBER  1975.
@@ -30804,7 +29225,15 @@ REAL(kind=wp) :: sum , X , y
 !!     Subroutine relsd (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    relsd(3f) computes the
+!!    sample relative standard deviation
+!!    of the data in the input vector x.
+!!    the sample relative standard deviation = (the sample
+!!    standard deviation)/(the sample mean).
+!!    the denominator n-1 is used in computing the
+!!    sample standard deviation.
+!!    the sample relative standard deviation is alternatively
+!!    referred to as the sample coefficient of variation.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -30833,23 +29262,9 @@ REAL(kind=wp) :: sum , X , y
 !*==relsd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
       IMPLICIT NONE
-!*--RELSD26115
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT RELSD
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE RELATIVE STANDARD DEVIATION
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE RELATIVE STANDARD DEVIATION = (THE SAMPLE
-!              STANDARD DEVIATION)/(THE SAMPLE MEAN).
-!              THE DENOMINATOR N-1 IS USED IN COMPUTING THE
-!              SAMPLE STANDARD DEVIATION.
-!              THE SAMPLE RELATIVE STANDARD DEVIATION IS ALTERNATIVELY
-!              REFERRED TO AS THE SAMPLE COEFFICIENT OF VARIATION.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -30875,19 +29290,12 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 47, 233.
 !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGES 62-65.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MARCH     1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -30964,7 +29372,27 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 !!     Subroutine replac (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    replac(3f) replaces (with the value xnew)
+!!    all observations in the
+!!    single precision vector x which are inside
+!!    the closed (inclusive) interval
+!!    defined by xmin and xmax.
+!!    all observations outside of
+!!    this interval are left unchanged.
+!!    thus all observations in x which are
+!!    equal to or larger than xmin and
+!!    equal to or smaller than xmax,
+!!    will be replaced by xnew.
+!!    replac(3f) (and the
+!!    retain and delete subroutines)
+!!    gives the data analyst the ability to
+!!    easily 'clean up' a data set which has
+!!    missing and/or outlying observations
+!!    so that a more appropriate subsequent
+!!    data analysis may be performed.
+!!    for example, replacement of an outlier with
+!!    a more appropriate value can easily
+!!    be done by replac(3f).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -30993,35 +29421,9 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 !*==replac.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
       IMPLICIT NONE
-!*--REPLAC26239
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
       INTEGER i , ipr , k , N , ndel
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT REPLAC
 !
-!     PURPOSE--THIS SUBROUTINE REPLACES (WITH THE VALUE XNEW)
-!              ALL OBSERVATIONS IN THE
-!              SINGLE PRECISION VECTOR X WHICH ARE INSIDE
-!              THE CLOSED (INCLUSIVE) INTERVAL
-!              DEFINED BY XMIN AND XMAX.
-!              ALL OBSERVATIONS OUTSIDE OF
-!              THIS INTERVAL ARE LEFT UNCHANGED.
-!              THUS ALL OBSERVATIONS IN X WHICH ARE
-!              EQUAL TO OR LARGER THAN XMIN AND
-!              EQUAL TO OR SMALLER THAN XMAX,
-!              WILL BE REPLACED BY XNEW.
-!              THIS SUBROUTINE (AND THE
-!              RETAIN AND DELETE SUBROUTINES)
-!              GIVES THE DATA ANALYST THE ABILITY TO
-!              EASILY 'CLEAN UP' A DATA SET WHICH HAS
-!              MISSING AND/OR OUTLYING OBSERVATIONS
-!              SO THAT A MORE APPROPRIATE SUBSEQUENT
-!              DATA ANALYSIS MAY BE PERFORMED.
-!              FOR EXAMPLE, REPLACEMENT OF AN OUTLIER WITH
-!              A MORE APPROPRIATE VALUE CAN EASILY
-!              BE DONE BY THIS SUBROUTINE.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -31052,10 +29454,7 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THIS SUBROUTINE MAY BE USEFULLY EMPLOYED
 !              IN CONJUNCTION WITH THE DATAPAC
 !              PLOTTING SUBROUTINES INASMUCH
@@ -31082,12 +29481,6 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 !              SUBROUTINES.
 !     COMMENT--THIS IS ONE OF THE FEW SUBRUTINES IN DATAPAC
 !              IN WHICH THE INPUT VECTOR X IS ALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -31176,7 +29569,23 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 !!     Subroutine retain (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    retain(3f) retains all observations in the
+!!    single precision vector x which are inside
+!!    the closed (inclusive) interval
+!!    defined by xmin and xmax,
+!!    while deleting all observations outside of
+!!    this interval.
+!!    thus all observations in x which are smaller
+!!    than xmin or larger than xmax are deleted from x.
+!!    retain(3f) (and the
+!!    replac and delete subroutines)
+!!    gives the data analyst the ability to
+!!    easily 'clean up' a data set which has
+!!    missing and/or outlying observations
+!!    so that a more appropriate subsequent
+!!    data analysis may be performed.
+!!    for example, a trimmed sample can easily
+!!    be constructed by use of retain(3f).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -31205,31 +29614,9 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 !*==retain.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
       IMPLICIT NONE
-!*--RETAIN26415
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
       INTEGER i , ipr , k , N , ndel , Newn , newnp1 , nold
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT RETAIN
 !
-!     PURPOSE--THIS SUBROUTINE RETAINS ALL OBSERVATIONS IN THE
-!              SINGLE PRECISION VECTOR X WHICH ARE INSIDE
-!              THE CLOSED (INCLUSIVE) INTERVAL
-!              DEFINED BY XMIN AND XMAX,
-!              WHILE DELETING ALL OBSERVATIONS OUTSIDE OF
-!              THIS INTERVAL.
-!              THUS ALL OBSERVATIONS IN X WHICH ARE SMALLER
-!              THAN XMIN OR LARGER THAN XMAX ARE DELETED FROM X.
-!              THIS SUBROUTINE (AND THE
-!              REPLAC AND DELETE SUBROUTINES)
-!              GIVES THE DATA ANALYST THE ABILITY TO
-!              EASILY 'CLEAN UP' A DATA SET WHICH HAS
-!              MISSING AND/OR OUTLYING OBSERVATIONS
-!              SO THAT A MORE APPROPRIATE SUBSEQUENT
-!              DATA ANALYSIS MAY BE PERFORMED.
-!              FOR EXAMPLE, A TRIMMED SAMPLE CAN EASILY
-!              BE CONSTRUCTED BY USE OF THIS SUBROUTINE.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -31263,10 +29650,7 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
 !              MADE WHATEVER DELETIONS ARE APPROPRIATE,
 !              THE OUTPUT VECTOR X WILL BE 'PACKED';
@@ -31288,12 +29672,6 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !              AS BOTH THE SECOND AND FIFTH ARGUMENTS.
 !     COMMENT--THIS IS ONE OF THE FEW SUBROUTINES IN DATAPAC
 !              IN WHICH THE INPUT VECTOR X IS ALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --JULY      1974.
 !     UPDATED         --NOVEMBER  1975.
@@ -31392,7 +29770,20 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !!     Subroutine runs (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    runs(3f) performs a runs analysis
+!!    of the data in the input vector x.
+!!    the analysis consists of first determining
+!!    the observed number of runs from the data,
+!!    and then computing
+!!    the expected number of runs,
+!!    the standard deviation of the number of runs,
+!!    and the resulting standardized statistic
+!!    for the number of runs for runs of various
+!!    lengths.
+!!    this is done for runs up, runs down, and
+!!    runs up and down.
+!!    this runs anslysis is a useful distribution-free
+!!    test of the randomness of a data set.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -31421,8 +29812,6 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 !*==runs.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RUNS(X,N)
       IMPLICIT NONE
-!*--RUNS26596
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , anrdl , anrdlg , anrtl , anrtlg , anrul , anrulg , &
      &     c1 , c2 , c3 , c4 , den , enrtl , enrtlg , enrul , enrulg ,  &
      &     hold , snrtl , snrtlg
@@ -31432,24 +29821,7 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
      &        maxlnd , maxlnt , maxlnu , N , nm1 , nneg , npos , nrdl , &
      &        nrdlg , nrtl , nrtlg
       INTEGER nrul , nrulg , nzer
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT RUNS
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A RUNS ANALYSIS
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE ANALYSIS CONSISTS OF FIRST DETERMINING
-!              THE OBSERVED NUMBER OF RUNS FROM THE DATA,
-!              AND THEN COMPUTING
-!              THE EXPECTED NUMBER OF RUNS,
-!              THE STANDARD DEVIATION OF THE NUMBER OF RUNS,
-!              AND THE RESULTING STANDARDIZED STATISTIC
-!              FOR THE NUMBER OF RUNS FOR RUNS OF VARIOUS
-!              LENGTHS.
-!              THIS IS DONE FOR RUNS UP, RUNS DOWN, AND
-!              RUNS UP AND DOWN.
-!              THIS RUNS ANSLYSIS IS A USEFUL DISTRIBUTION-FREE
-!              TEST OF THE RANDOMNESS OF A DATA SET.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -31463,20 +29835,13 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--LEVENE AND WOLFOWITZ, ANNALS OF MATHEMATICAL
 !                 STATISTICS, 1944, PAGES 58-69;
 !                 ESPECIALLY PAGES 60, 63, AND 64.
 !     REFERENCES--BRADLEY, DISTRIBUTION-FREE STATISTICAL TESTS,
 !                 1968, CHAPTER 12, PAGES 271-282.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -31869,7 +30234,12 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
 !!     Subroutine sampp (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    sampp(3f) computes the
+!!    sample 100p percent point
+!!    (where p is between 0.0 and 1.0, exclusively)
+!!    of the data in the input vector x.
+!!    the sample 100p percent point =  is that point in which
+!!    100p percent of the data in the sample is below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -31898,21 +30268,10 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
 !*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
       IMPLICIT NONE
-!*--SAMPP27037
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
       INTEGER i , ipr , iupper , Iwrite , j , jp1 , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SAMPP
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE 100P PERCENT POINT
-!              (WHERE P IS BETWEEN 0.0 AND 1.0, EXCLUSIVELY)
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE 100P PERCENT POINT =  IS THAT POINT IN WHICH
-!              100P PERCENT OF THE DATA IN THE SAMPLE IS BELOW.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -31952,10 +30311,7 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !                   BE PRINTED OUT AND PP WILL BE SET TO -999999999.0
 !                   IF(N+1)P IS LARGER THAN N, AN ERROR MESSAGE WILL
 !                   BE PRINTED OUT AND PP WILL BE SET TO 999999999.0.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 236-239,
 !                 243.
@@ -31963,11 +30319,6 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !                 OF STATISTICS, EDITION 2, 1963, PAGES 406-407.
 !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGE 125.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -32060,7 +30411,22 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !!     Subroutine scale (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    scale(3f) computes 4 estimates of the
+!!    scale (variation, scatter, dispersion)
+!!    of the data in the input vector x.
+!!    the 4 estimators employed are--
+!!
+!!      1. the sample range;
+!!      2. the sample standard deviation;
+!!      3. the sample relative standard deviation; and
+!!      4. the sample variance.
+!!
+!!    note that n-1 (rather than n)
+!!    is used in the divisor in the
+!!    computation of the sample standard
+!!    deviation, the sample relative
+!!    standard deviation, and the
+!!    sample variance.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -32087,31 +30453,12 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !!##LICENSE
 !!    CC0-1.0
 !*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SCALE(X,N)
-      IMPLICIT NONE
-!*--SCALE27191
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
-     &     xsd , xvar
-      INTEGER i , ipr , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SCALE
+SUBROUTINE SCALE(X,N)
+IMPLICIT NONE
+
+REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd , xsd , xvar
+INTEGER i , ipr , N
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES 4 ESTIMATES OF THE
-!              SCALE (VARIATION, SCATTER, DISPERSION)
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE 4 ESTIMATORS EMPLOYED ARE--
-!              1) THE SAMPLE RANGE;
-!              2) THE SAMPLE STANDARD DEVIATION;
-!              3) THE SAMPLE RELATIVE STANDARD DEVIATION; AND
-!              4) THE SAMPLE VARIANCE.
-!              NOTE THAT N-1 (RATHER THAN N)
-!              IS USED IN THE DIVISOR IN THE
-!              COMPUTATION OF THE SAMPLE STANDARD
-!              DEVIATION, THE SAMPLE RELATIVE
-!              STANDARD DEVIATION, AND THE
-!              SAMPLE VARIANCE.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -32127,10 +30474,8 @@ REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE SAMPLE RELATIVE STANDARD DEVIATION
 !              IS THE SAMPLE STANDARD DEVIATION RELATIVE
 !              TO THE MAGNITUDE OF THE SAMPLE MEAN.
@@ -32146,11 +30491,6 @@ REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
 !                 PAGES 357 AND 387
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -32258,7 +30598,7 @@ REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
       ENDIF
 99011 FORMAT (' ')
 !
-      END SUBROUTINE SCALE
+END SUBROUTINE SCALE
 !>
 !!##NAME
 !!    sd(3f) - [M_datapac:STATISTICS] compute the standard deviation of a
@@ -32269,7 +30609,11 @@ REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
 !!     Subroutine sd (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    sd(3f) computes the
+!!    sample standard deviation (with denominator n-1)
+!!    of the data in the input vector x.
+!!    the sample standard deviation = sqrt((the sum of the
+!!    squared deviations about the sample mean)/(n-1)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -32297,20 +30641,9 @@ REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
 !!    CC0-1.0
 !*==sd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SD(X,N,Iwrite,Xsd)
-      IMPLICIT NONE
-!*--SD27364
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SD
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE STANDARD DEVIATION (WITH DENOMINATOR N-1)
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE STANDARD DEVIATION = SQRT((THE SUM OF THE
-!              SQUARED DEVIATIONS ABOUT THE SAMPLE MEAN)/(N-1)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -32335,19 +30668,12 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGE 44.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGES 19, 76.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -32421,7 +30747,12 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!     Subroutine skipr (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    skipr(3f) reads through (skips over)
+!!    nlhead lines from input unit = 5.
+!!    if header information exists at the
+!!    beginning of a data file, skipr(3f)
+!!    is convenient for reading through
+!!    (skipping over) that header information.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -32450,35 +30781,14 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !*==skipr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SKIPR(Nlhead)
       IMPLICIT NONE
-!*--SKIPR27480
-!*** Start of declarations inserted by SPAG
       INTEGER i , ia , ipr , ird , Nlhead
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SKIPR
 !
-!     PURPOSE--THIS SUBROUTINE READS THROUGH (SKIPS OVER)
-!              NLHEAD LINES FROM INPUT UNIT = 5.
-!              IF HEADER INFORMATION EXISTS AT THE
-!              BEGINNING OF A DATA FILE, THIS SUBROUTINE
-!              IS CONVENIENT FOR READING THROUGH
-!              (SKIPPING OVER) THAT HEADER INFORMATION.
 !     INPUT  ARGUMENTS--NLHEAD = THE INTEGER NUMBER OF CARD
 !                                IMAGES TO BE READ THROUGH
 !                                (SKIPPED OVER).
-!     OUTPUT--NONE.
 !     PRINTING--NO.
 !     RESTRICTIONS--NLHEAD IS A NON-NEGATIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--INTEGER.
-!     LANGUAGE--ANSI FORTRAN.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --MAY       1976.
@@ -32530,12 +30840,12 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !!
 !!##DESCRIPTION
 !!
-!! SORTC(3f) sorts (in ascending order) the N elements of the vector X,
-!! puts the resulting N sorted values into the single precision vector XS,
-!! rearranges the elements of the vector Y (according to the sort on X),
-!! and puts the rearranged Y values into the single precision vector YC.
-!! This subroutine gives the data analyst the ability to sort one data
-!! vector while 'carrying along' the elements of a second data vector.
+!!    SORTC(3f) sorts (in ascending order) the N elements of the vector X,
+!!    puts the resulting N sorted values into the single precision vector XS,
+!!    rearranges the elements of the vector Y (according to the sort on X),
+!!    and puts the rearranged Y values into the single precision vector YC.
+!!    This subroutine gives the data analyst the ability to sort one data
+!!    vector while 'carrying along' the elements of a second data vector.
 !!
 !!##INPUT ARGUMENTS
 !!      X   THE SINGLE PRECISION VECTOR OF
@@ -33179,9 +31489,6 @@ IMPLICIT NONE
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
       INTEGER i , il , ip1 , ipr , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SORTP
-!
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE SORTED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -33278,11 +31585,6 @@ REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 !               --CACM JANUARY 1970, PAGE 54.
 !               --CACM OCTOBER 1970, PAGE 624.
 !               --JACM JANUARY 1961, PAGE 41.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -33452,7 +31754,12 @@ END SUBROUTINE SORTP
 !!     Subroutine spcorr (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    spcorr(3f) computes the
+!!    spearman rank correlation coefficient
+!!    between the 2 sets of data in the input vectors x and y.
+!!    the spearman rank correlation coefficient will be a
+!!    single precision value between -1.0 and 1.0
+!!    (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -33481,20 +31788,9 @@ END SUBROUTINE SORTP
 !*==spcorr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
       IMPLICIT NONE
-!*--SPCORR28356
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
       INTEGER i , iflag , ipr , iupper , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SPCORR
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SPEARMAN RANK CORRELATION COEFFICIENT
-!              BETWEEN THE 2 SETS OF DATA IN THE INPUT VECTORS X AND Y.
-!              THE SPEARMAN RANK CORRELATION COEFFICIENT WILL BE A
-!              SINGLE PRECISION VALUE BETWEEN -1.0 AND 1.0
-!              (INCLUSIVELY).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
@@ -33534,9 +31830,7 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--RANK AND SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
 !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
@@ -33545,11 +31839,6 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !                 ANALYSIS, EDITION 2, 1957, PAGES 294-295.
 !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
 !                 OF STATISTICS, EDITION 2, 1963, PAGE 424.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --JANUARY   1975.
@@ -33636,7 +31925,15 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !!     Subroutine stmom3 (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    stmom3(3f) computes the
+!!    sample standardized third central moment
+!!    of the data in the input vector x.
+!!    the sample standardized third central moment =
+!!    (the sample third central moment)/((the sample
+!!    standard deviation)**3).
+!!    n (rather than n-1) has been used in the denominator
+!!    in the calculation of both the sample third central
+!!    moment and the sample standard deviation.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -33665,23 +31962,9 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !*==stmom3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
       IMPLICIT NONE
-!*--STMOM328504
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT STMOM3
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE STANDARDIZED THIRD CENTRAL MOMENT
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE STANDARDIZED THIRD CENTRAL MOMENT =
-!              (THE SAMPLE THIRD CENTRAL MOMENT)/((THE SAMPLE
-!              STANDARD DEVIATION)**3).
-!              N (RATHER THAN N-1) HAS BEEN USED IN THE DENOMINATOR
-!              IN THE CALCULATION OF BOTH THE SAMPLE THIRD CENTRAL
-!              MOMENT AND THE SAMPLE STANDARD DEVIATION.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -33707,20 +31990,12 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85,
 !                 234, 243, 297-298, 305.
 !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGES 86-90.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -33797,7 +32072,15 @@ END SUBROUTINE STMOM3
 !!     Subroutine stmom4 (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    stmom4(3f) computes the
+!!    sample standardized fourth central moment
+!!    of the data in the input vector x.
+!!    the sample standardized fourth central moment =
+!!    (the sample fourth central moment)/((the sample
+!!    standard deviation)**4).
+!!    n (rather than n-1) has been used in the denominator
+!!    in the calculation of both the sample fourth central
+!!    moment and the sample standard deviation.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -33826,23 +32109,9 @@ END SUBROUTINE STMOM3
 !*==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
       IMPLICIT NONE
-!*--STMOM428629
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT STMOM4
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT =
-!              (THE SAMPLE FOURTH CENTRAL MOMENT)/((THE SAMPLE
-!              STANDARD DEVIATION)**4).
-!              N (RATHER THAN N-1) HAS BEEN USED IN THE DENOMINATOR
-!              IN THE CALCULATION OF BOTH THE SAMPLE FOURTH CENTRAL
-!              MOMENT AND THE SAMPLE STANDARD DEVIATION.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -33868,19 +32137,11 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85, 243.
 !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGES 86-90.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -33976,7 +32237,7 @@ END SUBROUTINE STMOM4
 !!    thus all observations of X which correspond to elements in D which
 !!    are smaller than DMIN or larger than DMAX are not copied over into Y.
 !!
-!!    the use of this subroutine gives the data analyst the capability
+!!    the use of subse1(3f) gives the data analyst the capability
 !!    to easily extract subsets of the data prior to data analysis on
 !!    each subset.
 !!
@@ -34197,7 +32458,7 @@ INTEGER i , ipr , k , N , ndel , Ny
 !!    elements in D2 which are smaller than D2MIN or larger than D2MAX,
 !!    are not copied over into Y.
 !!
-!!    The use of this subroutine gives the data analyst the capability
+!!    The use of subse2(3f) gives the data analyst the capability
 !!    to easily extract subsets of the datA prior to data analysis on
 !!    each subset.
 !!
@@ -34312,12 +32573,6 @@ INTEGER       :: i, ipr, k, N, ndel, Ny
 !              (DUE TO THE PACKING OF
 !              THE RETAINED ELEMENTS IN Y)
 !              AFTER APPLICATION OF THIS SUBROUTINE.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
@@ -34428,7 +32683,7 @@ END SUBROUTINE SUBSE2
 !!    Thus all observations in X which correspond to elements in D which
 !!    are smaller than DMIN or larger than DMAX are deleted from X.
 !!
-!!    The use of this subroutine gives the data analyst the capability
+!!    The use of subset(3f) gives the data analyst the capability
 !!    to easily extract subsets of the data prior to data analysis on
 !!    each subset.
 !!
@@ -34552,12 +32807,6 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !              AS BOTH THE SECOND AND SIXTH ARGUMENTS.
 !     COMMENT--THIS IS ONE OF THE FEW SUBROUTINES IN DATAPAC
 !              IN WHICH THE INPUT VECTOR X IS ALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !
@@ -34660,7 +32909,35 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !!     Subroutine tail (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    tail(3f) perfoms a symmetric distribution
+!!    tail length analysis
+!!    on the data in the input vector x.
+!!    the analysis consists of the following--
+!!
+!!      1. various test statistics to test
+!!         the specific hypothesis of normality;
+!!      2. a uniform probability plot
+!!         (a short-tailed distribution);
+!!      3. a normal probaiblity plot
+!!         (a moderate-tailed distribution);
+!!      4. a tukey lambda = -0.5 probabilty plot
+!!         (a moderate-long-tailed distribtion);
+!!      5. a cauchy probability plot
+!!         (a long-tailed distribution);
+!!      6. a determination of the best-fit
+!!         symmetric distribution
+!!         to the data set from an
+!!         admissable set consisting of
+!!         43 symmetric distributions.
+!!
+!!    the admissable set of symmetric
+!!    distributions considered includes the
+!!    uniform, normal, logistic,
+!!    double exponential, cauchy, and
+!!    37 distributions drawn from the
+!!    the tukey lambda distributional family.
+!!    the goodness of fit criterion is the maximum probability
+!!    plot correlation coefficient criterion.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -34698,37 +32975,7 @@ REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum
 REAL(kind=wp) :: xbar
 REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
 INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
-
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TAIL
 !
-!     PURPOSE--THIS SUBROUTINE PERFOMS A SYMMETRIC DISTRIBUTION
-!              TAIL LENGTH ANALYSIS
-!              ON THE DATA IN THE INPUT VECTOR X.
-!              THE ANALYSIS CONSISTS OF THE FOLLOWING--
-!              1) VARIOUS TEST STATISTICS TO TEST
-!                 THE SPECIFIC HYPOTHESIS OF NORMALITY;
-!              2) A UNIFORM PROBABILITY PLOT
-!                 (A SHORT-TAILED DISTRIBUTION);
-!              3) A NORMAL PROBAIBLITY PLOT
-!                 (A MODERATE-TAILED DISTRIBUTION);
-!              4) A TUKEY LAMBDA = -0.5 PROBABILTY PLOT
-!                 (A MODERATE-LONG-TAILED DISTRIBTION);
-!              5) A CAUCHY PROBABILITY PLOT
-!                (A LONG-TAILED DISTRIBUTION);
-!              6) A DETERMINATION OF THE BEST-FIT
-!                 SYMMETRIC DISTRIBUTION
-!                 TO THE DATA SET FROM AN
-!                 ADMISSABLE SET CONSISTING OF
-!                 43 SYMMETRIC DISTRIBUTIONS.
-!              THE ADMISSABLE SET OF SYMMETRIC
-!              DISTRIBUTIONS CONSIDERED INCLUDES THE
-!              UNIFORM, NORMAL, LOGISTIC,
-!              DOUBLE EXPONENTIAL, CAUCHY, AND
-!              37 DISTRIBUTIONS DRAWN FROM THE
-!              THE TUKEY LAMBDA DISTRIBUTIONAL FAMILY.
-!              THE GOODNESS OF FIT CRITERION IS THE MAXIMUM PROBABILITY
-!              PLOT CORRELATION COEFFICIENT CRITERION.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -34749,7 +32996,6 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG, LOG10, EXP,
 !                                         SIN, COS, ATAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
 !                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
 !                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
@@ -34758,11 +33004,6 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !                UNPUBLISHED MANUSCRIPT.
 !              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
 !                DISTRIBUTIONS-1, PAGES 250-271.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -35386,7 +33627,12 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !!     Subroutine tcdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    tcdf(3f) computes the cumulative distribution
+!!    function value for student's t distribution
+!!    with integer degrees of freedom parameter = nu.
+!!    this distribution is defined for all x.
+!!    the probability density function is given
+!!    in the references below.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -35415,20 +33661,9 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !*==tcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TCDF(X,Nu,Cdf)
       IMPLICIT NONE
-!*--TCDF30117
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
       INTEGER i , ievodd , imax , imin , ipr , Nu , nucut
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR STUDENT'S T DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X.
-!              THE PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -35446,7 +33681,6 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
 !                 SERIES 55, 1964, PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -35461,11 +33695,6 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
 !                 FOR STATISTICIANS, VOLUME 1, 1954,
 !                 PAGES 132-134.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -35620,7 +33849,29 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !!     Subroutine time (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    time(3f) performs a time series analysis
+!!    on the data in the input vector x.
+!!    the analysis consists of the following--
+!!
+!!      1. a plot of autocorrelation versus lag number;
+!!      2. a test for white noise (assuming normality);
+!!      3. a 'pilot' spectrum; and
+!!      4. 4 other estimated spectra--each based
+!!         on a differing bandwidth.
+!!
+!!    in order that the results of the time series analysis
+!!    be valid and properly interpreted, the input data
+!!    in x should be equi-spaced in time
+!!    (or whatever variable corresponds to time).
+!!
+!!    the horizontal axis of the spectra produced
+!!    by time(3f) is frequency.
+!!    this frequency is measured in units of
+!!    cycles per 'data point' or, more precisely, in
+!!    cycles per unit time where
+!!    'unit time' is defined as the
+!!    elapsed time between adjacent observations.
+!!    the range of the frequency axis is 0.0 to 0.5.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -35649,8 +33900,6 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !*==time.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TIME(X,N)
       IMPLICIT NONE
-!*--TIME30314
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: absr , ak , al , all , almax , an , an2 , arg1 , arg2 , bw , &
      &     df , dfroun , hold , p , perout , pi , pmsq , ps , pssq , r
 REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
@@ -35659,32 +33908,7 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
      &        irev , j , jmax , jmin , k , kmax , krev , l , ll , llp1 ,&
      &        lm1 , lmax
       INTEGER maxlag , N , n2 , ndiv , nmk , numout , numsp
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TIME
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A TIME SERIES ANALYSIS
-!              ON THE DATA IN THE INPUT VECTOR X.
-!              THE ANALYSIS CONSISTS OF THE FOLLOWING--
-!              1) A PLOT OF AUTOCORRELATION VERSUS LAG NUMBER;
-!              2) A TEST FOR WHITE NOISE (ASSUMING NORMALITY);
-!              3) A 'PILOT' SPECTRUM; AND
-!              4) 4 OTHER ESTIMATED SPECTRA--EACH BASED
-!                 ON A DIFFERING BANDWIDTH.
-!
-!              IN ORDER THAT THE RESULTS OF THE TIME SERIES ANALYSIS
-!              BE VALID AND PROPERLY INTERPRETED, THE INPUT DATA
-!              IN X SHOULD BE EQUI-SPACED IN TIME
-!              (OR WHATEVER VARIABLE CORRESPONDS TO TIME).
-!
-!              THE HORIZONTAL AXIS OF THE SPECTRA PRODUCED
-!              BY THIS SUBROUTINE IS FREQUENCY.
-!              THIS FREQUENCY IS MEASURED IN UNITS OF
-!              CYCLES PER 'DATA POINT' OR, MORE PRECISELY, IN
-!              CYCLES PER UNIT TIME WHERE
-!              'UNIT TIME' IS DEFINED AS THE
-!              ELAPSED TIME BETWEEN ADJACENT OBSERVATIONS.
-!              THE RANGE OF THE FREQUENCY AXIS IS 0.0 TO 0.5.
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
@@ -35716,7 +33940,6 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTC0, PLOTSP, AND CHSPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE 'FAST FOURIER TRANSFORM' IS NOT USED
 !              IN THIS VERSION OF TIME, BUT WILL BE
 !              IMPLEMENTED IN A FUTURE VERSION.
@@ -35757,11 +33980,6 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !              SMALLEST DETECTABLE CYCLE IN THE DATA
 !              IS 2 DATA POINTS PER CYCLE.
 !     REFERENCES--JENKINS AND WATTS, ESPECIALLY PAGE 290.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
@@ -36059,7 +34277,11 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !!     Subroutine tol (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    tol(3f) computes normal and
+!!    distribution-free tolerance limits
+!!    for the data in the input vector x.
+!!    15 normal tolerance limits are computed; and
+!!    30 distribution-free tolerance limits are computed.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36088,8 +34310,6 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TOL(X,N)
       IMPLICIT NONE
-!*--TOL30717
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
      &     an4 , an5 , an6 , b , c , c1 , c2 , c3
 REAL(kind=wp) :: d , d1 , d2 , d3 , d4 , d5 , d6 , d7 , f , hold , p , pa ,   &
@@ -36098,15 +34318,7 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
      &     xmin , xmin2 , xmin3 , z , z1
       INTEGER i , ipr , j , k , locmax , locmin , locmn2 , locmn3 ,     &
      &        locmx2 , locmx3 , N , numsec
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TOL
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES NORMAL AND
-!              DISTRIBUTION-FREE TOLERANCE LIMITS
-!              FOR THE DATA IN THE INPUT VECTOR X.
-!              15 NORMAL TOLERANCE LIMITS ARE COMPUTED; AND
-!              30 DISTRIBUTION-FREE TOLERANCE LIMITS ARE COMPUTED.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -36117,18 +34329,11 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
 !               --WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
 !               --MOOD AND GRABLE, PAGES 416-417
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -36460,7 +34665,27 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 !!     Subroutine tplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    tplt(3f) generates a student's t
+!!    probability plot (with integer
+!!    degrees of freedom parameter value = nu).
+!!    the prototype student's t distribution used
+!!    herein is defined for all x,
+!!    and its probability density function is given
+!!    in the references below.
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the student's t probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the  student's t distribution
+!!    with degrees of freedom parameter value = nu.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36489,37 +34714,11 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 !*==tplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TPLT(X,N,Nu)
       IMPLICIT NONE
-!*--TPLT31083
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
      &     yslope
       INTEGER i , ipr , iupper , N , Nu
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A STUDENT'S T
-!              PROBABILITY PLOT (WITH INTEGER
-!              DEGREES OF FREEDOM PARAMETER VALUE = NU).
-!              THE PROTOTYPE STUDENT'S T DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL X,
-!              AND ITS PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE STUDENT'S T PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE  STUDENT'S T DISTRIBUTION
-!              WITH DEGREES OF FREEDOM PARAMETER VALUE = NU.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -36536,7 +34735,6 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !                                         PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -36558,11 +34756,6 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 120-123.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
@@ -36694,7 +34887,16 @@ END SUBROUTINE TPLT
 !!     Subroutine tppf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    tppf(3f) computes the percent point
+!!    function value for the student's t distribution
+!!    with integer degrees of freedom parameter = nu.
+!!    the student's t distribution used
+!!    herein is defined for all x,
+!!    and its probability density function is given
+!!    in the references below.
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36723,24 +34925,9 @@ END SUBROUTINE TPLT
 !*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TPPF(P,Nu,Ppf)
       IMPLICIT NONE
-!*--TPPF31281
-!*** Start of declarations inserted by SPAG
       INTEGER ipass , ipr , maxit , Nu
 REAL(kind=wp) :: P , Ppf , ppfn
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE STUDENT'S T DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
-!              THE STUDENT'S T DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL X,
-!              AND ITS PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -36761,7 +34948,6 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSIN, DCOS, DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOR NU = 1 AND NU = 2, THE PERCENT POINT FUNCTION
 !              FOR THE T DISTRIBUTION EXISTS IN SIMPLE CLOSED FORM
 !              AND SO THE COMPUTED PERCENT POINTS ARE EXACT.
@@ -36787,11 +34973,6 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 120-123.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -36954,7 +35135,9 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!     Subroutine tran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!
+!!    This subroutine generates a random sample of size N from the student's
+!!    T distribution with integer degrees of freedom parameter = NU.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36983,17 +35166,9 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TRAN(N,Nu,Iseed,X)
       IMPLICIT NONE
-!*--TRAN31505
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
       INTEGER i , ipr , Iseed , j , N , Nu
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE STUDENT'S T DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -37014,7 +35189,6 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--MOOD AND GRABLE, INTRODUCTION TO THE
 !                 THEORY OF STATISTICS, 1963, PAGE 233.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -37116,7 +35290,12 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 !!     Subroutine trim (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    trim(3f) computes the
+!!    sample trimmed mean
+!!    of the data in the input vector x.
+!!    the trimming is such that
+!!    the lower 100*p1 % of the data is trimmed off
+!!    and the upper 100*p2 % of the data is trimmed off.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37149,12 +35328,6 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
       INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
 
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE TRIMMED MEAN
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE TRIMMING IS SUCH THAT
-!              THE LOWER 100*P1 % OF THE DATA IS TRIMMED OFF
-!              AND THE UPPER 100*P2 % OF THE DATA IS TRIMMED OFF.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -37207,9 +35380,7 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
 !                 --THE SUM OF P1 AND P2 SHOULD BE
 !                   SMALLER THAN 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
 !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
 !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
@@ -37218,11 +35389,6 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !                 PRINCETON UNIVERSITY, 1969).
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !
@@ -37364,7 +35530,13 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
 !!     Subroutine unicdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    unicdf(3f) computes the cumulative distribution
+!!    function value for the uniform (rectangular)
+!!    distribution on the unit interval (0,1).
+!!    this distribution has mean = 0.5
+!!    and standard deviation = sqrt(1/12) = 0.28867513.
+!!    this distribution has the probability
+!!    density function f(x) = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37393,21 +35565,9 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
 !*==unicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNICDF(X,Cdf)
       IMPLICIT NONE
-!*--UNICDF31863
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNICDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE UNIFORM (RECTANGULAR)
-!              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS THE PROBABILITY
-!              DENSITY FUNCTION F(X) = 1.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -37417,17 +35577,9 @@ REAL(kind=wp) :: Cdf , X
 !             FUNCTION VALUE CDF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE BETWEEN 0 AND 1, INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -37468,7 +35620,31 @@ REAL(kind=wp) :: Cdf , X
 !!     Subroutine unimed (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    unimed(3f) generates the n order statistic medians
+!!    from the uniform (rectangular)
+!!    distribution on the unit interval (0,1).
+!!    this distribution has mean = 0.5
+!!    and standard deviation = sqrt(1/12) = 0.28867513.
+!!    this distribution has the probability
+!!    density function f(x) = 1.
+!!    unimed(3f) is a support subroutine for
+!!    all of the probability plot subroutines
+!!    in datapac; it is rarely used by the
+!!    data analyst directly.
+!!    a probability plot for a general distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the i-th order statistic median for a general
+!!    distribution is obtained by transforming
+!!    the i-th uniform order statistic median
+!!    by the percent point function of the desired
+!!    distribution--hence the importance of being able to
+!!    generate uniform order statistic medians.
+!!    it is of theroetical interest to note that
+!!    the i-th uniform order statistic median
+!!    in a sample of size n is identically the
+!!    median of the beta distribution
+!!    with parameters i and n-i+1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37497,39 +35673,9 @@ REAL(kind=wp) :: Cdf , X
 !*==unimed.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIMED(N,X)
       IMPLICIT NONE
-!*--UNIMED31930
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , gam , X
       INTEGER i , imax , ipr , irev , N , nevodd , nhalf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNIMED
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES THE N ORDER STATISTIC MEDIANS
-!              FROM THE UNIFORM (RECTANGULAR)
-!              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS THE PROBABILITY
-!              DENSITY FUNCTION F(X) = 1.
-!              THIS SUBROUTINE IS A SUPPORT SUBROUTINE FOR
-!              ALL OF THE PROBABILITY PLOT SUBROUTINES
-!              IN DATAPAC; IT IS RARELY USED BY THE
-!              DATA ANALYST DIRECTLY.
-!              A PROBABILITY PLOT FOR A GENERAL DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE I-TH ORDER STATISTIC MEDIAN FOR A GENERAL
-!              DISTRIBUTION IS OBTAINED BY TRANSFORMING
-!              THE I-TH UNIFORM ORDER STATISTIC MEDIAN
-!              BY THE PERCENT POINT FUNCTION OF THE DESIRED
-!              DISTRIBUTION--HENCE THE IMPORTANCE OF BEING ABLE TO
-!              GENERATE UNIFORM ORDER STATISTIC MEDIANS.
-!              IT IS OF THEROETICAL INTEREST TO NOTE THAT
-!              THE I-TH UNIFORM ORDER STATISTIC MEDIAN
-!              IN A SAMPLE OF SIZE N IS IDENTICALLY THE
-!              MEDIAN OF THE BETA DISTRIBUTION
-!              WITH PARAMETERS I AND N-I+1.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF UNIFORM ORDER STATISTIC MEDIANS
 !                                TO BE GENERATED.
@@ -37543,17 +35689,9 @@ REAL(kind=wp) :: ai , an , gam , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
 !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -37621,7 +35759,13 @@ REAL(kind=wp) :: ai , an , gam , X
 !!     Subroutine unipdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    unipdf(3f) computes the probability density
+!!    function value for the uniform (rectangular)
+!!    distribution on the unit interval (0,1).
+!!    this distribution has mean = 0.5
+!!    and standard deviation = sqrt(1/12) = 0.28867513.
+!!    this distribution has the probability
+!!    density function f(x) = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37650,21 +35794,9 @@ REAL(kind=wp) :: ai , an , gam , X
 !*==unipdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIPDF(X,Pdf)
       IMPLICIT NONE
-!*--UNIPDF32047
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: Pdf , X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNIPDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
-!              FUNCTION VALUE FOR THE UNIFORM (RECTANGULAR)
-!              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS THE PROBABILITY
-!              DENSITY FUNCTION F(X) = 1.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -37674,17 +35806,9 @@ REAL(kind=wp) :: Pdf , X
 !             FUNCTION VALUE PDF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE BETWEEN 0 AND 1, INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -37723,7 +35847,28 @@ REAL(kind=wp) :: Pdf , X
 !!     Subroutine uniplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    uniplt(3f) generates a uniform
+!!    probability plot.
+!!    the prototype uniform distribution used herein
+!!    is defined on the unit interval (0,1).
+!!    this distribution has mean = 0.5
+!!    and standard deviation = sqrt(1/12) = 0.28867513.
+!!    this distribution has
+!!    the probability density function
+!!    f(x) = 1.
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the uniform probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the uniform distribution.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37752,37 +35897,10 @@ REAL(kind=wp) :: Pdf , X
 !*==uniplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIPLT(X,N)
       IMPLICIT NONE
-!*--UNIPLT32113
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNIPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A UNIFORM
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE UNIFORM DISTRIBUTION USED HEREIN
-!              IS DEFINED ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = 1.
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE UNIFORM PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE UNIFORM DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -37794,7 +35912,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -37804,11 +35921,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -37914,7 +36026,16 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !!     Subroutine unippf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    unippf(3f) computes the percent point
+!!    function value for the uniform (rectangular)
+!!    distribution on the unit interval (0,1).
+!!    this distribution has mean = 0.5
+!!    and standard deviation = sqrt(1/12) = 0.28867513.
+!!    this distribution has the probability
+!!    density function f(x) = 1.
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -37943,24 +36064,9 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !*==unippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIPPF(P,Ppf)
       IMPLICIT NONE
-!*--UNIPPF32268
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Ppf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNIPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE UNIFORM (RECTANGULAR)
-!              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS THE PROBABILITY
-!              DENSITY FUNCTION F(X) = 1.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -37971,10 +36077,7 @@ REAL(kind=wp) :: P , Ppf
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -37983,11 +36086,6 @@ REAL(kind=wp) :: P , Ppf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -38024,7 +36122,13 @@ REAL(kind=wp) :: P , Ppf
 !!     Subroutine uniran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    uniran(3f) generates a random sample of size n
+!!    from the uniform (rectangular)
+!!    distribution on the unit interval (0,1).
+!!    this distribution has mean = 0.5
+!!    and standard deviation = sqrt(1/12) = 0.28867513.
+!!    this distribution has the probability
+!!    density function f(x) = 1.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -38046,6 +36150,24 @@ REAL(kind=wp) :: P , Ppf
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
+!!##WRITTEN BY
+!!      --james blue
+!!                  scientific computing division
+!!                  center for applied mathematics
+!!                  national bureau of standards
+!!                  washington, d. c. 20234
+!!      --david kahaner
+!!                  scientific computing division
+!!                  center for applied mathematics
+!!                  national bureau of standards
+!!      --george marsaglia
+!!                  computer science department
+!!                  washington state university
+!!      --james j. filliben
+!!                  statistical engineering division
+!!                  center for applied mathematics
+!!                  national bureau of standards
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
@@ -38058,13 +36180,6 @@ REAL(kind=wp) :: ak , am1 , X(:)
 INTEGER i, ipr, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
 INTEGER m(17)
 
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE UNIFORM (RECTANGULAR)
-!              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS THE PROBABILITY
-!              DENSITY FUNCTION F(X) = 1.
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -38079,10 +36194,7 @@ INTEGER m(17)
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER           SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !
 !     ALGORITHM--FIBONACCI GENERATOR
 !                AS DEFINED BY GEORGE MARSAGLIA.
@@ -38160,22 +36272,6 @@ INTEGER m(17)
 !                 NUMBER GENERATOR", UNPUBLISHED NOTES, WASH S. U.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     WRITTEN BY--JAMES BLUE
-!                 SCIENTIFIC COMPUTING DIVISION
-!                 CENTER FOR APPLIED MATHEMATICS
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!               --DAVID KAHANER
-!                 SCIENTIFIC COMPUTING DIVISION
-!                 CENTER FOR APPLIED MATHEMATICS
-!                 NATIONAL BUREAU OF STANDARDS
-!               --GEORGE MARSAGLIA
-!                 COMPUTER SCIENCE DEPARTMENT
-!                 WASHINGTON STATE UNIVERSITY
-!               --JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING DIVISION
-!                 CENTER FOR APPLIED MATHEMATICS
-!                 NATIONAL BUREAU OF STANDARDS
 !
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     ORIGINAL VERSION--JUNE      1972.
@@ -38187,16 +36283,6 @@ INTEGER m(17)
 !     UPDATED         --MARCH     1984.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-!---------------------------------------------------------------------
-!
-!---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
 !
 !-----SAVE STATEMENTS-------------------------------------------------
 !
@@ -38308,9 +36394,6 @@ INTEGER m(17)
 !               **  EXIT       **
 !               *****************
 !
-!CCCC DEBUG TRACE,INIT
-!CCCC AT 90
-!CCCC TRACE ON
 END SUBROUTINE UNIRAN
 !>
 !!##NAME
@@ -38321,7 +36404,17 @@ END SUBROUTINE UNIRAN
 !!     Subroutine unisf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    UNISF(3f) computes the sparsity function value for the uniform
+!!    (rectangular) distribution on the unit interval (0,1).
+!!
+!!    This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    = 0.28867513.
+!!
+!!    This distribution has the probability density function f(X) = 1.
+!!
+!!    Note that the sparsity function of a distribution is the derivative
+!!    of the percent point function, and also is the reciprocal of the
+!!    probability density function (but in units of P rather than X).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -38350,25 +36443,9 @@ END SUBROUTINE UNIRAN
 !*==unisf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNISF(P,Sf)
       IMPLICIT NONE
-!*--UNISF32614
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Sf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNISF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE SPARSITY
-!              FUNCTION VALUE FOR THE UNIFORM (RECTANGULAR)
-!              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS THE PROBABILITY
-!              DENSITY FUNCTION F(X) = 1.
-!              NOTE THAT THE SPARSITY FUNCTION OF A DISTRIBUTION
-!              IS THE DERIVATIVE OF THE PERCENT POINT FUNCTION,
-!              AND ALSO IS THE RECIPROCAL OF THE PROBABILITY
-!              DENSITY FUNCTION (BUT IN UNITS OF P RATHER THAN X).
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
@@ -38379,10 +36456,7 @@ REAL(kind=wp) :: P , Sf
 !             SPARSITY FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -38391,11 +36465,6 @@ REAL(kind=wp) :: P , Sf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -38433,7 +36502,11 @@ REAL(kind=wp) :: P , Sf
 !!     Subroutine var (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    var(3f) computes the
+!!    sample variance (with denominator n-1)
+!!    of the data in the input vector x.
+!!    the sample variance = (the sum of the
+!!    squared deviations about the sample mean)/(n-1).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -38462,19 +36535,9 @@ REAL(kind=wp) :: P , Sf
 !*==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE VAR(X,N,Iwrite,Xvar)
       IMPLICIT NONE
-!*--VAR32690
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT VAR
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE VARIANCE (WITH DENOMINATOR N-1)
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE VARIANCE = (THE SUM OF THE
-!              SQUARED DEVIATIONS ABOUT THE SAMPLE MEAN)/(N-1).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -38499,21 +36562,13 @@ REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGE 44.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGE 38.
 !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
 !                 OF STATISTICS, EDITION 2, 1963, PAGE 171.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -38586,7 +36641,22 @@ REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 !!     Subroutine weib (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    weib(3f) perfoms a weibull distribution analysis
+!!    on the data in the input vector x.
+!!    this analysis consists of determining that particular
+!!    weibull distribution
+!!    which best fits the data set.
+!!    the goodness of fit criterion is the maximum probability
+!!    plot correlation coefficient criterion.
+!!    after the best-fit distribution is determined,
+!!    estimates are computed and printed out for the
+!!    location and scale parameters.
+!!    two probability plots are also printed out--
+!!    the best-fit weibull probability plot
+!!    and an extreme value type 1 probability plot
+!!    (this is due to the fact that as the weibull parameter
+!!    gamma approaches infinity, the weibull distribution
+!!    approaches the extreme value type 1 distribution).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -38615,32 +36685,11 @@ REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 !*==weib.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEIB(X,N)
       IMPLICIT NONE
-!*--WEIB32807
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
      &     sum2 , sum3 , sy , t , w , wbar , WS , X , xmax , xmin , Y
 REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
       INTEGER i , idis , idismx , ipr , iupper , N , numdis , numdm1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT WEIB
 !
-!     PURPOSE--THIS SUBROUTINE PERFOMS A WEIBULL DISTRIBUTION ANALYSIS
-!              ON THE DATA IN THE INPUT VECTOR X.
-!              THIS ANALYSIS CONSISTS OF DETERMINING THAT PARTICULAR
-!              WEIBULL DISTRIBUTION
-!              WHICH BEST FITS THE DATA SET.
-!              THE GOODNESS OF FIT CRITERION IS THE MAXIMUM PROBABILITY
-!              PLOT CORRELATION COEFFICIENT CRITERION.
-!              AFTER THE BEST-FIT DISTRIBUTION IS DETERMINED,
-!              ESTIMATES ARE COMPUTED AND PRINTED OUT FOR THE
-!              LOCATION AND SCALE PARAMETERS.
-!              TWO PROBABILITY PLOTS ARE ALSO PRINTED OUT--
-!              THE BEST-FIT WEIBULL PROBABILITY PLOT
-!              AND AN EXTREME VALUE TYPE 1 PROBABILITY PLOT
-!              (THIS IS DUE TO THE FACT THAT AS THE WEIBULL PARAMETER
-!              GAMMA APPROACHES INFINITY, THE WEIBULL DISTRIBUTION
-!              APPROACHES THE EXTREME VALUE TYPE 1 DISTRIBUTION).
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -38653,7 +36702,6 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !                                         EV1PLT, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
 !                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
 !                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
@@ -38662,11 +36710,6 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !                UNPUBLISHED MANUSCRIPT.
 !              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
 !                DISTRIBUTIONS-1, PAGES 250-271.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -38948,7 +36991,14 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !!     Subroutine weicdf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    weicdf(3f) computes the cumulative distribution
+!!    function value for the weibull
+!!    distribution with single precision
+!!    tail length parameter = gamma.
+!!    the weibull distribution used
+!!    herein is defined for all positive x,
+!!    and has the probability density function
+!!    f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -38977,22 +37027,9 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 !*==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEICDF(X,Gamma,Cdf)
       IMPLICIT NONE
-!*--WEICDF33133
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT WEICDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE WEIBULL
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE WEIBULL DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(GAMMA-1)) * EXP(-(X**GAMMA)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -39008,21 +37045,14 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
 !               --HASTINGS AND PEACOCK, STATISTICAL
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGE 124.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -39066,7 +37096,27 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !!     Subroutine weiplt (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    weiplt(3f) generates a weibull
+!!    probability plot
+!!    (with tail length parameter value = gamma).
+!!    the prototype weibull distribution used
+!!    herein is defined for all positive x,
+!!    and has the probability density function
+!!    f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+!!    as used herein, a probability plot for a distribution
+!!    is a plot of the ordered observations versus
+!!    the order statistic medians for that distribution.
+!!    the weibull probability plot is useful in
+!!    graphically testing the composite (that is,
+!!    location and scale parameters need not be specified)
+!!    hypothesis that the underlying distribution
+!!    from which the data have been randomly drawn
+!!    is the  weibull distribution
+!!    with tail length parameter value = gamma.
+!!    if the hypothesis is true, the probability plot
+!!    should be near-linear.
+!!    a measure of such linearity is given by the
+!!    calculated probability plot correlation coefficient.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -39095,38 +37145,12 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !*==weiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEIPLT(X,N,Gamma)
       IMPLICIT NONE
-!*--WEIPLT33215
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
      &     yint
 REAL(kind=wp) :: yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT WEIPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A WEIBULL
-!              PROBABILITY PLOT
-!              (WITH TAIL LENGTH PARAMETER VALUE = GAMMA).
-!              THE PROTOTYPE WEIBULL DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(GAMMA-1)) * EXP(-(X**GAMMA)).
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE WEIBULL PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE  WEIBULL DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -39142,7 +37166,6 @@ REAL(kind=wp) :: yslope
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -39152,11 +37175,6 @@ REAL(kind=wp) :: yslope
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --MARCH     1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -39293,7 +37311,17 @@ REAL(kind=wp) :: yslope
 !!     Subroutine weippf (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    weippf(3f) computes the percent point
+!!    function value for the weibull
+!!    distribution with single precision
+!!    tail length parameter = gamma.
+!!    the weibull distribution used
+!!    herein is defined for all positive x,
+!!    and has the probability density function
+!!    f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+!!    note that the percent point function of a distribution
+!!    is identically the same as the inverse cumulative
+!!    distribution function of the distribution.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -39322,25 +37350,9 @@ REAL(kind=wp) :: yslope
 !*==weippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEIPPF(P,Gamma,Ppf)
       IMPLICIT NONE
-!*--WEIPPF33406
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT WEIPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE WEIBULL
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE WEIBULL DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(GAMMA-1)) * EXP(-(X**GAMMA)).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -39358,21 +37370,14 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
 !               --HASTINGS AND PEACOCK, STATISTICAL
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGE 124.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -39415,7 +37420,13 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !!     Subroutine weiran (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    weiran(3f) generates a random sample of size n
+!!    from the weibull distribution
+!!    with tail length parameter value = gamma.
+!!    the prototype weibull distribution used
+!!    herein is defined for all positive x,
+!!    and has the probability density function
+!!    f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -39444,21 +37455,9 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !*==weiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
-!*--WEIRAN33493
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT WEIRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE WEIBULL DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              THE PROTOTYPE WEIBULL DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(GAMMA-1)) * EXP(-(X**GAMMA)).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -39479,7 +37478,6 @@ REAL(kind=wp) :: Gamma , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -39557,7 +37555,14 @@ REAL(kind=wp) :: Gamma , X
 !!     Subroutine wind (X, Y)
 !!
 !!##DESCRIPTION
-!!   Description
+!!    wind(3f) computes the
+!!    sample windsorized mean
+!!    of the data in the input vector x.
+!!    the windsorizing is such that
+!!    the lower 100*p1 % of the data is
+!!    replaced by the smallest non-windsorized value,
+!!    and the upper 100*p2 % of the data is windsorized.
+!!    replaced by the largest non-windsorized value.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -39583,34 +37588,25 @@ REAL(kind=wp) :: Gamma , X
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
-      IMPLICIT NONE
-
-REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
-     &     perp3 , psum , sum , WS , X , Xwind , Y
-      INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
-     &        np2
+IMPLICIT NONE
+REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
+INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE WINDSORIZED MEAN
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE WINDSORIZING IS SUCH THAT
-!              THE LOWER 100*P1 % OF THE DATA IS
-!              REPLACED BY THE SMALLEST NON-WINDSORIZED VALUE,
-!              AND THE UPPER 100*P2 % OF THE DATA IS WINDSORIZED.
-!              REPLACED BY THE LARGEST NON-WINDSORIZED VALUE.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT  ARGUMENTS--X      = THE VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P1     = THE SINGLE PRECISION VALUE
+!                     --P1     = THE VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE LOWER ORDER STATISTICS
 !                                IS TO BE WINDSORIZED
 !                                BEFORE COMPUTING THE WINDSORIZED MEAN.
-!                     --P2     = THE SINGLE PRECISION VALUE
+!                     --P2     = THE VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE UPPER ORDER STATISTICS
@@ -39627,14 +37623,14 @@ REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
 !                                THE PRINTING OF THE
 !                                SAMPLE WINDSORIZED MEAN
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XWIND  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XWIND  = THE VALUE OF THE
 !                                COMPUTED SAMPLE WINDSORIZED MEAN
 !                                WHERE 100*P1 % OF THE SMALLEST
 !                                AND 100*P2 % OF THE LARGEST
 !                                ORDERED OBSERVATIONS HAVE BEEN
 !                                WINSORIZED BEFORE COMPUTING THE
 !                                MEAN.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED VALUE OF THE
 !             SAMPLE WINDSORIZED MEAN
 !             WHERE 100*P1 % OF THE SMALLEST
 !             AND   100*P2 % OF THE LARGEST
@@ -39651,9 +37647,6 @@ REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
 !                 --THE SUM OF P1 AND P2 SHOULD BE
 !                   SMALLER THAN 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
 !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
 !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
@@ -39662,13 +37655,6 @@ REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !                 PRINCETON UNIVERSITY, 1969).
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
@@ -39788,17 +37774,13 @@ REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
       WRITE (ipr,99012)
 99012 FORMAT (' ')
       WRITE (ipr,99013) N , Xwind
-99013 FORMAT (' ','THE SAMPLE WINDSORIZED MEAN OF THE ',I6,             &
-     &        ' OBSERVATIONS IS ',E15.8)
+99013 FORMAT (' ','THE SAMPLE WINDSORIZED MEAN OF THE ',I6, ' OBSERVATIONS IS ',E15.8)
       WRITE (ipr,99014) perp1 , np1
-99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
-     &        'OF THE DATA WERE WINDSORIZED BELOW')
+99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED BELOW')
       WRITE (ipr,99015) perp2 , np2
-99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
-     &        'OF THE DATA WERE WINDSORIZED ABOVE')
+99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED ABOVE')
       WRITE (ipr,99016) perp3 , k
-99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
-     &        ' OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
+99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS)  OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
 END SUBROUTINE WIND
@@ -39813,51 +37795,47 @@ END SUBROUTINE WIND
 !!
 !!##DESCRIPTION
 !!
-!!    THIS SUBROUTINE WRITES OUT THE CONTENTS
-!!    OF THE SINGLE PRECISION VECTOR X IN AN ORDERLY
-!!    AND NEAT FASHION.
+!!    WRITE(3f) writes out the contents of the single precision vector X
+!!    in an orderly and neat fashion.
 !!
-!!    THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY
-!!    TO GET DATA OUT OF THE MACHINE WITHOUT HAVING
-!!    TO WORRY ABOUT AND SPECIFY FORMATS.
+!!    WRITE(3f) gives the data analyst the ability to get data out of the
+!!    machine without having to worry about and specify formats.
 !!
 !!##INPUT ARGUMENTS
 !!
-!!    X       THE SINGLE PRECISION VECTOR OF
-!!            OBSERVATIONS TO BE PRINTED OUT.
+!!    X       The single precision vector of
+!!            observations to be printed out.
 !!
-!!    N       THE INTEGER NUMBER OF OBSERVATIONS
-!!            IN THE VECTOR X.
+!!    N       the integer number of observations
+!!            in the vector X.
 !!
-!!    NNLINE  THE INTEGER VALUE
-!!            OF THE DESIRED NUMBER OF
-!!            OBSERVATIONS IN X TO APPEAR PER LINE.
+!!    NNLINE  The integer value
+!!            of the desired number of
+!!            observations in X to appear per line.
 !!
-!!    IWIDTH  THE INTEGER VALUE
-!!            OF THE LARGEST NUMBER OF
-!!            CHARACTERS THAT A VALUE IN X MAY TAKE UP
+!!    IWIDTH  The integer value
+!!            of the largest number of
+!!            characters that a value in x may take up
 !!
-!!                = THE DESIRED NUMBER OF INTEGER DIGITS
-!!                + THE DESIRED NUMBER OF DECIMAL DIGITS
-!!                + 1 DIGIT FOR THE SIGN
-!!                + 1 DIGIT FOR THE DECIMAL POINT.
-!!            (NO PROVISION NEED BE MADE FOR LEADING
-!!            OR TRAILING SEPARATION BLANKS--THIS IS
-!!            DONE AUTOMATICALLY BY THE SUBROUTINE.)
+!!                = the desired number of integer digits
+!!                + the desired number of decimal digits
+!!                + 1 digit for the sign
+!!                + 1 digit for the decimal point.
 !!
-!!    IDEC    THE INTEGER VALUE
-!!            OF THE DESIRED NUMBER OF
-!!            DECIMAL DIGITS TO BE PRINTED OUT.
+!!            (No provision need be made for leading
+!!            or trailing separation blanks--this is
+!!            done automatically by the subroutine.)
+!!
+!!    IDEC    The integer value of the desired number of decimal digits to
+!!            be printed out.
+!!
 !!##OUTPUT
 !!
-!!    A LISTING OF THE N VALUES OF THE DATA VECTOR X
-!!    WITH NNLINE VALUES PRINTED PER LINE, AND WITH
-!!    BLANKS AUTOMATICALLY INSERTED BETWEEN ADJACENT VALUES.
-!!    A BLANK LINE WILL APPEAR AFTER EVERY TENTH LINE.
-!!    50 LINES OF DATA WILL APPEAR PER PRINTER PAGE.
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    a listing of the n values of the data vector x
+!!    with nnline values printed per line, and with
+!!    blanks automatically inserted between adjacent values.
+!!    a blank line will appear after every tenth line.
+!!    50 lines of data will appear per printer page.
 !!
 !!##EXAMPLES
 !!
@@ -39879,6 +37857,8 @@ END SUBROUTINE WIND
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
 !*==write.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
 IMPLICIT NONE
@@ -39900,8 +37880,6 @@ REAL(kind=wp) :: X(:)
 !              THE SECOND VALUE IN X APPEARS ON ROW 1, COLUMN 2,
 !              ETC.
 
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --NOVEMBER  1975.
 !---------------------------------------------------------------------
       ipr = 6
       maxwid = 12

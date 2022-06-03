@@ -63,13 +63,12 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <A HREF=#2>Description</A><BR>
 <A HREF=#3>Input Arguments</A><BR>
 <A HREF=#4>Output</A><BR>
-<A HREF=#5>Options</A><BR>
-<A HREF=#6>Examples</A><BR>
-<A HREF=#7>Author</A><BR>
-<A HREF=#8>Maintainer</A><BR>
-<A HREF=#9>License</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
 </BLOCKQUOTE>
-<A name=10>
+<A name=9>
 
      <H3>SYNOPSIS</H3>
 
@@ -84,32 +83,11 @@ SUBROUTINE <B>WRITE</B>(X,N,Nnline,Iwidth,Idec)
 </A>
 <BLOCKQUOTE>
 <P>
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; THIS SUBROUTINE WRITES OUT THE CONTENTS</H4>
-</A>
-<BLOCKQUOTE>
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; OF THE SINGLE PRECISION VECTOR X IN AN ORDERLY</H4>
-</A>
-<BLOCKQUOTE>
-AND NEAT FASHION.
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY</H4>
-</A>
-<BLOCKQUOTE>
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; TO GET DATA OUT OF THE MACHINE WITHOUT HAVING</H4>
-</A>
-<BLOCKQUOTE>
-TO WORRY ABOUT AND SPECIFY FORMATS.
+<B>WRITE</B>(3f) writes out the contents of the single precision vector X
+in an orderly and neat fashion.
+<P>
+<B>WRITE</B>(3f) gives the data analyst the ability to get data out of the
+machine without having to worry about and specify formats.
 </BLOCKQUOTE>
 <A name=3>
 
@@ -118,88 +96,49 @@ TO WORRY ABOUT AND SPECIFY FORMATS.
 </A>
 <BLOCKQUOTE>
 <P>
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; X THE SINGLE PRECISION VECTOR OF</H4>
-</A>
-<BLOCKQUOTE>
-OBSERVATIONS TO BE PRINTED OUT.
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; N THE INTEGER NUMBER OF OBSERVATIONS</H4>
-</A>
-<BLOCKQUOTE>
-IN THE VECTOR X.
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; NNLINE THE INTEGER VALUE</H4>
-</A>
-<BLOCKQUOTE>
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; OF THE DESIRED NUMBER OF</H4>
-</A>
-<BLOCKQUOTE>
-OBSERVATIONS IN X TO APPEAR PER LINE.
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; IWIDTH THE INTEGER VALUE</H4>
-</A>
-<BLOCKQUOTE>
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; OF THE LARGEST NUMBER OF</H4>
-</A>
-<BLOCKQUOTE>
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; CHARACTERS THAT A VALUE IN X MAY TAKE UP</H4>
-</A>
-<BLOCKQUOTE>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B>X</B> </TD><TD valign=bottom>
+The single precision vector of
+observations to be printed out.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>N</B> </TD><TD valign=bottom>
+the integer number of observations
+in the vector X.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>NNLINE</B> </TD><TD valign=bottom>
+The integer value
+of the desired number of
+observations in X to appear per line.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>IWIDTH</B> </TD><TD valign=bottom>
+The integer value
+of the largest number of
+characters that a value in x may take up
+</TD></TR>
+<TR><TD colspan=2>
+<PRE>
+               = the desired number of integer digits
+               + the desired number of decimal digits
+               + 1 digit for the sign
+               + 1 digit for the decimal point.
 <P>
-= THE DESIRED NUMBER OF INTEGER DIGITS
-<TABLE cellpadding=3><!-- tsb: = THE DESIRED NUMBER OF INTEGER DIGITS
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD width=3%>
-o
-</TD><TD>
-THE DESIRED NUMBER OF DECIMAL DIGITS
+</PRE>
 </TD></TR>
-<TR valign=top><TD width=3%>
-o
-</TD><TD>
-1 DIGIT FOR THE SIGN
+<TR><TD width=6%>&nbsp;</TD><TD>
+(No provision need be made for leading
+or trailing separation blanks-<B>-this</B> is
+done automatically by the subroutine.)
 </TD></TR>
-<TR valign=top><TD width=3%>
-o
-</TD><TD>
-1 DIGIT FOR THE DECIMAL POINT.
-(NO PROVISION NEED BE MADE FOR LEADING
-OR TRAILING SEPARATION BLANKS-<B>-THIS</B> IS
-DONE AUTOMATICALLY BY THE SUBROUTINE.)
+<TR valign=top><TD width=6% nowrap>
+<B>IDEC</B> </TD><TD valign=bottom>
+The integer value of the desired number of decimal digits to
+be printed out.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; IDEC THE INTEGER VALUE</H4>
-</A>
-<BLOCKQUOTE>
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; OF THE DESIRED NUMBER OF</H4>
-</A>
-<BLOCKQUOTE>
-DECIMAL DIGITS TO BE PRINTED OUT.
-</BLOCKQUOTE>
 <A name=4>
 
      <H3>OUTPUT</H3>
@@ -207,34 +146,13 @@ DECIMAL DIGITS TO BE PRINTED OUT.
 </A>
 <BLOCKQUOTE>
 <P>
-</BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; A LISTING OF THE N VALUES OF THE DATA VECTOR X</H4>
-</A>
-<BLOCKQUOTE>
-WITH NNLINE VALUES PRINTED PER LINE, AND WITH
-BLANKS AUTOMATICALLY INSERTED BETWEEN ADJACENT VALUES.
-A BLANK LINE WILL APPEAR AFTER EVERY TENTH LINE.
-50 LINES OF DATA WILL APPEAR PER PRINTER PAGE.
+a listing of the n values of the data vector x
+with nnline values printed per line, and with
+blanks automatically inserted between adjacent values.
+a blank line will appear after every tenth line.
+50 lines of data will appear per printer page.
 </BLOCKQUOTE>
 <A name=5>
-
-     <H3>OPTIONS</H3>
-
-</A>
-<BLOCKQUOTE>
-<TABLE cellpadding=3>
-<TR valign=top><TD width=3% nowrap>
-<B>X</B> </TD><TD valign=bottom>
-description of parameter
-</TD></TR>
-<TR valign=top><TD width=3% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
-</TD></TR>
-<TR></TR></TABLE></BLOCKQUOTE>
-<A name=6>
 
      <H3>EXAMPLES</H3>
 
@@ -253,7 +171,7 @@ Sample program:
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=7>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
@@ -262,7 +180,7 @@ Results:
 The original DATAPAC library was written by James Filliben of the Statistical
 Engineering Division, National Institute of Standards and Technology.
 </BLOCKQUOTE>
-<A name=8>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -270,7 +188,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=9>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -279,7 +197,7 @@ John Urban, 2022.05.31
 CC0-1.0
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>write (3m_datapac)</TD> <TD align=right width=33%><I>June 02, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 757a8732-b345-4976-a434-15f406d484fd using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>write (3m_datapac)</TD> <TD align=right width=33%><I>June 02, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 7ea05933-bf9e-49e7-9eab-6b2e382eb1b3 using man macros.</FONT>
 <br><br><center><img src="images/write.gif"></center>
 </div>
 </div>

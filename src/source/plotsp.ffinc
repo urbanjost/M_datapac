@@ -7,7 +7,15 @@ SYNOPSIS
     Subroutine plotsp (X, Y)
 
 DESCRIPTION
-  Description
+   this routine yields a one-page plot of the spectrum, along with upper
+   and lower limits of the spectrum.
+   the convention has been followed that if the integer input parameter idf
+   has the value 0, then no confidence limits will be computed and only the
+   spectrum itself will be plotted out.
+   multiple plot points are not indicated.
+   the first point will be plotted on the left vertical axis
+   the last point will be plotted on the right vertical axis
+   there is no restriction on the maximum value of n for this routine.
 
 OPTIONS
     X   description of parameter
@@ -37,25 +45,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plotsp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTSP(Y,N,Idf)
       IMPLICIT NONE
-!*--PLOTSP19976
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
      &     slower , spmax , spmin , supper , xi , Y , ylable , ymax ,   &
      &     ymin
       INTEGER i , Idf , iflag , ipr , j , k , mx , my , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTSP
 !
-!     THIS ROUTINE YIELDS A ONE-PAGE PLOT OF THE SPECTRUM, ALONG WITH UPPER
-!     AND LOWER LIMITS OF THE SPECTRUM.
-!     THE CONVENTION HAS BEEN FOLLOWED THAT IF THE INTEGER INPUT PARAMETER IDF
-!     HAS THE VALUE 0, THEN NO CONFIDENCE LIMITS WILL BE COMPUTED AND ONLY THE
-!     SPECTRUM ITSELF WILL BE PLOTTED OUT.
-!     MULTIPLE PLOT POINTS ARE NOT INDICATED.
-!     THE FIRST POINT WILL BE PLOTTED ON THE LEFT VERTICAL AXIS
-!     THE LAST POINT WILL BE PLOTTED ON THE RIGHT VERTICAL AXIS
-!     THERE IS NO RESTRICTION ON THE MAXIMUM VALUE OF N FOR THIS ROUTINE.
 !     PRINTING--YES
 !     SUBROUTINES NEEDED--CHSPPF.
 !     WRITTEN BY JAMES J. FILLIBEN, STATISTICAL ENGINEERING LABORATORY (205.03)

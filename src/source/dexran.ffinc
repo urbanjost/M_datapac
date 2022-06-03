@@ -8,7 +8,13 @@ SYNOPSIS
     Subroutine dexran (X, Y)
 
 DESCRIPTION
-  Description
+   dexran(3f) generates a random sample of size n
+   from the double exponential
+   (laplace) distribution with mean = 0 and
+   standard deviation = sqrt(2).
+   this distribution is defined for all x and has
+   the probability density function
+   f(x) = 0.5*exp(-abs(x)).
 
 OPTIONS
     X   description of parameter
@@ -38,21 +44,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==dexran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DEXRAN(N,Istart,X)
       IMPLICIT NONE
-!*--DEXRAN4244
-!*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Istart , N
 REAL(kind=wp) :: q , X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DEXRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE DOUBLE EXPONENTIAL
-!              (LAPLACE) DISTRIBUTION WITH MEAN = 0 AND
-!              STANDARD DEVIATION = SQRT(2).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = 0.5*EXP(-ABS(X)).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -86,7 +80,6 @@ REAL(kind=wp) :: q , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
@@ -99,11 +92,6 @@ REAL(kind=wp) :: q , X
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

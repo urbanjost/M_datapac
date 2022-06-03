@@ -13,11 +13,11 @@ SYNOPSIS
 
 DESCRIPTION
 
-This subroutine computes the sample autocorrelation coefficient of the
-data in the input vector X. The sample autocorrelation coefficient
-equals the correlation between X(I) and X(I+1) over the entire sample.
-The autocorrelation coefficient coefficient will be a single precision
-value between -1.0 and 1.0 (inclusively).
+   AUTOCO(3f) computes the sample autocorrelation coefficient of the
+   data in the input vector X. The sample autocorrelation coefficient
+   equals the correlation between X(I) and X(I+1) over the entire sample.
+   The autocorrelation coefficient coefficient will be a single precision
+   value between -1.0 and 1.0 (inclusively).
 
 INPUT  ARGUMENTS
    X        The single precision vector of (unsorted) observations.

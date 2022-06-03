@@ -8,7 +8,13 @@ SYNOPSIS
     Subroutine caupdf (X, Y)
 
 DESCRIPTION
-  Description
+   caupdf(3f) computes the probability density function value for the
+   cauchy distribution with median = 0 and 75% point = 1.
+
+   this distribution is defined for all x and has the probability
+   density function
+
+       f(x) = (1/pi)*(1/(1+x*x)).
 
 OPTIONS
     X   description of parameter
@@ -34,24 +40,17 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUPDF(X,Pdf)
       IMPLICIT NONE
 !*--CAUPDF1328
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: c , Pdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CAUPDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PROBABILITY DENSITY
-!              FUNCTION VALUE FOR THE CAUCHY DISTRIBUTION
-!              WITH MEDIAN = 0 AND 75% POINT = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/PI)*(1/(1+X*X)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -59,26 +58,12 @@ REAL(kind=wp) :: c , Pdf , X
 !                                DENSITY FUNCTION VALUE.
 !     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
 !             FUNCTION VALUE PDF.
-!     PRINTING--NONE.
-!     RESTRICTIONS--NONE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
-      DATA c/.31830988618379_wp/
+      DATA c/0.31830988618379_wp/
 !
       ipr = 6
 !

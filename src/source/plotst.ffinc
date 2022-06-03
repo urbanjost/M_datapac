@@ -8,7 +8,21 @@ SYNOPSIS
     Subroutine plotst (X, Y)
 
 DESCRIPTION
-  Description
+   plotst(3f) yields a narrow-width (71-character)
+   of y(i) versus x(i):
+
+     1. with only those points (x(i),y(i)) plotted
+        for which the corresponding value of d(i)
+        is between the specified values of dmin and dmax.
+ 
+   its narrow width makes it
+   appropriate for use on a terminal.
+   
+   the use of the subset defintion vector d
+   gives the data analyst the capability of
+   plotting subsets of the data,
+   where the subset is defined
+   by values in the vector d.
 
 OPTIONS
     X   description of parameter
@@ -38,32 +52,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plotst.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTST(Y,X,N,D,Dmin,Dmax)
       IMPLICIT NONE
-!*--PLOTST20155
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     D , delx , dely , Dmax , Dmin , hold , X , xlable , xmax ,   &
      &     xmin , xwidth , Y , ylable
 REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
       INTEGER i , icol , icolmx , ipr , irow , ixdel , N , n2 , numcol ,&
      &        numlab , numr25 , numr50 , numr75 , numrow
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTST
 !
-!     PURPOSE--THIS SUBROUTINE YIELDS A NARROW-WIDTH (71-CHARACTER)
-!              OF Y(I) VERSUS X(I):
-!              1) WITH ONLY THOSE POINTS (X(I),Y(I)) PLOTTED
-!                 FOR WHICH THE CORRESPONDING VALUE OF D(I)
-!                 IS BETWEEN THE SPECIFIED VALUES OF DMIN AND DMAX.
-!
-!              ITS NARROW WIDTH MAKES IT
-!              APPROPRIATE FOR USE ON A TERMINAL.
-!
-!              THE USE OF THE SUBSET DEFINTION VECTOR D
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              PLOTTING SUBSETS OF THE DATA,
-!              WHERE THE SUBSET IS DEFINED
-!              BY VALUES IN THE VECTOR D.
 !
 !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -92,10 +87,7 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -121,12 +113,6 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 !              VERY SMALL.
 !              THIS IS DUE TO THE 'ONE LINE AT A TIME' ALGORITHM
 !              EMPLOYED FOR THE PLOT.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.

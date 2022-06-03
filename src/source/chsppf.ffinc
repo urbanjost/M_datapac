@@ -8,7 +8,17 @@ SYNOPSIS
     Subroutine chsppf (X, Y)
 
 DESCRIPTION
-  Description
+   chsppf(3f) computes the percent point function value for the
+   chi-squared distribution with integer degrees of freedom parameter
+   = nu.
+
+   the chi-squared distribution used herein is defined for all
+   non-negative x, and its probability density function is given in
+   references 2, 3, and 4 below.
+
+   note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
 
 OPTIONS
     X   description of parameter
@@ -38,24 +48,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==chsppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSPPF(P,Nu,Ppf)
       IMPLICIT NONE
-!*--CHSPPF2250
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit , Nu
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CHSPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE CHI-SQUARED DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
-!              THE CHI-SQUARED DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND ITS PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN REFERENCES 2, 3, AND 4 BELOW.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -73,10 +68,8 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !     RESTRICTIONS--NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
 !               COMPARED TO THE KNOWN NU = 2 (EXPONENTIAL)
 !               RESULTS, AGREEMENT WAS HAD OUT TO 6 SIGNIFICANT
@@ -102,11 +95,6 @@ REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 46-51.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !

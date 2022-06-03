@@ -7,7 +7,14 @@ SYNOPSIS
     Subroutine norran (X, Y)
 
 DESCRIPTION
-  Description
+
+   norran(3f) generates a random sample of size n from the the normal
+   (gaussian) distribution with mean = 0 and standard deviation = 1.
+
+   this distribution is defined for all x and has the probability
+   density function
+
+       f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
 
 OPTIONS
     X   description of parameter
@@ -37,20 +44,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORRAN(N,Iseed,X)
       IMPLICIT NONE
-!*--NORRAN15024
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
       INTEGER i , ip1 , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NORRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE THE NORMAL (GAUSSIAN)
-!              DISTRIBUTION WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/SQRT(2*PI))*EXP(-X*X/2).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.

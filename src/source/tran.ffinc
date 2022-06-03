@@ -8,7 +8,9 @@ SYNOPSIS
     Subroutine tran (X, Y)
 
 DESCRIPTION
-  Description
+
+   This subroutine generates a random sample of size N from the student's
+   T distribution with integer degrees of freedom parameter = NU.
 
 OPTIONS
     X   description of parameter
@@ -38,17 +40,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TRAN(N,Nu,Iseed,X)
       IMPLICIT NONE
-!*--TRAN31505
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
       INTEGER i , ipr , Iseed , j , N , Nu
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE STUDENT'S T DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -69,7 +63,6 @@ REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--MOOD AND GRABLE, INTRODUCTION TO THE
 !                 THEORY OF STATISTICS, 1963, PAGE 233.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE

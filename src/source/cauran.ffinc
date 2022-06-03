@@ -7,7 +7,13 @@ SYNOPSIS
     Subroutine cauran (X, Y)
 
 DESCRIPTION
-  Description
+   CAURAN(3f) generates a random sample of size N from the Cauchy
+   distribution with median = 0 and 75% point = 1.
+
+   This distribution is defined for all X and has the probability
+   density function
+
+       f(X) = (1/pi)*(1/(1+X*X))
 
 OPTIONS
     X   description of parameter
@@ -37,20 +43,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==cauran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAURAN(N,Iseed,X)
       IMPLICIT NONE
-!*--CAURAN1622
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg , pi , X
       INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CAUPPF
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE CAUCHY DISTRIBUTION
-!              WITH MEDIAN = 0 AND 75% POINT = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/PI)*(1/(1+X*X)).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -67,7 +62,6 @@ REAL(kind=wp) :: arg , pi , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGE 15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,

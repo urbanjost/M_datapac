@@ -8,7 +8,15 @@ SYNOPSIS
     Subroutine stmom4 (X, Y)
 
 DESCRIPTION
-  Description
+   stmom4(3f) computes the
+   sample standardized fourth central moment
+   of the data in the input vector x.
+   the sample standardized fourth central moment =
+   (the sample fourth central moment)/((the sample
+   standard deviation)**4).
+   n (rather than n-1) has been used in the denominator
+   in the calculation of both the sample fourth central
+   moment and the sample standard deviation.
 
 OPTIONS
     X   description of parameter
@@ -38,23 +46,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
       IMPLICIT NONE
-!*--STMOM428629
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT STMOM4
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT =
-!              (THE SAMPLE FOURTH CENTRAL MOMENT)/((THE SAMPLE
-!              STANDARD DEVIATION)**4).
-!              N (RATHER THAN N-1) HAS BEEN USED IN THE DENOMINATOR
-!              IN THE CALCULATION OF BOTH THE SAMPLE FOURTH CENTRAL
-!              MOMENT AND THE SAMPLE STANDARD DEVIATION.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -80,19 +74,11 @@ REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85, 243.
 !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGES 86-90.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

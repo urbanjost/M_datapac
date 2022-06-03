@@ -8,7 +8,18 @@ SYNOPSIS
     Subroutine gamcdf (X, Y)
 
 DESCRIPTION
-  Description
+   gamcdf(3f) computes the cumulative distribution
+   function value for the gamma
+   distribution with single precision
+   tail length parameter = gamma.
+   the gamma distribution used
+   herein has mean = gamma
+   and standard deviation = sqrt(gamma).
+   this distribution is defined for all positive x,
+   and has the probability density function
+   f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+   where the constant = the gamma function evaluated
+   at the value gamma.
 
 OPTIONS
     X   description of parameter
@@ -38,26 +49,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==gamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMCDF(X,Gamma,Cdf)
       IMPLICIT NONE
-!*--GAMCDF8063
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Cdf , Gamma , X
       INTEGER i , ipr , maxit
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GAMCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE GAMMA
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE GAMMA DISTRIBUTION USED
-!              HEREIN HAS MEAN = GAMMA
-!              AND STANDARD DEVIATION = SQRT(GAMMA).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/CONSTANT) * (X**(GAMMA-1)) * EXP(-X)
-!              WHERE THE CONSTANT = THE GAMMA FUNCTION EVALUATED
-!              AT THE VALUE GAMMA.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -73,10 +67,8 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
 !               COMPARED TO THE KNOWN GAMMA = 1 (EXPONENTIAL)
 !               RESULTS, AGREEMENT WAS HAD OUT TO 7 SIGNIFICANT
@@ -97,11 +89,6 @@ REAL(kind=wp) :: Cdf , Gamma , X
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 68-73.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------

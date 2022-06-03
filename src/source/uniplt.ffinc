@@ -8,7 +8,28 @@ SYNOPSIS
     Subroutine uniplt (X, Y)
 
 DESCRIPTION
-  Description
+   uniplt(3f) generates a uniform
+   probability plot.
+   the prototype uniform distribution used herein
+   is defined on the unit interval (0,1).
+   this distribution has mean = 0.5
+   and standard deviation = sqrt(1/12) = 0.28867513.
+   this distribution has
+   the probability density function
+   f(x) = 1.
+   as used herein, a probability plot for a distribution
+   is a plot of the ordered observations versus
+   the order statistic medians for that distribution.
+   the uniform probability plot is useful in
+   graphically testing the composite (that is,
+   location and scale parameters need not be specified)
+   hypothesis that the underlying distribution
+   from which the data have been randomly drawn
+   is the uniform distribution.
+   if the hypothesis is true, the probability plot
+   should be near-linear.
+   a measure of such linearity is given by the
+   calculated probability plot correlation coefficient.
 
 OPTIONS
     X   description of parameter
@@ -38,37 +59,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==uniplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIPLT(X,N)
       IMPLICIT NONE
-!*--UNIPLT32113
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
       INTEGER i , ipr , iupper , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNIPLT
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A UNIFORM
-!              PROBABILITY PLOT.
-!              THE PROTOTYPE UNIFORM DISTRIBUTION USED HEREIN
-!              IS DEFINED ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = 1.
-!              AS USED HEREIN, A PROBABILITY PLOT FOR A DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE UNIFORM PROBABILITY PLOT IS USEFUL IN
-!              GRAPHICALLY TESTING THE COMPOSITE (THAT IS,
-!              LOCATION AND SCALE PARAMETERS NEED NOT BE SPECIFIED)
-!              HYPOTHESIS THAT THE UNDERLYING DISTRIBUTION
-!              FROM WHICH THE DATA HAVE BEEN RANDOMLY DRAWN
-!              IS THE UNIFORM DISTRIBUTION.
-!              IF THE HYPOTHESIS IS TRUE, THE PROBABILITY PLOT
-!              SHOULD BE NEAR-LINEAR.
-!              A MEASURE OF SUCH LINEARITY IS GIVEN BY THE
-!              CALCULATED PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -80,7 +74,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
 !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
 !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
@@ -90,11 +83,6 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
 !                 1967, PAGES 260-308.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

@@ -2,13 +2,22 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tppf.3m_datapac.man
 NAME
    tppf(3f) - [M_datapac:STATISTICS:PP] computes the percent
-   point function value for the student's T distribution 
+   point function value for the student's T distribution
 
 SYNOPSIS
     Subroutine tppf (X, Y)
 
 DESCRIPTION
-  Description
+   tppf(3f) computes the percent point
+   function value for the student's t distribution
+   with integer degrees of freedom parameter = nu.
+   the student's t distribution used
+   herein is defined for all x,
+   and its probability density function is given
+   in the references below.
+   note that the percent point function of a distribution
+   is identically the same as the inverse cumulative
+   distribution function of the distribution.
 
 OPTIONS
     X   description of parameter
@@ -38,24 +47,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TPPF(P,Nu,Ppf)
       IMPLICIT NONE
-!*--TPPF31281
-!*** Start of declarations inserted by SPAG
       INTEGER ipass , ipr , maxit , Nu
 REAL(kind=wp) :: P , Ppf , ppfn
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE STUDENT'S T DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
-!              THE STUDENT'S T DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL X,
-!              AND ITS PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -76,7 +70,6 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSIN, DCOS, DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOR NU = 1 AND NU = 2, THE PERCENT POINT FUNCTION
 !              FOR THE T DISTRIBUTION EXISTS IN SIMPLE CLOSED FORM
 !              AND SO THE COMPUTED PERCENT POINTS ARE EXACT.
@@ -102,11 +95,6 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 120-123.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !

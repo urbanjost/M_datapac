@@ -7,7 +7,14 @@ SYNOPSIS
     Subroutine rank (X, Y)
 
 DESCRIPTION
-  Description
+   rank(3f) ranks (in ascending order)
+   the n elements of the single precision vector x,
+   and puts the resulting n ranks into the
+   single precision vector xr.
+   rank(3f) gives the data analyst
+   the ability to (for example) rank the data
+   preliminary to certain distribution-free
+   analyses.
 
 OPTIONS
     X   description of parameter
@@ -41,14 +48,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
       INTEGER i , ibran , ipr , iupper , j , jmin , jp1 , k , N , nm1
 !
-!     PURPOSE--THIS SUBROUTINE RANKS (IN ASCENDING ORDER)
-!              THE N ELEMENTS OF THE SINGLE PRECISION VECTOR X,
-!              AND PUTS THE RESULTING N RANKS INTO THE
-!              SINGLE PRECISION VECTOR XR.
-!              THIS SUBROUTINE GIVES THE DATA ANALYST
-!              THE ABILITY TO (FOR EXAMPLE) RANK THE DATA
-!              PRELIMINARY TO CERTAIN DISTRIBUTION-FREE
-!              ANALYSES.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE RANKED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -65,9 +64,7 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE RANK OF THE FIRST ELEMENT
 !              OF THE VECTOR X
 !              WILL BE PLACED IN THE FIRST POSITION
@@ -132,11 +129,6 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 !               --CACM JANUARY 1970, PAGE 54.
 !               --CACM OCTOBER 1970, PAGE 624.
 !               --JACM JANUARY 1961, PAGE 41.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.

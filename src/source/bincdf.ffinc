@@ -8,10 +8,30 @@ SYNOPSIS
     Subroutine bincdf (X, Y)
 
 DESCRIPTION
-  Description
+   BINCDF(3f) computes the cumulative distribution function value
+   at the single precision value x for the binomial distribution with
+   single precision 'bernoulli probability' parameter = p, and integer
+   'number of bernoulli trials' parameter = n.
+
+   the binomial distribution used herein has mean = n*p and standard
+   deviation = sqrt(n*p*(1-p)).
+
+   this distribution is defined for all discrete integer x between 0
+   (inclusively) and n (inclusively).
+
+   this distribution has the probability function
+
+       f(x) = c(n,x) * p**x * (1-p)**(n-x).
+
+   where c(n,x) is the combinatorial function equaling the number of
+   combinations of n items taken x at a time.
+
+   the binomial distribution is the distribution of the number of
+   successes in n bernoulli (0,1) trials where the probability of success
+   in a single trial = p.
 
 OPTIONS
-    X   description of parameter
+    x   description of parameter
     Y   description of parameter
 
 EXAMPLES
@@ -34,42 +54,16 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --MAY       1977.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE BINCDF(X,P,N,Cdf)
 IMPLICIT NONE
-!*--BINCDF356
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , Cdf , del , fintx , P , X
       INTEGER i , ievodd , iflag1 , iflag2 , imax , imin , intx , ipr , &
      &        N , nu1 , nu2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT BINCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE X
-!              FOR THE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = P,
-!              AND INTEGER 'NUMBER OF BERNOULLI TRIALS'
-!              PARAMETER = N.
-!              THE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = N*P
-!              AND STANDARD DEVIATION = SQRT(N*P*(1-P)).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL
-!              DISCRETE INTEGER X BETWEEN 0 (INCLUSIVELY)
-!              AND N (INCLUSIVELY).
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(N,X) * P**X * (1-P)**(N-X).
-!              WHERE C(N,X) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF N ITEMS
-!              TAKEN X AT A TIME.
-!              THE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF
-!              SUCCESSES IN N BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -101,10 +95,8 @@ REAL(kind=wp) :: an , Cdf , del , fintx , P , X
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --N SHOULD BE A POSITIVE INTEGER.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
 !              DISTRIBUTION FUNCTION SUBROUTINE
@@ -152,8 +144,6 @@ REAL(kind=wp) :: an , Cdf , del , fintx , P , X
 !                 NATIONAL BUREAU OF STANDARDS
 !                 WASHINGTON, D. C. 20234
 !                 PHONE:  301-921-2315
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --MAY       1977.
 !
 !---------------------------------------------------------------------
 !

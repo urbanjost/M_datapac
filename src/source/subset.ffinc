@@ -21,7 +21,7 @@ DESCRIPTION
    Thus all observations in X which correspond to elements in D which
    are smaller than DMIN or larger than DMAX are deleted from X.
 
-   The use of this subroutine gives the data analyst the capability
+   The use of subset(3f) gives the data analyst the capability
    to easily extract subsets of the data prior to data analysis on
    each subset.
 
@@ -146,12 +146,6 @@ REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 !              AS BOTH THE SECOND AND SIXTH ARGUMENTS.
 !     COMMENT--THIS IS ONE OF THE FEW SUBROUTINES IN DATAPAC
 !              IN WHICH THE INPUT VECTOR X IS ALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !

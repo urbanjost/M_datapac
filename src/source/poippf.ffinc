@@ -8,7 +8,27 @@ SYNOPSIS
     Subroutine poippf (X, Y)
 
 DESCRIPTION
-  Description
+   poippf(3f) computes the percent point
+   function value at the single precision value p
+   for the poisson distribution
+   with single precision
+   tail length parameter = alamba.
+   the poisson distribution used
+   herein has mean = alamba
+   and standard deviation = sqrt(alamba).
+   this distribution is defined for
+   all discrete non-negative integer  x--x = 0, 1, 2, ... .
+   this distribution has the probability function
+   f(x) = exp(-alamba) * alamba**x / x!.
+   the poisson distribution is the
+   distribution of the number of events
+   in the interval (0,alamba) when
+   the waiting time between events
+   is exponentially distributed
+   with mean = 1 and standard deviation = 1.
+   note that the percent point function of a distribution
+   is identically the same as the inverse cumulative
+   distribution function of the distribution.
 
 OPTIONS
     X   description of parameter
@@ -38,36 +58,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==poippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
       IMPLICIT NONE
-!*--POIPPF23360
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT POIPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE P
-!              FOR THE POISSON DISTRIBUTION
-!              WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = ALAMBA.
-!              THE POISSON DISTRIBUTION USED
-!              HEREIN HAS MEAN = ALAMBA
-!              AND STANDARD DEVIATION = SQRT(ALAMBA).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL DISCRETE NON-NEGATIVE INTEGER  X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = EXP(-ALAMBA) * ALAMBA**X / X!.
-!              THE POISSON DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF EVENTS
-!              IN THE INTERVAL (0,ALAMBA) WHEN
-!              THE WAITING TIME BETWEEN EVENTS
-!              IS EXPONENTIALLY DISTRIBUTED
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -89,7 +83,6 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, POICDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, DEXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE SINGLE PRECISION TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
@@ -134,11 +127,6 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 !                 DISTRIBUTION, 1962.
 !               --OWEN, HANDBOOK OF STATISTICAL
 !                 TABLES, 1962, PAGES 259-261.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------

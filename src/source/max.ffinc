@@ -7,7 +7,9 @@ SYNOPSIS
     Subroutine max (X, Y)
 
 DESCRIPTION
-  Description
+   max(3f) computes the
+   sample maximum
+   of the data in the input vector x.
 
 OPTIONS
     X   description of parameter
@@ -37,17 +39,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==max.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MAX(X,N,Iwrite,Xmax)
       IMPLICIT NONE
-!*--MAX12412
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , X , Xmax
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MAX
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE MAXIMUM
-!              OF THE DATA IN THE INPUT VECTOR X.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -72,16 +66,8 @@ REAL(kind=wp) :: hold , X , Xmax
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGE 7.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

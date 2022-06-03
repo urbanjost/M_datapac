@@ -9,7 +9,12 @@ SYNOPSIS
     Subroutine tcdf (X, Y)
 
 DESCRIPTION
-  Description
+   tcdf(3f) computes the cumulative distribution
+   function value for student's t distribution
+   with integer degrees of freedom parameter = nu.
+   this distribution is defined for all x.
+   the probability density function is given
+   in the references below.
 
 OPTIONS
     X   description of parameter
@@ -39,20 +44,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==tcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TCDF(X,Nu,Cdf)
       IMPLICIT NONE
-!*--TCDF30117
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
       INTEGER i , ievodd , imax , imin , ipr , Nu , nucut
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR STUDENT'S T DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X.
-!              THE PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -70,7 +64,6 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
 !                 SERIES 55, 1964, PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -85,11 +78,6 @@ REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
 !                 FOR STATISTICIANS, VOLUME 1, 1954,
 !                 PAGES 132-134.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.

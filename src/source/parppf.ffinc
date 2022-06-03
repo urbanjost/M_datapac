@@ -7,7 +7,18 @@ SYNOPSIS
     Subroutine parppf (X, Y)
 
 DESCRIPTION
-  Description
+   parppf(3f) computes the percent point
+   function value for the pareto
+   distribution with single precision
+   tail length parameter = gamma.
+   the pareto distribution used
+   herein is defined for all x greater than
+   or equal to 1,
+   and has the probability density function
+   f(x) = gamma / (x**(gamma+1)).
+   note that the percent point function of a distribution
+   is identically the same as the inverse cumulative
+   distribution function of the distribution.
 
 OPTIONS
     X   description of parameter
@@ -37,26 +48,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==parppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPPF(P,Gamma,Ppf)
       IMPLICIT NONE
-!*--PARPPF15510
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PARPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE PARETO
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE PARETO DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL X GREATER THAN
-!              OR EQUAL TO 1,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA / (X**(GAMMA+1)).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -74,21 +68,13 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
 !               --HASTINGS AND PEACOCK, STATISTICAL
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGE 102.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------

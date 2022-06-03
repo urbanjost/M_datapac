@@ -8,7 +8,11 @@ SYNOPSIS
     Subroutine sd (X, Y)
 
 DESCRIPTION
-  Description
+   sd(3f) computes the
+   sample standard deviation (with denominator n-1)
+   of the data in the input vector x.
+   the sample standard deviation = sqrt((the sum of the
+   squared deviations about the sample mean)/(n-1)).
 
 OPTIONS
     X   description of parameter
@@ -37,20 +41,9 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==sd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SD(X,N,Iwrite,Xsd)
-      IMPLICIT NONE
-!*--SD27364
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
       INTEGER i , ipr , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SD
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE STANDARD DEVIATION (WITH DENOMINATOR N-1)
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE STANDARD DEVIATION = SQRT((THE SUM OF THE
-!              SQUARED DEVIATIONS ABOUT THE SAMPLE MEAN)/(N-1)).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -75,19 +68,12 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGE 44.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGES 19, 76.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

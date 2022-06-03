@@ -7,7 +7,10 @@ SYNOPSIS
     Subroutine dot (X, Y)
 
 DESCRIPTION
-  Description
+   to compute the dot product between 2 vectors--a and b.
+   only elements imin through imax of the 2 vectors are considered.
+   the computed dot product is added to the input value parpro
+   to yield a final answer for dotpro.
 
 OPTIONS
     X   description of parameter
@@ -37,19 +40,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DOT(A,B,Imin,Imax,Parpro,Dotpro)
       IMPLICIT NONE
-!*--DOT5171
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: A , B , Dotpro , Parpro
       INTEGER i , Imax , Imin
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DOT
-!     PURPOSE--TO COMPUTE THE DOT PRODUCT BETWEEN 2 VECTORS--A AND B.
-!     ONLY ELEMENTS IMIN THROUGH IMAX OF THE 2 VECTORS ARE CONSIDERED.
-!     THE COMPUTED DOT PRODUCT IS ADDED TO THE INPUT VALUE PARPRO
-!     TO YIELD A FINAL ANSWER FOR DOTPRO.
 !     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
       DOUBLE PRECISION sum , prod , dparpr

@@ -8,7 +8,31 @@ SYNOPSIS
     Subroutine binppf (X, Y)
 
 DESCRIPTION
-  Description
+   binppf(3f) computes the percent point function value at the single
+   precision value p for the binomial distribution with single precision
+   'bernoulli probability' parameter = ppar, and integer 'number of
+   bernoulli trials' parameter = n.
+
+   the binomial distribution used herein has mean = n*ppar and standard
+   deviation = sqrt(n*ppar*(1-ppar)).
+
+   this distribution is defined for all discrete integer x between 0
+   (inclusively) and n (inclusively).
+
+   this distribution has the probability function
+
+      f(x) = c(n,x) * ppar**x * (1-ppar)**(n-x).
+
+   where c(n,x) is the combinatorial function equaling the number of
+   combinations of n items taken x at a time.
+
+   the binomial distribution is the distribution of the number of
+   successes in n bernoulli (0,1) trials where the probability of success
+   in a single trial = ppar.
+
+   note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
 
 OPTIONS
     X   description of parameter
@@ -34,42 +58,16 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==binppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE BINPPF(P,Ppar,N,Ppf)
 
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
      &     x0 , x1 , x2 , zppf
       INTEGER i , ipr , isd , ix0 , ix0p1 , ix1 , ix2 , N
 
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE AT THE SINGLE PRECISION VALUE P
-!              FOR THE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = PPAR,
-!              AND INTEGER 'NUMBER OF BERNOULLI TRIALS'
-!              PARAMETER = N.
-!              THE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = N*PPAR
-!              AND STANDARD DEVIATION = SQRT(N*PPAR*(1-PPAR)).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL
-!              DISCRETE INTEGER X BETWEEN 0 (INCLUSIVELY)
-!              AND N (INCLUSIVELY).
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(N,X) * PPAR**X * (1-PPAR)**(N-X).
-!              WHERE C(N,X) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF N ITEMS
-!              TAKEN X AT A TIME.
-!              THE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF
-!              SUCCESSES IN N BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = PPAR.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (INCLUSIVELY))
@@ -102,7 +100,6 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, BINCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -141,13 +138,6 @@ REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd ,&
 !                 OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
 !               --OWEN, HANDBOOK OF STATISTICAL
 !                 TABLES, 1962, PAGES 264-272.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
       DOUBLE PRECISION dppar

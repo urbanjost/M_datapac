@@ -8,7 +8,17 @@ SYNOPSIS
     Subroutine read (X, Y)
 
 DESCRIPTION
-  Description
+   read(3f) performs a format-free read
+   of data from punched cards.
+   only the card columns between icol1 and icol2
+   (inclusively) are scanned for the read.
+   read(3f) gives the data analyst the ability
+   to get data into the machine without having
+   to worry about and specify formats.
+   the data cards may be punched up
+   without regard to any particular format
+   and may be entered into the machine
+   without defining any formats.
 
 OPTIONS
     X   description of parameter
@@ -38,28 +48,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==read.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE READ(Icol1,Icol2,X,N)
       IMPLICIT NONE
-!*--READ25117
-!*** Start of declarations inserted by SPAG
       INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ipr , ird ,    &
      &        istart , istop , j , jp1 , jp2 , jrev , k , l , locpt ,   &
      &        maxcol , mincol , N
       INTEGER nc , ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT READ
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A FORMAT-FREE READ
-!              OF DATA FROM PUNCHED CARDS.
-!              ONLY THE CARD COLUMNS BETWEEN ICOL1 AND ICOL2
-!              (INCLUSIVELY) ARE SCANNED FOR THE READ.
-!              THIS SUBROUTINE GIVES THE DATA ANALYST THE ABILITY
-!              TO GET DATA INTO THE MACHINE WITHOUT HAVING
-!              TO WORRY ABOUT AND SPECIFY FORMATS.
-!              THE DATA CARDS MAY BE PUNCHED UP
-!              WITHOUT REGARD TO ANY PARTICULAR FORMAT
-!              AND MAY BE ENTERED INTO THE MACHINE
-!              WITHOUT DEFINING ANY FORMATS.
 !     INPUT  ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
 !                                WHICH DEFINES THE LOWER BOUND
 !                                (INCLUSIVELY) OF THE INTERVAL
@@ -93,10 +87,7 @@ REAL(kind=wp) :: sum , X , y
 !     PRINTING--YES.
 !     RESTRICTIONS--ICOL1 AND ICOL2 MUST BE BETWEEN 1 AND 80,
 !                   INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--ADJACENT DATA VALUES ON THE SAME CARD
 !              MUST BE SEPARATED BY AT LEAST 1 BLANK
 !              OR 1 ALPHABETIC CHARACTER, OR BY  ANY
@@ -152,12 +143,6 @@ REAL(kind=wp) :: sum , X , y
 !              FAILURE TO DO SO WILL RESULT IN AN INCOMPLETE
 !              DATA SET OR (ON SOME COMPUTERS) AN
 !              UNPREDICTABLE RUN TERMINATION.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --AUGUST    1974.
 !     UPDATED         --NOVEMBER  1975.

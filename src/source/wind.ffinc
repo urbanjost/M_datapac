@@ -8,7 +8,14 @@ SYNOPSIS
     Subroutine wind (X, Y)
 
 DESCRIPTION
-  Description
+   wind(3f) computes the
+   sample windsorized mean
+   of the data in the input vector x.
+   the windsorizing is such that
+   the lower 100*p1 % of the data is
+   replaced by the smallest non-windsorized value,
+   and the upper 100*p2 % of the data is windsorized.
+   replaced by the largest non-windsorized value.
 
 OPTIONS
     X   description of parameter
@@ -34,35 +41,26 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
-      IMPLICIT NONE
-
-REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
-     &     perp3 , psum , sum , WS , X , Xwind , Y
-      INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 ,&
-     &        np2
+IMPLICIT NONE
+REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
+INTEGER i , ipr , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE WINDSORIZED MEAN
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE WINDSORIZING IS SUCH THAT
-!              THE LOWER 100*P1 % OF THE DATA IS
-!              REPLACED BY THE SMALLEST NON-WINDSORIZED VALUE,
-!              AND THE UPPER 100*P2 % OF THE DATA IS WINDSORIZED.
-!              REPLACED BY THE LARGEST NON-WINDSORIZED VALUE.
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT  ARGUMENTS--X      = THE VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P1     = THE SINGLE PRECISION VALUE
+!                     --P1     = THE VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE LOWER ORDER STATISTICS
 !                                IS TO BE WINDSORIZED
 !                                BEFORE COMPUTING THE WINDSORIZED MEAN.
-!                     --P2     = THE SINGLE PRECISION VALUE
+!                     --P2     = THE VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE UPPER ORDER STATISTICS
@@ -79,14 +77,14 @@ REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
 !                                THE PRINTING OF THE
 !                                SAMPLE WINDSORIZED MEAN
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XWIND  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XWIND  = THE VALUE OF THE
 !                                COMPUTED SAMPLE WINDSORIZED MEAN
 !                                WHERE 100*P1 % OF THE SMALLEST
 !                                AND 100*P2 % OF THE LARGEST
 !                                ORDERED OBSERVATIONS HAVE BEEN
 !                                WINSORIZED BEFORE COMPUTING THE
 !                                MEAN.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED VALUE OF THE
 !             SAMPLE WINDSORIZED MEAN
 !             WHERE 100*P1 % OF THE SMALLEST
 !             AND   100*P2 % OF THE LARGEST
@@ -103,9 +101,6 @@ REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
 !                 --THE SUM OF P1 AND P2 SHOULD BE
 !                   SMALLER THAN 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
 !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
 !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
@@ -114,13 +109,6 @@ REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !                 PRINCETON UNIVERSITY, 1969).
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
@@ -240,17 +228,13 @@ REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 ,     &
       WRITE (ipr,99012)
 99012 FORMAT (' ')
       WRITE (ipr,99013) N , Xwind
-99013 FORMAT (' ','THE SAMPLE WINDSORIZED MEAN OF THE ',I6,             &
-     &        ' OBSERVATIONS IS ',E15.8)
+99013 FORMAT (' ','THE SAMPLE WINDSORIZED MEAN OF THE ',I6, ' OBSERVATIONS IS ',E15.8)
       WRITE (ipr,99014) perp1 , np1
-99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
-     &        'OF THE DATA WERE WINDSORIZED BELOW')
+99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED BELOW')
       WRITE (ipr,99015) perp2 , np2
-99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
-     &        'OF THE DATA WERE WINDSORIZED ABOVE')
+99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED ABOVE')
       WRITE (ipr,99016) perp3 , k
-99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
-     &        ' OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
+99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS)  OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
 END SUBROUTINE WIND

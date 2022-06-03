@@ -7,7 +7,9 @@ SYNOPSIS
     Subroutine chsran (X, Y)
 
 DESCRIPTION
-  Description
+   chsran(3f) generates a random sample of size n
+   from the chi-squared distribution
+   with integer degrees of freedom parameter = nu.
 
 OPTIONS
     X   description of parameter
@@ -37,17 +39,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSRAN(N,Nu,Iseed,X)
       IMPLICIT NONE
-!*--CHSRAN2486
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
       INTEGER i , ipr , Iseed , j , N , Nu
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CHSRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE CHI-SQUARED DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -68,7 +62,6 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 34-35.
 !               --MOOD AND GRABLE, INTRODUCTION TO THE

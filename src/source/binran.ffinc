@@ -7,7 +7,25 @@ SYNOPSIS
     Subroutine binran (X, Y)
 
 DESCRIPTION
-  Description
+   binran(3f) generates a random sample of size n from the binomial
+   distribution with single precision 'bernoulli probability' parameter =
+   p, and integer 'number of bernoulli trials' parameter = npar.
+
+   the binomial distribution used herein has mean = npar*p and standard
+   deviation = sqrt(npar*p*(1-p)).
+
+   this distribution is defined for all discrete integer x between 0
+   (inclusively) and npar (inclusively).  this distribution has the
+   probability function
+
+       f(x) = c(npar,x) * p**x * (1-p)**(npar-x).
+
+   where c(npar,x) is the combinatorial function equaling the number of
+   combinations of npar items taken x at a time.
+
+   the binomial distribution is the distribution of the number of
+   successes in npar bernoulli (0,1) trials where the probability of
+   success in a single trial = p.
 
 OPTIONS
     X   description of parameter
@@ -33,40 +51,17 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==binran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
-      IMPLICIT NONE
-!*--BINRAN1061
-!*** Start of declarations inserted by SPAG
+SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
+IMPLICIT NONE
 REAL(kind=wp) :: g(1) , P , u(1) , X
       INTEGER i , ig , ipr , Iseed , isum , j , N , Npar
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT BINRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = P,
-!              AND INTEGER 'NUMBER OF BERNOULLI TRIALS'
-!              PARAMETER = NPAR.
-!              THE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = NPAR*P
-!              AND STANDARD DEVIATION = SQRT(NPAR*P*(1-P)).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL
-!              DISCRETE INTEGER X BETWEEN 0 (INCLUSIVELY)
-!              AND NPAR (INCLUSIVELY).
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(NPAR,X) * P**X * (1-P)**(NPAR-X).
-!              WHERE C(NPAR,X) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF NPAR ITEMS
-!              TAKEN X AT A TIME.
-!              THE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF
-!              SUCCESSES IN NPAR BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -96,9 +91,7 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --NPAR SHOULD BE A POSITIVE INTEGER.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, GEORAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -135,16 +128,6 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
 !                 OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
 !               --TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 39-40.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING DIVISION
-!                 CENTER FOR APPLIED MATHEMATICS
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-3651
-!     VERSION NUMBER--82/7
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --DECEMBER  1981.
-!     UPDATED         --MAY       1982.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !

@@ -8,7 +8,13 @@ SYNOPSIS
     Subroutine fcdf (X, Y)
 
 DESCRIPTION
-  Description
+   fcdf(3f) computes the cumulative distribution
+   function value for the f distribution
+   with integer degrees of freedom
+   parameters = nu1 and nu2.
+   this distribution is defined for all non-negative x.
+   the probability density function is given
+   in the references below.
 
 OPTIONS
     X   description of parameter
@@ -38,23 +44,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
       IMPLICIT NONE
-!*--FCDF7056
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
      &     zratio
       INTEGER i , ibran , ievodd , iflag1 , iflag2 , imax , imin , ipr ,&
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT FCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE F DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM
-!              PARAMETERS = NU1 AND NU2.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X.
-!              THE PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -78,7 +72,6 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF,CHSCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGES 946-947,
 !                 FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
@@ -92,11 +85,6 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 !               --SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES
 !                 FOR POPULATION TOLERANCE LIMITS, 1944,
 !                 NUMBER 15, PAGE 217.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--AUGUST    1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

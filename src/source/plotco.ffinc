@@ -8,7 +8,9 @@ SYNOPSIS
     Subroutine plotco (X, Y)
 
 DESCRIPTION
-  Description
+   this routine yields a multi-page (if necessary) plot of the autocorrelatio
+   coefficient r(k) versus the lag k
+   there is no restriction on the maximum value of n for this routine.
 
 OPTIONS
     X   description of parameter
@@ -36,28 +38,17 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plotco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOTCO(Y,N)
-      IMPLICIT NONE
-!*--PLOTCO18497
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: hold , ratioy , Y , ylable , ymax , ymin
-      INTEGER i , iaxdel , idel , iflag , imax , imin , ipr , ix ,      &
-     &        ixmax , ixmin , iz , j , jmax , jmin , k , mx , my , N ,  &
-     &        numpag
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTCO
-!
-!     THIS ROUTINE YIELDS A MULTI-PAGE (IF NECESSARY) PLOT OF THE AUTOCORRELATIO
-!     COEFFICIENT R(K) VERSUS THE LAG K
-!     THERE IS NO RESTRICTION ON THE MAXIMUM VALUE OF N FOR THIS ROUTINE.
+SUBROUTINE PLOTCO(Y,N)
+IMPLICIT NONE
+
+REAL(kind=wp) :: hold, ratioy, Y, ylable, ymax, ymin
+INTEGER i, iaxdel, idel, iflag, imax, imin, ipr, ix, ixmax, ixmin, iz, j, jmax, jmin, k, mx, my, N,  numpag
+
 !     PRINTING--YES
-!     SUBROUTINES NEEDED--NONE
-!     WRITTEN BY JAMES J. FILLIBEN, STATISTICAL ENGINEERING LABORATORY (205.03)
-!     NATIONAL BUREAU OF STANDARDS, WASHINGTON, D.C. 20234     JUN 1972
-!                                                      UPDATED FEB 1975
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
+!     UPDATED  -- JUN 1972
+!     UPDATED  -- UPDATED FEB 1975
+!     UPDATED  -- NOVEMBER  1975.
+!     UPDATED  -- FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
@@ -240,4 +231,4 @@ REAL(kind=wp) :: hold , ratioy , Y , ylable , ymax , ymin
 99011 FORMAT (' ',6X,24(I4,1X),I4)
 99012 FORMAT (' ',6X,8(I4,11X),I4)
 99013 FORMAT (' ',6X,12(I4,6X),I4)
-      END SUBROUTINE PLOTCO
+END SUBROUTINE PLOTCO

@@ -8,7 +8,12 @@ SYNOPSIS
     Subroutine sampp (X, Y)
 
 DESCRIPTION
-  Description
+   sampp(3f) computes the
+   sample 100p percent point
+   (where p is between 0.0 and 1.0, exclusively)
+   of the data in the input vector x.
+   the sample 100p percent point =  is that point in which
+   100p percent of the data in the sample is below.
 
 OPTIONS
     X   description of parameter
@@ -38,21 +43,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
       IMPLICIT NONE
-!*--SAMPP27037
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
       INTEGER i , ipr , iupper , Iwrite , j , jp1 , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SAMPP
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE 100P PERCENT POINT
-!              (WHERE P IS BETWEEN 0.0 AND 1.0, EXCLUSIVELY)
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE 100P PERCENT POINT =  IS THAT POINT IN WHICH
-!              100P PERCENT OF THE DATA IN THE SAMPLE IS BELOW.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -92,10 +86,7 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !                   BE PRINTED OUT AND PP WILL BE SET TO -999999999.0
 !                   IF(N+1)P IS LARGER THAN N, AN ERROR MESSAGE WILL
 !                   BE PRINTED OUT AND PP WILL BE SET TO 999999999.0.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 236-239,
 !                 243.
@@ -103,11 +94,6 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
 !                 OF STATISTICS, EDITION 2, 1963, PAGES 406-407.
 !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
 !                 EDITION 6, 1967, PAGE 125.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

@@ -9,7 +9,29 @@ SYNOPSIS
     Subroutine time (X, Y)
 
 DESCRIPTION
-  Description
+   time(3f) performs a time series analysis
+   on the data in the input vector x.
+   the analysis consists of the following--
+
+     1. a plot of autocorrelation versus lag number;
+     2. a test for white noise (assuming normality);
+     3. a 'pilot' spectrum; and
+     4. 4 other estimated spectra--each based
+        on a differing bandwidth.
+ 
+   in order that the results of the time series analysis
+   be valid and properly interpreted, the input data
+   in x should be equi-spaced in time
+   (or whatever variable corresponds to time).
+   
+   the horizontal axis of the spectra produced
+   by time(3f) is frequency.
+   this frequency is measured in units of
+   cycles per 'data point' or, more precisely, in
+   cycles per unit time where
+   'unit time' is defined as the
+   elapsed time between adjacent observations.
+   the range of the frequency axis is 0.0 to 0.5.
 
 OPTIONS
     X   description of parameter
@@ -39,8 +61,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==time.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE TIME(X,N)
       IMPLICIT NONE
-!*--TIME30314
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: absr , ak , al , all , almax , an , an2 , arg1 , arg2 , bw , &
      &     df , dfroun , hold , p , perout , pi , pmsq , ps , pssq , r
 REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
@@ -49,32 +69,7 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
      &        irev , j , jmax , jmin , k , kmax , krev , l , ll , llp1 ,&
      &        lm1 , lmax
       INTEGER maxlag , N , n2 , ndiv , nmk , numout , numsp
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TIME
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A TIME SERIES ANALYSIS
-!              ON THE DATA IN THE INPUT VECTOR X.
-!              THE ANALYSIS CONSISTS OF THE FOLLOWING--
-!              1) A PLOT OF AUTOCORRELATION VERSUS LAG NUMBER;
-!              2) A TEST FOR WHITE NOISE (ASSUMING NORMALITY);
-!              3) A 'PILOT' SPECTRUM; AND
-!              4) 4 OTHER ESTIMATED SPECTRA--EACH BASED
-!                 ON A DIFFERING BANDWIDTH.
-!
-!              IN ORDER THAT THE RESULTS OF THE TIME SERIES ANALYSIS
-!              BE VALID AND PROPERLY INTERPRETED, THE INPUT DATA
-!              IN X SHOULD BE EQUI-SPACED IN TIME
-!              (OR WHATEVER VARIABLE CORRESPONDS TO TIME).
-!
-!              THE HORIZONTAL AXIS OF THE SPECTRA PRODUCED
-!              BY THIS SUBROUTINE IS FREQUENCY.
-!              THIS FREQUENCY IS MEASURED IN UNITS OF
-!              CYCLES PER 'DATA POINT' OR, MORE PRECISELY, IN
-!              CYCLES PER UNIT TIME WHERE
-!              'UNIT TIME' IS DEFINED AS THE
-!              ELAPSED TIME BETWEEN ADJACENT OBSERVATIONS.
-!              THE RANGE OF THE FREQUENCY AXIS IS 0.0 TO 0.5.
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
@@ -106,7 +101,6 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTC0, PLOTSP, AND CHSPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE 'FAST FOURIER TRANSFORM' IS NOT USED
 !              IN THIS VERSION OF TIME, BUT WILL BE
 !              IMPLEMENTED IN A FUTURE VERSION.
@@ -147,11 +141,6 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
 !              SMALLEST DETECTABLE CYCLE IN THE DATA
 !              IS 2 DATA POINTS PER CYCLE.
 !     REFERENCES--JENKINS AND WATTS, ESPECIALLY PAGE 290.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.

@@ -7,7 +7,13 @@ SYNOPSIS
     Subroutine uniran (X, Y)
 
 DESCRIPTION
-  Description
+   uniran(3f) generates a random sample of size n
+   from the uniform (rectangular)
+   distribution on the unit interval (0,1).
+   this distribution has mean = 0.5
+   and standard deviation = sqrt(1/12) = 0.28867513.
+   this distribution has the probability
+   density function f(x) = 1.
 
 OPTIONS
     X   description of parameter
@@ -28,6 +34,24 @@ EXAMPLES
 AUTHOR
    The original DATAPAC library was written by James Filliben of the Statistical
    Engineering Division, National Institute of Standards and Technology.
+
+WRITTEN BY
+     --james blue
+                 scientific computing division
+                 center for applied mathematics
+                 national bureau of standards
+                 washington, d. c. 20234
+     --david kahaner
+                 scientific computing division
+                 center for applied mathematics
+                 national bureau of standards
+     --george marsaglia
+                 computer science department
+                 washington state university
+     --james j. filliben
+                 statistical engineering division
+                 center for applied mathematics
+                 national bureau of standards
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
@@ -42,13 +66,6 @@ REAL(kind=wp) :: ak , am1 , X(:)
 INTEGER i, ipr, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
 INTEGER m(17)
 
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE UNIFORM (RECTANGULAR)
-!              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS THE PROBABILITY
-!              DENSITY FUNCTION F(X) = 1.
 !
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -63,10 +80,7 @@ INTEGER m(17)
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER           SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !
 !     ALGORITHM--FIBONACCI GENERATOR
 !                AS DEFINED BY GEORGE MARSAGLIA.
@@ -144,22 +158,6 @@ INTEGER m(17)
 !                 NUMBER GENERATOR", UNPUBLISHED NOTES, WASH S. U.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
-!     WRITTEN BY--JAMES BLUE
-!                 SCIENTIFIC COMPUTING DIVISION
-!                 CENTER FOR APPLIED MATHEMATICS
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!               --DAVID KAHANER
-!                 SCIENTIFIC COMPUTING DIVISION
-!                 CENTER FOR APPLIED MATHEMATICS
-!                 NATIONAL BUREAU OF STANDARDS
-!               --GEORGE MARSAGLIA
-!                 COMPUTER SCIENCE DEPARTMENT
-!                 WASHINGTON STATE UNIVERSITY
-!               --JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING DIVISION
-!                 CENTER FOR APPLIED MATHEMATICS
-!                 NATIONAL BUREAU OF STANDARDS
 !
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     ORIGINAL VERSION--JUNE      1972.
@@ -171,16 +169,6 @@ INTEGER m(17)
 !     UPDATED         --MARCH     1984.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-!---------------------------------------------------------------------
-!
-!---------------------------------------------------------------------
-!
-!CCCC CHARACTER*4 IFEEDB
-!CCCC CHARACTER*4 IPRINT
-!
-!CCCC COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
-!CCCC COMMON /PRINT/IFEEDB,IPRINT
 !
 !-----SAVE STATEMENTS-------------------------------------------------
 !
@@ -292,7 +280,4 @@ INTEGER m(17)
 !               **  EXIT       **
 !               *****************
 !
-!CCCC DEBUG TRACE,INIT
-!CCCC AT 90
-!CCCC TRACE ON
 END SUBROUTINE UNIRAN

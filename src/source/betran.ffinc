@@ -11,11 +11,10 @@ SYNOPSIS
 
 DESCRIPTION
 
-   BETRAN(3f) generates a random sample of size N from the beta distribution
-   with single precision shape parameters ALPHA and BETA.
-   
-   The prototype beta distribution used
-   herein has 
+   BETRAN(3f) generates a random sample of size N from the beta
+   distribution with single precision shape parameters ALPHA and BETA.
+
+   The prototype beta distribution used herein has
    
       mean = ALPHA/(ALPHA+BETA)
    
@@ -23,8 +22,8 @@ DESCRIPTION
    
       standard_deviation=sqrt((ALPHA*BETA)/((ALPHA+BETA)**2)*(ALPHA+BETA+1))
    
-   This distribution is defined for all X between 0.0 (inclusively) and 1.0
-   (inclusively) and has the probability density function
+   This distribution is defined for all X between 0.0 (inclusively)
+   and 1.0 (inclusively) and has the probability density function
    
       f(x) = (1/constant) * x**(alpha-1) * (1.0-x)**(beta-1)
    

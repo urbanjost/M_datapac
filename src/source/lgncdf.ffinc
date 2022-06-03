@@ -8,7 +8,19 @@ SYNOPSIS
     Subroutine lgncdf (X, Y)
 
 DESCRIPTION
-  Description
+   lgncdf(3f) computes the cumulative distribution
+   function value for the lognormal
+   distribution.
+   the lognormal distribution used
+   herein has mean = sqrt(e) = 1.64872127
+   and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+   this distribution is defined for all positive x
+   and has the probability density function
+   f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+   the lognormal distribution used herein
+   is the distribution of the variate x = exp(z) where
+   the variate z is normally distributed
+   with mean = 0 and standard deviation = 1.
 
 OPTIONS
     X   description of parameter
@@ -38,27 +50,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==lgncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LGNCDF(X,Cdf)
       IMPLICIT NONE
-!*--LGNCDF11228
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg , Cdf , X
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LGNCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE LOGNORMAL
-!              DISTRIBUTION.
-!              THE LOGNORMAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = SQRT(E) = 1.64872127
-!              AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/(X*SQRT(2*PI))) * EXP(-LOG(X)*LOG(X)/2)
-!              THE LOGNORMAL DISTRIBUTION USED HEREIN
-!              IS THE DISTRIBUTION OF THE VARIATE X = EXP(Z) WHERE
-!              THE VARIATE Z IS NORMALLY DISTRIBUTED
-!              WITH MEAN = 0 AND STANDARD DEVIATION = 1.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -74,16 +68,10 @@ REAL(kind=wp) :: arg , Cdf , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
 !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
 !                 1946, PAGES 219-220.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------

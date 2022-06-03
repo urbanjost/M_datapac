@@ -7,7 +7,21 @@ SYNOPSIS
     Subroutine gamppf (X, Y)
 
 DESCRIPTION
-  Description
+   gamppf(3f) computes the percent point
+   function value for the gamma distribution
+   with single precision
+   tail length parameter = gamma.
+   the gamma distribution used
+   herein has mean = gamma
+   and standard deviation = sqrt(gamma).
+   this distribution is defined for all positive x,
+   and has the probability density function
+   f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+   where the constant = the gamma function evaluated
+   at the value gamma.
+   note that the percent point function of a distribution
+   is identically the same as the inverse cumulative
+   distribution function of the distribution.
 
 OPTIONS
     X   description of parameter
@@ -37,29 +51,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==gamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPPF(P,Gamma,Ppf)
       IMPLICIT NONE
-!*--GAMPPF8588
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER icount , iloop , ipr , j , maxit
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GAMPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE GAMMA DISTRIBUTION
-!              WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE GAMMA DISTRIBUTION USED
-!              HEREIN HAS MEAN = GAMMA
-!              AND STANDARD DEVIATION = SQRT(GAMMA).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/CONSTANT) * (X**(GAMMA-1)) * EXP(-X)
-!              WHERE THE CONSTANT = THE GAMMA FUNCTION EVALUATED
-!              AT THE VALUE GAMMA.
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -77,10 +71,8 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
 !               COMPARED TO THE KNOWN GAMMA = 1 (EXPONENTIAL)
 !               RESULTS, AGREEMENT WAS HAD OUT TO 6 SIGNIFICANT
@@ -105,11 +97,6 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 DISTRIBUTIONS--A HANDBOOK FOR
 !                 STUDENTS AND PRACTITIONERS, 1975,
 !                 PAGES 68-73.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

@@ -8,7 +8,17 @@ SYNOPSIS
     Subroutine ev2ppf (X, Y)
 
 DESCRIPTION
-  Description
+   ev2ppf(3f) computes the percent point
+   function value for the extreme value type 2
+   distribution with single precision
+   tail length parameter = gamma.
+   the extreme value type 2 distribution used
+   herein is defined for all non-negative x,
+   and has the probability density function
+   f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+   note that the percent point function of a distribution
+   is identically the same as the inverse cumulative
+   distribution function of the distribution.
 
 OPTIONS
     X   description of parameter
@@ -38,25 +48,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2PPF(P,Gamma,Ppf)
       IMPLICIT NONE
-!*--EV2PPF5873
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , P , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV2PPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE EXTREME VALUE TYPE 2
-!              DISTRIBUTION WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = GAMMA.
-!              THE EXTREME VALUE TYPE 2 DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(-GAMMA-1)) * EXP(-(X**(-GAMMA))).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
@@ -74,17 +68,10 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------

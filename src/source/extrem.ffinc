@@ -8,7 +8,22 @@ SYNOPSIS
     Subroutine extrem (X, Y)
 
 DESCRIPTION
-  Description
+   extrem(3f) performs an extreme value analysis
+   on the data in the input vector x.
+   this analysis consists of determining that particular
+   extreme value type 1 or extreme value type 2 distribution
+   which best fits the data set.
+   the goodness of fit criterion is the maximum probability
+   plot correlation coefficient criterion.
+   after the best-fit distribution is determined,
+   estimates are computed and printed out for the
+   location and scale parameters.
+   two probability plots are also printed out--
+   the best-fit type 2 probability plot
+   (if the best fit was in fact a type 2),
+   and the type 1 probability plot.
+   predicted extremes for various return periods are
+   also computed and printed out.
 
 OPTIONS
     X   description of parameter
@@ -38,34 +53,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXTREM(X,N)
       IMPLICIT NONE
-!*--EXTREM6625
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: a , aindex , am , an , arg , cc , corr , corrmx , gamtab ,   &
      &     h , hold , p , r , scrat , sum1 , sum2 , sum3 , sy , t , w
 REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
      &     yslope , Z
       INTEGER i , idis , idismx , ipr , iupper , j , jskip , k , N ,    &
      &        numam , numdis , numdm1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXTREM
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS AN EXTREME VALUE ANALYSIS
-!              ON THE DATA IN THE INPUT VECTOR X.
-!              THIS ANALYSIS CONSISTS OF DETERMINING THAT PARTICULAR
-!              EXTREME VALUE TYPE 1 OR EXTREME VALUE TYPE 2 DISTRIBUTION
-!              WHICH BEST FITS THE DATA SET.
-!              THE GOODNESS OF FIT CRITERION IS THE MAXIMUM PROBABILITY
-!              PLOT CORRELATION COEFFICIENT CRITERION.
-!              AFTER THE BEST-FIT DISTRIBUTION IS DETERMINED,
-!              ESTIMATES ARE COMPUTED AND PRINTED OUT FOR THE
-!              LOCATION AND SCALE PARAMETERS.
-!              TWO PROBABILITY PLOTS ARE ALSO PRINTED OUT--
-!              THE BEST-FIT TYPE 2 PROBABILITY PLOT
-!              (IF THE BEST FIT WAS IN FACT A TYPE 2),
-!              AND THE TYPE 1 PROBABILITY PLOT.
-!              PREDICTED EXTREMES FOR VARIOUS RETURN PERIODS ARE
-!              ALSO COMPUTED AND PRINTED OUT.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -78,7 +72,6 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !                                         EV2PLT, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
 !                 ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
 !                 CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
@@ -87,11 +80,6 @@ REAL(kind=wp) :: wbar , WS , X , xmax , xmin , Y , ybar , yi , yint , ys ,    &
 !                 UNPUBLISHED MANUSCRIPT.
 !               --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS-1, 1970, PAGES 272-295.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --DECEMBER  1974.
 !     UPDATED         --NOVEMBER  1975.

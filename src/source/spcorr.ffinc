@@ -8,7 +8,12 @@ SYNOPSIS
     Subroutine spcorr (X, Y)
 
 DESCRIPTION
-  Description
+   spcorr(3f) computes the
+   spearman rank correlation coefficient
+   between the 2 sets of data in the input vectors x and y.
+   the spearman rank correlation coefficient will be a
+   single precision value between -1.0 and 1.0
+   (inclusively).
 
 OPTIONS
     X   description of parameter
@@ -38,20 +43,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==spcorr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
       IMPLICIT NONE
-!*--SPCORR28356
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
       INTEGER i , iflag , ipr , iupper , Iwrite , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SPCORR
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SPEARMAN RANK CORRELATION COEFFICIENT
-!              BETWEEN THE 2 SETS OF DATA IN THE INPUT VECTORS X AND Y.
-!              THE SPEARMAN RANK CORRELATION COEFFICIENT WILL BE A
-!              SINGLE PRECISION VALUE BETWEEN -1.0 AND 1.0
-!              (INCLUSIVELY).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
@@ -91,9 +85,7 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--RANK AND SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
 !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
@@ -102,11 +94,6 @@ REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 !                 ANALYSIS, EDITION 2, 1957, PAGES 294-295.
 !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
 !                 OF STATISTICS, EDITION 2, 1963, PAGE 424.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --JANUARY   1975.

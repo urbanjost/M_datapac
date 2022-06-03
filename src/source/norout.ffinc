@@ -8,7 +8,32 @@ SYNOPSIS
     Subroutine norout (X, Y)
 
 DESCRIPTION
-  Description
+   norout(3f) performs a normal outlier analysis
+   on the data in the input vector x.
+   this analysis consists of--
+
+     1. various normal outlier statistics;
+     2. various partial sample means
+     3. various partial sample standard deviations;
+     4. the first 40 and last 40 ordered observations;
+     5. a line plot; and
+     6. a normal probability plot.
+
+   when the first 40 and last 40 ordered observations
+   are printed out, also included for each
+   of the 40+40 = 80 listed data values
+   is the corresponding residual about
+   the (full) sample mean,
+   the standardized residual,
+   the normal n(0,1) value for the standardized
+   residual,
+   and the position number
+   in the original data vector x.
+   this last piece of information allows
+   the data analyst to easily locate
+   back in the original data vector .
+   a suspected outlier or otherwise
+   interesting observation.
 
 OPTIONS
     X   description of parameter
@@ -38,8 +63,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NOROUT(X,N)
       IMPLICIT NONE
-!*--NOROUT14213
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
      &     res , s , s1 , s13 , s14 , s2 , s23 , s24 , s3 , s4 , ssq
 REAL(kind=wp) :: ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
@@ -49,34 +72,7 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
      &     xb4 , xline , XPOs , Y
       INTEGER i , icount , iflag , ipr , irev , iupper , j , mx , N ,   &
      &        nm1 , nm2 , nm3 , nm4 , nm5
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NOROUT
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A NORMAL OUTLIER ANALYSIS
-!              ON THE DATA IN THE INPUT VECTOR X.
-!              THIS ANALYSIS CONSISTS OF--
-!              1) VARIOUS NORMAL OUTLIER STATISTICS;
-!              2) VARIOUS PARTIAL SAMPLE MEANS
-!              3) VARIOUS PARTIAL SAMPLE STANDARD DEVIATIONS;
-!              4) THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS;
-!              5) A LINE PLOT; AND
-!              6) A NORMAL PROBABILITY PLOT.
-!              WHEN THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS
-!              ARE PRINTED OUT, ALSO INCLUDED FOR EACH
-!              OF THE 40+40 = 80 LISTED DATA VALUES
-!              IS THE CORRESPONDING RESIDUAL ABOUT
-!              THE (FULL) SAMPLE MEAN,
-!              THE STANDARDIZED RESIDUAL,
-!              THE NORMAL N(0,1) VALUE FOR THE STANDARDIZED
-!              RESIDUAL,
-!              AND THE POSITION NUMBER
-!              IN THE ORIGINAL DATA VECTOR X.
-!              THIS LAST PIECE OF INFORMATION ALLOWS
-!              THE DATA ANALYST TO EASILY LOCATE
-!              BACK IN THE ORIGINAL DATA VECTOR .
-!              A SUSPECTED OUTLIER OR OTHERWISE
-!              INTERESTING OBSERVATION.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -95,7 +91,6 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !                                         SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     WRITE OUT THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS,
 !     INCLUDING THEIR RESIDUALS ABOUT THE (FULL) SAMPLE MEAN,
 !     THE STANDARDIZED RESIDUALS,
@@ -103,11 +98,6 @@ REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
 !     OF THE STANDARDIZED RESIDUAL, AND
 !     THE POSITION NUMBER IN THE ORIGINAL DATA VECTOR X.
 !     REFERENCES--GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.

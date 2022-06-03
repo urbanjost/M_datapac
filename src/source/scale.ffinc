@@ -9,7 +9,22 @@ SYNOPSIS
     Subroutine scale (X, Y)
 
 DESCRIPTION
-  Description
+   scale(3f) computes 4 estimates of the
+   scale (variation, scatter, dispersion)
+   of the data in the input vector x.
+   the 4 estimators employed are--
+
+     1. the sample range;
+     2. the sample standard deviation;
+     3. the sample relative standard deviation; and
+     4. the sample variance.
+
+   note that n-1 (rather than n)
+   is used in the divisor in the
+   computation of the sample standard
+   deviation, the sample relative
+   standard deviation, and the
+   sample variance.
 
 OPTIONS
     X   description of parameter
@@ -37,31 +52,12 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SCALE(X,N)
-      IMPLICIT NONE
-!*--SCALE27191
-!*** Start of declarations inserted by SPAG
-REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
-     &     xsd , xvar
-      INTEGER i , ipr , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SCALE
+SUBROUTINE SCALE(X,N)
+IMPLICIT NONE
+
+REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd , xsd , xvar
+INTEGER i , ipr , N
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES 4 ESTIMATES OF THE
-!              SCALE (VARIATION, SCATTER, DISPERSION)
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE 4 ESTIMATORS EMPLOYED ARE--
-!              1) THE SAMPLE RANGE;
-!              2) THE SAMPLE STANDARD DEVIATION;
-!              3) THE SAMPLE RELATIVE STANDARD DEVIATION; AND
-!              4) THE SAMPLE VARIANCE.
-!              NOTE THAT N-1 (RATHER THAN N)
-!              IS USED IN THE DIVISOR IN THE
-!              COMPUTATION OF THE SAMPLE STANDARD
-!              DEVIATION, THE SAMPLE RELATIVE
-!              STANDARD DEVIATION, AND THE
-!              SAMPLE VARIANCE.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -77,10 +73,8 @@ REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE SAMPLE RELATIVE STANDARD DEVIATION
 !              IS THE SAMPLE STANDARD DEVIATION RELATIVE
 !              TO THE MAGNITUDE OF THE SAMPLE MEAN.
@@ -96,11 +90,6 @@ REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
 !                 PAGES 357 AND 387
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -208,4 +197,4 @@ REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd ,&
       ENDIF
 99011 FORMAT (' ')
 !
-      END SUBROUTINE SCALE
+END SUBROUTINE SCALE

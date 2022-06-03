@@ -7,7 +7,16 @@ SYNOPSIS
     Subroutine logsf (X, Y)
 
 DESCRIPTION
-  Description
+   logsf(3f) computes the sparsity
+   function value for the logistic distribution
+   with mean = 0 and standard deviation = pi/sqrt(3).
+   this distribution is defined for all x and has
+   the probability density function
+   f(x) = exp(x)/(1+exp(x)).
+   note that the sparsity function of a distribution
+   is the derivative of the percent point function,
+   and also is the reciprocal of the probability
+   density function (but in units of p rather than x).
 
 OPTIONS
     X   description of parameter
@@ -37,24 +46,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGSF(P,Sf)
       IMPLICIT NONE
-!*--LOGSF12337
-!*** Start of declarations inserted by SPAG
       INTEGER ipr
 REAL(kind=wp) :: P , Sf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOGSF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE SPARSITY
-!              FUNCTION VALUE FOR THE LOGISTIC DISTRIBUTION
-!              WITH MEAN = 0 AND STANDARD DEVIATION = PI/SQRT(3).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(X)/(1+EXP(X)).
-!              NOTE THAT THE SPARSITY FUNCTION OF A DISTRIBUTION
-!              IS THE DERIVATIVE OF THE PERCENT POINT FUNCTION,
-!              AND ALSO IS THE RECIPROCAL OF THE PROBABILITY
-!              DENSITY FUNCTION (BUT IN UNITS OF P RATHER THAN X).
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
@@ -65,10 +59,7 @@ REAL(kind=wp) :: P , Sf
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
@@ -77,11 +68,6 @@ REAL(kind=wp) :: P , Sf
 !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

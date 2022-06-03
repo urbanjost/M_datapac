@@ -8,7 +8,17 @@ SYNOPSIS
     Subroutine cauppf (X, Y)
 
 DESCRIPTION
-  Description
+   cauppf(3f) computes the percent point function value for the cauchy
+   distribution with median = 0 and 75% point = 1.
+
+   this distribution is defined for all x and has the probability
+   density function
+
+       f(x) = (1/pi)*(1/(1+x*x)).
+
+   note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
 
 OPTIONS
     X   description of parameter
@@ -38,23 +48,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CAUPPF(P,Ppf)
       IMPLICIT NONE
-!*--CAUPPF1545
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: arg , P , pi , Ppf
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CAUPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE CAUCHY DISTRIBUTION
-!              WITH MEDIAN = 0 AND 75% POINT = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/PI)*(1/(1+X*X)).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -65,10 +61,8 @@ REAL(kind=wp) :: arg , P , pi , Ppf
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,

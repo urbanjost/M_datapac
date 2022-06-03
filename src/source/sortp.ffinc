@@ -57,9 +57,6 @@ IMPLICIT NONE
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
       INTEGER i , il , ip1 , ipr , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT SORTP
-!
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE SORTED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -156,11 +153,6 @@ REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 !               --CACM JANUARY 1970, PAGE 54.
 !               --CACM OCTOBER 1970, PAGE 624.
 !               --JACM JANUARY 1961, PAGE 41.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !

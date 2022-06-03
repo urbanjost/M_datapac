@@ -7,7 +7,12 @@ SYNOPSIS
     Subroutine poly (X, Y)
 
 DESCRIPTION
-  Description
+   poly(3f) computes a least squares
+   polynomial fit (of degree = ideg) of the
+   response variable data in the single precision
+   vector y as a function of the independent
+   variable data in the single precision
+   vector x.
 
 OPTIONS
     X   description of parameter
@@ -37,8 +42,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==poly.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POLY(Y,X,W,N,Ideg,Iwrite,B,Sdb,S,Df,Pred,Res)
       IMPLICIT NONE
-!*--POLY23881
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ak , amb , amdb1 , amdb2 , amdr1 , amdr2 , amr , an ,        &
      &     aneggi , aneggj , ani , B , b2 , cdf , cdf2 , D , Df , DUM1 ,&
      &     DUM2 , e
@@ -55,12 +58,6 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
      &        nkmax
       INTEGER nm5 , nmax , numset
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES A LEAST SQUARES
-!              POLYNOMIAL FIT (OF DEGREE = IDEG) OF THE
-!              RESPONSE VARIABLE DATA IN THE SINGLE PRECISION
-!              VECTOR Y AS A FUNCTION OF THE INDEPENDENT
-!              VARIABLE DATA IN THE SINGLE PRECISION
-!              VECTOR X.
 !     INPUT  ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
 !                                RESPONSE DATA (THAT IS, THE
 !                                DEPENDENT VARIABLE).
@@ -98,11 +95,6 @@ REAL(kind=wp) :: resss , S , Sdb , sum , t , tol , value , W , whold , wres , &
 !                     --RES    = THE SINGLE PRECISION VECTOR OF
 !                                RESIDUALS FROM THE LEAST SQUARES FIT.
 !     SUBROUTINES NEEDED--DECOMP, INVXWX, DOT, FCDF.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--MARCH     1974
 !     UPDATED--OCTOBER   1974
 !     UPDATED--MARCH     1975

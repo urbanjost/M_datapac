@@ -8,7 +8,23 @@ SYNOPSIS
     Subroutine loc (X, Y)
 
 DESCRIPTION
-  Description
+   loc(3f) computes 4 estimates of the
+   location (typical value, measure of central
+   tendancy) of the data in the input vector x.
+   the 4 estimators employed are--
+
+           1. the sample midrange;
+           2. the sample mean;
+           3. the sample midmean; and
+           4. the sample median.
+
+   the above 4 estimators are near-optimal
+   estimators of location
+   for shorter-tailed symmetric distributions,
+   moderate-tailed distributions,
+   moderate-long-tailed distributions,
+   and long-tailed distributions,
+   respectively.
 
 OPTIONS
     X   description of parameter
@@ -38,31 +54,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==loc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOC(X,N)
       IMPLICIT NONE
-!*--LOC11703
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
      &     xmidm , Y
       INTEGER i , iflag , imax , imaxm1 , imin , iminp1 , ipr , iupper ,&
      &        N , nmid , nmidp1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOC
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES 4 ESTIMATES OF THE
-!              LOCATION (TYPICAL VALUE, MEASURE OF CENTRAL
-!              TENDANCY) OF THE DATA IN THE INPUT VECTOR X.
-!              THE 4 ESTIMATORS EMPLOYED ARE--
-!              1) THE SAMPLE MIDRANGE;
-!              2) THE SAMPLE MEAN;
-!              3) THE SAMPLE MIDMEAN; AND
-!              4) THE SAMPLE MEDIAN.
-!              THE ABOVE 4 ESTIMATORS ARE NEAR-OPTIMAL
-!              ESTIMATORS OF LOCATION
-!              FOR SHORTER-TAILED SYMMETRIC DISTRIBUTIONS,
-!              MODERATE-TAILED DISTRIBUTIONS,
-!              MODERATE-LONG-TAILED DISTRIBUTIONS,
-!              AND LONG-TAILED DISTRIBUTIONS,
-!              RESPECTIVELY.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -79,19 +75,12 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DIXON AND MASSEY, PAGES 14, 70, AND 71
 !               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
 !                 PAGES 357 AND 387
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.

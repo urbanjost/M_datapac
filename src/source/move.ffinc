@@ -8,7 +8,14 @@ SYNOPSIS
     Subroutine move (X, Y)
 
 DESCRIPTION
-  Description
+   move(3f) moves (copies) m elements of the
+   single precision vector x
+   (starting with position ix1)
+   into the single precision vector y
+   (starting with position iy1).
+   this allows the data analyst
+   to take any subvector in x and place it
+   anywhere in the vector y.
 
 OPTIONS
     X   description of parameter
@@ -36,24 +43,11 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==move.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
-      IMPLICIT NONE
-!*--MOVE13114
-!*** Start of declarations inserted by SPAG
+SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
+IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Y
-      INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MOVE
+INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
 !
-!     PURPOSE--THIS SUBROUTINE MOVES (COPIES) M ELEMENTS OF THE
-!              SINGLE PRECISION VECTOR X
-!              (STARTING WITH POSITION IX1)
-!              INTO THE SINGLE PRECISION VECTOR Y
-!              (STARTING WITH POSITION IY1).
-!              THIS ALLOWS THE DATA ANALYST
-!              TO TAKE ANY SUBVECTOR IN X AND PLACE IT
-!              ANYWHERE IN THE VECTOR Y.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS, PART (OR ALL)
 !                                OF WHICH IS TO BE MOVED
@@ -80,10 +74,7 @@ REAL(kind=wp) :: hold , X , Y
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF M FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE ELEMENT IN POSITION IX1 OF THE VECTOR X
 !            IS COPIED INTO POSITION IY1 OF THE VECTOR Y,
 !            THE ELEMENT IN POSITION (IX1+1) OF THE VECTOR X
@@ -92,12 +83,6 @@ REAL(kind=wp) :: hold , X , Y
 !            THE ELEMENT IN POSITION (IX1+M-1) OF THE VECTOR X
 !            IS COPIED INTO POSITION (IY1+M-1) OF THE VECTOR Y.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !

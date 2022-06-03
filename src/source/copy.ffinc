@@ -8,7 +8,9 @@ SYNOPSIS
     Subroutine copy (X, Y)
 
 DESCRIPTION
-  Description
+   copy(3f) copies the contents
+   of the single precision vector x into the
+   single precision vector y.
 
 OPTIONS
     X   description of parameter
@@ -38,17 +40,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==copy.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE COPY(X,N,Y)
       IMPLICIT NONE
-!*--COPY2766
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , X , Y
       INTEGER i , ipr , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT COPY
 !
-!     PURPOSE--THIS SUBROUTINE COPIES THE CONTENTS
-!              OF THE SINGLE PRECISION VECTOR X INTO THE
-!              SINGLE PRECISION VECTOR Y.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE COPIED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -63,20 +57,11 @@ REAL(kind=wp) :: hold , X , Y
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THE FIRST ELEMENT OF X IS COPIED INTO THE FIRST
 !              ELEMENT OF Y; THE SECOND ELEMENT OF X IS COPIED INTO
 !              THE SECOND ELEMENT OF Y, ETC.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !

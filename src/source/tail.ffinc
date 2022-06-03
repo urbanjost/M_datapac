@@ -8,7 +8,35 @@ SYNOPSIS
     Subroutine tail (X, Y)
 
 DESCRIPTION
-  Description
+   tail(3f) perfoms a symmetric distribution
+   tail length analysis
+   on the data in the input vector x.
+   the analysis consists of the following--
+
+     1. various test statistics to test
+        the specific hypothesis of normality;
+     2. a uniform probability plot
+        (a short-tailed distribution);
+     3. a normal probaiblity plot
+        (a moderate-tailed distribution);
+     4. a tukey lambda = -0.5 probabilty plot
+        (a moderate-long-tailed distribtion);
+     5. a cauchy probability plot
+        (a long-tailed distribution);
+     6. a determination of the best-fit
+        symmetric distribution
+        to the data set from an
+        admissable set consisting of
+        43 symmetric distributions.
+
+   the admissable set of symmetric
+   distributions considered includes the
+   uniform, normal, logistic,
+   double exponential, cauchy, and
+   37 distributions drawn from the
+   the tukey lambda distributional family.
+   the goodness of fit criterion is the maximum probability
+   plot correlation coefficient criterion.
 
 OPTIONS
     X   description of parameter
@@ -43,41 +71,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
 REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
 REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
-REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS, X 
+REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS, X
 REAL(kind=wp) :: xbar
 REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
 INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
-
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT TAIL
 !
-!     PURPOSE--THIS SUBROUTINE PERFOMS A SYMMETRIC DISTRIBUTION
-!              TAIL LENGTH ANALYSIS
-!              ON THE DATA IN THE INPUT VECTOR X.
-!              THE ANALYSIS CONSISTS OF THE FOLLOWING--
-!              1) VARIOUS TEST STATISTICS TO TEST
-!                 THE SPECIFIC HYPOTHESIS OF NORMALITY;
-!              2) A UNIFORM PROBABILITY PLOT
-!                 (A SHORT-TAILED DISTRIBUTION);
-!              3) A NORMAL PROBAIBLITY PLOT
-!                 (A MODERATE-TAILED DISTRIBUTION);
-!              4) A TUKEY LAMBDA = -0.5 PROBABILTY PLOT
-!                 (A MODERATE-LONG-TAILED DISTRIBTION);
-!              5) A CAUCHY PROBABILITY PLOT
-!                (A LONG-TAILED DISTRIBUTION);
-!              6) A DETERMINATION OF THE BEST-FIT
-!                 SYMMETRIC DISTRIBUTION
-!                 TO THE DATA SET FROM AN
-!                 ADMISSABLE SET CONSISTING OF
-!                 43 SYMMETRIC DISTRIBUTIONS.
-!              THE ADMISSABLE SET OF SYMMETRIC
-!              DISTRIBUTIONS CONSIDERED INCLUDES THE
-!              UNIFORM, NORMAL, LOGISTIC,
-!              DOUBLE EXPONENTIAL, CAUCHY, AND
-!              37 DISTRIBUTIONS DRAWN FROM THE
-!              THE TUKEY LAMBDA DISTRIBUTIONAL FAMILY.
-!              THE GOODNESS OF FIT CRITERION IS THE MAXIMUM PROBABILITY
-!              PLOT CORRELATION COEFFICIENT CRITERION.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -98,7 +96,6 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG, LOG10, EXP,
 !                                         SIN, COS, ATAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
 !                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
 !                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
@@ -107,11 +104,6 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, ipr, irev, 
 !                UNPUBLISHED MANUSCRIPT.
 !              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
 !                DISTRIBUTIONS-1, PAGES 250-271.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.

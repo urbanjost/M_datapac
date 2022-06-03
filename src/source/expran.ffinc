@@ -7,7 +7,12 @@ SYNOPSIS
     Subroutine expran (X, Y)
 
 DESCRIPTION
-  Description
+   expran(3f) generates a random sample of size n
+   from the exponential distribution
+   with mean = 1 and standard deviation = 1.
+   this distribution is defined for all non-negative x,
+   and has the probability density function
+   f(x) = exp(-x).
 
 OPTIONS
     X   description of parameter
@@ -37,20 +42,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EXPRAN(N,Iseed,X)
       IMPLICIT NONE
-!*--EXPRAN6438
-!*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXPRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE EXPONENTIAL DISTRIBUTION
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(-X).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -67,7 +61,6 @@ REAL(kind=wp) :: X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14, 35-36.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,

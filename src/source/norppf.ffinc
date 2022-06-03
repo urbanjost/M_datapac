@@ -7,7 +7,15 @@ SYNOPSIS
     Subroutine norppf (X, Y)
 
 DESCRIPTION
-  Description
+   norppf(3f) computes the percent point
+   function value for the normal (gaussian)
+   distribution with mean = 0 and standard deviation = 1.
+   this distribution is defined for all x and has
+   the probability density function
+   f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+   note that the percent point function of a distribution
+   is identically the same as the inverse cumulative
+   distribution function of the distribution.
 
 OPTIONS
     X   description of parameter
@@ -37,24 +45,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==norppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORPPF(P,Ppf)
       IMPLICIT NONE
-!*--NORPPF14899
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
      &     q2 , q3 , q4 , r , t
       INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NORPPF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE PERCENT POINT
-!              FUNCTION VALUE FOR THE NORMAL (GAUSSIAN)
-!              DISTRIBUTION WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/SQRT(2*PI))*EXP(-X*X/2).
-!              NOTE THAT THE PERCENT POINT FUNCTION OF A DISTRIBUTION
-!              IS IDENTICALLY THE SAME AS THE INVERSE CUMULATIVE
-!              DISTRIBUTION FUNCTION OF THE DISTRIBUTION.
 !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
@@ -65,10 +59,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--ODEH AND EVANS, THE PERCENTAGE POINTS
 !                 OF THE NORMAL DISTRIBUTION, ALGORTIHM 70,
 !                 APPLIED STATISTICS, 1974, PAGES 96-97.
@@ -111,11 +102,6 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 ,   &
 !               THE ACCURACY OF APPROXIMATION
 !               BEING IMPROVED FROM 4.5*(10**-4)
 !               TO 1.5*(10**-8).
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

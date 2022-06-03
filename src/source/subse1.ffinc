@@ -26,7 +26,7 @@ DESCRIPTION
    thus all observations of X which correspond to elements in D which
    are smaller than DMIN or larger than DMAX are not copied over into Y.
 
-   the use of this subroutine gives the data analyst the capability
+   the use of subse1(3f) gives the data analyst the capability
    to easily extract subsets of the data prior to data analysis on
    each subset.
 

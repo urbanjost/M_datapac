@@ -7,7 +7,28 @@ SYNOPSIS
     Subroutine nbran (X, Y)
 
 DESCRIPTION
-  Description
+   nbran(3f) generates a random sample of size n
+   from the negative binomial distribution
+   with single precision 'bernoulli probability'
+   parameter = p,
+   and integer 'number of successes in bernoulli trials'
+   parameter = npar.
+   the negative binomial distribution used
+   herein has mean = npar*(1-p)/p
+   and standard deviation = sqrt(npar*(1-p)/(p*p))).
+   this distribution is defined for
+   all non-negative integer x--x = 0, 1, 2, ... .
+   this distribution has the probability function
+   f(x) = c(npar+x-1,npar) * p**npar * (1-p)**x.
+   where c(npar+x-1,npar) is the combinatorial function
+   equaling the number of combinations of npar+x-1 items
+   taken npar at a time.
+   the negative binomial distribution is the
+   distribution of the number of failures
+   before obtaining npar successes in an
+   indefinite sequence of bernoulli (0,1)
+   trials where the probability of success
+   in a single trial = p.
 
 OPTIONS
     X   description of parameter
@@ -37,36 +58,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
       IMPLICIT NONE
-!*--NBRAN13940
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: b(1) , g(1) , P , X
       INTEGER i , ib , ig , ipr , Istart , isum , j , N , Npar
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT NBRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE NEGATIVE BINOMIAL DISTRIBUTION
-!              WITH SINGLE PRECISION 'BERNOULLI PROBABILITY'
-!              PARAMETER = P,
-!              AND INTEGER 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
-!              PARAMETER = NPAR.
-!              THE NEGATIVE BINOMIAL DISTRIBUTION USED
-!              HEREIN HAS MEAN = NPAR*(1-P)/P
-!              AND STANDARD DEVIATION = SQRT(NPAR*(1-P)/(P*P))).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL NON-NEGATIVE INTEGER X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = C(NPAR+X-1,NPAR) * P**NPAR * (1-P)**X.
-!              WHERE C(NPAR+X-1,NPAR) IS THE COMBINATORIAL FUNCTION
-!              EQUALING THE NUMBER OF COMBINATIONS OF NPAR+X-1 ITEMS
-!              TAKEN NPAR AT A TIME.
-!              THE NEGATIVE BINOMIAL DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF FAILURES
-!              BEFORE OBTAINING NPAR SUCCESSES IN AN
-!              INDEFINITE SEQUENCE OF BERNOULLI (0,1)
-!              TRIALS WHERE THE PROBABILITY OF SUCCESS
-!              IN A SINGLE TRIAL = P.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -113,9 +107,7 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --NPAR SHOULD BE A POSITIVE INTEGER.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, BINRAN, GEORAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -148,11 +140,6 @@ REAL(kind=wp) :: b(1) , g(1) , P , X
 !                 SERIES 55, 1964, PAGE 929.
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------

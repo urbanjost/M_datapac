@@ -7,7 +7,23 @@ SYNOPSIS
     Subroutine poiran (X, Y)
 
 DESCRIPTION
-  Description
+   poiran(3f) generates a random sample of size n
+   from the poisson distribution
+   with single precision
+   tail length parameter = alamba.
+   the poisson distribution used
+   herein has mean = alamba
+   and standard deviation = sqrt(alamba).
+   this distribution is defined for
+   all discrete non-negative integer  x--x = 0, 1, 2, ... .
+   this distribution has the probability function
+   f(x) = exp(-alamba) * alamba**x / x!.
+   the poisson distribution is the
+   distribution of the number of events
+   in the interval (0,alamba) when
+   the waiting time between events
+   is exponentially distributed
+   with mean = 1 and standard deviation = 1.
 
 OPTIONS
     X   description of parameter
@@ -37,31 +53,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==poiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
       IMPLICIT NONE
-!*--POIRAN23713
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Alamba , e , sum , u(1) , X
       INTEGER i , ipr , Iseed , j , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT POIRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE POISSON DISTRIBUTION
-!              WITH SINGLE PRECISION
-!              TAIL LENGTH PARAMETER = ALAMBA.
-!              THE POISSON DISTRIBUTION USED
-!              HEREIN HAS MEAN = ALAMBA
-!              AND STANDARD DEVIATION = SQRT(ALAMBA).
-!              THIS DISTRIBUTION IS DEFINED FOR
-!              ALL DISCRETE NON-NEGATIVE INTEGER  X--X = 0, 1, 2, ... .
-!              THIS DISTRIBUTION HAS THE PROBABILITY FUNCTION
-!              F(X) = EXP(-ALAMBA) * ALAMBA**X / X!.
-!              THE POISSON DISTRIBUTION IS THE
-!              DISTRIBUTION OF THE NUMBER OF EVENTS
-!              IN THE INTERVAL (0,ALAMBA) WHEN
-!              THE WAITING TIME BETWEEN EVENTS
-!              IS EXPONENTIALLY DISTRIBUTED
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -82,7 +76,6 @@ REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     COMMENT--THE SINGLE PRECISION TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.

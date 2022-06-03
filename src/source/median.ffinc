@@ -7,7 +7,11 @@ SYNOPSIS
     Subroutine median (X, Y)
 
 DESCRIPTION
-  Description
+   median(3f) computes the
+   sample median
+   of the data in the input vector x.
+   the sample median = that value such that half the
+   data set is below it and half above it.
 
 OPTIONS
     X   description of parameter
@@ -37,19 +41,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
       IMPLICIT NONE
-!*--MEDIAN12627
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: hold , WS , X , Xmed , Y
       INTEGER i , iflag , ipr , iupper , Iwrite , N , nmid , nmidp1
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT MEDIAN
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE MEDIAN
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE SAMPLE MEDIAN = THAT VALUE SUCH THAT HALF THE
-!              DATA SET IS BELOW IT AND HALF ABOVE IT.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -75,9 +69,7 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 326.
 !               --KENDALL AND STUART, THE ADVANCED THEORY OF
@@ -87,11 +79,6 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
 !                 EDITION 6, 1967, PAGE 123.
 !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
 !                 ANALYSIS, EDITION 2, 1957, PAGE 70.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

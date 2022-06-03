@@ -7,7 +7,17 @@ SYNOPSIS
     Subroutine gamran (X, Y)
 
 DESCRIPTION
-  Description
+   gamran(3f) generates a random sample of size n
+   from the gamma distribution
+   with tail length parameter value = gamma.
+   the prototype gamma distribution used
+   herein has mean = gamma
+   and standard deviation = sqrt(gamma).
+   this distribution is defined for all positive x,
+   and has the probability density function
+   f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+   where the constant = the gamma function evaluated
+   at the value gamma.
 
 OPTIONS
     X   description of parameter
@@ -37,27 +47,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
-!*--GAMRAN8819
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
      &     X , xg , xg0 , xn(1) , xn0
       INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT GAMRAN
 !     ******STILL NEEDS ALGORITHM WORK ******
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE GAMMA DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              THE PROTOTYPE GAMMA DISTRIBUTION USED
-!              HEREIN HAS MEAN = GAMMA
-!              AND STANDARD DEVIATION = SQRT(GAMMA).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL POSITIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = (1/CONSTANT) * (X**(GAMMA-1)) * EXP(-X)
-!              WHERE THE CONSTANT = THE GAMMA FUNCTION EVALUATED
-!              AT THE VALUE GAMMA.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -82,7 +76,6 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--GREENWOOD, 'A FAST GENERATOR FOR
 !                 GAMMA-DISTRIBUTED RANDOM VARIABLES',
 !                 COMPSTAT 1974, PROCEEDINGS IN

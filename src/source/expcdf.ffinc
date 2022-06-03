@@ -8,7 +8,12 @@ SYNOPSIS
     Subroutine expcdf (X, Y)
 
 DESCRIPTION
-  Description
+   expcdf(3f) computes the cumulative distribution
+   function value for the exponential distribution
+   with mean = 1 and standard deviation = 1.
+   this distribution is defined for all non-negative x,
+   and has the probability density function
+   f(x) = exp(-x).
 
 OPTIONS
     X   description of parameter
@@ -36,22 +41,11 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==expcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE EXPCDF(X,Cdf)
-      IMPLICIT NONE
-!*--EXPCDF6072
-!*** Start of declarations inserted by SPAG
+SUBROUTINE EXPCDF(X,Cdf)
+IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
-      INTEGER ipr
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EXPCDF
+INTEGER ipr
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE EXPONENTIAL DISTRIBUTION
-!              WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(-X).
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -61,17 +55,10 @@ REAL(kind=wp) :: Cdf , X
 !             FUNCTION VALUE CDF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

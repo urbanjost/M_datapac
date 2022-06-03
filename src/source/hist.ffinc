@@ -8,7 +8,18 @@ SYNOPSIS
     Subroutine hist (X, Y)
 
 DESCRIPTION
-  Description
+   hist(3f) produces 2 histograms
+   (with differing class widths)
+   of the data in the input vector x.
+   the first  histogram has class width = 0.1
+   sample standard deviations;
+   the second histogram has class width = 0.2
+   sample standard deviations.
+   two histograms of the same data set
+   are printed out so as to give the data
+   analyst some feel for how dependent
+   the histogram shape is as a function
+   of the class width and number of classes.
 
 OPTIONS
     X   description of parameter
@@ -38,30 +49,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HIST(X,N)
       IMPLICIT NONE
-!*--HIST10109
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
      &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
       INTEGER i , icoun2 , icount , ievodd , ihist , inc , ipr , irev , &
      &        itlabl , ixlabl , j , jmax , jp1 , jsum , maxfre , mt ,   &
      &        mx , N , numcla , numhis
       INTEGER numout
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT HIST
 !
-!     PURPOSE--THIS SUBROUTINE PRODUCES 2 HISTOGRAMS
-!              (WITH DIFFERING CLASS WIDTHS)
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE FIRST  HISTOGRAM HAS CLASS WIDTH = 0.1
-!              SAMPLE STANDARD DEVIATIONS;
-!              THE SECOND HISTOGRAM HAS CLASS WIDTH = 0.2
-!              SAMPLE STANDARD DEVIATIONS.
-!              TWO HISTOGRAMS OF THE SAME DATA SET
-!              ARE PRINTED OUT SO AS TO GIVE THE DATA
-!              ANALYST SOME FEEL FOR HOW DEPENDENT
-!              THE HISTOGRAM SHAPE IS AS A FUNCTION
-!              OF THE CLASS WIDTH AND NUMBER OF CLASSES.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -74,17 +68,10 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--KENDALL AND STUART, THE ADVANCED THEORY OF
 !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 4.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.

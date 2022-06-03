@@ -30,7 +30,7 @@ DESCRIPTION
    elements in D2 which are smaller than D2MIN or larger than D2MAX,
    are not copied over into Y.
 
-   The use of this subroutine gives the data analyst the capability
+   The use of subse2(3f) gives the data analyst the capability
    to easily extract subsets of the datA prior to data analysis on
    each subset.
 
@@ -146,12 +146,6 @@ INTEGER       :: i, ipr, k, N, ndel, Ny
 !              (DUE TO THE PACKING OF
 !              THE RETAINED ELEMENTS IN Y)
 !              AFTER APPLICATION OF THIS SUBROUTINE.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--FEBRUARY  1976.
 !
 !---------------------------------------------------------------------

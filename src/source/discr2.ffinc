@@ -8,7 +8,35 @@ SYNOPSIS
     Subroutine discr2 (X, Y)
 
 DESCRIPTION
-  Description
+   discr2(3f) 'discretizes' the data
+   of the single precision vector x
+   into numcla classes.
+   all values in the vector x within a given class
+   will be mapped into the midpoint of that class.
+   the sample minimum and sample maximum
+   are automatically computed internally
+   and the class width (xdel) is computed as
+   the (sample max - sample min)/numcla.
+   the first class interval is from
+   the sample min to the sample min + xdel;
+   the second class interval is from
+   the sample min + xdel to
+   the sample min + 2*xdel;
+   ...;
+   the last class interval is from
+   the sample max - xdel to the sample max.
+   the use of discr2(3f)
+   (and the discre and discr3 subroutines)
+   gives the data analyst the capability of
+   constructing a discrete variate from
+   a continuous one.
+   the resulting discrete variate might then
+   (for example) be analyzed in itself for
+   gross structure, or for adherence to some
+   theroetical discrete probability model,
+   or the discrete variate might be used
+   as a subset definition vector for some
+   other variate.
 
 OPTIONS
     X   description of parameter
@@ -38,44 +66,10 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==discr2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE DISCR2(X,N,Numcla,Y)
       IMPLICIT NONE
-!*--DISCR24429
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
      &     xmax , xmin , Y
       INTEGER i , icount , ip , ipr , iupncl , N , Numcla
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT DISCR2
 !
-!     PURPOSE--THIS SUBROUTINE 'DISCRETIZES' THE DATA
-!              OF THE SINGLE PRECISION VECTOR X
-!              INTO NUMCLA CLASSES.
-!              ALL VALUES IN THE VECTOR X WITHIN A GIVEN CLASS
-!              WILL BE MAPPED INTO THE MIDPOINT OF THAT CLASS.
-!              THE SAMPLE MINIMUM AND SAMPLE MAXIMUM
-!              ARE AUTOMATICALLY COMPUTED INTERNALLY
-!              AND THE CLASS WIDTH (XDEL) IS COMPUTED AS
-!              THE (SAMPLE MAX - SAMPLE MIN)/NUMCLA.
-!              THE FIRST CLASS INTERVAL IS FROM
-!              THE SAMPLE MIN TO THE SAMPLE MIN + XDEL;
-!              THE SECOND CLASS INTERVAL IS FROM
-!              THE SAMPLE MIN + XDEL TO
-!              THE SAMPLE MIN + 2*XDEL;
-!              ...;
-!              THE LAST CLASS INTERVAL IS FROM
-!              THE SAMPLE MAX - XDEL TO THE SAMPLE MAX.
-!              THE USE OF THIS SUBROUTINE
-!              (AND THE DISCRE AND DISCR3 SUBROUTINES)
-!              GIVES THE DATA ANALYST THE CAPABILITY OF
-!              CONSTRUCTING A DISCRETE VARIATE FROM
-!              A CONTINUOUS ONE.
-!              THE RESULTING DISCRETE VARIATE MIGHT THEN
-!              (FOR EXAMPLE) BE ANALYZED IN ITSELF FOR
-!              GROSS STRUCTURE, OR FOR ADHERENCE TO SOME
-!              THEROETICAL DISCRETE PROBABILITY MODEL,
-!              OR THE DISCRETE VARIATE MIGHT BE USED
-!              AS A SUBSET DEFINITION VECTOR FOR SOME
-!              OTHER VARIATE.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
@@ -106,10 +100,7 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NUMCLA SHOULD BE POSITIVE AND NOT EXCEED 1000
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--THIS SUBROUTINE DIFFERS FROM THE DISCR3
 !              SUBROUTINE INASMUCH AS THIS SUBROUTINE
 !              PERFORMS ITS DISCRETIZATION BY OUTPUTING
@@ -128,12 +119,6 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
 !              TO HAVE        CALL DISCR2(X,N,10,X)
 !              IN WHICH THE VARIABLE NAME      X    IS USED
 !              AS BOTH THE FIRST AND FOURTH ARGUMENTS.
-!     REFERENCES--NONE.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --APRIL     1975.
 !     UPDATED         --NOVEMBER  1975.

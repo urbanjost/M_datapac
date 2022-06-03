@@ -7,7 +7,20 @@ SYNOPSIS
     Subroutine runs (X, Y)
 
 DESCRIPTION
-  Description
+   runs(3f) performs a runs analysis
+   of the data in the input vector x.
+   the analysis consists of first determining
+   the observed number of runs from the data,
+   and then computing
+   the expected number of runs,
+   the standard deviation of the number of runs,
+   and the resulting standardized statistic
+   for the number of runs for runs of various
+   lengths.
+   this is done for runs up, runs down, and
+   runs up and down.
+   this runs anslysis is a useful distribution-free
+   test of the randomness of a data set.
 
 OPTIONS
     X   description of parameter
@@ -37,8 +50,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==runs.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RUNS(X,N)
       IMPLICIT NONE
-!*--RUNS26596
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , anrdl , anrdlg , anrtl , anrtlg , anrul , anrulg , &
      &     c1 , c2 , c3 , c4 , den , enrtl , enrtlg , enrul , enrulg ,  &
      &     hold , snrtl , snrtlg
@@ -48,24 +59,7 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
      &        maxlnd , maxlnt , maxlnu , N , nm1 , nneg , npos , nrdl , &
      &        nrdlg , nrtl , nrtlg
       INTEGER nrul , nrulg , nzer
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT RUNS
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A RUNS ANALYSIS
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE ANALYSIS CONSISTS OF FIRST DETERMINING
-!              THE OBSERVED NUMBER OF RUNS FROM THE DATA,
-!              AND THEN COMPUTING
-!              THE EXPECTED NUMBER OF RUNS,
-!              THE STANDARD DEVIATION OF THE NUMBER OF RUNS,
-!              AND THE RESULTING STANDARDIZED STATISTIC
-!              FOR THE NUMBER OF RUNS FOR RUNS OF VARIOUS
-!              LENGTHS.
-!              THIS IS DONE FOR RUNS UP, RUNS DOWN, AND
-!              RUNS UP AND DOWN.
-!              THIS RUNS ANSLYSIS IS A USEFUL DISTRIBUTION-FREE
-!              TEST OF THE RANDOMNESS OF A DATA SET.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -79,20 +73,13 @@ REAL(kind=wp) :: snrul , snrulg , stat , WS , X , Y , znrdl , znrdlg , znrtl ,&
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--LEVENE AND WOLFOWITZ, ANNALS OF MATHEMATICAL
 !                 STATISTICS, 1944, PAGES 58-69;
 !                 ESPECIALLY PAGES 60, 63, AND 64.
 !     REFERENCES--BRADLEY, DISTRIBUTION-FREE STATISTICAL TESTS,
 !                 1968, CHAPTER 12, PAGES 271-282.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.

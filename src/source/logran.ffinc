@@ -7,7 +7,12 @@ SYNOPSIS
     Subroutine logran (X, Y)
 
 DESCRIPTION
-  Description
+   logran(3f) generates a random sample of size n
+   from the logistic distribution
+   with mean = 0 and standard deviation = pi/sqrt(3).
+   this distribution is defined for all x and has
+   the probability density function
+   f(x) = exp(x)/(1+exp(x)).
 
 OPTIONS
     X   description of parameter
@@ -37,20 +42,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==logran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGRAN(N,Iseed,X)
       IMPLICIT NONE
-!*--LOGRAN12227
-!*** Start of declarations inserted by SPAG
       INTEGER i , ipr , Iseed , N
 REAL(kind=wp) :: X
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT LOGRAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE LOGISTIC DISTRIBUTION
-!              WITH MEAN = 0 AND STANDARD DEVIATION = PI/SQRT(3).
-!              THIS DISTRIBUTION IS DEFINED FOR ALL X AND HAS
-!              THE PROBABILITY DENSITY FUNCTION
-!              F(X) = EXP(X)/(1+EXP(X)).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -67,7 +61,6 @@ REAL(kind=wp) :: X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,

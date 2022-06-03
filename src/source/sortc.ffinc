@@ -15,12 +15,12 @@ SYNOPSIS
 
 DESCRIPTION
 
-SORTC(3f) sorts (in ascending order) the N elements of the vector X,
-puts the resulting N sorted values into the single precision vector XS,
-rearranges the elements of the vector Y (according to the sort on X),
-and puts the rearranged Y values into the single precision vector YC.
-This subroutine gives the data analyst the ability to sort one data
-vector while 'carrying along' the elements of a second data vector.
+   SORTC(3f) sorts (in ascending order) the N elements of the vector X,
+   puts the resulting N sorted values into the single precision vector XS,
+   rearranges the elements of the vector Y (according to the sort on X),
+   and puts the rearranged Y values into the single precision vector YC.
+   This subroutine gives the data analyst the ability to sort one data
+   vector while 'carrying along' the elements of a second data vector.
 
 INPUT ARGUMENTS
      X   THE SINGLE PRECISION VECTOR OF

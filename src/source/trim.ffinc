@@ -8,7 +8,12 @@ SYNOPSIS
     Subroutine trim (X, Y)
 
 DESCRIPTION
-  Description
+   trim(3f) computes the
+   sample trimmed mean
+   of the data in the input vector x.
+   the trimming is such that
+   the lower 100*p1 % of the data is trimmed off
+   and the upper 100*p2 % of the data is trimmed off.
 
 OPTIONS
     X   description of parameter
@@ -42,12 +47,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
       INTEGER i, ipr, istart, istop, iupper, Iwrite, k, N, np1, np2
 
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE
-!              SAMPLE TRIMMED MEAN
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE TRIMMING IS SUCH THAT
-!              THE LOWER 100*P1 % OF THE DATA IS TRIMMED OFF
-!              AND THE UPPER 100*P2 % OF THE DATA IS TRIMMED OFF.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -100,9 +99,7 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
 !                 --THE SUM OF P1 AND P2 SHOULD BE
 !                   SMALLER THAN 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
 !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
 !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
@@ -111,11 +108,6 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
 !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
 !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !                 PRINCETON UNIVERSITY, 1969).
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !

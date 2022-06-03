@@ -8,7 +8,12 @@ SYNOPSIS
     Subroutine chscdf (X, Y)
 
 DESCRIPTION
-  Description
+   chscdf(3f) computes the cumulative distribution
+   function value for the chi-squared distribution
+   with integer degrees of freedom parameter = nu.
+   this distribution is defined for all non-negative x.
+   the probability density function is given
+   in the references below.
 
 OPTIONS
     X   description of parameter
@@ -38,20 +43,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE CHSCDF(X,Nu,Cdf)
       IMPLICIT NONE
-!*--CHSCDF1816
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
       INTEGER i , ibran , ievodd , imax , imin , ipr , Nu , nucut
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT CHSCDF
 !
-!     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION
-!              FUNCTION VALUE FOR THE CHI-SQUARED DISTRIBUTION
-!              WITH INTEGER DEGREES OF FREEDOM PARAMETER = NU.
-!              THIS DISTRIBUTION IS DEFINED FOR ALL NON-NEGATIVE X.
-!              THE PROBABILITY DENSITY FUNCTION IS GIVEN
-!              IN THE REFERENCES BELOW.
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
@@ -70,7 +64,6 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DEXP.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
@@ -81,11 +74,6 @@ REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
 !                 FOR STATISTICIANS, VOLUME 1, 1954,
 !                 PAGES 122-131.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.

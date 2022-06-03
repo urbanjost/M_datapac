@@ -7,7 +7,23 @@ SYNOPSIS
     Subroutine plotu (X, Y)
 
 DESCRIPTION
-  Description
+   plotu(3f) produces the following 4 plots--
+   all on the same printer page--
+
+     1. data plot--x(i) versus i
+     2. autoregression plot--x(i) versus x(i-1)
+     3. histogram
+     4. normal probability plot
+
+   in addition, location, scale, and autocorrelation
+   summary statistics are printed out automatically
+   on the same page.
+
+   these plots give the data analyst a quick
+   first-pass check at some of
+   the underlying assumptions typically made--
+   constant location, constant scale, no outliers,
+   unautocorrelated data, symmetry, normality.
 
 OPTIONS
     X   description of parameter
@@ -37,8 +53,6 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTU(X,N)
       IMPLICIT NONE
-!*--PLOTU20843
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
      &     promin , ratiox , ratioy , s , sum , sum1 , sum2 , sum23 ,   &
      &     sum3 , width , WS , X
@@ -54,24 +68,7 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
      &        j2 , j3 , j4 , mt , mx
       INTEGER my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
      &        numdis , nummax , nummin , numout
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT PLOTU
 !
-!     PURPOSE--THIS SUBROUTINE PRODUCES THE FOLLOWING 4 PLOTS--
-!              ALL ON THE SAME PRINTER PAGE--
-!              1) DATA PLOT--X(I) VERSUS I
-!              2) AUTOREGRESSION PLOT--X(I) VERSUS X(I-1)
-!              3) HISTOGRAM
-!              4) NORMAL PROBABILITY PLOT
-!              IN ADDITION, LOCATION, SCALE, AND AUTOCORRELATION
-!              SUMMARY STATISTICS ARE PRINTED OUT AUTOMATICALLY
-!              ON THE SAME PAGE.
-!              THESE PLOTS GIVE THE DATA ANALYST A QUICK
-!              FIRST-PASS CHECK AT SOME OF
-!              THE UNDERLYING ASSUMPTIONS TYPICALLY MADE--
-!              CONSTANT LOCATION, CONSTANT SCALE, NO OUTLIERS,
-!              UNAUTOCORRELATED DATA, SYMMETRY, NORMALITY.
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -91,7 +88,6 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES
 !                 FOR DATA ANALYSIS', (UNPUBLISHED MANUSCRIPT
 !                 AVAILABLE FROM AUTHOR), 1975.
@@ -99,11 +95,6 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 !                 1967, PAGES 260-308.
 !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
 !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.

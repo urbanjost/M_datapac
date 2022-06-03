@@ -8,7 +8,13 @@ SYNOPSIS
     Subroutine ev2ran (X, Y)
 
 DESCRIPTION
-  Description
+   ev2ran(3f) generates a random sample of size n
+   from the extreme value type 2 distribution
+   with tail length parameter value = gamma.
+   the prototype extreme value type 2 distribution used
+   herein is defined for all non-negative x,
+   and has the probability density function
+   f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
 
 OPTIONS
     X   description of parameter
@@ -38,21 +44,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==ev2ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
       IMPLICIT NONE
-!*--EV2RAN5956
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: Gamma , X
       INTEGER i , ipr , Iseed , N
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT EV2RAN
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
-!              FROM THE EXTREME VALUE TYPE 2 DISTRIBUTION
-!              WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!              THE PROTOTYPE EXTREME VALUE TYPE 2 DISTRIBUTION USED
-!              HEREIN IS DEFINED FOR ALL NON-NEGATIVE X,
-!              AND HAS THE PROBABILITY DENSITY FUNCTION
-!              F(X) = GAMMA * (X**(-GAMMA-1)) * EXP(-(X**(-GAMMA))).
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
@@ -73,7 +67,6 @@ REAL(kind=wp) :: Gamma , X
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN (1977)
 !     REFERENCES--TOCHER, THE ART OF SIMULATION,
 !                 1963, PAGES 14-15.
 !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,

@@ -7,7 +7,37 @@ SYNOPSIS
     Subroutine fourie (X, Y)
 
 DESCRIPTION
-  Description
+   fourie(3f) performs a Fourier analysis
+   of the data in the input vector X.
+   the analysis consists of the following--
+
+              1. computing (and printing)
+                 (for each of the harmonic frequencies
+                 1/n, 2/n, 3/n, ..., 1/2)
+                 the corresponding fourier coeficients,
+                 the amplitude, the phase,
+                 the contribution to the total variance,
+                 and the relative contribution to the total
+                 variance.
+              2. plotting out a fourier line spectrum =
+                 the periodogram = the plot of relative
+                 contribution to total variance
+                 (at each fourier frequency) versus
+                 the fourier frequency.
+   
+   in order that the results of the Fourier analysis
+   be valid and properly interpreted, the input data
+   in X should be equi-spaced in time
+   (or whatever variable corresponds to time).
+   
+   the horizontal axis of the spectra produced
+   by fourie(3f) is frequency.
+   this frequency is measured in units of
+   cycles per 'data point' or, more precisely, in
+   cycles per unit time where
+   'unit time' is defined as the
+   elapsed time between adjacent observations.
+   the range of the frequency axis is 0.0 to 0.5.
 
 OPTIONS
     X   description of parameter
@@ -37,48 +67,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FOURIE(X,N)
       IMPLICIT NONE
-!*--FOURIE7415
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
      &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
      &     suma , sumb , t
 REAL(kind=wp) :: vbias , WS , X , xbar
       INTEGER i , ievodd , ilower , ipage , ipr , iskip , iupper , j ,  &
      &        maxpag , N , nhalf , nnpage
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT FOURIE
 !
-!     PURPOSE--THIS SUBROUTINE PERFORMS A FOURIER ANALYSIS
-!              OF THE DATA IN THE INPUT VECTOR X.
-!              THE ANALYSIS CONSISTS OF THE FOLLOWING--
-!              1) COMPUTING (AND PRINTING)
-!                 (FOR EACH OF THE HARMONIC FREQUENCIES
-!                 1/N, 2/N, 3/N, ..., 1/2)
-!                 THE CORRESPONDING FOURIER COEFICIENTS,
-!                 THE AMPLITUDE, THE PHASE,
-!                 THE CONTRIBUTION TO THE TOTAL VARIANCE,
-!                 AND THE RELATIVE CONTRIBUTION TO THE TOTAL
-!                 VARIANCE.
-!              2) PLOTTING OUT A FOURIER LINE SPECTRUM =
-!                 THE PERIODOGRAM = THE PLOT OF RELATIVE
-!                 CONTRIBUTION TO TOTAL VARIANCE
-!                 (AT EACH FOURIER FREQUENCY) VERSUS
-!                 THE FOURIER FREQUENCY.
-!
-!              IN ORDER THAT THE RESULTS OF THE FOURIER ANALYSIS
-!              BE VALID AND PROPERLY INTERPRETED, THE INPUT DATA
-!              IN X SHOULD BE EQUI-SPACED IN TIME
-!              (OR WHATEVER VARIABLE CORRESPONDS TO TIME).
-!
-!              THE HORIZONTAL AXIS OF THE SPECTRA PRODUCED
-!              BY THIS SUBROUTINE IS FREQUENCY.
-!              THIS FREQUENCY IS MEASURED IN UNITS OF
-!              CYCLES PER 'DATA POINT' OR, MORE PRECISELY, IN
-!              CYCLES PER UNIT TIME WHERE
-!              'UNIT TIME' IS DEFINED AS THE
-!              ELAPSED TIME BETWEEN ADJACENT OBSERVATIONS.
-!              THE RANGE OF THE FREQUENCY AXIS IS 0.0 TO 0.5.
 !
 !     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
@@ -116,7 +111,6 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTSP AND CHSPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     COMMENT--FOURIER ANALYSIS DIFFERS FROM SPECTRAL ANALYSIS
 !              (AS, FOR EXAMPLE, PRODUCED BY THE DATAPAC
 !              TIMESE SUBROUTINE) IN THAT A
@@ -168,11 +162,6 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 !              SMALLEST DETECTABLE CYCLE IN THE DATA
 !              IS 2 DATA POINTS PER CYCLE.
 !     REFERENCES--JENKINS AND WATTS, ESPECIALLY PAGE 290.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE--301-921-2315
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.

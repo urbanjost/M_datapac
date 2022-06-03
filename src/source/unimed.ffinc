@@ -9,7 +9,31 @@ SYNOPSIS
     Subroutine unimed (X, Y)
 
 DESCRIPTION
-  Description
+   unimed(3f) generates the n order statistic medians
+   from the uniform (rectangular)
+   distribution on the unit interval (0,1).
+   this distribution has mean = 0.5
+   and standard deviation = sqrt(1/12) = 0.28867513.
+   this distribution has the probability
+   density function f(x) = 1.
+   unimed(3f) is a support subroutine for
+   all of the probability plot subroutines
+   in datapac; it is rarely used by the
+   data analyst directly.
+   a probability plot for a general distribution
+   is a plot of the ordered observations versus
+   the order statistic medians for that distribution.
+   the i-th order statistic median for a general
+   distribution is obtained by transforming
+   the i-th uniform order statistic median
+   by the percent point function of the desired
+   distribution--hence the importance of being able to
+   generate uniform order statistic medians.
+   it is of theroetical interest to note that
+   the i-th uniform order statistic median
+   in a sample of size n is identically the
+   median of the beta distribution
+   with parameters i and n-i+1.
 
 OPTIONS
     X   description of parameter
@@ -39,39 +63,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==unimed.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE UNIMED(N,X)
       IMPLICIT NONE
-!*--UNIMED31930
-!*** Start of declarations inserted by SPAG
 REAL(kind=wp) :: ai , an , gam , X
       INTEGER i , imax , ipr , irev , N , nevodd , nhalf
-!*** End of declarations inserted by SPAG
-!CCCC FOLLOWING LINE ADDED TO MAKE THIS A DLL.
-!      DLL_EXPORT UNIMED
 !
-!     PURPOSE--THIS SUBROUTINE GENERATES THE N ORDER STATISTIC MEDIANS
-!              FROM THE UNIFORM (RECTANGULAR)
-!              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
-!              THIS DISTRIBUTION HAS MEAN = 0.5
-!              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
-!              THIS DISTRIBUTION HAS THE PROBABILITY
-!              DENSITY FUNCTION F(X) = 1.
-!              THIS SUBROUTINE IS A SUPPORT SUBROUTINE FOR
-!              ALL OF THE PROBABILITY PLOT SUBROUTINES
-!              IN DATAPAC; IT IS RARELY USED BY THE
-!              DATA ANALYST DIRECTLY.
-!              A PROBABILITY PLOT FOR A GENERAL DISTRIBUTION
-!              IS A PLOT OF THE ORDERED OBSERVATIONS VERSUS
-!              THE ORDER STATISTIC MEDIANS FOR THAT DISTRIBUTION.
-!              THE I-TH ORDER STATISTIC MEDIAN FOR A GENERAL
-!              DISTRIBUTION IS OBTAINED BY TRANSFORMING
-!              THE I-TH UNIFORM ORDER STATISTIC MEDIAN
-!              BY THE PERCENT POINT FUNCTION OF THE DESIRED
-!              DISTRIBUTION--HENCE THE IMPORTANCE OF BEING ABLE TO
-!              GENERATE UNIFORM ORDER STATISTIC MEDIANS.
-!              IT IS OF THEROETICAL INTEREST TO NOTE THAT
-!              THE I-TH UNIFORM ORDER STATISTIC MEDIAN
-!              IN A SAMPLE OF SIZE N IS IDENTICALLY THE
-!              MEDIAN OF THE BETA DISTRIBUTION
-!              WITH PARAMETERS I AND N-I+1.
 !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF UNIFORM ORDER STATISTIC MEDIANS
 !                                TO BE GENERATED.
@@ -85,17 +79,9 @@ REAL(kind=wp) :: ai , an , gam , X
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
 !     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     LANGUAGE--ANSI FORTRAN.
 !     REFERENCES--FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
 !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!     WRITTEN BY--JAMES J. FILLIBEN
-!                 STATISTICAL ENGINEERING LABORATORY (205.03)
-!                 NATIONAL BUREAU OF STANDARDS
-!                 WASHINGTON, D. C. 20234
-!                 PHONE:  301-921-2315
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
