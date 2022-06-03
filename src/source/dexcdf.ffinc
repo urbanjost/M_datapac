@@ -75,4 +75,4 @@ REAL(kind=wp) :: Cdf , X
       IF ( X<=0.0_wp ) Cdf = 0.5_wp*EXP(X)
       IF ( X>0.0_wp ) Cdf = 1.0_wp - (0.5_wp*EXP(-X))
 !
-      END SUBROUTINE DEXCDF
+END SUBROUTINE DEXCDF

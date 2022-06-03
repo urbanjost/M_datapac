@@ -308,4 +308,4 @@ REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
          ENDDO
       ENDIF
 99013 FORMAT (' ',6X,123A1)
-      END SUBROUTINE HIST
+END SUBROUTINE HIST

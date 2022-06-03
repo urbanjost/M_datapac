@@ -121,4 +121,4 @@ REAL(kind=wp) :: hold , X , Xmin
       WRITE (ipr,99006) N , Xmin
 99006 FORMAT (' ','THE MINIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ',  &
      &        E15.8)
-      END SUBROUTINE MIN
+END SUBROUTINE MIN

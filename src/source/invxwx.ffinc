@@ -138,4 +138,4 @@ REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
          irarg = (i-1)*K + i
          R(irarg) = dum3(i)
       ENDDO
-      END SUBROUTINE INVXWX
+END SUBROUTINE INVXWX

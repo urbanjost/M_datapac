@@ -300,4 +300,4 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE POIPLT
+END SUBROUTINE POIPLT

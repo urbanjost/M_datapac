@@ -198,4 +198,4 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
       ENDIF
 99011 FORMAT (' ')
 !
-      END SUBROUTINE LOC
+END SUBROUTINE LOC

@@ -445,4 +445,4 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 99018 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99019 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOT9
+END SUBROUTINE PLOT9

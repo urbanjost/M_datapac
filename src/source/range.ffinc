@@ -134,4 +134,4 @@ REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
       WRITE (ipr,99006) N , Xrange
 99006 FORMAT (' ','THE SAMPLE RANGE OF THE ',I6,' OBSERVATIONS IS ',    &
      &        E15.8)
-      END SUBROUTINE RANGE
+END SUBROUTINE RANGE

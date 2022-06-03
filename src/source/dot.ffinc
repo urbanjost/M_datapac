@@ -60,4 +60,4 @@ REAL(kind=wp) :: A , B , Dotpro , Parpro
       ENDIF
       Dotpro = sum + dparpr
 !
-      END SUBROUTINE DOT
+END SUBROUTINE DOT

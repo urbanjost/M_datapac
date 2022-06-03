@@ -195,4 +195,4 @@ REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 99014    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS UNCHANGED IS ',I6)
       ENDIF
 !
-      END SUBROUTINE REPLAC
+END SUBROUTINE REPLAC

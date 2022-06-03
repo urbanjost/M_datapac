@@ -214,4 +214,4 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
       ENDIF
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-      END SUBROUTINE CHSPLT
+END SUBROUTINE CHSPLT

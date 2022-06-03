@@ -185,4 +185,4 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE NORPLT
+END SUBROUTINE NORPLT

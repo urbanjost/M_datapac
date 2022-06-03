@@ -226,4 +226,4 @@ REAL(kind=wp) :: yslope
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE GEOPLT
+END SUBROUTINE GEOPLT

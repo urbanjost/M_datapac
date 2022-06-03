@@ -427,4 +427,4 @@ REAL(kind=wp) :: r025 , r975 , rk , rmax , s , sd , sdr , ssq , sum , sum1 ,  &
       ENDDO
 99017 FORMAT (' ')
 !
-      END SUBROUTINE TIME
+END SUBROUTINE TIME

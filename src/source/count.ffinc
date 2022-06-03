@@ -147,4 +147,4 @@ REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
      &           ' OBSERVATIONS) IN THE INTERVAL ',E15.7,' TO ',E15.7,  &
      &           ' IS ',E15.7)
       ENDIF
-      END SUBROUTINE COUNT
+END SUBROUTINE COUNT

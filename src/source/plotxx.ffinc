@@ -294,4 +294,4 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
 99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
      &        ' SUBROUTINE')
 !
-      END SUBROUTINE PLOTXX
+END SUBROUTINE PLOTXX

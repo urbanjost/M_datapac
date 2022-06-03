@@ -287,4 +287,4 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
       ENDIF
 99020 FORMAT (' ')
 !
-      END SUBROUTINE DISCRE
+END SUBROUTINE DISCRE

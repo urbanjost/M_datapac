@@ -137,4 +137,4 @@ REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
       WRITE (ipr,99006) N , Xvar
 99006 FORMAT (' ','THE SAMPLE VARIANCE OF THE ',I6,' OBSERVATIONS IS ', &
      &        E15.8)
-      END SUBROUTINE VAR
+END SUBROUTINE VAR

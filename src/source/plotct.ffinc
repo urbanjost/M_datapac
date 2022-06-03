@@ -417,4 +417,4 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 99018 FORMAT (' ',18X,54A1)
 99019 FORMAT (' ',15X,A1)
 !
-      END SUBROUTINE PLOTCT
+END SUBROUTINE PLOTCT

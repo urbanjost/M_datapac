@@ -132,4 +132,4 @@ REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
       WRITE (ipr,99006) N , Xmidr
 99006 FORMAT (' ','THE SAMPLE MIDRANGE OF THE ',I6,' OBSERVATIONS IS ', &
      &        E22.15)
-      END SUBROUTINE MIDR
+END SUBROUTINE MIDR

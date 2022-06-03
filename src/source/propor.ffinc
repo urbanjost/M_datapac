@@ -155,4 +155,4 @@ REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
      &           ' OBSERVATIONS IN THE INTERVAL ',E15.7,' TO ',E15.7,   &
      &           ' IS ',E15.7)
       ENDIF
-      END SUBROUTINE PROPOR
+END SUBROUTINE PROPOR

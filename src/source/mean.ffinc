@@ -130,4 +130,4 @@ REAL(kind=wp) :: an , hold , sum , X , Xmean
       WRITE (ipr,99006) N , Xmean
 99006 FORMAT (' ','THE SAMPLE MEAN OF THE ',I6,' OBSERVATIONS IS ',     &
      &        E15.8)
-      END SUBROUTINE MEAN
+END SUBROUTINE MEAN

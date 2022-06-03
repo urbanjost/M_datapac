@@ -136,4 +136,4 @@ REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
       WRITE (ipr,99006) N , Xsd
 99006 FORMAT (' ','THE SAMPLE STANDARD DEVIATION OF THE ',I6,           &
      &        ' OBSERVATIONS IS ',E15.8)
-      END SUBROUTINE SD
+END SUBROUTINE SD

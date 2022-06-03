@@ -169,4 +169,4 @@ REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
      &     'THE LINEAR        CORRELATION COEFFICIENT OF THE 2 SETS OF '&
      &     ,I6,' OBSERVATIONS IS ',F14.5)
       ENDIF
-      END SUBROUTINE CORR
+END SUBROUTINE CORR

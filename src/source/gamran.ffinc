@@ -198,4 +198,4 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
       ENDIF
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE GAMRAN
+END SUBROUTINE GAMRAN

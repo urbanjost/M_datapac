@@ -186,4 +186,4 @@ REAL(kind=wp) :: Cdf , Gamma , X
       ENDIF
 99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE GAMCDF
+END SUBROUTINE GAMCDF

@@ -411,4 +411,4 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
 99019 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99020 FORMAT (' ','VALUE OF ',E15.8)
 !
-      END SUBROUTINE PLOTS
+END SUBROUTINE PLOTS

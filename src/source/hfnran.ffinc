@@ -154,4 +154,4 @@ REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
          ENDDO
       ENDIF
 !
-      END SUBROUTINE HFNRAN
+END SUBROUTINE HFNRAN

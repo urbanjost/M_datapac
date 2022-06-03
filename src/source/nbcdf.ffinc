@@ -328,4 +328,4 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
       ENDIF
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE NBCDF
+END SUBROUTINE NBCDF

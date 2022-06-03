@@ -402,4 +402,4 @@ REAL(kind=wp) :: ylower , ymax , ymin , yupper , ywidth
 99021 FORMAT (' ',18X,54A1)
 99022 FORMAT (' ',15X,A1)
 !
-      END SUBROUTINE PLOTST
+END SUBROUTINE PLOTST

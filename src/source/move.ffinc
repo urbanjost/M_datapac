@@ -144,4 +144,4 @@ INTEGER i , iend , ipr , istart , Ix1 , Iy1 , j , k , M
       ENDIF
 99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-      END SUBROUTINE MOVE
+END SUBROUTINE MOVE

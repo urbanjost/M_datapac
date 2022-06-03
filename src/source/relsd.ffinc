@@ -145,4 +145,4 @@ REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 99006 FORMAT (' THE RELATIVE STANDARD DEVIATION (= STANDARD ',          &
      &        'DEVIATION/MEAN) FOR THE ',I6,' OBSERVATIONS IS ',E12.8,  &
      &        ' PERCENT')
-      END SUBROUTINE RELSD
+END SUBROUTINE RELSD

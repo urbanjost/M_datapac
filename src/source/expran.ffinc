@@ -123,4 +123,4 @@ REAL(kind=wp) :: X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE EXPRAN
+END SUBROUTINE EXPRAN

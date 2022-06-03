@@ -250,4 +250,4 @@ REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE--',           &
      &        'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
 !
-      END SUBROUTINE RANK
+END SUBROUTINE RANK

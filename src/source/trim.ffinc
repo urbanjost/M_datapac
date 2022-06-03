@@ -238,4 +238,4 @@ REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtr
      &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE TRIM
+END SUBROUTINE TRIM

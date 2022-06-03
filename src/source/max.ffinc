@@ -122,4 +122,4 @@ REAL(kind=wp) :: hold , X , Xmax
       WRITE (ipr,99006) N , Xmax
 99006 FORMAT (' ','THE MAXIMUM OF THE SET OF ',I6,' OBSERVATIONS IS ',  &
      &        E15.8)
-      END SUBROUTINE MAX
+END SUBROUTINE MAX

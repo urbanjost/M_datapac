@@ -570,4 +570,4 @@ REAL(kind=wp) :: zmean2 , zmed , zmin , zrange , zrdeva , zrdevb , zsd
 99019 FORMAT (' ',F16.7,4A1,45A1,F16.7,4A1,45A1)
 99020 FORMAT (' ',17X,5F10.4,15X,4F10.4,F9.3)
 !
-      END SUBROUTINE PLOTU
+END SUBROUTINE PLOTU

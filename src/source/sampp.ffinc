@@ -174,4 +174,4 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &        '  THE VALUE OF THE THIRD INPUT ARGUMENT = ',E20.10,      &
      &        '*****')
 !
-      END SUBROUTINE SAMPP
+END SUBROUTINE SAMPP

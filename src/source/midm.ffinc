@@ -171,4 +171,4 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 99010 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
      &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
 !
-      END SUBROUTINE MIDM
+END SUBROUTINE MIDM

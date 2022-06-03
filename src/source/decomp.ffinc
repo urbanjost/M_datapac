@@ -205,4 +205,4 @@ REAL(kind=wp) :: D , dis , dn , DUM1 , DUM2 , Eta , hold , Q , R , risj ,     &
 !     END STEP NUMBER     IS     INTHE DECOMPOSITION
 !
       Insing = 1
-      END SUBROUTINE DECOMP
+END SUBROUTINE DECOMP

@@ -375,4 +375,4 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
 99019 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
 99020 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
-      END SUBROUTINE POIPPF
+END SUBROUTINE POIPPF

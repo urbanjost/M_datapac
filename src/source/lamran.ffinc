@@ -128,4 +128,4 @@ REAL(kind=wp) :: alamb2 , Alamba , q , X
          ENDDO
       ENDIF
 !
-      END SUBROUTINE LAMRAN
+END SUBROUTINE LAMRAN

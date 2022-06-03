@@ -152,4 +152,4 @@ REAL(kind=wp) :: Cdf , del , fintx , P , X
       ENDIF
 99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
-      END SUBROUTINE GEOCDF
+END SUBROUTINE GEOCDF

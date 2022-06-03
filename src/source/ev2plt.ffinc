@@ -211,4 +211,4 @@ REAL(kind=wp) :: yslope
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
-      END SUBROUTINE EV2PLT
+END SUBROUTINE EV2PLT

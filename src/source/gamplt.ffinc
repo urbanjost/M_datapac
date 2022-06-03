@@ -381,4 +381,4 @@ REAL(kind=wp) :: yslope
          GOTO 500
       ENDIF
 !
-      END SUBROUTINE GAMPLT
+END SUBROUTINE GAMPLT

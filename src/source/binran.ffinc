@@ -219,4 +219,5 @@ REAL(kind=wp) :: g(1) , P , u(1) , X
       RETURN
 99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
-99999 END SUBROUTINE BINRAN
+99999 continue
+END SUBROUTINE BINRAN

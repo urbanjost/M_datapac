@@ -255,4 +255,4 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
 99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 99016 FORMAT (' ')
 !
-      END SUBROUTINE DISCR3
+END SUBROUTINE DISCR3

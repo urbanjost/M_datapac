@@ -140,4 +140,4 @@ REAL(kind=wp) :: hold , WS , X , Xmed , Y
       WRITE (ipr,99006) N , Xmed
 99006 FORMAT (' ','THE SAMPLE MEDIAN OF THE ',I6,' OBSERVATIONS IS ',   &
      &        E15.8)
-      END SUBROUTINE MEDIAN
+END SUBROUTINE MEDIAN

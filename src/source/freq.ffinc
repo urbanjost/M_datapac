@@ -188,4 +188,4 @@ REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,&
       ENDIF
 99013 FORMAT (' ',I8,4X,E17.10,3X,I8,6X,F8.4,10X,I8,6X,F8.4)
 99014 FORMAT (' ')
-      END SUBROUTINE FREQ
+END SUBROUTINE FREQ

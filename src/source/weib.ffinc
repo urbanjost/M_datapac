@@ -348,4 +348,4 @@ REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
       ENDIF
 99020 FORMAT (' ')
 !
-      END SUBROUTINE WEIB
+END SUBROUTINE WEIB

@@ -121,4 +121,4 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
       sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
       Pdf = 1.0_wp/sf
 !
-      END SUBROUTINE LAMPDF
+END SUBROUTINE LAMPDF

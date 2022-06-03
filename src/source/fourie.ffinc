@@ -342,4 +342,4 @@ REAL(kind=wp) :: vbias , WS , X , xbar
 99013 FORMAT ('1')
 99014 FORMAT (' ')
 !
-      END SUBROUTINE FOURIE
+END SUBROUTINE FOURIE
