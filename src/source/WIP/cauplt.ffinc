@@ -60,14 +60,15 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 154-165.
+REFERENCES
+  o filliben, 'techniques for tail length analysis', proceedings of the
+    eighteenth conference on the design of experiments in army research
+    development and testing (aberdeen, maryland, october, 1972),
+    pages 425-450.
+  o hahn and shapiro, statistical methods in engineering, 1967, pages
+    260-308.
+  o johnson and kotz, continuous univariate distributions--1, 1970,
+    pages 154-165.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -80,7 +81,6 @@ SUBROUTINE CAUPLT(X,N)
 REAL(kind=wp) :: X(:)
 INTEGER       :: N
 REAL(kind=wp) :: an, arg, cc, hold, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
-!REAL(kind=wp),allocatable :: Y(:), W(:)
 REAL(kind=wp) :: Y(7500), W(7500)
 INTEGER       ::  i, iupper
 
@@ -90,10 +90,6 @@ EQUIVALENCE (W(1),WS(7501))
  
 DATA tau/10.02040649_wp/
 
-!   if(allocated(y))deallocate(y)
-!   if(allocated(w))deallocate(w)
-!   allocate(y(n),w(n)
- 
       iupper = size(y)
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS

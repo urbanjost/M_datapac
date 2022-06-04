@@ -53,9 +53,9 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --GRANGER AND HATANAKA, PAGES 170 TO 189,
-!                 ESPECIALLY PAGES 173, 177, AND 182.
+REFERENCES
+ o granger and hatanaka, pages 170 to 189, especially pages 173, 177,
+   and 182.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==demod.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

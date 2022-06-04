@@ -33,17 +33,14 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 34-35.
-!               --MOOD AND GRABLE, INTRODUCTION TO THE
-!                 THEORY OF STATISTICS, 1963, PAGES 226-227.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGE 171.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 48.
+REFERENCES
+ o tocher, the art of simulation, 1963, pages 34-35.
+ o mood and grable, introduction to the theory of statistics, 1963,
+   pages 226-227.
+ o johnson and kotz, continuous univariate distributions--1, 1970,
+   page 171.
+ o hastings and peacock, statistical distributions--a handbook for students
+   and practitioners, 1975, page 48.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

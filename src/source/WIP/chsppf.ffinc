@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE CHSPPF(P,Nu,Ppf)
 
 DESCRIPTION
-   chsppf(3f) computes the percent point function value for the
+   CHSPPF(3f) computes the percent point function value for the
    chi-squared distribution with integer degrees of freedom parameter
    = nu.
 
@@ -37,26 +37,26 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!                 TECHNOMETRICS, 1962, PAGES 1-15,
-!                 ESPECIALLY PAGES 3-5.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41,
-!                 AND PAGES 940-943.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 46-51.
+
+REFERENCES
+ o wilk, gnanadesikan, and huyett, 'probability plots for the gamma
+   distribution', technometrics, 1962, pages 1-15, especially pages 3-5.
+ o national bureau of standards applied mathematics series 55, 1964,
+   page 257, formula 6.1.41, and pages 940-943.
+ o johnson and kotz, continuous univariate distributions--1, 1970,
+   pages 166-206.
+ o hastings and peacock, statistical distributions--a handbook for
+   students and practitioners, 1975, pages 46-51.
+
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==chsppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

@@ -61,12 +61,15 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
 <A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
+<A HREF=#4>Input Arguments</A><BR>
+<A HREF=#5>Output Arguments</A><BR>
+<A HREF=#6>Examples</A><BR>
+<A HREF=#7>Author</A><BR>
+<A HREF=#8>Maintainer</A><BR>
+<A HREF=#9>License</A><BR>
+<A HREF=#10>References</A><BR>
 </BLOCKQUOTE>
-<A name=8>
+<A name=11>
 
      <H3>SYNOPSIS</H3>
 
@@ -108,97 +111,61 @@ success in a single trial = p.
 
 </A>
 <BLOCKQUOTE>
+</BLOCKQUOTE>
+<A name=4>
+
+     <H3>INPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-INPUT  ARGUMENTS-<B>-N</B>      = THE DESIRED INTEGER NUMBER
+<B>n</B> </TD><TD valign=bottom>
+the desired integer number of random numbers to be generated.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OF RANDOM NUMBERS TO BE
+<B>p</B> </TD><TD valign=bottom>
+the value of the &#146;bernoulli probability&#146; parameter for the
+<TABLE width=100% cellpadding=3><!-- tsb: the value of the &#146;bernoulli probability&#146; parameter for the
+ -->
+<TR></TR><TR></TR>
+<TR valign=top><TD colspan=2>
+<B>binomial distribution.</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+p should be between 0.0 (exclusively)
+and 1.0 (exclusively).
+</TD></TR>
+<TR></TR></TABLE><!-- .TP -->
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-GENERATED.
+<B>npar</B> </TD><TD valign=bottom>
+the integer value of the &#146;number of bernoulli trials&#146;
+<TABLE width=100% cellpadding=3><!-- tsb: the integer value of the &#146;number of bernoulli trials&#146;
+ -->
+<TR></TR><TR></TR>
+<TR valign=top><TD colspan=2>
+<B>parameter.</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+npar should be a positive integer.
 </TD></TR>
+<TR></TR></TABLE></TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
+
+     <H3>OUTPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
+<TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--P</B>      = THE VALUE
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OF THE &#146;BERNOULLI PROBABILITY&#146;
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-PARAMETER FOR THE BINOMIAL
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-DISTRIBUTION.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-P SHOULD BE BETWEEN
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-0.0 (EXCLUSIVELY) AND
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-1.0 (EXCLUSIVELY).
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--NPAR</B>   = THE INTEGER VALUE
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OF THE &#146;NUMBER OF BERNOULLI TRIALS&#146;
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-PARAMETER.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-NPAR SHOULD BE A POSITIVE INTEGER.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OUTPUT ARGUMENTS-<B>-X</B>      = A VECTOR
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-(OF DIMENSION AT LEAST N)
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-INTO WHICH THE GENERATED
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-RANDOM SAMPLE WILL BE PLACED.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OUTPUT-<B>-A</B> RANDOM SAMPLE OF SIZE N
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-FROM THE BINOMIAL DISTRIBUTION
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-WITH &#146;BERNOULLI PROBABILITY&#146; PARAMETER = P
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-AND &#146;NUMBER OF BERNOULLI TRIALS&#146; PARAMETER = NPAR.
+<B>x</B> </TD><TD valign=bottom>
+a vector (of dimension at least n) into which the generated
+random sample of size n from the binomial distribution
+will be placed; with &#146;bernoulli probability&#146; parameter = p
+and &#146;number of bernoulli trials&#146; parameter = npar.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
-<A name=4>
+<A name=6>
 
      <H3>EXAMPLES</H3>
 
@@ -217,7 +184,7 @@ Sample program:
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=5>
+<A name=7>
 
      <H3>AUTHOR</H3>
 
@@ -226,7 +193,7 @@ Results:
 The original DATAPAC library was written by James Filliben of the Statistical
 Engineering Division, National Institute of Standards and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=8>
 
      <H3>MAINTAINER</H3>
 
@@ -234,7 +201,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=9>
 
      <H3>LICENSE</H3>
 
@@ -242,86 +209,57 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<TABLE cellpadding=3><!-- tsb: CC0-1.0
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-REFERENCES
-<TABLE width=100% cellpadding=3><!-- tsb: REFERENCES
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--JOHNSON</B> AND KOTZ, DISCRETE
+<A name=10>
+
+     <H3>REFERENCES</H3>
+
+</A>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-DISTRIBUTIONS, 1969, PAGES 50-86.
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Hastings and Peacock, Statistical Distributions,
+A Handbook for Students and Practitioners, 1975,
+Page 41.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--HASTINGS</B> AND PEACOCK, STATISTICAL
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Feller, An Introduction to Probability Theory and Its Applications,
+Volume 1, Edition 2, 1957, Pages 135-142.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-DISTRIBUTIONS-<B>-A</B> HANDBOOK FOR
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+National Bureau of Standards Applied Mathematics
+Series 55, 1964, Page 929.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-STUDENTS AND PRACTITIONERS, 1975,
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Kendall and Stuart, The Advanced Theory of Statistics,
+Volume 1, Edition 2, 1963, Pages 120-125.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-PAGE 41.
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Mood and Grable, Introduction to the Theory of Statistics,
+Edition 2, 1963, Pages 64-69.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--FELLER</B>, AN INTRODUCTION TO PROBABILITY
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Tocher, The Art Of Simulation, 1963, Pages 39-40.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-THEORY AND ITS APPLICATIONS, VOLUME 1,
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-EDITION 2, 1957, PAGES 135-142.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--NATIONAL</B> BUREAU OF STANDARDS APPLIED MATHEMATICS
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-SERIES 55, 1964, PAGE 929.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--KENDALL</B> AND STUART, THE ADVANCED THEORY OF
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 120-125.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--MOOD</B> AND GRABLE, INTRODUCTION TO THE THEORY
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--TOCHER</B>, THE ART OF SIMULATION,
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-1963, PAGES 39-40.
-</TD></TR>
-<TR></TR></TABLE></TD></TR>
-<TR></TR></TABLE><P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>binran (3m_datapac)</TD> <TD align=right width=33%><I>June 03, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 2f4234d5-ccd7-4276-a0ca-b7d6bf1d1646 using man macros.</FONT>
+<TR></TR></TABLE></BLOCKQUOTE>
+<P><HR>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>binran (3m_datapac)</TD> <TD align=right width=33%><I>June 04, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 2248432a-df54-4bd2-90f4-0ba88aaf7eaf using man macros.</FONT>
 <br><br><center><img src="images/binran.gif"></center>
 </div>
 </div>

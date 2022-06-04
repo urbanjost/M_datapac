@@ -1,0 +1,105 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file min.3m_datapac.man
+NAME
+   min(3f) - [M_datapac:STATISTICS] compute the minimum of a data vector
+
+SYNOPSIS
+    SUBROUTINE MIN(X,N,Iwrite,Xmin)
+
+     real(kind=wp),intent(in)  :: X(:)
+     integer,intent(in)        :: N
+     integer,intent(in)        :: Iwrite
+     real(kind=wp),intent(out) :: Xmin
+
+DESCRIPTION
+   MIN(3f) computes the sample minimum of the data in the input vector X.
+
+INPUT ARGUMENTS
+
+  X       The vector of (unsorted or sorted) observations.
+
+  N       The integer number of observations in the vector X.
+
+  IWRITE  An integer flag code which (if set to 0) will suppress
+          The printing of the sample minimum as it is computed; or (if set
+          to some integer value not equal to 0; like, say, 1) will cause
+          The printing of the sample minimum at the time it is computed.
+
+OUTPUT ARGUMENTS
+
+  XMIN   The value of the computed sample minimum.
+
+EXAMPLES
+  Sample program:
+
+   program demo_min
+   use M_datapac, only : min
+   implicit none
+   real :: xmin
+      call min([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmin)
+      write(*,*)xmin
+   end program demo_min
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the Statistical
+   Engineering Division, National Institute of Standards and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+REFERENCES
+ o David, Order Statistics, 1970, Page 7.
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==min.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine min(X,N,Iwrite,Xmin)
+real(kind=wp) :: hold , X(:) , Xmin
+integer       :: i , Iwrite , N
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      if ( N<1 ) then
+         write (g_io,99001)
+         99001 format (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO MIN(3f) IS NON-POSITIVE *****')
+         write (g_io,99002) N
+         99002 format (' ***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         return
+      else
+         if ( N==1 ) then
+            write (g_io,99003)
+            99003 format (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO MIN(3f) HAS THE VALUE 1 *****')
+            Xmin = X(1)
+         else
+            hold = X(1)
+            do i = 2 , N
+               if ( X(i) /= hold ) goto 50
+            enddo
+            write (g_io,99004) hold
+            99004 format (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO MIN(3f) HAS ALL ELEMENTS = ', &
+	    & g0, &
+	    & ' *****')
+            Xmin = X(1)
+         endif
+         goto 100
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      continue
+         Xmin = X(1)
+         do i = 2 , N
+            if ( X(i) < Xmin ) Xmin = X(i)
+         enddo
+      endif
+!
+ 100  continue
+      if ( Iwrite==0 ) return
+      write (G_IO,99005)
+      99005 format (' ')
+      write (g_io,99006) N , Xmin
+      99006 format (' ','THE MINIMUM OF THE SET OF ',I0,' OBSERVATIONS IS ', g0)
+
+end subroutine min

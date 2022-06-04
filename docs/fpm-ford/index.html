@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Statistics">
+    
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="./favicon.png">
+
+    <title> M_datapac </title>
+
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/pygments.css" rel="stylesheet">
+    <link href="./css/font-awesome.min.css" rel="stylesheet">
+    <link href="./css/local.css" rel="stylesheet">
+    
+    <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="./js/jquery-2.1.3.min.js"></script>
+    <script src="./js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html">M_datapac </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="./lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="./lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="./lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            <li><a href="./lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/procedures.html">Procedures</a></li>
+
+                             
+
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="./search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <p>Statistics</p>
+        	 
+	<p> Find us on&hellip;</p>
+        <p>
+        	 
+          <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_datapac" role="button">GitHub</a>
+			 
+			 
+			 
+			 
+	         
+			 
+        </p>
+      </div>
+
+      <div class="row" id='text'>
+		  
+        <div class="col-md-8">
+		  
+          <h1>M_datapac</h1>
+          <h2 id="name">Name</h2>
+<p>M_datapac(3f) - an fpm module build from the NIST DATAPAC package
+   (LICENSE: CC0-1.0)</p>
+<h2 id="synopsis">Synopsis</h2>
+<div class="codehilite"><pre><span></span><code>       use M_datapac
+</code></pre></div>
+
+<h2 id="description">Description</h2>
+<p><strong>A WORK IN PROGRESS</strong></p>
+<p>The original DATAPAC library was written by James Filliben of the Statistical
+Engineering Division,
+<a href="https://www.nist.gov/">National Institute of Standards and Technology</a>.
+After these routines were incorporated into the <a href="https://www.nist.gov/statistical-engineering-division/dataplot">Dataplot</a>
+program, development of DATAPAC stopped. However, there are some
+subroutines here that may be of interest. In particular, there are
+a number of routines for computing various probability functions.</p>
+<p>It is also useful to have the routines apart from Dataplot as a separate
+make(1) and fpm(1) package for use in other applications.</p>
+<p>It is provided on an &ldquo;as is&rdquo; basis.</p>
+<p>This software is not formally supported and is not being further developed
+other than to develop a test suite at this time.</p>
+<p>There is no formal documentation yet for the subroutines. However, most
+of the subroutines contain extensive usage instructions in the comments
+in the source code.</p>
+<p>These routines were written in Fortran 77 and were ported to a modern
+Fortran module accessible via <code>fpm</code>.</p>
+<p>The initial conversion was done with
+<a href="https://polyhedron.com/?product=plusfort">spag</a> from plusfort.</p>
+<h2 id="needs">Needs</h2>
+<p>Looking for unit tests and example programs that use DATAPAC, and to
+reformat the comments to man-page format.</p>
+<h2 id="building-the-module-using-make1">Building the Module Using make(1) <img alt="gmake" src="docs/images/gnu.gif"></h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">git</span> <span class="nv">clone</span> <span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">urbanjost</span><span class="o">/</span><span class="nv">M_datapac</span>.<span class="nv">git</span>
+ <span class="nv">cd</span> <span class="nv">M_datapac</span><span class="o">/</span><span class="nv">src</span>
+ # <span class="nv">change</span> <span class="nv">Makefile</span> <span class="k">if</span> <span class="nv">not</span> <span class="nv">using</span> <span class="nv">one</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">listed</span> <span class="nv">compilers</span>
+
+ # <span class="k">for</span> <span class="nv">gfortran</span>
+ <span class="nv">make</span> <span class="nv">clean</span>
+ <span class="nv">make</span> <span class="nv">F90</span><span class="o">=</span><span class="nv">gfortran</span> <span class="nv">gfortran</span>
+
+ # <span class="k">for</span> <span class="nv">ifort</span>
+ <span class="nv">make</span> <span class="nv">clean</span>
+ <span class="nv">make</span> <span class="nv">F90</span><span class="o">=</span><span class="nv">ifort</span> <span class="nv">ifort</span>
+
+ # <span class="k">for</span> <span class="nv">nvfortran</span>
+ <span class="nv">make</span> <span class="nv">clean</span>
+ <span class="nv">make</span> <span class="nv">F90</span><span class="o">=</span><span class="nv">nvfortran</span> <span class="nv">nvfortran</span>
+</code></pre></div>
+
+<p>This will compile the Fortran module and basic example
+program that exercise the routine and place the resulting
+files in the src/lib/ directory.</p>
+<h2 id="build-and-test-with-fpm">Build and Test with FPM <img alt="-" src="docs/images/fpm_logo.gif"></h2>
+<p>Alternatively, download the github repository and build it with
+   fpm ( as described at <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> )</p>
+<div class="codehilite"><pre><span></span><code>        git clone https://github.com/urbanjost/M_datapac.git
+        <span class="nb">cd</span> M_datapac
+    fpm build
+</code></pre></div>
+
+<p>Tests and examples are under construction as well</p>
+<div class="codehilite"><pre><span></span><code>        fpm run <span class="s2">&quot;*&quot;</span>
+        fpm run --example <span class="s2">&quot;*&quot;</span>
+        fpm <span class="nb">test</span>
+</code></pre></div>
+
+<p>or just list it as a dependency in your fpm.toml project file.</p>
+<div class="codehilite"><pre><span></span><code>        <span class="k">[dependencies]</span>
+        <span class="n">M_datapac</span>        <span class="o">=</span> <span class="p">{</span> <span class="n">git</span> <span class="o">=</span> <span class="s">&quot;https://github.com/urbanjost/M_datapac.git&quot;</span> <span class="p">}</span>
+</code></pre></div>
+
+<h2 id="contents">Contents</h2>
+<p>The following subroutines are available in M_datapac:
+( Note they all contain a man-page template at the top that is a place-holder as the documentation is being re-composed)</p>
+<ul>
+<li><a href="src/source/autoco.ffinc">AUTOCO</a>  - compute the sample autocorrelation coefficient</li>
+<li><a href="src/source/WIP/loc.ffinc">LOC</a>        - compute the sample mean, midrange, midmean, and median</li>
+<li><a href="src/source/WIP/mean.ffinc">MEAN</a>      - compute the mean of a data vector</li>
+<li><a href="src/source/WIP/median.ffinc">MEDIAN</a>  - compute the median of a data vector</li>
+<li><a href="src/source/WIP/midm.ffinc">MIDM</a>      - compute the midmean of a data vector</li>
+<li><a href="src/source/WIP/midr.ffinc">MIDR</a>      - compute the midrange of a data vector</li>
+<li><a href="src/source/WIP/move.ffinc">MOVE</a>      - move selected elements of one vector into another vector</li>
+<li><a href="src/source/WIP/poly.ffinc">POLY</a>      - compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)</li>
+<li><a href="src/source/WIP/propor.ffinc">PROPOR</a>  - compute the sample proportion</li>
+<li><a href="src/source/WIP/range.ffinc">RANGE</a>    - compute the sample range</li>
+<li><a href="src/source/WIP/relsd.ffinc">RELSD</a>    - compute the relative standard deviation of a vector of observations</li>
+<li><a href="src/source/WIP/runs.ffinc">RUNS</a>      - perform a runs test</li>
+<li><a href="src/source/WIP/scale.ffinc">SCALE</a>    - compute the sample range, sample standard deviation, sample relative standard deviation, and sample variance</li>
+<li><a href="src/source/WIP/sd.ffinc">SD</a>          - compute the standard deviation of a vector of observations</li>
+<li><a href="src/source/WIP/spcorr.ffinc">SPCORR</a>  - compute the sample Spearman rank correlation coefficient between two vectors of observations</li>
+<li><a href="src/source/WIP/stmom3.ffinc">STMOM3</a>  - compute the third central moment (i.e., the skewness) of a vector of observations</li>
+<li><a href="src/source/WIP/stmom4.ffinc">STMOM4</a>  - compute the fourth central moment (i.e., the kurtosis) of a vector of observations</li>
+<li><a href="src/source/WIP/tail.ffinc">TAIL</a>      - performs a symmetric distribution tail length analysis</li>
+<li><a href="src/source/WIP/tol.ffinc">TOL</a>        - compute normal and distribution-free tolerance limits</li>
+<li><a href="src/source/WIP/trim.ffinc">TRIM</a>      - computes the sample trimmed mean of the data in the input vector X.</li>
+<li><a href="src/source/WIP/unimed.ffinc">UNIMED</a>  - generate the /N/ order statistic medians (used in creating probability plots)</li>
+<li><a href="src/source/WIP/var.ffinc">VAR</a>        - compute the sample variance of a vector of observations</li>
+<li><a href="src/source/WIP/weib.ffinc">WEIB</a>      - perform a Weibull distribution analysis (Weibull PPCC analysis)</li>
+<li><a href="src/source/WIP/wind.ffinc">WIND</a>      - compute the sample Winsorized mean of a vector of observations</li>
+</ul>
+<h2 id="_1"></h2>
+<ul>
+<li><a href="src/source/WIP/replac.ffinc">REPLAC</a>  - replace all observations in a vector within a given interval with a user-specified constant</li>
+<li><a href="src/source/WIP/retain.ffinc">RETAIN</a>  - retain all observations in a vector within a user-specified interval</li>
+<li><a href="src/source/WIP/subse1.ffinc">SUBSE1</a>  - extract the elements of a vector which fall into a user-specified subset (one subset variable)</li>
+<li><a href="src/source/WIP/subse2.ffinc">SUBSE2</a>  - extract the elements of a vector which fall into a user-specified subset (two subset variables)</li>
+<li><a href="src/source/WIP/subset.ffinc">SUBSET</a>  - extract the elements of a vector which fall into a user-specified subset (one subset variable)</li>
+</ul>
+<h2 id="now-available-in-modern-fortran">now available in modern Fortran</h2>
+<ul>
+<li><a href="src/source/max.ffinc">MAX</a>        - compute the maximum of a data vector (see Fortran intrinsic MAXVAL(3f))</li>
+<li><a href="src/source/min.ffinc">MIN</a>        - compute the minimum of a data vector (see Fortran intrinsic MINVAL(3f))</li>
+<li><a href="src/source/dot.ffinc">DOT</a>        - compute the dot product of two equal-sized vectors (see Fortran intrinsic DOT_PRODUCT(3f))</li>
+</ul>
+<h2 id="sort">sort</h2>
+<ul>
+<li><a href="src/source/WIP/rank.ffinc">RANK</a>      - rank a vector of sample observations</li>
+<li><a href="src/source/sortc.ffinc">SORTC</a>    - sort a vector of sample observations and &ldquo;carry&rdquo; a second vector</li>
+<li><a href="src/source/WIP/sortp.ffinc">SORTP</a>    - sorts and ranks a numeric vector X</li>
+<li><a href="src/source/WIP/sort.ffinc">SORT</a>      - sort a vector of sample observations, also return the positions in the original vector</li>
+</ul>
+<h2 id="random-values">random values</h2>
+<ul>
+<li><a href="src/source/WIP/betran.ffinc">BETRAN</a>  - generate beta random numbers</li>
+<li><a href="src/source/WIP/binran.ffinc">BINRAN</a>  - generate binomial random numbers</li>
+<li><a href="src/source/WIP/cauran.ffinc">CAURAN</a>  - generate Cauchy random numbers</li>
+<li><a href="src/source/WIP/chsran.ffinc">CHSRAN</a>  - generate chi-square random numbers</li>
+<li><a href="src/source/WIP/dexran.ffinc">DEXRAN</a>  - generate double exponential random numbers</li>
+<li><a href="src/source/WIP/ev1ran.ffinc">EV1RAN</a>  - generate extreme value type 1 (Gumbel) random numbers</li>
+<li><a href="src/source/WIP/ev2ran.ffinc">EV2RAN</a>  - generate extreme value type 2 (Frechet) random numbers</li>
+<li><a href="src/source/WIP/expran.ffinc">EXPRAN</a>  - generate exponential random numbers</li>
+<li><a href="src/source/WIP/fran.ffinc">FRAN</a>      - generate F random numbers</li>
+<li><a href="src/source/WIP/gamran.ffinc">GAMRAN</a>  - generate gamma random numbers</li>
+<li><a href="src/source/WIP/georan.ffinc">GEORAN</a>  - generate geometric random numbers</li>
+<li><a href="src/source/WIP/hfnran.ffinc">HFNRAN</a>  - generate half-normal random numbers</li>
+<li><a href="src/source/WIP/lgnran.ffinc">LGNRAN</a>  - generate lognormal random numbers</li>
+<li><a href="src/source/WIP/logran.ffinc">LOGRAN</a>  - generate logistic random numbers</li>
+<li><a href="src/source/WIP/nbran.ffinc">NBRAN</a>    - generate negative binomial random numbers</li>
+<li><a href="src/source/WIP/norran.ffinc">NORRAN</a>  - generate normal random numbers</li>
+<li><a href="src/source/WIP/parran.ffinc">PARRAN</a>  - generate Pareto random numbers</li>
+<li><a href="src/source/WIP/poiran.ffinc">POIRAN</a>  - generate Poisson random numbers</li>
+<li><a href="src/source/WIP/ranper.ffinc">RANPER</a>  - generates a random permutation</li>
+<li><a href="src/source/WIP/tran.ffinc">TRAN</a>      - generate /t/ random numbers</li>
+<li><a href="src/source/WIP/uniran.ffinc">UNIRAN</a>  - generate Uniform random numbers</li>
+<li><a href="src/source/WIP/weiran.ffinc">WEIRAN</a>  - generate Weibull random numbers</li>
+</ul>
+<h2 id="probability-density-function">probability density function</h2>
+<ul>
+<li><a href="src/source/WIP/caupdf.ffinc">CAUPDF</a>  - compute the Cauchy probability density function</li>
+<li><a href="src/source/WIP/lgnpdf.ffinc">LGNPDF</a>  - compute the lognormal probability density function</li>
+<li><a href="src/source/WIP/logpdf.ffinc">LOGPDF</a>  - compute the logistic probability density function</li>
+<li><a href="src/source/WIP/norpdf.ffinc">NORPDF</a>  - compute the normal probability density function</li>
+<li><a href="src/source/WIP/unipdf.ffinc">UNIPDF</a>  - compute the Uniform probability density function</li>
+</ul>
+<h2 id="percent-point-function">percent point function</h2>
+<ul>
+<li><a href="src/source/WIP/binppf.ffinc">BINPPF</a>  - compute the binomial percent point function</li>
+<li><a href="src/source/WIP/cauppf.ffinc">CAUPPF</a>  - compute the Cauchy percent point function</li>
+<li><a href="src/source/WIP/chsppf.ffinc">CHSPPF</a>  - compute the chi-square percent point function</li>
+<li><a href="src/source/WIP/lgnppf.ffinc">LGNPPF</a>  - compute the lognormal percent point function</li>
+<li><a href="src/source/WIP/logppf.ffinc">LOGPPF</a>  - compute the logistic percent point function</li>
+<li><a href="src/source/WIP/nbppf.ffinc">NBPPF</a>    - compute the negative binomial percent point function</li>
+<li><a href="src/source/WIP/norppf.ffinc">NORPPF</a>  - compute the normal percent point function</li>
+<li><a href="src/source/WIP/parppf.ffinc">PARPPF</a>  - compute the Pareto percent point function</li>
+<li><a href="src/source/WIP/poippf.ffinc">POIPPF</a>  - compute the Poisson percent point function</li>
+<li><a href="src/source/WIP/sampp.ffinc">SAMPP</a>    - compute the sample 100P percent point (i.e., percentile)</li>
+<li><a href="src/source/WIP/tppf.ffinc">TPPF</a>      - compute the /t/ percent point function</li>
+<li><a href="src/source/WIP/unippf.ffinc">UNIPPF</a>  - compute the Uniform percent point function</li>
+<li><a href="src/source/WIP/weippf.ffinc">WEIPPF</a>  - compute the Weibull percent point function</li>
+</ul>
+<h2 id="sparsity-function">sparsity function</h2>
+<ul>
+<li><a href="src/source/WIP/causf.ffinc">CAUSF</a>    - compute the Cauchy sparsity function</li>
+<li><a href="src/source/WIP/lamsf.ffinc">LAMSF</a>    - compute the Tukey-Lambda sparsity function</li>
+<li><a href="src/source/WIP/logsf.ffinc">LOGSF</a>    - compute the logistic sparsity function</li>
+<li><a href="src/source/WIP/norsf.ffinc">NORSF</a>    - compute the normal sparsity function</li>
+<li><a href="src/source/WIP/unisf.ffinc">UNISF</a>    - compute the Uniform sparsity function</li>
+</ul>
+<h2 id="cumulative-distribution-function">cumulative distribution function</h2>
+<ul>
+<li><a href="src/source/WIP/bincdf.ffinc">BINCDF</a>  - compute the binomial cumulative distribution function</li>
+<li><a href="src/source/WIP/caucdf.ffinc">CAUCDF</a>  - compute the Cauchy cumulative distribution function</li>
+<li><a href="src/source/WIP/chscdf.ffinc">CHSCDF</a>  - compute the chi-square cumulative distribution function</li>
+<li><a href="src/source/WIP/lgncdf.ffinc">LGNCDF</a>  - compute the lognormal cumulative distribution function</li>
+<li><a href="src/source/WIP/logcdf.ffinc">LOGCDF</a>  - compute the logistic cumulative distribution function</li>
+<li><a href="src/source/WIP/nbcdf.ffinc">NBCDF</a>    - compute the negative binomial cumulative distribution function</li>
+<li><a href="src/source/WIP/norcdf.ffinc">NORCDF</a>  - compute the normal cumulative distribution function</li>
+<li><a href="src/source/WIP/parcdf.ffinc">PARCDF</a>  - compute the Pareto cumulative distribution function</li>
+<li><a href="src/source/WIP/poicdf.ffinc">POICDF</a>  - compute the Poisson cumulative distribution function</li>
+<li><a href="src/source/WIP/poicdf.ffinc">POICDF</a>  - compute the Poisson cumulative distribution function</li>
+<li><a href="src/source/WIP/tcdf.ffinc">TCDF</a>      - compute the /t/ cumulative distribution function</li>
+<li><a href="src/source/unicdf.ffinc">UNICDF</a>  - trivially compute the Uniform cumulative distribution function</li>
+<li><a href="src/source/WIP/weicdf.ffinc">WEICDF</a>  - compute the Weibull cumulative distribution function</li>
+</ul>
+<h2 id="input-and-output-formatting">input and output formatting</h2>
+<ul>
+<li><a href="src/source/WIP/readg.ffinc">READG</a>    - perform a format-free read of data from a file restricted to a user-specified set of columns</li>
+<li><a href="src/source/WIP/read.ffinc">READ</a>      - perform a format-free read of data from a file</li>
+<li><a href="src/source/WIP/skipr.ffinc">SKIPR</a>    - skip over a user-specified number of rows in reading a data file</li>
+<li><a href="src/source/WIP/write.ffinc">WRITE</a>    - write a vector of observations in a &ldquo;neat&rdquo; fashion</li>
+</ul>
+<h2 id="line-printer-plots">line printer plots</h2>
+<ul>
+<li><a href="src/source/WIP/cauplt.ffinc">CAUPLT</a>  - generate a Cauchy probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/chsplt.ffinc">CHSPLT</a>  - generate a chi-square probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/dexplt.ffinc">DEXPLT</a>  - generate a double exponential probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/ev1plt.ffinc">EV1PLT</a>  - generate a extreme value type 1 (Gumbel) probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/ev2plt.ffinc">EV2PLT</a>  - generate a extreme value type 2 (Frechet) probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/expplt.ffinc">EXPPLT</a>  - generate a exponential probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/gamplt.ffinc">GAMPLT</a>  - generate a gamma probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/gamplt.ffinc">GEOPLT</a>  - generate a geometric probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/hfnplt.ffinc">HFNPLT</a>  - generate a half-normal probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/lamplt.ffinc">LAMPLT</a>  - generate a Tukey-Lambda probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/lgnplt.ffinc">LGNPLT</a>  - generate a lognormal probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/logplt.ffinc">LOGPLT</a>  - generate a logistic probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/norout.ffinc">NOROUT</a>  - Performs a normal outlier analysis on the data in the input vector X.</li>
+<li><a href="src/source/WIP/norplt.ffinc">NORPLT</a>  - generate a normal probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/parplt.ffinc">PARPLT</a>  - generate a Pareto probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/plot6.ffinc">PLOT6</a>    - generate a line printer plot</li>
+<li><a href="src/source/WIP/plot7.ffinc">PLOT7</a>    - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/WIP/plot8.ffinc">PLOT8</a>    - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/WIP/plot9.ffinc">PLOT9</a>    - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/WIP/plot10.ffinc">PLOT10</a>  - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/WIP/plotco.ffinc">PLOTCO</a>  - generate a line printer autocorrelation plot</li>
+<li><a href="src/source/WIP/plotc.ffinc">PLOTC</a>    - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/WIP/plotct.ffinc">PLOTCT</a>  - generate a line printer plot for the terminal (71 characters wide)</li>
+<li><a href="src/source/WIP/plotsc.ffinc">PLOTSC</a>  - generate a line printer plot with special plot characters</li>
+<li><a href="src/source/WIP/plotsp.ffinc">PLOTSP</a>  - generate a line printer spectrum plot</li>
+<li><a href="src/source/WIP/plot.ffinc">PLOT</a>      - yields a one-page printer plot of y(i) versus x(i)</li>
+<li><a href="src/source/WIP/plots.ffinc">PLOTS</a>    - generate a line printer plot of Y vs X</li>
+<li><a href="src/source/WIP/plotst.ffinc">PLOTST</a>  - generate a line printer plot of Y vs X for the terminal (71 characters wide)</li>
+<li><a href="src/source/WIP/plott.ffinc">PLOTT</a>    - generate a line printer plot of Y vs X for the terminal (71 characters wide)</li>
+<li><a href="src/source/WIP/plotu.ffinc">PLOTU</a>    - generate a line printer 4-plot</li>
+<li><a href="src/source/WIP/plotx.ffinc">PLOTX</a>    - generate a line printer run sequence plot</li>
+<li><a href="src/source/WIP/plotxt.ffinc">PLOTXT</a>  - generate a line printer run sequence plot for the terminal (71 characters wide)</li>
+<li><a href="src/source/WIP/plotxx.ffinc">PLOTXX</a>  - generate a line printer lag plot</li>
+<li><a href="src/source/WIP/pltsct.ffinc">PLTSCT</a>  - generate a line printer plot with special plot characters for the terminal (71 characters wide)</li>
+<li><a href="src/source/WIP/pltxxt.ffinc">PLTXXT</a>  - generate a line printer lag plot for the terminal (71 characters wide)</li>
+<li><a href="src/source/WIP/poiplt.ffinc">POIPLT</a>  - generate a Poisson probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/time.ffinc">TIME</a>      - perform a time series analysis (autocorrelation plot, a test for white noise, a &ldquo;pilot&rdquo; spectrum, and 4 other estimated spectra based on differing bandwidth)</li>
+<li><a href="src/source/WIP/tplt.ffinc">TPLT</a>      - generate a /t/ probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/uniplt.ffinc">UNIPLT</a>  - generate a Uniform probability plot (line printer graph)</li>
+<li><a href="src/source/WIP/weiplt.ffinc">WEIPLT</a>  - generate a Weibull probability plot (line printer graph)</li>
+</ul>
+<hr>
+<h2 id="documentation">Documentation   <img alt="docs" src="docs/images/docs.gif"></h2>
+<h3 id="user-under-construction">User (<strong>UNDER CONSTRUCTION</strong>)</h3>
+<ul>
+<li>
+<p>a simple index to the man-pages in HTML form for the
+   <a href="https://urbanjost.github.io/M_datapac/man3.html">routines</a>
+   and <a href="https://urbanjost.github.io/M_datapac/man1.html">programs</a></p>
+</li>
+<li>
+<p>A single page that uses javascript to combine all the HTML
+     descriptions of the man-pages is in
+     <a href="https://urbanjost.github.io/M_datapac/BOOK_M_datapac.html">BOOK_M_datapac</a>.</p>
+</li>
+<li>
+<p><img alt="man-pages" src="docs/images/manpages.gif">
+     There are man-pages in the repository download in the docs/ directory
+     that may be installed on ULS (Unix-Like Systems) </p>
+<ul>
+<li><a href="https://urbanjost.github.io/M_datapac/manpages.zip">manpages.zip</a></li>
+<li><a href="https://urbanjost.github.io/M_datapac/manpages.tgz">manpages.tgz</a></li>
+</ul>
+</li>
+<li>
+<p><a href="docs/CHANGELOG.md">CHANGELOG</a> provides a history of significant changes</p>
+</li>
+</ul>
+<h3 id="developerunder-construction">Developer(<strong>UNDER CONSTRUCTION</strong>)</h3>
+<ul>
+<li><a href="https://urbanjost.github.io/M_datapac/fpm-ford/index.html">ford(1) output</a>.</li>
+<li><a href="https://urbanjost.github.io/M_datapac/doxygen_out/html/index.html">doxygen(1) output</a>.</li>
+<li><a href="docs/STATUS.md">github action status</a></li>
+</ul>
+<hr>
+<h3 id="license">License</h3>
+<p>CC0-1.0</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.nist.gov/itl/sed/datapac">datapac</a></li>
+<li><a href="https://github.com/usnistgov/dataplot">dataplot</a></li>
+</ul>
+<hr>
+        </div>
+		  
+        <div class="col-md-4">
+	  <div class="well">
+          <h2>Developer Info</h2>
+          <h4>John S. Urban</h4>
+          
+          
+			   
+            <div class="text-center"><div class="btn-group" role="group">
+              
+              
+              
+              <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_datapac"><i class="fa fa-github fa-lg"></i></a>
+				  
+				  
+              
+              
+              
+              
+            </div></div>
+            
+       </div>
+       </div>
+       
+      </div>
+      
+      
+      
+      
+		
+      <div class="row">
+        <div class="col-xs-6 col-sm-4">
+              <h3>Source Files</h3>
+              <ul>
+                
+                  
+                    <li><a href='./sourcefile/demo_autoco.f90.html'>demo_autoco.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/demo_betran.f90.html'>demo_betran.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/demo_bincdf.f90.html'>demo_bincdf.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/demo_binppf.f90.html'>demo_binppf.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/demo_binran.f90.html'>demo_binran.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/demo_caucdf.f90.html'>demo_caucdf.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/demo_caupdf.f90.html'>demo_caupdf.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/demo_cauplt.f90.html'>demo_cauplt.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/demo_cauppf.f90.html'>demo_cauppf.f90</a></li>
+                  
+                
+                  
+                    <li><a href='./sourcefile/demo_cauran.f90.html'>demo_cauran.f90</a></li>
+                  
+                
+                  
+                    <li><a href="./lists/files.html"><em>All source files&hellip;</em></a></li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+          </div>
+          
+		  <div class="col-xs-6 col-sm-4">
+              <h3>Modules</h3>
+              <ul>
+                
+                  
+                    <li><a href='./module/m_datapac.html'>M_datapac</a></li>
+                  
+                
+                  
+                    <li><a href='./module/m_datapac_d.html'>M_datapac_d</a></li>
+                  
+                
+                  
+                    <li><a href='./module/m_datapac_n.html'>M_datapac_n</a></li>
+                  
+                
+                  
+                    <li><a href='./module/m_datapac_s.html'>M_datapac_s</a></li>
+                  
+                
+              </ul>
+          </div>
+          
+          
+		  <div class="col-xs-6 col-sm-4">
+              <h3>Procedures</h3>
+              <ul>
+                
+                  
+                    <li><a href='./proc/autoco.html'>autoco</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/autoco~2.html'>autoco</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/betran.html'>BETRAN</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/betran~2.html'>BETRAN</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/bincdf.html'>BINCDF</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/bincdf~2.html'>BINCDF</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/binppf.html'>BINPPF</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/binppf~2.html'>BINPPF</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/binran.html'>BINRAN</a></li>
+                  
+                
+                  
+                    <li><a href='./proc/binran~2.html'>BINRAN</a></li>
+                  
+                
+                  
+                    <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+          </div>
+          
+          
+      </div>
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2022 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2022-06-03 22:20  
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="./js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="./tipuesearch/tipuesearch_content.js"></script>
+    <script src="./tipuesearch/tipuesearch_set.js"></script>
+    <script src="./tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

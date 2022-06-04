@@ -61,19 +61,28 @@ random numbers
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output Arguments</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=8>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
 </A>
 <BLOCKQUOTE>
-SUBROUTINE <B>DEXRAN</B>(N,Istart,X)
+subroutine <B>dexran</B>(N,Istart,X)
+<P>
+<PRE>
+       integer,intent(in) :: N
+       integer            :: Istart
+       real(kind=wp)      :: X(:)
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -81,35 +90,55 @@ SUBROUTINE <B>DEXRAN</B>(N,Istart,X)
 
 </A>
 <BLOCKQUOTE>
-<B>dexran</B>(3f) generates a random sample of size n from the double
-exponential (laplace) distribution with mean = 0 and standard deviation
+<B>DEXRAN</B>(3f) generates a random sample of size n from the double
+exponential (Laplace) distribution with mean = 0 and standard deviation
 = <B>sqrt</B>(2).
 <P>
-this distribution is defined for all x and has the probability
+This distribution is defined for all X and has the probability
 density function
 <P>
 <PRE>
-       f(x) = 0.5*exp(-abs(x)).
+       f(X) = 0.5*exp(-abs(X))
 <P>
 </PRE>
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>X</B> </TD><TD valign=bottom>
-description of parameter
+<B>N</B> </TD><TD valign=bottom>
+The desired integer number of random numbers to be generated.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+<B>ISTART</B> </TD><TD valign=bottom>
+An integer flag code which (if set to 0) will start the
+generator over and hence produce the same random sample
+over and over again upon successive calls to this subroutine
+within a run; or (if set to some integer value not equal to
+0, like, say, 1) will allow the generator to continue from
+where it stopped and hence produce different random samples
+upon successive calls to this subroutine within a run.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
+
+     <H3>OUTPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B>X</B> </TD><TD valign=bottom>
+A single precision vector (of dimension at least N) into which
+the generated random sample will be placed.
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -128,16 +157,17 @@ Sample program:
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=5>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -145,7 +175,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -153,66 +183,45 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<TABLE cellpadding=3><!-- tsb: CC0-1.0
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-REFERENCES
-<TABLE width=100% cellpadding=3><!-- tsb: REFERENCES
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--TOCHER</B>, THE ART OF SIMULATION,
+<A name=9>
+
+     <H3>REFERENCES</H3>
+
+</A>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Tocher, The Art of Simulation, 1963, Pages 14-15.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-1963, PAGES 14-15.
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--HAMMERSLEY</B> AND HANDSCOMB, MONTE CARLO METHODS,
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Filliben, Simple and Robust Linear Estimation of the Location Parameter
+of a Symmetric Distribution (Unpublished PH.D. dissertation, Princeton
+University), 1969, Page 231.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-1964, PAGE 36.
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Filliben, &#146;The percent point function&#146;, (Unpublished manuscript),
+1970, Pages 28-31.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--FILLIBEN</B>, SIMPLE AND ROBUST LINEAR ESTIMATION
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Johnson and Kotz, Continuous Univariate Distributions-<B>-2</B>, 1970,
+Pages 22-36.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OF THE LOCATION PARAMETER OF A SYMMETRIC
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-PRINCETON UNIVERSITY), 1969, PAGE 231.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--FILLIBEN</B>, &#146;THE PERCENT POINT FUNCTION&#146;,
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-(UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--JOHNSON</B> AND KOTZ, CONTINUOUS UNIVARIATE
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-DISTRIBUTIONS-<B>-2</B>, 1970, PAGES 22-36.
-</TD></TR>
-<TR></TR></TABLE></TD></TR>
-<TR></TR></TABLE><P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>dexran (3m_datapac)</TD> <TD align=right width=33%><I>June 03, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from f86e6cc1-c005-4355-8578-87b668b30935 using man macros.</FONT>
+<TR></TR></TABLE></BLOCKQUOTE>
+<P><HR>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>dexran (3m_datapac)</TD> <TD align=right width=33%><I>June 04, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 3964e24f-3182-4d51-8d3c-3371fa83253a using man macros.</FONT>
 <br><br><center><img src="images/dexran.gif"></center>
 </div>
 </div>

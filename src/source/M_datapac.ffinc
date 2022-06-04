@@ -1,0 +1,377 @@
+use,intrinsic :: iso_fortran_env, only : stdin=>input_unit,  stdout=>output_unit, stderr=>error_unit
+implicit none
+private
+integer, save           :: G_IO=stdout  ! IO LUN for all write statements
+real(kind=wp),parameter :: G_pi = 3.14159265358979_wp
+real(kind=wp),parameter :: G_pi_dp = 3.14159265358979d0
+
+public :: &
+autoco  ,  betran  ,  bincdf  ,  binppf  ,  binran  ,  caucdf  ,  caupdf  ,  cauplt  ,  cauppf  ,  cauran  , &
+causf   ,  chscdf  ,  chsplt  ,  chsppf  ,  chsran  ,  code    ,  copy    ,  corr    ,  count   ,  decomp  , &
+define  ,  delete  ,  demod   ,  dexcdf  ,  dexpdf  ,  dexplt  ,  dexppf  ,  dexran  ,  dexsf   ,  discr2  , &
+discr3  ,  discre  ,  dot     ,  ev1cdf  ,  ev1plt  ,  ev1ppf  ,  ev1ran  ,  ev2cdf  ,  ev2plt  ,  ev2ppf  , &
+ev2ran  ,  expcdf  ,  exppdf  ,  expplt  ,  expppf  ,  expran  ,  expsf   ,  extrem  ,  fcdf    ,  fourie  , &
+fran    ,  freq    ,  gamcdf  ,  gamplt  ,  gamppf  ,  gamran  ,  geocdf  ,  geoplt  ,  geoppf  ,  georan  , &
+hfncdf  ,  hfnplt  ,  hfnppf  ,  hfnran  ,  hist    ,  invxwx  ,  lamcdf  ,  lampdf  ,  lamplt  ,  lamppf  , &
+lamran  ,  lamsf   ,  lgncdf  ,  lgnplt  ,  lgnppf  ,  lgnran  ,  loc     ,  logcdf  ,  logpdf  ,  logplt  , &
+logppf  ,  logran  ,  logsf   ,  max     ,  mean    ,  median  ,  midm    ,  midr    ,  min     ,  move    , &
+nbcdf   ,  nbppf   ,  nbran   ,  norcdf  ,  norout  ,  norpdf  ,  norplt  ,  norppf  ,  norran  ,  norsf   , &
+parcdf  ,  parplt  ,  parppf  ,  parran  ,  plot10  ,  plot6   ,  plot7   ,  plot8   ,  plot9   ,  plotc   , &
+plotco  ,  plotct  ,  plot    ,  plotsc  ,  plots   ,  plotsp  ,  plotst  ,  plott   ,  plotu   ,  plotx   , &
+plotxt  ,  plotxx  ,  pltsct  ,  pltxxt  ,  poicdf  ,  poiplt  ,  poippf  ,  poiran  ,  poly    ,  propor  , &
+range   ,  rank    ,  ranper  ,  read    ,  readg   ,  relsd   ,  replac  ,  retain  ,  runs    ,  sampp   , &
+scale   ,  sd      ,             sortc   ,  sort    ,  sortp   ,  spcorr  ,  stmom3  ,  stmom4  ,  subse1  , &
+subse2  ,  subset  ,  tail    ,  tcdf    ,  time    ,  tol     ,  tplt    ,  tppf    ,  tran    ,  trim    , &
+unicdf  ,  unimed  ,  unipdf  ,  uniplt  ,  unippf  ,  uniran  ,  unisf   ,  var     ,  weib    ,  weicdf  , &
+weiplt  ,  weippf  ,  weiran  ,  wind    ,  write 
+
+interface  autoco;  module  procedure  autoco  ;  end  interface
+interface  betran;  module  procedure  betran  ;  end  interface
+interface  bincdf;  module  procedure  bincdf  ;  end  interface
+interface  binppf;  module  procedure  binppf  ;  end  interface
+interface  binran;  module  procedure  binran  ;  end  interface
+interface  caucdf;  module  procedure  caucdf  ;  end  interface
+interface  caupdf;  module  procedure  caupdf  ;  end  interface
+interface  cauplt;  module  procedure  cauplt  ;  end  interface
+interface  cauppf;  module  procedure  cauppf  ;  end  interface
+interface  cauran;  module  procedure  cauran  ;  end  interface
+interface  causf;   module  procedure  causf   ;  end  interface
+interface  chscdf;  module  procedure  chscdf  ;  end  interface
+interface  chsplt;  module  procedure  chsplt  ;  end  interface
+interface  chsppf;  module  procedure  chsppf  ;  end  interface
+interface  chsran;  module  procedure  chsran  ;  end  interface
+interface  code;    module  procedure  code    ;  end  interface
+interface  copy;    module  procedure  copy    ;  end  interface
+interface  corr;    module  procedure  corr    ;  end  interface
+interface  count;   module  procedure  count   ;  end  interface
+interface  decomp;  module  procedure  decomp  ;  end  interface
+interface  define;  module  procedure  define  ;  end  interface
+interface  delete;  module  procedure  delete  ;  end  interface
+interface  demod;   module  procedure  demod   ;  end  interface
+interface  dexcdf;  module  procedure  dexcdf  ;  end  interface
+interface  dexpdf;  module  procedure  dexpdf  ;  end  interface
+interface  dexplt;  module  procedure  dexplt  ;  end  interface
+interface  dexppf;  module  procedure  dexppf  ;  end  interface
+interface  dexran;  module  procedure  dexran  ;  end  interface
+interface  dexsf;   module  procedure  dexsf   ;  end  interface
+interface  discr2;  module  procedure  discr2  ;  end  interface
+interface  discr3;  module  procedure  discr3  ;  end  interface
+interface  discre;  module  procedure  discre  ;  end  interface
+interface  dot;     module  procedure  dot     ;  end  interface
+interface  ev1cdf;  module  procedure  ev1cdf  ;  end  interface
+interface  ev1plt;  module  procedure  ev1plt  ;  end  interface
+interface  ev1ppf;  module  procedure  ev1ppf  ;  end  interface
+interface  ev1ran;  module  procedure  ev1ran  ;  end  interface
+interface  ev2cdf;  module  procedure  ev2cdf  ;  end  interface
+interface  ev2plt;  module  procedure  ev2plt  ;  end  interface
+interface  ev2ppf;  module  procedure  ev2ppf  ;  end  interface
+interface  ev2ran;  module  procedure  ev2ran  ;  end  interface
+interface  expcdf;  module  procedure  expcdf  ;  end  interface
+interface  exppdf;  module  procedure  exppdf  ;  end  interface
+interface  expplt;  module  procedure  expplt  ;  end  interface
+interface  expppf;  module  procedure  expppf  ;  end  interface
+interface  expran;  module  procedure  expran  ;  end  interface
+interface  expsf;   module  procedure  expsf   ;  end  interface
+interface  extrem;  module  procedure  extrem  ;  end  interface
+interface  fcdf;    module  procedure  fcdf    ;  end  interface
+interface  fourie;  module  procedure  fourie  ;  end  interface
+interface  fran;    module  procedure  fran    ;  end  interface
+interface  freq;    module  procedure  freq    ;  end  interface
+interface  gamcdf;  module  procedure  gamcdf  ;  end  interface
+interface  gamplt;  module  procedure  gamplt  ;  end  interface
+interface  gamppf;  module  procedure  gamppf  ;  end  interface
+interface  gamran;  module  procedure  gamran  ;  end  interface
+interface  geocdf;  module  procedure  geocdf  ;  end  interface
+interface  geoplt;  module  procedure  geoplt  ;  end  interface
+interface  geoppf;  module  procedure  geoppf  ;  end  interface
+interface  georan;  module  procedure  georan  ;  end  interface
+interface  hfncdf;  module  procedure  hfncdf  ;  end  interface
+interface  hfnplt;  module  procedure  hfnplt  ;  end  interface
+interface  hfnppf;  module  procedure  hfnppf  ;  end  interface
+interface  hfnran;  module  procedure  hfnran  ;  end  interface
+interface  hist;    module  procedure  hist    ;  end  interface
+interface  invxwx;  module  procedure  invxwx  ;  end  interface
+interface  lamcdf;  module  procedure  lamcdf  ;  end  interface
+interface  lampdf;  module  procedure  lampdf  ;  end  interface
+interface  lamplt;  module  procedure  lamplt  ;  end  interface
+interface  lamppf;  module  procedure  lamppf  ;  end  interface
+interface  lamran;  module  procedure  lamran  ;  end  interface
+interface  lamsf;   module  procedure  lamsf   ;  end  interface
+interface  lgncdf;  module  procedure  lgncdf  ;  end  interface
+interface  lgnplt;  module  procedure  lgnplt  ;  end  interface
+interface  lgnppf;  module  procedure  lgnppf  ;  end  interface
+interface  lgnran;  module  procedure  lgnran  ;  end  interface
+interface  loc;     module  procedure  loc     ;  end  interface
+interface  logcdf;  module  procedure  logcdf  ;  end  interface
+interface  logpdf;  module  procedure  logpdf  ;  end  interface
+interface  logplt;  module  procedure  logplt  ;  end  interface
+interface  logppf;  module  procedure  logppf  ;  end  interface
+interface  logran;  module  procedure  logran  ;  end  interface
+interface  logsf;   module  procedure  logsf   ;  end  interface
+interface  max;     module  procedure  max     ;  end  interface
+interface  mean;    module  procedure  mean    ;  end  interface
+interface  median;  module  procedure  median  ;  end  interface
+interface  midm;    module  procedure  midm    ;  end  interface
+interface  midr;    module  procedure  midr    ;  end  interface
+interface  min;     module  procedure  min     ;  end  interface
+interface  move;    module  procedure  move    ;  end  interface
+interface  nbcdf;   module  procedure  nbcdf   ;  end  interface
+interface  nbppf;   module  procedure  nbppf   ;  end  interface
+interface  nbran;   module  procedure  nbran   ;  end  interface
+interface  norcdf;  module  procedure  norcdf  ;  end  interface
+interface  norout;  module  procedure  norout  ;  end  interface
+interface  norpdf;  module  procedure  norpdf  ;  end  interface
+interface  norplt;  module  procedure  norplt  ;  end  interface
+interface  norppf;  module  procedure  norppf  ;  end  interface
+interface  norran;  module  procedure  norran  ;  end  interface
+interface  norsf;   module  procedure  norsf   ;  end  interface
+interface  parcdf;  module  procedure  parcdf  ;  end  interface
+interface  parplt;  module  procedure  parplt  ;  end  interface
+interface  parppf;  module  procedure  parppf  ;  end  interface
+interface  parran;  module  procedure  parran  ;  end  interface
+interface  plot;    module  procedure  plot    ;  end  interface
+interface  plot10;  module  procedure  plot10  ;  end  interface
+interface  plot6;   module  procedure  plot6   ;  end  interface
+interface  plot7;   module  procedure  plot7   ;  end  interface
+interface  plot8;   module  procedure  plot8   ;  end  interface
+interface  plot9;   module  procedure  plot9   ;  end  interface
+interface  plotc;   module  procedure  plotc   ;  end  interface
+interface  plotco;  module  procedure  plotco  ;  end  interface
+interface  plotct;  module  procedure  plotct  ;  end  interface
+interface  plots;   module  procedure  plots   ;  end  interface
+interface  plotsc;  module  procedure  plotsc  ;  end  interface
+interface  plotsp;  module  procedure  plotsp  ;  end  interface
+interface  plotst;  module  procedure  plotst  ;  end  interface
+interface  plott;   module  procedure  plott   ;  end  interface
+interface  plotu;   module  procedure  plotu   ;  end  interface
+interface  plotx;   module  procedure  plotx   ;  end  interface
+interface  plotxt;  module  procedure  plotxt  ;  end  interface
+interface  plotxx;  module  procedure  plotxx  ;  end  interface
+interface  pltsct;  module  procedure  pltsct  ;  end  interface
+interface  pltxxt;  module  procedure  pltxxt  ;  end  interface
+interface  poicdf;  module  procedure  poicdf  ;  end  interface
+interface  poiplt;  module  procedure  poiplt  ;  end  interface
+interface  poippf;  module  procedure  poippf  ;  end  interface
+interface  poiran;  module  procedure  poiran  ;  end  interface
+interface  poly;    module  procedure  poly    ;  end  interface
+interface  propor;  module  procedure  propor  ;  end  interface
+interface  range;   module  procedure  range   ;  end  interface
+interface  rank;    module  procedure  rank    ;  end  interface
+interface  ranper;  module  procedure  ranper  ;  end  interface
+interface  read;    module  procedure  read    ;  end  interface
+interface  readg;   module  procedure  readg   ;  end  interface
+interface  relsd;   module  procedure  relsd   ;  end  interface
+interface  replac;  module  procedure  replac  ;  end  interface
+interface  retain;  module  procedure  retain  ;  end  interface
+interface  runs;    module  procedure  runs    ;  end  interface
+interface  sampp;   module  procedure  sampp   ;  end  interface
+interface  scale;   module  procedure  scale   ;  end  interface
+interface  sd;      module  procedure  sd      ;  end  interface
+interface  sort;    module  procedure  sort    ;  end  interface
+interface  sortc;   module  procedure  sortc   ;  end  interface
+interface  sortp;   module  procedure  sortp   ;  end  interface
+interface  spcorr;  module  procedure  spcorr  ;  end  interface
+interface  stmom3;  module  procedure  stmom3  ;  end  interface
+interface  stmom4;  module  procedure  stmom4  ;  end  interface
+interface  subse1;  module  procedure  subse1  ;  end  interface
+interface  subse2;  module  procedure  subse2  ;  end  interface
+interface  subset;  module  procedure  subset  ;  end  interface
+interface  tail;    module  procedure  tail    ;  end  interface
+interface  tcdf;    module  procedure  tcdf    ;  end  interface
+interface  time;    module  procedure  time    ;  end  interface
+interface  tol;     module  procedure  tol     ;  end  interface
+interface  tplt;    module  procedure  tplt    ;  end  interface
+interface  tppf;    module  procedure  tppf    ;  end  interface
+interface  tran;    module  procedure  tran    ;  end  interface
+interface  trim;    module  procedure  trim    ;  end  interface
+interface  unicdf;  module  procedure  unicdf  ;  end  interface
+interface  unimed;  module  procedure  unimed  ;  end  interface
+interface  unipdf;  module  procedure  unipdf  ;  end  interface
+interface  uniplt;  module  procedure  uniplt  ;  end  interface
+interface  unippf;  module  procedure  unippf  ;  end  interface
+interface  uniran;  module  procedure  uniran  ;  end  interface
+interface  unisf;   module  procedure  unisf   ;  end  interface
+interface  var;     module  procedure  var     ;  end  interface
+interface  weib;    module  procedure  weib    ;  end  interface
+interface  weicdf;  module  procedure  weicdf  ;  end  interface
+interface  weiplt;  module  procedure  weiplt  ;  end  interface
+interface  weippf;  module  procedure  weippf  ;  end  interface
+interface  weiran;  module  procedure  weiran  ;  end  interface
+interface  wind;    module  procedure  wind    ;  end  interface
+interface  write;   module  procedure  write   ;  end  interface
+
+contains
+$INCLUDE "autoco.ffinc"
+$INCLUDE "WIP/betran.ffinc"
+$INCLUDE "WIP/bincdf.ffinc"
+$INCLUDE "WIP/binppf.ffinc"
+$INCLUDE "WIP/binran.ffinc"
+$INCLUDE "caucdf.ffinc"
+$INCLUDE "WIP/caupdf.ffinc"
+$INCLUDE "WIP/cauplt.ffinc"
+$INCLUDE "WIP/cauppf.ffinc"
+$INCLUDE "WIP/cauran.ffinc"
+$INCLUDE "WIP/causf.ffinc"
+$INCLUDE "WIP/chscdf.ffinc"
+$INCLUDE "WIP/chsplt.ffinc"
+$INCLUDE "WIP/chsppf.ffinc"
+$INCLUDE "WIP/chsran.ffinc"
+$INCLUDE "WIP/code.ffinc"
+$INCLUDE "WIP/copy.ffinc"
+$INCLUDE "WIP/corr.ffinc"
+$INCLUDE "WIP/count.ffinc"
+$INCLUDE "WIP/decomp.ffinc"
+$INCLUDE "WIP/define.ffinc"
+$INCLUDE "WIP/delete.ffinc"
+$INCLUDE "WIP/demod.ffinc"
+$INCLUDE "WIP/dexcdf.ffinc"
+$INCLUDE "WIP/dexpdf.ffinc"
+$INCLUDE "WIP/dexplt.ffinc"
+$INCLUDE "WIP/dexppf.ffinc"
+$INCLUDE "WIP/dexran.ffinc"
+$INCLUDE "WIP/dexsf.ffinc"
+$INCLUDE "WIP/discr2.ffinc"
+$INCLUDE "WIP/discr3.ffinc"
+$INCLUDE "WIP/discre.ffinc"
+$INCLUDE "dot.ffinc"
+$INCLUDE "WIP/ev1cdf.ffinc"
+$INCLUDE "WIP/ev1plt.ffinc"
+$INCLUDE "WIP/ev1ppf.ffinc"
+$INCLUDE "WIP/ev1ran.ffinc"
+$INCLUDE "WIP/ev2cdf.ffinc"
+$INCLUDE "WIP/ev2plt.ffinc"
+$INCLUDE "WIP/ev2ppf.ffinc"
+$INCLUDE "WIP/ev2ran.ffinc"
+$INCLUDE "WIP/expcdf.ffinc"
+$INCLUDE "WIP/exppdf.ffinc"
+$INCLUDE "WIP/expplt.ffinc"
+$INCLUDE "WIP/expppf.ffinc"
+$INCLUDE "WIP/expran.ffinc"
+$INCLUDE "WIP/expsf.ffinc"
+$INCLUDE "WIP/extrem.ffinc"
+$INCLUDE "WIP/fcdf.ffinc"
+$INCLUDE "WIP/fourie.ffinc"
+$INCLUDE "WIP/fran.ffinc"
+$INCLUDE "WIP/freq.ffinc"
+$INCLUDE "WIP/gamcdf.ffinc"
+$INCLUDE "WIP/gamplt.ffinc"
+$INCLUDE "WIP/gamppf.ffinc"
+$INCLUDE "WIP/gamran.ffinc"
+$INCLUDE "WIP/geocdf.ffinc"
+$INCLUDE "WIP/geoplt.ffinc"
+$INCLUDE "WIP/geoppf.ffinc"
+$INCLUDE "WIP/georan.ffinc"
+$INCLUDE "WIP/hfncdf.ffinc"
+$INCLUDE "WIP/hfnplt.ffinc"
+$INCLUDE "WIP/hfnppf.ffinc"
+$INCLUDE "WIP/hfnran.ffinc"
+$INCLUDE "WIP/hist.ffinc"
+$INCLUDE "WIP/invxwx.ffinc"
+$INCLUDE "WIP/lamcdf.ffinc"
+$INCLUDE "WIP/lampdf.ffinc"
+$INCLUDE "WIP/lamplt.ffinc"
+$INCLUDE "WIP/lamppf.ffinc"
+$INCLUDE "WIP/lamran.ffinc"
+$INCLUDE "WIP/lamsf.ffinc"
+$INCLUDE "WIP/lgncdf.ffinc"
+$INCLUDE "WIP/lgnplt.ffinc"
+$INCLUDE "WIP/lgnppf.ffinc"
+$INCLUDE "WIP/lgnran.ffinc"
+$INCLUDE "WIP/loc.ffinc"
+$INCLUDE "WIP/logcdf.ffinc"
+$INCLUDE "WIP/logpdf.ffinc"
+$INCLUDE "WIP/logplt.ffinc"
+$INCLUDE "WIP/logppf.ffinc"
+$INCLUDE "WIP/logran.ffinc"
+$INCLUDE "WIP/logsf.ffinc"
+$INCLUDE "max.ffinc"
+$INCLUDE "WIP/mean.ffinc"
+$INCLUDE "WIP/median.ffinc"
+$INCLUDE "WIP/midm.ffinc"
+$INCLUDE "WIP/midr.ffinc"
+$INCLUDE "min.ffinc"
+$INCLUDE "WIP/move.ffinc"
+$INCLUDE "WIP/nbcdf.ffinc"
+$INCLUDE "WIP/nbppf.ffinc"
+$INCLUDE "WIP/nbran.ffinc"
+$INCLUDE "WIP/norcdf.ffinc"
+$INCLUDE "WIP/norout.ffinc"
+$INCLUDE "WIP/norpdf.ffinc"
+$INCLUDE "WIP/norplt.ffinc"
+$INCLUDE "WIP/norppf.ffinc"
+$INCLUDE "WIP/norran.ffinc"
+$INCLUDE "WIP/norsf.ffinc"
+$INCLUDE "WIP/parcdf.ffinc"
+$INCLUDE "WIP/parplt.ffinc"
+$INCLUDE "WIP/parppf.ffinc"
+$INCLUDE "WIP/parran.ffinc"
+$INCLUDE "WIP/plot10.ffinc"
+$INCLUDE "WIP/plot6.ffinc"
+$INCLUDE "WIP/plot7.ffinc"
+$INCLUDE "WIP/plot8.ffinc"
+$INCLUDE "WIP/plot9.ffinc"
+$INCLUDE "WIP/plotc.ffinc"
+$INCLUDE "WIP/plotco.ffinc"
+$INCLUDE "WIP/plotct.ffinc"
+$INCLUDE "WIP/plot.ffinc"
+$INCLUDE "WIP/plotsc.ffinc"
+$INCLUDE "WIP/plots.ffinc"
+$INCLUDE "WIP/plotsp.ffinc"
+$INCLUDE "WIP/plotst.ffinc"
+$INCLUDE "WIP/plott.ffinc"
+$INCLUDE "WIP/plotu.ffinc"
+$INCLUDE "WIP/plotx.ffinc"
+$INCLUDE "WIP/plotxt.ffinc"
+$INCLUDE "WIP/plotxx.ffinc"
+$INCLUDE "WIP/pltsct.ffinc"
+$INCLUDE "WIP/pltxxt.ffinc"
+$INCLUDE "WIP/poicdf.ffinc"
+$INCLUDE "WIP/poiplt.ffinc"
+$INCLUDE "WIP/poippf.ffinc"
+$INCLUDE "WIP/poiran.ffinc"
+$INCLUDE "WIP/poly.ffinc"
+$INCLUDE "WIP/propor.ffinc"
+$INCLUDE "WIP/range.ffinc"
+$INCLUDE "WIP/rank.ffinc"
+$INCLUDE "WIP/ranper.ffinc"
+$INCLUDE "WIP/read.ffinc"
+$INCLUDE "WIP/readg.ffinc"
+$INCLUDE "WIP/relsd.ffinc"
+$INCLUDE "WIP/replac.ffinc"
+$INCLUDE "WIP/retain.ffinc"
+$INCLUDE "WIP/runs.ffinc"
+$INCLUDE "WIP/sampp.ffinc"
+$INCLUDE "WIP/scale.ffinc"
+$INCLUDE "WIP/sd.ffinc"
+$INCLUDE "sortc.ffinc"
+$INCLUDE "WIP/sort.ffinc"
+$INCLUDE "WIP/sortp.ffinc"
+$INCLUDE "WIP/spcorr.ffinc"
+$INCLUDE "WIP/stmom3.ffinc"
+$INCLUDE "WIP/stmom4.ffinc"
+$INCLUDE "WIP/subse1.ffinc"
+$INCLUDE "WIP/subse2.ffinc"
+$INCLUDE "WIP/subset.ffinc"
+$INCLUDE "WIP/tail.ffinc"
+$INCLUDE "WIP/tcdf.ffinc"
+$INCLUDE "WIP/time.ffinc"
+$INCLUDE "WIP/tol.ffinc"
+$INCLUDE "WIP/tplt.ffinc"
+$INCLUDE "WIP/tppf.ffinc"
+$INCLUDE "WIP/tran.ffinc"
+$INCLUDE "WIP/trim.ffinc"
+$INCLUDE "unicdf.ffinc"
+$INCLUDE "WIP/unimed.ffinc"
+$INCLUDE "WIP/unipdf.ffinc"
+$INCLUDE "WIP/uniplt.ffinc"
+$INCLUDE "WIP/unippf.ffinc"
+$INCLUDE "WIP/uniran.ffinc"
+$INCLUDE "WIP/unisf.ffinc"
+$INCLUDE "WIP/var.ffinc"
+$INCLUDE "WIP/weib.ffinc"
+$INCLUDE "WIP/weicdf.ffinc"
+$INCLUDE "WIP/weiplt.ffinc"
+$INCLUDE "WIP/weippf.ffinc"
+$INCLUDE "WIP/weiran.ffinc"
+$INCLUDE "WIP/wind.ffinc"
+$INCLUDE "WIP/write.ffinc"

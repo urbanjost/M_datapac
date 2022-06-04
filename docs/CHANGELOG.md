@@ -23,6 +23,11 @@ checked ...
    - [ ] registered in fpm(1) repository
 
 ---
+**2022-06-03**  John S. Urban  <https://github.com/urbanjost>
+
+### :green_circle: ADD:
+     real and double_precision float values now supported
+---
 **2022-05-31**  John S. Urban  <https://github.com/urbanjost>
 
 ### :green_circle: ADD:

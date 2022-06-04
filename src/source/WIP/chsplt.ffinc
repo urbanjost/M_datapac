@@ -49,27 +49,26 @@ EXAMPLES
 AUTHOR
    The original DATAPAC library was written by James Filliben of the Statistical
    Engineering Division, National Institute of Standards and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!                 TECHNOMETRICS, 1962, PAGES 1-15.
-!               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 46-51.
+REFERENCES
+ o wilk, gnanadesikan, and huyett, 'probability plots for the gamma
+   distribution', technometrics, 1962, pages 1-15.
+ o filliben, 'techniques for tail length analysis', proceedings of the
+   eighteenth conference on the design of experiments in army research
+   development and testing (aberdeen, maryland, october, 1972), pages
+   425-450.
+ o hahn and shapiro, statistical methods in engineering, 1967, pages
+   260-308.
+ o johnson and kotz, continuous univariate distributions--1, 1970,
+   pages 166-206.
+ o hastings and peacock, statistical distributions--a handbook for students
+   and practitioners, 1975, pages 46-51.
+
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==chsplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

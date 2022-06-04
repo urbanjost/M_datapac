@@ -119,8 +119,8 @@ The following subroutines are available in M_datapac:
   * [SUBSE2](src/source/WIP/subse2.ffinc)  - extract the elements of a vector which fall into a user-specified subset (two subset variables)
   * [SUBSET](src/source/WIP/subset.ffinc)  - extract the elements of a vector which fall into a user-specified subset (one subset variable)
 ## now available in modern Fortran
-  * [MAX](src/source/WIP/max.ffinc)        - compute the maximum of a data vector (see Fortran intrinsic MAXVAL(3f))
-  * [MIN](src/source/WIP/min.ffinc)        - compute the minimum of a data vector (see Fortran intrinsic MINVAL(3f))
+  * [MAX](src/source/max.ffinc)        - compute the maximum of a data vector (see Fortran intrinsic MAXVAL(3f))
+  * [MIN](src/source/min.ffinc)        - compute the minimum of a data vector (see Fortran intrinsic MINVAL(3f))
   * [DOT](src/source/dot.ffinc)        - compute the dot product of two equal-sized vectors (see Fortran intrinsic DOT_PRODUCT(3f))
 ## sort
   * [RANK](src/source/WIP/rank.ffinc)      - rank a vector of sample observations
@@ -178,7 +178,7 @@ The following subroutines are available in M_datapac:
   * [UNISF](src/source/WIP/unisf.ffinc)    - compute the Uniform sparsity function
 ## cumulative distribution function
   * [BINCDF](src/source/WIP/bincdf.ffinc)  - compute the binomial cumulative distribution function
-  * [CAUCDF](src/source/WIP/caucdf.ffinc)  - compute the Cauchy cumulative distribution function
+  * [CAUCDF](src/source/caucdf.ffinc)  - compute the Cauchy cumulative distribution function
   * [CHSCDF](src/source/WIP/chscdf.ffinc)  - compute the chi-square cumulative distribution function
   * [LGNCDF](src/source/WIP/lgncdf.ffinc)  - compute the lognormal cumulative distribution function
   * [LOGCDF](src/source/WIP/logcdf.ffinc)  - compute the logistic cumulative distribution function

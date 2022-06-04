@@ -39,17 +39,14 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGE 176,
-!                 FORMULA 28, AND PAGE 180, FORMULA 33.1.
-!               --OWEN, HANDBOOK OF STATISTICAL TABLES,
-!                 1962, PAGES 50-55.
-!               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
-!                 FOR STATISTICIANS, VOLUME 1, 1954,
-!                 PAGES 122-131.
+REFERENCES
+ o national bureau of standards applied mathematics series 55, 1964,
+   page 941, formulae 26.4.4 and 26.4.5.
+ o johnson and kotz, continuous univariate distributions--1, 1970,
+   page 176, formula 28, and page 180, formula 33.1.
+ o owen, handbook of statistical tables, 1962, pages 50-55.
+ o pearson and hartley, biometrika tables for statisticians, volume 1,
+   1954, pages 122-131.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.

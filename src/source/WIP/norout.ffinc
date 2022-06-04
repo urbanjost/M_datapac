@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file norout.3m_datapac.man
 NAME
-   norout(3f) - [M_datapac:STATISTICS:CD] Performs a normal outlier analysis
+   norout(3f) - [M_datapac:STATISTICS] Performs a normal outlier analysis
                 on the data in the input vector X.
 
 SYNOPSIS
@@ -9,10 +9,10 @@ SYNOPSIS
 
 DESCRIPTION
 
-   norout(3f) performs a normal outlier analysis on the data in the
-   input vector x.
+   NOROUT(3f) performs a normal outlier analysis on the data in the
+   input vector X.
 
-   this analysis consists of--
+   This analysis consists of--
 
      1. various normal outlier statistics;
      2. various partial sample means
@@ -21,14 +21,14 @@ DESCRIPTION
      5. a line plot; and
      6. a normal probability plot.
 
-   when the first 40 and last 40 ordered observations are printed out,
+   When the first 40 and last 40 ordered observations are printed out,
    also included for each of the 40+40 = 80 listed data values is the
    corresponding residual about the (full) sample mean, the standardized
    residual, the normal n(0,1) value for the standardized residual,
-   and the position number in the original data vector x.
+   and the position number in the original data vector X.
 
-   this last piece of information allows the data analyst to easily
-   locate back in the original data vector. a suspected outlier or
+   This last piece of information allows the data analyst to easily
+   locate back in the original data vector. A suspected outlier or
    otherwise interesting observation.
 
 OPTIONS
@@ -48,8 +48,9 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
@@ -57,23 +58,20 @@ LICENSE
 !     REFERENCES
 !               --GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
 $ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NOROUT(X,N)
-REAL(kind=wp) :: ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
-     &     res , s , s1 , s13 , s14 , s2 , s23 , s24 , s3 , s4 , ssq
-REAL(kind=wp) :: ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
-     &     st1 , st2 , st3 , st4 , st5 , st6 , st7 , st8 , st9 , stres ,&
-     &     sum , sum4
-REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
-     &     xb4 , xline , XPOs , Y
-INTEGER :: i , icount , iflag , irev , iupper , j , mx , N ,   &
-     &        nm1 , nm2 , nm3 , nm4 , nm5
+
+subroutine norout(X,N)
+real(kind=wp) :: ai, an, anm1, anm2, anm3, anm4, anm5, cdf, hold, res, s, s1, s13, s14, s2, s23, s24, s3, s4, ssq
+real(kind=wp) :: ssq1, ssq13, ssq14, ssq2, ssq23, ssq24, ssq3, ssq4,  st1, st2, st3, st4, st5, st6, st7, st8, st9, stres, sum, sum4
+real(kind=wp) :: WS, X, xb, xb1, xb13, xb14, xb2, xb23, xb24, xb3, xb4, xline, XPOs, Y
+integer :: i, icount, iflag, irev, iupper, j, mx, N,   nm1, nm2, nm3, nm4, nm5
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
+!     INPUT ARGUMENTS--X      = THE VECTOR OF (UNSORTED OR SORTED) OBSERVATIONS.
+!                      N      = THE INTEGER NUMBER OF OBSERVATIONS IN THE VECTOR X.
 !     OUTPUT--4 PAGES OF AUTOMATIC PRINTOUT--
 !             1) VARIOUS NORMAL OUTLIER STATISTICS;
 !             2) VARIOUS PARTIAL SAMPLE MEANS
@@ -84,25 +82,19 @@ INTEGER :: i , icount , iflag , irev , iupper , j , mx , N ,   &
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORTP, NORCDF, NORPLT,
-!                                         SORT, UNIMED, NORPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+
 !     WRITE OUT THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS,
 !     INCLUDING THEIR RESIDUALS ABOUT THE (FULL) SAMPLE MEAN,
 !     THE STANDARDIZED RESIDUALS,
 !     THE NORMAL N(0,1) CUMULATIVE DISTRIBUTION FUNCTION VALUE
 !     OF THE STANDARDIZED RESIDUAL, AND
 !     THE POSITION NUMBER IN THE ORIGINAL DATA VECTOR X.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
-CHARACTER(len=4) :: blank , hyphen , alphai , alphax
-CHARACTER(len=4) :: iline1
-CHARACTER(len=4) :: iline2
+character(len=4) :: blank , hyphen , alphai , alphax
+character(len=4) :: iline1
+character(len=4) :: iline2
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , XPOs(7500)

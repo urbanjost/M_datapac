@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Statistics">
+    
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>RUNS &ndash; M_datapac</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">M_datapac </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            <li><a href="../lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>RUNS
+      <small>Subroutine</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 0.8% of total for procedures.">264 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/M_datapac_d.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/m_datapac_d.f90.html'>M_datapac_d.f90</a></li>
+    
+     <li><a href='../module/m_datapac_d.html'>M_datapac_d</a></li>
+    
+  
+     <li class="active">RUNS</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading
+  text-left"><h3 class="panel-title"><a data-toggle="collapse"
+  href="#common-0">Common Blocks</a></h3></div>
+  <div id="common-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/runs.html#common-block2~29">BLOCK2</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-ws~57">WS</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-y~45">Y</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-ai~20">ai</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-an~38">an</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrdl">anrdl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrdlg">anrdlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrtl">anrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrtlg">anrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrul">anrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrulg">anrulg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-c1">c1</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-c2">c2</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-c3">c3</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-c4">c4</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-den~5">den</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-enrtl">enrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-enrtlg">enrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-enrul">enrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-enrulg">enrulg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-hold~65">hold</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-i~98">i</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-imax~9">imax</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-ip1~9">ip1</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-iupper~27">iupper</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-j~38">j</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-jp1~6">jp1</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-lendn">lendn</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-lenup">lenup</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-maxlnd">maxlnd</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-maxlnt">maxlnt</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-maxlnu">maxlnu</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nm1~5">nm1</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nneg">nneg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-npos">npos</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrdl">nrdl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrdlg">nrdlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrtl">nrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrtlg">nrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrul">nrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrulg">nrulg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nzer">nzer</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-snrtl">snrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-snrtlg">snrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-snrul">snrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-snrulg">snrulg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-stat">stat</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrdl">znrdl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrdlg">znrdlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrtl">znrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrtlg">znrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrul">znrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrulg">znrulg</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/runs.html#src">RUNS</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+public subroutine RUNS(X, N)
+    
+    
+   
+</h2>
+    
+  
+
+
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x~109"></span>real(kind=wp)</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>X</strong>(:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n~91"></span>integer</td>
+  <td></td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>N</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading
+  text-left"><h3 class="panel-title"><a data-toggle="collapse"
+  href="#common-1">Common Blocks</a></h3></div>
+  <div id="common-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/runs.html#common-block2~29">BLOCK2</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-ws~57">WS</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-y~45">Y</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-ai~20">ai</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-an~38">an</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrdl">anrdl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrdlg">anrdlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrtl">anrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrtlg">anrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrul">anrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-anrulg">anrulg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-c1">c1</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-c2">c2</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-c3">c3</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-c4">c4</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-den~5">den</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-enrtl">enrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-enrtlg">enrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-enrul">enrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-enrulg">enrulg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-hold~65">hold</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-i~98">i</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-imax~9">imax</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-ip1~9">ip1</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-iupper~27">iupper</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-j~38">j</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-jp1~6">jp1</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-lendn">lendn</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-lenup">lenup</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-maxlnd">maxlnd</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-maxlnt">maxlnt</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-maxlnu">maxlnu</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nm1~5">nm1</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nneg">nneg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-npos">npos</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrdl">nrdl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrdlg">nrdlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrtl">nrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrtlg">nrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrul">nrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nrulg">nrulg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-nzer">nzer</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-snrtl">snrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-snrtlg">snrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-snrul">snrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-snrulg">snrulg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-stat">stat</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrdl">znrdl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrdlg">znrdlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrtl">znrtl</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrtlg">znrtlg</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrul">znrul</a>
+      
+      <a class="list-group-item" href="../proc/runs.html#variable-znrulg">znrulg</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/runs.html#src">RUNS</a>
+  </div>
+</div>
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+    <section>
+      <h2>Common Blocks</h2>
+      
+      
+<div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="common-block2~29"></span><h3>
+      <a data-toggle="popover" data-html="true" tabindex="0" 
+     data-trigger="focus"
+   data-content="<h4>Used Elsewhere:</h4><a href='../proc/cauplt.html#common-block2'>CAUPLT</a> (subroutine)<br><a href='../proc/chscdf.html#common-block2~2'>CHSCDF</a> (subroutine)<br><a href='../proc/code.html#common-block2~3'>CODE</a> (subroutine)<br><a href='../proc/decomp.html#common-block2~4'>DECOMP</a> (subroutine)<br><a href='../proc/demod.html#common-block2~5'>DEMOD</a> (subroutine)<br><a href='../proc/dexplt.html#common-block2~6'>DEXPLT</a> (subroutine)<br><a href='../proc/ev1plt.html#common-block2~7'>EV1PLT</a> (subroutine)<br><a href='../proc/ev2plt.html#common-block2~8'>EV2PLT</a> (subroutine)<br><a href='../proc/expplt.html#common-block2~9'>EXPPLT</a> (subroutine)<br><a href='../proc/extrem.html#common-block2~10'>EXTREM</a> (subroutine)<br><a href='../proc/extrem.html#common-block2~11'>EXTREM</a> (subroutine)<br><a href='../proc/freq.html#common-block2~12'>FREQ</a> (subroutine)<br><a href='../proc/gamplt.html#common-block2~13'>GAMPLT</a> (subroutine)<br><a href='../proc/geoplt.html#common-block2~14'>GEOPLT</a> (subroutine)<br><a href='../proc/hfnplt.html#common-block2~15'>HFNPLT</a> (subroutine)<br><a href='../proc/invxwx.html#common-block2~16'>INVXWX</a> (subroutine)<br><a href='../proc/lamplt.html#common-block2~17'>LAMPLT</a> (subroutine)<br><a href='../proc/lgnplt.html#common-block2~18'>LGNPLT</a> (subroutine)<br><a href='../proc/loc.html#common-block2~19'>LOC</a> (subroutine)<br><a href='../proc/logplt.html#common-block2~20'>LOGPLT</a> (subroutine)<br><a href='../proc/median.html#common-block2~21'>MEDIAN</a> (subroutine)<br><a href='../proc/midm.html#common-block2~22'>MIDM</a> (subroutine)<br><a href='../proc/norout.html#common-block2~23'>NOROUT</a> (subroutine)<br><a href='../proc/norplt.html#common-block2~24'>NORPLT</a> (subroutine)<br><a href='../proc/parplt.html#common-block2~25'>PARPLT</a> (subroutine)<br><a href='../proc/plotu.html#common-block2~26'>PLOTU</a> (subroutine)<br><a href='../proc/poiplt.html#common-block2~27'>POIPLT</a> (subroutine)<br><a href='../proc/poly.html#common-block2~28'>POLY</a> (subroutine)<br><a href='../proc/sampp.html#common-block2~30'>SAMPP</a> (subroutine)<br><a href='../proc/spcorr.html#common-block2~31'>SPCORR</a> (subroutine)<br><a href='../proc/tail.html#common-block2~32'>TAIL</a> (subroutine)<br><a href='../proc/tplt.html#common-block2~33'>TPLT</a> (subroutine)<br><a href='../proc/trim.html#common-block2~34'>TRIM</a> (subroutine)<br><a href='../proc/uniplt.html#common-block2~35'>UNIPLT</a> (subroutine)<br><a href='../proc/weib.html#common-block2~36'>WEIB</a> (subroutine)<br><a href='../proc/weiplt.html#common-block2~37'>WEIPLT</a> (subroutine)<br><a href='../proc/wind.html#common-block2~38'>WIND</a> (subroutine)<br><a href='../proc/cauplt~2.html#common-block2~39'>CAUPLT</a> (subroutine)<br><a href='../proc/chscdf~2.html#common-block2~40'>CHSCDF</a> (subroutine)<br><a href='../proc/code~2.html#common-block2~41'>CODE</a> (subroutine)<br><a href='../proc/decomp~2.html#common-block2~42'>DECOMP</a> (subroutine)<br><a href='../proc/demod~2.html#common-block2~43'>DEMOD</a> (subroutine)<br><a href='../proc/dexplt~2.html#common-block2~44'>DEXPLT</a> (subroutine)<br><a href='../proc/ev1plt~2.html#common-block2~45'>EV1PLT</a> (subroutine)<br><a href='../proc/ev2plt~2.html#common-block2~46'>EV2PLT</a> (subroutine)<br><a href='../proc/expplt~2.html#common-block2~47'>EXPPLT</a> (subroutine)<br><a href='../proc/extrem~2.html#common-block2~48'>EXTREM</a> (subroutine)<br><a href='../proc/extrem~2.html#common-block2~49'>EXTREM</a> (subroutine)<br><a href='../proc/freq~2.html#common-block2~50'>FREQ</a> (subroutine)<br><a href='../proc/gamplt~2.html#common-block2~51'>GAMPLT</a> (subroutine)<br><a href='../proc/geoplt~2.html#common-block2~52'>GEOPLT</a> (subroutine)<br><a href='../proc/hfnplt~2.html#common-block2~53'>HFNPLT</a> (subroutine)<br><a href='../proc/invxwx~2.html#common-block2~54'>INVXWX</a> (subroutine)<br><a href='../proc/lamplt~2.html#common-block2~55'>LAMPLT</a> (subroutine)<br><a href='../proc/lgnplt~2.html#common-block2~56'>LGNPLT</a> (subroutine)<br><a href='../proc/loc~2.html#common-block2~57'>LOC</a> (subroutine)<br><a href='../proc/logplt~2.html#common-block2~58'>LOGPLT</a> (subroutine)<br><a href='../proc/median~2.html#common-block2~59'>MEDIAN</a> (subroutine)<br><a href='../proc/midm~2.html#common-block2~60'>MIDM</a> (subroutine)<br><a href='../proc/norout~2.html#common-block2~61'>NOROUT</a> (subroutine)<br><a href='../proc/norplt~2.html#common-block2~62'>NORPLT</a> (subroutine)<br><a href='../proc/parplt~2.html#common-block2~63'>PARPLT</a> (subroutine)<br><a href='../proc/plotu~2.html#common-block2~64'>PLOTU</a> (subroutine)<br><a href='../proc/poiplt~2.html#common-block2~65'>POIPLT</a> (subroutine)<br><a href='../proc/poly~2.html#common-block2~66'>POLY</a> (subroutine)<br><a href='../proc/runs~2.html#common-block2~67'>RUNS</a> (subroutine)<br><a href='../proc/sampp~2.html#common-block2~68'>SAMPP</a> (subroutine)<br><a href='../proc/spcorr~2.html#common-block2~69'>SPCORR</a> (subroutine)<br><a href='../proc/tail~2.html#common-block2~70'>TAIL</a> (subroutine)<br><a href='../proc/tplt~2.html#common-block2~71'>TPLT</a> (subroutine)<br><a href='../proc/trim~2.html#common-block2~72'>TRIM</a> (subroutine)<br><a href='../proc/uniplt~2.html#common-block2~73'>UNIPLT</a> (subroutine)<br><a href='../proc/weib~2.html#common-block2~74'>WEIB</a> (subroutine)<br><a href='../proc/weiplt~2.html#common-block2~75'>WEIPLT</a> (subroutine)<br><a href='../proc/wind~2.html#common-block2~76'>WIND</a> (subroutine)<br>">common /BLOCK2/</a>
+      
+  </h3></div>
+  <div class="panel-body">
+    
+    
+    
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ws~58"></span>real</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>WS</strong>(15000)</td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+</div>
+</div>
+
+      
+    </section>
+    <br>
+    <script>
+      $(function () {
+      $('[data-toggle="popover"]').popover()
+      })
+    </script>
+    
+
+    
+    <section>    
+      <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ws~57"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>WS</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-y~45"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(15000)</td><td>::</td>
+  <td><strong>Y</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ai~20"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ai</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-an~38"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>an</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-anrdl"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>anrdl</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-anrdlg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>anrdlg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-anrtl"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>anrtl</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-anrtlg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>anrtlg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-anrul"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>anrul</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-anrulg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>anrulg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-c1"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(15)</td><td>::</td>
+  <td><strong>c1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-c2"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(15)</td><td>::</td>
+  <td><strong>c2</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-c3"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(15)</td><td>::</td>
+  <td><strong>c3</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-c4"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(15)</td><td>::</td>
+  <td><strong>c4</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-den~5"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>den</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-enrtl"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>enrtl</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-enrtlg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>enrtlg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-enrul"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>enrul</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-enrulg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>enrulg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-hold~65"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>hold</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i~98"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>i</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-imax~9"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>imax</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ip1~9"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ip1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-iupper~27"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>iupper</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-j~38"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>j</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-jp1~6"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>jp1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-lendn"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>lendn</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-lenup"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>lenup</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-maxlnd"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>maxlnd</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-maxlnt"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>maxlnt</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-maxlnu"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>maxlnu</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nm1~5"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>nm1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nneg"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>nneg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-npos"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>npos</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nrdl"></span>integer,</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>nrdl</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nrdlg"></span>integer,</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>nrdlg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nrtl"></span>integer,</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>nrtl</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nrtlg"></span>integer,</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>nrtlg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nrul"></span>integer,</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>nrul</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nrulg"></span>integer,</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>nrulg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nzer"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>nzer</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-snrtl"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>snrtl</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-snrtlg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>snrtlg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-snrul"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>snrul</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-snrulg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>snrulg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-stat"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>stat</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-znrdl"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>znrdl</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-znrdlg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>znrdlg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-znrtl"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>znrtl</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-znrtlg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>znrtlg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-znrul"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>znrul</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-znrulg"></span>real(kind=wp),</td>
+  
+  <td>public,</td>
+  <td>dimension(16)</td><td>::</td>
+  <td><strong>znrulg</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">RUNS</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">X</span><span class="p">(:)</span>
+<span class="kt">INTEGER</span>       <span class="kd">::</span> <span class="n">N</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">ai</span><span class="p">,</span> <span class="n">an</span><span class="p">,</span> <span class="n">anrdl</span><span class="p">,</span> <span class="n">anrdlg</span><span class="p">,</span> <span class="n">anrtl</span><span class="p">,</span> <span class="n">anrtlg</span><span class="p">,</span> <span class="n">anrul</span><span class="p">,</span> <span class="n">anrulg</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">c4</span><span class="p">,</span> <span class="n">den</span><span class="p">,</span> <span class="n">enrtl</span><span class="p">,</span> <span class="n">enrtlg</span><span class="p">,</span> <span class="n">enrul</span><span class="p">,</span> <span class="n">enrulg</span><span class="p">,</span> <span class="n">hold</span><span class="p">,</span> <span class="n">snrtl</span><span class="p">,</span> <span class="n">snrtlg</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">snrul</span><span class="p">,</span> <span class="n">snrulg</span><span class="p">,</span> <span class="nb">stat</span><span class="p">,</span> <span class="n">WS</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">znrdl</span><span class="p">,</span> <span class="n">znrdlg</span><span class="p">,</span> <span class="n">znrtl</span><span class="p">,</span> <span class="n">znrtlg</span><span class="p">,</span> <span class="n">znrul</span><span class="p">,</span> <span class="n">znrulg</span>
+<span class="kt">INTEGER</span>       <span class="kd">::</span> <span class="n">i</span><span class="p">,</span> <span class="n">imax</span><span class="p">,</span> <span class="n">ip1</span><span class="p">,</span> <span class="n">iupper</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">jp1</span><span class="p">,</span> <span class="n">lendn</span><span class="p">,</span> <span class="n">lenup</span><span class="p">,</span> <span class="n">maxlnd</span><span class="p">,</span> <span class="n">maxlnt</span><span class="p">,</span> <span class="n">maxlnu</span><span class="p">,</span> <span class="n">nm1</span><span class="p">,</span> <span class="n">nneg</span><span class="p">,</span> <span class="n">npos</span><span class="p">,</span> <span class="n">nrdl</span><span class="p">,</span> <span class="n">nrdlg</span><span class="p">,</span> <span class="n">nrtl</span><span class="p">,</span> <span class="n">nrtlg</span>
+<span class="kt">INTEGER</span>       <span class="kd">::</span> <span class="n">nrul</span><span class="p">,</span> <span class="n">nrulg</span><span class="p">,</span> <span class="n">nzer</span>
+
+<span class="k">DIMENSION </span><span class="n">Y</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">nrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">nrdl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">nrtl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">nrulg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">nrdlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">nrtlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">enrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">enrtl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">enrulg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">enrtlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">snrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">snrtl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">snrulg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">snrtlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">znrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">znrdl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">znrtl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">znrulg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">znrdlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">znrtlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">c1</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">anrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">anrdl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">anrtl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">anrulg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">anrdlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">,</span> <span class="n">anrtlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="k">COMMON</span> <span class="o">/</span><span class="n">BLOCK2</span><span class="o">/</span> <span class="n">WS</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
+<span class="k">EQUIVALENCE</span> <span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+      <span class="k">DATA </span><span class="n">c1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="p">,</span>      <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="n">c1</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span> <span class="p">,</span> <span class="n">c1</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="p">,</span> <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="n">c1</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">/</span><span class="mf">0.4236111111E+00_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">112667548</span><span class="mf">5E+00_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">419168871</span><span class="mf">3E-01_wp</span> <span class="p">,</span> <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="p">.</span><span class="mi">107691248</span><span class="mf">7E-01_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">200395923</span><span class="mf">8E-02_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">302323579</span><span class="mf">9E-03_wp</span> <span class="p">,</span>        <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="p">.</span><span class="mi">391155547</span><span class="mf">3E-04_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">445903884</span><span class="mf">3E-05_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">455110521</span><span class="mf">0E-06_wp</span> <span class="p">,</span>        <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="p">.</span><span class="mi">420746683</span><span class="mf">7E-07_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">355593092</span><span class="mf">7E-08_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">276827325</span><span class="mf">7E-09_wp</span> <span class="p">,</span>        <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="p">.</span><span class="mi">199782152</span><span class="mf">4E-10_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">134387656</span><span class="mf">8E-11_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">846561017</span><span class="mf">7E-13_wp</span><span class="o">/</span>
+      <span class="k">DATA </span><span class="n">c2</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="p">,</span>      <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="n">c2</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span> <span class="p">,</span> <span class="n">c2</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="p">,</span> <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="n">c2</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">/</span> <span class="o">-</span> <span class="p">.</span><span class="mi">481944444</span><span class="mf">4E+00_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">162828483</span><span class="mf">2E+00_wp</span> <span class="p">,</span>               <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">969069664</span><span class="mf">9E-01_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">377810678</span><span class="mf">6E-01_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">928922871</span><span class="mf">6E-02_wp</span> <span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">172442925</span><span class="mf">2E-02_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">263855788</span><span class="mf">8E-03_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">346696509</span><span class="mf">6E-04_wp</span> <span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">400412915</span><span class="mf">3E-05_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">413038258</span><span class="mf">7E-06_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">385187606</span><span class="mf">9E-07_wp</span> <span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">327910378</span><span class="mf">6E-08_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">256849111</span><span class="mf">7E-09_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">186343386</span><span class="mf">8E-10_wp</span> <span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">125922046</span><span class="mf">6E-11_wp</span><span class="o">/</span>
+      <span class="k">DATA </span><span class="n">c3</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="p">,</span>      <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="n">c3</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span> <span class="p">,</span> <span class="n">c3</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="p">,</span> <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="n">c3</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">/</span><span class="p">.</span><span class="mi">177777777</span><span class="mf">8E+00_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">791666666</span><span class="mf">7E-01_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">473897707</span><span class="mf">2E-01_wp</span> <span class="p">,</span> <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="p">.</span><span class="mi">127480158</span><span class="mf">7E-01_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">233860605</span><span class="mf">9E-02_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">346135873</span><span class="mf">4E-03_wp</span> <span class="p">,</span>        <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="p">.</span><span class="mi">440712177</span><span class="mf">0E-04_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">496002060</span><span class="mf">3E-05_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">501038757</span><span class="mf">5E-06_wp</span> <span class="p">,</span>        <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="p">.</span><span class="mi">459288335</span><span class="mf">2E-07_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">385417027</span><span class="mf">4E-08_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">298239383</span><span class="mf">9E-09_wp</span> <span class="p">,</span>        <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="p">.</span><span class="mi">214120584</span><span class="mf">4E-10_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">143384320</span><span class="mf">0E-11_wp</span> <span class="p">,</span> <span class="p">.</span><span class="mi">899666321</span><span class="mf">4E-13_wp</span><span class="o">/</span>
+      <span class="k">DATA </span><span class="n">c4</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="p">,</span>      <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="n">c4</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span> <span class="p">,</span> <span class="n">c4</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="p">,</span> <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="n">c4</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">/</span> <span class="o">-</span> <span class="p">.</span><span class="mi">322222222</span><span class="mf">2E+00_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">597222222</span><span class="mf">2E-01_wp</span> <span class="p">,</span>               <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">113026895</span><span class="mf">9E+00_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">469642857</span><span class="mf">1E-01_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">112327306</span><span class="mf">5E-01_wp</span> <span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">202517084</span><span class="mf">9E-02_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">302941041</span><span class="mf">1E-03_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">391282454</span><span class="mf">8E-04_wp</span> <span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">445923451</span><span class="mf">9E-05_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">455112878</span><span class="mf">5E-06_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">420746912</span><span class="mf">4E-07_wp</span> <span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">355593111</span><span class="mf">0E-08_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">276827326</span><span class="mf">9E-09_wp</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">199782152</span><span class="mf">5E-10_wp</span> <span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">134387656</span><span class="mf">8E-11_wp</span><span class="o">/</span>
+<span class="c">!</span>
+      <span class="n">iupper</span> <span class="o">=</span> <span class="mi">15000</span>
+<span class="c">!</span>
+<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
+<span class="c">!</span>
+      <span class="k">IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">&lt;</span><span class="mi">1</span> <span class="p">.</span><span class="nb">OR</span><span class="p">.</span> <span class="n">N</span><span class="o">&gt;</span><span class="n">iupper</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span> <span class="n">iupper</span>
+<span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO RUNS(3f) IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span> <span class="n">N</span>
+<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+         <span class="k">RETURN</span>
+<span class="k">      </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">N</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span>
+<span class="mi">99003</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE RUNS SUBROUTINE HAS THE VALUE 1 *****&#39;</span><span class="p">)</span>
+         <span class="k">RETURN</span>
+<span class="k">      ELSE</span>
+<span class="k">         </span><span class="n">hold</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">,</span> <span class="n">N</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span> <span class="p">)</span> <span class="k">GOTO </span><span class="mi">50</span>
+         <span class="k">ENDDO</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span> <span class="n">hold</span>
+<span class="mi">99004</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO RUNS(3f) HAS ALL ELEMENTS = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="c">!</span>
+<span class="c">!-----START POINT-----------------------------------------------------</span>
+<span class="c">!</span>
+ <span class="mi">50</span>      <span class="n">an</span> <span class="o">=</span> <span class="n">N</span>
+<span class="c">!</span>
+<span class="c">!     FORM THE SEQUENTIAL DIFFERENCE TABLE</span>
+<span class="c">!</span>
+         <span class="n">nm1</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">nm1</span>
+            <span class="n">ip1</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="n">ip1</span><span class="p">)</span> <span class="o">-</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     ZERO-OUT THE 6 &#39;NUMBER OF RUNS&#39; VECTORS</span>
+<span class="c">!</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">16</span>
+            <span class="n">nrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">nrdl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">nrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">nrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">nrdlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">nrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     DETERMINE THE NUMBER OF RUNS UP OF LENGTH EXACTLY I</span>
+<span class="c">!     AND THE NUMBER OF RUNS DOWN OF LENGTH EXACTLY I</span>
+<span class="c">!     DETERMINE THE LENGTH OF THE LONGEST RUN UP</span>
+<span class="c">!     AND THE LENGTH OF THE LONGEST RUN DOWN</span>
+<span class="c">!</span>
+         <span class="n">lenup</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="n">lendn</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="n">maxlnu</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="n">maxlnd</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">nm1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">)</span> <span class="n">lenup</span> <span class="o">=</span> <span class="n">lenup</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">)</span> <span class="n">lendn</span> <span class="o">=</span> <span class="n">lendn</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">==</span><span class="mi">0</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">==</span><span class="mi">0</span> <span class="p">)</span>              <span class="n">lenup</span> <span class="o">=</span> <span class="n">lenup</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">&lt;=</span><span class="mi">15</span> <span class="p">)</span> <span class="n">nrdl</span><span class="p">(</span><span class="n">lendn</span><span class="p">)</span>  <span class="o">=</span> <span class="n">nrdl</span><span class="p">(</span><span class="n">lendn</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">&gt;=</span><span class="mi">16</span> <span class="p">)</span> <span class="n">nrdl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>     <span class="o">=</span> <span class="n">nrdl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="n">lendn</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="n">lenup</span> <span class="o">=</span> <span class="n">lenup</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">&lt;=</span><span class="mi">15</span> <span class="p">)</span> <span class="n">nrul</span><span class="p">(</span><span class="n">lenup</span><span class="p">)</span>  <span class="o">=</span> <span class="n">nrul</span><span class="p">(</span><span class="n">lenup</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.0</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">&gt;=</span><span class="mi">16</span> <span class="p">)</span> <span class="n">nrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>     <span class="o">=</span> <span class="n">nrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.0</span> <span class="p">)</span> <span class="n">lenup</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.0</span> <span class="p">)</span> <span class="n">lendn</span> <span class="o">=</span> <span class="n">lendn</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">i</span><span class="o">==</span><span class="n">nm1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">&lt;=</span><span class="mi">15</span> <span class="p">)</span> <span class="n">nrdl</span><span class="p">(</span><span class="n">lendn</span><span class="p">)</span>    <span class="o">=</span> <span class="n">nrdl</span><span class="p">(</span><span class="n">lendn</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">i</span><span class="o">==</span><span class="n">nm1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lendn</span><span class="o">&gt;=</span><span class="mi">16</span> <span class="p">)</span> <span class="n">nrdl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>       <span class="o">=</span> <span class="n">nrdl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">i</span><span class="o">==</span><span class="n">nm1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">&lt;=</span><span class="mi">15</span> <span class="p">)</span> <span class="n">nrul</span><span class="p">(</span><span class="n">lenup</span><span class="p">)</span>    <span class="o">=</span> <span class="n">nrul</span><span class="p">(</span><span class="n">lenup</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">i</span><span class="o">==</span><span class="n">nm1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="p">.</span><span class="nb">AND</span><span class="p">.</span> <span class="n">lenup</span><span class="o">&gt;=</span><span class="mi">16</span> <span class="p">)</span> <span class="n">nrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>       <span class="o">=</span> <span class="n">nrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">lenup</span><span class="o">&gt;</span><span class="n">maxlnu</span> <span class="p">)</span> <span class="n">maxlnu</span> <span class="o">=</span> <span class="n">lenup</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">lendn</span><span class="o">&gt;</span><span class="n">maxlnd</span> <span class="p">)</span> <span class="n">maxlnd</span> <span class="o">=</span> <span class="n">lendn</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     DETERMINE THE NUMBER OF RUNS TOTAL OF LENGTH EXACTLY I</span>
+<span class="c">!     AND THE LENGTH OF THE LONGEST RUN UP OR DOWN</span>
+<span class="c">!</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">16</span>
+            <span class="n">nrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">nrdl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         </span><span class="n">maxlnt</span> <span class="o">=</span> <span class="n">maxlnu</span>
+         <span class="k">IF</span> <span class="p">(</span> <span class="n">maxlnd</span><span class="o">&gt;</span><span class="n">maxlnu</span> <span class="p">)</span> <span class="n">maxlnt</span> <span class="o">=</span> <span class="n">maxlnd</span>
+<span class="c">!</span>
+<span class="c">!     DETERMINE THE NUMBER OF RUNS UP OF LENGTH I OR MORE</span>
+<span class="c">!     AND THE NUMBER OF RUNS DOWN OF LENGTH I OR MORE</span>
+<span class="c">!     AND THE NUMBER OF RUNS TOTAL OF LENGTH I OR MORE</span>
+<span class="c">!</span>
+         <span class="n">nrulg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrul</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+         <span class="n">nrdlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrdl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+         <span class="n">nrtlg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrtl</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">15</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">-</span> <span class="n">i</span>
+            <span class="n">jp1</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">nrulg</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrulg</span><span class="p">(</span><span class="n">jp1</span><span class="p">)</span> <span class="o">+</span> <span class="n">nrul</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="n">nrdlg</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrdlg</span><span class="p">(</span><span class="n">jp1</span><span class="p">)</span> <span class="o">+</span> <span class="n">nrdl</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="n">nrtlg</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrtlg</span><span class="p">(</span><span class="n">jp1</span><span class="p">)</span> <span class="o">+</span> <span class="n">nrtl</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     DETERMINE THE NUMBER OF POSITIVE, ZERO, AND NEGATIVE ENTRIES</span>
+<span class="c">!     IN THE DIFFERENCE TABLE.  IF RANDOM, THE NUMBER OF POSITIVE SHOULD BE</span>
+<span class="c">!     APPROXIMATELY EQUAL TO THE NUMBER OF NEGATIVE</span>
+<span class="c">!</span>
+         <span class="n">nneg</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="n">nzer</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="n">npos</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">nm1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="n">nneg</span> <span class="o">=</span> <span class="n">nneg</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="n">nzer</span> <span class="o">=</span> <span class="n">nzer</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">IF</span> <span class="p">(</span> <span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="n">npos</span> <span class="o">=</span> <span class="n">npos</span> <span class="o">+</span> <span class="mi">1</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     COMPUTE THE EXPECTED NUMBER OF RUNS UP OF LENGTH EXACTLY I =</span>
+<span class="c">!     THE EXPECTED NUMBER OF RUNS DOWN OF LENGTH EXACTLY I =</span>
+<span class="c">!     ONE HALF THE EXPECTED NUMBER OF RUNS TOTAL OF LENGTH EXACTLY I</span>
+<span class="c">!</span>
+         <span class="n">den</span> <span class="o">=</span> <span class="mf">6.0_wp</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">15</span>
+            <span class="n">ai</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">enrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">an</span><span class="o">*</span><span class="p">(</span><span class="n">ai</span><span class="o">*</span><span class="n">ai</span><span class="o">+</span><span class="mf">3.0_wp</span><span class="o">*</span><span class="n">ai</span><span class="o">+</span><span class="mf">1.0_wp</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">ai</span><span class="o">*</span><span class="n">ai</span><span class="o">*</span><span class="n">ai</span><span class="o">+</span><span class="mf">3.0_wp</span><span class="o">*</span><span class="n">ai</span><span class="o">*</span><span class="n">ai</span><span class="o">-</span><span class="n">ai</span><span class="o">-</span><span class="mf">4.0_wp</span><span class="p">)</span>
+            <span class="n">den</span> <span class="o">=</span> <span class="n">den</span><span class="o">*</span><span class="p">(</span><span class="n">ai</span><span class="o">+</span><span class="mf">3.0_wp</span><span class="p">)</span>
+            <span class="n">enrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">enrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">den</span>
+            <span class="n">enrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mf">2.0_wp</span><span class="o">*</span><span class="n">enrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     COMPUTE THE EXPECTED NUMBER OF RUNS UP OF LENGTH I OR MORE =</span>
+<span class="c">!     THE EXPECTED NUMBER OF RUNS DOWN OF LENGTH I OR MORE =</span>
+<span class="c">!     ONE HALF THE EXPECTED NUMBER OF RUNS TOTAL OF LENGTH I OR MORE</span>
+<span class="c">!</span>
+         <span class="n">den</span> <span class="o">=</span> <span class="mf">2.0_wp</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">15</span>
+            <span class="n">ai</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">enrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">an</span><span class="o">*</span><span class="p">(</span><span class="n">ai</span><span class="o">+</span><span class="mf">1.0_wp</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">ai</span><span class="o">*</span><span class="n">ai</span><span class="o">+</span><span class="n">ai</span><span class="o">-</span><span class="mf">1.0_wp</span><span class="p">)</span>
+            <span class="n">den</span> <span class="o">=</span> <span class="n">den</span><span class="o">*</span><span class="p">(</span><span class="n">ai</span><span class="o">+</span><span class="mf">2.0_wp</span><span class="p">)</span>
+            <span class="n">enrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">enrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">den</span>
+            <span class="n">enrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mf">2.0_wp</span><span class="o">*</span><span class="n">enrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     COMPUTE THE STANDARD DEV. OF THE NUMBER OF RUNS UP OF LENGTH EXACTLY I =</span>
+<span class="c">!     THE STANDARD DEV. OF THE NUMBER OF RUNS DOWN OF LENGTH EXACTLY I =</span>
+<span class="c">!     SQRT(0.5)* THE STAND. DEV. OF THE NUMBER OF RUNS TOTAL OF LENGTH EXACTLY I</span>
+<span class="c">!</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">15</span>
+            <span class="n">snrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">SQRT</span><span class="p">(</span><span class="n">c1</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">an</span><span class="o">+</span><span class="n">c2</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">snrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">SQRT</span><span class="p">(</span><span class="mf">0.5_wp</span><span class="p">)</span><span class="o">*</span><span class="n">snrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     COMPUTE THE STAND. DEV. OF THE NUMBER OF RUNS UP OF LENGTH I OR MORE =</span>
+<span class="c">!     THE STAND. DEV. OF THE NUMBER OF RUNS DOWN OF LENGTH I OR MORE =</span>
+<span class="c">!     SQRT(0.5)* THE STAND. DEV. OF THE NUMBER OF RUNS TOTAL OF LENGTH I OR MORE</span>
+<span class="c">!</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">15</span>
+            <span class="n">snrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">SQRT</span><span class="p">(</span><span class="n">c3</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">an</span><span class="o">+</span><span class="n">c4</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">snrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">SQRT</span><span class="p">(</span><span class="mf">0.5_wp</span><span class="p">)</span><span class="o">*</span><span class="n">snrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     FORM Z STATISTICS</span>
+<span class="c">!</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">15</span>
+            <span class="nb">stat</span> <span class="o">=</span> <span class="n">nrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">znrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nb">stat</span><span class="o">-</span><span class="n">enrul</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">/</span><span class="n">snrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="nb">stat</span> <span class="o">=</span> <span class="n">nrdl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">znrdl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nb">stat</span><span class="o">-</span><span class="n">enrul</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">/</span><span class="n">snrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="nb">stat</span> <span class="o">=</span> <span class="n">nrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">znrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nb">stat</span><span class="o">-</span><span class="n">enrtl</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">/</span><span class="n">snrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="nb">stat</span> <span class="o">=</span> <span class="n">nrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">znrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nb">stat</span><span class="o">-</span><span class="n">enrulg</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">/</span><span class="n">snrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="nb">stat</span> <span class="o">=</span> <span class="n">nrdlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">znrdlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nb">stat</span><span class="o">-</span><span class="n">enrulg</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">/</span><span class="n">snrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="nb">stat</span> <span class="o">=</span> <span class="n">nrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">znrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nb">stat</span><span class="o">-</span><span class="n">enrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">/</span><span class="n">snrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">15</span>
+            <span class="n">anrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">anrdl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrdl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">anrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">anrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">anrdlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrdlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">anrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">nrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="c">!</span>
+<span class="c">!     WRITE EVERYTHING OUT</span>
+<span class="c">!</span>
+         <span class="n">imax</span> <span class="o">=</span> <span class="mi">15</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99024</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span>
+<span class="mi">99005</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">48</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;RUNS UP&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span>
+<span class="mi">99006</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">27</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;STATISTIC = NUMBER OF RUNS UP    OF LENGTH EXACTLY I&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99022</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">imax</span>
+            <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99023</span><span class="p">)</span> <span class="n">i</span> <span class="p">,</span> <span class="n">anrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">enrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">snrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">znrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span>
+<span class="mi">99007</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">27</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;STATISTIC = NUMBER OF RUNS UP    OF LENGTH I OR MORE&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99022</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">imax</span>
+            <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99023</span><span class="p">)</span> <span class="n">i</span> <span class="p">,</span> <span class="n">anrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">enrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">snrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span>   <span class="n">znrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99024</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99008</span><span class="p">)</span>
+<span class="mi">99008</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">48</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;RUNS DOWN&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99009</span><span class="p">)</span>
+<span class="mi">99009</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">27</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;STATISTIC = NUMBER OF RUNS DOWN  OF LENGTH EXACTLY I&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99022</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">imax</span>
+            <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99023</span><span class="p">)</span> <span class="n">i</span> <span class="p">,</span> <span class="n">anrdl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">enrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">snrul</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">znrdl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99010</span><span class="p">)</span>
+<span class="mi">99010</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">27</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;STATISTIC = NUMBER OF RUNS DOWN  OF LENGTH I OR MORE&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99022</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">imax</span>
+            <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99023</span><span class="p">)</span> <span class="n">i</span> <span class="p">,</span> <span class="n">anrdlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">enrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">snrulg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">znrdlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99024</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span>
+<span class="mi">99011</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">40</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;RUNS TOTAL = RUNS UP + RUNS DOWN&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span>
+<span class="mi">99012</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">27</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;STATISTIC = NUMBER OF RUNS TOTAL OF LENGTH EXACTLY I&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99022</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">imax</span>
+            <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99023</span><span class="p">)</span> <span class="n">i</span> <span class="p">,</span> <span class="n">anrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">enrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">snrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">znrtl</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span>
+<span class="mi">99013</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">27</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;STATISTIC = NUMBER OF RUNS TOTAL OF LENGTH I OR MORE&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99022</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">imax</span>
+            <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99023</span><span class="p">)</span> <span class="n">i</span> <span class="p">,</span> <span class="n">anrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">enrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span> <span class="n">snrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">,</span>   <span class="n">znrtlg</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99024</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99014</span><span class="p">)</span> <span class="n">maxlnu</span>
+<span class="mi">99014</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LENGTH OF THE LONGEST RUN UP         = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99015</span><span class="p">)</span> <span class="n">maxlnd</span>
+<span class="mi">99015</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LENGTH OF THE LONGEST RUN DOWN       = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99016</span><span class="p">)</span> <span class="n">maxlnt</span>
+<span class="mi">99016</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LENGTH OF THE LONGEST RUN UP OR DOWN = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99025</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99017</span><span class="p">)</span> <span class="n">npos</span>
+<span class="mi">99017</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;NUMBER OF POSITIVE DIFFERENCES = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span> <span class="n">nneg</span>
+<span class="mi">99018</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;NUMBER OF NEGATIVE DIFFERENCES = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99019</span><span class="p">)</span> <span class="n">nzer</span>
+<span class="mi">99019</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;NUMBER OF ZERO     DIFFERENCES = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">)</span>
+<span class="mi">99020</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">(</span><span class="n">I4</span><span class="p">,</span><span class="mi">2</span><span class="n">X</span><span class="p">,</span><span class="n">F7</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="n">X</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="n">X</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="n">X</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="n">X</span><span class="p">))</span>
+<span class="mi">99021</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="mi">2</span><span class="n">X</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="mi">2</span><span class="n">X</span><span class="p">,</span><span class="n">I6</span><span class="p">)</span>
+      <span class="k">ENDIF</span>
+<span class="mi">99022</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;I = LENGTH OF RUN         VALUE OF STAT        EXP(STAT)            SD(STAT)    (STAT-EXP(STAT))/SD(STAT)&#39;</span><span class="p">)</span>
+<span class="mi">99023</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">4</span><span class="n">X</span><span class="p">,</span><span class="n">I4</span><span class="p">,</span><span class="mi">13</span><span class="n">X</span><span class="p">,</span><span class="mi">6</span><span class="n">X</span><span class="p">,</span><span class="n">F7</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="n">X</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="mi">12</span><span class="n">X</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="mi">11</span><span class="n">X</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">2</span><span class="p">)</span>
+<span class="mi">99024</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+<span class="mi">99025</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="k">END SUBROUTINE </span><span class="n">RUNS</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2022 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2022-06-03 22:20  
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

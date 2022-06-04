@@ -49,9 +49,8 @@ EXAMPLES
 
  Result:
  
-  THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZONTALLY)
+  The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
                     I-----------I-----------I-----------I-----------I
-                  
    0.1000000E+01 -                                                  X
    0.9583333E+00 I                                                XX
    0.9166667E+00 I                                             XX
@@ -77,13 +76,13 @@ EXAMPLES
    0.8333331E-01 I      XX
    0.4166663E-01 I   XX
    0.0000000E+00 -  X
-                  
                     I-----------I-----------I-----------I-----------I
              0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 
 MAINTAINER
    John Urban, 2022.05.31
@@ -92,7 +91,8 @@ LICENSE
    CC0-1.0
 
 REFERENCES
- o Johnson and Kotz, Continuous Univariate Distributions -- 2, 1970, Pages 57-74.
+ o Johnson and Kotz, Continuous Univariate Distributions -- 2, 1970,
+ Pages 57-74.
 
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
