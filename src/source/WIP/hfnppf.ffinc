@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file hfnppf.3m_datapac.man
 NAME
-   hfnppf(3f) - [M_datapac:STATISTICS:PP] compute the half-normal percent
+   hfnppf(3f) - [M_datapac:PERCENT_POINT] compute the half-normal percent
    point function
 
 SYNOPSIS

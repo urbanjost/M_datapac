@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file dexsf.3m_datapac.man
 NAME
-   dexsf(3f) - [M_datapac:STATISTICS:SF] compute the double exponential
+   dexsf(3f) - [M_datapac:SPARSITY] compute the double exponential
    sparsity function
 
 SYNOPSIS

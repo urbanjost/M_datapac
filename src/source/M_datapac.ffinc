@@ -4,7 +4,7 @@ private
 integer, save           :: G_IO=stdout  ! IO LUN for all write statements
 real(kind=wp),parameter :: G_pi = 3.14159265358979_wp
 real(kind=wp),parameter :: G_pi_dp = 3.14159265358979d0
-
+private invxwx
 public :: &
 autoco  ,  betran  ,  bincdf  ,  binppf  ,  binran  ,  caucdf  ,  caupdf  ,  cauplt  ,  cauppf  ,  cauran  , &
 causf   ,  chscdf  ,  chsplt  ,  chsppf  ,  chsran  ,  code    ,  copy    ,  corr    ,  count   ,  decomp  , &
@@ -12,7 +12,7 @@ define  ,  delete  ,  demod   ,  dexcdf  ,  dexpdf  ,  dexplt  ,  dexppf  ,  dex
 discr3  ,  discre  ,  dot     ,  ev1cdf  ,  ev1plt  ,  ev1ppf  ,  ev1ran  ,  ev2cdf  ,  ev2plt  ,  ev2ppf  , &
 ev2ran  ,  expcdf  ,  exppdf  ,  expplt  ,  expppf  ,  expran  ,  expsf   ,  extrem  ,  fcdf    ,  fourie  , &
 fran    ,  freq    ,  gamcdf  ,  gamplt  ,  gamppf  ,  gamran  ,  geocdf  ,  geoplt  ,  geoppf  ,  georan  , &
-hfncdf  ,  hfnplt  ,  hfnppf  ,  hfnran  ,  hist    ,  invxwx  ,  lamcdf  ,  lampdf  ,  lamplt  ,  lamppf  , &
+hfncdf  ,  hfnplt  ,  hfnppf  ,  hfnran  ,  hist    ,             lamcdf  ,  lampdf  ,  lamplt  ,  lamppf  , &
 lamran  ,  lamsf   ,  lgncdf  ,  lgnplt  ,  lgnppf  ,  lgnran  ,  loc     ,  logcdf  ,  logpdf  ,  logplt  , &
 logppf  ,  logran  ,  logsf   ,  max     ,  mean    ,  median  ,  midm    ,  midr    ,  min     ,  move    , &
 nbcdf   ,  nbppf   ,  nbran   ,  norcdf  ,  norout  ,  norpdf  ,  norplt  ,  norppf  ,  norran  ,  norsf   , &
@@ -90,7 +90,6 @@ interface  hfnplt;  module  procedure  hfnplt  ;  end  interface
 interface  hfnppf;  module  procedure  hfnppf  ;  end  interface
 interface  hfnran;  module  procedure  hfnran  ;  end  interface
 interface  hist;    module  procedure  hist    ;  end  interface
-interface  invxwx;  module  procedure  invxwx  ;  end  interface
 interface  lamcdf;  module  procedure  lamcdf  ;  end  interface
 interface  lampdf;  module  procedure  lampdf  ;  end  interface
 interface  lamplt;  module  procedure  lamplt  ;  end  interface
@@ -266,7 +265,7 @@ $INCLUDE "WIP/hfnplt.ffinc"
 $INCLUDE "WIP/hfnppf.ffinc"
 $INCLUDE "WIP/hfnran.ffinc"
 $INCLUDE "WIP/hist.ffinc"
-$INCLUDE "WIP/invxwx.ffinc"
+$INCLUDE "invxwx.ffinc"
 $INCLUDE "WIP/lamcdf.ffinc"
 $INCLUDE "WIP/lampdf.ffinc"
 $INCLUDE "WIP/lamplt.ffinc"
@@ -285,7 +284,7 @@ $INCLUDE "WIP/logppf.ffinc"
 $INCLUDE "WIP/logran.ffinc"
 $INCLUDE "WIP/logsf.ffinc"
 $INCLUDE "max.ffinc"
-$INCLUDE "WIP/mean.ffinc"
+$INCLUDE "mean.ffinc"
 $INCLUDE "WIP/median.ffinc"
 $INCLUDE "WIP/midm.ffinc"
 $INCLUDE "WIP/midr.ffinc"

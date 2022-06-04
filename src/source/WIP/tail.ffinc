@@ -124,7 +124,7 @@ CHARACTER(len=4) :: alphax
       DIMENSION corr(50) , iflag1(50) , iflag2(50) , iflag3(50)
       DIMENSION iline1(130) , iline2(130)
       DIMENSION xline(13)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (Z(1),WS(3001))
       EQUIVALENCE (YM(1),WS(6001))

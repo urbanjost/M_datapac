@@ -57,8 +57,8 @@ REAL(kind=wp) :: D, dis, dn, DUM1, DUM2, Eta, hold, Q, R, risj, Tol, tol2, WS
 INTEGER i, Insing, ip, IPIvot, iqarg, iqarg1, iqarg2, Irank, irarg, irarg1, irarg2, is, ism1, isp1, j, K, l, m, N
 LOGICAL fsum
 DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
-COMMON /BLOCK2/ WS(15000)
-COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+COMMON /BLOCK2_${KIND}/ WS(15000)
+COMMON /BLOCK3_${KIND}/ DUM1(3000) , DUM2(3000)
 EQUIVALENCE (Q(1),WS(1))          !     Q--USED AND CHANGED
 EQUIVALENCE (R(1),WS(10001))      !     R--DEFINED
 EQUIVALENCE (D(1),WS(12501))      !     D--PERMANENTLY DEFINED

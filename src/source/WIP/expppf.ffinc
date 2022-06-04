@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file expppf.3m_datapac.man
 NAME
-   expppf(3f) - [M_datapac:STATISTICS:PP] compute the exponential percent
+   expppf(3f) - [M_datapac:PERCENT_POINT] compute the exponential percent
    point function
 
 SYNOPSIS
@@ -84,5 +84,5 @@ REAL(kind=wp) :: P , Ppf
       ELSE
          Ppf = -LOG(1.0_wp-P)
       ENDIF
- 
+
 END SUBROUTINE EXPPPF

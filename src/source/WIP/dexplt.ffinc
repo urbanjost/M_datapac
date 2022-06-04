@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file dexplt.3m_datapac.man
 NAME
-   dexplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a double exponential
+   dexplt(3f) - [M_datapac:LINE_PLOT] generate a double exponential
    probability plot
 
 SYNOPSIS
@@ -98,7 +98,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !

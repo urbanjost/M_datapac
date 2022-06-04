@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file unisf.3m_datapac.man
 NAME
-   unisf(3f) - [M_datapac:STATISTICS:SF] compute the Uniform sparsity function
+   unisf(3f) - [M_datapac:SPARSITY] compute the Uniform sparsity function
 
 SYNOPSIS
       SUBROUTINE UNISF(P,Sf)

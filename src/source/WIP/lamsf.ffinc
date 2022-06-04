@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lamsf.3m_datapac.man
 NAME
-   lamsf(3f) - [M_datapac:STATISTICS:SF] compute the Tukey-Lambda sparsity function
+   lamsf(3f) - [M_datapac:SPARSITY] compute the Tukey-Lambda sparsity function
 
 SYNOPSIS
       SUBROUTINE LAMSF(P,Alamba,Sf)

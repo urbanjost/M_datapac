@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file chsran.3m_datapac.man
 NAME
-   chsran(3f) - [M_datapac:STATISTICS:RANDOM] generate chi-square random numbers
+   chsran(3f) - [M_datapac:RANDOM] generate chi-square random numbers
 
 SYNOPSIS
       SUBROUTINE CHSRAN(N,Nu,Iseed,X)

@@ -86,7 +86,7 @@ INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       DATA p1 , p2 , perp1 , perp2 , perp3/0.25_wp , 0.25_wp , 25.0_wp , 25.0_wp ,  &
      &     50.0_wp/

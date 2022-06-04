@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotxx.3m_datapac.man
 NAME
-   plotxx(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
+   plotxx(3f) - [M_datapac:LINE_PLOT] generate a line printer lag plot
 
 SYNOPSIS
       SUBROUTINE PLOTXX(X,N)

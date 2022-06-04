@@ -79,7 +79,7 @@ INTEGER i , iupper , j , N , numdis
 !
       DIMENSION X(:) , Y(:)
       DIMENSION DISt(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (DISt(1),WS(1))
 !
       iupper = 15000

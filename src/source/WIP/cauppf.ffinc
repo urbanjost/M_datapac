@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file cauppf.3m_datapac.man
 NAME
-   cauppf(3f) - [M_datapac:STATISTICS:PP] compute the Cauchy percent point
+   cauppf(3f) - [M_datapac:PERCENT_POINT] compute the Cauchy percent point
    function
 
 SYNOPSIS
@@ -62,7 +62,7 @@ REFERENCES
      Princeton University), 1969, Pages 21-44, 229-231.
    o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
      1970, Pages 28-31.
-   o Johnson and Kotz, Continuous Univariate Distributions 
+   o Johnson and Kotz, Continuous Univariate Distributions
      -- 1, 1970, PAGES 154-165.
 
 $ENDBLOCK

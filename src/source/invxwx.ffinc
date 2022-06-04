@@ -1,5 +1,5 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file invxwx.3m_datapac.man
+$BLOCK COMMENT --file PRIVATE/invxwx.3m_datapac.man
 NAME
    invxwx(3f) - [M_datapac:STATISTICS] compute the inverse of X'WX
 
@@ -7,25 +7,25 @@ SYNOPSIS
       SUBROUTINE INVXWX(N,K)
 
 DESCRIPTION
-   invxwx(3f) computes the inverse of x'wx which is done by computing
-   the inverse of r'r (where r has just recently been modified before
-   calling this subroutine. the input r = the square root of the
-   diagonal matrix d times the old matrix r. the inverse of x'wx will
-   be identical (except for the absence of s**2 = the residual variance)
+   INVXWX(3f) computes the inverse of X'WX which is done by computing
+   the inverse of R'R (where r has just recently been modified before
+   calling this subroutine. The input r = the square root of the
+   diagonal matrix D times the old matrix R. the inverse of X'WX will
+   be identical (except for the absence of S**2 = the residual variance)
    to the covariance matrix of the coefficients.
 
-   the only reason invxwx(3f) exists is for the calculation of such
+   the only reason INVXWX(3f) exists is for the calculation of such
    covariances.
 
-   unpivoting has also been done herein so as to undo the pivoting done
-   in the decomposition subroutine (decomp). the matrix c used herein
+   Unpivoting has also been done herein so as to undo the pivoting done
+   in the decomposition subroutine (DECOMP(3f)). The matrix C used herein
    is an intermediate result matrix.
 
-   x--not used
-   q--not used
-   r--used and changed
-   d--not used
-   ipivot--used
+      x--not used
+      q--not used
+      r--used and changed
+      d--not used
+      ipivot--used
 
 OPTIONS
     X   description of parameter
@@ -34,18 +34,19 @@ OPTIONS
 EXAMPLES
   Sample program:
 
-   program demo_invxwx
+   program test_invxwx
    use M_datapac, only : invxwx
    implicit none
-   character(len=*),parameter ::  g='(*(g0,1x))'
+   ! private routine
    ! call invxwx(x,y)
-   end program demo_invxwx
+   end program test_invxwx
 
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
@@ -57,15 +58,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE INVXWX(N,K)
-REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
-INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
+REAL(kind=wp) :: anegri, D, dotpro, DUM1, DUM2, dum3, Q, R, ri, WS
+INTEGER i, ii, im1, ip1, IPIvot, irarg, irarg1, irarg2, irarg3, j, jj, K, l, N
 
 !     INVERSION ALGORITHM USED--CHOLESKI DECOMPOSITION
 !---------------------------------------------------------------------
 !
       DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
-      COMMON /BLOCK2/ WS(15000)
-      COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
+      COMMON /BLOCK3_${KIND}/ DUM1(3000) , DUM2(3000)
       EQUIVALENCE (Q(1),WS(1))
       EQUIVALENCE (R(1),WS(10001))
       EQUIVALENCE (D(1),WS(12501))

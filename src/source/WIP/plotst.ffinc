@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotst.3m_datapac.man
 NAME
-   plotst(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
+   plotst(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
    Y vs X for the terminal (71 characters wide)
 
 SYNOPSIS
@@ -14,7 +14,7 @@ DESCRIPTION
      1. with only those points (x(i),y(i)) plotted
         for which the corresponding value of d(i)
         is between the specified values of dmin and dmax.
- 
+
    its narrow width makes it appropriate for use on a terminal.
 
    the use of the subset definition vector d gives the data analyst

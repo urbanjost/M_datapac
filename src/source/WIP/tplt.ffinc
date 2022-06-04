@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tplt.3m_datapac.man
 NAME
-   tplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a student's
+   tplt(3f) - [M_datapac:LINE_PLOT] generates a student's
    t probability plot (with integer degrees of freedom parameter value
    NU).
 
@@ -109,7 +109,7 @@ INTEGER :: i , iupper , N , Nu
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !

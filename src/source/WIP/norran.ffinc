@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file norran.3m_datapac.man
 NAME
-   norran(3f) - [M_datapac:STATISTICS:RANDOM] generate normal random numbers
+   norran(3f) - [M_datapac:RANDOM] generate normal random numbers
 
 SYNOPSIS
       SUBROUTINE NORRAN(N,Iseed,X)

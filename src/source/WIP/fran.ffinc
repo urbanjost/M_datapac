@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file fran.3m_datapac.man
 NAME
-   fran(3f) - [M_datapac:STATISTICS:RANDOM] generate F random numbers
+   fran(3f) - [M_datapac:RANDOM] generate F random numbers
 
 SYNOPSIS
       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)

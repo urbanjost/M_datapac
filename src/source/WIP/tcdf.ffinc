@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tcdf.3m_datapac.man
 NAME
-   tcdf(3f) - [M_datapac:STATISTICS:CD] computes the cumulative distribution
+   tcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] computes the cumulative distribution
    function value for student's t distribution with integer degrees of
    freedom NU.
 

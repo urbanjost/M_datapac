@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file sortc.3m_datapac.man
 NAME
-   sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample
+   sortc(3f) - [M_datapac:SORT] sort a vector of sample
    observations and "carry" a second vector
 
 SYNOPSIS
@@ -76,7 +76,7 @@ EXAMPLES
    program demo_sortc
    use M_datapac, only : sortc
    implicit none
-   integer,parameter            :: isz=20   
+   integer,parameter            :: isz=20
    real                         :: aa(isz)
    real                         :: bb(isz)
    real                         :: cc(isz)
@@ -88,7 +88,7 @@ EXAMPLES
      aa=aa*450000.0
      bb=real([(i,i=1,isz)])
      call sortc(aa,bb,size(aa),cc,dd)
-    
+
      write(*,*)'checking if real values are sorted(3f)'
      do i=1,isz-1
         if(cc(i).gt.cc(i+1))then

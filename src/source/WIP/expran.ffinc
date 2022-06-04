@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file expran.3m_datapac.man
 NAME
-   expran(3f) - [M_datapac:STATISTICS:RANDOM] generate exponential random numbers
+   expran(3f) - [M_datapac:RANDOM] generate exponential random numbers
 
 SYNOPSIS
       SUBROUTINE EXPRAN(N,Iseed,X)

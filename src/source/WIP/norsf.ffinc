@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file norsf.3m_datapac.man
 NAME
-   norsf(3f) - [M_datapac:STATISTICS:SF] compute the normal sparsity function
+   norsf(3f) - [M_datapac:SPARSITY] compute the normal sparsity function
 
 SYNOPSIS
       SUBROUTINE NORSF(P,Sf)

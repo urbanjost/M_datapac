@@ -1,5 +1,10 @@
 module M_datapac
-use M_datapac_n
+use,intrinsic :: iso_fortran_env, only : stdin=>input_unit,  stdout=>output_unit, stderr=>error_unit
 use M_datapac_s
 use M_datapac_d
+public :: skipr
+private :: G_io
+integer, save           :: G_IO=stdout  ! IO LUN for all write statements
+contains
+$INCLUDE "WIP/skipr.ffinc"
 end module M_datapac

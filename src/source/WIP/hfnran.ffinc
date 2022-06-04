@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file hfnran.3m_datapac.man
 NAME
-   hfnran(3f) - [M_datapac:STATISTICS:RANDOM] generate half-normal random numbers
+   hfnran(3f) - [M_datapac:RANDOM] generate half-normal random numbers
 
 SYNOPSIS
       SUBROUTINE HFNRAN(N,Iseed,X)

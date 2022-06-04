@@ -100,7 +100,7 @@ character(len=4) :: iline2
       DIMENSION Y(7500) , XPOs(7500)
       DIMENSION iline1(130) , iline2(130)
       DIMENSION xline(13)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (XPOs(1),WS(7501))
 !

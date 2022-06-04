@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plott.3m_datapac.man
 NAME
-   plott(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
+   plott(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
    Y vs X for the terminal (71 characters wide)
 
 SYNOPSIS
@@ -297,7 +297,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       ENDDO
       WRITE (G_IO,99010) (xlable(i),i=1,numlab)
       99010 FORMAT (' ',9X,5E12.4)
- 
+
 99011 FORMAT (' ','**********************************************************************')
 99012 FORMAT (' ','                   FATAL ERROR                    ')
 99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
@@ -306,5 +306,5 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 99016 FORMAT (' ','VALUE OF ',E15.8)
 99017 FORMAT (' ',18X,54A1)
 99018 FORMAT (' ',15X,A1)
- 
+
 END SUBROUTINE PLOTT

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file poiran.3m_datapac.man
 NAME
-   poiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Poisson random numbers
+   poiran(3f) - [M_datapac:RANDOM] generate Poisson random numbers
 
 SYNOPSIS
       SUBROUTINE POIRAN(N,Alamba,Iseed,X)

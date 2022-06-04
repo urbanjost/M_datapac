@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file sortp.3m_datapac.man
 NAME
-   sortp(3f) - [M_datapac:STATISTICS:SORT] sorts and ranks a numeric
+   sortp(3f) - [M_datapac:SORT] sorts and ranks a numeric
    vector X
 
 SYNOPSIS
@@ -183,8 +183,8 @@ INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , 
             WRITE (G_IO,99004) hold
 99004       FORMAT (' ',&
              & '***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SORTP  SUBROUTINE HAS ALL ELEMENTS =',&
-	     & E15.8,&
-	     & ' *****')
+             & E15.8,&
+             & ' *****')
             DO i = 1 , N
                Y(i) = X(i)
                Xpos(i) = i

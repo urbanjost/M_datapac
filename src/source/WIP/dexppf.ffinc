@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file dexppf.3m_datapac.man
 NAME
-   dexppf(3f) - [M_datapac:STATISTICS:PP] compute the double exponential
+   dexppf(3f) - [M_datapac:PERCENT_POINT] compute the double exponential
    percent point function
 
 SYNOPSIS

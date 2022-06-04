@@ -1,0 +1,125 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file mean.3m_datapac.man
+NAME
+   mean(3f) - [M_datapac:STATISTICS] compute the sample mean of a data vector
+
+SYNOPSIS
+      subroutine mean(X,N,Iwrite,Xmean)
+
+       real(kind=wp),intent(in)  :: X(:)
+       integer,intent(in)        :: N
+       integer,intent(in)        :: Iwrite
+       real(kind=wp),intent(out) :: Xmean
+
+DESCRIPTION
+   MEAN(3f) computes the sample mean of the data in the input vector X.
+
+   The sample mean = (sum of the observations)/n.
+
+   For a data set, the arithmetic mean, also known as arithmetic
+   average, is a measure of central tendency of a finite set of numbers:
+   specifically, the sum of the values divided by the number of values. If
+   the data set were based on a series of observations obtained by
+   sampling from a statistical population, the arithmetic mean is the
+   sample mean.
+
+INPUT  ARGUMENTS
+ X        The vector of (unsorted or sorted) observations.
+
+ N        The integer number of observations in the vector X.
+
+ IWRITE   An integer flag code which (if set to 0) will suppress
+          the printing of the sample mean as it is computed; or (if set
+          to some integer value not equal to 0), like, say, 1) will cause
+          the printing of the sample mean at the time it is computed.
+
+OUTPUT ARGUMENTS
+
+ XMEAN    The value of the computed sample mean.
+
+EXAMPLES
+  Sample program:
+
+   program demo_mean
+   use M_datapac, only : mean
+   implicit none
+   real :: sp_mean
+   double precision :: dp_mean
+      call mean([4.0, 36.0, 45.0, 50.0, 75.0], 5, 1, sp_mean)
+      write(*,*)sp_mean,sp_mean==42.0
+      call mean([4.0d0, 36.0d0, 45.0d0, 50.0d0, 75.0d0], 5, 1, dp_mean)
+      write(*,*)dp_mean,dp_mean==42.0
+   end program demo_mean
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+ o Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
+   Edition 1, 1961, Page 4.
+ o Mood and Grable, Introduction to the Theory of Statistics, Edition 2,
+   1963, Page 146.
+ o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+   1957, Page 14.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine mean(X,N,Iwrite,Xmean)
+real(kind=wp),intent(in)  :: X(:)
+integer,intent(in)        :: N
+integer,intent(in)        :: Iwrite
+real(kind=wp),intent(out) :: Xmean
+
+integer                   :: i
+real(kind=wp)             :: an, hold, sum
+   an = real(N,kind=wp)
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   if ( N<1 ) then
+      write (G_io,99001)
+      99001 format (' ***** FATAL ERROR--The second input argument to MEAN(3f) is non-positive *****')
+      write (G_io,99002) N
+      99002 format (' ','***** The value of the argument is ',I0,' *****')
+      return
+   elseif ( N==1 ) then
+      write (G_io,99003)
+      99003 format (' ***** NON-FATAL DIAGNOSTIC--The second input argument to MEAN(3f) has the value 1 *****')
+      Xmean = X(1)
+   else
+      hold = X(1)
+      if(all(x(2:n) == hold)) then
+         write (G_io,99004) hold
+         99004 format(&
+         &' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to MEAN(3f) has all elements = ',g0,' *****')
+         Xmean = X(1)
+      else
+         sum = 0.0_wp
+         do i = 1 , N
+            sum = sum + X(i)
+         enddo
+         Xmean = sum/an
+      endif
+   endif
+
+   if ( Iwrite /= 0 ) then
+      write (G_io,99006) N , Xmean
+      99006 format (/,' The sample mean of the ',I0,' observations is ', g0)
+   endif
+
+end subroutine mean

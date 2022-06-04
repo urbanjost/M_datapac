@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file sampp.3m_datapac.man
 NAME
-   sampp(3f) - [M_datapac:STATISTICS:PP] compute the sample 100P percent
+   sampp(3f) - [M_datapac:PERCENT_POINT] compute the sample 100P percent
    point (i.e., percentile)
 
 SYNOPSIS
@@ -102,7 +102,7 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000

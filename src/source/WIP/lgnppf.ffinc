@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lgnppf.3m_datapac.man
 NAME
-   lgnppf(3f) - [M_datapac:STATISTICS:PP] compute the lognormal percent
+   lgnppf(3f) - [M_datapac:PERCENT_POINT] compute the lognormal percent
    point function
 
 SYNOPSIS
@@ -70,7 +70,7 @@ REAL(kind=wp) :: P , Ppf
 !             VALUE PPF FOR THE LOGNORMAL DISTRIBUTION
 !             WITH MEAN = SQRT(E) = 1.64872127
 !             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!     
+!
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !---------------------------------------------------------------------

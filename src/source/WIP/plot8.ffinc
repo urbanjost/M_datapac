@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plot8.3m_datapac.man
 NAME
-   plot8(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+   plot8(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
    special plot characters
 
 SYNOPSIS
@@ -44,7 +44,7 @@ DESCRIPTION
      z if char(i) is between 35.5 and 36.5
      x if char(i) is any value outside the range
                               0.5 to  36.5.
-   
+
    the use of the ymin, ymax, xmin, and xmax specifications allows the
    data analyst to control fully the plot axis limits, so as, for example,
    to zero-in on an interesting sub-region of a previous plot.

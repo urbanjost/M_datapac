@@ -90,7 +90,7 @@ The following subroutines are available in M_datapac:
 
   * [AUTOCO](src/source/autoco.ffinc)  - compute the sample autocorrelation coefficient
   * [LOC](src/source/WIP/loc.ffinc)        - compute the sample mean, midrange, midmean, and median
-  * [MEAN](src/source/WIP/mean.ffinc)      - compute the mean of a data vector
+  * [MEAN](src/source/mean.ffinc)      - compute the mean of a data vector
   * [MEDIAN](src/source/WIP/median.ffinc)  - compute the median of a data vector
   * [MIDM](src/source/WIP/midm.ffinc)      - compute the midmean of a data vector
   * [MIDR](src/source/WIP/midr.ffinc)      - compute the midrange of a data vector

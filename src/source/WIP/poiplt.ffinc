@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file poiplt.3m_datapac.man
 NAME
-   poiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Poisson probability plot
+   poiplt(3f) - [M_datapac:LINE_PLOT] generate a Poisson probability plot
    (line printer graph)
 
 SYNOPSIS
@@ -120,7 +120,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
       DIMENSION X(:)
       DIMENSION Y(5000) , W(5000)
       DIMENSION Z(5000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(5001))
       EQUIVALENCE (Z(1),WS(10001))

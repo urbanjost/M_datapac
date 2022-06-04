@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file caucdf.3m_datapac.man
 NAME
-   caucdf(3f) - [M_datapac:STATISTICS:CD] compute the Cauchy cumulative
+   caucdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Cauchy cumulative
    distribution function
 
 SYNOPSIS
@@ -48,7 +48,7 @@ EXAMPLES
    end program demo_caucdf
 
   Results:
-    
+
     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
                       I-----------I-----------I-----------I-----------I
      0.1000000E+03 -                                                  X
@@ -102,7 +102,7 @@ real(kind=wp),intent(in)  :: X
 real(kind=wp),intent(out) :: Cdf
 
    ! CHECK THE INPUT ARGUMENTS FOR ERRORS ...  NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
- 
+
    Cdf = 0.5_wp + ((1.0_wp/G_pi)*atan(X))
- 
+
 end subroutine caucdf

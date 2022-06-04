@@ -88,7 +88,7 @@ INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file ev2ran.3m_datapac.man
 NAME
-   ev2ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 2
+   ev2ran(3f) - [M_datapac:RANDOM] generate extreme value type 2
    (Frechet) random numbers
 
 SYNOPSIS

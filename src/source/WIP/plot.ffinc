@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plot.3m_datapac.man
 NAME
-   plot(3f) - [M_datapac:STATISTICS:LINE PLOT] yields a one-page printer
+   plot(3f) - [M_datapac:LINE_PLOT] yields a one-page printer
    plot of y(i) versus x(i)
 
 SYNOPSIS

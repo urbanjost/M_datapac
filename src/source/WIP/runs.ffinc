@@ -72,7 +72,7 @@ REAL(kind=wp) :: c1, c2, c3, c4, den, enrtl, enrtlg, enrul, enrulg, hold, snrtl,
 REAL(kind=wp) :: snrul, snrulg, stat, WS, Y, znrdl, znrdlg, znrtl, znrtlg, znrul, znrulg
 INTEGER       :: i, imax, ip1, iupper, j, jp1, lendn, lenup, maxlnd, maxlnt, maxlnu, nm1, nneg, npos, nrdl, nrdlg, nrtl, nrtlg
 INTEGER       :: nrul, nrulg, nzer
- 
+
 DIMENSION Y(15000)
 DIMENSION nrul(16) , nrdl(16) , nrtl(16) , nrulg(16) , nrdlg(16)
 DIMENSION nrtlg(16)
@@ -83,9 +83,9 @@ DIMENSION znrtlg(16)
 DIMENSION c1(15) , c2(15) , c3(15) , c4(15)
 DIMENSION anrul(16) , anrdl(16) , anrtl(16)
 DIMENSION anrulg(16) , anrdlg(16) , anrtlg(16)
-COMMON /BLOCK2/ WS(15000)
+COMMON /BLOCK2_${KIND}/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
- 
+
       DATA c1(1) , c1(2) , c1(3) , c1(4) , c1(5) , c1(6) , c1(7) ,      &
      &     c1(8) , c1(9) , c1(10) , c1(11) , c1(12) , c1(13) , c1(14) , &
      &     c1(15)/0.4236111111E+00_wp , .1126675485E+00_wp , .4191688713E-01_wp , &

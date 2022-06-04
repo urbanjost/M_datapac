@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file ev1ppf.3m_datapac.man
 NAME
-   ev1ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 1
+   ev1ppf(3f) - [M_datapac:PERCENT_POINT] compute the extreme value type 1
    (Gumbel) percent point function
 
 SYNOPSIS

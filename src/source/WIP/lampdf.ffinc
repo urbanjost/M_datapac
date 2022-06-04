@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lampdf.3m_datapac.man
 NAME
-   lampdf(3f) - [M_datapac:STATISTICS:PD] compute the Tukey-Lambda
+   lampdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the Tukey-Lambda
    probability density function
 
 SYNOPSIS
@@ -113,7 +113,7 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
             RETURN
          ENDIF
       ENDIF
- 
+
       CALL LAMCDF(X,Alamba,cdf)
       sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
       Pdf = 1.0_wp/sf

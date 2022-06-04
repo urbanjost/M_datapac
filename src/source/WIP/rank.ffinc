@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file rank.3m_datapac.man
 NAME
-   rank(3f) - [M_datapac:STATISTICS:SORT] rank a vector of sample observations
+   rank(3f) - [M_datapac:SORT] rank a vector of sample observations
 
 SYNOPSIS
       SUBROUTINE RANK(X,N,Xr)
@@ -96,12 +96,12 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !              BE SINGLE PRECISION AND NOT INTEGER.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     COMMENT--DUE TO CONFLICTING USE OF LABELED
-!              COMMON /BLOCK2/ BY THIS RANK
+!              COMMON /BLOCK2_${KIND}/ BY THIS RANK
 !              SUBROUTINE AND THE SPCORR (SPEARMAN RANK
 !              CORRELATION COEFFICIENT) SUBROUTINE,
 !              THE VECTOR XS OF THIS RANK
 !              SUBROUTINE HAS BEEN PLACED IN
-!              LABELED COMMON /BLOCK4/
+!              LABELED COMMON /BLOCK4_${KIND}/
 !     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE
 !              CALLING SEQUENCE MAY
 !              BE IDENTICAL; THAT IS, AN 'IN PLACE'
@@ -134,7 +134,7 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !---------------------------------------------------------------------
 !
       DIMENSION X(:) , Xr(:)
-      COMMON /BLOCK4/ XS(7500)
+      COMMON /BLOCK4_${KIND}/ XS(7500)
 !
       an = N
       iupper = 7500

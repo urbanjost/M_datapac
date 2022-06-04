@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file gamran.3m_datapac.man
 NAME
-   gamran(3f) - [M_datapac:STATISTICS:RANDOM] generate gamma random numbers
+   gamran(3f) - [M_datapac:RANDOM] generate gamma random numbers
 
 SYNOPSIS
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)

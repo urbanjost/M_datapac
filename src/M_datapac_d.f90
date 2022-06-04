@@ -1,4 +1,5 @@
 module M_datapac_d
+! build real64 version
 use,intrinsic :: iso_fortran_env, only : wp=>real64
 use,intrinsic :: iso_fortran_env, only : stdin=>input_unit,  stdout=>output_unit, stderr=>error_unit
 implicit none
@@ -6,7 +7,7 @@ private
 integer, save           :: G_IO=stdout  ! IO LUN for all write statements
 real(kind=wp),parameter :: G_pi = 3.14159265358979_wp
 real(kind=wp),parameter :: G_pi_dp = 3.14159265358979d0
-
+private invxwx
 public :: &
 autoco  ,  betran  ,  bincdf  ,  binppf  ,  binran  ,  caucdf  ,  caupdf  ,  cauplt  ,  cauppf  ,  cauran  , &
 causf   ,  chscdf  ,  chsplt  ,  chsppf  ,  chsran  ,  code    ,  copy    ,  corr    ,  count   ,  decomp  , &
@@ -14,7 +15,7 @@ define  ,  delete  ,  demod   ,  dexcdf  ,  dexpdf  ,  dexplt  ,  dexppf  ,  dex
 discr3  ,  discre  ,  dot     ,  ev1cdf  ,  ev1plt  ,  ev1ppf  ,  ev1ran  ,  ev2cdf  ,  ev2plt  ,  ev2ppf  , &
 ev2ran  ,  expcdf  ,  exppdf  ,  expplt  ,  expppf  ,  expran  ,  expsf   ,  extrem  ,  fcdf    ,  fourie  , &
 fran    ,  freq    ,  gamcdf  ,  gamplt  ,  gamppf  ,  gamran  ,  geocdf  ,  geoplt  ,  geoppf  ,  georan  , &
-hfncdf  ,  hfnplt  ,  hfnppf  ,  hfnran  ,  hist    ,  invxwx  ,  lamcdf  ,  lampdf  ,  lamplt  ,  lamppf  , &
+hfncdf  ,  hfnplt  ,  hfnppf  ,  hfnran  ,  hist    ,             lamcdf  ,  lampdf  ,  lamplt  ,  lamppf  , &
 lamran  ,  lamsf   ,  lgncdf  ,  lgnplt  ,  lgnppf  ,  lgnran  ,  loc     ,  logcdf  ,  logpdf  ,  logplt  , &
 logppf  ,  logran  ,  logsf   ,  max     ,  mean    ,  median  ,  midm    ,  midr    ,  min     ,  move    , &
 nbcdf   ,  nbppf   ,  nbran   ,  norcdf  ,  norout  ,  norpdf  ,  norplt  ,  norppf  ,  norran  ,  norsf   , &
@@ -92,7 +93,6 @@ interface  hfnplt;  module  procedure  hfnplt  ;  end  interface
 interface  hfnppf;  module  procedure  hfnppf  ;  end  interface
 interface  hfnran;  module  procedure  hfnran  ;  end  interface
 interface  hist;    module  procedure  hist    ;  end  interface
-interface  invxwx;  module  procedure  invxwx  ;  end  interface
 interface  lamcdf;  module  procedure  lamcdf  ;  end  interface
 interface  lampdf;  module  procedure  lampdf  ;  end  interface
 interface  lamplt;  module  procedure  lamplt  ;  end  interface
@@ -330,7 +330,7 @@ integer i , ip1 , iwrite , n , nm1
 end subroutine autoco
 !>
 !!##NAME
-!!    betran(3f) - [M_datapac:STATISTICS:RANDOM] generate beta random numbers
+!!    betran(3f) - [M_datapac:RANDOM] generate beta random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -541,7 +541,7 @@ INTEGER ::  i , Iseed , N
 END SUBROUTINE BETRAN
 !>
 !!##NAME
-!!    bincdf(3f) - [M_datapac:STATISTICS:CD] compute the binomial cumulative
+!!    bincdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the binomial cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -872,7 +872,7 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 END SUBROUTINE BINCDF
 !>
 !!##NAME
-!!    binppf(3f) - [M_datapac:STATISTICS:PP] compute the binomial percent
+!!    binppf(3f) - [M_datapac:PERCENT_POINT] compute the binomial percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -1274,7 +1274,7 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 END SUBROUTINE BINPPF
 !>
 !!##NAME
-!!    binran(3f) - [M_datapac:STATISTICS:RANDOM] generate binomial random numbers
+!!    binran(3f) - [M_datapac:RANDOM] generate binomial random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -1462,7 +1462,7 @@ INTEGER i , ig , Iseed , isum , j , N , Npar
 END SUBROUTINE BINRAN
 !>
 !!##NAME
-!!    caucdf(3f) - [M_datapac:STATISTICS:CD] compute the Cauchy cumulative
+!!    caucdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Cauchy cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -1501,16 +1501,46 @@ END SUBROUTINE BINRAN
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
-!!       x=[(real(i),i=-1000,1000,10)]
-!!       if(allocated(x))deallocate(x)
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
 !!       do i=1,size(x)
-!!          call caucdf(x(i),y(i))
+!!          call caucdf(x(i)/10.0,y(i))
 !!       enddo
 !!       call plott(x,y,size(x))
 !!    end program demo_caucdf
 !!
 !!   Results:
+!!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                                  X
+!!      0.9166666E+02 I                                                  X
+!!      0.8333334E+02 I                                                  X
+!!      0.7500000E+02 I                                                 XX
+!!      0.6666667E+02 I                                                 X
+!!      0.5833334E+02 I                                                 X
+!!      0.5000000E+02 -                                                XX
+!!      0.4166667E+02 I                                               XX
+!!      0.3333334E+02 I                                              XX
+!!      0.2500000E+02 I                                            XXX
+!!      0.1666667E+02 I                                         XXXX
+!!      0.8333336E+01 I                                  XXXXXXX
+!!      0.0000000E+00 -                    XX XX X XX XX
+!!     -0.8333328E+01 I            XXXXXXX
+!!     -0.1666666E+02 I        XXXX
+!!     -0.2499999E+02 I      XXX
+!!     -0.3333333E+02 I     XX
+!!     -0.4166666E+02 I    XX
+!!     -0.5000000E+02 -   XX
+!!     -0.5833333E+02 I   X
+!!     -0.6666666E+02 I   X
+!!     -0.7500000E+02 I  XX
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.3173E-01  0.2659E+00  0.5000E+00  0.7341E+00  0.9683E+00
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -1539,7 +1569,7 @@ real(kind=wp),intent(out) :: Cdf
 end subroutine caucdf
 !>
 !!##NAME
-!!    caupdf(3f) - [M_datapac:STATISTICS:PD] compute the Cauchy probability
+!!    caupdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the Cauchy probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -1609,7 +1639,7 @@ REAL(kind=wp),parameter :: c = 0.31830988618379_wp
 END SUBROUTINE CAUPDF
 !>
 !!##NAME
-!!    cauplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Cauchy
+!!    cauplt(3f) - [M_datapac:LINE_PLOT] generate a Cauchy
 !!    probability plot
 !!
 !!##SYNOPSIS
@@ -1692,7 +1722,7 @@ REAL(kind=wp) :: an, arg, cc, hold, sum1, sum2, sum3, tau, wbar, WS, ybar, yint,
 REAL(kind=wp) :: Y(7500), W(7500)
 INTEGER       ::  i, iupper
 
-COMMON /BLOCK2/ WS(15000)
+COMMON /BLOCK2_real64/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 EQUIVALENCE (W(1),WS(7501))
 
@@ -1779,7 +1809,7 @@ DATA tau/10.02040649_wp/
 END SUBROUTINE CAUPLT
 !>
 !!##NAME
-!!    cauppf(3f) - [M_datapac:STATISTICS:PP] compute the Cauchy percent point
+!!    cauppf(3f) - [M_datapac:PERCENT_POINT] compute the Cauchy percent point
 !!    function
 !!
 !!##SYNOPSIS
@@ -1876,7 +1906,7 @@ REAL(kind=wp) :: arg , P , pi , Ppf
 END SUBROUTINE CAUPPF
 !>
 !!##NAME
-!!    cauran(3f) - [M_datapac:STATISTICS:RANDOM] generate Cauchy random numbers
+!!    cauran(3f) - [M_datapac:RANDOM] generate Cauchy random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -1995,7 +2025,7 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE CAURAN
 !>
 !!##NAME
-!!    causf(3f) - [M_datapac:STATISTICS:SF] compute the Cauchy sparsity function
+!!    causf(3f) - [M_datapac:SPARSITY] compute the Cauchy sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -2096,7 +2126,7 @@ REAL(kind=wp) :: arg , P , pi , Sf
 END SUBROUTINE CAUSF
 !>
 !!##NAME
-!!    chscdf(3f) - [M_datapac:STATISTICS:CD] compute the chi-square cumulative
+!!    chscdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the chi-square cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -2359,7 +2389,7 @@ INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 99999 END SUBROUTINE CHSCDF
 !>
 !!##NAME
-!!    chsplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a chi-square probability
+!!    chsplt(3f) - [M_datapac:LINE_PLOT] generate a chi-square probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -2459,7 +2489,7 @@ INTEGER i , iupper , N , Nu
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -2573,7 +2603,7 @@ INTEGER i , iupper , N , Nu
 END SUBROUTINE CHSPLT
 !>
 !!##NAME
-!!    chsppf(3f) - [M_datapac:STATISTICS:PP] compute the chi-square percent
+!!    chsppf(3f) - [M_datapac:PERCENT_POINT] compute the chi-square percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -2830,7 +2860,7 @@ INTEGER icount , iloop , j , maxit , Nu
 END SUBROUTINE CHSPPF
 !>
 !!##NAME
-!!    chsran(3f) - [M_datapac:STATISTICS:RANDOM] generate chi-square random numbers
+!!    chsran(3f) - [M_datapac:RANDOM] generate chi-square random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -3043,7 +3073,7 @@ INTEGER i , iupper , j , N , numdis
 !
       DIMENSION X(:) , Y(:)
       DIMENSION DISt(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (DISt(1),WS(1))
 !
       iupper = 15000
@@ -3617,8 +3647,8 @@ REAL(kind=wp) :: D, dis, dn, DUM1, DUM2, Eta, hold, Q, R, risj, Tol, tol2, WS
 INTEGER i, Insing, ip, IPIvot, iqarg, iqarg1, iqarg2, Irank, irarg, irarg1, irarg2, is, ism1, isp1, j, K, l, m, N
 LOGICAL fsum
 DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
-COMMON /BLOCK2/ WS(15000)
-COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+COMMON /BLOCK2_real64/ WS(15000)
+COMMON /BLOCK3_real64/ DUM1(3000) , DUM2(3000)
 EQUIVALENCE (Q(1),WS(1))          !     Q--USED AND CHANGED
 EQUIVALENCE (R(1),WS(10001))      !     R--DEFINED
 EQUIVALENCE (D(1),WS(12501))      !     D--PERMANENTLY DEFINED
@@ -4202,7 +4232,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 !
       DIMENSION X(:)
       DIMENSION Y1(5000) , Y2(5000) , Z(5000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y1(1),WS(1))
       EQUIVALENCE (Y2(1),WS(5001))
       EQUIVALENCE (Z(1),WS(10001))
@@ -4395,7 +4425,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 END SUBROUTINE DEMOD
 !>
 !!##NAME
-!!    dexcdf(3f) - [M_datapac:STATISTICS:CD] compute the double exponential
+!!    dexcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the double exponential
 !!    cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -4467,7 +4497,7 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE DEXCDF
 !>
 !!##NAME
-!!    dexpdf(3f) - [M_datapac:STATISTICS:PD] compute the double exponential
+!!    dexpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the double exponential
 !!    probability density function
 !!
 !!##SYNOPSIS
@@ -4549,7 +4579,7 @@ REAL(kind=wp) :: arg , Pdf , X
 END SUBROUTINE DEXPDF
 !>
 !!##NAME
-!!    dexplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a double exponential
+!!    dexplt(3f) - [M_datapac:LINE_PLOT] generate a double exponential
 !!    probability plot
 !!
 !!##SYNOPSIS
@@ -4646,7 +4676,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -4741,7 +4771,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE DEXPLT
 !>
 !!##NAME
-!!    dexppf(3f) - [M_datapac:STATISTICS:PP] compute the double exponential
+!!    dexppf(3f) - [M_datapac:PERCENT_POINT] compute the double exponential
 !!    percent point function
 !!
 !!##SYNOPSIS
@@ -4841,7 +4871,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE DEXPPF
 !>
 !!##NAME
-!!    dexran(3f) - [M_datapac:STATISTICS:RANDOM] generate double exponential
+!!    dexran(3f) - [M_datapac:RANDOM] generate double exponential
 !!    random numbers
 !!
 !!##SYNOPSIS
@@ -4950,7 +4980,7 @@ real(kind=wp)      :: q
 end subroutine dexran
 !>
 !!##NAME
-!!    dexsf(3f) - [M_datapac:STATISTICS:SF] compute the double exponential
+!!    dexsf(3f) - [M_datapac:SPARSITY] compute the double exponential
 !!    sparsity function
 !!
 !!##SYNOPSIS
@@ -5915,7 +5945,7 @@ double precision          :: sum , prod , dparpr
 end subroutine dot
 !>
 !!##NAME
-!!    ev1cdf(3f) - [M_datapac:STATISTICS:CD] compute the extreme value type 1
+!!    ev1cdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the extreme value type 1
 !!    (Gumbel) cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -5993,7 +6023,7 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE EV1CDF
 !>
 !!##NAME
-!!    ev1plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 1
+!!    ev1plt(3f) - [M_datapac:LINE_PLOT] generate a extreme value type 1
 !!    (Gumbel) probability plot
 !!
 !!##SYNOPSIS
@@ -6088,7 +6118,7 @@ INTEGER :: i , iupper , N
 !---------------------------------------------------------------------
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -6184,7 +6214,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE EV1PLT
 !>
 !!##NAME
-!!    ev1ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 1
+!!    ev1ppf(3f) - [M_datapac:PERCENT_POINT] compute the extreme value type 1
 !!    (Gumbel) percent point function
 !!
 !!##SYNOPSIS
@@ -6280,7 +6310,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE EV1PPF
 !>
 !!##NAME
-!!    ev1ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 1
+!!    ev1ran(3f) - [M_datapac:RANDOM] generate extreme value type 1
 !!    (Gumbel) random numbers
 !!
 !!##SYNOPSIS
@@ -6375,7 +6405,7 @@ REAL(kind=wp) :: X(:)
 END SUBROUTINE EV1RAN
 !>
 !!##NAME
-!!    ev2cdf(3f) - [M_datapac:STATISTICS:CD] compute the extreme value type 2
+!!    ev2cdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the extreme value type 2
 !!    (Frechet) cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -6476,7 +6506,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 END SUBROUTINE EV2CDF
 !>
 !!##NAME
-!!    ev2plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 2
+!!    ev2plt(3f) - [M_datapac:LINE_PLOT] generate a extreme value type 2
 !!    (Frechet) probability plot
 !!
 !!##SYNOPSIS
@@ -6575,7 +6605,7 @@ INTEGER i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -6691,7 +6721,7 @@ INTEGER i , iupper , N
 END SUBROUTINE EV2PLT
 !>
 !!##NAME
-!!    ev2ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 2
+!!    ev2ppf(3f) - [M_datapac:PERCENT_POINT] compute the extreme value type 2
 !!    (Frechet) percent point function
 !!
 !!##SYNOPSIS
@@ -6796,7 +6826,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 END SUBROUTINE EV2PPF
 !>
 !!##NAME
-!!    ev2ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 2
+!!    ev2ran(3f) - [M_datapac:RANDOM] generate extreme value type 2
 !!    (Frechet) random numbers
 !!
 !!##SYNOPSIS
@@ -6906,7 +6936,7 @@ INTEGER i , Iseed , N
 END SUBROUTINE EV2RAN
 !>
 !!##NAME
-!!    expcdf(3f) - [M_datapac:STATISTICS:CD] compute the exponential cumulative
+!!    expcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the exponential cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -6994,7 +7024,7 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE EXPCDF
 !>
 !!##NAME
-!!    exppdf(3f) - [M_datapac:STATISTICS:PD] compute the exponential probability
+!!    exppdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the exponential probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -7081,7 +7111,7 @@ REAL(kind=wp) :: Pdf , X
 END SUBROUTINE EXPPDF
 !>
 !!##NAME
-!!    expplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a exponential probability
+!!    expplt(3f) - [M_datapac:LINE_PLOT] generate a exponential probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -7173,7 +7203,7 @@ INTEGER i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -7268,7 +7298,7 @@ INTEGER i , iupper , N
 END SUBROUTINE EXPPLT
 !>
 !!##NAME
-!!    expppf(3f) - [M_datapac:STATISTICS:PP] compute the exponential percent
+!!    expppf(3f) - [M_datapac:PERCENT_POINT] compute the exponential percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -7355,7 +7385,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE EXPPPF
 !>
 !!##NAME
-!!    expran(3f) - [M_datapac:STATISTICS:RANDOM] generate exponential random numbers
+!!    expran(3f) - [M_datapac:RANDOM] generate exponential random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -7474,7 +7504,7 @@ REAL(kind=wp) :: X
 END SUBROUTINE EXPRAN
 !>
 !!##NAME
-!!    expsf(3f) - [M_datapac:STATISTICS:SF] compute the exponential sparsity function
+!!    expsf(3f) - [M_datapac:SPARSITY] compute the exponential sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -7676,7 +7706,7 @@ CHARACTER(len=4) :: iflag3
 !
       DIMENSION aindex(50)
       DIMENSION h(60,2)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (Z(1),WS(7501))
       DATA blank , alpham , alphaa , alphax/' ' , 'M' , 'A' , 'X'/
@@ -8024,7 +8054,7 @@ CHARACTER(len=4) :: iflag3
 99999 END SUBROUTINE EXTREM
 !>
 !!##NAME
-!!    fcdf(3f) - [M_datapac:STATISTICS:CD] compute the F cumulative distribution
+!!    fcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the F cumulative distribution
 !!    function
 !!
 !!##SYNOPSIS
@@ -8569,7 +8599,7 @@ INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
 CHARACTER(len=4) :: alperc
       DIMENSION X(:)
       DIMENSION A(7500) , B(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (A(1),WS(1))
       EQUIVALENCE (B(1),WS(7501))
       DATA pi/3.14159265358979_wp/
@@ -8742,7 +8772,7 @@ CHARACTER(len=4) :: alperc
 END SUBROUTINE FOURIE
 !>
 !!##NAME
-!!    fran(3f) - [M_datapac:STATISTICS:RANDOM] generate F random numbers
+!!    fran(3f) - [M_datapac:RANDOM] generate F random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -8992,7 +9022,7 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
@@ -9103,7 +9133,7 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 END SUBROUTINE FREQ
 !>
 !!##NAME
-!!    gamcdf(3f) - [M_datapac:STATISTICS:CD] compute the gamma cumulative
+!!    gamcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the gamma cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -9289,7 +9319,7 @@ INTEGER :: i , maxit
 END SUBROUTINE GAMCDF
 !>
 !!##NAME
-!!    gamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a gamma probability plot
+!!    gamplt(3f) - [M_datapac:LINE_PLOT] generate a gamma probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -9401,7 +9431,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
       DIMENSION d(10)
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
       DATA c/.918938533204672741D0/
@@ -9673,7 +9703,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 END SUBROUTINE GAMPLT
 !>
 !!##NAME
-!!    gamppf(3f) - [M_datapac:STATISTICS:PP] compute the gamma percent point function
+!!    gamppf(3f) - [M_datapac:PERCENT_POINT] compute the gamma percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -9923,7 +9953,7 @@ INTEGER :: icount , iloop , j , maxit
 END SUBROUTINE GAMPPF
 !>
 !!##NAME
-!!    gamran(3f) - [M_datapac:STATISTICS:RANDOM] generate gamma random numbers
+!!    gamran(3f) - [M_datapac:RANDOM] generate gamma random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -10114,7 +10144,7 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE GAMRAN
 !>
 !!##NAME
-!!    geocdf(3f) - [M_datapac:STATISTICS:CD] compute the geometric cumulative
+!!    geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -10251,7 +10281,7 @@ INTEGER intx
 END SUBROUTINE GEOCDF
 !>
 !!##NAME
-!!    geoplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a geometric probability
+!!    geoplt(3f) - [M_datapac:LINE_PLOT] generate a geometric probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -10361,7 +10391,7 @@ INTEGER i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -10477,7 +10507,7 @@ INTEGER i , iupper , N
 END SUBROUTINE GEOPLT
 !>
 !!##NAME
-!!    geoppf(3f) - [M_datapac:STATISTICS:PP] compute the geometric percent
+!!    geoppf(3f) - [M_datapac:PERCENT_POINT] compute the geometric percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -10632,7 +10662,7 @@ INTEGER iratio
 99999 END SUBROUTINE GEOPPF
 !>
 !!##NAME
-!!    georan(3f) - [M_datapac:STATISTICS:RANDOM] generate geometric random numbers
+!!    georan(3f) - [M_datapac:RANDOM] generate geometric random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -10800,7 +10830,7 @@ INTEGER :: i , iratio , Iseed , N
 END SUBROUTINE GEORAN
 !>
 !!##NAME
-!!    hfncdf(3f) - [M_datapac:STATISTICS:CD] compute the half-normal cumulative
+!!    hfncdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the half-normal cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -10899,7 +10929,7 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE HFNCDF
 !>
 !!##NAME
-!!    hfnplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a half-normal probability
+!!    hfnplt(3f) - [M_datapac:LINE_PLOT] generate a half-normal probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -10998,7 +11028,7 @@ INTEGER i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -11095,7 +11125,7 @@ INTEGER i , iupper , N
 END SUBROUTINE HFNPLT
 !>
 !!##NAME
-!!    hfnppf(3f) - [M_datapac:STATISTICS:PP] compute the half-normal percent
+!!    hfnppf(3f) - [M_datapac:PERCENT_POINT] compute the half-normal percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -11193,7 +11223,7 @@ REAL(kind=wp) :: arg , P , Ppf
 END SUBROUTINE HFNPPF
 !>
 !!##NAME
-!!    hfnran(3f) - [M_datapac:STATISTICS:RANDOM] generate half-normal random numbers
+!!    hfnran(3f) - [M_datapac:RANDOM] generate half-normal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -11653,25 +11683,25 @@ END SUBROUTINE HIST
 !!       SUBROUTINE INVXWX(N,K)
 !!
 !!##DESCRIPTION
-!!    invxwx(3f) computes the inverse of x'wx which is done by computing
-!!    the inverse of r'r (where r has just recently been modified before
-!!    calling this subroutine. the input r = the square root of the
-!!    diagonal matrix d times the old matrix r. the inverse of x'wx will
-!!    be identical (except for the absence of s**2 = the residual variance)
+!!    INVXWX(3f) computes the inverse of X'WX which is done by computing
+!!    the inverse of R'R (where r has just recently been modified before
+!!    calling this subroutine. The input r = the square root of the
+!!    diagonal matrix D times the old matrix R. the inverse of X'WX will
+!!    be identical (except for the absence of S**2 = the residual variance)
 !!    to the covariance matrix of the coefficients.
 !!
-!!    the only reason invxwx(3f) exists is for the calculation of such
+!!    the only reason INVXWX(3f) exists is for the calculation of such
 !!    covariances.
 !!
-!!    unpivoting has also been done herein so as to undo the pivoting done
-!!    in the decomposition subroutine (decomp). the matrix c used herein
+!!    Unpivoting has also been done herein so as to undo the pivoting done
+!!    in the decomposition subroutine (DECOMP(3f)). The matrix C used herein
 !!    is an intermediate result matrix.
 !!
-!!    x--not used
-!!    q--not used
-!!    r--used and changed
-!!    d--not used
-!!    ipivot--used
+!!       x--not used
+!!       q--not used
+!!       r--used and changed
+!!       d--not used
+!!       ipivot--used
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11681,18 +11711,19 @@ END SUBROUTINE HIST
 !!
 !!   Sample program:
 !!
-!!    program demo_invxwx
+!!    program test_invxwx
 !!    use M_datapac, only : invxwx
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
+!!    ! private routine
 !!    ! call invxwx(x,y)
-!!    end program demo_invxwx
+!!    end program test_invxwx
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
@@ -11702,15 +11733,15 @@ END SUBROUTINE HIST
 !*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE INVXWX(N,K)
-REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
-INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
+REAL(kind=wp) :: anegri, D, dotpro, DUM1, DUM2, dum3, Q, R, ri, WS
+INTEGER i, ii, im1, ip1, IPIvot, irarg, irarg1, irarg2, irarg3, j, jj, K, l, N
 
 !     INVERSION ALGORITHM USED--CHOLESKI DECOMPOSITION
 !---------------------------------------------------------------------
 !
       DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
-      COMMON /BLOCK2/ WS(15000)
-      COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+      COMMON /BLOCK2_real64/ WS(15000)
+      COMMON /BLOCK3_real64/ DUM1(3000) , DUM2(3000)
       EQUIVALENCE (Q(1),WS(1))
       EQUIVALENCE (R(1),WS(10001))
       EQUIVALENCE (D(1),WS(12501))
@@ -11785,7 +11816,7 @@ INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj 
 END SUBROUTINE INVXWX
 !>
 !!##NAME
-!!    lamcdf(3f) - [M_datapac:STATISTICS:CD] compute the Tukey-Lambda cumulative
+!!    lamcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Tukey-Lambda cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -11936,7 +11967,7 @@ INTEGER :: icount
 99999 END SUBROUTINE LAMCDF
 !>
 !!##NAME
-!!    lampdf(3f) - [M_datapac:STATISTICS:PD] compute the Tukey-Lambda
+!!    lampdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the Tukey-Lambda
 !!    probability density function
 !!
 !!##SYNOPSIS
@@ -12056,7 +12087,7 @@ REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 END SUBROUTINE LAMPDF
 !>
 !!##NAME
-!!    lamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Tukey-Lambda probability
+!!    lamplt(3f) - [M_datapac:LINE_PLOT] generate a Tukey-Lambda probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -12161,7 +12192,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -12269,7 +12300,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE LAMPLT
 !>
 !!##NAME
-!!    lamppf(3f) - [M_datapac:STATISTICS:PP] compute the Tukey-Lambda percent
+!!    lamppf(3f) - [M_datapac:PERCENT_POINT] compute the Tukey-Lambda percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -12388,7 +12419,7 @@ REAL(kind=wp) :: Alamba , P , Ppf
 99999 END SUBROUTINE LAMPPF
 !>
 !!##NAME
-!!    lamran(3f) - [M_datapac:STATISTICS:RANDOM] generate Tukey-Lambda random numbers
+!!    lamran(3f) - [M_datapac:RANDOM] generate Tukey-Lambda random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -12508,7 +12539,7 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE LAMRAN
 !>
 !!##NAME
-!!    lamsf(3f) - [M_datapac:STATISTICS:SF] compute the Tukey-Lambda sparsity function
+!!    lamsf(3f) - [M_datapac:SPARSITY] compute the Tukey-Lambda sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -12619,7 +12650,7 @@ REAL(kind=wp) :: Alamba , P , Sf
 99999 END SUBROUTINE LAMSF
 !>
 !!##NAME
-!!    lgncdf(3f) - [M_datapac:STATISTICS:CD] compute the lognormal cumulative
+!!    lgncdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the lognormal cumulative
 !!                 distribution function
 !!
 !!##SYNOPSIS
@@ -12715,7 +12746,7 @@ REAL(kind=wp) :: arg , Cdf , X
 END SUBROUTINE LGNCDF
 !>
 !!##NAME
-!!    lgnplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a lognormal probability plot
+!!    lgnplt(3f) - [M_datapac:LINE_PLOT] generates a lognormal probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -12809,7 +12840,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -12906,7 +12937,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE LGNPLT
 !>
 !!##NAME
-!!    lgnppf(3f) - [M_datapac:STATISTICS:PP] compute the lognormal percent
+!!    lgnppf(3f) - [M_datapac:PERCENT_POINT] compute the lognormal percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -12997,7 +13028,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE LGNPPF
 !>
 !!##NAME
-!!    lgnran(3f) - [M_datapac:STATISTICS:RANDOM] generate lognormal random numbers
+!!    lgnran(3f) - [M_datapac:RANDOM] generate lognormal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -13236,7 +13267,7 @@ INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
@@ -13347,7 +13378,7 @@ INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
 END SUBROUTINE LOC
 !>
 !!##NAME
-!!    logcdf(3f) - [M_datapac:STATISTICS:CD] compute the logistic cumulative
+!!    logcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the logistic cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -13423,7 +13454,7 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE LOGCDF
 !>
 !!##NAME
-!!    logpdf(3f) - [M_datapac:STATISTICS:PD] compute the logistic probability
+!!    logpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the logistic probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -13495,7 +13526,7 @@ REAL(kind=wp) :: Pdf , X
 END SUBROUTINE LOGPDF
 !>
 !!##NAME
-!!    logplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a logistic probability
+!!    logplt(3f) - [M_datapac:LINE_PLOT] generate a logistic probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -13582,7 +13613,7 @@ INTEGER :: i , iupper , N
 !
 DIMENSION X(:)
 DIMENSION Y(7500) , W(7500)
-COMMON /BLOCK2/ WS(15000)
+COMMON /BLOCK2_real64/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 EQUIVALENCE (W(1),WS(7501))
 !
@@ -13673,7 +13704,7 @@ DATA tau/1.63473745_wp/
 END SUBROUTINE LOGPLT
 !>
 !!##NAME
-!!    logppf(3f) - [M_datapac:STATISTICS:PP] compute the logistic percent
+!!    logppf(3f) - [M_datapac:PERCENT_POINT] compute the logistic percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -13763,7 +13794,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE LOGPPF
 !>
 !!##NAME
-!!    logran(3f) - [M_datapac:STATISTICS:RANDOM] generate logistic random numbers
+!!    logran(3f) - [M_datapac:RANDOM] generate logistic random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -13877,7 +13908,7 @@ REAL(kind=wp) :: X
 END SUBROUTINE LOGRAN
 !>
 !!##NAME
-!!    logsf(3f) - [M_datapac:STATISTICS:SF] compute the logistic sparsity function
+!!    logsf(3f) - [M_datapac:SPARSITY] compute the logistic sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -14079,20 +14110,42 @@ ENDIF
 end subroutine max
 !>
 !!##NAME
-!!    mean(3f) - [M_datapac:STATISTICS] compute the mean of a data vector
+!!    mean(3f) - [M_datapac:STATISTICS] compute the sample mean of a data vector
 !!
 !!##SYNOPSIS
 !!
-!!       SUBROUTINE MEAN(X,N,Iwrite,Xmean)
+!!       subroutine mean(X,N,Iwrite,Xmean)
+!!
+!!        real(kind=wp),intent(in)  :: X(:)
+!!        integer,intent(in)        :: N
+!!        integer,intent(in)        :: Iwrite
+!!        real(kind=wp),intent(out) :: Xmean
 !!
 !!##DESCRIPTION
-!!    mean(3f) computes the sample mean of the data in the input vector x.
+!!    MEAN(3f) computes the sample mean of the data in the input vector X.
 !!
-!!    the sample mean = (sum of the observations)/n.
+!!    The sample mean = (sum of the observations)/n.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    For a data set, the arithmetic mean, also known as arithmetic
+!!    average, is a measure of central tendency of a finite set of numbers:
+!!    specifically, the sum of the values divided by the number of values. If
+!!    the data set were based on a series of observations obtained by
+!!    sampling from a statistical population, the arithmetic mean is the
+!!    sample mean.
+!!
+!!##INPUT  ARGUMENTS
+!!  X        The vector of (unsorted or sorted) observations.
+!!
+!!  N        The integer number of observations in the vector X.
+!!
+!!  IWRITE   An integer flag code which (if set to 0) will suppress
+!!           the printing of the sample mean as it is computed; or (if set
+!!           to some integer value not equal to 0), like, say, 1) will cause
+!!           the printing of the sample mean at the time it is computed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!  XMEAN    The value of the computed sample mean.
 !!
 !!##EXAMPLES
 !!
@@ -14101,112 +14154,83 @@ end subroutine max
 !!    program demo_mean
 !!    use M_datapac, only : mean
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call mean(x,y)
+!!    real :: sp_mean
+!!    double precision :: dp_mean
+!!       call mean([4.0, 36.0, 45.0, 50.0, 75.0], 5, 1, sp_mean)
+!!       write(*,*)sp_mean,sp_mean==42.0
+!!       call mean([4.0d0, 36.0d0, 45.0d0, 50.0d0, 75.0d0], 5, 1, dp_mean)
+!!       write(*,*)dp_mean,dp_mean==42.0
 !!    end program demo_mean
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 4.
-!! !               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
-!! !                 OF STATISTICS, EDITION 2, 1963, PAGE 146.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 14.
-!*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE MEAN(X,N,Iwrite,Xmean)
-REAL(kind=wp) :: an, hold, sum, X, Xmean
-INTEGER       :: i, Iwrite, N
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --IWRITE = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL SUPPRESS
-!                                THE PRINTING OF THE
-!                                SAMPLE MEAN
-!                                AS IT IS COMPUTED;
-!                                OR (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0),
-!                                LIKE, SAY, 1) WILL CAUSE
-!                                THE PRINTING OF THE
-!                                SAMPLE MEAN
-!                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMEAN  = THE SINGLE PRECISION VALUE OF THE
-!                                COMPUTED SAMPLE MEAN.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
-!             SAMPLE MEAN.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!
+!!##REFERENCES
+!!  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
+!!    Edition 1, 1961, Page 4.
+!!  o Mood and Grable, Introduction to the Theory of Statistics, Edition 2,
+!!    1963, Page 146.
+!!  o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!    1957, Page 14.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
-!
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      an = N
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MEAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         RETURN
-      ELSE
-         IF ( N==1 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MEAN&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xmean = X(1)
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE MEAN   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xmean = X(1)
-         ENDIF
-         GOTO 100
-!
-!-----START POINT-----------------------------------------------------
-!
- 50      sum = 0.0_wp
-         DO i = 1 , N
+!*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine mean(X,N,Iwrite,Xmean)
+real(kind=wp),intent(in)  :: X(:)
+integer,intent(in)        :: N
+integer,intent(in)        :: Iwrite
+real(kind=wp),intent(out) :: Xmean
+
+integer                   :: i
+real(kind=wp)             :: an, hold, sum
+   an = real(N,kind=wp)
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   if ( N<1 ) then
+      write (G_io,99001)
+      99001 format (' ***** FATAL ERROR--The second input argument to MEAN(3f) is non-positive *****')
+      write (G_io,99002) N
+      99002 format (' ','***** The value of the argument is ',I0,' *****')
+      return
+   elseif ( N==1 ) then
+      write (G_io,99003)
+      99003 format (' ***** NON-FATAL DIAGNOSTIC--The second input argument to MEAN(3f) has the value 1 *****')
+      Xmean = X(1)
+   else
+      hold = X(1)
+      if(all(x(2:n) == hold)) then
+         write (G_io,99004) hold
+         99004 format(&
+         &' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to MEAN(3f) has all elements = ',g0,' *****')
+         Xmean = X(1)
+      else
+         sum = 0.0_wp
+         do i = 1 , N
             sum = sum + X(i)
-         ENDDO
+         enddo
          Xmean = sum/an
-      ENDIF
-!
- 100  IF ( Iwrite==0 ) RETURN
-      WRITE (G_IO,99005)
-99005 FORMAT (' ')
-      WRITE (G_IO,99006) N , Xmean
-99006 FORMAT (' ','THE SAMPLE MEAN OF THE ',I6,' OBSERVATIONS IS ',     &
-     &        E15.8)
-END SUBROUTINE MEAN
+      endif
+   endif
+
+   if ( Iwrite /= 0 ) then
+      write (G_io,99006) N , Xmean
+      99006 format (/,' The sample mean of the ',I0,' observations is ', g0)
+   endif
+
+end subroutine mean
 !>
 !!##NAME
 !!    median(3f) - [M_datapac:STATISTICS] compute the median of a data vector
@@ -14296,7 +14320,7 @@ INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
@@ -14435,7 +14459,7 @@ INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       DATA p1 , p2 , perp1 , perp2 , perp3/0.25_wp , 0.25_wp , 25.0_wp , 25.0_wp ,  &
      &     50.0_wp/
@@ -14898,7 +14922,7 @@ INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 END SUBROUTINE MOVE
 !>
 !!##NAME
-!!    nbcdf(3f) - [M_datapac:STATISTICS:CD] compute the negative binomial
+!!    nbcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the negative binomial
 !!    cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -15223,7 +15247,7 @@ INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
 END SUBROUTINE NBCDF
 !>
 !!##NAME
-!!    nbppf(3f) - [M_datapac:STATISTICS:PP] compute the negative binomial
+!!    nbppf(3f) - [M_datapac:PERCENT_POINT] compute the negative binomial
 !!    percent point function
 !!
 !!##SYNOPSIS
@@ -15639,7 +15663,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 END SUBROUTINE NBPPF
 !>
 !!##NAME
-!!    nbran(3f) - [M_datapac:STATISTICS:RANDOM] generate negative binomial random numbers
+!!    nbran(3f) - [M_datapac:RANDOM] generate negative binomial random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -15866,7 +15890,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 99999 END SUBROUTINE NBRAN
 !>
 !!##NAME
-!!    norcdf(3f) - [M_datapac:STATISTICS:CD] compute the normal cumulative
+!!    norcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the normal cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -16048,7 +16072,7 @@ character(len=4) :: iline2
       DIMENSION Y(7500) , XPOs(7500)
       DIMENSION iline1(130) , iline2(130)
       DIMENSION xline(13)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (XPOs(1),WS(7501))
 !
@@ -16428,7 +16452,7 @@ character(len=4) :: iline2
 END SUBROUTINE NOROUT
 !>
 !!##NAME
-!!    norpdf(3f) - [M_datapac:STATISTICS:PD] compute the normal probability
+!!    norpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the normal probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -16505,7 +16529,7 @@ REAL(kind=wp) :: c , Pdf , X
 END SUBROUTINE NORPDF
 !>
 !!##NAME
-!!    norplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a normal probability plot
+!!    norplt(3f) - [M_datapac:LINE_PLOT] generate a normal probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -16594,7 +16618,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -16687,7 +16711,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE NORPLT
 !>
 !!##NAME
-!!    norppf(3f) - [M_datapac:STATISTICS:PP] compute the normal percent point function
+!!    norppf(3f) - [M_datapac:PERCENT_POINT] compute the normal percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -16832,7 +16856,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 99999 END SUBROUTINE NORPPF
 !>
 !!##NAME
-!!    norran(3f) - [M_datapac:STATISTICS:RANDOM] generate normal random numbers
+!!    norran(3f) - [M_datapac:RANDOM] generate normal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -16974,7 +16998,7 @@ INTEGER :: i , ip1 , Iseed , N
 END SUBROUTINE NORRAN
 !>
 !!##NAME
-!!    norsf(3f) - [M_datapac:STATISTICS:SF] compute the normal sparsity function
+!!    norsf(3f) - [M_datapac:SPARSITY] compute the normal sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -17068,7 +17092,7 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 END SUBROUTINE NORSF
 !>
 !!##NAME
-!!    parcdf(3f) - [M_datapac:STATISTICS:CD] compute the Pareto cumulative
+!!    parcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Pareto cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -17172,7 +17196,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 END SUBROUTINE PARCDF
 !>
 !!##NAME
-!!    parplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Pareto probability plot
+!!    parplt(3f) - [M_datapac:LINE_PLOT] generate a Pareto probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -17263,7 +17287,7 @@ INTEGER       :: i, iupper, N
 !---------------------------------------------------------------------
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -17380,7 +17404,7 @@ INTEGER       :: i, iupper, N
 END SUBROUTINE PARPLT
 !>
 !!##NAME
-!!    parppf(3f) - [M_datapac:STATISTICS:PP] compute the Pareto percent point function
+!!    parppf(3f) - [M_datapac:PERCENT_POINT] compute the Pareto percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -17485,7 +17509,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 END SUBROUTINE PARPPF
 !>
 !!##NAME
-!!    parran(3f) - [M_datapac:STATISTICS:RANDOM] generate Pareto random numbers
+!!    parran(3f) - [M_datapac:RANDOM] generate Pareto random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -17610,7 +17634,7 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE PARRAN
 !>
 !!##NAME
-!!    plot10(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plot10(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -18114,7 +18138,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT10
 !>
 !!##NAME
-!!    plot6(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot
+!!    plot6(3f) - [M_datapac:LINE_PLOT] generate a line printer plot
 !!
 !!##SYNOPSIS
 !!
@@ -18434,7 +18458,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT6
 !>
 !!##NAME
-!!    plot7(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plot7(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -18842,7 +18866,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT7
 !>
 !!##NAME
-!!    plot8(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plot8(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -19315,7 +19339,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT8
 !>
 !!##NAME
-!!    plot9(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer
+!!    plot9(3f) - [M_datapac:LINE_PLOT] generate a line printer
 !!    plot with special plot characters
 !!
 !!##SYNOPSIS
@@ -19753,7 +19777,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT9
 !>
 !!##NAME
-!!    plotc(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plotc(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -20179,7 +20203,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTC
 !>
 !!##NAME
-!!    plotco(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer
+!!    plotco(3f) - [M_datapac:LINE_PLOT] generate a line printer
 !!    autocorrelation plot
 !!
 !!##SYNOPSIS
@@ -20397,7 +20421,7 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
 END SUBROUTINE PLOTCO
 !>
 !!##NAME
-!!    plotct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot for
+!!    plotct(3f) - [M_datapac:LINE_PLOT] generate a line printer plot for
 !!    the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -20816,7 +20840,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai
 END SUBROUTINE PLOTCT
 !>
 !!##NAME
-!!    plot(3f) - [M_datapac:STATISTICS:LINE PLOT] yields a one-page printer
+!!    plot(3f) - [M_datapac:LINE_PLOT] yields a one-page printer
 !!    plot of y(i) versus x(i)
 !!
 !!##SYNOPSIS
@@ -21138,7 +21162,7 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 END SUBROUTINE PLOT
 !>
 !!##NAME
-!!    plotsc(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plotsc(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -21643,7 +21667,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTSC
 !>
 !!##NAME
-!!    plots(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of Y vs X
+!!    plots(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of Y vs X
 !!
 !!##SYNOPSIS
 !!
@@ -22048,7 +22072,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTS
 !>
 !!##NAME
-!!    plotsp(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer spectrum plot
+!!    plotsp(3f) - [M_datapac:LINE_PLOT] generate a line printer spectrum plot
 !!
 !!##SYNOPSIS
 !!
@@ -22251,7 +22275,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax , dot
 END SUBROUTINE PLOTSP
 !>
 !!##NAME
-!!    plotst(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
+!!    plotst(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
 !!    Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -22645,7 +22669,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 END SUBROUTINE PLOTST
 !>
 !!##NAME
-!!    plott(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
+!!    plott(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
 !!    Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -22954,7 +22978,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 END SUBROUTINE PLOTT
 !>
 !!##NAME
-!!    plotu(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer 4-plot
+!!    plotu(3f) - [M_datapac:LINE_PLOT] generate a line printer 4-plot
 !!
 !!##SYNOPSIS
 !!
@@ -23064,7 +23088,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
       DIMENSION xmin(4) , xmax(4) , xmid(4) , x25(4) , x75(4)
       DIMENSION itaxis(4) , ibaxis(4) , ilaxis(4) , iraxis(4)
       COMMON /BLOCK1/ IGRaph(55,130)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
 !CCCC COMMON IGRAPH(45,110)
       EQUIVALENCE (X2(1),WS(1))
       EQUIVALENCE (Y2(1),WS(7501))
@@ -23522,7 +23546,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTU
 !>
 !!##NAME
-!!    plotx(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer run sequence plot
+!!    plotx(3f) - [M_datapac:LINE_PLOT] generate a line printer run sequence plot
 !!
 !!##SYNOPSIS
 !!
@@ -23786,7 +23810,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTX
 !>
 !!##NAME
-!!    plotxt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer run
+!!    plotxt(3f) - [M_datapac:LINE_PLOT] generate a line printer run
 !!    sequence plot for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -24049,7 +24073,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 END SUBROUTINE PLOTXT
 !>
 !!##NAME
-!!    plotxx(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
+!!    plotxx(3f) - [M_datapac:LINE_PLOT] generate a line printer lag plot
 !!
 !!##SYNOPSIS
 !!
@@ -24343,7 +24367,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTXX
 !>
 !!##NAME
-!!    pltsct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    pltsct(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -24827,7 +24851,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai
 END SUBROUTINE PLTSCT
 !>
 !!##NAME
-!!    pltxxt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
+!!    pltxxt(3f) - [M_datapac:LINE_PLOT] generate a line printer lag plot
 !!    for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -25112,7 +25136,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 END SUBROUTINE PLTXXT
 !>
 !!##NAME
-!!    poicdf(3f) - [M_datapac:STATISTICS:CD] compute the Poisson cumulative
+!!    poicdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Poisson cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -25328,7 +25352,7 @@ INTEGER :: i , ievodd , imax , imin , intx , nu
 END SUBROUTINE POICDF
 !>
 !!##NAME
-!!    poiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Poisson probability plot
+!!    poiplt(3f) - [M_datapac:LINE_PLOT] generate a Poisson probability plot
 !!    (line printer graph)
 !!
 !!##SYNOPSIS
@@ -25447,7 +25471,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
       DIMENSION X(:)
       DIMENSION Y(5000) , W(5000)
       DIMENSION Z(5000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(5001))
       EQUIVALENCE (Z(1),WS(10001))
@@ -25628,7 +25652,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
 END SUBROUTINE POIPLT
 !>
 !!##NAME
-!!    poippf(3f) - [M_datapac:STATISTICS:PP] compute the Poisson percent
+!!    poippf(3f) - [M_datapac:PERCENT_POINT] compute the Poisson percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -26001,7 +26025,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 END SUBROUTINE POIPPF
 !>
 !!##NAME
-!!    poiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Poisson random numbers
+!!    poiran(3f) - [M_datapac:RANDOM] generate Poisson random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -26284,8 +26308,8 @@ INTEGER :: nm5 , nmax , numset
       DIMENSION b2(50)
       DIMENSION f(3000) , wres(3000) , g(50) , h(50)
       DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
-      COMMON /BLOCK2/ WS(15000)
-      COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+      COMMON /BLOCK2_real64/ WS(15000)
+      COMMON /BLOCK3_real64/ DUM1(3000) , DUM2(3000)
       EQUIVALENCE (Q(1),WS(1))
       EQUIVALENCE (R(1),WS(10001))
       EQUIVALENCE (D(1),WS(12501))
@@ -27128,7 +27152,7 @@ INTEGER :: i , Iwrite , N
 END SUBROUTINE RANGE
 !>
 !!##NAME
-!!    rank(3f) - [M_datapac:STATISTICS:SORT] rank a vector of sample observations
+!!    rank(3f) - [M_datapac:SORT] rank a vector of sample observations
 !!
 !!##SYNOPSIS
 !!
@@ -27223,12 +27247,12 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !              BE SINGLE PRECISION AND NOT INTEGER.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     COMMENT--DUE TO CONFLICTING USE OF LABELED
-!              COMMON /BLOCK2/ BY THIS RANK
+!              COMMON /BLOCK2_real64/ BY THIS RANK
 !              SUBROUTINE AND THE SPCORR (SPEARMAN RANK
 !              CORRELATION COEFFICIENT) SUBROUTINE,
 !              THE VECTOR XS OF THIS RANK
 !              SUBROUTINE HAS BEEN PLACED IN
-!              LABELED COMMON /BLOCK4/
+!              LABELED COMMON /BLOCK4_real64/
 !     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE
 !              CALLING SEQUENCE MAY
 !              BE IDENTICAL; THAT IS, AN 'IN PLACE'
@@ -27261,7 +27285,7 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !---------------------------------------------------------------------
 !
       DIMENSION X(:) , Xr(:)
-      COMMON /BLOCK4/ XS(7500)
+      COMMON /BLOCK4_real64/ XS(7500)
 !
       an = N
       iupper = 7500
@@ -27376,7 +27400,7 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 END SUBROUTINE RANK
 !>
 !!##NAME
-!!    ranper(3f) - [M_datapac:STATISTICS:RANDOM] generates a random permutation
+!!    ranper(3f) - [M_datapac:RANDOM] generates a random permutation
 !!
 !!##SYNOPSIS
 !!
@@ -29142,7 +29166,7 @@ DIMENSION znrtlg(16)
 DIMENSION c1(15) , c2(15) , c3(15) , c4(15)
 DIMENSION anrul(16) , anrdl(16) , anrtl(16)
 DIMENSION anrulg(16) , anrdlg(16) , anrtlg(16)
-COMMON /BLOCK2/ WS(15000)
+COMMON /BLOCK2_real64/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 
       DATA c1(1) , c1(2) , c1(3) , c1(4) , c1(5) , c1(6) , c1(7) ,      &
@@ -29477,7 +29501,7 @@ EQUIVALENCE (Y(1),WS(1))
 END SUBROUTINE RUNS
 !>
 !!##NAME
-!!    sampp(3f) - [M_datapac:STATISTICS:PP] compute the sample 100P percent
+!!    sampp(3f) - [M_datapac:PERCENT_POINT] compute the sample 100P percent
 !!    point (i.e., percentile)
 !!
 !!##SYNOPSIS
@@ -29578,7 +29602,7 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
@@ -29982,7 +30006,7 @@ INTEGER :: i , Iwrite , N
 END SUBROUTINE SD
 !>
 !!##NAME
-!!    sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample
+!!    sortc(3f) - [M_datapac:SORT] sort a vector of sample
 !!    observations and "carry" a second vector
 !!
 !!##SYNOPSIS
@@ -30284,7 +30308,7 @@ INTEGER i, il(36), ip1, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
 END SUBROUTINE SORTC
 !>
 !!##NAME
-!!    sort(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample
+!!    sort(3f) - [M_datapac:SORT] sort a vector of sample
 !!    observations, also return the positions in the original vector
 !!
 !!##SYNOPSIS
@@ -30555,7 +30579,7 @@ DIMENSION iu(36), il(36)
 END SUBROUTINE SORT
 !>
 !!##NAME
-!!    sortp(3f) - [M_datapac:STATISTICS:SORT] sorts and ranks a numeric
+!!    sortp(3f) - [M_datapac:SORT] sorts and ranks a numeric
 !!    vector X
 !!
 !!##SYNOPSIS
@@ -30969,7 +30993,7 @@ INTEGER :: i , iflag , iupper , Iwrite , N
 !
       DIMENSION X(:) , Y(:)
       DIMENSION XR(7500) , YR(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (XR(1),WS(1))
       EQUIVALENCE (YR(1),WS(7501))
 !
@@ -32127,7 +32151,7 @@ CHARACTER(len=4) :: alphax
       DIMENSION corr(50) , iflag1(50) , iflag2(50) , iflag3(50)
       DIMENSION iline1(130) , iline2(130)
       DIMENSION xline(13)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (Z(1),WS(3001))
       EQUIVALENCE (YM(1),WS(6001))
@@ -32715,7 +32739,7 @@ CHARACTER(len=4) :: alphax
 END SUBROUTINE TAIL
 !>
 !!##NAME
-!!    tcdf(3f) - [M_datapac:STATISTICS:CD] computes the cumulative distribution
+!!    tcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] computes the cumulative distribution
 !!    function value for student's t distribution with integer degrees of
 !!    freedom NU.
 !!
@@ -33740,7 +33764,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
 END SUBROUTINE TOL
 !>
 !!##NAME
-!!    tplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a student's
+!!    tplt(3f) - [M_datapac:LINE_PLOT] generates a student's
 !!    t probability plot (with integer degrees of freedom parameter value
 !!    NU).
 !!
@@ -33848,7 +33872,7 @@ INTEGER :: i , iupper , N , Nu
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -33962,7 +33986,7 @@ INTEGER :: i , iupper , N , Nu
 END SUBROUTINE TPLT
 !>
 !!##NAME
-!!    tppf(3f) - [M_datapac:STATISTICS:PP] computes the percent
+!!    tppf(3f) - [M_datapac:PERCENT_POINT] computes the percent
 !!    point function value for the student's T distribution
 !!
 !!##SYNOPSIS
@@ -34206,7 +34230,7 @@ REAL(kind=wp) :: P , Ppf , ppfn
 99999 END SUBROUTINE TPPF
 !>
 !!##NAME
-!!    tran(3f) - [M_datapac:STATISTICS:RANDOM] a random sample of size n from the
+!!    tran(3f) - [M_datapac:RANDOM] a random sample of size n from the
 !!    student's t distribution with integer degrees of freedom parameter NU.
 !!
 !!##SYNOPSIS
@@ -34465,7 +34489,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
@@ -34590,7 +34614,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 END SUBROUTINE TRIM
 !>
 !!##NAME
-!!    unicdf(3f) - [M_datapac:STATISTICS:CD] trivially compute the Uniform
+!!    unicdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] trivially compute the Uniform
 !!    cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -34844,7 +34868,7 @@ INTEGER i , imax , irev , N , nevodd , nhalf
 END SUBROUTINE UNIMED
 !>
 !!##NAME
-!!    unipdf(3f) - [M_datapac:STATISTICS:PD] compute the Uniform probability
+!!    unipdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the Uniform probability
 !!    density function
 !!
 !!##SYNOPSIS
@@ -34927,7 +34951,7 @@ REAL(kind=wp) :: Pdf , X
 END SUBROUTINE UNIPDF
 !>
 !!##NAME
-!!    uniplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Uniform probability plot
+!!    uniplt(3f) - [M_datapac:LINE_PLOT] generate a Uniform probability plot
 !!    (line printer graph)
 !!
 !!##SYNOPSIS
@@ -35016,7 +35040,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -35103,7 +35127,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE UNIPLT
 !>
 !!##NAME
-!!    unippf(3f) - [M_datapac:STATISTICS:PP] compute the Uniform percent
+!!    unippf(3f) - [M_datapac:PERCENT_POINT] compute the Uniform percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -35198,7 +35222,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE UNIPPF
 !>
 !!##NAME
-!!    uniran(3f) - [M_datapac:STATISTICS:RANDOM] generate Uniform random numbers
+!!    uniran(3f) - [M_datapac:RANDOM] generate Uniform random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -35477,7 +35501,7 @@ INTEGER m(17)
 END SUBROUTINE UNIRAN
 !>
 !!##NAME
-!!    unisf(3f) - [M_datapac:STATISTICS:SF] compute the Uniform sparsity function
+!!    unisf(3f) - [M_datapac:SPARSITY] compute the Uniform sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -35815,7 +35839,7 @@ CHARACTER(len=4) :: equal
       DIMENSION yi(50) , ys(50) , t(50)
       DIMENSION iflag1(50) , iflag2(50) , iflag3(50)
       DIMENSION aindex(50)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (Z(1),WS(7501))
       DATA blank , alpham , alphaa , alphax/' ' , 'M' , 'A' , 'X'/
@@ -36057,7 +36081,7 @@ CHARACTER(len=4) :: equal
 END SUBROUTINE WEIB
 !>
 !!##NAME
-!!    weicdf(3f) - [M_datapac:STATISTICS:CD] compute the Weibull cumulative
+!!    weicdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Weibull cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -36158,7 +36182,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 END SUBROUTINE WEICDF
 !>
 !!##NAME
-!!    weiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Weibull probability plot
+!!    weiplt(3f) - [M_datapac:LINE_PLOT] generate a Weibull probability plot
 !!    (line printer graph)
 !!
 !!##SYNOPSIS
@@ -36257,7 +36281,7 @@ INTEGER i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -36374,7 +36398,7 @@ INTEGER i , iupper , N
 END SUBROUTINE WEIPLT
 !>
 !!##NAME
-!!    weippf(3f) - [M_datapac:STATISTICS:PP] compute the Weibull percent
+!!    weippf(3f) - [M_datapac:PERCENT_POINT] compute the Weibull percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -36480,7 +36504,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 END SUBROUTINE WEIPPF
 !>
 !!##NAME
-!!    weiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Weibull random numbers
+!!    weiran(3f) - [M_datapac:RANDOM] generate Weibull random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -36717,7 +36741,7 @@ INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real64/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000

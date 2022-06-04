@@ -23,7 +23,7 @@ DESCRIPTION
          contribution to total variance
          (at each fourier frequency) versus
          the fourier frequency.
-   
+
    in order that the results of the Fourier analysis be valid and properly
    interpreted, the input data in X should be equi-spaced in time (or
    whatever variable corresponds to time).
@@ -167,7 +167,7 @@ INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
 CHARACTER(len=4) :: alperc
       DIMENSION X(:)
       DIMENSION A(7500) , B(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (A(1),WS(1))
       EQUIVALENCE (B(1),WS(7501))
       DATA pi/3.14159265358979_wp/

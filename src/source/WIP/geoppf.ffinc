@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file geoppf.3m_datapac.man
 NAME
-   geoppf(3f) - [M_datapac:STATISTICS:PP] compute the geometric percent
+   geoppf(3f) - [M_datapac:PERCENT_POINT] compute the geometric percent
    point function
 
 SYNOPSIS
@@ -16,7 +16,7 @@ DESCRIPTION
    standard deviation = sqrt((1-ppar)/(ppar*ppar))).
 
    this distribution is defined for all non-negative integer x--x = 0,
-   1, 2, ... . 
+   1, 2, ... .
 
    this distribution has the probability function
 

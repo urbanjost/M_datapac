@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file parran.3m_datapac.man
 NAME
-   parran(3f) - [M_datapac:STATISTICS:RANDOM] generate Pareto random numbers
+   parran(3f) - [M_datapac:RANDOM] generate Pareto random numbers
 
 SYNOPSIS
       SUBROUTINE PARRAN(N,Gamma,Iseed,X)

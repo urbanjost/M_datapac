@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file chscdf.3m_datapac.man
 NAME
-   chscdf(3f) - [M_datapac:STATISTICS:CD] compute the chi-square cumulative
+   chscdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the chi-square cumulative
    distribution function
 
 SYNOPSIS

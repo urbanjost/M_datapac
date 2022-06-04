@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file betran.3m_datapac.man
 NAME
-   betran(3f) - [M_datapac:STATISTICS:RANDOM] generate beta random numbers
+   betran(3f) - [M_datapac:RANDOM] generate beta random numbers
 
 SYNOPSIS
     subroutine BETRAN (N,Alpha,Beta,Iseed,X)
@@ -15,18 +15,18 @@ DESCRIPTION
    distribution with shape parameters ALPHA and BETA.
 
    The prototype beta distribution used herein has
-   
+
       mean = ALPHA/(ALPHA+BETA)
-   
-   and 
-   
+
+   and
+
       standard_deviation=sqrt((ALPHA*BETA)/((ALPHA+BETA)**2)*(ALPHA+BETA+1))
-   
+
    This distribution is defined for all X between 0.0 (inclusively)
    and 1.0 (inclusively) and has the probability density function
-   
+
       f(x) = (1/constant) * x**(alpha-1) * (1.0-x)**(beta-1)
-   
+
    where the constant = the beta function evaluated at the values ALPHA
    and BETA.
 
@@ -74,16 +74,16 @@ REFERENCES
   * Greenwood, 'A Fast Generator for Beta-distributed Random Variables',
     Compstat 1974, Proceedings in Computational Statistics, Vienna,
     September, 1974, Pages 19-27.
-  
+
   * Tocher, The Art of Simulation, 1963, Pages 24-27.
-  
+
   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Pages 36-37.
-  
+
   * Johnson and Kotz, Continuous Univariate Distributions --2, 1970, Pages 37-56.
-  
+
   * Hastings and Peacock, Statistical Distributions--A Handbook For
     Students and Practitioners, 1975, Pages 30-35.
-  
+
   * National Bureau of Standards Applied Mathematics Series 55, 1964, Page 952.
 
 $ENDBLOCK

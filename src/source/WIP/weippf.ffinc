@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file weippf.3m_datapac.man
 NAME
-   weippf(3f) - [M_datapac:STATISTICS:PP] compute the Weibull percent
+   weippf(3f) - [M_datapac:PERCENT_POINT] compute the Weibull percent
    point function
 
 SYNOPSIS

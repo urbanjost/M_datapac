@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tppf.3m_datapac.man
 NAME
-   tppf(3f) - [M_datapac:STATISTICS:PP] computes the percent
+   tppf(3f) - [M_datapac:PERCENT_POINT] computes the percent
    point function value for the student's T distribution
 
 SYNOPSIS

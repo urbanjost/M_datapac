@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file norcdf.3m_datapac.man
 NAME
-   norcdf(3f) - [M_datapac:STATISTICS:CD] compute the normal cumulative
+   norcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the normal cumulative
    distribution function
 
 SYNOPSIS

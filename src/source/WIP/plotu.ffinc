@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotu.3m_datapac.man
 NAME
-   plotu(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer 4-plot
+   plotu(3f) - [M_datapac:LINE_PLOT] generate a line printer 4-plot
 
 SYNOPSIS
       SUBROUTINE PLOTU(X,N)
@@ -111,7 +111,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
       DIMENSION xmin(4) , xmax(4) , xmid(4) , x25(4) , x75(4)
       DIMENSION itaxis(4) , ibaxis(4) , ilaxis(4) , iraxis(4)
       COMMON /BLOCK1/ IGRaph(55,130)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
 !CCCC COMMON IGRAPH(45,110)
       EQUIVALENCE (X2(1),WS(1))
       EQUIVALENCE (Y2(1),WS(7501))

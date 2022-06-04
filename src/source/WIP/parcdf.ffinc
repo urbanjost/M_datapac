@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file parcdf.3m_datapac.man
 NAME
-   parcdf(3f) - [M_datapac:STATISTICS:CD] compute the Pareto cumulative
+   parcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Pareto cumulative
    distribution function
 
 SYNOPSIS

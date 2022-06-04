@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file logplt.3m_datapac.man
 NAME
-   logplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a logistic probability
+   logplt(3f) - [M_datapac:LINE_PLOT] generate a logistic probability
    plot
 
 SYNOPSIS
@@ -88,7 +88,7 @@ INTEGER :: i , iupper , N
 !
 DIMENSION X(:)
 DIMENSION Y(7500) , W(7500)
-COMMON /BLOCK2/ WS(15000)
+COMMON /BLOCK2_${KIND}/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 EQUIVALENCE (W(1),WS(7501))
 !
@@ -102,8 +102,8 @@ DATA tau/1.63473745_wp/
          WRITE (G_IO,99001) iupper
          99001    FORMAT (' ', &
          & '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LOGPLT SUBROUTINE IS OUTSIDE THE ALLOWABLE (1,', &
-	 & I6, &
-	 & ') INTERVAL *****')
+         & I6, &
+         & ') INTERVAL *****')
          WRITE (G_IO,99002) N
          99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
@@ -175,5 +175,5 @@ DATA tau/1.63473745_wp/
          &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
          &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
- 
+
 END SUBROUTINE LOGPLT

@@ -104,7 +104,7 @@ INTEGER :: i , iflag , iupper , Iwrite , N
 !
       DIMENSION X(:) , Y(:)
       DIMENSION XR(7500) , YR(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (XR(1),WS(1))
       EQUIVALENCE (YR(1),WS(7501))
 !

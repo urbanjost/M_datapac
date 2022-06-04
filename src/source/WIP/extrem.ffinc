@@ -107,7 +107,7 @@ CHARACTER(len=4) :: iflag3
 !
       DIMENSION aindex(50)
       DIMENSION h(60,2)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (Z(1),WS(7501))
       DATA blank , alpham , alphaa , alphax/' ' , 'M' , 'A' , 'X'/

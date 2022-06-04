@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file uniran.3m_datapac.man
 NAME
-   uniran(3f) - [M_datapac:STATISTICS:RANDOM] generate Uniform random numbers
+   uniran(3f) - [M_datapac:RANDOM] generate Uniform random numbers
 
 SYNOPSIS
       SUBROUTINE UNIRAN(N,Iseed,X)

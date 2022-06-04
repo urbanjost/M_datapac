@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file gamplt.3m_datapac.man
 NAME
-   gamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a gamma probability plot
+   gamplt(3f) - [M_datapac:LINE_PLOT] generate a gamma probability plot
 
 SYNOPSIS
       SUBROUTINE GAMPLT(X,N,Gamma)
@@ -113,7 +113,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
       DIMENSION d(10)
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
       DATA c/.918938533204672741D0/

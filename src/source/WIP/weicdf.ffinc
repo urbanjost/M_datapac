@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file weicdf.3m_datapac.man
 NAME
-   weicdf(3f) - [M_datapac:STATISTICS:CD] compute the Weibull cumulative
+   weicdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Weibull cumulative
    distribution function
 
 SYNOPSIS

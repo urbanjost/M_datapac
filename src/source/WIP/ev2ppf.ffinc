@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file ev2ppf.3m_datapac.man
 NAME
-   ev2ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 2
+   ev2ppf(3f) - [M_datapac:PERCENT_POINT] compute the extreme value type 2
    (Frechet) percent point function
 
 SYNOPSIS

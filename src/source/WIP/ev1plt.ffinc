@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file ev1plt.3m_datapac.man
 NAME
-   ev1plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 1
+   ev1plt(3f) - [M_datapac:LINE_PLOT] generate a extreme value type 1
    (Gumbel) probability plot
 
 SYNOPSIS
@@ -96,7 +96,7 @@ INTEGER :: i , iupper , N
 !---------------------------------------------------------------------
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !

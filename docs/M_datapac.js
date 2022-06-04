@@ -64,7 +64,6 @@ append("hfnplt.3m_datapac.html");
 append("hfnppf.3m_datapac.html");
 append("hfnran.3m_datapac.html");
 append("hist.3m_datapac.html");
-append("invxwx.3m_datapac.html");
 append("lamcdf.3m_datapac.html");
 append("lampdf.3m_datapac.html");
 append("lamplt.3m_datapac.html");

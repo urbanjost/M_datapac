@@ -21,7 +21,7 @@ DESCRIPTION
        input demodulation frequency f
        does not flatten sufficiently the
        phase plot.
- 
+
    the allowable range of the input demodulation frequency f is 0.0 to
    0.5 (exclusively).
 
@@ -142,7 +142,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 !
       DIMENSION X(:)
       DIMENSION Y1(5000) , Y2(5000) , Z(5000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_${KIND}/ WS(15000)
       EQUIVALENCE (Y1(1),WS(1))
       EQUIVALENCE (Y2(1),WS(5001))
       EQUIVALENCE (Z(1),WS(10001))

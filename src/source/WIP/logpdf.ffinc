@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file logpdf.3m_datapac.man
 NAME
-   logpdf(3f) - [M_datapac:STATISTICS:PD] compute the logistic probability
+   logpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the logistic probability
    density function
 
 SYNOPSIS

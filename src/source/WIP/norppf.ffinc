@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file norppf.3m_datapac.man
 NAME
-   norppf(3f) - [M_datapac:STATISTICS:PP] compute the normal percent point function
+   norppf(3f) - [M_datapac:PERCENT_POINT] compute the normal percent point function
 
 SYNOPSIS
       SUBROUTINE NORPPF(P,Ppf)

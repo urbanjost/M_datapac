@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file lamppf.3m_datapac.man
 NAME
-   lamppf(3f) - [M_datapac:STATISTICS:PP] compute the Tukey-Lambda percent
+   lamppf(3f) - [M_datapac:PERCENT_POINT] compute the Tukey-Lambda percent
    point function
 
 SYNOPSIS

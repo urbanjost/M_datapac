@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file dexran.3m_datapac.man
 NAME
-   dexran(3f) - [M_datapac:STATISTICS:RANDOM] generate double exponential
+   dexran(3f) - [M_datapac:RANDOM] generate double exponential
    random numbers
 
 SYNOPSIS

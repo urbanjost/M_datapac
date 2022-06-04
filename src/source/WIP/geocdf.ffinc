@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file geocdf.3m_datapac.man
 NAME
-   geocdf(3f) - [M_datapac:STATISTICS:CD] compute the geometric cumulative
+   geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric cumulative
    distribution function
 
 SYNOPSIS
@@ -60,7 +60,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp) :: Cdf , del , fintx , P , X
-INTEGER intx 
+INTEGER intx
 !
 !     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
@@ -134,5 +134,5 @@ INTEGER intx
 99002 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NEGATIVE *****')
 99003 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NON-INTEGRAL *****')
 99004 FORMAT(' ***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
- 
+
 END SUBROUTINE GEOCDF

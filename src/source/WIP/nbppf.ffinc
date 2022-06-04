@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file nbppf.3m_datapac.man
 NAME
-   nbppf(3f) - [M_datapac:STATISTICS:PP] compute the negative binomial
+   nbppf(3f) - [M_datapac:PERCENT_POINT] compute the negative binomial
    percent point function
 
 SYNOPSIS
@@ -16,7 +16,7 @@ DESCRIPTION
    the negative binomial distribution used herein has mean =
    n*(1-ppar)/ppar and standard deviation = sqrt(n*(1-ppar)/(ppar*ppar))).
    this distribution is defined for all non-negative integer x--x = 0,
-   1, 2, ... . 
+   1, 2, ... .
 
    this distribution has the probability function
 

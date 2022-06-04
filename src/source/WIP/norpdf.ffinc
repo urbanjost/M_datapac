@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file norpdf.3m_datapac.man
 NAME
-   norpdf(3f) - [M_datapac:STATISTICS:PD] compute the normal probability
+   norpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the normal probability
    density function
 
 SYNOPSIS

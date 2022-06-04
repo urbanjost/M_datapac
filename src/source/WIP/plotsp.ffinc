@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotsp.3m_datapac.man
 NAME
-   plotsp(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer spectrum plot
+   plotsp(3f) - [M_datapac:LINE_PLOT] generate a line printer spectrum plot
 
 SYNOPSIS
       SUBROUTINE PLOTSP(Y,N,Idf)
