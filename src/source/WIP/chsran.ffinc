@@ -34,16 +34,16 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
- o tocher, the art of simulation, 1963, pages 34-35.
- o mood and grable, introduction to the theory of statistics, 1963,
+ * tocher, the art of simulation, 1963, pages 34-35.
+ * mood and grable, introduction to the theory of statistics, 1963,
    pages 226-227.
- o johnson and kotz, continuous univariate distributions--1, 1970,
+ * johnson and kotz, continuous univariate distributions--1, 1970,
    page 171.
- o hastings and peacock, statistical distributions--a handbook for students
+ * hastings and peacock, statistical distributions--a handbook for students
    and practitioners, 1975, page 48.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z

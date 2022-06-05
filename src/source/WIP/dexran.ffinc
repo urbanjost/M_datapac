@@ -60,14 +60,14 @@ LICENSE
    CC0-1.0
 
 REFERENCES
- o Tocher, The Art of Simulation, 1963, Pages 14-15.
- o Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
- o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+ * Tocher, The Art of Simulation, 1963, Pages 14-15.
+ * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+ * Filliben, Simple and Robust Linear Estimation of the Location Parameter
    of a Symmetric Distribution (Unpublished PH.D. dissertation, Princeton
    University), 1969, Page 231.
- o Filliben, 'The percent point function', (Unpublished manuscript),
+ * Filliben, 'The percent point function', (Unpublished manuscript),
    1970, Pages 28-31.
- o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+ * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
    Pages 22-36.
 
 $ENDBLOCK
@@ -75,7 +75,7 @@ $ENDBLOCK
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==dexran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine dexran(N,Istart,X)
 integer,intent(in) :: N

@@ -5,7 +5,11 @@ NAME
    distribution function
 
 SYNOPSIS
-SUBROUTINE CHSCDF(X,Nu,Cdf)
+      SUBROUTINE CHSCDF(X,Nu,Cdf)
+
+       REAL(kind=wp),intent(in) :: X
+       REAL(kind=wp),intent(out) :: Cdf
+       INTEGER,intent(in) :: Nu 
 
 DESCRIPTION
    chscdf(3f) computes the cumulative distribution function value for
@@ -16,9 +20,16 @@ DESCRIPTION
 
    the probability density function is given in the references below.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   X      The value at which the cumulative distribution function is to
+          be evaluated. X should be non-negative.
+
+   NU     The integer number of degrees of freedom. NU should be positive.
+
+OUTPUT ARGUMENTS
+
+   CDF    The cumulative distribution function value.
 
 EXAMPLES
   Sample program:
@@ -26,7 +37,6 @@ EXAMPLES
    program demo_chscdf
    use M_datapac, only : chscdf
    implicit none
-   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call chscdf(x,y)
    end program demo_chscdf
 
@@ -40,12 +50,12 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
- o national bureau of standards applied mathematics series 55, 1964,
+ * national bureau of standards applied mathematics series 55, 1964,
    page 941, formulae 26.4.4 and 26.4.5.
- o johnson and kotz, continuous univariate distributions--1, 1970,
+ * johnson and kotz, continuous univariate distributions--1, 1970,
    page 176, formula 28, and page 180, formula 33.1.
- o owen, handbook of statistical tables, 1962, pages 50-55.
- o pearson and hartley, biometrika tables for statisticians, volume 1,
+ * owen, handbook of statistical tables, 1962, pages 50-55.
+ * pearson and hartley, biometrika tables for statisticians, volume 1,
    1954, pages 122-131.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
@@ -54,55 +64,36 @@ $ENDBLOCK
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSCDF(X,Nu,Cdf)
-REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
-INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE.
-!                     --NU     = THE INTEGER NUMBER OF DEGREES
-!                                OF FREEDOM.
-!                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE CHI-SQUARED DISTRIBUTION
-!             WITH DEGREES OF FREEDOM PARAMETER = NU.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DEXP.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , pi , chi , sum , term , ai , dcdfn
-      DOUBLE PRECISION dnu
-      DOUBLE PRECISION DSQRT , DEXP
-      DOUBLE PRECISION DLOG
-      DOUBLE PRECISION dfact , dpower
-      DOUBLE PRECISION dw
-      DOUBLE PRECISION d1 , d2 , d3
-      DOUBLE PRECISION term0 , term1 , term2 , term3 , term4
-      DOUBLE PRECISION b11
-      DOUBLE PRECISION b21
-      DOUBLE PRECISION b31 , b32
-      DOUBLE PRECISION b41 , b42 , b43
-      DATA nucut/1000/
-      DATA pi/3.14159265358979D0/
-      DATA dpower/0.33333333333333D0/
-      DATA b11/0.33333333333333D0/
-      DATA b21/ - 0.02777777777778D0/
-      DATA b31/ - 0.00061728395061D0/
-      DATA b32/ - 13.0D0/
-      DATA b41/0.00018004115226D0/
-      DATA b42/6.0D0/
-      DATA b43/17.0D0/
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Cdf
+INTEGER,intent(in) :: Nu 
+
+REAL(kind=wp) :: amean , anu , cdfn , danu , sd , spchi , u , z
+INTEGER :: i , ibran , ievodd , imax , imin , nucut
+DOUBLE PRECISION dx , chi , sum , term , ai , dcdfn
+DOUBLE PRECISION dnu
+DOUBLE PRECISION DSQRT , DEXP
+DOUBLE PRECISION DLOG
+DOUBLE PRECISION dfact , dpower
+DOUBLE PRECISION dw
+DOUBLE PRECISION d1 , d2 , d3
+DOUBLE PRECISION term0 , term1 , term2 , term3 , term4
+DOUBLE PRECISION b11
+DOUBLE PRECISION b21
+DOUBLE PRECISION b31 , b32
+DOUBLE PRECISION b41 , b42 , b43
+DATA nucut/1000/
+DATA dpower/0.33333333333333D0/
+DATA b11/0.33333333333333D0/
+DATA b21/ - 0.02777777777778D0/
+DATA b31/ - 0.00061728395061D0/
+DATA b32/ - 13.0D0/
+DATA b41/0.00018004115226D0/
+DATA b42/6.0D0/
+DATA b43/17.0D0/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -196,7 +187,7 @@ INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 !
                         sum = sum*DEXP(-dx/2.0D0)
                         IF ( ievodd/=0 ) THEN
-                           sum = (DSQRT(2.0D0/pi))*sum
+                           sum = (DSQRT(2.0D0/G_pi_dp))*sum
                            spchi = chi
                            CALL NORCDF(spchi,cdfn)
                            dcdfn = cdfn

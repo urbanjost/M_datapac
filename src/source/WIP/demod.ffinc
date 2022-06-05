@@ -54,11 +54,11 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
- o granger and hatanaka, pages 170 to 189, especially pages 173, 177,
+ * granger and hatanaka, pages 170 to 189, especially pages 173, 177,
    and 182.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==demod.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEMOD(X,N,F)
 REAL(kind=wp) :: ai, aiflag, aimax2, alen1, alen2, an, del, F, fest, fmin, hold, pi, range, slopeh, sloper, sum, WS, X, Y1, Y2

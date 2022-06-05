@@ -7,21 +7,29 @@ NAME
 SYNOPSIS
       SUBROUTINE EV1CDF(X,Cdf)
 
+       REAL(kind=wp),intent(in) :: X
+       REAL(kind=wp),intent(out) :: Cdf 
+
 DESCRIPTION
-   ev1cdf(3f) computes the cumulative distribution function value for
+   EV1CDF(3f) computes the cumulative distribution function value for
    the extreme value type 1 distribution.
 
-   the extreme value type 1 distribution used herein has mean = euler's
+   The extreme value type 1 distribution used herein has mean = Euler's
    number = 0.57721566 and standard deviation = pi/sqrt(6) = 1.28254983.
 
-   this distribution is defined for all x and has the probability
+   This distribution is defined for all X and has the probability
    density function
 
        f(x) = (exp(-x)) * (exp(-(exp(-x))))
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   X     The value at which the cumulative distribution function is
+         to be evaluated.
+
+OUTPUT ARGUMENTS
+
+   CDF   The cumulative distribution function value.
 
 EXAMPLES
   Sample program:
@@ -36,44 +44,31 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-    PAGES 272-295.
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    Pages 272-295.
+
 $ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==ev1cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1CDF(X,Cdf)
-REAL(kind=wp) :: Cdf , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE EXTREME VALUE TYPE 1
-!             DISTRIBUTION WITH MEAN = EULER'S NUMBER = 0.57721566
-!             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
-!
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Cdf 
+
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS. -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
+ 
       Cdf = 1.0_wp - EXP(-(EXP(-X)))
-!
+ 
 END SUBROUTINE EV1CDF

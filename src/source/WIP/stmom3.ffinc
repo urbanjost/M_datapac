@@ -46,14 +46,14 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  o Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
+  * Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
     Edition 2, 1963, Pages 85, 234, 243, 297-298, 305.
-  o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
+  * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
     86-90.
 
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==stmom3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 INTEGER :: i , Iwrite , N

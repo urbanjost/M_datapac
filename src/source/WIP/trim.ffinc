@@ -42,15 +42,15 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  o David, Order Statistics, 1970, Pages 126-130, 136.
-  o Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+  * David, Order Statistics, 1970, Pages 126-130, 136.
+  * Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
     American Statistical Association, 1967, Pages 357, 387.
-  o Filliben, Simple and Robust Linear Estimation of the Location
+  * Filliben, Simple and Robust Linear Estimation of the Location
     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
     Princeton University, 1969).
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==trim.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
 INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2

@@ -255,6 +255,132 @@ public subroutine SORTC(X, Y, N, Xs, Yc)
 
 
     
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>sortc(3f) - [M_datapac:SORT] sort a vector of sample
+observations and &quot;carry&quot; a second vector
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Subroutine sortc(X,Y,N,Xs,Yc)
+
+   Real, Intent (In)    :: X
+   Real, Intent (In)    :: Y
+   Integer, Intent (In) :: N
+   Real, Intent (Out)   :: Xs
+   Real, Intent (Out)   :: Yc
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">SORTC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">sorts</span> <span class="ss">(</span><span class="nv">in</span> <span class="nv">ascending</span> <span class="nv">order</span><span class="ss">)</span> <span class="nv">the</span> <span class="nv">N</span> <span class="nv">elements</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">X</span>,
+<span class="nv">puts</span> <span class="nv">the</span> <span class="nv">resulting</span> <span class="nv">N</span> <span class="nv">sorted</span> <span class="nv">values</span> <span class="nv">into</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">XS</span>,
+<span class="nv">rearranges</span> <span class="nv">the</span> <span class="nv">elements</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">Y</span> <span class="ss">(</span><span class="nv">according</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">sort</span> <span class="nv">on</span> <span class="nv">X</span><span class="ss">)</span>,
+<span class="nv">and</span> <span class="nv">puts</span> <span class="nv">the</span> <span class="nv">rearranged</span> <span class="nv">Y</span> <span class="nv">values</span> <span class="nv">into</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">YC</span>.
+<span class="nv">This</span> <span class="nv">subroutine</span> <span class="nv">gives</span> <span class="nv">the</span> <span class="nv">data</span> <span class="nv">analyst</span> <span class="nv">the</span> <span class="nv">ability</span> <span class="nv">to</span> <span class="nv">sort</span> <span class="nv">one</span> <span class="nv">data</span>
+<span class="nv">vector</span> <span class="k">while</span> <span class="s1">&#39;</span><span class="s">carrying along</span><span class="s1">&#39;</span> <span class="nv">the</span> <span class="nv">elements</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">second</span> <span class="nv">data</span> <span class="nv">vector</span>.
+
+<span class="nv">The</span> <span class="nv">smallest</span> <span class="nv">element</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">X</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">placed</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">first</span>
+<span class="nv">position</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">XS</span>, <span class="nv">the</span> <span class="nv">second</span> <span class="nv">smallest</span> <span class="nv">element</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">vector</span>
+<span class="nv">X</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">placed</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">second</span> <span class="nv">position</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">XS</span>, <span class="nv">etc</span>.
+
+<span class="nv">The</span> <span class="nv">element</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">Y</span> <span class="nv">corresponding</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">smallest</span> <span class="nv">element</span> <span class="nv">in</span>
+<span class="nv">X</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">placed</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">first</span> <span class="nv">position</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">YC</span>, <span class="nv">the</span> <span class="nv">element</span>
+<span class="nv">in</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">Y</span> <span class="nv">corresponding</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">second</span> <span class="nv">smallest</span> <span class="nv">element</span> <span class="nv">in</span> <span class="nv">X</span>
+<span class="nv">will</span> <span class="nv">be</span> <span class="nv">placed</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">second</span> <span class="nv">position</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">YC</span>, <span class="nv">etc</span>.
+
+<span class="nv">The</span> <span class="nv">input</span> <span class="nv">vector</span> <span class="nv">X</span> <span class="nv">remains</span> <span class="nv">unaltered</span>.
+
+<span class="k">If</span> <span class="nv">the</span> <span class="nv">analyst</span> <span class="nv">desires</span> <span class="nv">a</span> <span class="nv">sort</span> <span class="s1">&#39;</span><span class="s">in place</span><span class="s1">&#39;</span>, <span class="nv">this</span> <span class="nv">is</span> <span class="nv">done</span> <span class="nv">by</span> <span class="nv">having</span> <span class="nv">the</span>
+<span class="nv">same</span> <span class="nv">output</span> <span class="nv">vector</span> <span class="nv">as</span> <span class="nv">input</span> <span class="nv">vector</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">calling</span> <span class="nv">sequence</span>. <span class="nv">Thus</span>,
+<span class="k">for</span> <span class="nv">example</span>, <span class="nv">the</span> <span class="nv">calling</span> <span class="nv">sequence</span> <span class="k">CALL</span> <span class="nl">SORTC</span><span class="ss">(</span><span class="nv">X</span>,<span class="nv">Y</span>,<span class="nv">N</span>,<span class="nv">X</span>,<span class="nv">YC</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">allowable</span>
+<span class="nv">and</span> <span class="nv">will</span> <span class="nb">result</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">desired</span> <span class="s1">&#39;</span><span class="s">in-place</span><span class="s1">&#39;</span> <span class="nv">sort</span>.
+
+<span class="nv">The</span> <span class="nv">sorting</span> <span class="nv">algorithm</span> <span class="nv">used</span> <span class="nv">herein</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">binary</span> <span class="nv">sort</span>. <span class="nv">This</span> <span class="nv">algorithm</span>
+<span class="nv">is</span> <span class="nv">extremely</span> <span class="nv">fast</span> <span class="nv">as</span> <span class="nv">the</span> <span class="nv">following</span> <span class="nv">time</span> <span class="nv">trials</span> <span class="nv">indicate</span>. <span class="nv">These</span> <span class="nv">time</span>
+<span class="nv">trials</span> <span class="nv">were</span> <span class="nv">carried</span> <span class="nv">out</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">UNIVAC</span> <span class="mi">1108</span> <span class="k">EXEC</span> <span class="mi">8</span> <span class="nv">system</span> <span class="nv">at</span> <span class="nv">NBS</span> <span class="nv">in</span>
+<span class="nv">August</span> <span class="nv">of</span> <span class="mi">1974</span>. <span class="nv">By</span> <span class="nv">way</span> <span class="nv">of</span> <span class="nv">comparison</span>, <span class="nv">the</span> <span class="nv">time</span> <span class="nv">trial</span> <span class="nv">values</span> <span class="k">for</span> <span class="nv">the</span>
+<span class="nv">easy</span><span class="o">-</span><span class="nv">to</span><span class="o">-</span><span class="nv">program</span> <span class="nv">but</span> <span class="nv">extremely</span> <span class="nv">inefficient</span> <span class="nv">bubble</span> <span class="nv">sort</span> <span class="nv">algorithm</span> <span class="nv">have</span>
+<span class="nv">also</span> <span class="nv">been</span> <span class="nv">included</span><span class="o">--</span>
+
+  <span class="nv">Number</span> <span class="nv">of</span> <span class="k">Random</span>        <span class="nv">Binary</span> <span class="nv">Sort</span>       <span class="nv">Bubble</span> <span class="nv">Sort</span>
+  <span class="nv">Numbers</span> <span class="nv">Sorted</span>
+    <span class="nv">N</span> <span class="o">=</span> <span class="mi">10</span>                 .<span class="mi">002</span> <span class="nv">sec</span>          .<span class="mi">002</span> <span class="nv">sec</span>
+    <span class="nv">N</span> <span class="o">=</span> <span class="mi">100</span>                .<span class="mi">011</span> <span class="nv">sec</span>          .<span class="mi">045</span> <span class="nv">sec</span>
+    <span class="nv">N</span> <span class="o">=</span> <span class="mi">1000</span>               .<span class="mi">141</span> <span class="nv">sec</span>         <span class="mi">4</span>.<span class="mi">332</span> <span class="nv">sec</span>
+    <span class="nv">N</span> <span class="o">=</span> <span class="mi">3000</span>               .<span class="mi">476</span> <span class="nv">sec</span>        <span class="mi">37</span>.<span class="mi">683</span> <span class="nv">sec</span>
+    <span class="nv">N</span> <span class="o">=</span> <span class="mi">10000</span>             <span class="mi">1</span>.<span class="mi">887</span> <span class="nv">sec</span>      <span class="nv">NOT</span> <span class="nv">COMPUTED</span>
+</code></pre></div>
+
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code>  X   The vector of observations to be sorted.
+
+  Y   The vector of
+      observations to be &#39;carried along&#39;, that is, to be rearranged
+      according to the sort on X.
+
+  N   The integer number of observations in the vector X.
+</code></pre></div>
+
+<h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code>  XS  The vector into which the sorted data values from X will be
+      placed in ascending order.
+
+  YC  The vector into which the rearranged (according to the sort of
+      the vector X) values of the vector Y will be placed.
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_sortc</span>
+<span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">sortc</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">integer</span>,<span class="nv">parameter</span>            :: <span class="nv">isz</span><span class="o">=</span><span class="mi">20</span>
+<span class="nv">real</span>                         :: <span class="nv">aa</span><span class="ss">(</span><span class="nv">isz</span><span class="ss">)</span>
+<span class="nv">real</span>                         :: <span class="nv">bb</span><span class="ss">(</span><span class="nv">isz</span><span class="ss">)</span>
+<span class="nv">real</span>                         :: <span class="nv">cc</span><span class="ss">(</span><span class="nv">isz</span><span class="ss">)</span>
+<span class="nv">real</span>                         :: <span class="nv">dd</span><span class="ss">(</span><span class="nv">isz</span><span class="ss">)</span>
+<span class="nv">integer</span>                      :: <span class="nv">i</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">initializing array with </span><span class="s1">&#39;</span>,<span class="nv">isz</span>,<span class="s1">&#39;</span><span class="s"> random numbers</span><span class="s1">&#39;</span>
+  <span class="k">call</span> <span class="nl">random_seed</span><span class="ss">()</span>
+  <span class="k">CALL</span> <span class="nl">RANDOM_NUMBER</span><span class="ss">(</span><span class="nv">aa</span><span class="ss">)</span>
+  <span class="nv">aa</span><span class="o">=</span><span class="nv">aa</span><span class="o">*</span><span class="mi">450000</span>.<span class="mi">0</span>
+  <span class="nv">bb</span><span class="o">=</span><span class="nv">real</span><span class="ss">(</span>[<span class="ss">(</span><span class="nv">i</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">isz</span><span class="ss">)</span>]<span class="ss">)</span>
+  <span class="k">call</span> <span class="nl">sortc</span><span class="ss">(</span><span class="nv">aa</span>,<span class="nv">bb</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">aa</span><span class="ss">)</span>,<span class="nv">cc</span>,<span class="nv">dd</span><span class="ss">)</span>
+
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">checking if real values are sorted(3f)</span><span class="s1">&#39;</span>
+  <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">isz</span><span class="o">-</span><span class="mi">1</span>
+     <span class="k">if</span><span class="ss">(</span><span class="nv">cc</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>.<span class="nv">gt</span>.<span class="nv">cc</span><span class="ss">(</span><span class="nv">i</span><span class="o">+</span><span class="mi">1</span><span class="ss">))</span><span class="k">then</span>
+        <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Error in sorting reals small to large </span><span class="s1">&#39;</span>,<span class="nv">i</span>,<span class="nv">cc</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">cc</span><span class="ss">(</span><span class="nv">i</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>
+     <span class="k">endif</span>
+  <span class="nv">enddo</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">test of sortc(3f) complete</span><span class="s1">&#39;</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(4(g0,1x))</span><span class="s1">&#39;</span><span class="ss">)(</span><span class="nv">aa</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">bb</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">cc</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">dd</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">isz</span><span class="ss">)</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">sum</span><span class="ss">(</span><span class="nv">aa</span><span class="ss">)</span>,<span class="nv">sum</span><span class="ss">(</span><span class="nv">cc</span><span class="ss">)</span> <span class="o">!</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">the</span> <span class="nv">same</span> <span class="k">if</span> <span class="nv">no</span> <span class="nv">truncation</span>
+  <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">sum</span><span class="ss">(</span><span class="nv">bb</span><span class="ss">)</span>,<span class="nv">sum</span><span class="ss">(</span><span class="nv">dd</span><span class="ss">)</span>
+
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_sortc</span>
+</code></pre></div>
+
+<p>Results:</p>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
+Engineering Division, National Institute of Standards and Technology.
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="references">REFERENCES</h2>
+<ol>
+<li>CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).</li>
+<li>CACM JANUARY 1970, PAGE 54.</li>
+<li>CACM OCTOBER 1970, PAGE 624.</li>
+<li>JACM JANUARY 1961, PAGE 41.</li>
+</ol>
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+    
 
     <h3>Arguments</h3>
     
@@ -927,7 +1053,7 @@ public subroutine SORTC(X, Y, N, Xs, Yc)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-05 04:30  
+             on 2022-06-05 06:28  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

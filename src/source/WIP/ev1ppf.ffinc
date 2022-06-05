@@ -7,24 +7,33 @@ NAME
 SYNOPSIS
       SUBROUTINE EV1PPF(P,Ppf)
 
+       REAL(kind=wp),intent(in)  :: P
+       REAL(kind=wp),intent(out) :: Ppf
+
 DESCRIPTION
-   ev1ppf(3f) computes the percent point function value for the extreme
+   EV1PPF(3f) computes the percent point function value for the extreme
    value type 1 distribution.
 
-   the extreme value type 1 distribution used herein has mean = euler's
+   The extreme value type 1 distribution used herein has mean = Euler's
    number = 0.57721566 and standard deviation = pi/sqrt(6) = 1.28254983.
-   this distribution is defined for all x and has the probability
+
+   This distribution is defined for all x and has the probability
    density function
 
        f(x) = (exp(-x)) * (exp(-(exp(-x))))
 
-   note that the percent point function of a distribution is identically
+   Note that the percent point function of a distribution is identically
    the same as the inverse cumulative distribution function of the
    distribution.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+   P      The value (between 0.0 and 1.0 exclusively) at which the
+          percent point function is to be evaluated.
+
+OUTPUT ARGUMENTS
+   PPF    The  percent point function value for the extreme value type
+          1 distribution with mean = Euler's number = 0.57721566 and standard
+          deviation = pi/sqrt(6) = 1.28254983.
 
 EXAMPLES
   Sample program:
@@ -39,59 +48,37 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
 REFERENCES
-  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-    PAGES 272-295.
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    Pages 272-295.
 $ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==ev1ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1PPF(P,Ppf)
-REAL(kind=wp) :: P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (EXCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE EXTREME VALUE TYPE 1 DISTRIBUTION
-!             WITH MEAN = EULER'S NUMBER = 0.57721566
-!             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Ppf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1PPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         Ppf = 0.0_wp
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Ppf = -LOG(LOG(1.0_wp/P))
-      ENDIF
-!
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO EV1PPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      Ppf = 0.0_wp
+      RETURN
+   ELSE
+      Ppf = -LOG(LOG(1.0_wp/P))
+   ENDIF
+ 
 END SUBROUTINE EV1PPF

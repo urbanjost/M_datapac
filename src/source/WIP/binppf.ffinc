@@ -5,7 +5,12 @@ NAME
    point function
 
 SYNOPSIS
-    SUBROUTINE BINPPF(P,Ppar,N,Ppf)
+      SUBROUTINE BINPPF(P,Ppar,N,Ppf)
+
+       REAL(kind=wp) :: P
+       REAL(kind=wp) :: Ppar
+       REAL(kind=wp) :: Ppf
+       INTEGER :: N
 
 DESCRIPTION
    BINPPF(3f) computes the percent point function value at the precision
@@ -44,7 +49,7 @@ INPUT ARGUMENTS
          N should be a positive integer.
 
 OUTPUT ARGUMENTS
-  PPF    The  percent point function value.
+  PPF    The percent point function value.
 
 EXAMPLES
   Sample program:
@@ -66,39 +71,39 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
-  o Johnson and Kotz, Discrete
+  * Johnson and Kotz, Discrete
     Distributions, 1969, Pages 50-86,
     especially Page 64, Formula 36.
-  o Hastings and Peacock, Statistical
+  * Hastings and Peacock, Statistical
     Distributions--A Handbook for
     Students and Practitioners, 1975,
     Pages 36-41.
-  o National Bureau of Standards Applied Mathematics
+  * National Bureau of Standards Applied Mathematics
     Series 55, 1964, Page 929.
-  o Feller, An Introduction to Probability
+  * Feller, An Introduction to Probability
     Theory and Its Applications, Volume 1,
     Edition 2, 1957, Pages 135-142.
-  o Kendall and Stuart, The Advanced Theory of
+  * Kendall and Stuart, The Advanced Theory of
     Statistics, Volume 1, Edition 2, 1963, Pages 120-125.
-  o Mood and Grable, Introduction to the Theory
+  * Mood and Grable, Introduction to the Theory
     of Statistics, Edition 2, 1963, Pages 64-69.
-  o Owen, Handbook of Statistical Tables, 1962, PAGES 264-272.
+  * Owen, Handbook of Statistical Tables, 1962, PAGES 264-272.
 $ENDBLOCK
 !     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==binppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BINPPF(P,Ppar,N,Ppf)
-REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd , x0 , x1 , x2 , zppf
-INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
+REAL(kind=wp) :: P
+REAL(kind=wp) :: Ppar
+REAL(kind=wp) :: Ppf
+INTEGER :: N
+REAL(kind=wp) :: amean , an, p0 , p1 , p2 , pf0 , qfn , sd , x0 , x1 , x2 , zppf
+INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
+DOUBLE PRECISION :: dppar
 
-!     RESTRICTIONS--PPAR SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!                 --N SHOULD BE A POSITIVE INTEGER.
-!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (INCLUSIVELY).
 
-!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS -- SINGLE AND DOUBLE PRECISION.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -120,8 +125,6 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
 !---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dppar
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -371,20 +374,21 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 99013    FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
       ENDIF
 !
- 300  WRITE (G_IO,99014) ix0 , p0
-99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
+ 300  continue
+      WRITE (G_IO,99014) ix0 , p0
+      99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
       WRITE (G_IO,99015) ix1 , p1
-99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
+      99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
       WRITE (G_IO,99016) ix2 , p2
-99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
+      99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
       WRITE (G_IO,99017) P
-99017 FORMAT (' ','P    = ',F14.7)
+      99017 FORMAT (' ','P    = ',F14.7)
       WRITE (G_IO,99018) Ppar , N
-99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
+      99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
       RETURN
-99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-99020 FORMAT (' ','***** INTERNAL ERROR IN BINPPF SUBROUTINE *****')
-99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
-99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
+      99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      99020 FORMAT (' ','***** INTERNAL ERROR IN BINPPF SUBROUTINE *****')
+      99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
+      99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
 END SUBROUTINE BINPPF

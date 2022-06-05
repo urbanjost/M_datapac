@@ -54,16 +54,16 @@ LICENSE
    CC0-1.0
 
 REFERENCE
-  o Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
+  * Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
     of the Eighteenth Conference on the Design of Experiments in Army
     Research and Testing, Pages 425-450.
-  o Filliben, 'The Percent Point Function', UNpublished Manuscript.
-  o Johnson and Kotz (1970), Continuous Univariate Distributions-1,
+  * Filliben, 'The Percent Point Function', UNpublished Manuscript.
+  * Johnson and Kotz (1970), Continuous Univariate Distributions-1,
     Pages 250-271.
 
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==weib.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIB(X,N)
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
      &     sum2 , sum3 , sy , t , w , wbar , WS , X , xmax , xmin , Y

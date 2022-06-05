@@ -38,14 +38,14 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
-  o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
-  o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+  * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+  * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
     1957, Page 38.
-  o Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
+  * Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
     1963, Page 171.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 INTEGER i , Iwrite , N

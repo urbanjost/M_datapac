@@ -42,7 +42,7 @@ $ENDBLOCK
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==plotx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&

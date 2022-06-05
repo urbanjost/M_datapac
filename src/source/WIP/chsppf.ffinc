@@ -7,22 +7,44 @@ NAME
 SYNOPSIS
       SUBROUTINE CHSPPF(P,Nu,Ppf)
 
+       REAL(kind=wp) :: P 
+       REAL(kind=wp) :: Ppf
+       INTEGER       :: Nu
+
 DESCRIPTION
    CHSPPF(3f) computes the percent point function value for the
    chi-squared distribution with integer degrees of freedom parameter
    = nu.
 
-   the chi-squared distribution used herein is defined for all
+   The chi-squared distribution used herein is defined for all
    non-negative x, and its probability density function is given in
    references 2, 3, and 4 below.
 
-   note that the percent point function of a distribution is identically
+   Note that the percent point function of a distribution is identically
    the same as the inverse cumulative distribution function of the
    distribution.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   P      The value (between 0.0 (inclusively) and 1.0 (exclusively))
+          at which the percent point function is to be evaluated.
+
+   NU     The integer number of degrees of freedom. NU should be positive.
+
+OUTPUT ARGUMENTS
+
+   PPF    The percent point function value for the chi-squared
+          distribution
+
+ACCURACY
+   (On the UNIVAC 1108, EXEC 8 System at NBS) Compared to the known NU
+   = 2 (exponential) results, agreement was had out to 6 significant
+   digits for all tested P in the range P = .001 to P = .999.  for P =
+   .95 And smaller, The agreement was even better--7 significant digits.
+   (Note that the tabulated values given in the Wilk, Gnanadesikan,
+   and Huyett reference below, Page 20, are in error for at least the
+   GAMMA = 1 case-- The worst detected error was agreement to only 3
+   significant digits (in their 8 significant digit table) for P = .999.)
 
 EXAMPLES
   Sample program:
@@ -48,70 +70,40 @@ LICENSE
    CC0-1.0
 
 REFERENCES
- o wilk, gnanadesikan, and huyett, 'probability plots for the gamma
-   distribution', technometrics, 1962, pages 1-15, especially pages 3-5.
- o national bureau of standards applied mathematics series 55, 1964,
-   page 257, formula 6.1.41, and pages 940-943.
- o johnson and kotz, continuous univariate distributions--1, 1970,
-   pages 166-206.
- o hastings and peacock, statistical distributions--a handbook for
-   students and practitioners, 1975, pages 46-51.
+ * Wilk, gnanadesikan, and huyett, 'probability plots for the gamma
+   Distribution', technometrics, 1962, pages 1-15, especially pages 3-5.
+ * National bureau of standards applied mathematics series 55, 1964,
+   Page 257, formula 6.1.41, and pages 940-943.
+ * Johnson and kotz, continuous univariate distributions--1, 1970,
+   Pages 166-206.
+ * Hastings and peacock, statistical distributions--a handbook for
+   Students and practitioners, 1975, pages 46-51.
 
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==chsppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE CHSPPF(P,Nu,Ppf)
-REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
-INTEGER icount , iloop , j , maxit , Nu
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (INCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --NU     = THE INTEGER NUMBER OF DEGREES
-!                                OF FREEDOM.
-!                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE CHI-SQUARED DISTRIBUTION
-!             WITH DEGREES OF FREEDOM PARAMETER = NU.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--NU SHOULD BE A POSITIVE INTEGER VARIABLE.
-!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-
-!     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
-!               COMPARED TO THE KNOWN NU = 2 (EXPONENTIAL)
-!               RESULTS, AGREEMENT WAS HAD OUT TO 6 SIGNIFICANT
-!               DIGITS FOR ALL TESTED P IN THE RANGE P = .001 TO
-!               P = .999.  FOR P = .95 AND SMALLER, THE AGREEMENT
-!               WAS EVEN BETTER--7 SIGNIFICANT DIGITS.
-!               (NOTE THAT THE TABULATED VALUES GIVEN IN THE WILK,
-!               GNANADESIKAN, AND HUYETT REFERENCE BELOW, PAGE 20,
-!               ARE IN ERROR FOR AT LEAST THE GAMMA = 1 CASE--
-!               THE WORST DETECTED ERROR WAS AGREEMENT TO ONLY 3
-!               SIGNIFICANT DIGITS (IN THEIR 8 SIGNIFICANT DIGIT TABLE)
-!               FOR P = .999.)
 !     ORIGINAL VERSION--SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dp , dgamma
-      DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d , g
-      DOUBLE PRECISION xmin0 , xmin , ai , xmax , dx , pcalc , xmid
-      DOUBLE PRECISION xlower , xupper , xdel
-      DOUBLE PRECISION sum , term , cut1 , cut2 , aj , cutoff , t
-      DOUBLE PRECISION DEXP , DLOG
-      DIMENSION d(10)
-      DATA c/.918938533204672741D0/
-      DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CHSPPF(P,Nu,Ppf)
+REAL(kind=wp) :: P 
+REAL(kind=wp) :: Ppf
+INTEGER       :: Nu
+REAL(kind=wp) :: anu , dnu , gamma 
+INTEGER       :: icount , iloop , j , maxit
+
+DOUBLE PRECISION :: dp , dgamma
+DOUBLE PRECISION :: z , z2 , z3 , z4 , z5 , den , a , b , c , d(10) , g
+DOUBLE PRECISION :: xmin0 , xmin , ai , xmax , dx , pcalc , xmid
+DOUBLE PRECISION :: xlower , xupper , xdel
+DOUBLE PRECISION :: sum , term , cut1 , cut2 , aj , cutoff , t
+DOUBLE PRECISION :: DEXP , DLOG
+
+DATA c/.918938533204672741D0/
+DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
      &     -.277777777777777778D-2 , +.793650793650793651D-3 ,          &
      &     -.595238095238095238D-3 , +.841750841750841751D-3/
-      DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
+DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
      &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
      &     +.179644372368830573D0 , -.139243221690590111D1/
 !

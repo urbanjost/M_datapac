@@ -56,13 +56,13 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
-  o GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
+  * GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine norout(X,N)
 real(kind=wp) :: ai, an, anm1, anm2, anm3, anm4, anm5, cdf, hold, res, s, s1, s13, s14, s2, s23, s24, s3, s4, ssq

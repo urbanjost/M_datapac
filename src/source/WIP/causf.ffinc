@@ -5,7 +5,10 @@ NAME
 
 SYNOPSIS
 
-    SUBROUTINE CAUSF(P,Sf)
+      SUBROUTINE CAUSF(P,Sf)
+
+       REAL(kind=wp) :: P 
+       REAL(kind=wp) :: Sf
 
 DESCRIPTION
 
@@ -20,9 +23,13 @@ DESCRIPTION
    of the percent point function, and also is the reciprocal of the
    probability density function (but in units of p rather than x).
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+    P    the value (between 0.0 and 1.0) at which the sparsity
+         function is to be evaluated. P should be between 0.0 and 1.0,
+         exclusively.
+
+OUTPUT ARGUMENTS
+    SF   The sparsity function value.
 
 EXAMPLES
   Sample program:
@@ -49,12 +56,12 @@ LICENSE
 
 REFERENCES
 
- o filliben, simple and robust linear estimation of the location parameter
+ * filliben, simple and robust linear estimation of the location parameter
    of a symmetric distribution (unpublished ph.d. dissertation, princeton
    university), 1969, pages 21-44, 229-231.
- o filliben, 'the percent point function', (unpublished manuscript),
+ * filliben, 'the percent point function', (unpublished manuscript),
    1970, pages 28-31.
- o johnson and kotz, continuous univariate distributions--1, 1970,
+ * johnson and kotz, continuous univariate distributions--1, 1970,
    pages 154-165.
 
 $ENDBLOCK
@@ -62,42 +69,25 @@ $ENDBLOCK
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==causf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUSF(P,Sf)
-REAL(kind=wp) :: arg , P , pi , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!---------------------------------------------------------------------
-!
-      DATA pi/3.14159265358979_wp/
+REAL(kind=wp) :: P 
+REAL(kind=wp) :: Sf
+
+REAL(kind=wp) :: arg 
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO CAUSF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         arg = pi*P
-         Sf = pi/((SIN(arg))**2)
+         arg = G_pi*P
+         Sf = G_pi/((SIN(arg))**2)
       ENDIF
 !
 END SUBROUTINE CAUSF

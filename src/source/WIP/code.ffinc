@@ -14,10 +14,10 @@ DESCRIPTION
 
    The coding is as follows--
 
-    o  the minimum is coded as 1.0.
-    o  the next larger value as 2.0,
-    o  the next larger value as 3.0,
-    o  etc.
+    *  the minimum is coded as 1.0.
+    *  the next larger value as 2.0,
+    *  the next larger value as 3.0,
+    *  etc.
 
 OPTIONS
     X   description of parameter
@@ -44,7 +44,7 @@ LICENSE
    CC0-1.0
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==code.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CODE(X,N,Y)
 REAL(kind=wp) :: ai , DISt , hold , WS , X , Y

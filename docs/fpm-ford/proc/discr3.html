@@ -245,6 +245,74 @@ public subroutine DISCR3(X, N, Numcla, Y)
 
 
     
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>discr3(3f) - [M_datapac:STATISTICS] bin the elements of a vector
+(output vector contains 1&#39;s, 2&#39;s, 3&#39;s, and so on)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>   SUBROUTINE DISCR3(X,N,Numcla,Y)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">discr3</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="s1">&#39;discretizes&#39;</span> <span class="n">the</span> <span class="n">data</span> <span class="n">on</span> <span class="n">the</span> <span class="n">precision</span> <span class="n">precision</span> <span class="n">vector</span> <span class="n">x</span>
+<span class="n">into</span> <span class="n">numcla</span> <span class="n">classes</span><span class="o">.</span>
+
+<span class="n">all</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">vector</span> <span class="n">x</span> <span class="n">within</span> <span class="n">a</span> <span class="n">given</span> <span class="k">class</span> <span class="n">will</span> <span class="n">be</span> <span class="n">mapped</span> <span class="n">into</span>
+<span class="n">the</span> <span class="k">class</span> <span class="n">number</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">...</span> <span class="p">,</span> <span class="n">numcla</span><span class="p">)</span><span class="o">.</span> <span class="n">thus</span> <span class="n">all</span> <span class="n">the</span> <span class="n">elements</span> <span class="ow">in</span> <span class="n">the</span>
+<span class="n">lowermost</span> <span class="k">class</span> <span class="n">will</span> <span class="n">be</span> <span class="n">mapped</span> <span class="n">into</span> <span class="n">the</span> <span class="n">value</span> <span class="mf">1.0</span><span class="p">;</span> <span class="n">all</span> <span class="n">the</span> <span class="n">elements</span>
+<span class="n">of</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">next</span> <span class="n">higher</span> <span class="k">class</span> <span class="n">will</span> <span class="n">be</span> <span class="n">mapped</span> <span class="n">into</span> <span class="mf">2.0</span><span class="p">;</span> <span class="n">etc</span><span class="o">.</span>
+
+<span class="n">the</span> <span class="n">sample</span> <span class="n">minimum</span> <span class="ow">and</span> <span class="n">sample</span> <span class="n">maximum</span> <span class="n">are</span> <span class="n">automatically</span> <span class="n">computed</span>
+<span class="n">internally</span> <span class="ow">and</span> <span class="n">the</span> <span class="k">class</span> <span class="n">width</span> <span class="p">(</span><span class="n">xdel</span><span class="p">)</span> <span class="k">is</span> <span class="n">computed</span> <span class="k">as</span> <span class="n">the</span> <span class="p">(</span><span class="n">sample</span> <span class="nb">max</span>
+<span class="o">-</span> <span class="n">sample</span> <span class="nb">min</span><span class="p">)</span><span class="o">/</span><span class="n">numcla</span><span class="o">.</span> <span class="n">the</span> <span class="n">first</span> <span class="k">class</span> <span class="n">interval</span> <span class="k">is</span> <span class="n">from</span> <span class="n">the</span> <span class="n">sample</span>
+<span class="nb">min</span> <span class="n">to</span> <span class="n">the</span> <span class="n">sample</span> <span class="nb">min</span> <span class="o">+</span> <span class="n">xdel</span><span class="p">;</span> <span class="n">the</span> <span class="n">second</span> <span class="k">class</span> <span class="n">interval</span> <span class="k">is</span> <span class="n">from</span> <span class="n">the</span>
+<span class="n">sample</span> <span class="nb">min</span> <span class="o">+</span> <span class="n">xdel</span> <span class="n">to</span> <span class="n">the</span> <span class="n">sample</span> <span class="nb">min</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">xdel</span><span class="p">;</span>
+<span class="o">...</span><span class="p">;</span>
+
+<span class="n">the</span> <span class="n">last</span> <span class="k">class</span> <span class="n">interval</span> <span class="k">is</span> <span class="n">from</span> <span class="n">the</span> <span class="n">sample</span> <span class="nb">max</span> <span class="o">-</span> <span class="n">xdel</span> <span class="n">to</span> <span class="n">the</span> <span class="n">sample</span>
+<span class="nb">max</span><span class="o">.</span> <span class="n">the</span> <span class="n">use</span> <span class="n">of</span> <span class="n">discr3</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="p">(</span><span class="ow">and</span> <span class="n">the</span> <span class="n">discre</span> <span class="ow">and</span> <span class="n">discr2</span> <span class="n">subroutines</span><span class="p">)</span>
+<span class="n">gives</span> <span class="n">the</span> <span class="n">data</span> <span class="n">analyst</span> <span class="n">the</span> <span class="n">capability</span> <span class="n">of</span> <span class="n">constructing</span> <span class="n">a</span> <span class="n">discrete</span>
+<span class="n">variate</span> <span class="n">from</span> <span class="n">a</span> <span class="n">continuous</span> <span class="n">one</span><span class="o">.</span>
+
+<span class="n">the</span> <span class="n">resulting</span> <span class="n">discrete</span> <span class="n">variate</span> <span class="n">might</span> <span class="n">then</span> <span class="p">(</span><span class="k">for</span> <span class="n">example</span><span class="p">)</span> <span class="n">be</span> <span class="n">analyzed</span>
+<span class="ow">in</span> <span class="n">itself</span> <span class="k">for</span> <span class="n">gross</span> <span class="n">structure</span><span class="p">,</span> <span class="ow">or</span> <span class="k">for</span> <span class="n">adherence</span> <span class="n">to</span> <span class="n">some</span> <span class="n">theoretical</span>
+<span class="n">discrete</span> <span class="n">probability</span> <span class="n">model</span><span class="p">,</span> <span class="ow">or</span> <span class="n">the</span> <span class="n">discrete</span> <span class="n">variate</span> <span class="n">might</span> <span class="n">be</span> <span class="n">used</span> <span class="k">as</span>
+<span class="n">a</span> <span class="n">subset</span> <span class="n">definition</span> <span class="n">vector</span> <span class="k">for</span> <span class="n">some</span> <span class="n">other</span> <span class="n">variate</span><span class="o">.</span>
+
+<span class="n">this</span> <span class="n">discr3</span> <span class="n">subroutine</span> <span class="k">is</span> <span class="n">particularly</span> <span class="n">suited</span> <span class="n">to</span> <span class="n">this</span> <span class="n">last</span> <span class="n">purpose</span>
+<span class="n">inasmuch</span> <span class="k">as</span> <span class="n">it</span> <span class="n">output</span><span class="s1">&#39;s 1&#39;</span><span class="n">s</span><span class="p">,</span> <span class="mi">2</span><span class="s1">&#39;s, etc. rather than midpoints.</span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> X   description of parameter
+ Y   description of parameter
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_discr3</span>
+<span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">discr3</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> ::  <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="o">!</span> <span class="k">call</span> <span class="nl">discr3</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span><span class="ss">)</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_discr3</span>
+</code></pre></div>
+
+<p>Results:</p>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
+Engineering Division, National Institute of Standards and Technology.
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+    
 
     <h3>Arguments</h3>
     
@@ -822,7 +890,7 @@ public subroutine DISCR3(X, N, Numcla, Y)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-05 04:30  
+             on 2022-06-05 06:28  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

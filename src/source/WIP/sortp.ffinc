@@ -49,13 +49,13 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
-  o CACM March 1969, Page 186 (Binary Sort Algorithm by Richard C. Singleton).
-  o CACM January 1970, Page 54.
-  o CACM October 1970, Page 624.
-  o JACM January 1961, Page 41.
+  * CACM March 1969, Page 186 (Binary Sort Algorithm by Richard C. Singleton).
+  * CACM January 1970, Page 54.
+  * CACM October 1970, Page 624.
+  * JACM January 1961, Page 41.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1

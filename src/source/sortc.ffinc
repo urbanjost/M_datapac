@@ -120,7 +120,7 @@ $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==sortc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTC(X,Y,N,Xs,Yc)
 
 REAL(kind=wp) :: amed, bmed, hold, tx, ty, X(:), Xs(:), Y(:), Yc(:)

@@ -91,7 +91,7 @@ LICENSE
 
 REFERENCES
 
- o Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970,
+ * Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970,
    Pages 154-165.
 
 $ENDBLOCK
@@ -99,7 +99,7 @@ $ENDBLOCK
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine caupdf(X,Pdf)
 real(kind=wp),intent(in) :: X

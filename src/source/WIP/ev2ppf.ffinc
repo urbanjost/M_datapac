@@ -7,23 +7,36 @@ NAME
 SYNOPSIS
       SUBROUTINE EV2PPF(P,Gamma,Ppf)
 
+       REAL(kind=wp),intent(in) :: P
+       REAL(kind=wp),intent(in) :: Gamma
+       REAL(kind=wp),intent(out) :: Ppf
+
 DESCRIPTION
-   ev2ppf(3f) computes the percent point function value for the extreme
+   EV2PPF(3f) computes the percent point function value for the extreme
    value type 2 distribution with precision precision tail length parameter
-   = gamma.
+   = GAMMA.
 
-   the extreme value type 2 distribution used herein is defined for all
-   non-negative x, and has the probability density function
+   The extreme value type 2 distribution used herein is defined for all
+   non-negative X, and has the probability density function
 
-       f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+       f(X) = GAMMA * (X**(-GAMMA-1)) * exp(-(X**(-GAMMA)))
 
-   note that the percent point function of a distribution is identically
+   Note that the percent point function of a distribution is identically
    the same as the inverse cumulative distribution function of the
    distribution.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   P      The value (between 0.0 (exclusively) and 1.0 (exclusively))
+          at which the percent point function is to be evaluated.
+
+   GAMMA  The value of the tail length parameter. GAMMA should be
+          positive.
+
+OUTPUT ARGUMENTS
+
+   PPF    The percent point function value for the extreme value type
+          2 distribution with tail length parameter value = GAMMA.
 
 EXAMPLES
   Sample program:
@@ -38,44 +51,29 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
     PAGES 272-295.
+
 $ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2PPF(P,Gamma,Ppf)
-REAL(kind=wp) :: Gamma , P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (EXCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE EXTREME VALUE TYPE 2 DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
+REAL(kind=wp),intent(in) :: P
+REAL(kind=wp),intent(in) :: Gamma
+REAL(kind=wp),intent(out) :: Ppf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !

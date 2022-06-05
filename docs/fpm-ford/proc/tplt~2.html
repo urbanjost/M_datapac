@@ -275,6 +275,88 @@ public subroutine TPLT(X, N, Nu)
 
 
     
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>tplt(3f) - [M_datapac:LINE_PLOT] generates a student&#39;s
+t probability plot (with integer degrees of freedom parameter value
+NU).
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>   SUBROUTINE TPLT(X,N,Nu)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">tplt</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">generates</span> <span class="nv">a</span> <span class="nv">student</span><span class="s1">&#39;</span><span class="s">s t probability plot (with integer</span>
+<span class="nv">degrees</span> <span class="nv">of</span> <span class="nv">freedom</span> <span class="nv">parameter</span> <span class="nv">value</span> <span class="o">=</span> <span class="nv">nu</span><span class="ss">)</span>.
+
+<span class="nv">the</span> <span class="nv">prototype</span> <span class="nv">student</span><span class="s1">&#39;</span><span class="s">s t distribution used herein is defined for all</span>
+<span class="nv">x</span>, <span class="nv">and</span> <span class="nv">its</span> <span class="nv">probability</span> <span class="nv">density</span> <span class="nv">function</span> <span class="nv">is</span> <span class="nv">given</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">references</span>
+<span class="nv">below</span>.
+
+<span class="nv">as</span> <span class="nv">used</span> <span class="nv">herein</span>, <span class="nv">a</span> <span class="nv">probability</span> <span class="nv">plot</span> <span class="k">for</span> <span class="nv">a</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">plot</span>
+<span class="nv">of</span> <span class="nv">the</span> <span class="nv">ordered</span> <span class="nv">observations</span> <span class="nv">versus</span> <span class="nv">the</span> <span class="nv">order</span> <span class="nv">statistic</span> <span class="nv">medians</span> <span class="k">for</span>
+<span class="nv">that</span> <span class="nv">distribution</span>.
+
+<span class="nv">the</span> <span class="nv">student</span><span class="s1">&#39;</span><span class="s">s t probability plot is useful in graphically testing</span>
+<span class="nv">the</span> <span class="nv">composite</span> <span class="ss">(</span><span class="nv">that</span> <span class="nv">is</span>, <span class="nv">location</span> <span class="nv">and</span> <span class="nv">scale</span> <span class="nv">parameters</span> <span class="nv">need</span> <span class="nv">not</span> <span class="nv">be</span>
+<span class="nv">specified</span><span class="ss">)</span> <span class="nv">hypothesis</span> <span class="nv">that</span> <span class="nv">the</span> <span class="nv">underlying</span> <span class="nv">distribution</span> <span class="nv">from</span> <span class="nv">which</span>
+<span class="nv">the</span> <span class="nv">data</span> <span class="nv">have</span> <span class="nv">been</span> <span class="nv">randomly</span> <span class="nv">drawn</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">student</span><span class="s1">&#39;</span><span class="s">s t distribution</span>
+<span class="nv">with</span> <span class="nv">degrees</span> <span class="nv">of</span> <span class="nv">freedom</span> <span class="nv">parameter</span> <span class="nv">value</span> <span class="o">=</span> <span class="nv">nu</span>.
+
+<span class="k">if</span> <span class="nv">the</span> <span class="nv">hypothesis</span> <span class="nv">is</span> <span class="nv">true</span>, <span class="nv">the</span> <span class="nv">probability</span> <span class="nv">plot</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">near</span><span class="o">-</span><span class="nv">linear</span>.
+
+<span class="nv">a</span> <span class="nv">measure</span> <span class="nv">of</span> <span class="nv">such</span> <span class="nv">linearity</span> <span class="nv">is</span> <span class="nv">given</span> <span class="nv">by</span> <span class="nv">the</span> <span class="nv">calculated</span> <span class="nv">probability</span>
+<span class="nv">plot</span> <span class="nv">correlation</span> <span class="nv">coefficient</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> X   description of parameter
+ Y   description of parameter
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_tplt</span>
+<span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">tplt</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> ::  <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="o">!</span> <span class="k">call</span> <span class="nl">tplt</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span><span class="ss">)</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_tplt</span>
+</code></pre></div>
+
+<p>Results:</p>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
+Engineering Division, National Institute of Standards and Technology.
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+
+<h2 id="references">REFERENCES</h2>
+<ul>
+<li>FILLIBEN, &lsquo;TECHNIQUES FOR TAIL LENGTH ANALYSIS&rsquo;, PROCEEDINGS OF THE
+     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+     425-450.</li>
+<li>HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+     260-308.</li>
+<li>NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+     PAGE 949, FORMULA 26.7.5.</li>
+<li>JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS&ndash;2, 1970,
+     PAGE 102, FORMULA 11.</li>
+<li>FEDERIGHI, &lsquo;EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT&rsquo;S
+     T DISTRIBUTION, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+     1969, PAGES 683-688.</li>
+<li>HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS&ndash;A HANDBOOK FOR
+     STUDENTS AND PRACTITIONERS, 1975, PAGES 120-123.</li>
+</ul>
+    
 
     <h3>Arguments</h3>
     
@@ -996,7 +1078,7 @@ public subroutine TPLT(X, N, Nu)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-05 04:30  
+             on 2022-06-05 06:28  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

@@ -1,16 +1,21 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file bincdf.3m_datapac.man
 NAME
-   bincdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the binomial cumulative
-   distribution function
+   bincdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the binomial
+   cumulative distribution function
 
 SYNOPSIS
-    SUBROUTINE BINCDF(X,P,N,Cdf)
+      SUBROUTINE BINCDF(X,P,N,Cdf)
+
+       REAL(kind=wp) :: X
+       REAL(kind=wp) :: P
+       INTEGER       :: N
+       REAL(kind=wp) :: Cdf
 
 DESCRIPTION
    BINCDF(3f) computes the cumulative distribution function value
-   at the precision precision value X for the binomial distribution with
-   precision precision 'Bernoulli probability' parameter = P, and integer
+   at the double precision value X for the binomial distribution with
+   double precision 'Bernoulli probability' parameter = P, and integer
    'number of Bernoulli trials' parameter = N.
 
    The binomial distribution used herein has mean = N*P and standard
@@ -30,9 +35,23 @@ DESCRIPTION
    successes in N Bernoulli (0,1) trials where the probability of success
    in a precision trial = P.
 
-OPTIONS
-    x   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+ 
+   X      The value at which the cumulative distribution
+          function is to be evaluated. X should be integral-valued,
+          and between 0.0 (inclusively) and N (inclusively).
+                       
+   P      The value of the 'Bernoulli probability'
+          parameter for the binomial distribution.
+          P should be between 0.0 (exclusively) and 1.0 (exclusively).
+                       
+   N      The integer value of the 'number of Bernoulli trials'
+          parameter. N should be a positive integer.
+
+OUTPUT ARGUMENTS
+
+  CDF     The cumulative distribution function value for the binomial
+          distribution.
 
 EXAMPLES
   Sample program:
@@ -47,72 +66,52 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  o hastings and peacock, statistical
-    distributions--a handbook for students and practitioners, 1975,
-    page 38.
-  o national bureau of standards applied mathematics
-    series 55, 1964, page 945, formulae 26.5.24 and 26.5.28, and
-    page 929.
-  o johnson and kotz, discrete
-    distributions, 1969, pages 50-86, especially pages 63-64.
-  o feller, an introduction to probability
-    theory and its applications, volume 1, edition 2, 1957, pages
+  * Hastings and Peacock, Statistical
+    Distributions--A Handbook for Students and Practitioners, 1975,
+    Page 38.
+  * National Bureau of Standards Applied Mathematics
+    Series 55, 1964, Page 945, Formulae 26.5.24 and 26.5.28, and
+    Page 929.
+  * Johnson and Kotz, Discrete
+    Distributions, 1969, Pages 50-86, especially Pages 63-64.
+  * Feller, An Introduction to Probability
+    Theory and its Applications, Volume 1, Edition 2, 1957, Pages
     135-142.
-  o kendall and stuart, the advanced theory of
-    statistics, volume 1, edition 2, 1963, pages 120-125.
-  o mood and grable, introduction to the theory
-    of statistics, edition 2, 1963, pages 64-69.
-  o owen, handbook of statistical tables, 1962, pages 264-272.
+  * Kendall and Stuart, The Advanced Theory of
+    Statistics, Volume 1, Edition 2, 1963, Pages 120-125.
+  * Mood and Grable, Introduction to the Theory
+    of Statistics, Edition 2, 1963, Pages 64-69.
+  * Owen, Handbook of Statistical Tables, 1962, Pages 264-272.
 $ENDBLOCK
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --MAY       1977.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BINCDF(X,P,N,Cdf)
-REAL(kind=wp) :: an, Cdf, del, fintx, P, X
-INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE INTEGRAL-VALUED,
-!                                AND BETWEEN 0.0 (INCLUSIVELY)
-!                                AND N (INCLUSIVELY).
-!                     --P      = THE  VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE BINOMIAL
-!                                DISTRIBUTION.
-!                                P SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!                     --N      = THE INTEGER VALUE
-!                                OF THE 'NUMBER OF BERNOULLI TRIALS'
-!                                PARAMETER.
-!                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF
-!             FOR THE BINOMIAL DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
-!             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = N.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE INTEGRAL-VALUED,
-!                   AND BETWEEN 0.0 (INCLUSIVELY)
-!                   AND N (INCLUSIVELY).
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!                 --N SHOULD BE A POSITIVE INTEGER.
+REAL(kind=wp) :: X
+REAL(kind=wp) :: P
+INTEGER       :: N
+REAL(kind=wp) :: Cdf
+REAL(kind=wp) :: an, del, fintx
 
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+INTEGER          :: i, ievodd, iflag1, iflag2, imax, imin, intx, nu1, nu2
+DOUBLE PRECISION :: dx , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
+DOUBLE PRECISION :: coef
+DOUBLE PRECISION :: theta , sinth , costh , a , b
+DOUBLE PRECISION :: DSQRT , DATAN
+
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
 !              DISTRIBUTION FUNCTION SUBROUTINE
@@ -137,12 +136,6 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
 !---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
-      DOUBLE PRECISION coef
-      DOUBLE PRECISION theta , sinth , costh , a , b
-      DOUBLE PRECISION DSQRT , DATAN
-      DATA pi/3.14159265358979D0/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -289,7 +282,7 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
                sum = sum*sinth*costh
             ENDIF
 !
-            a = (2.0D0/pi)*(theta+sum)
+            a = (2.0D0/G_pi_dp)*(theta+sum)
             sum = 0.0D0
             term = 1.0D0
             IF ( nu1==1 ) b = 0.0D0
@@ -319,7 +312,7 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
                ENDIF
 !
                coef = coef*anu2
-               IF ( ievodd /= 0 ) coef = coef*(2.0D0/pi)
+               IF ( ievodd /= 0 ) coef = coef*(2.0D0/G_pi_dp)
 !
                b = coef*sum
             ENDIF

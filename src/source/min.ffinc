@@ -48,13 +48,13 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
- o David, Order Statistics, 1970, Page 7.
+ * David, Order Statistics, 1970, Page 7.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==min.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine min(X,N,Iwrite,Xmin)
 real(kind=wp) :: hold , X(:) , Xmin

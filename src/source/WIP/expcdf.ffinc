@@ -7,18 +7,26 @@ NAME
 SYNOPSIS
       SUBROUTINE EXPCDF(X,Cdf)
 
+       REAL(kind=wp),intent(in) :: X
+       REAL(kind=wp),intent(out) :: Cdf
+
 DESCRIPTION
-   expcdf(3f) computes the cumulative distribution function value for
+   EXPCDF(3f) computes the cumulative distribution function value for
    the exponential distribution with mean = 1 and standard deviation = 1.
 
-   this distribution is defined for all non-negative x, and has the
+   This distribution is defined for all non-negative X, and has the
    probability density function
 
-      f(x) = exp(-x).
+      f(x) = exp(-x)
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   X      The value at which the cumulative distribution function is
+          to be evaluated. X should be non-negative.
+
+OUTPUT ARGUMENTS
+
+   CDF    The cumulative distribution function value.
 
 EXAMPLES
   Sample program:
@@ -44,49 +52,29 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-    PAGES 207-232.
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    Pages 207-232.
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==expcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE EXPCDF(X,Cdf)
-IMPLICIT NONE
-REAL(kind=wp) :: Cdf , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EXPCDF(X,Cdf)
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Cdf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EXPC&
-     &DF SUBROUTINE IS NEGATIVE *****')
+         99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO EXPCDF(3f) IS NEGATIVE *****')
          WRITE (G_IO,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          Cdf = 1.0_wp - EXP(-X)
       ENDIF
 !

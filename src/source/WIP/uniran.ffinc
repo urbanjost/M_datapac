@@ -36,19 +36,19 @@ AUTHOR
    Engineering Division, National Institute of Standards and Technology.
 
 WRITTEN BY
-     o James Blue
+     * James Blue
                  scientific computing division
                  center for applied mathematics
                  national bureau of standards
                  washington, d. c. 20234
-     o David Kahaner
+     * David Kahaner
                  scientific computing division
                  center for applied mathematics
                  national bureau of standards
-     o George Marsaglia
+     * George Marsaglia
                  computer science department
                  washington state university
-     o James J. Filliben
+     * James J. Filliben
                  statistical engineering division
                  center for applied mathematics
                  national bureau of standards
@@ -59,14 +59,14 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  o Marsaglia G., "Comments on the Perfect Uniform Random Number
+  * Marsaglia G., "Comments on the Perfect Uniform Random Number
     Generator", Unpublished Notes, Wash S. U.
-  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
     Pages 57-74.
 
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIRAN(N,Iseed,X)
 REAL(kind=wp) :: ak , am1 , X(:)
 INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N

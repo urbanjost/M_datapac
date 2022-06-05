@@ -46,7 +46,7 @@ contains
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==skipr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SKIPR(Nlhead)
 INTEGER i , ia , ird , Nlhead
 !

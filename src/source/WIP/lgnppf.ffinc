@@ -53,14 +53,14 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+  * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
     PAGES 112-136.
-  o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+  * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 
 $ENDBLOCK
 !     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==lgnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf

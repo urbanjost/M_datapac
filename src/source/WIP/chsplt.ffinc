@@ -56,22 +56,22 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
- o wilk, gnanadesikan, and huyett, 'probability plots for the gamma
+ * wilk, gnanadesikan, and huyett, 'probability plots for the gamma
    distribution', technometrics, 1962, pages 1-15.
- o filliben, 'techniques for tail length analysis', proceedings of the
+ * filliben, 'techniques for tail length analysis', proceedings of the
    eighteenth conference on the design of experiments in army research
    development and testing (aberdeen, maryland, october, 1972), pages
    425-450.
- o hahn and shapiro, statistical methods in engineering, 1967, pages
+ * hahn and shapiro, statistical methods in engineering, 1967, pages
    260-308.
- o johnson and kotz, continuous univariate distributions--1, 1970,
+ * johnson and kotz, continuous univariate distributions--1, 1970,
    pages 166-206.
- o hastings and peacock, statistical distributions--a handbook for students
+ * hastings and peacock, statistical distributions--a handbook for students
    and practitioners, 1975, pages 46-51.
 
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==chsplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSPLT(X,N,Nu)
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&

@@ -53,16 +53,16 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
- o Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, Pages
+ * Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, Pages
    58-69; especially pages 60, 63, and 64.
- o Bradley, Distribution-free Statistical Tests, 1968, Chapter 12,
+ * Bradley, Distribution-free Statistical Tests, 1968, Chapter 12,
    Pages 271-282.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==runs.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE RUNS(X,N)
 REAL(kind=wp) :: X(:)

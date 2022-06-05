@@ -209,6 +209,69 @@ public subroutine LOGSF(P, Sf)
 
 
     
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>logsf(3f) - [M_datapac:SPARSITY] compute the logistic sparsity function
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>   SUBROUTINE LOGSF(P,Sf)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">logsf</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">computes</span> <span class="nv">the</span> <span class="nv">sparsity</span> <span class="nv">function</span> <span class="nv">value</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">logistic</span>
+<span class="nv">distribution</span> <span class="nv">with</span> <span class="nv">mean</span> <span class="o">=</span> <span class="mi">0</span> <span class="nv">and</span> <span class="nv">standard</span> <span class="nv">deviation</span> <span class="o">=</span> <span class="nv">pi</span><span class="o">/</span><span class="nv">sqrt</span><span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>.
+
+<span class="nv">this</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">defined</span> <span class="k">for</span> <span class="nv">all</span> <span class="nv">x</span> <span class="nv">and</span> <span class="nv">has</span> <span class="nv">the</span> <span class="nv">probability</span>
+<span class="nv">density</span> <span class="nv">function</span>
+
+    <span class="nv">f</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">exp</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span><span class="o">/</span><span class="ss">(</span><span class="mi">1</span><span class="o">+</span><span class="nv">exp</span><span class="ss">(</span><span class="nv">x</span><span class="ss">))</span>.
+
+<span class="nv">note</span> <span class="nv">that</span> <span class="nv">the</span> <span class="nv">sparsity</span> <span class="nv">function</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">derivative</span>
+<span class="nv">of</span> <span class="nv">the</span> <span class="nv">percent</span> <span class="nv">point</span> <span class="nv">function</span>, <span class="nv">and</span> <span class="nv">also</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">reciprocal</span> <span class="nv">of</span> <span class="nv">the</span>
+<span class="nv">probability</span> <span class="nv">density</span> <span class="nv">function</span> <span class="ss">(</span><span class="nv">but</span> <span class="nv">in</span> <span class="nv">units</span> <span class="nv">of</span> <span class="nv">p</span> <span class="nv">rather</span> <span class="nv">than</span> <span class="nv">x</span><span class="ss">)</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> X   description of parameter
+ Y   description of parameter
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_logsf</span>
+<span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">logsf</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> ::  <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="o">!</span> <span class="k">call</span> <span class="nl">logsf</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span><span class="ss">)</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_logsf</span>
+</code></pre></div>
+
+<p>Results:</p>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+
+<h2 id="references">REFERENCES</h2>
+<ul>
+<li>FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.</li>
+<li>FILLIBEN, &lsquo;THE PERCENT POINT FUNCTION&rsquo;, (UNPUBLISHED MANUSCRIPT),
+     1970, PAGES 28-31.</li>
+<li>JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS&ndash;2, 1970,
+     PAGES 1-21.</li>
+</ul>
+    
 
     <h3>Arguments</h3>
     
@@ -379,7 +442,7 @@ public subroutine LOGSF(P, Sf)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-05 04:30  
+             on 2022-06-05 06:28  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

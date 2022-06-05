@@ -264,7 +264,7 @@ contains
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --MAY       2022.
-!*==autoco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine autoco(x,n,iwrite,xautoc)
 real(kind=wp) :: an, hold , sum1 , sum2 , sum3 , x(:) , xautoc , xbar , xbar1 , xbar2
@@ -421,7 +421,7 @@ end subroutine autoco
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --JUNE      1978.
 !     UPDATED         --DECEMBER  1981.
-!*==betran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
 REAL(kind=wp) :: a1, a2, Alpha, arg, athird, b1, b2, Beta, funct, sqrt3, term, u, X, xg, xg01, xg02, xg1, xg2, xn(1)
@@ -541,17 +541,22 @@ INTEGER ::  i , Iseed , N
 END SUBROUTINE BETRAN
 !>
 !!##NAME
-!!    bincdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the binomial cumulative
-!!    distribution function
+!!    bincdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the binomial
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE BINCDF(X,P,N,Cdf)
+!!       SUBROUTINE BINCDF(X,P,N,Cdf)
+!!
+!!        REAL(kind=wp) :: X
+!!        REAL(kind=wp) :: P
+!!        INTEGER       :: N
+!!        REAL(kind=wp) :: Cdf
 !!
 !!##DESCRIPTION
 !!    BINCDF(3f) computes the cumulative distribution function value
-!!    at the precision precision value X for the binomial distribution with
-!!    precision precision 'Bernoulli probability' parameter = P, and integer
+!!    at the double precision value X for the binomial distribution with
+!!    double precision 'Bernoulli probability' parameter = P, and integer
 !!    'number of Bernoulli trials' parameter = N.
 !!
 !!    The binomial distribution used herein has mean = N*P and standard
@@ -571,9 +576,23 @@ END SUBROUTINE BETRAN
 !!    successes in N Bernoulli (0,1) trials where the probability of success
 !!    in a precision trial = P.
 !!
-!!##OPTIONS
-!!     x   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the cumulative distribution
+!!           function is to be evaluated. X should be integral-valued,
+!!           and between 0.0 (inclusively) and N (inclusively).
+!!
+!!    P      The value of the 'Bernoulli probability'
+!!           parameter for the binomial distribution.
+!!           P should be between 0.0 (exclusively) and 1.0 (exclusively).
+!!
+!!    N      The integer value of the 'number of Bernoulli trials'
+!!           parameter. N should be a positive integer.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!   CDF     The cumulative distribution function value for the binomial
+!!           distribution.
 !!
 !!##EXAMPLES
 !!
@@ -589,70 +608,50 @@ END SUBROUTINE BETRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   o hastings and peacock, statistical
-!!     distributions--a handbook for students and practitioners, 1975,
-!!     page 38.
-!!   o national bureau of standards applied mathematics
-!!     series 55, 1964, page 945, formulae 26.5.24 and 26.5.28, and
-!!     page 929.
-!!   o johnson and kotz, discrete
-!!     distributions, 1969, pages 50-86, especially pages 63-64.
-!!   o feller, an introduction to probability
-!!     theory and its applications, volume 1, edition 2, 1957, pages
+!!   * Hastings and Peacock, Statistical
+!!     Distributions--A Handbook for Students and Practitioners, 1975,
+!!     Page 38.
+!!   * National Bureau of Standards Applied Mathematics
+!!     Series 55, 1964, Page 945, Formulae 26.5.24 and 26.5.28, and
+!!     Page 929.
+!!   * Johnson and Kotz, Discrete
+!!     Distributions, 1969, Pages 50-86, especially Pages 63-64.
+!!   * Feller, An Introduction to Probability
+!!     Theory and its Applications, Volume 1, Edition 2, 1957, Pages
 !!     135-142.
-!!   o kendall and stuart, the advanced theory of
-!!     statistics, volume 1, edition 2, 1963, pages 120-125.
-!!   o mood and grable, introduction to the theory
-!!     of statistics, edition 2, 1963, pages 64-69.
-!!   o owen, handbook of statistical tables, 1962, pages 264-272.
+!!   * Kendall and Stuart, The Advanced Theory of
+!!     Statistics, Volume 1, Edition 2, 1963, Pages 120-125.
+!!   * Mood and Grable, Introduction to the Theory
+!!     of Statistics, Edition 2, 1963, Pages 64-69.
+!!   * Owen, Handbook of Statistical Tables, 1962, Pages 264-272.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --MAY       1977.
-!*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BINCDF(X,P,N,Cdf)
-REAL(kind=wp) :: an, Cdf, del, fintx, P, X
-INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE INTEGRAL-VALUED,
-!                                AND BETWEEN 0.0 (INCLUSIVELY)
-!                                AND N (INCLUSIVELY).
-!                     --P      = THE  VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE BINOMIAL
-!                                DISTRIBUTION.
-!                                P SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!                     --N      = THE INTEGER VALUE
-!                                OF THE 'NUMBER OF BERNOULLI TRIALS'
-!                                PARAMETER.
-!                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF
-!             FOR THE BINOMIAL DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
-!             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = N.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE INTEGRAL-VALUED,
-!                   AND BETWEEN 0.0 (INCLUSIVELY)
-!                   AND N (INCLUSIVELY).
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!                 --N SHOULD BE A POSITIVE INTEGER.
+REAL(kind=wp) :: X
+REAL(kind=wp) :: P
+INTEGER       :: N
+REAL(kind=wp) :: Cdf
+REAL(kind=wp) :: an, del, fintx
 
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+INTEGER          :: i, ievodd, iflag1, iflag2, imax, imin, intx, nu1, nu2
+DOUBLE PRECISION :: dx , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
+DOUBLE PRECISION :: coef
+DOUBLE PRECISION :: theta , sinth , costh , a , b
+DOUBLE PRECISION :: DSQRT , DATAN
+
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
 !              DISTRIBUTION FUNCTION SUBROUTINE
@@ -677,12 +676,6 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
 !---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
-      DOUBLE PRECISION coef
-      DOUBLE PRECISION theta , sinth , costh , a , b
-      DOUBLE PRECISION DSQRT , DATAN
-      DATA pi/3.14159265358979D0/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -829,7 +822,7 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
                sum = sum*sinth*costh
             ENDIF
 !
-            a = (2.0D0/pi)*(theta+sum)
+            a = (2.0D0/G_pi_dp)*(theta+sum)
             sum = 0.0D0
             term = 1.0D0
             IF ( nu1==1 ) b = 0.0D0
@@ -859,7 +852,7 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
                ENDIF
 !
                coef = coef*anu2
-               IF ( ievodd /= 0 ) coef = coef*(2.0D0/pi)
+               IF ( ievodd /= 0 ) coef = coef*(2.0D0/G_pi_dp)
 !
                b = coef*sum
             ENDIF
@@ -877,7 +870,12 @@ END SUBROUTINE BINCDF
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE BINPPF(P,Ppar,N,Ppf)
+!!       SUBROUTINE BINPPF(P,Ppar,N,Ppf)
+!!
+!!        REAL(kind=wp) :: P
+!!        REAL(kind=wp) :: Ppar
+!!        REAL(kind=wp) :: Ppf
+!!        INTEGER :: N
 !!
 !!##DESCRIPTION
 !!    BINPPF(3f) computes the percent point function value at the precision
@@ -916,7 +914,7 @@ END SUBROUTINE BINCDF
 !!          N should be a positive integer.
 !!
 !!##OUTPUT ARGUMENTS
-!!   PPF    The  percent point function value.
+!!   PPF    The percent point function value.
 !!
 !!##EXAMPLES
 !!
@@ -939,37 +937,37 @@ END SUBROUTINE BINCDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o Johnson and Kotz, Discrete
+!!   * Johnson and Kotz, Discrete
 !!     Distributions, 1969, Pages 50-86,
 !!     especially Page 64, Formula 36.
-!!   o Hastings and Peacock, Statistical
+!!   * Hastings and Peacock, Statistical
 !!     Distributions--A Handbook for
 !!     Students and Practitioners, 1975,
 !!     Pages 36-41.
-!!   o National Bureau of Standards Applied Mathematics
+!!   * National Bureau of Standards Applied Mathematics
 !!     Series 55, 1964, Page 929.
-!!   o Feller, An Introduction to Probability
+!!   * Feller, An Introduction to Probability
 !!     Theory and Its Applications, Volume 1,
 !!     Edition 2, 1957, Pages 135-142.
-!!   o Kendall and Stuart, The Advanced Theory of
+!!   * Kendall and Stuart, The Advanced Theory of
 !!     Statistics, Volume 1, Edition 2, 1963, Pages 120-125.
-!!   o Mood and Grable, Introduction to the Theory
+!!   * Mood and Grable, Introduction to the Theory
 !!     of Statistics, Edition 2, 1963, Pages 64-69.
-!!   o Owen, Handbook of Statistical Tables, 1962, PAGES 264-272.
+!!   * Owen, Handbook of Statistical Tables, 1962, PAGES 264-272.
 !     ORIGINAL VERSION--NOVEMBER  1975.
-!*==binppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BINPPF(P,Ppar,N,Ppf)
-REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd , x0 , x1 , x2 , zppf
-INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
+REAL(kind=wp) :: P
+REAL(kind=wp) :: Ppar
+REAL(kind=wp) :: Ppf
+INTEGER :: N
+REAL(kind=wp) :: amean , an, p0 , p1 , p2 , pf0 , qfn , sd , x0 , x1 , x2 , zppf
+INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
+DOUBLE PRECISION :: dppar
 
-!     RESTRICTIONS--PPAR SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!                 --N SHOULD BE A POSITIVE INTEGER.
-!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (INCLUSIVELY).
 
-!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS -- SINGLE AND DOUBLE PRECISION.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -991,8 +989,6 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !              IS THE MORE NATURAL MODE FOR DOING
 !              DATA ANALYSIS.
 !---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dppar
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -1242,21 +1238,22 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 99013    FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
       ENDIF
 !
- 300  WRITE (G_IO,99014) ix0 , p0
-99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
+ 300  continue
+      WRITE (G_IO,99014) ix0 , p0
+      99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
       WRITE (G_IO,99015) ix1 , p1
-99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
+      99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
       WRITE (G_IO,99016) ix2 , p2
-99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
+      99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
       WRITE (G_IO,99017) P
-99017 FORMAT (' ','P    = ',F14.7)
+      99017 FORMAT (' ','P    = ',F14.7)
       WRITE (G_IO,99018) Ppar , N
-99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
+      99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
       RETURN
-99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-99020 FORMAT (' ','***** INTERNAL ERROR IN BINPPF SUBROUTINE *****')
-99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
-99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
+      99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      99020 FORMAT (' ','***** INTERNAL ERROR IN BINPPF SUBROUTINE *****')
+      99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
+      99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
 END SUBROUTINE BINPPF
 !>
@@ -1328,24 +1325,24 @@ END SUBROUTINE BINPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
-!!   o Hastings and Peacock, Statistical Distributions,
+!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
+!!   * Hastings and Peacock, Statistical Distributions,
 !!     A Handbook for Students and Practitioners, 1975,
 !!     Page 41.
-!!   o Feller, An Introduction to Probability Theory and Its Applications,
+!!   * Feller, An Introduction to Probability Theory and Its Applications,
 !!     Volume 1, Edition 2, 1957, Pages 135-142.
-!!   o National Bureau of Standards Applied Mathematics
+!!   * National Bureau of Standards Applied Mathematics
 !!     Series 55, 1964, Page 929.
-!!   o Kendall and Stuart, The Advanced Theory of Statistics,
+!!   * Kendall and Stuart, The Advanced Theory of Statistics,
 !!     Volume 1, Edition 2, 1963, Pages 120-125.
-!!   o Mood and Grable, Introduction to the Theory of Statistics,
+!!   * Mood and Grable, Introduction to the Theory of Statistics,
 !!     Edition 2, 1963, Pages 64-69.
-!!   o Tocher, The Art Of Simulation, 1963, Pages 39-40.
+!!   * Tocher, The Art Of Simulation, 1963, Pages 39-40.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!*==binran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
 REAL(kind=wp) :: g(1) , P , u(1) , X
@@ -1538,12 +1535,12 @@ END SUBROUTINE BINRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970,
 !!    pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==caucdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine caucdf(X,Cdf)
 real(kind=wp),intent(in)  :: X
@@ -1648,12 +1645,12 @@ end subroutine caucdf
 !!
 !!##REFERENCES
 !!
-!!  o Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970,
 !!    Pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine caupdf(X,Pdf)
 real(kind=wp),intent(in) :: X
@@ -1731,19 +1728,19 @@ end subroutine caupdf
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o Filliben, 'Techniques for Tail Length Analysis', proceedings of the
+!!   * Filliben, 'Techniques for Tail Length Analysis', proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army Research
 !!     Development and Testing (Aberdeen, Maryland, October, 1972),
 !!     Pages 425-450.
-!!   o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
 !!     260-308.
-!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     Pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUPLT(X,N)
 REAL(kind=wp),intent(in) :: X(:)
@@ -1901,18 +1898,18 @@ END SUBROUTINE CAUPLT
 !!
 !!##REFERENCES
 !!
-!!    o Filliben, Simple and Robust Linear Estimation
+!!    * Filliben, Simple and Robust Linear Estimation
 !!      of the Location Parameter of a Symmetric
 !!      Distribution (Unpublished PH.D. Dissertation,
 !!      Princeton University), 1969, Pages 21-44, 229-231.
-!!    o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!    * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
 !!      1970, Pages 28-31.
-!!    o Johnson and Kotz, Continuous Univariate Distributions
+!!    * Johnson and Kotz, Continuous Univariate Distributions
 !!      -- 1, 1970, PAGES 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUPPF(P,Ppf)
 REAL(kind=wp) :: P
@@ -1978,16 +1975,16 @@ END SUBROUTINE CAUPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o tocher, the art of simulation, 1963, page 15.
-!!  o hammersley and handscomb, monte carlo methods, 1964, page 36.
-!!  o filliben, simple and robust linear estimation of the location parameter
+!!  * tocher, the art of simulation, 1963, page 15.
+!!  * hammersley and handscomb, monte carlo methods, 1964, page 36.
+!!  * filliben, simple and robust linear estimation of the location parameter
 !!    of a symmetric distribution (unpublished ph.d. dissertation, princeton
 !!    university), 1969, page 231.
-!!  o filliben, 'the percent point function', (unpublished manuscript),
+!!  * filliben, 'the percent point function', (unpublished manuscript),
 !!    1970, pages 28-31.
-!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!  * johnson and kotz, continuous univariate distributions--1, 1970,
 !!    pages 154-165.
-!*==cauran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAURAN(N,Iseed,X)
 REAL(kind=wp) :: arg , pi , X
@@ -2061,7 +2058,10 @@ END SUBROUTINE CAURAN
 !!##SYNOPSIS
 !!
 !!
-!!     SUBROUTINE CAUSF(P,Sf)
+!!       SUBROUTINE CAUSF(P,Sf)
+!!
+!!        REAL(kind=wp) :: P
+!!        REAL(kind=wp) :: Sf
 !!
 !!##DESCRIPTION
 !!
@@ -2076,9 +2076,13 @@ END SUBROUTINE CAURAN
 !!    of the percent point function, and also is the reciprocal of the
 !!    probability density function (but in units of p rather than x).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!     P    the value (between 0.0 and 1.0) at which the sparsity
+!!          function is to be evaluated. P should be between 0.0 and 1.0,
+!!          exclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!     SF   The sparsity function value.
 !!
 !!##EXAMPLES
 !!
@@ -2106,52 +2110,35 @@ END SUBROUTINE CAURAN
 !!
 !!##REFERENCES
 !!
-!!  o filliben, simple and robust linear estimation of the location parameter
+!!  * filliben, simple and robust linear estimation of the location parameter
 !!    of a symmetric distribution (unpublished ph.d. dissertation, princeton
 !!    university), 1969, pages 21-44, 229-231.
-!!  o filliben, 'the percent point function', (unpublished manuscript),
+!!  * filliben, 'the percent point function', (unpublished manuscript),
 !!    1970, pages 28-31.
-!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!  * johnson and kotz, continuous univariate distributions--1, 1970,
 !!    pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==causf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUSF(P,Sf)
-REAL(kind=wp) :: arg , P , pi , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!---------------------------------------------------------------------
-!
-      DATA pi/3.14159265358979_wp/
+REAL(kind=wp) :: P
+REAL(kind=wp) :: Sf
+
+REAL(kind=wp) :: arg
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO CAUSF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         arg = pi*P
-         Sf = pi/((SIN(arg))**2)
+         arg = G_pi*P
+         Sf = G_pi/((SIN(arg))**2)
       ENDIF
 !
 END SUBROUTINE CAUSF
@@ -2162,7 +2149,11 @@ END SUBROUTINE CAUSF
 !!
 !!##SYNOPSIS
 !!
-!! SUBROUTINE CHSCDF(X,Nu,Cdf)
+!!       SUBROUTINE CHSCDF(X,Nu,Cdf)
+!!
+!!        REAL(kind=wp),intent(in) :: X
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!        INTEGER,intent(in) :: Nu
 !!
 !!##DESCRIPTION
 !!    chscdf(3f) computes the cumulative distribution function value for
@@ -2173,9 +2164,16 @@ END SUBROUTINE CAUSF
 !!
 !!    the probability density function is given in the references below.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the cumulative distribution function is to
+!!           be evaluated. X should be non-negative.
+!!
+!!    NU     The integer number of degrees of freedom. NU should be positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
@@ -2184,7 +2182,6 @@ END SUBROUTINE CAUSF
 !!    program demo_chscdf
 !!    use M_datapac, only : chscdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chscdf(x,y)
 !!    end program demo_chscdf
 !!
@@ -2198,67 +2195,48 @@ END SUBROUTINE CAUSF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o national bureau of standards applied mathematics series 55, 1964,
+!!  * national bureau of standards applied mathematics series 55, 1964,
 !!    page 941, formulae 26.4.4 and 26.4.5.
-!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!  * johnson and kotz, continuous univariate distributions--1, 1970,
 !!    page 176, formula 28, and page 180, formula 33.1.
-!!  o owen, handbook of statistical tables, 1962, pages 50-55.
-!!  o pearson and hartley, biometrika tables for statisticians, volume 1,
+!!  * owen, handbook of statistical tables, 1962, pages 50-55.
+!!  * pearson and hartley, biometrika tables for statisticians, volume 1,
 !!    1954, pages 122-131.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
-!*==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSCDF(X,Nu,Cdf)
-REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
-INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE.
-!                     --NU     = THE INTEGER NUMBER OF DEGREES
-!                                OF FREEDOM.
-!                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE CHI-SQUARED DISTRIBUTION
-!             WITH DEGREES OF FREEDOM PARAMETER = NU.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DEXP.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , pi , chi , sum , term , ai , dcdfn
-      DOUBLE PRECISION dnu
-      DOUBLE PRECISION DSQRT , DEXP
-      DOUBLE PRECISION DLOG
-      DOUBLE PRECISION dfact , dpower
-      DOUBLE PRECISION dw
-      DOUBLE PRECISION d1 , d2 , d3
-      DOUBLE PRECISION term0 , term1 , term2 , term3 , term4
-      DOUBLE PRECISION b11
-      DOUBLE PRECISION b21
-      DOUBLE PRECISION b31 , b32
-      DOUBLE PRECISION b41 , b42 , b43
-      DATA nucut/1000/
-      DATA pi/3.14159265358979D0/
-      DATA dpower/0.33333333333333D0/
-      DATA b11/0.33333333333333D0/
-      DATA b21/ - 0.02777777777778D0/
-      DATA b31/ - 0.00061728395061D0/
-      DATA b32/ - 13.0D0/
-      DATA b41/0.00018004115226D0/
-      DATA b42/6.0D0/
-      DATA b43/17.0D0/
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Cdf
+INTEGER,intent(in) :: Nu
+
+REAL(kind=wp) :: amean , anu , cdfn , danu , sd , spchi , u , z
+INTEGER :: i , ibran , ievodd , imax , imin , nucut
+DOUBLE PRECISION dx , chi , sum , term , ai , dcdfn
+DOUBLE PRECISION dnu
+DOUBLE PRECISION DSQRT , DEXP
+DOUBLE PRECISION DLOG
+DOUBLE PRECISION dfact , dpower
+DOUBLE PRECISION dw
+DOUBLE PRECISION d1 , d2 , d3
+DOUBLE PRECISION term0 , term1 , term2 , term3 , term4
+DOUBLE PRECISION b11
+DOUBLE PRECISION b21
+DOUBLE PRECISION b31 , b32
+DOUBLE PRECISION b41 , b42 , b43
+DATA nucut/1000/
+DATA dpower/0.33333333333333D0/
+DATA b11/0.33333333333333D0/
+DATA b21/ - 0.02777777777778D0/
+DATA b31/ - 0.00061728395061D0/
+DATA b32/ - 13.0D0/
+DATA b41/0.00018004115226D0/
+DATA b42/6.0D0/
+DATA b43/17.0D0/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -2352,7 +2330,7 @@ INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 !
                         sum = sum*DEXP(-dx/2.0D0)
                         IF ( ievodd/=0 ) THEN
-                           sum = (DSQRT(2.0D0/pi))*sum
+                           sum = (DSQRT(2.0D0/G_pi_dp))*sum
                            spchi = chi
                            CALL NORCDF(spchi,cdfn)
                            dcdfn = cdfn
@@ -2477,19 +2455,19 @@ INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o wilk, gnanadesikan, and huyett, 'probability plots for the gamma
+!!  * wilk, gnanadesikan, and huyett, 'probability plots for the gamma
 !!    distribution', technometrics, 1962, pages 1-15.
-!!  o filliben, 'techniques for tail length analysis', proceedings of the
+!!  * filliben, 'techniques for tail length analysis', proceedings of the
 !!    eighteenth conference on the design of experiments in army research
 !!    development and testing (aberdeen, maryland, october, 1972), pages
 !!    425-450.
-!!  o hahn and shapiro, statistical methods in engineering, 1967, pages
+!!  * hahn and shapiro, statistical methods in engineering, 1967, pages
 !!    260-308.
-!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!  * johnson and kotz, continuous univariate distributions--1, 1970,
 !!    pages 166-206.
-!!  o hastings and peacock, statistical distributions--a handbook for students
+!!  * hastings and peacock, statistical distributions--a handbook for students
 !!    and practitioners, 1975, pages 46-51.
-!*==chsplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSPLT(X,N,Nu)
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
@@ -2641,22 +2619,44 @@ END SUBROUTINE CHSPLT
 !!
 !!       SUBROUTINE CHSPPF(P,Nu,Ppf)
 !!
+!!        REAL(kind=wp) :: P
+!!        REAL(kind=wp) :: Ppf
+!!        INTEGER       :: Nu
+!!
 !!##DESCRIPTION
 !!    CHSPPF(3f) computes the percent point function value for the
 !!    chi-squared distribution with integer degrees of freedom parameter
 !!    = nu.
 !!
-!!    the chi-squared distribution used herein is defined for all
+!!    The chi-squared distribution used herein is defined for all
 !!    non-negative x, and its probability density function is given in
 !!    references 2, 3, and 4 below.
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P      The value (between 0.0 (inclusively) and 1.0 (exclusively))
+!!           at which the percent point function is to be evaluated.
+!!
+!!    NU     The integer number of degrees of freedom. NU should be positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF    The percent point function value for the chi-squared
+!!           distribution
+!!
+!!##ACCURACY
+!!    (On the UNIVAC 1108, EXEC 8 System at NBS) Compared to the known NU
+!!    = 2 (exponential) results, agreement was had out to 6 significant
+!!    digits for all tested P in the range P = .001 to P = .999.  for P =
+!!    .95 And smaller, The agreement was even better--7 significant digits.
+!!    (Note that the tabulated values given in the Wilk, Gnanadesikan,
+!!    and Huyett reference below, Page 20, are in error for at least the
+!!    GAMMA = 1 case-- The worst detected error was agreement to only 3
+!!    significant digits (in their 8 significant digit table) for P = .999.)
 !!
 !!##EXAMPLES
 !!
@@ -2683,67 +2683,37 @@ END SUBROUTINE CHSPLT
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o wilk, gnanadesikan, and huyett, 'probability plots for the gamma
-!!    distribution', technometrics, 1962, pages 1-15, especially pages 3-5.
-!!  o national bureau of standards applied mathematics series 55, 1964,
-!!    page 257, formula 6.1.41, and pages 940-943.
-!!  o johnson and kotz, continuous univariate distributions--1, 1970,
-!!    pages 166-206.
-!!  o hastings and peacock, statistical distributions--a handbook for
-!!    students and practitioners, 1975, pages 46-51.
-!*==chsppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE CHSPPF(P,Nu,Ppf)
-REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
-INTEGER icount , iloop , j , maxit , Nu
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (INCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --NU     = THE INTEGER NUMBER OF DEGREES
-!                                OF FREEDOM.
-!                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE CHI-SQUARED DISTRIBUTION
-!             WITH DEGREES OF FREEDOM PARAMETER = NU.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--NU SHOULD BE A POSITIVE INTEGER VARIABLE.
-!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-
-!     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
-!               COMPARED TO THE KNOWN NU = 2 (EXPONENTIAL)
-!               RESULTS, AGREEMENT WAS HAD OUT TO 6 SIGNIFICANT
-!               DIGITS FOR ALL TESTED P IN THE RANGE P = .001 TO
-!               P = .999.  FOR P = .95 AND SMALLER, THE AGREEMENT
-!               WAS EVEN BETTER--7 SIGNIFICANT DIGITS.
-!               (NOTE THAT THE TABULATED VALUES GIVEN IN THE WILK,
-!               GNANADESIKAN, AND HUYETT REFERENCE BELOW, PAGE 20,
-!               ARE IN ERROR FOR AT LEAST THE GAMMA = 1 CASE--
-!               THE WORST DETECTED ERROR WAS AGREEMENT TO ONLY 3
-!               SIGNIFICANT DIGITS (IN THEIR 8 SIGNIFICANT DIGIT TABLE)
-!               FOR P = .999.)
+!!  * Wilk, gnanadesikan, and huyett, 'probability plots for the gamma
+!!    Distribution', technometrics, 1962, pages 1-15, especially pages 3-5.
+!!  * National bureau of standards applied mathematics series 55, 1964,
+!!    Page 257, formula 6.1.41, and pages 940-943.
+!!  * Johnson and kotz, continuous univariate distributions--1, 1970,
+!!    Pages 166-206.
+!!  * Hastings and peacock, statistical distributions--a handbook for
+!!    Students and practitioners, 1975, pages 46-51.
 !     ORIGINAL VERSION--SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dp , dgamma
-      DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d , g
-      DOUBLE PRECISION xmin0 , xmin , ai , xmax , dx , pcalc , xmid
-      DOUBLE PRECISION xlower , xupper , xdel
-      DOUBLE PRECISION sum , term , cut1 , cut2 , aj , cutoff , t
-      DOUBLE PRECISION DEXP , DLOG
-      DIMENSION d(10)
-      DATA c/.918938533204672741D0/
-      DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CHSPPF(P,Nu,Ppf)
+REAL(kind=wp) :: P
+REAL(kind=wp) :: Ppf
+INTEGER       :: Nu
+REAL(kind=wp) :: anu , dnu , gamma
+INTEGER       :: icount , iloop , j , maxit
+
+DOUBLE PRECISION :: dp , dgamma
+DOUBLE PRECISION :: z , z2 , z3 , z4 , z5 , den , a , b , c , d(10) , g
+DOUBLE PRECISION :: xmin0 , xmin , ai , xmax , dx , pcalc , xmid
+DOUBLE PRECISION :: xlower , xupper , xdel
+DOUBLE PRECISION :: sum , term , cut1 , cut2 , aj , cutoff , t
+DOUBLE PRECISION :: DEXP , DLOG
+
+DATA c/.918938533204672741D0/
+DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
      &     -.277777777777777778D-2 , +.793650793650793651D-3 ,          &
      &     -.595238095238095238D-3 , +.841750841750841751D-3/
-      DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
+DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
      &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
      &     +.179644372368830573D0 , -.139243221690590111D1/
 !
@@ -2926,14 +2896,14 @@ END SUBROUTINE CHSPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o tocher, the art of simulation, 1963, pages 34-35.
-!!  o mood and grable, introduction to the theory of statistics, 1963,
+!!  * tocher, the art of simulation, 1963, pages 34-35.
+!!  * mood and grable, introduction to the theory of statistics, 1963,
 !!    pages 226-227.
-!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!  * johnson and kotz, continuous univariate distributions--1, 1970,
 !!    page 171.
-!!  o hastings and peacock, statistical distributions--a handbook for students
+!!  * hastings and peacock, statistical distributions--a handbook for students
 !!    and practitioners, 1975, page 48.
-!*==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
@@ -3040,10 +3010,10 @@ END SUBROUTINE CHSRAN
 !!
 !!    The coding is as follows--
 !!
-!!     o  the minimum is coded as 1.0.
-!!     o  the next larger value as 2.0,
-!!     o  the next larger value as 3.0,
-!!     o  etc.
+!!     *  the minimum is coded as 1.0.
+!!     *  the next larger value as 2.0,
+!!     *  the next larger value as 3.0,
+!!     *  etc.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3069,7 +3039,7 @@ END SUBROUTINE CHSRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==code.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CODE(X,N,Y)
 REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
@@ -3232,7 +3202,7 @@ END SUBROUTINE CODE
 !!    CC0-1.0
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
-!*==copy.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE COPY(X,N,Y)
 REAL(kind=wp) :: hold , X , Y
@@ -3341,13 +3311,13 @@ END SUBROUTINE COPY
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o kendall and stuart, the advanced theory of statistics, volume 1,
+!!  * kendall and stuart, the advanced theory of statistics, volume 1,
 !!    edition 2, 1963, pages 235-236.
-!!  o kendall and stuart, the advanced theory of statistics, volume 2,
+!!  * kendall and stuart, the advanced theory of statistics, volume 2,
 !!    edition 1, 1961, pages 292-293.
-!!  o snedecor and cochran, statistical methods, edition 6, 1967, pages
+!!  * snedecor and cochran, statistical methods, edition 6, 1967, pages
 !!    172-198.
-!*==corr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CORR(X,Y,N,Iwrite,C)
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
@@ -3512,11 +3482,11 @@ END SUBROUTINE CORR
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o snedecor and cochran, statistical methods, edition 6, 1967, pages
+!!  * snedecor and cochran, statistical methods, edition 6, 1967, pages
 !!    207-213.
-!!  o dixon and massey, introduction to statistical analysis, edition 2,
+!!  * dixon and massey, introduction to statistical analysis, edition 2,
 !!    1957, pages 81-82, 228-231.
-!*==count.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
@@ -3671,7 +3641,7 @@ END SUBROUTINE COUNT
 !!    CC0-1.0
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==decomp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
 REAL(kind=wp) :: D, dis, dn, DUM1, DUM2, Eta, hold, Q, R, risj, Tol, tol2, WS
@@ -3858,7 +3828,7 @@ END SUBROUTINE DECOMP
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==define.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEFINE(X,N,Xnew)
 INTEGER i , N
@@ -3974,7 +3944,7 @@ END SUBROUTINE DEFINE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==delete.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
@@ -4177,9 +4147,9 @@ END SUBROUTINE DELETE
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o granger and hatanaka, pages 170 to 189, especially pages 173, 177,
+!!  * granger and hatanaka, pages 170 to 189, especially pages 173, 177,
 !!    and 182.
-!*==demod.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEMOD(X,N,F)
 REAL(kind=wp) :: ai, aiflag, aimax2, alen1, alen2, an, del, F, fest, fmin, hold, pi, range, slopeh, sloper, sum, WS, X, Y1, Y2
@@ -4546,12 +4516,12 @@ END SUBROUTINE DEMOD
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!    Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==dexcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine dexcdf(X,Cdf)
 real(kind=wp),intent(in)  :: X
@@ -4625,13 +4595,13 @@ end subroutine dexcdf
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!    Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --SEPTEMBER 1978.
-!*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine dexpdf(X,Pdf)
 real(kind=wp),intent(in)  :: X
@@ -4711,15 +4681,15 @@ end subroutine dexpdf
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!  * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!    EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!    DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!    425-450.
-!!  o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!  * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!    260-308.
-!!  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!  * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
 !!    PAGES 22-36.
-!*==dexplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEXPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
@@ -4848,6 +4818,9 @@ END SUBROUTINE DEXPLT
 !!
 !!       SUBROUTINE DEXPPF(P,Ppf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Ppf
+!!
 !!##DESCRIPTION
 !!    DEXPPF(3f) computes the percent point function value for the double
 !!    exponential (laplace) distribution with mean = 0 and standard deviation
@@ -4862,9 +4835,14 @@ END SUBROUTINE DEXPLT
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P      The value (between 0.0 and 1.0, EXCLUSIVELY) at which the
+!!           percent point function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF    The percent point function value.
 !!
 !!##EXAMPLES
 !!
@@ -4890,54 +4868,35 @@ END SUBROUTINE DEXPLT
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION PARAMETER
-!!    OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION, PRINCETON
-!!    UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!  o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!    1970, PAGES 28-31.
-!!  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!    PAGES 22-36.
+!!  * Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!    of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
+!!    University), 1969, Pages 21-44, 229-231.
+!!  * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!    1970, Pages 28-31.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!    Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==dexppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEXPPF(P,Ppf)
-REAL(kind=wp) :: P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT
-!             FUNCTION VALUE PPF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!---------------------------------------------------------------------
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Ppf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE DEXPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO DEXPPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          IF ( P<=0.5_wp ) Ppf = LOG(2.0_wp*P)
          IF ( P>0.5_wp ) Ppf = -LOG(2.0_wp*(1.0_wp-P))
       ENDIF
-!
+
 END SUBROUTINE DEXPPF
 !>
 !!##NAME
@@ -5002,19 +4961,19 @@ END SUBROUTINE DEXPPF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Tocher, The Art of Simulation, 1963, Pages 14-15.
-!!  o Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
-!!  o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!  * Tocher, The Art of Simulation, 1963, Pages 14-15.
+!!  * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+!!  * Filliben, Simple and Robust Linear Estimation of the Location Parameter
 !!    of a Symmetric Distribution (Unpublished PH.D. dissertation, Princeton
 !!    University), 1969, Page 231.
-!!  o Filliben, 'The percent point function', (Unpublished manuscript),
+!!  * Filliben, 'The percent point function', (Unpublished manuscript),
 !!    1970, Pages 28-31.
-!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!    Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==dexran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine dexran(N,Istart,X)
 integer,intent(in) :: N
@@ -5057,23 +5016,28 @@ end subroutine dexran
 !!
 !!       SUBROUTINE DEXSF(P,Sf)
 !!
+!!        REAL(kind=wp),intent(in) :: P
+!!        REAL(kind=wp),intent(out) :: Sf
+!!
 !!##DESCRIPTION
-!!    dexsf(3f) computes the sparsity function value for the double
-!!    exponential (laplace) distribution with mean = 0 and standard deviation
+!!    DEXSF(3f) computes the sparsity function value for the double
+!!    exponential (Laplace) distribution with mean = 0 and standard deviation
 !!    = sqrt(2).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all x and has the probability
 !!    density function
 !!
-!!        f(x) = 0.5*exp(-abs(x)).
+!!        f(x) = 0.5*exp(-abs(x))
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
-!!    probability density function (but in units of p rather than x).
+!!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    P      The value (between 0.0 and 1.0 exclusively) at which the
+!!           sparsity function is to be evaluated.
+!!##OUTPUT ARGUMENTS
+!!    SF     The sparsity function value.
 !!
 !!##EXAMPLES
 !!
@@ -5100,53 +5064,34 @@ end subroutine dexran
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 22-36.
-!*==dexsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE DEXSF(P,Sf)
-REAL(kind=wp) :: P , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!   * Filliben, 'The Percent Point Function', (UNpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE DEXSF(P,Sf)
+REAL(kind=wp),intent(in) :: P
+REAL(kind=wp),intent(out) :: Sf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE DEXSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         IF ( P<=0.5_wp ) Sf = 1.0_wp/P
-         IF ( P>0.5_wp ) Sf = 1.0_wp/(1.0_wp-P)
-      ENDIF
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO DEXSF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      RETURN
+   ELSE
+      IF ( P<=0.5_wp ) Sf = 1.0_wp/P
+      IF ( P>0.5_wp ) Sf = 1.0_wp/(1.0_wp-P)
+   ENDIF
 !
 END SUBROUTINE DEXSF
 !>
@@ -5208,7 +5153,7 @@ END SUBROUTINE DEXSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==discr2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DISCR2(X,N,Numcla,Y)
 REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
@@ -5464,7 +5409,7 @@ END SUBROUTINE DISCR2
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==discr3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DISCR3(X,N,Numcla,Y)
 REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
@@ -5702,7 +5647,7 @@ END SUBROUTINE DISCR3
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==discre.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
 REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
@@ -5996,7 +5941,7 @@ END SUBROUTINE DISCRE
 !!##LICENSE
 !!    CC0-1.0
 !     UPDATED         --NOVEMBER  1975.
-!*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine dot(A,B,Imin,Imax,Parpro,Dotpro)
 real(kind=wp),intent(in)  :: A(:) , B(:) , Parpro
@@ -6025,21 +5970,29 @@ end subroutine dot
 !!
 !!       SUBROUTINE EV1CDF(X,Cdf)
 !!
+!!        REAL(kind=wp),intent(in) :: X
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    ev1cdf(3f) computes the cumulative distribution function value for
+!!    EV1CDF(3f) computes the cumulative distribution function value for
 !!    the extreme value type 1 distribution.
 !!
-!!    the extreme value type 1 distribution used herein has mean = euler's
+!!    The extreme value type 1 distribution used herein has mean = Euler's
 !!    number = 0.57721566 and standard deviation = pi/sqrt(6) = 1.28254983.
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
 !!        f(x) = (exp(-x)) * (exp(-(exp(-x))))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The value at which the cumulative distribution function is
+!!          to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF   The cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
@@ -6055,44 +6008,30 @@ end subroutine dot
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 272-295.
-!*==ev1cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 272-295.
+!     ORIGINAL VERSION--NOVEMBER  1975.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1CDF(X,Cdf)
-REAL(kind=wp) :: Cdf , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE EXTREME VALUE TYPE 1
-!             DISTRIBUTION WITH MEAN = EULER'S NUMBER = 0.57721566
-!             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
-!
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Cdf
+
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS. -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
+
       Cdf = 1.0_wp - EXP(-(EXP(-X)))
-!
+
 END SUBROUTINE EV1CDF
 !>
 !!##NAME
@@ -6160,15 +6099,15 @@ END SUBROUTINE EV1CDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 272-295.
-!*==ev1plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1PLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
@@ -6297,24 +6236,33 @@ END SUBROUTINE EV1PLT
 !!
 !!       SUBROUTINE EV1PPF(P,Ppf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Ppf
+!!
 !!##DESCRIPTION
-!!    ev1ppf(3f) computes the percent point function value for the extreme
+!!    EV1PPF(3f) computes the percent point function value for the extreme
 !!    value type 1 distribution.
 !!
-!!    the extreme value type 1 distribution used herein has mean = euler's
+!!    The extreme value type 1 distribution used herein has mean = Euler's
 !!    number = 0.57721566 and standard deviation = pi/sqrt(6) = 1.28254983.
-!!    this distribution is defined for all x and has the probability
+!!
+!!    This distribution is defined for all x and has the probability
 !!    density function
 !!
 !!        f(x) = (exp(-x)) * (exp(-(exp(-x))))
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    P      The value (between 0.0 and 1.0 exclusively) at which the
+!!           percent point function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!    PPF    The  percent point function value for the extreme value type
+!!           1 distribution with mean = Euler's number = 0.57721566 and standard
+!!           deviation = pi/sqrt(6) = 1.28254983.
 !!
 !!##EXAMPLES
 !!
@@ -6330,59 +6278,37 @@ END SUBROUTINE EV1PLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 272-295.
-!*==ev1ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 272-295.
+!     ORIGINAL VERSION--NOVEMBER  1975.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1PPF(P,Ppf)
-REAL(kind=wp) :: P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (EXCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE EXTREME VALUE TYPE 1 DISTRIBUTION
-!             WITH MEAN = EULER'S NUMBER = 0.57721566
-!             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Ppf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1PPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         Ppf = 0.0_wp
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Ppf = -LOG(LOG(1.0_wp/P))
-      ENDIF
-!
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO EV1PPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      Ppf = 0.0_wp
+      RETURN
+   ELSE
+      Ppf = -LOG(LOG(1.0_wp/P))
+   ENDIF
+
 END SUBROUTINE EV1PPF
 !>
 !!##NAME
@@ -6429,15 +6355,15 @@ END SUBROUTINE EV1PPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 272-295.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!*==ev1ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1RAN(N,Iseed,X)
 INTEGER i , Iseed , N
@@ -6489,19 +6415,32 @@ END SUBROUTINE EV1RAN
 !!
 !!       SUBROUTINE EV2CDF(X,Gamma,Cdf)
 !!
+!!        REAL(kind=wp),intent(in) :: X
+!!        REAL(kind=wp),intent(in) :: Gamma
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    ev2cdf(3f) computes the cumulative distribution function value for
+!!    EV2CDF(3f) computes the cumulative distribution function value for
 !!    the extreme value type 2 distribution with precision precision tail
-!!    length parameter = gamma.
+!!    length parameter = GAMMA.
 !!
-!!    the extreme value type 2 distribution used herein is defined for all
-!!    non-negative x, and has the probability density function
+!!    The extreme value type 2 distribution used herein is defined for all
+!!    non-negative X, and has the probability density function
 !!
-!!        f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+!!        f(X) = GAMMA * (X**(-GAMMA-1)) * exp(-(X**(-GAMMA)))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the cumulative distribution function is
+!!           to be evaluated. X should be non-negative.
+!!
+!!    GAMMA  The value of the tail length parameter. GAMMA should be
+!!           positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the extreme
+!!           value type 2 distribution with tail length parameter value = GAMMA.
 !!
 !!##EXAMPLES
 !!
@@ -6517,69 +6456,46 @@ END SUBROUTINE EV1RAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 272-295.
-!*==ev2cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 272-295.
+!     ORIGINAL VERSION--NOVEMBER  1975.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2CDF(X,Gamma,Cdf)
-REAL(kind=wp) :: Cdf , Gamma , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE.
-!                     --GAMMA  = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE EXTREME VALUE TYPE 2
-!             DISTRIBUTION WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --X SHOULD BE NON-NEGATIVE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(in) :: Gamma
+REAL(kind=wp),intent(out) :: Cdf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EV2C&
-     &DF SUBROUTINE IS NEGATIVE *****')
+         99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument to EV2CDF(3f) is negative *****')
          WRITE (G_IO,99003) X
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2CDF SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--The second input argument to EV2CDF(3f) is non-positive *****')
          WRITE (G_IO,99003) Gamma
          Cdf = 0.0_wp
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          Cdf = 0.0_wp
          IF ( X==0.0_wp ) RETURN
          Cdf = EXP(-(X**(-Gamma)))
       ENDIF
-99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-!
+
+99003 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+
 END SUBROUTINE EV2CDF
 !>
 !!##NAME
@@ -6640,19 +6556,19 @@ END SUBROUTINE EV2CDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 272-295.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==ev2plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2PLT(X,N,Gamma)
 REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
@@ -6804,23 +6720,36 @@ END SUBROUTINE EV2PLT
 !!
 !!       SUBROUTINE EV2PPF(P,Gamma,Ppf)
 !!
+!!        REAL(kind=wp),intent(in) :: P
+!!        REAL(kind=wp),intent(in) :: Gamma
+!!        REAL(kind=wp),intent(out) :: Ppf
+!!
 !!##DESCRIPTION
-!!    ev2ppf(3f) computes the percent point function value for the extreme
+!!    EV2PPF(3f) computes the percent point function value for the extreme
 !!    value type 2 distribution with precision precision tail length parameter
-!!    = gamma.
+!!    = GAMMA.
 !!
-!!    the extreme value type 2 distribution used herein is defined for all
-!!    non-negative x, and has the probability density function
+!!    The extreme value type 2 distribution used herein is defined for all
+!!    non-negative X, and has the probability density function
 !!
-!!        f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+!!        f(X) = GAMMA * (X**(-GAMMA-1)) * exp(-(X**(-GAMMA)))
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P      The value (between 0.0 (exclusively) and 1.0 (exclusively))
+!!           at which the percent point function is to be evaluated.
+!!
+!!    GAMMA  The value of the tail length parameter. GAMMA should be
+!!           positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF    The percent point function value for the extreme value type
+!!           2 distribution with tail length parameter value = GAMMA.
 !!
 !!##EXAMPLES
 !!
@@ -6836,42 +6765,26 @@ END SUBROUTINE EV2PLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     PAGES 272-295.
-!*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!     ORIGINAL VERSION--NOVEMBER  1975.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2PPF(P,Gamma,Ppf)
-REAL(kind=wp) :: Gamma , P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (EXCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE EXTREME VALUE TYPE 2 DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
+REAL(kind=wp),intent(in) :: P
+REAL(kind=wp),intent(in) :: Gamma
+REAL(kind=wp),intent(out) :: Ppf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -6943,14 +6856,14 @@ END SUBROUTINE EV2PPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o Tocher, The Art of Simulation, 1963, Pages 14-15.
-!!  o Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
-!!  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970, Pages 272-295.
+!!  * Tocher, The Art of Simulation, 1963, Pages 14-15.
+!!  * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970, Pages 272-295.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!*==ev2ran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X(:)
@@ -7019,18 +6932,26 @@ END SUBROUTINE EV2RAN
 !!
 !!       SUBROUTINE EXPCDF(X,Cdf)
 !!
+!!        REAL(kind=wp),intent(in) :: X
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    expcdf(3f) computes the cumulative distribution function value for
+!!    EXPCDF(3f) computes the cumulative distribution function value for
 !!    the exponential distribution with mean = 1 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x, and has the
+!!    This distribution is defined for all non-negative X, and has the
 !!    probability density function
 !!
-!!       f(x) = exp(-x).
+!!       f(x) = exp(-x)
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the cumulative distribution function is
+!!           to be evaluated. X should be non-negative.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
@@ -7057,47 +6978,27 @@ END SUBROUTINE EV2RAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 207-232.
-!*==expcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE EXPCDF(X,Cdf)
-IMPLICIT NONE
-REAL(kind=wp) :: Cdf , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EXPCDF(X,Cdf)
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Cdf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EXPC&
-     &DF SUBROUTINE IS NEGATIVE *****')
+         99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO EXPCDF(3f) IS NEGATIVE *****')
          WRITE (G_IO,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          Cdf = 1.0_wp - EXP(-X)
       ENDIF
 !
@@ -7162,12 +7063,12 @@ END SUBROUTINE EXPCDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!    Pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==exppdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPPDF(X,Pdf)
 REAL(kind=wp),intent(in) :: X
@@ -7246,14 +7147,14 @@ END SUBROUTINE EXPPDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 207-232.
-!*==expplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
@@ -7381,22 +7282,31 @@ END SUBROUTINE EXPPLT
 !!
 !!       SUBROUTINE EXPPPF(P,Ppf)
 !!
+!!        REAL(kind=wp),intent(in) :: P
+!!        REAL(kind=wp),intent(out) :: Ppf
+!!
 !!##DESCRIPTION
-!!    expppf(3f) computes the percent point function value for the
+!!    EXPPPF(3f) computes the percent point function value for the
 !!    exponential distribution with mean = 1 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x, and has the
+!!    This distribution is defined for all non-negative X, and has the
 !!    probability density function
 !!
-!!        f(x) = exp(-x).
+!!        f(x) = exp(-x)
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P     The value at which the percent point function is to be
+!!          evaluated. P Should be between 0.0 (inclusively) and 1.0
+!!          (exclusively).
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF  The percent point function value.
 !!
 !!##EXAMPLES
 !!
@@ -7412,37 +7322,33 @@ END SUBROUTINE EXPPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 207-232.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!   * filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==expppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPPPF(P,Ppf)
-REAL(kind=wp) :: P , Ppf
+REAL(kind=wp),intent(in) :: P
+REAL(kind=wp),intent(out) :: Ppf
 !
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT
-!             FUNCTION VALUE PPF.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY) AND 1.0 (EXCLUSIVELY).
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -7500,15 +7406,15 @@ END SUBROUTINE EXPPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14, 35-36.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14, 35-36.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 207-232.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGE 58.
-!*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPRAN(N,Iseed,X)
 INTEGER i , Iseed , N
@@ -7619,14 +7525,14 @@ END SUBROUTINE EXPRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 207-232.
-!*==expsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPSF(P,Sf)
 REAL(kind=wp) :: P , Sf
@@ -7723,13 +7629,13 @@ END SUBROUTINE EXPSF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS
+!!   * FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS
 !!     OF THE EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY
 !!     RESEARCH AND TESTING, PAGES 425-450.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', UNPUBLISHED MANUSCRIPT.
-!!   o JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE DISTRIBUTIONS-1,
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', UNPUBLISHED MANUSCRIPT.
+!!   * JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE DISTRIBUTIONS-1,
 !!     1970, PAGES 272-295.
-!*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXTREM(X,N)
 REAL(kind=wp) :: a, aindex, am, an, arg, cc, corr, corrmx, gamtab,   h, hold, p, r, scrat, sum1, sum2, sum3, sy, t, w
@@ -8165,16 +8071,16 @@ CHARACTER(len=4) :: iflag3
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGES 946-947, FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
 !!     PAGE 83, FORMULA 20, AND PAGE 84, THIRD FORMULA.
-!!   o PAULSON, AN APPROXIMATE NORMALIZATION OF THE ANALYSIS OF VARIANCE
+!!   * PAULSON, AN APPROXIMATE NORMALIZATION OF THE ANALYSIS OF VARIANCE
 !!     DISTRIBUTION, ANNALS OF MATHEMATICAL STATISTICS, 1942, NUMBER 13,
 !!     PAGES 233-135.
-!!   o SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES FOR POPULATION TOLERANCE
+!!   * SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES FOR POPULATION TOLERANCE
 !!     LIMITS, 1944, NUMBER 15, PAGE 217.
-!*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
      &     zratio
@@ -8561,8 +8467,8 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JENKINS AND WATTS, ESPECIALLY PAGE 290.
-!*==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * JENKINS AND WATTS, ESPECIALLY PAGE 290.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FOURIE(X,N)
 REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
      &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
@@ -8879,13 +8785,13 @@ END SUBROUTINE FOURIE
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o MOOD AND GRABLE, INTRODUCTION TO THE THEORY OF STATISTICS, 1963,
+!!   * MOOD AND GRABLE, INTRODUCTION TO THE THEORY OF STATISTICS, 1963,
 !!     PAGES 231-232.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
 !!     PAGES 75-93.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGE 64.
-!*==fran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
 REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
      &     z
@@ -9056,9 +8962,9 @@ END SUBROUTINE FRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGE 8.
-!*==freq.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE FREQ(X,N)
 REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,    WS , X , xbar , Y
@@ -9245,15 +9151,15 @@ END SUBROUTINE FREQ
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
 !!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 257, FORMULA 6.1.41.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 166-206.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
-!*==gamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 INTEGER :: i , maxit
@@ -9441,19 +9347,19 @@ END SUBROUTINE GAMCDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
 !!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 257, FORMULA 6.1.41.
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 166-206.
-!*==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GAMPLT(X,N,Gamma)
 REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
      &     dx , g , Gamma , hold , pcalc , pp0025 , pp025 , pp975 ,     &
@@ -9810,15 +9716,15 @@ END SUBROUTINE GAMPLT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
 !!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 257, FORMULA 6.1.41.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 166-206.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
-!*==gamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 INTEGER :: icount , iloop , j , maxit
@@ -10056,20 +9962,20 @@ END SUBROUTINE GAMPPF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o GREENWOOD, 'A FAST GENERATOR FOR GAMMA-DISTRIBUTED RANDOM VARIABLES',
+!!   * GREENWOOD, 'A FAST GENERATOR FOR GAMMA-DISTRIBUTED RANDOM VARIABLES',
 !!     COMPSTAT 1974, PROCEEDINGS IN COMPUTATIONAL STATISTICS, VIENNA,
 !!     SEPTEMBER, 1974, PAGES 19-27.
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 24-27.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGES 36-37.
-!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 24-27.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGES 36-37.
+!!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
 !!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 166-206.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 952.
-!*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
      &     X , xg , xg0 , xn(1) , xn0
@@ -10247,12 +10153,12 @@ END SUBROUTINE GAMRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!    o Feller, An Introduction to Probability Theory and its Applications,
+!!    * Feller, An Introduction to Probability Theory and its Applications,
 !!      Volume 1, Edition 2, 1957, Pages 155-157, 210.
-!!    o National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!    * National Bureau of Standards Applied Mathematics Series 55, 1964,
 !!      Page 929.
 !     ORIGINAL VERSION--NOVEMBER  1975.
-!*==geocdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp) :: Cdf , del , fintx , P , X
@@ -10397,15 +10303,15 @@ END SUBROUTINE GEOCDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
 !!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 929.
-!*==geoplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPLT(X,N,P)
 REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
      &     sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,    &
@@ -10615,11 +10521,11 @@ END SUBROUTINE GEOPLT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
 !!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 929.
-!*==geoppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPPF(P,Ppar,Ppf)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 INTEGER iratio
@@ -10762,13 +10668,13 @@ INTEGER iratio
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
 !!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 929.
-!*==georan.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEORAN(N,P,Iseed,X)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 INTEGER :: i , iratio , Iseed , N
@@ -10926,11 +10832,11 @@ END SUBROUTINE GEORAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 53, 59, 81, 83.
-!!   o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+!!   * DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
 !!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
-!*==hfncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
@@ -11037,21 +10943,21 @@ END SUBROUTINE HFNCDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+!!   * DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
 !!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 53, 59, 81, 83.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==hfnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE HFNPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
@@ -11222,11 +11128,11 @@ END SUBROUTINE HFNPLT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 53, 59, 81, 83.
-!!   o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+!!   * DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
 !!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
-!*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
 !
@@ -11318,16 +11224,16 @@ END SUBROUTINE HFNPPF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!   PAGES 53, 59, 81, 83.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --JULY      1976.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!*==hfnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE HFNRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
@@ -11455,9 +11361,9 @@ END SUBROUTINE HFNRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGE 4.
-!*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HIST(X,N)
 REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
      &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
@@ -11771,7 +11677,7 @@ END SUBROUTINE HIST
 !!    CC0-1.0
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE INVXWX(N,K)
 REAL(kind=wp) :: anegri, D, dotpro, DUM1, DUM2, dum3, Q, R, ri, WS
@@ -11899,17 +11805,17 @@ END SUBROUTINE INVXWX
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
 !!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
 !!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==lamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LAMCDF(X,Alamba,Cdf)
 REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , X , xcalc , xmax , xmin
@@ -12109,17 +12015,17 @@ INTEGER :: icount
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Hastings, Mosteller, Tukey, and Windsor, 'Low Moments for Small
+!!  * Hastings, Mosteller, Tukey, and Windsor, 'Low Moments for Small
 !!    Samples:  A Comparative Study of Order Statistics', Annals of MAthematical
 !!    Statistics, 18, 1947, Pages 413-426.
-!!  o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!  * Filliben, Simple and Robust Linear Estimation of the Location Parameter
 !!    of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
 !!    University), 1969, Pages 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LAMPDF(X,Alamba,Pdf)
 REAL(kind=wp) :: X
@@ -12226,19 +12132,19 @@ END SUBROUTINE LAMPDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY, 1969), PAGES 21-44, 229-231, PAGES 53-58.
-!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
 !!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
 !!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
-!*==lamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
      &     q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar ,&
@@ -12423,15 +12329,15 @@ END SUBROUTINE LAMPLT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231, PAGES 53-58.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
 !!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
 !!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
-!*==lamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , P , Ppf
 !
@@ -12531,14 +12437,14 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 53-58.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!*==lamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
 REAL(kind=wp) :: alamb2 , Alamba , q , X
 INTEGER :: i , Iseed , N
@@ -12655,15 +12561,15 @@ END SUBROUTINE LAMRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231, PAGES 53-58.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
 !!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
 !!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
-!*==lamsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMSF(P,Alamba,Sf)
 REAL(kind=wp) :: Alamba , P , Sf
 !
@@ -12762,10 +12668,10 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 112-136.
-!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
-!*==lgncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNCDF(X,Cdf)
 REAL(kind=wp) :: arg , Cdf , X
@@ -12875,16 +12781,16 @@ END SUBROUTINE LGNCDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 112-136.
-!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
-!*==lgnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
@@ -13059,11 +12965,11 @@ END SUBROUTINE LGNPLT
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 112-136.
-!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+!!   * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !     ORIGINAL VERSION--NOVEMBER  1975.
-!*==lgnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
@@ -13147,19 +13053,19 @@ END SUBROUTINE LGNPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 112-136.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGE 88.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --JULY      1976.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!*==lgnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
@@ -13298,12 +13204,12 @@ END SUBROUTINE LGNRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o DIXON AND MASSEY, PAGES 14, 70, AND 71
-!!   o CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
+!!   * DIXON AND MASSEY, PAGES 14, 70, AND 71
+!!   * CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
 !!     AND 387
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGE 8.
-!*==loc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOC(X,N)
 REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
      &     xmidm , Y
@@ -13488,13 +13394,13 @@ END SUBROUTINE LOC
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
 !!     PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==logcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
@@ -13617,11 +13523,11 @@ END SUBROUTINE LOGCDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 1-21.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==logpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGPDF(X,Pdf)
 REAL(kind=wp),intent(in)  :: X
@@ -13689,19 +13595,19 @@ END SUBROUTINE LOGPDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
 !!     PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==logplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
@@ -13858,17 +13764,17 @@ END SUBROUTINE LOGPLT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
 !!     PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==logppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
@@ -13940,14 +13846,14 @@ END SUBROUTINE LOGPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGE 230.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
 !!     PAGES 1-21.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
@@ -13955,7 +13861,7 @@ END SUBROUTINE LOGPPF
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!*==logran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGRAN(N,Iseed,X)
 INTEGER i , Iseed , N
@@ -14059,14 +13965,14 @@ END SUBROUTINE LOGRAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
 !!     PAGES 1-21.
-!*==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
@@ -14163,11 +14069,11 @@ END SUBROUTINE LOGSF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o David, Order Statistics, 1970, page 7.
+!!  * David, Order Statistics, 1970, page 7.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==max.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE MAX(X,N,Iwrite,Xmax)
 REAL(kind=wp) :: hold , X(:) , Xmax
@@ -14282,16 +14188,16 @@ end subroutine max
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
+!!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
 !!    Edition 1, 1961, Page 4.
-!!  o Mood and Grable, Introduction to the Theory of Statistics, Edition 2,
+!!  * Mood and Grable, Introduction to the Theory of Statistics, Edition 2,
 !!    1963, Page 146.
-!!  o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!  * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
 !!    1957, Page 14.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine mean(X,N,Iwrite,Xmean)
 real(kind=wp),intent(in)  :: X(:)
@@ -14415,16 +14321,16 @@ end subroutine mean
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1, Edition 2, 1963, Page 326.
-!!  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 2, Edition 1, 1961, Page 49.
-!!  o David, Order Statistics, 1970, Page 139.
-!!  o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 123.
-!!  o Dixon and Massey, Introduction to Statistical Analysis, Edition 2, 1957, Page 70.
+!!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1, Edition 2, 1963, Page 326.
+!!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 2, Edition 1, 1961, Page 49.
+!!  * David, Order Statistics, 1970, Page 139.
+!!  * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 123.
+!!  * Dixon and Massey, Introduction to Statistical Analysis, Edition 2, 1957, Page 70.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
 REAL(kind=wp) :: hold , WS , X(:) , Xmed , Y(15000)
@@ -14515,13 +14421,13 @@ END SUBROUTINE MEDIAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
-!!   o CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION', JOURNAL OF THE
+!!   * DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
+!!   * CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION', JOURNAL OF THE
 !!     AMERICAN STATISTICAL ASSOCIATION, 1967, PAGES 357, 387.
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY, 1969).
-!*==midm.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
 REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
      &     X , Xmidm , Y
@@ -14685,14 +14591,14 @@ END SUBROUTINE MIDM
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGE 338.
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2,
 !!     EDITION 1, 1961, PAGE 91.
-!!   o DAVID, ORDER STATISTICS, 1970, PAGE 97.
-!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
+!!   * DAVID, ORDER STATISTICS, 1970, PAGE 97.
+!!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
 !!     1957, PAGE 71.
-!*==midr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
 REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 INTEGER :: i , Iwrite , N
@@ -14829,11 +14735,11 @@ END SUBROUTINE MIDR
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o David, Order Statistics, 1970, Page 7.
+!!  * David, Order Statistics, 1970, Page 7.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==min.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine min(X,N,Iwrite,Xmin)
 real(kind=wp) :: hold , X(:) , Xmin
@@ -14923,7 +14829,7 @@ end subroutine min
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==move.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
 IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Y
@@ -15080,20 +14986,20 @@ END SUBROUTINE MOVE
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 945, FORMULAE 26.5.24 AND 26.5.28, AND PAGE 929.
-!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
+!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
 !!     ESPECIALLY PAGE 127.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGES 92-95.
-!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
 !!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGES 130-131.
-!!   o WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
+!!   * WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
 !!     DISTRIBUTION, 1963.
-!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
-!*==nbcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBCDF(X,P,N,Cdf)
 REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
@@ -15404,20 +15310,20 @@ END SUBROUTINE NBCDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
+!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
 !!     ESPECIALLY PAGE 127, FORMULA 22.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGES 92-95.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 929.
-!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
 !!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGES 130-131.
-!!   o WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
+!!   * WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
 !!     DISTRIBUTION, 1963.
-!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
-!*==nbppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
 REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
      &     Ppar , Ppf , sd , sinh , x0 , x1 , x2 , ymean , yppf , ysd
@@ -15807,16 +15713,16 @@ END SUBROUTINE NBPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGE 95.
-!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142.
-!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142.
+!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
 !!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 929.
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGES 130-131.
-!*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
 REAL(kind=wp) :: b(1) , g(1) , P , X
 INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
@@ -16018,11 +15924,11 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 932, FORMULA 26.2.17.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 40-111.
-!*==norcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE NORCDF(X,Cdf)
 REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !
@@ -16117,11 +16023,11 @@ END SUBROUTINE NORCDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
+!!   * GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine norout(X,N)
 real(kind=wp) :: ai, an, anm1, anm2, anm3, anm4, anm5, cdf, hold, res, s, s1, s13, s14, s2, s23, s24, s3, s4, ssq
@@ -16598,11 +16504,11 @@ END SUBROUTINE NOROUT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970, Pages 40-111.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970, Pages 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE NORPDF(X,Pdf)
 REAL(kind=wp),intent(in)  :: X
@@ -16669,23 +16575,23 @@ END SUBROUTINE NORPDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
+!!   * FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
 !!     NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!!   o RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS FOR NORMALITY'
+!!   * RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS FOR NORMALITY'
 !!     PENNSYLVANIA STATE UNIVERSITY REPORT.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==norplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE NORPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
@@ -16841,31 +16747,31 @@ END SUBROUTINE NORPLT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o ODEH AND EVANS, THE PERCENTAGE POINTS OF THE NORMAL DISTRIBUTION,
+!!   * ODEH AND EVANS, THE PERCENTAGE POINTS OF THE NORMAL DISTRIBUTION,
 !!     ALGORITHM 70, APPLIED STATISTICS, 1974, PAGES 96-97.
-!!   o EVANS, ALGORITHMS FOR MINIMAL DEGREE POLYNOMIAL AND RATIONAL
+!!   * EVANS, ALGORITHMS FOR MINIMAL DEGREE POLYNOMIAL AND RATIONAL
 !!     APPROXIMATION, M. SC. THESIS, 1972, UNIVERSITY OF VICTORIA, B. C.,
 !!     CANADA.
-!!   o HASTINGS, APPROXIMATIONS FOR DIGITAL COMPUTERS, 1955, PAGES 113,
+!!   * HASTINGS, APPROXIMATIONS FOR DIGITAL COMPUTERS, 1955, PAGES 113,
 !!     191, 192.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 933, FORMULA 26.2.23.
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 40-111.
-!!   o THE KELLEY STATISTICAL TABLES, 1948.
-!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 3-16.
-!!   o PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
+!!   * THE KELLEY STATISTICAL TABLES, 1948.
+!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 3-16.
+!!   * PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
 !!     1954, PAGES 104-113.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
-!*==norppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE NORPPF(P,Ppf)
 REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 , q3 , q4 , r , t
@@ -16978,13 +16884,13 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o BOX AND MULLER, 'A NOTE ON THE GENERATION OF RANDOM NORMAL DEVIATES',
+!!   * BOX AND MULLER, 'A NOTE ON THE GENERATION OF RANDOM NORMAL DEVIATES',
 !!     JOURNAL OF THE ASSOCIATION FOR COMPUTING MACHINERY, 1958, PAGES 610-611.
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 33-34.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 39.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 33-34.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 39.
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 40-111.
-!*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER :: i , ip1 , Iseed , N
@@ -17119,17 +17025,17 @@ END SUBROUTINE NORRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
 !!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
 !!     1970, PAGES 28-31.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==norsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORSF(P,Sf)
 REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !
@@ -17211,12 +17117,12 @@ END SUBROUTINE NORSF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 233-249.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGE 102.
 !     ORIGINAL VERSION--NOVEMBER  1975.
-!*==parcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
@@ -17329,15 +17235,15 @@ END SUBROUTINE PARCDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 233-249.
-!*==parplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARPLT(X,N,Gamma)
 REAL(kind=wp) :: an, cc, Gamma, hold, pp0025, pp025, pp975, pp9975,   q, sum1, sum2, sum3, tau, W, wbar, WS, X, Y, ybar, yint
@@ -17525,11 +17431,11 @@ END SUBROUTINE PARPLT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 233-249.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGE 102.
-!*==parppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
@@ -17624,13 +17530,13 @@ END SUBROUTINE PARPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
 !!     PAGES 233-249.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGE 104.
-!*==parran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
 INTEGER :: i , Iseed , N
@@ -17793,11 +17699,11 @@ END SUBROUTINE PARRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
 !!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-!*==plot10.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
 IMPLICIT NONE
 
@@ -18253,7 +18159,7 @@ END SUBROUTINE PLOT10
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
 !     UPDATED         --JUNE      1977.
-!*==plot6.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
 IMPLICIT NONE
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
@@ -18597,11 +18503,11 @@ END SUBROUTINE PLOT6
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
 !!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-!*==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
 REAL(kind=wp) :: aim1, Char, cutoff, hold, ratiox, ratioy, X, x25, x75, Xmax, xmid, Xmin, Y, ylable, Ymax, Ymin
@@ -19009,11 +18915,11 @@ END SUBROUTINE PLOT7
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
 !!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-!*==plot8.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable ,   &
@@ -19485,11 +19391,11 @@ END SUBROUTINE PLOT8
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
 !!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-!*==plot9.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,Plchid)
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
      &     x25 , x75 , Xaxid , Xmax , xmid , Xmin , Y , Yaxid , ylable ,&
@@ -19903,11 +19809,11 @@ END SUBROUTINE PLOT9
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
 !!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-!*==plotc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTC(Y,X,Char,N)
 REAL(kind=wp) :: aim1, Char, cutoff, hold, ratiox, ratioy, X, x25,  x75, xmax, xmid, xmin, Y, ylable, ymax, ymin
@@ -20307,7 +20213,7 @@ END SUBROUTINE PLOTC
 !     UPDATED  -- UPDATED FEB 1975
 !     UPDATED  -- NOVEMBER  1975.
 !     UPDATED  -- FEBRUARY  1976.
-!*==plotco.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTCO(Y,N)
 REAL(kind=wp) :: hold, ratioy, Y(:), ylable(11), ymax, ymin
@@ -20551,11 +20457,11 @@ END SUBROUTINE PLOTCO
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
 !!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-!*==plotct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTCT(Y,X,Char,N)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , delx , dely , hold , X , xlable , xmax , xmin ,     &
@@ -20971,7 +20877,7 @@ END SUBROUTINE PLOTCT
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
-!*==plot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOT(Y,X,N)
 REAL(kind=wp),intent(in) ::   X(:),  Y(:)
@@ -21295,11 +21201,11 @@ END SUBROUTINE PLOT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
 !!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-!*==plotsc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTSC(Y,X,Char,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
@@ -21766,7 +21672,7 @@ END SUBROUTINE PLOTSC
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==plots.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
@@ -22176,7 +22082,7 @@ END SUBROUTINE PLOTS
 !!    CC0-1.0
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==plotsp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTSP(Y,N,Idf)
 REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
      &     slower , spmax , spmin , supper , xi , Y , ylable , ymax ,   &
@@ -22399,7 +22305,7 @@ END SUBROUTINE PLOTSP
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==plotst.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTST(Y,X,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     D , delx , dely , Dmax , Dmin , hold , X , xlable , xmax ,   &
@@ -22796,7 +22702,7 @@ END SUBROUTINE PLOTST
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
-!*==plott.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTT(Y,X,N)
 REAL(kind=wp),intent(in) :: X(:), Y(:)
@@ -23083,13 +22989,13 @@ END SUBROUTINE PLOTT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES FOR DATA ANALYSIS',
+!!   * FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES FOR DATA ANALYSIS',
 !!     (UNPUBLISHED MANUSCRIPT AVAILABLE FROM AUTHOR), 1975.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
+!!   * FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
 !!     NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTU(X,N)
 REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
      &     promin , ratiox , ratioy , s , sum , sum1 , sum2 , sum23 ,   &
@@ -23644,7 +23550,7 @@ END SUBROUTINE PLOTU
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
-!*==plotx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
@@ -23902,7 +23808,7 @@ END SUBROUTINE PLOTX
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==plotxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTXT(X,N)
 REAL(kind=wp) :: ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
      &     anumcm , anumlm , anumr , anumrm , cutoff , delai , delx ,   &
@@ -24172,16 +24078,16 @@ END SUBROUTINE PLOTXT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE STATISTICAL ANALYSIS OF
+!!   * FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE STATISTICAL ANALYSIS OF
 !!     DATA', UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT
 !!     THE FALL CONFERENCE OF THE CHEMICAL DIVISION OF THE AMERICAN SOCIETY
 !!     FOR QUALITY CONTROL, KNOXVILLE, TENNESSEE, OCTOBER 19-20, 1972.
-!!   o FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE SUBROUTINES',
+!!   * FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE SUBROUTINES',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'STRATEGY FOR DATA ANALYSIS BY COMPUTERS' SESSION AT THE NATIONAL
 !!     MEETING OF THE AMERICAN STATISTICAL ASSOCIATION, ST. LOUIS, MISSOURI,
 !!     AUGUST 26-29, 1974.
-!*==plotxx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTXX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     xmax , xmid , xmin , ylable , ymax , ymin
@@ -24493,11 +24399,11 @@ END SUBROUTINE PLOTXX
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF
 !!     THE AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-!*==pltsct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTSCT(Y,X,Char,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
      &     cutoff , D , delx , dely , Dmax , Dmin , hold , X , xlable , &
@@ -24949,16 +24855,16 @@ END SUBROUTINE PLTSCT
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE STATISTICAL ANALYSIS OF
+!!   * FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE STATISTICAL ANALYSIS OF
 !!     DATA', UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT
 !!     THE FALL CONFERENCE OF THE CHEMICAL DIVISION OF THE AMERICAN SOCIETY
 !!     FOR QUALITY CONTROL, KNOXVILLE, TENNESSEE, OCTOBER 19-20, 1972.
-!!   o FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE SUBROUTINES',
+!!   * FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE SUBROUTINES',
 !!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
 !!     'STRATEGY FOR DATA ANALYSIS BY COMPUTERS' SESSION AT THE NATIONAL
 !!     MEETING OF THE AMERICAN STATISTICAL ASSOCIATION, ST. LOUIS, MISSOURI,
 !!     AUGUST 26-29, 1974.
-!*==pltxxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTXXT(X,N)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     delx , hold , X , x2labl , xcwidt , xlable , xlower , xmax , &
@@ -25235,19 +25141,19 @@ END SUBROUTINE PLTXXT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
+!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
 !!     ESPECIALLY PAGE 114, FORMULA 93.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGE 112.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 941, FORMULAE 26.4.4 AND 26.4.5, AND PAGE 929.
-!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
 !!     VOLUME 1, EDITION 2, 1957, PAGES 146-154.
-!!   o COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
-!!   o GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
+!!   * COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
+!!   * GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
 !!     TERMS OF POISSON DISTRIBUTION, 1962.
-!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
-!*==poicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE POICDF(X,Alamba,Cdf)
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
@@ -25467,14 +25373,14 @@ END SUBROUTINE POICDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
 !!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
 !!     260-308.
-!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
-!*==poiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
      &     sum1 , sum2 , sum3 , W , wbar , WS , X , Y , ybar , yint ,   &
@@ -25748,18 +25654,18 @@ END SUBROUTINE POIPLT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
+!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
 !!     ESPECIALLY PAGE 102, FORMULA 36.1.  --HASTINGS AND PEACOCK, STATISTICAL
 !!     DISTRIBUTIONS--A HANDBOOK FOR STUDENTS AND PRACTITIONERS, 1975,
 !!     PAGES 108-113.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 929.  --FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS
 !!     APPLICATIONS, VOLUME 1, EDITION 2, 1957, PAGES 146-154.
-!!   o COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
-!!   o GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
+!!   * COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
+!!   * GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
 !!     TERMS OF POISSON DISTRIBUTION, 1962.
-!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
-!*==poippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
@@ -26109,16 +26015,16 @@ END SUBROUTINE POIPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
-!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 36-37.
-!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!   * COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
+!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 36-37.
+!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
+!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGES 108-113.
-!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
 !!     VOLUME 1, EDITION 2, 1957, PAGES 146-154.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 929.
-!*==poiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
 REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 INTEGER :: i , Iseed , j , N
@@ -26263,7 +26169,7 @@ END SUBROUTINE POIRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==poly.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE POLY(Y,X,W,N,Ideg,Iwrite,B,Sdb,S,Df,Pred,Res)
 REAL(kind=wp) :: ak , amb , amdb1 , amdb2 , amdr1 , amdr2 , amr , an ,        &
      &     aneggi , aneggj , ani , B , b2 , cdf , cdf2 , D , Df , DUM1 ,&
@@ -26935,11 +26841,11 @@ INTEGER :: nm5 , nmax , numset
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
+!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
 !!     207-213.
-!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
+!!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
 !!     1957, PAGES 81-82, 228-231.
-!*==propor.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 INTEGER :: i , isum , Iwrite , N
@@ -27084,13 +26990,13 @@ END SUBROUTINE PROPOR
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGE 338.
-!!   o DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
-!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGE 39.
-!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
+!!   * DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
+!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGE 39.
+!!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
 !!     1957, PAGE 21.
-!*==range.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 INTEGER :: i , Iwrite , N
@@ -27219,12 +27125,12 @@ END SUBROUTINE RANGE
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD
+!!   * CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD
 !!     C. SINGLETON).
-!!   o CACM JANUARY 1970, PAGE 54.
-!!   o CACM OCTOBER 1970, PAGE 624.
-!!   o JACM JANUARY 1961, PAGE 41.
-!*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * CACM JANUARY 1970, PAGE 54.
+!!   * CACM OCTOBER 1970, PAGE 624.
+!!   * JACM JANUARY 1961, PAGE 41.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE RANK(X,N,Xr)
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
@@ -27462,7 +27368,7 @@ END SUBROUTINE RANK
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==ranper.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RANPER(N,Istart,X)
 REAL(kind=wp) :: add , an , hold , u , X
 INTEGER :: i , iadd , Istart , j , N
@@ -27597,7 +27503,7 @@ END SUBROUTINE RANPER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==read.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE READ(Icol1,Icol2,X,N)
 INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ird ,    &
      &        istart , istop , j , jp1 , jp2 , jrev , k , l , locpt ,   &
@@ -28115,7 +28021,7 @@ END SUBROUTINE READ
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==readg.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE READG(Ird,Icol1,Icol2,X,N)
 INTEGER :: i , Icol1 , Icol2 , iend , ipower , Ird , istart ,  &
      &        istop , j , jp1 , jp2 , jrev , k , l , locpt , maxcol ,   &
@@ -28632,11 +28538,11 @@ END SUBROUTINE READG
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGES 47, 233.
-!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
+!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
 !!     62-65.
-!*==relsd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
 REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 INTEGER :: i , Iwrite , N
@@ -28780,7 +28686,7 @@ END SUBROUTINE RELSD
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==replac.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 INTEGER :: i , k , N , ndel
@@ -28963,7 +28869,7 @@ END SUBROUTINE REPLAC
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==retain.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
@@ -29166,14 +29072,14 @@ END SUBROUTINE RETAIN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, Pages
+!!  * Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, Pages
 !!    58-69; especially pages 60, 63, and 64.
-!!  o Bradley, Distribution-free Statistical Tests, 1968, Chapter 12,
+!!  * Bradley, Distribution-free Statistical Tests, 1968, Chapter 12,
 !!    Pages 271-282.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==runs.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE RUNS(X,N)
 REAL(kind=wp) :: X(:)
@@ -29572,12 +29478,12 @@ END SUBROUTINE RUNS
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
 !!     Edition 2, 1963, Pages 236-239, 243.
-!!   o Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
+!!   * Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
 !!     1963, Pages 406-407.
-!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 125.
-!*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 125.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
 REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , Y
 INTEGER :: i , iupper , Iwrite , j , jp1 , N
@@ -29752,14 +29658,14 @@ END SUBROUTINE SAMPP
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o DIXON AND MASSEY, PAGES 19 AND 21
-!!   o SNEDECOR AND COCHRAN, PAGE 62
-!!   o DIXON AND MASSEY, PAGES 14, 70, AND 71
-!!   o CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
+!!   * DIXON AND MASSEY, PAGES 19 AND 21
+!!   * SNEDECOR AND COCHRAN, PAGE 62
+!!   * DIXON AND MASSEY, PAGES 14, 70, AND 71
+!!   * CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
 !!     AND 387
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGE 8.
-!*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SCALE(X,N)
 
 REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd , xsd , xvar
@@ -29941,10 +29847,10 @@ END SUBROUTINE SCALE
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
-!!   o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+!!   * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
 !!     1957, Pages 19, 76.
-!*==sd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SD(X,N,Iwrite,Xsd)
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 INTEGER :: i , Iwrite , N
@@ -30157,7 +30063,7 @@ END SUBROUTINE SD
 !!    CC0-1.0
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
-!*==sortc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTC(X,Y,N,Xs,Yc)
 
 REAL(kind=wp) :: amed, bmed, hold, tx, ty, X(:), Xs(:), Y(:), Yc(:)
@@ -30419,7 +30325,7 @@ END SUBROUTINE SORTC
 !!
 !!##LICENSE
 !!    CC0-1.0
-!*==sort.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORT(X,N,Y)
 REAL(kind=wp) :: amed, hold, tt, X, Y
 integer i, il, ip1, iu, j, jmi, jmk, k, l, lmi,   m, mid, n, nm1
@@ -30661,11 +30567,11 @@ END SUBROUTINE SORT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o CACM March 1969, Page 186 (Binary Sort Algorithm by Richard C. Singleton).
-!!   o CACM January 1970, Page 54.
-!!   o CACM October 1970, Page 624.
-!!   o JACM January 1961, Page 41.
-!*==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * CACM March 1969, Page 186 (Binary Sort Algorithm by Richard C. Singleton).
+!!   * CACM January 1970, Page 54.
+!!   * CACM October 1970, Page 624.
+!!   * JACM January 1961, Page 41.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
@@ -30961,11 +30867,11 @@ END SUBROUTINE SORTP
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
-!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES 193-195.
-!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2, 1957, PAGES 294-295.
-!!   o MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY OF STATISTICS, EDITION 2, 1963, PAGE 424.
-!*==spcorr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
+!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES 193-195.
+!!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2, 1957, PAGES 294-295.
+!!   * MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY OF STATISTICS, EDITION 2, 1963, PAGE 424.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 INTEGER :: i , iflag , iupper , Iwrite , N
@@ -31134,11 +31040,11 @@ END SUBROUTINE SPCORR
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
+!!   * Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
 !!     Edition 2, 1963, Pages 85, 234, 243, 297-298, 305.
-!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
 !!     86-90.
-!*==stmom3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 INTEGER :: i , Iwrite , N
@@ -31284,14 +31190,14 @@ END SUBROUTINE STMOM3
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
 !!     Edition 2, 1963, Pages 85, 243.
-!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
 !!     86-90.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
@@ -31460,7 +31366,7 @@ END SUBROUTINE STMOM4
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==subse1.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SUBSE1(X,N,D,Dmin,Dmax,Y,Ny)
 REAL(kind=wp) :: D(:) , Dmax , Dmin , hold , pointl , pointu , X(:) , Y(:)
 INTEGER i , k , N , ndel , Ny
@@ -31691,7 +31597,7 @@ END SUBROUTINE SUBSE1
 !!##LICENSE
 !!    CC0-1.0
 !     ORIGINAL VERSION--FEBRUARY  1976.
-!*==subse2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE SUBSE2(X,N,D1,D1min,D1max,D2,D2min,D2max,Y,Ny)
 REAL(kind=wp) :: D1(:), D1max, D1min, D2(:), D2max, D2min, hold, poin1l, poin1u, poin2l, poin2u, X(:), Y(:)
@@ -31902,7 +31808,7 @@ END SUBROUTINE SUBSE2
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!*==subset.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SUBSET(X,N,D,Dmin,Dmax,Newn)
 REAL(kind=wp) :: D , Dmax , Dmin , hold , pointl , pointu , X
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
@@ -32129,13 +32035,13 @@ END SUBROUTINE SUBSET
 !!    CC0-1.0
 !!
 !!##REFERENCE
-!!   o Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
+!!   * Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
 !!     of the Eighteenth Conference on the Design of Experiments in Army
 !!     Research and Testing, Pages 425-450.
-!!   o Filliben, 'The Percent Point Function', Unpublished Manuscript.
-!!   o Johnson and Kotz (1970), Continuous Univariate Distributions-1,
+!!   * Filliben, 'The Percent Point Function', Unpublished Manuscript.
+!!   * Johnson and Kotz (1970), Continuous Univariate Distributions-1,
 !!     Pages 250-271.
-!*==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TAIL(X,N)
 REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
 REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
@@ -32818,17 +32724,17 @@ END SUBROUTINE TAIL
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
 !!     PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
 !!     PAGES 94-129.
-!!   o FEDERIGHI, EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT'S
+!!   * FEDERIGHI, EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT'S
 !!     T-DISTRIBUTION, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, 1959,
 !!     PAGES 683-688.
-!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 27-30.
-!!   o PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
+!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 27-30.
+!!   * PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
 !!     1954, PAGES 132-134.
-!*==tcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TCDF(X,Nu,Cdf)
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 INTEGER :: i , ievodd , imax , imin , Nu , nucut
@@ -33054,11 +32960,11 @@ END SUBROUTINE TCDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Jenkins and Watts, especially Page 290.
+!!   * Jenkins and Watts, especially Page 290.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
-!*==time.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE TIME(X,N)
 REAL(kind=wp) :: absr, ak, al, all, almax, an, an2, arg1, arg2, bw, df, dfroun, hold, p, perout, pi, pmsq, ps, pssq, r
@@ -33457,10 +33363,10 @@ END SUBROUTINE TIME
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
-!!   o WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
-!!   o MOOD AND GRABLE, PAGES 416-417
-!*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+!!   * GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
+!!   * WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
+!!   * MOOD AND GRABLE, PAGES 416-417
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TOL(X,N)
 REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
      &     an4 , an5 , an6 , b , c , c1 , c2 , c3
@@ -33834,9 +33740,15 @@ END SUBROUTINE TOL
 !!    a measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X      The vector of (unsorted or sorted) observations.
+!!    N      The integer number of observations in the vector X.
+!!           The maximum allowable value of N for this subroutine is 7500.
+!!    NU     The integer number of degrees of freedom.
+!!           NU should be positive.
+!!
+!!##OUTPUT
+!!    A one-page Student's T probability plot.
 !!
 !!##EXAMPLES
 !!
@@ -33852,62 +33764,45 @@ END SUBROUTINE TOL
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
-!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
 !!     425-450.
-!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
 !!     260-308.
-!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 949, FORMULA 26.7.5.
-!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGE 102, FORMULA 11.
-!!   o FEDERIGHI, 'EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT'S
-!!     T DISTRIBUTION, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!!     1969, PAGES 683-688.
-!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 120-123.
-!*==tplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE TPLT(X,N,Nu)
-REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
-     &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
-     &     yslope
-INTEGER :: i , iupper , N , Nu
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --NU     = THE INTEGER NUMBER OF DEGREES
-!                                OF FREEDOM.
-!                                NU SHOULD BE POSITIVE.
-!     OUTPUT--A ONE-PAGE STUDENT'S T PROBABILITY PLOT.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!                 --NU SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, TPPF, NORPPF,
-!                                         PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 949, FormulA 26.7.5.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Page 102, Formula 11.
+!!   * Federighi, 'Extended Tables of the Percentage Points of Student's
+!!     T Distribution, Journal of the American Statistical Association,
+!!     1969, Pages 683-688.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Pages 120-123.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2_real32/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (W(1),WS(7501))
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE TPLT(X,N,Nu)
+REAL(kind=wp) :: X(:)
+INTEGER :: N
+INTEGER :: Nu
+
+REAL(kind=wp) :: W(7500), Y(7500)
+REAL(kind=wp) :: an, cc, hold, pp0025, pp025, pp975, pp9975, q, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
+INTEGER :: i, iupper
+
+COMMON /BLOCK2_real32/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (W(1),WS(7501))
 !
       iupper = 7500
 !
@@ -33915,23 +33810,18 @@ INTEGER :: i , iupper , N , Nu
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TPLT   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001 FORMAT ( &
+         & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO TPLT(3f) IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
          WRITE (G_IO,99007) N
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TPLT&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+         99002 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO TPLT(3f) HAS THE VALUE 1 *****')
          RETURN
       ELSE
          IF ( Nu<=0 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE TPLT   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+            99003 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO TPLT(3f) IS NON-POSITIVE *****')
             WRITE (G_IO,99007) Nu
             RETURN
          ELSE
@@ -33940,9 +33830,8 @@ INTEGER :: i , iupper , N , Nu
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE TPLT   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ',&
+            &'***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO TPLT(3f) HAS ALL ELEMENTS = ',E15.8,' *****')
             RETURN
          ENDIF
 !
@@ -33981,9 +33870,8 @@ INTEGER :: i , iupper , N , Nu
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (G_IO,99005) Nu , tau , N
 !
-99005    FORMAT (' ',                                                   &
-     &        'STUDENT''S T PROBABILITY PLOT WITH DEGREES OF FREEDOM = '&
-     &        ,I8,1X,'(TAU = ',E15.8,')',11X,'THE SAMPLE SIZE N = ',I7)
+         99005 FORMAT (' STUDENT''S T PROBABILITY PLOT WITH DEGREES OF FREEDOM = '&
+          & ,I8,1X,'(TAU = ',E15.8,')',11X,'THE SAMPLE SIZE N = ',I7)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -34010,11 +33898,11 @@ INTEGER :: i , iupper , N , Nu
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
          WRITE (G_IO,99006) cc , yint , yslope
-99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
-     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
-     &           'ESTIMATED SLOPE = ',E15.8)
+         99006    FORMAT (' PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
+           & 5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
+           & 'ESTIMATED SLOPE = ',E15.8)
       ENDIF
-99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+      99007 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
 !
 END SUBROUTINE TPLT
 !>
@@ -34066,16 +33954,16 @@ END SUBROUTINE TPLT
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
 !!     Page 949, Formula 26.7.5.
-!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!     Page 102, Formula 11.
-!!   o Federighi, 'Extended Tables of the Percentage Points of Student's T
+!!   * Federighi, 'Extended Tables of the Percentage Points of Student's T
 !!     Distribution, Journal of the American Statistical Association, 1969,
 !!     Pages 683-688.
-!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
 !!     Students and Practitioners, 1975, Pages 120-123.
-!*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TPPF(P,Nu,Ppf)
 INTEGER ipass , maxit , Nu
 REAL(kind=wp) :: P , Ppf , ppfn
@@ -34303,13 +34191,13 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Mood and Grable, Introduction to the Theory of Statistics, 1963,
+!!   * Mood and Grable, Introduction to the Theory of Statistics, 1963,
 !!     Page 233.
-!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!     Page 94.
-!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
 !!     Students and Practitioners, 1975, Page 121.
-!*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 INTEGER i , Iseed , j , N , Nu
@@ -34454,13 +34342,13 @@ END SUBROUTINE TRAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o David, Order Statistics, 1970, Pages 126-130, 136.
-!!   o Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+!!   * David, Order Statistics, 1970, Pages 126-130, 136.
+!!   * Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
 !!     American Statistical Association, 1967, Pages 357, 387.
-!!   o Filliben, Simple and Robust Linear Estimation of the Location
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
 !!     Princeton University, 1969).
-!*==trim.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
 INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
@@ -34742,13 +34630,13 @@ END SUBROUTINE TRIM
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions -- 2, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions -- 2, 1970,
 !!  Pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --JUNE      2022.
-!*==unicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine unicdf(X,Cdf)
 real(kind=wp), intent(in)  :: X
@@ -34833,12 +34721,12 @@ end subroutine unicdf
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Filliben, 'The Probability Plot Correlation Coefficient Test for
+!!   * Filliben, 'The Probability Plot Correlation Coefficient Test for
 !!     Normality', Technometrics, 1975, Pages 111-117.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==unimed.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIMED(N,X)
 REAL(kind=wp) :: ai , an , gam , X(:)
 INTEGER i , imax , irev , N , nevodd , nhalf
@@ -34976,11 +34864,11 @@ END SUBROUTINE UNIMED
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 57-74.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!*==unipdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE UNIPDF(X,Pdf)
 REAL(kind=wp),intent(in)  :: X
@@ -35064,19 +34952,19 @@ END SUBROUTINE UNIPDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army REsearch
 !!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
 !!     425-450.
-!!   o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
 !!     260-308.
-!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!     Pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==uniplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
@@ -35231,14 +35119,14 @@ END SUBROUTINE UNIPLT
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!   * Filliben, Simple and Robust Linear Estimation of the Location Parameter
 !!     of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
 !!     University), 1969, Pages 21-44, 229-231.
-!!   o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
 !!     1970, Pages 28-31.
-!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!     Pages 57-74.
-!*==unippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
@@ -35317,19 +35205,19 @@ END SUBROUTINE UNIPPF
 !!    Engineering Division, National Institute of Standards and Technology.
 !!
 !!##WRITTEN BY
-!!      o James Blue
+!!      * James Blue
 !!                  scientific computing division
 !!                  center for applied mathematics
 !!                  national bureau of standards
 !!                  washington, d. c. 20234
-!!      o David Kahaner
+!!      * David Kahaner
 !!                  scientific computing division
 !!                  center for applied mathematics
 !!                  national bureau of standards
-!!      o George Marsaglia
+!!      * George Marsaglia
 !!                  computer science department
 !!                  washington state university
-!!      o James J. Filliben
+!!      * James J. Filliben
 !!                  statistical engineering division
 !!                  center for applied mathematics
 !!                  national bureau of standards
@@ -35340,11 +35228,11 @@ END SUBROUTINE UNIPPF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Marsaglia G., "Comments on the Perfect Uniform Random Number
+!!   * Marsaglia G., "Comments on the Perfect Uniform Random Number
 !!     Generator", Unpublished Notes, Wash S. U.
-!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!     Pages 57-74.
-!*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIRAN(N,Iseed,X)
 REAL(kind=wp) :: ak , am1 , X(:)
 INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
@@ -35608,14 +35496,14 @@ END SUBROUTINE UNIRAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o Filliben, Simple and Robust Linear Estimation of the Location
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     Parameter of a Symmetric Distribution (Unpublished PH.D. DIssertation,
 !!     Princeton University), 1969, Pages 21-44, 229-231.
-!!   o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
 !!     1970, Pages 28-31.
-!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!     Pages 57-74.
-!*==unisf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNISF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
@@ -35696,12 +35584,12 @@ END SUBROUTINE UNISF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
-!!   o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+!!   * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
 !!     1957, Page 38.
-!!   o Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
+!!   * Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
 !!     1963, Page 171.
-!*==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 INTEGER i , Iwrite , N
@@ -35848,13 +35736,13 @@ END SUBROUTINE VAR
 !!    CC0-1.0
 !!
 !!##REFERENCE
-!!   o Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
+!!   * Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
 !!     of the Eighteenth Conference on the Design of Experiments in Army
 !!     Research and Testing, Pages 425-450.
-!!   o Filliben, 'The Percent Point Function', UNpublished Manuscript.
-!!   o Johnson and Kotz (1970), Continuous Univariate Distributions-1,
+!!   * Filliben, 'The Percent Point Function', UNpublished Manuscript.
+!!   * Johnson and Kotz (1970), Continuous Univariate Distributions-1,
 !!     Pages 250-271.
-!*==weib.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIB(X,N)
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
      &     sum2 , sum3 , sy , t , w , wbar , WS , X , xmax , xmin , Y
@@ -36188,11 +36076,11 @@ END SUBROUTINE WEIB
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     Pages 250-271.
-!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
 !!     Students and Practitioners, 1975, Page 124.
-!*==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
@@ -36301,15 +36189,15 @@ END SUBROUTINE WEICDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army Research
 !!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
 !!     425-450.
-!!   o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
 !!     260-308.
-!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     Pages 250-271.
-!*==weiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE WEIPLT(X,N,Gamma)
 REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
@@ -36504,11 +36392,11 @@ END SUBROUTINE WEIPLT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     Pages 250-271.
-!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
 !!     Students and Practitioners, 1975, Page 124.
-!*==weippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
@@ -36604,13 +36492,13 @@ END SUBROUTINE WEIPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o Tocher, the Art of Simulation, 1963, Pages 14-15.
-!!   o Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
-!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!   * Tocher, the Art of Simulation, 1963, Pages 14-15.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     Pages 250-271.
-!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
 !!     Students and Practitioners, 1975, Page 128.
-!*==weiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
 INTEGER i , Iseed , N
@@ -36729,15 +36617,15 @@ END SUBROUTINE WEIRAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   o David, Order Statistics, 1970, Pages 126-130, 136.
-!!   o Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+!!   * David, Order Statistics, 1970, Pages 126-130, 136.
+!!   * Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
 !!     American Statistical Association, 1967, Pages 357, 387.
-!!   o Filliben, Simple and Robust Linear Estimation of the Location
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
 !!     Princeton University, 1969).
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
 REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
 INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
@@ -36996,7 +36884,7 @@ END SUBROUTINE WIND
 !!    CC0-1.0
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
-!*==write.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
 INTEGER i, i10, i50, Idec, idecp1, iwidm2, iwidp1, Iwidth, j, jmax, jmin, maxcha, maxwid, N, nlines, Nnline, numcha
 REAL(kind=wp) :: X(:)

@@ -62,14 +62,15 @@ NU).
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
@@ -107,21 +108,35 @@ plot correlation coefficient.
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>X</B> </TD><TD valign=bottom>
-description of parameter
+The vector of (unsorted or sorted) observations.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+<B>N</B> </TD><TD valign=bottom>
+The integer number of observations in the vector X.
+The maximum allowable value of N for this subroutine is 7500.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>NU</B> </TD><TD valign=bottom>
+The integer number of degrees of freedom.
+NU should be positive.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
+
+     <H3>OUTPUT</H3>
+
+</A>
+<BLOCKQUOTE>
+A one-page Student&#146;s T probability plot.
+</BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -140,16 +155,17 @@ Sample program:
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=5>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -157,7 +173,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -165,7 +181,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -175,56 +191,45 @@ CC0-1.0
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-FILLIBEN, &#146;TECHNIQUES FOR TAIL LENGTH ANALYSIS&#146;, PROCEEDINGS OF THE
+Filliben, &#146;Techniques for Tail Length Analysis&#146;, Proceedings of the
+Eighteenth Conference on the Design of Experiments in Army Research
+Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+425-450.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+260-308.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+National Bureau of Standards Applied Mathematics Series 55, 1964,
+Page 949, FormulA 26.7.5.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Johnson and Kotz, Continuous Univariate Distributions-<B>-2</B>, 1970,
+Page 102, Formula 11.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Federighi, &#146;Extended Tables of the Percentage Points of Student&#146;s
+T Distribution, Journal of the American Statistical Association,
+1969, Pages 683-688.
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+Hastings and Peacock, Statistical Distributions-<B>-A</B> Handbook for
+Students and Practitioners, 1975, Pages 120-123.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
-<A name=>
-
-    <H4>&nbsp; &nbsp; EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH</H4>
-</A>
-<BLOCKQUOTE>
-DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
-425-450.
-</BLOCKQUOTE>
-<TABLE cellpadding=3><!-- tsb: DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD width=3%>
-o
-</TD><TD>
-HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
-260-308.
-<TABLE width=100% cellpadding=3><!-- tsb: HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD width=3%>
-o
-</TD><TD>
-NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-PAGE 949, FORMULA 26.7.5.
-</TD></TR>
-<TR valign=top><TD width=3%>
-o
-</TD><TD>
-JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS-<B>-2</B>, 1970,
-PAGE 102, FORMULA 11.
-</TD></TR>
-<TR valign=top><TD width=3%>
-o
-</TD><TD>
-FEDERIGHI, &#146;EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT&#146;S
-T DISTRIBUTION, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-1969, PAGES 683-688.
-</TD></TR>
-<TR valign=top><TD width=3%>
-o
-</TD><TD>
-HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS-<B>-A</B> HANDBOOK FOR
-STUDENTS AND PRACTITIONERS, 1975, PAGES 120-123.
-</TD></TR>
-<TR></TR></TABLE></TD></TR>
-<TR></TR></TABLE><P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>tplt (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from b268d06c-cd5a-41bf-b496-2103858d2e89 using man macros.</FONT>
+<P><HR>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>tplt (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from a803ff71-f7f2-431c-a440-40bb5101ba51 using man macros.</FONT>
 <br><br><center><img src="images/tplt.gif"></center>
 </div>
 </div>

@@ -63,13 +63,13 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
-  o Filliben, 'Techniques for Tail Length Analysis', proceedings of the
+  * Filliben, 'Techniques for Tail Length Analysis', proceedings of the
     Eighteenth Conference on the Design of Experiments in Army Research
     Development and Testing (Aberdeen, Maryland, October, 1972),
     Pages 425-450.
-  o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+  * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
     260-308.
-  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
     Pages 154-165.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
@@ -77,7 +77,7 @@ $ENDBLOCK
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUPLT(X,N)
 REAL(kind=wp),intent(in) :: X(:)

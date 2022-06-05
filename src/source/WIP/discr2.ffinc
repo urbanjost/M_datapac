@@ -58,7 +58,7 @@ LICENSE
    CC0-1.0
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==discr2.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DISCR2(X,N,Numcla,Y)
 REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &

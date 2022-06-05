@@ -40,18 +40,18 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
- o tocher, the art of simulation, 1963, page 15.
- o hammersley and handscomb, monte carlo methods, 1964, page 36.
- o filliben, simple and robust linear estimation of the location parameter
+ * tocher, the art of simulation, 1963, page 15.
+ * hammersley and handscomb, monte carlo methods, 1964, page 36.
+ * filliben, simple and robust linear estimation of the location parameter
    of a symmetric distribution (unpublished ph.d. dissertation, princeton
    university), 1969, page 231.
- o filliben, 'the percent point function', (unpublished manuscript),
+ * filliben, 'the percent point function', (unpublished manuscript),
    1970, pages 28-31.
- o johnson and kotz, continuous univariate distributions--1, 1970,
+ * johnson and kotz, continuous univariate distributions--1, 1970,
    pages 154-165.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! ==cauran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAURAN(N,Iseed,X)
 REAL(kind=wp) :: arg , pi , X
