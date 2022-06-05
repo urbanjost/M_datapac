@@ -69,7 +69,7 @@ $ENDBLOCK
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==norppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==norppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE NORPPF(P,Ppf)
 REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 , q3 , q4 , r , t

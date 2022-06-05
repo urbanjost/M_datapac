@@ -172,9 +172,9 @@
   <div id="common-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/extrem.html#common-block2~10">BLOCK2</a>
+      <a class="list-group-item" href="../proc/extrem.html#common-block2_real64~10">BLOCK2_real64</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#common-block2~11">BLOCK2</a>
+      <a class="list-group-item" href="../proc/extrem.html#common-block2_real64~11">BLOCK2_real64</a>
       
     </div>
   </div>
@@ -191,13 +191,13 @@
       
       <a class="list-group-item" href="../proc/extrem.html#variable-b">B</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-cdf~8">Cdf</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-cdf~6">Cdf</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-datan~2">DATAN</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-dsqrt~3">DSQRT</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-n~28">N</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-n~27">N</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-nu1">Nu1</a>
       
@@ -207,9 +207,9 @@
       
       <a class="list-group-item" href="../proc/extrem.html#variable-ws~20">WS</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-x~35">X</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-x~30">X</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-x~36">X</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-x~31">X</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-y~13">Y</a>
       
@@ -263,9 +263,9 @@
       
       <a class="list-group-item" href="../proc/extrem.html#variable-anu2~2">anu2</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-arg~8">arg</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-arg~7">arg</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-arg~9">arg</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-arg~8">arg</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-b~3">b</a>
       
@@ -401,9 +401,9 @@
       
       <a class="list-group-item" href="../proc/extrem.html#variable-phase2">phase2</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-pi~8">pi</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-pi~7">pi</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-pi~9">pi</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-pi~8">pi</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-r">r</a>
       
@@ -526,7 +526,7 @@ public subroutine EXTREM(X, N)
 
     
     <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>fcdf(3f) - [M_datapac:STATISTICS:CD] compute the F cumulative distribution
+<div class="codehilite"><pre><span></span><code>fcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the F cumulative distribution
 function
 </code></pre></div>
 
@@ -559,8 +559,9 @@ function
 
 <p>Results:</p>
 <h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </code></pre></div>
 
 <h2 id="maintainer">MAINTAINER</h2>
@@ -571,20 +572,16 @@ Engineering Division, National Institute of Standards and Technology.
 <div class="codehilite"><pre><span></span><code>CC0-1.0
 </code></pre></div>
 
-<p>!     REFERENCES
- !               &ndash;NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
- !                 SERIES 55, 1964, PAGES 946-947,
- !                 FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
- !               &ndash;JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
- !                 DISTRIBUTIONS&ndash;2, 1970, PAGE 83, FORMULA 20,
- !                 AND PAGE 84, THIRD FORMULA.
- !               &ndash;PAULSON, AN APPROXIMATE NORMAILIZATION
- !                 OF THE ANALYSIS OF VARIANCE DISTRIBUTION,
- !                 ANNALS OF MATHEMATICAL STATISTICS, 1942,
- !                 NUMBER 13, PAGES 233-135.
- !               &ndash;SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES
- !                 FOR POPULATION TOLERANCE LIMITS, 1944,
- !                 NUMBER 15, PAGE 217.
+<h2 id="references">REFERENCES</h2>
+<p>o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+     PAGES 946-947, FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
+   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS&ndash;2, 1970,
+     PAGE 83, FORMULA 20, AND PAGE 84, THIRD FORMULA.
+   o PAULSON, AN APPROXIMATE NORMALIZATION OF THE ANALYSIS OF VARIANCE
+     DISTRIBUTION, ANNALS OF MATHEMATICAL STATISTICS, 1942, NUMBER 13,
+     PAGES 233-135.
+   o SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES FOR POPULATION TOLERANCE
+     LIMITS, 1944, NUMBER 15, PAGE 217.
 ==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022</p>
 <h2 id="name_1">NAME</h2>
 <div class="codehilite"><pre><span></span><code>fourie(3f) - [M_datapac:STATISTICS] perform a Fourier analysis of a data set
@@ -601,7 +598,7 @@ Engineering Division, National Institute of Standards and Technology.
    <span class="mf">1.</span> <span class="n">computing</span> <span class="p">(</span><span class="ow">and</span> <span class="n">printing</span><span class="p">)</span>
       <span class="p">(</span><span class="k">for</span> <span class="n">each</span> <span class="n">of</span> <span class="n">the</span> <span class="n">harmonic</span> <span class="n">frequencies</span>
       <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-      <span class="n">the</span> <span class="n">corresponding</span> <span class="n">fourier</span> <span class="n">coeficients</span><span class="p">,</span>
+      <span class="n">the</span> <span class="n">corresponding</span> <span class="n">fourier</span> <span class="n">coefficients</span><span class="p">,</span>
       <span class="n">the</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">the</span> <span class="n">phase</span><span class="p">,</span>
       <span class="n">the</span> <span class="n">contribution</span> <span class="n">to</span> <span class="n">the</span> <span class="n">total</span> <span class="n">variance</span><span class="p">,</span>
       <span class="ow">and</span> <span class="n">the</span> <span class="n">relative</span> <span class="n">contribution</span> <span class="n">to</span> <span class="n">the</span> <span class="n">total</span>
@@ -653,8 +650,8 @@ Engineering Division, National Institute of Standards and Technology.
 <div class="codehilite"><pre><span></span><code>CC0-1.0
 </code></pre></div>
 
-<p>!     REFERENCES
- !               &ndash;JENKINS AND WATTS, ESPECIALLY PAGE 290.
+<h2 id="references_1">REFERENCES</h2>
+<p>o JENKINS AND WATTS, ESPECIALLY PAGE 290.
 ==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022</p>
     
 
@@ -676,7 +673,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~37"></span>real(kind=wp)</td>
+  <td><span class="anchor" id="variable-x~32"></span>real(kind=wp)</td>
   <td></td>
   <td></td>
   
@@ -691,7 +688,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-n~29"></span>integer</td>
+  <td><span class="anchor" id="variable-n~28"></span>integer</td>
   <td></td>
   <td></td>
   
@@ -723,9 +720,9 @@ Engineering Division, National Institute of Standards and Technology.
   <div id="common-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/extrem.html#common-block2~10">BLOCK2</a>
+      <a class="list-group-item" href="../proc/extrem.html#common-block2_real64~10">BLOCK2_real64</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#common-block2~11">BLOCK2</a>
+      <a class="list-group-item" href="../proc/extrem.html#common-block2_real64~11">BLOCK2_real64</a>
       
     </div>
   </div>
@@ -742,13 +739,13 @@ Engineering Division, National Institute of Standards and Technology.
       
       <a class="list-group-item" href="../proc/extrem.html#variable-b">B</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-cdf~8">Cdf</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-cdf~6">Cdf</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-datan~2">DATAN</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-dsqrt~3">DSQRT</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-n~28">N</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-n~27">N</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-nu1">Nu1</a>
       
@@ -758,9 +755,9 @@ Engineering Division, National Institute of Standards and Technology.
       
       <a class="list-group-item" href="../proc/extrem.html#variable-ws~20">WS</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-x~35">X</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-x~30">X</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-x~36">X</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-x~31">X</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-y~13">Y</a>
       
@@ -814,9 +811,9 @@ Engineering Division, National Institute of Standards and Technology.
       
       <a class="list-group-item" href="../proc/extrem.html#variable-anu2~2">anu2</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-arg~8">arg</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-arg~7">arg</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-arg~9">arg</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-arg~8">arg</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-b~3">b</a>
       
@@ -952,9 +949,9 @@ Engineering Division, National Institute of Standards and Technology.
       
       <a class="list-group-item" href="../proc/extrem.html#variable-phase2">phase2</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-pi~8">pi</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-pi~7">pi</a>
       
-      <a class="list-group-item" href="../proc/extrem.html#variable-pi~9">pi</a>
+      <a class="list-group-item" href="../proc/extrem.html#variable-pi~8">pi</a>
       
       <a class="list-group-item" href="../proc/extrem.html#variable-r">r</a>
       
@@ -1069,10 +1066,10 @@ Engineering Division, National Institute of Standards and Technology.
       
       
 <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="common-block2~10"></span><h3>
+  <div class="panel-heading codesum"><span class="anchor" id="common-block2_real64~10"></span><h3>
       <a data-toggle="popover" data-html="true" tabindex="0" 
      data-trigger="focus"
-   data-content="<h4>Used Elsewhere:</h4><a href='../proc/cauplt.html#common-block2'>CAUPLT</a> (subroutine)<br><a href='../proc/chscdf.html#common-block2~2'>CHSCDF</a> (subroutine)<br><a href='../proc/code.html#common-block2~3'>CODE</a> (subroutine)<br><a href='../proc/decomp.html#common-block2~4'>DECOMP</a> (subroutine)<br><a href='../proc/demod.html#common-block2~5'>DEMOD</a> (subroutine)<br><a href='../proc/dexplt.html#common-block2~6'>DEXPLT</a> (subroutine)<br><a href='../proc/ev1plt.html#common-block2~7'>EV1PLT</a> (subroutine)<br><a href='../proc/ev2plt.html#common-block2~8'>EV2PLT</a> (subroutine)<br><a href='../proc/expplt.html#common-block2~9'>EXPPLT</a> (subroutine)<br><a href='../proc/extrem.html#common-block2~11'>EXTREM</a> (subroutine)<br><a href='../proc/freq.html#common-block2~12'>FREQ</a> (subroutine)<br><a href='../proc/gamplt.html#common-block2~13'>GAMPLT</a> (subroutine)<br><a href='../proc/geoplt.html#common-block2~14'>GEOPLT</a> (subroutine)<br><a href='../proc/hfnplt.html#common-block2~15'>HFNPLT</a> (subroutine)<br><a href='../proc/invxwx.html#common-block2~16'>INVXWX</a> (subroutine)<br><a href='../proc/lamplt.html#common-block2~17'>LAMPLT</a> (subroutine)<br><a href='../proc/lgnplt.html#common-block2~18'>LGNPLT</a> (subroutine)<br><a href='../proc/loc.html#common-block2~19'>LOC</a> (subroutine)<br><a href='../proc/logplt.html#common-block2~20'>LOGPLT</a> (subroutine)<br><a href='../proc/median.html#common-block2~21'>MEDIAN</a> (subroutine)<br><a href='../proc/midm.html#common-block2~22'>MIDM</a> (subroutine)<br><a href='../proc/norout.html#common-block2~23'>NOROUT</a> (subroutine)<br><a href='../proc/norplt.html#common-block2~24'>NORPLT</a> (subroutine)<br><a href='../proc/parplt.html#common-block2~25'>PARPLT</a> (subroutine)<br><a href='../proc/plotu.html#common-block2~26'>PLOTU</a> (subroutine)<br><a href='../proc/poiplt.html#common-block2~27'>POIPLT</a> (subroutine)<br><a href='../proc/poly.html#common-block2~28'>POLY</a> (subroutine)<br><a href='../proc/runs.html#common-block2~29'>RUNS</a> (subroutine)<br><a href='../proc/sampp.html#common-block2~30'>SAMPP</a> (subroutine)<br><a href='../proc/spcorr.html#common-block2~31'>SPCORR</a> (subroutine)<br><a href='../proc/tail.html#common-block2~32'>TAIL</a> (subroutine)<br><a href='../proc/tplt.html#common-block2~33'>TPLT</a> (subroutine)<br><a href='../proc/trim.html#common-block2~34'>TRIM</a> (subroutine)<br><a href='../proc/uniplt.html#common-block2~35'>UNIPLT</a> (subroutine)<br><a href='../proc/weib.html#common-block2~36'>WEIB</a> (subroutine)<br><a href='../proc/weiplt.html#common-block2~37'>WEIPLT</a> (subroutine)<br><a href='../proc/wind.html#common-block2~38'>WIND</a> (subroutine)<br><a href='../proc/cauplt~2.html#common-block2~39'>CAUPLT</a> (subroutine)<br><a href='../proc/chscdf~2.html#common-block2~40'>CHSCDF</a> (subroutine)<br><a href='../proc/code~2.html#common-block2~41'>CODE</a> (subroutine)<br><a href='../proc/decomp~2.html#common-block2~42'>DECOMP</a> (subroutine)<br><a href='../proc/demod~2.html#common-block2~43'>DEMOD</a> (subroutine)<br><a href='../proc/dexplt~2.html#common-block2~44'>DEXPLT</a> (subroutine)<br><a href='../proc/ev1plt~2.html#common-block2~45'>EV1PLT</a> (subroutine)<br><a href='../proc/ev2plt~2.html#common-block2~46'>EV2PLT</a> (subroutine)<br><a href='../proc/expplt~2.html#common-block2~47'>EXPPLT</a> (subroutine)<br><a href='../proc/extrem~2.html#common-block2~48'>EXTREM</a> (subroutine)<br><a href='../proc/extrem~2.html#common-block2~49'>EXTREM</a> (subroutine)<br><a href='../proc/freq~2.html#common-block2~50'>FREQ</a> (subroutine)<br><a href='../proc/gamplt~2.html#common-block2~51'>GAMPLT</a> (subroutine)<br><a href='../proc/geoplt~2.html#common-block2~52'>GEOPLT</a> (subroutine)<br><a href='../proc/hfnplt~2.html#common-block2~53'>HFNPLT</a> (subroutine)<br><a href='../proc/invxwx~2.html#common-block2~54'>INVXWX</a> (subroutine)<br><a href='../proc/lamplt~2.html#common-block2~55'>LAMPLT</a> (subroutine)<br><a href='../proc/lgnplt~2.html#common-block2~56'>LGNPLT</a> (subroutine)<br><a href='../proc/loc~2.html#common-block2~57'>LOC</a> (subroutine)<br><a href='../proc/logplt~2.html#common-block2~58'>LOGPLT</a> (subroutine)<br><a href='../proc/median~2.html#common-block2~59'>MEDIAN</a> (subroutine)<br><a href='../proc/midm~2.html#common-block2~60'>MIDM</a> (subroutine)<br><a href='../proc/norout~2.html#common-block2~61'>NOROUT</a> (subroutine)<br><a href='../proc/norplt~2.html#common-block2~62'>NORPLT</a> (subroutine)<br><a href='../proc/parplt~2.html#common-block2~63'>PARPLT</a> (subroutine)<br><a href='../proc/plotu~2.html#common-block2~64'>PLOTU</a> (subroutine)<br><a href='../proc/poiplt~2.html#common-block2~65'>POIPLT</a> (subroutine)<br><a href='../proc/poly~2.html#common-block2~66'>POLY</a> (subroutine)<br><a href='../proc/runs~2.html#common-block2~67'>RUNS</a> (subroutine)<br><a href='../proc/sampp~2.html#common-block2~68'>SAMPP</a> (subroutine)<br><a href='../proc/spcorr~2.html#common-block2~69'>SPCORR</a> (subroutine)<br><a href='../proc/tail~2.html#common-block2~70'>TAIL</a> (subroutine)<br><a href='../proc/tplt~2.html#common-block2~71'>TPLT</a> (subroutine)<br><a href='../proc/trim~2.html#common-block2~72'>TRIM</a> (subroutine)<br><a href='../proc/uniplt~2.html#common-block2~73'>UNIPLT</a> (subroutine)<br><a href='../proc/weib~2.html#common-block2~74'>WEIB</a> (subroutine)<br><a href='../proc/weiplt~2.html#common-block2~75'>WEIPLT</a> (subroutine)<br><a href='../proc/wind~2.html#common-block2~76'>WIND</a> (subroutine)<br>">common /BLOCK2/</a>
+   data-content="<h4>Used Elsewhere:</h4><a href='../proc/cauplt.html#common-block2_real64'>CAUPLT</a> (subroutine)<br><a href='../proc/chscdf.html#common-block2_real64~2'>CHSCDF</a> (subroutine)<br><a href='../proc/code.html#common-block2_real64~3'>CODE</a> (subroutine)<br><a href='../proc/decomp.html#common-block2_real64~4'>DECOMP</a> (subroutine)<br><a href='../proc/demod.html#common-block2_real64~5'>DEMOD</a> (subroutine)<br><a href='../proc/dexplt.html#common-block2_real64~6'>DEXPLT</a> (subroutine)<br><a href='../proc/ev1plt.html#common-block2_real64~7'>EV1PLT</a> (subroutine)<br><a href='../proc/ev2plt.html#common-block2_real64~8'>EV2PLT</a> (subroutine)<br><a href='../proc/expplt.html#common-block2_real64~9'>EXPPLT</a> (subroutine)<br><a href='../proc/extrem.html#common-block2_real64~11'>EXTREM</a> (subroutine)<br><a href='../proc/freq.html#common-block2_real64~12'>FREQ</a> (subroutine)<br><a href='../proc/gamplt.html#common-block2_real64~13'>GAMPLT</a> (subroutine)<br><a href='../proc/geoplt.html#common-block2_real64~14'>GEOPLT</a> (subroutine)<br><a href='../proc/hfnplt.html#common-block2_real64~15'>HFNPLT</a> (subroutine)<br><a href='../proc/invxwx.html#common-block2_real64~16'>INVXWX</a> (subroutine)<br><a href='../proc/lamplt.html#common-block2_real64~17'>LAMPLT</a> (subroutine)<br><a href='../proc/lgnplt.html#common-block2_real64~18'>LGNPLT</a> (subroutine)<br><a href='../proc/loc.html#common-block2_real64~19'>LOC</a> (subroutine)<br><a href='../proc/logplt.html#common-block2_real64~20'>LOGPLT</a> (subroutine)<br><a href='../proc/median.html#common-block2_real64~21'>MEDIAN</a> (subroutine)<br><a href='../proc/midm.html#common-block2_real64~22'>MIDM</a> (subroutine)<br><a href='../proc/norout.html#common-block2_real64~23'>norout</a> (subroutine)<br><a href='../proc/norplt.html#common-block2_real64~24'>NORPLT</a> (subroutine)<br><a href='../proc/parplt.html#common-block2_real64~25'>PARPLT</a> (subroutine)<br><a href='../proc/plotu.html#common-block2_real64~26'>PLOTU</a> (subroutine)<br><a href='../proc/poiplt.html#common-block2_real64~27'>POIPLT</a> (subroutine)<br><a href='../proc/poly.html#common-block2_real64~28'>POLY</a> (subroutine)<br><a href='../proc/runs.html#common-block2_real64~29'>RUNS</a> (subroutine)<br><a href='../proc/sampp.html#common-block2_real64~30'>SAMPP</a> (subroutine)<br><a href='../proc/spcorr.html#common-block2_real64~31'>SPCORR</a> (subroutine)<br><a href='../proc/tail.html#common-block2_real64~32'>TAIL</a> (subroutine)<br><a href='../proc/tplt.html#common-block2_real64~33'>TPLT</a> (subroutine)<br><a href='../proc/trim.html#common-block2_real64~34'>TRIM</a> (subroutine)<br><a href='../proc/uniplt.html#common-block2_real64~35'>UNIPLT</a> (subroutine)<br><a href='../proc/weib.html#common-block2_real64~36'>WEIB</a> (subroutine)<br><a href='../proc/weiplt.html#common-block2_real64~37'>WEIPLT</a> (subroutine)<br><a href='../proc/wind.html#common-block2_real64~38'>WIND</a> (subroutine)<br>">common /BLOCK2_real64/</a>
       
   </h3></div>
   <div class="panel-body">
@@ -1113,10 +1110,10 @@ Engineering Division, National Institute of Standards and Technology.
       
       
 <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="common-block2~11"></span><h3>
+  <div class="panel-heading codesum"><span class="anchor" id="common-block2_real64~11"></span><h3>
       <a data-toggle="popover" data-html="true" tabindex="0" 
      data-trigger="focus"
-   data-content="<h4>Used Elsewhere:</h4><a href='../proc/cauplt.html#common-block2'>CAUPLT</a> (subroutine)<br><a href='../proc/chscdf.html#common-block2~2'>CHSCDF</a> (subroutine)<br><a href='../proc/code.html#common-block2~3'>CODE</a> (subroutine)<br><a href='../proc/decomp.html#common-block2~4'>DECOMP</a> (subroutine)<br><a href='../proc/demod.html#common-block2~5'>DEMOD</a> (subroutine)<br><a href='../proc/dexplt.html#common-block2~6'>DEXPLT</a> (subroutine)<br><a href='../proc/ev1plt.html#common-block2~7'>EV1PLT</a> (subroutine)<br><a href='../proc/ev2plt.html#common-block2~8'>EV2PLT</a> (subroutine)<br><a href='../proc/expplt.html#common-block2~9'>EXPPLT</a> (subroutine)<br><a href='../proc/extrem.html#common-block2~10'>EXTREM</a> (subroutine)<br><a href='../proc/freq.html#common-block2~12'>FREQ</a> (subroutine)<br><a href='../proc/gamplt.html#common-block2~13'>GAMPLT</a> (subroutine)<br><a href='../proc/geoplt.html#common-block2~14'>GEOPLT</a> (subroutine)<br><a href='../proc/hfnplt.html#common-block2~15'>HFNPLT</a> (subroutine)<br><a href='../proc/invxwx.html#common-block2~16'>INVXWX</a> (subroutine)<br><a href='../proc/lamplt.html#common-block2~17'>LAMPLT</a> (subroutine)<br><a href='../proc/lgnplt.html#common-block2~18'>LGNPLT</a> (subroutine)<br><a href='../proc/loc.html#common-block2~19'>LOC</a> (subroutine)<br><a href='../proc/logplt.html#common-block2~20'>LOGPLT</a> (subroutine)<br><a href='../proc/median.html#common-block2~21'>MEDIAN</a> (subroutine)<br><a href='../proc/midm.html#common-block2~22'>MIDM</a> (subroutine)<br><a href='../proc/norout.html#common-block2~23'>NOROUT</a> (subroutine)<br><a href='../proc/norplt.html#common-block2~24'>NORPLT</a> (subroutine)<br><a href='../proc/parplt.html#common-block2~25'>PARPLT</a> (subroutine)<br><a href='../proc/plotu.html#common-block2~26'>PLOTU</a> (subroutine)<br><a href='../proc/poiplt.html#common-block2~27'>POIPLT</a> (subroutine)<br><a href='../proc/poly.html#common-block2~28'>POLY</a> (subroutine)<br><a href='../proc/runs.html#common-block2~29'>RUNS</a> (subroutine)<br><a href='../proc/sampp.html#common-block2~30'>SAMPP</a> (subroutine)<br><a href='../proc/spcorr.html#common-block2~31'>SPCORR</a> (subroutine)<br><a href='../proc/tail.html#common-block2~32'>TAIL</a> (subroutine)<br><a href='../proc/tplt.html#common-block2~33'>TPLT</a> (subroutine)<br><a href='../proc/trim.html#common-block2~34'>TRIM</a> (subroutine)<br><a href='../proc/uniplt.html#common-block2~35'>UNIPLT</a> (subroutine)<br><a href='../proc/weib.html#common-block2~36'>WEIB</a> (subroutine)<br><a href='../proc/weiplt.html#common-block2~37'>WEIPLT</a> (subroutine)<br><a href='../proc/wind.html#common-block2~38'>WIND</a> (subroutine)<br><a href='../proc/cauplt~2.html#common-block2~39'>CAUPLT</a> (subroutine)<br><a href='../proc/chscdf~2.html#common-block2~40'>CHSCDF</a> (subroutine)<br><a href='../proc/code~2.html#common-block2~41'>CODE</a> (subroutine)<br><a href='../proc/decomp~2.html#common-block2~42'>DECOMP</a> (subroutine)<br><a href='../proc/demod~2.html#common-block2~43'>DEMOD</a> (subroutine)<br><a href='../proc/dexplt~2.html#common-block2~44'>DEXPLT</a> (subroutine)<br><a href='../proc/ev1plt~2.html#common-block2~45'>EV1PLT</a> (subroutine)<br><a href='../proc/ev2plt~2.html#common-block2~46'>EV2PLT</a> (subroutine)<br><a href='../proc/expplt~2.html#common-block2~47'>EXPPLT</a> (subroutine)<br><a href='../proc/extrem~2.html#common-block2~48'>EXTREM</a> (subroutine)<br><a href='../proc/extrem~2.html#common-block2~49'>EXTREM</a> (subroutine)<br><a href='../proc/freq~2.html#common-block2~50'>FREQ</a> (subroutine)<br><a href='../proc/gamplt~2.html#common-block2~51'>GAMPLT</a> (subroutine)<br><a href='../proc/geoplt~2.html#common-block2~52'>GEOPLT</a> (subroutine)<br><a href='../proc/hfnplt~2.html#common-block2~53'>HFNPLT</a> (subroutine)<br><a href='../proc/invxwx~2.html#common-block2~54'>INVXWX</a> (subroutine)<br><a href='../proc/lamplt~2.html#common-block2~55'>LAMPLT</a> (subroutine)<br><a href='../proc/lgnplt~2.html#common-block2~56'>LGNPLT</a> (subroutine)<br><a href='../proc/loc~2.html#common-block2~57'>LOC</a> (subroutine)<br><a href='../proc/logplt~2.html#common-block2~58'>LOGPLT</a> (subroutine)<br><a href='../proc/median~2.html#common-block2~59'>MEDIAN</a> (subroutine)<br><a href='../proc/midm~2.html#common-block2~60'>MIDM</a> (subroutine)<br><a href='../proc/norout~2.html#common-block2~61'>NOROUT</a> (subroutine)<br><a href='../proc/norplt~2.html#common-block2~62'>NORPLT</a> (subroutine)<br><a href='../proc/parplt~2.html#common-block2~63'>PARPLT</a> (subroutine)<br><a href='../proc/plotu~2.html#common-block2~64'>PLOTU</a> (subroutine)<br><a href='../proc/poiplt~2.html#common-block2~65'>POIPLT</a> (subroutine)<br><a href='../proc/poly~2.html#common-block2~66'>POLY</a> (subroutine)<br><a href='../proc/runs~2.html#common-block2~67'>RUNS</a> (subroutine)<br><a href='../proc/sampp~2.html#common-block2~68'>SAMPP</a> (subroutine)<br><a href='../proc/spcorr~2.html#common-block2~69'>SPCORR</a> (subroutine)<br><a href='../proc/tail~2.html#common-block2~70'>TAIL</a> (subroutine)<br><a href='../proc/tplt~2.html#common-block2~71'>TPLT</a> (subroutine)<br><a href='../proc/trim~2.html#common-block2~72'>TRIM</a> (subroutine)<br><a href='../proc/uniplt~2.html#common-block2~73'>UNIPLT</a> (subroutine)<br><a href='../proc/weib~2.html#common-block2~74'>WEIB</a> (subroutine)<br><a href='../proc/weiplt~2.html#common-block2~75'>WEIPLT</a> (subroutine)<br><a href='../proc/wind~2.html#common-block2~76'>WIND</a> (subroutine)<br>">common /BLOCK2/</a>
+   data-content="<h4>Used Elsewhere:</h4><a href='../proc/cauplt.html#common-block2_real64'>CAUPLT</a> (subroutine)<br><a href='../proc/chscdf.html#common-block2_real64~2'>CHSCDF</a> (subroutine)<br><a href='../proc/code.html#common-block2_real64~3'>CODE</a> (subroutine)<br><a href='../proc/decomp.html#common-block2_real64~4'>DECOMP</a> (subroutine)<br><a href='../proc/demod.html#common-block2_real64~5'>DEMOD</a> (subroutine)<br><a href='../proc/dexplt.html#common-block2_real64~6'>DEXPLT</a> (subroutine)<br><a href='../proc/ev1plt.html#common-block2_real64~7'>EV1PLT</a> (subroutine)<br><a href='../proc/ev2plt.html#common-block2_real64~8'>EV2PLT</a> (subroutine)<br><a href='../proc/expplt.html#common-block2_real64~9'>EXPPLT</a> (subroutine)<br><a href='../proc/extrem.html#common-block2_real64~10'>EXTREM</a> (subroutine)<br><a href='../proc/freq.html#common-block2_real64~12'>FREQ</a> (subroutine)<br><a href='../proc/gamplt.html#common-block2_real64~13'>GAMPLT</a> (subroutine)<br><a href='../proc/geoplt.html#common-block2_real64~14'>GEOPLT</a> (subroutine)<br><a href='../proc/hfnplt.html#common-block2_real64~15'>HFNPLT</a> (subroutine)<br><a href='../proc/invxwx.html#common-block2_real64~16'>INVXWX</a> (subroutine)<br><a href='../proc/lamplt.html#common-block2_real64~17'>LAMPLT</a> (subroutine)<br><a href='../proc/lgnplt.html#common-block2_real64~18'>LGNPLT</a> (subroutine)<br><a href='../proc/loc.html#common-block2_real64~19'>LOC</a> (subroutine)<br><a href='../proc/logplt.html#common-block2_real64~20'>LOGPLT</a> (subroutine)<br><a href='../proc/median.html#common-block2_real64~21'>MEDIAN</a> (subroutine)<br><a href='../proc/midm.html#common-block2_real64~22'>MIDM</a> (subroutine)<br><a href='../proc/norout.html#common-block2_real64~23'>norout</a> (subroutine)<br><a href='../proc/norplt.html#common-block2_real64~24'>NORPLT</a> (subroutine)<br><a href='../proc/parplt.html#common-block2_real64~25'>PARPLT</a> (subroutine)<br><a href='../proc/plotu.html#common-block2_real64~26'>PLOTU</a> (subroutine)<br><a href='../proc/poiplt.html#common-block2_real64~27'>POIPLT</a> (subroutine)<br><a href='../proc/poly.html#common-block2_real64~28'>POLY</a> (subroutine)<br><a href='../proc/runs.html#common-block2_real64~29'>RUNS</a> (subroutine)<br><a href='../proc/sampp.html#common-block2_real64~30'>SAMPP</a> (subroutine)<br><a href='../proc/spcorr.html#common-block2_real64~31'>SPCORR</a> (subroutine)<br><a href='../proc/tail.html#common-block2_real64~32'>TAIL</a> (subroutine)<br><a href='../proc/tplt.html#common-block2_real64~33'>TPLT</a> (subroutine)<br><a href='../proc/trim.html#common-block2_real64~34'>TRIM</a> (subroutine)<br><a href='../proc/uniplt.html#common-block2_real64~35'>UNIPLT</a> (subroutine)<br><a href='../proc/weib.html#common-block2_real64~36'>WEIB</a> (subroutine)<br><a href='../proc/weiplt.html#common-block2_real64~37'>WEIPLT</a> (subroutine)<br><a href='../proc/wind.html#common-block2_real64~38'>WIND</a> (subroutine)<br>">common /BLOCK2_real64/</a>
       
   </h3></div>
   <div class="panel-body">
@@ -1211,7 +1208,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-cdf~8"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-cdf~6"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1253,7 +1250,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-n~28"></span>integer,</td>
+  <td><span class="anchor" id="variable-n~27"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1323,7 +1320,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~35"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-x~30"></span>real(kind=wp),</td>
   
   <td>public,</td>
   <td>dimension(:), dimension(:)</td><td>::</td>
@@ -1337,7 +1334,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~36"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-x~31"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1715,7 +1712,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-arg~8"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-arg~7"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1729,7 +1726,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-arg~9"></span>double precision,</td>
+  <td><span class="anchor" id="variable-arg~8"></span>double precision,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -2681,7 +2678,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-pi~8"></span>double precision,</td>
+  <td><span class="anchor" id="variable-pi~7"></span>double precision,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -2695,7 +2692,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-pi~9"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-pi~8"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -3235,7 +3232,7 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">wbar</span><span class="p">,</span> <span class="n">WS</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">ybar</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">yint</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">yslope</span><span class="p">,</span> <span class="n">Z</span>
 <span class="kt">INTEGER</span>       <span class="kd">::</span> <span class="n">i</span><span class="p">,</span> <span class="n">idis</span><span class="p">,</span> <span class="n">idismx</span><span class="p">,</span> <span class="n">iupper</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">jskip</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">numam</span><span class="p">,</span> <span class="n">numdis</span><span class="p">,</span> <span class="n">numdm1</span>
 <span class="c">!</span>
-<span class="c">!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF</span>
+<span class="c">!     INPUT ARGUMENTS--X      = THE  VECTOR OF</span>
 <span class="c">!                               (UNSORTED OR SORTED) OBSERVATIONS.</span>
 <span class="c">!                      N      = THE INTEGER NUMBER OF OBSERVATIONS</span>
 <span class="c">!                               IN THE VECTOR X.</span>
@@ -3246,7 +3243,7 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="c">!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, EV1PLT,</span>
 <span class="c">!                                         EV2PLT, PLOT.</span>
 <span class="c">!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.</span>
-<span class="c">!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.</span>
+<span class="c">!     MODE OF INTERNAL OPERATIONS--.</span>
 <span class="c">!     ORIGINAL VERSION--JUNE      1972.</span>
 <span class="c">!     UPDATED         --DECEMBER  1974.</span>
 <span class="c">!     UPDATED         --NOVEMBER  1975.</span>
@@ -3273,7 +3270,7 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="c">!</span>
       <span class="k">DIMENSION </span><span class="n">aindex</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
       <span class="k">DIMENSION </span><span class="n">h</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-      <span class="k">COMMON</span> <span class="o">/</span><span class="n">BLOCK2</span><span class="o">/</span> <span class="n">WS</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
+      <span class="k">COMMON</span> <span class="o">/</span><span class="n">BLOCK2_real64</span><span class="o">/</span> <span class="n">WS</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
       <span class="k">EQUIVALENCE</span> <span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
       <span class="k">EQUIVALENCE</span> <span class="p">(</span><span class="n">Z</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">7501</span><span class="p">))</span>
       <span class="k">DATA </span><span class="n">blank</span> <span class="p">,</span> <span class="n">alpham</span> <span class="p">,</span> <span class="n">alphaa</span> <span class="p">,</span> <span class="n">alphax</span><span class="o">/</span><span class="s1">&#39; &#39;</span> <span class="p">,</span> <span class="s1">&#39;M&#39;</span> <span class="p">,</span> <span class="s1">&#39;A&#39;</span> <span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="o">/</span>
@@ -3640,7 +3637,7 @@ Engineering Division, National Institute of Standards and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-03 22:20  
+             on 2022-06-05 04:30  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

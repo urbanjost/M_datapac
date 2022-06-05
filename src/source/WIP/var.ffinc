@@ -45,7 +45,7 @@ REFERENCES
     1963, Page 171.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 INTEGER i , Iwrite , N

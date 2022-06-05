@@ -47,7 +47,7 @@ REFERENCES
     STUDENTS AND PRACTITIONERS, 1975, PAGE 104.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==parran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==parran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
 INTEGER :: i , Iseed , N

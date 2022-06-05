@@ -48,7 +48,7 @@ REFERENCES
     PAGES 40-111.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER :: i , ip1 , Iseed , N

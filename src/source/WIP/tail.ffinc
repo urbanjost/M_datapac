@@ -73,7 +73,7 @@ REFERENCE
 
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TAIL(X,N)
 REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
 REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq

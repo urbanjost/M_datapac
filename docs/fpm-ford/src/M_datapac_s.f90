@@ -1,4 +1,5 @@
 module M_datapac_s
+! build real32 version
 use,intrinsic :: iso_fortran_env, only : wp=>real32
 use,intrinsic :: iso_fortran_env, only : stdin=>input_unit,  stdout=>output_unit, stderr=>error_unit
 implicit none
@@ -6,7 +7,7 @@ private
 integer, save           :: G_IO=stdout  ! IO LUN for all write statements
 real(kind=wp),parameter :: G_pi = 3.14159265358979_wp
 real(kind=wp),parameter :: G_pi_dp = 3.14159265358979d0
-
+private invxwx
 public :: &
 autoco  ,  betran  ,  bincdf  ,  binppf  ,  binran  ,  caucdf  ,  caupdf  ,  cauplt  ,  cauppf  ,  cauran  , &
 causf   ,  chscdf  ,  chsplt  ,  chsppf  ,  chsran  ,  code    ,  copy    ,  corr    ,  count   ,  decomp  , &
@@ -14,7 +15,7 @@ define  ,  delete  ,  demod   ,  dexcdf  ,  dexpdf  ,  dexplt  ,  dexppf  ,  dex
 discr3  ,  discre  ,  dot     ,  ev1cdf  ,  ev1plt  ,  ev1ppf  ,  ev1ran  ,  ev2cdf  ,  ev2plt  ,  ev2ppf  , &
 ev2ran  ,  expcdf  ,  exppdf  ,  expplt  ,  expppf  ,  expran  ,  expsf   ,  extrem  ,  fcdf    ,  fourie  , &
 fran    ,  freq    ,  gamcdf  ,  gamplt  ,  gamppf  ,  gamran  ,  geocdf  ,  geoplt  ,  geoppf  ,  georan  , &
-hfncdf  ,  hfnplt  ,  hfnppf  ,  hfnran  ,  hist    ,  invxwx  ,  lamcdf  ,  lampdf  ,  lamplt  ,  lamppf  , &
+hfncdf  ,  hfnplt  ,  hfnppf  ,  hfnran  ,  hist    ,             lamcdf  ,  lampdf  ,  lamplt  ,  lamppf  , &
 lamran  ,  lamsf   ,  lgncdf  ,  lgnplt  ,  lgnppf  ,  lgnran  ,  loc     ,  logcdf  ,  logpdf  ,  logplt  , &
 logppf  ,  logran  ,  logsf   ,  max     ,  mean    ,  median  ,  midm    ,  midr    ,  min     ,  move    , &
 nbcdf   ,  nbppf   ,  nbran   ,  norcdf  ,  norout  ,  norpdf  ,  norplt  ,  norppf  ,  norran  ,  norsf   , &
@@ -92,7 +93,6 @@ interface  hfnplt;  module  procedure  hfnplt  ;  end  interface
 interface  hfnppf;  module  procedure  hfnppf  ;  end  interface
 interface  hfnran;  module  procedure  hfnran  ;  end  interface
 interface  hist;    module  procedure  hist    ;  end  interface
-interface  invxwx;  module  procedure  invxwx  ;  end  interface
 interface  lamcdf;  module  procedure  lamcdf  ;  end  interface
 interface  lampdf;  module  procedure  lampdf  ;  end  interface
 interface  lamplt;  module  procedure  lamplt  ;  end  interface
@@ -221,11 +221,11 @@ contains
 !!    AUTOCO(3f) computes the sample autocorrelation coefficient of the
 !!    data in the input vector X. The sample autocorrelation coefficient
 !!    equals the correlation between X(I) and X(I+1) over the entire sample.
-!!    The autocorrelation coefficient coefficient will be a single precision
+!!    The autocorrelation coefficient coefficient will be a precision precision
 !!    value between -1.0 and 1.0 (inclusively).
 !!
-!!##INPUT  ARGUMENTS
-!!    X        The single precision vector of (unsorted) observations.
+!!##INPUT ARGUMENTS
+!!    X        The precision precision vector of (unsorted) observations.
 !!    N        The integer number of observations in the vector x.
 !!    IWRITE   An integer flag code which (if set to 0) will suppress
 !!             the printing of the sample autocorrelation coefficient
@@ -235,8 +235,8 @@ contains
 !!
 !!##OUTPUT ARGUMENTS
 !!
-!!    XAUTOC   The single precision value of the computed sample autocorrelation coefficient.
-!!             This single precision value will be between -1.0 and 1.0 (inclusively).
+!!    XAUTOC   The precision precision value of the computed sample autocorrelation coefficient.
+!!             This precision precision value will be between -1.0 and 1.0 (inclusively).
 !!
 !!##EXAMPLES
 !!
@@ -330,7 +330,7 @@ integer i , ip1 , iwrite , n , nm1
 end subroutine autoco
 !>
 !!##NAME
-!!    betran(3f) - [M_datapac:STATISTICS:RANDOM] generate beta random numbers
+!!    betran(3f) - [M_datapac:RANDOM] generate beta random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -541,7 +541,7 @@ INTEGER ::  i , Iseed , N
 END SUBROUTINE BETRAN
 !>
 !!##NAME
-!!    bincdf(3f) - [M_datapac:STATISTICS:CD] compute the binomial cumulative
+!!    bincdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the binomial cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -550,8 +550,8 @@ END SUBROUTINE BETRAN
 !!
 !!##DESCRIPTION
 !!    BINCDF(3f) computes the cumulative distribution function value
-!!    at the single precision value X for the binomial distribution with
-!!    single precision 'Bernoulli probability' parameter = P, and integer
+!!    at the precision precision value X for the binomial distribution with
+!!    precision precision 'Bernoulli probability' parameter = P, and integer
 !!    'number of Bernoulli trials' parameter = N.
 !!
 !!    The binomial distribution used herein has mean = N*P and standard
@@ -562,14 +562,14 @@ END SUBROUTINE BETRAN
 !!
 !!    This distribution has the probability function
 !!
-!!        f(X) = c(N,X) * P**X * (1-P)**(N-X).
+!!        f(X) = c(N,X) * P**X * (1-P)**(N-X)
 !!
 !!    where c(N,X) is the combinatorial function equaling the number of
 !!    combinations of N items taken X at a time.
 !!
 !!    The binomial distribution is the distribution of the number of
 !!    successes in N Bernoulli (0,1) trials where the probability of success
-!!    in a single trial = P.
+!!    in a precision trial = P.
 !!
 !!##OPTIONS
 !!     x   description of parameter
@@ -596,22 +596,22 @@ END SUBROUTINE BETRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!    o hastings and peacock, statistical
-!!      distributions--a handbook for students and practitioners, 1975,
-!!      page 38.
-!!    o national bureau of standards applied mathematics
-!!      series 55, 1964, page 945, formulae 26.5.24 and 26.5.28, and
-!!      page 929.
-!!    o johnson and kotz, discrete
-!!      distributions, 1969, pages 50-86, especially pages 63-64.
-!!    o feller, an introduction to probability
-!!      theory and its applications, volume 1, edition 2, 1957, pages
-!!      135-142.
-!!    o kendall and stuart, the advanced theory of
-!!      statistics, volume 1, edition 2, 1963, pages 120-125.
-!!    o mood and grable, introduction to the theory
-!!      of statistics, edition 2, 1963, pages 64-69.
-!!    o owen, handbook of statistical tables, 1962, pages 264-272.
+!!   o hastings and peacock, statistical
+!!     distributions--a handbook for students and practitioners, 1975,
+!!     page 38.
+!!   o national bureau of standards applied mathematics
+!!     series 55, 1964, page 945, formulae 26.5.24 and 26.5.28, and
+!!     page 929.
+!!   o johnson and kotz, discrete
+!!     distributions, 1969, pages 50-86, especially pages 63-64.
+!!   o feller, an introduction to probability
+!!     theory and its applications, volume 1, edition 2, 1957, pages
+!!     135-142.
+!!   o kendall and stuart, the advanced theory of
+!!     statistics, volume 1, edition 2, 1963, pages 120-125.
+!!   o mood and grable, introduction to the theory
+!!     of statistics, edition 2, 1963, pages 64-69.
+!!   o owen, handbook of statistical tables, 1962, pages 264-272.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --MAY       1977.
 !*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -620,13 +620,13 @@ SUBROUTINE BINCDF(X,P,N,Cdf)
 REAL(kind=wp) :: an, Cdf, del, fintx, P, X
 INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE INTEGRAL-VALUED,
 !                                AND BETWEEN 0.0 (INCLUSIVELY)
 !                                AND N (INCLUSIVELY).
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE BINOMIAL
 !                                DISTRIBUTION.
@@ -637,9 +637,9 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !                                OF THE 'NUMBER OF BERNOULLI TRIALS'
 !                                PARAMETER.
 !                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE BINOMIAL DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
@@ -666,7 +666,7 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -872,7 +872,7 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 END SUBROUTINE BINCDF
 !>
 !!##NAME
-!!    binppf(3f) - [M_datapac:STATISTICS:PP] compute the binomial percent
+!!    binppf(3f) - [M_datapac:PERCENT_POINT] compute the binomial percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -880,8 +880,8 @@ END SUBROUTINE BINCDF
 !!     SUBROUTINE BINPPF(P,Ppar,N,Ppf)
 !!
 !!##DESCRIPTION
-!!    BINPPF(3f) computes the percent point function value at the single
-!!    precision value P for the binomial distribution with single precision
+!!    BINPPF(3f) computes the percent point function value at the precision
+!!    precision value P for the binomial distribution with precision precision
 !!    'Bernoulli probability' parameter = PPAR, and integer 'number of
 !!    Bernoulli trials' parameter = N.
 !!
@@ -900,35 +900,23 @@ END SUBROUTINE BINCDF
 !!
 !!    The binomial distribution is the distribution of the number of
 !!    successes in N Bernoulli (0,1) trials where the probability of success
-!!    in a single trial = PPAR.
+!!    in a precision trial = PPAR.
 !!
 !!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!! !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
-!! !                                (BETWEEN 0.0 (INCLUSIVELY)
-!! !                                AND 1.0 (INCLUSIVELY))
-!! !                                AT WHICH THE PERCENT POINT
-!! !                                FUNCTION IS TO BE EVALUATED.
-!! !                     --PPAR   = THE SINGLE PRECISION VALUE
-!! !                                OF THE 'BERNOULLI PROBABILITY'
-!! !                                PARAMETER FOR THE BINOMIAL
-!! !                                DISTRIBUTION.
-!! !                                PPAR SHOULD BE BETWEEN
-!! !                                0.0 (EXCLUSIVELY) AND
-!! !                                1.0 (EXCLUSIVELY).
-!! !                     --N      = THE INTEGER VALUE
-!! !                                OF THE 'NUMBER OF BERNOULLI TRIALS'
-!! !                                PARAMETER.
-!! !                                N SHOULD BE A POSITIVE INTEGER.
-!! !     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
-!! !                                POINT FUNCTION VALUE.
-!! !     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
-!! !             FUNCTION VALUE PPF
-!! !             FOR THE BINOMIAL DISTRIBUTION
-!! !             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
-!! !             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = N.
+!!##INPUT ARGUMENTS
+!!    P     The value (between 0.0 (inclusively) and 1.0 (inclusively))
+!!          at which the percent point function is to be evaluated.
+!!    PPAR  The value of the 'Bernoulli probability' parameter for the binomial
+!!          distribution. PPAR should be between 0.0 (exclusively) and
+!!          1.0 (exclusively).
+!!    N     The integer value of the 'number of Bernoulli trials' parameter.
+!!          N should be a positive integer.
+!!
+!!##OUTPUT ARGUMENTS
+!!   PPF    The  percent point function value.
 !!
 !!##EXAMPLES
 !!
@@ -975,14 +963,13 @@ SUBROUTINE BINPPF(P,Ppar,N,Ppf)
 REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd , x0 , x1 , x2 , zppf
 INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--PPAR SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --N SHOULD BE A POSITIVE INTEGER.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (INCLUSIVELY).
 
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -993,7 +980,7 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -1274,7 +1261,7 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 END SUBROUTINE BINPPF
 !>
 !!##NAME
-!!    binran(3f) - [M_datapac:STATISTICS:RANDOM] generate binomial random numbers
+!!    binran(3f) - [M_datapac:RANDOM] generate binomial random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -1299,31 +1286,26 @@ END SUBROUTINE BINPPF
 !!
 !!    the binomial distribution is the distribution of the number of
 !!    successes in npar bernoulli (0,1) trials where the probability of
-!!    success in a single trial = p.
+!!    success in a precision trial = p.
 !!
 !!##OPTIONS
-!! !     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!! !                                OF RANDOM NUMBERS TO BE
-!! !                                GENERATED.
-!! !                     --P      = THE VALUE
-!! !                                OF THE 'BERNOULLI PROBABILITY'
-!! !                                PARAMETER FOR THE BINOMIAL
-!! !                                DISTRIBUTION.
-!! !                                P SHOULD BE BETWEEN
-!! !                                0.0 (EXCLUSIVELY) AND
-!! !                                1.0 (EXCLUSIVELY).
-!! !                     --NPAR   = THE INTEGER VALUE
-!! !                                OF THE 'NUMBER OF BERNOULLI TRIALS'
-!! !                                PARAMETER.
-!! !                                NPAR SHOULD BE A POSITIVE INTEGER.
-!! !     OUTPUT ARGUMENTS--X      = A VECTOR
-!! !                                (OF DIMENSION AT LEAST N)
-!! !                                INTO WHICH THE GENERATED
-!! !                                RANDOM SAMPLE WILL BE PLACED.
-!! !     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!! !             FROM THE BINOMIAL DISTRIBUTION
-!! !             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
-!! !             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = NPAR.
+!!##INPUT ARGUMENTS
+!!
+!!   N      The desired integer number of random numbers to be generated.
+!!
+!!   P      The value of the 'Bernoulli probability' parameter for the
+!!          binomial distribution.  P should be between 0.0 (exclusively)
+!!          and 1.0 (exclusively).
+!!
+!!   NPAR   The integer value of the 'number of Bernoulli trials'
+!!          parameter.  NPAR should be a positive integer.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!   X     A vector (of dimension at least N) into which the generated
+!!         random sample of size n from the binomial distribution
+!!         will be placed; with 'Bernoulli probability' parameter = P
+!!         and 'number of Bernoulli trials' parameter = NPAR.
 !!
 !!##EXAMPLES
 !!
@@ -1345,24 +1327,20 @@ END SUBROUTINE BINPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 50-86.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 41.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 135-142.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 120-125.
-!! !               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
-!! !                 OF STATISTICS, EDITION 2, 1963, PAGES 64-69.
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 39-40.
+!!##REFERENCES
+!!   o Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
+!!   o Hastings and Peacock, Statistical Distributions,
+!!     A Handbook for Students and Practitioners, 1975,
+!!     Page 41.
+!!   o Feller, An Introduction to Probability Theory and Its Applications,
+!!     Volume 1, Edition 2, 1957, Pages 135-142.
+!!   o National Bureau of Standards Applied Mathematics
+!!     Series 55, 1964, Page 929.
+!!   o Kendall and Stuart, The Advanced Theory of Statistics,
+!!     Volume 1, Edition 2, 1963, Pages 120-125.
+!!   o Mood and Grable, Introduction to the Theory of Statistics,
+!!     Edition 2, 1963, Pages 64-69.
+!!   o Tocher, The Art Of Simulation, 1963, Pages 39-40.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -1373,9 +1351,7 @@ SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
 REAL(kind=wp) :: g(1) , P , u(1) , X
 INTEGER i , ig , Iseed , isum , j , N , Npar
 !
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
+!     RESTRICTIONS--
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --NPAR SHOULD BE A POSITIVE INTEGER.
@@ -1473,13 +1449,16 @@ INTEGER i , ig , Iseed , isum , j , N , Npar
 END SUBROUTINE BINRAN
 !>
 !!##NAME
-!!    caucdf(3f) - [M_datapac:STATISTICS:CD] compute the Cauchy cumulative
+!!    caucdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Cauchy cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
 !!
 !!
-!!     SUBROUTINE CAUCDF(X,Cdf)
+!!       subroutine caucdf(X,Cdf)
+!!
+!!        real(kind=wp),intent(in)  :: X
+!!        real(kind=wp),intent(out) :: Cdf
 !!
 !!##DESCRIPTION
 !!    CAUCDF(3f) computes the cumulative distribution function value for
@@ -1488,12 +1467,12 @@ END SUBROUTINE BINRAN
 !!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/pi)*(1/(1+x*x))
+!!        f(X) = (1/pi)*(1/(1+X*X))
 !!
 !!##INPUT ARGUMENTS
 !!
 !!    X   The value at which the cumulative distribution function is to
-!!    be evaluated.
+!!        be evaluated.
 !!
 !!##OUTPUT ARGUMENTS
 !!
@@ -1504,45 +1483,88 @@ END SUBROUTINE BINRAN
 !!   Sample program:
 !!
 !!    program demo_caucdf
-!!    use M_datapac, only : caucdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : caucdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call caucdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call caucdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_caucdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                                  X
+!!      0.9166666E+02 I                                                  X
+!!      0.8333334E+02 I                                                  X
+!!      0.7500000E+02 I                                                 XX
+!!      0.6666667E+02 I                                                 X
+!!      0.5833334E+02 I                                                 X
+!!      0.5000000E+02 -                                                XX
+!!      0.4166667E+02 I                                               XX
+!!      0.3333334E+02 I                                              XX
+!!      0.2500000E+02 I                                            XXX
+!!      0.1666667E+02 I                                         XXXX
+!!      0.8333336E+01 I                                  XXXXXXX
+!!      0.0000000E+00 -                    XX XX X XX XX
+!!     -0.8333328E+01 I            XXXXXXX
+!!     -0.1666666E+02 I        XXXX
+!!     -0.2499999E+02 I      XXX
+!!     -0.3333333E+02 I     XX
+!!     -0.4166666E+02 I    XX
+!!     -0.5000000E+02 -   XX
+!!     -0.5833333E+02 I   X
+!!     -0.6666666E+02 I   X
+!!     -0.7500000E+02 I  XX
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.3173E-01  0.2659E+00  0.5000E+00  0.7341E+00  0.9683E+00
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970, pages 154-165.
+!!  o Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970,
+!!    pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==caucdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
-SUBROUTINE CAUCDF(X,Cdf)
-REAL(kind=wp),intent(in)  :: X
-REAL(kind=wp),intent(out) :: Cdf
+subroutine caucdf(X,Cdf)
+real(kind=wp),intent(in)  :: X
+real(kind=wp),intent(out) :: Cdf
 
    ! CHECK THE INPUT ARGUMENTS FOR ERRORS ...  NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 
-   Cdf = 0.5_wp + ((1.0_wp/G_pi)*ATAN(X))
+   Cdf = 0.5_wp + ((1.0_wp/G_pi)*atan(X))
 
-END SUBROUTINE CAUCDF
+end subroutine caucdf
 !>
 !!##NAME
-!!    caupdf(3f) - [M_datapac:STATISTICS:PD] compute the Cauchy probability
+!!    caupdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the Cauchy probability
 !!    density function
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE CAUPDF(X,Pdf)
+!!       subroutine caupdf(X,Pdf)
+!!
+!!        real(kind=wp),intent(in) :: X
+!!        real(kind=wp),intent(out):: Pdf
 !!
 !!##DESCRIPTION
 !!    CAUPDF(3f) computes the probability density function value for the
@@ -1551,12 +1573,12 @@ END SUBROUTINE CAUCDF
 !!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/pi)*(1/(1+x*x)).
+!!        f(x) = (1/pi)*(1/(1+x*x))
 !!
 !!##INPUT ARGUMENTS
 !!
-!!    X    The value at which the probability density
-!!         function is to be evaluated.
+!!    X    The value at which the probability density function is to be
+!!         evaluated.
 !!
 !!##OUTPUT ARGUMENTS
 !!
@@ -1567,13 +1589,51 @@ END SUBROUTINE CAUCDF
 !!   Sample program:
 !!
 !!    program demo_caupdf
-!!    use M_datapac, only : caupdf
+!!    !@(#) line plotter graph of probability density function
+!!    use M_datapac, only : caupdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call caupdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call caupdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_caupdf
 !!
 !!   Results:
+!!
+!!     The following is a plot of Y(i) (vertically) versus X(i) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -  X
+!!      0.9166666E+02 I  X
+!!      0.8333334E+02 I  X
+!!      0.7500000E+02 I  X
+!!      0.6666667E+02 I  XX
+!!      0.5833334E+02 I   X
+!!      0.5000000E+02 -   XX
+!!      0.4166667E+02 I    XX
+!!      0.3333334E+02 I     XX
+!!      0.2500000E+02 I       XXXX
+!!      0.1666667E+02 I           XXXXXX X X
+!!      0.8333336E+01 I                     X X  X X  X  X  X  X
+!!      0.0000000E+00 -                                           X  X X X
+!!     -0.8333328E+01 I                     X X  X X  X  X  X  X
+!!     -0.1666666E+02 I           XXXXXX X X
+!!     -0.2499999E+02 I       XXXX
+!!     -0.3333333E+02 I     XX
+!!     -0.4166666E+02 I    XX
+!!     -0.5000000E+02 -   XX
+!!     -0.5833333E+02 I   X
+!!     -0.6666666E+02 I  XX
+!!     -0.7500000E+02 I  X
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.3152E-02  0.8194E-01  0.1607E+00  0.2395E+00  0.3183E+00
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -1595,24 +1655,26 @@ END SUBROUTINE CAUCDF
 !     UPDATED         --NOVEMBER  1975.
 !*==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
-SUBROUTINE CAUPDF(X,Pdf)
-REAL(kind=wp),intent(in) :: X
-REAL(kind=wp),intent(out):: Pdf
-REAL(kind=wp),parameter :: c = 0.31830988618379_wp
-!
-!  CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
-!
+subroutine caupdf(X,Pdf)
+real(kind=wp),intent(in) :: X
+real(kind=wp),intent(out):: Pdf
+real(kind=wp),parameter  :: c = 0.31830988618379_wp
+   !
+   !  CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
+   !
    Pdf = c*(1.0_wp/(1.0_wp+X*X))
-!
-END SUBROUTINE CAUPDF
+
+end subroutine caupdf
 !>
 !!##NAME
-!!    cauplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Cauchy
-!!    probability plot
+!!    cauplt(3f) - [M_datapac:LINE_PLOT] generate a Cauchy probability plot
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE CAUPLT(X,N)
+!!       SUBROUTINE CAUPLT(X,N)
+!!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
 !!
 !!##DESCRIPTION
 !!    CAUPLT(3f) generates a one-page Cauchy probability plot.
@@ -1623,7 +1685,7 @@ END SUBROUTINE CAUPDF
 !!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(X) = (1/pi) * (1/(1+X*X)).
+!!        f(X) = (1/pi) * (1/(1+X*X))
 !!
 !!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
@@ -1655,27 +1717,28 @@ END SUBROUTINE CAUPDF
 !!    program demo_cauplt
 !!    use M_datapac, only : cauplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call cauplt(x,y)
 !!    end program demo_cauplt
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 154-165.
+!!##REFERENCES
+!!   o Filliben, 'Techniques for Tail Length Analysis', proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and Testing (Aberdeen, Maryland, October, 1972),
+!!     Pages 425-450.
+!!   o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!     260-308.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -1683,22 +1746,18 @@ END SUBROUTINE CAUPDF
 !*==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUPLT(X,N)
-REAL(kind=wp) :: X(:)
-INTEGER       :: N
-REAL(kind=wp) :: an, arg, cc, hold, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
-!REAL(kind=wp),allocatable :: Y(:), W(:)
-REAL(kind=wp) :: Y(7500), W(7500)
-INTEGER       ::  i, iupper
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
 
-COMMON /BLOCK2/ WS(15000)
+REAL(kind=wp)            :: an, arg, cc, hold, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
+REAL(kind=wp)            :: Y(7500), W(7500)
+INTEGER                  :: i, iupper
+
+COMMON /BLOCK2_real32/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 EQUIVALENCE (W(1),WS(7501))
 
 DATA tau/10.02040649_wp/
-
-!   if(allocated(y))deallocate(y)
-!   if(allocated(w))deallocate(w)
-!   allocate(y(n),w(n)
 
       iupper = size(y)
 !
@@ -1781,12 +1840,16 @@ DATA tau/10.02040649_wp/
 END SUBROUTINE CAUPLT
 !>
 !!##NAME
-!!    cauppf(3f) - [M_datapac:STATISTICS:PP] compute the Cauchy percent point
+!!    cauppf(3f) - [M_datapac:PERCENT_POINT] compute the Cauchy percent point
 !!    function
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE CAUPPF(P,Ppf)
+!!       SUBROUTINE CAUPPF(P,Ppf)
+!!
+!!        REAL(kind=wp) :: P
+!!        REAL(kind=wp) :: Ppf
+!!        REAL(kind=wp) :: arg
 !!
 !!##DESCRIPTION
 !!    CAUPPF(3f) computes the percent point function value for the cauchy
@@ -1852,33 +1915,29 @@ END SUBROUTINE CAUPLT
 !*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUPPF(P,Ppf)
-REAL(kind=wp) :: arg , P , pi , Ppf
-!
-!---------------------------------------------------------------------
-!
-   DATA pi/3.14159265358979_wp/
-!
-!  CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
+REAL(kind=wp) :: P
+REAL(kind=wp) :: Ppf
+REAL(kind=wp) :: arg
+
+   !
+   !  CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
    IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
       WRITE (G_IO,99001)
       99001    FORMAT (' ',&
-      & '***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      & '***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO CAUPPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
       WRITE (G_IO,99002) P
       99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
       RETURN
    ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-      arg = pi*P
+      arg = G_pi*P
       Ppf = -COS(arg)/SIN(arg)
    ENDIF
-!
+
 END SUBROUTINE CAUPPF
 !>
 !!##NAME
-!!    cauran(3f) - [M_datapac:STATISTICS:RANDOM] generate Cauchy random numbers
+!!    cauran(3f) - [M_datapac:RANDOM] generate Cauchy random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -1911,35 +1970,33 @@ END SUBROUTINE CAUPPF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGE 15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!!                  1964, PAGE 36.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGE 231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
+!!##REFERENCES
+!!  o tocher, the art of simulation, 1963, page 15.
+!!  o hammersley and handscomb, monte carlo methods, 1964, page 36.
+!!  o filliben, simple and robust linear estimation of the location parameter
+!!    of a symmetric distribution (unpublished ph.d. dissertation, princeton
+!!    university), 1969, page 231.
+!!  o filliben, 'the percent point function', (unpublished manuscript),
+!!    1970, pages 28-31.
+!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!    pages 154-165.
 !*==cauran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAURAN(N,Iseed,X)
 REAL(kind=wp) :: arg , pi , X
 INTEGER :: i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -1951,7 +2008,7 @@ INTEGER :: i , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -1999,20 +2056,23 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE CAURAN
 !>
 !!##NAME
-!!    causf(3f) - [M_datapac:STATISTICS:SF] compute the Cauchy sparsity function
+!!    causf(3f) - [M_datapac:SPARSITY] compute the Cauchy sparsity function
 !!
 !!##SYNOPSIS
 !!
-!! SUBROUTINE CAUSF(P,Sf)
+!!
+!!     SUBROUTINE CAUSF(P,Sf)
 !!
 !!##DESCRIPTION
-!!    causf(3f) computes the sparsity function value for the cauchy
+!!
+!!    CAUSF(3f) computes the sparsity function value for the cauchy
 !!    distribution with median = 0 and 75% point = 1.
 !!
-!!    this distribution is defined for all x and has the probability density
-!!    function f(x) = (1/pi)*(1/(1+x*x)).
+!!    This distribution is defined for all X and has the probability density
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!        function f(X) = (1/pi)*(1/(1+X*X))
+!!
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
 !!    probability density function (but in units of p rather than x).
 !!
@@ -2034,42 +2094,43 @@ END SUBROUTINE CAURAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 154-165.
+!!
+!!##REFERENCES
+!!
+!!  o filliben, simple and robust linear estimation of the location parameter
+!!    of a symmetric distribution (unpublished ph.d. dissertation, princeton
+!!    university), 1969, pages 21-44, 229-231.
+!!  o filliben, 'the percent point function', (unpublished manuscript),
+!!    1970, pages 28-31.
+!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!    pages 154-165.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==causf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUSF(P,Sf)
 REAL(kind=wp) :: arg , P , pi , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
 !
       DATA pi/3.14159265358979_wp/
@@ -2096,7 +2157,7 @@ REAL(kind=wp) :: arg , P , pi , Sf
 END SUBROUTINE CAUSF
 !>
 !!##NAME
-!!    chscdf(3f) - [M_datapac:STATISTICS:CD] compute the chi-square cumulative
+!!    chscdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the chi-square cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -2136,17 +2197,14 @@ END SUBROUTINE CAUSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGE 176,
-!! !                 FORMULA 28, AND PAGE 180, FORMULA 33.1.
-!! !               --OWEN, HANDBOOK OF STATISTICAL TABLES,
-!! !                 1962, PAGES 50-55.
-!! !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
-!! !                 FOR STATISTICIANS, VOLUME 1, 1954,
-!! !                 PAGES 122-131.
+!!##REFERENCES
+!!  o national bureau of standards applied mathematics series 55, 1964,
+!!    page 941, formulae 26.4.4 and 26.4.5.
+!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!    page 176, formula 28, and page 180, formula 33.1.
+!!  o owen, handbook of statistical tables, 1962, pages 50-55.
+!!  o pearson and hartley, biometrika tables for statisticians, volume 1,
+!!    1954, pages 122-131.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -2158,16 +2216,16 @@ SUBROUTINE CHSCDF(X,Nu,Cdf)
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE CHI-SQUARED DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -2362,7 +2420,7 @@ INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 99999 END SUBROUTINE CHSCDF
 !>
 !!##NAME
-!!    chsplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a chi-square probability
+!!    chsplt(3f) - [M_datapac:LINE_PLOT] generate a chi-square probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -2412,27 +2470,25 @@ INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15.
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 46-51.
+!!##REFERENCES
+!!  o wilk, gnanadesikan, and huyett, 'probability plots for the gamma
+!!    distribution', technometrics, 1962, pages 1-15.
+!!  o filliben, 'techniques for tail length analysis', proceedings of the
+!!    eighteenth conference on the design of experiments in army research
+!!    development and testing (aberdeen, maryland, october, 1972), pages
+!!    425-450.
+!!  o hahn and shapiro, statistical methods in engineering, 1967, pages
+!!    260-308.
+!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!    pages 166-206.
+!!  o hastings and peacock, statistical distributions--a handbook for students
+!!    and practitioners, 1975, pages 46-51.
 !*==chsplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSPLT(X,N,Nu)
@@ -2441,7 +2497,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     yslope
 INTEGER i , iupper , N , Nu
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -2455,7 +2511,7 @@ INTEGER i , iupper , N , Nu
 !                 --NU SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, CHSPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
@@ -2464,7 +2520,7 @@ INTEGER i , iupper , N , Nu
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -2578,7 +2634,7 @@ INTEGER i , iupper , N , Nu
 END SUBROUTINE CHSPLT
 !>
 !!##NAME
-!!    chsppf(3f) - [M_datapac:STATISTICS:PP] compute the chi-square percent
+!!    chsppf(3f) - [M_datapac:PERCENT_POINT] compute the chi-square percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -2586,7 +2642,7 @@ END SUBROUTINE CHSPLT
 !!       SUBROUTINE CHSPPF(P,Nu,Ppf)
 !!
 !!##DESCRIPTION
-!!    chsppf(3f) computes the percent point function value for the
+!!    CHSPPF(3f) computes the percent point function value for the
 !!    chi-squared distribution with integer degrees of freedom parameter
 !!    = nu.
 !!
@@ -2616,33 +2672,32 @@ END SUBROUTINE CHSPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15,
-!! !                 ESPECIALLY PAGES 3-5.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41,
-!! !                 AND PAGES 940-943.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 46-51.
+!!
+!!##REFERENCES
+!!  o wilk, gnanadesikan, and huyett, 'probability plots for the gamma
+!!    distribution', technometrics, 1962, pages 1-15, especially pages 3-5.
+!!  o national bureau of standards applied mathematics series 55, 1964,
+!!    page 257, formula 6.1.41, and pages 940-943.
+!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!    pages 166-206.
+!!  o hastings and peacock, statistical distributions--a handbook for
+!!    students and practitioners, 1975, pages 46-51.
 !*==chsppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSPPF(P,Nu,Ppf)
 REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 INTEGER icount , iloop , j , maxit , Nu
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -2650,9 +2705,9 @@ INTEGER icount , iloop , j , maxit , Nu
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE CHI-SQUARED DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -2836,7 +2891,7 @@ INTEGER icount , iloop , j , maxit , Nu
 END SUBROUTINE CHSPPF
 !>
 !!##NAME
-!!    chsran(3f) - [M_datapac:STATISTICS:RANDOM] generate chi-square random numbers
+!!    chsran(3f) - [M_datapac:RANDOM] generate chi-square random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -2870,30 +2925,27 @@ END SUBROUTINE CHSPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 34-35.
-!! !               --MOOD AND GRABLE, INTRODUCTION TO THE
-!! !                 THEORY OF STATISTICS, 1963, PAGES 226-227.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGE 171.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 48.
+!!##REFERENCES
+!!  o tocher, the art of simulation, 1963, pages 34-35.
+!!  o mood and grable, introduction to the theory of statistics, 1963,
+!!    pages 226-227.
+!!  o johnson and kotz, continuous univariate distributions--1, 1970,
+!!    page 171.
+!!  o hastings and peacock, statistical distributions--a handbook for students
+!!    and practitioners, 1975, page 48.
 !*==chsran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 INTEGER i , Iseed , j , N , Nu
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --NU     = THE INTEGER DEGREES OF FREEDOM
 !                                (PARAMETER) FOR THE CHI-SQUARED
 !                                DISTRIBUTION.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -2906,7 +2958,7 @@ INTEGER i , Iseed , j , N , Nu
 !                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--FEBRUARY  1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -3023,14 +3075,14 @@ SUBROUTINE CODE(X,N,Y)
 REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 INTEGER i , iupper , j , N , numdis
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!     INPUT ARGUMENTS--X      = THE  VECTOR
 !                                OF OBSERVATIONS TO BE CODED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE CODED VALUES
 !                                WILL BE PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH WILL CONTAIN THE CODED VALUES
 !             CORRESPONDING TO THE OBSERVATIONS IN
 !             THE VECTOR X.
@@ -3052,7 +3104,7 @@ INTEGER i , iupper , j , N , numdis
 !
       DIMENSION X(:) , Y(:)
       DIMENSION DISt(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (DISt(1),WS(1))
 !
       iupper = 15000
@@ -3151,8 +3203,8 @@ END SUBROUTINE CODE
 !!       SUBROUTINE COPY(X,N,Y)
 !!
 !!##DESCRIPTION
-!!    copy(3f) copies the contents of the single precision vector x into
-!!    the single precision vector y.
+!!    copy(3f) copies the contents of the precision precision vector x into
+!!    the precision precision vector y.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3186,17 +3238,17 @@ SUBROUTINE COPY(X,N,Y)
 REAL(kind=wp) :: hold , X , Y
 INTEGER i , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS TO BE COPIED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE COPIED DATA VALUES
 !                                FROM X WILL BE SEQUENTIALLY PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y.
+!     OUTPUT--THE  VECTOR Y.
 !             WHICH WILL HAVE ITS
 !             FIRST N ELEMENTS IDENTICAL
-!             TO THE SINGLE PRECISION VECTOR X.
+!             TO THE  VECTOR X.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
@@ -3257,7 +3309,7 @@ END SUBROUTINE COPY
 !!##DESCRIPTION
 !!    corr(3f) computes the sample correlation coefficient between the 2
 !!    sets of data in the input vectors x and y. The sample correlation
-!!    coefficient will be a single precision value between -1.0 and 1.0
+!!    coefficient will be a precision precision value between -1.0 and 1.0
 !!    (inclusively).
 !!
 !!##OPTIONS
@@ -3278,30 +3330,34 @@ END SUBROUTINE COPY
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 235-236.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 292-293.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 172-198.
+!!
+!!##REFERENCES
+!!  o kendall and stuart, the advanced theory of statistics, volume 1,
+!!    edition 2, 1963, pages 235-236.
+!!  o kendall and stuart, the advanced theory of statistics, volume 2,
+!!    edition 1, 1961, pages 292-293.
+!!  o snedecor and cochran, statistical methods, edition 6, 1967, pages
+!!    172-198.
 !*==corr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CORR(X,Y,N,Iwrite,C)
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 INTEGER i , iflag , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
 !                                OF DATA.
-!                     --Y      = THE SINGLE PRECISION VECTOR OF
+!                     --Y      = THE  VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE SECOND SET
 !                                OF DATA.
@@ -3320,14 +3376,14 @@ INTEGER i , iflag , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE CORRELATION COEFFICIENT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--C      = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--C      = THE  VALUE OF THE
 !                                COMPUTED SAMPLE CORRELATION COEFFICIENT
 !                                BETWEEN THE 2 SETS OF DATA
 !                                IN THE INPUT VECTORS X AND Y.
-!                                THIS SINGLE PRECISION VALUE
+!                                THIS  VALUE
 !                                WILL BE BETWEEN -1.0 AND 1.0
 !                                (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE CORRELATION COEFFICIENT BETWEEN THE 2 SETS
 !             OF DATA IN THE INPUT VECTORS X AND Y.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
@@ -3336,7 +3392,7 @@ INTEGER i , iflag , Iwrite , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -3424,7 +3480,7 @@ END SUBROUTINE CORR
 !!       SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 !!
 !!##DESCRIPTION
-!!    count(3f) computes the number of observations between xmin and xmax
+!!    COUNT(3f) computes the number of observations between xmin and xmax
 !!    (inclusively) in the input vector x.
 !!
 !!##OPTIONS
@@ -3445,32 +3501,36 @@ END SUBROUTINE CORR
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 207-213.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGES 81-82, 228-231.
+!!
+!!##REFERENCES
+!!  o snedecor and cochran, statistical methods, edition 6, 1967, pages
+!!    207-213.
+!!  o dixon and massey, introduction to statistical analysis, edition 2,
+!!    1957, pages 81-82, 228-231.
 !*==count.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 INTEGER i , isum , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
@@ -3485,16 +3545,16 @@ INTEGER i , isum , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE COUNT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XCOUNT = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XCOUNT = THE  VALUE OF THE
 !                                COMPUTED SAMPLE COUNT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE COUNT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
@@ -3618,8 +3678,8 @@ REAL(kind=wp) :: D, dis, dn, DUM1, DUM2, Eta, hold, Q, R, risj, Tol, tol2, WS
 INTEGER i, Insing, ip, IPIvot, iqarg, iqarg1, iqarg2, Irank, irarg, irarg1, irarg2, is, ism1, isp1, j, K, l, m, N
 LOGICAL fsum
 DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
-COMMON /BLOCK2/ WS(15000)
-COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+COMMON /BLOCK2_real32/ WS(15000)
+COMMON /BLOCK3_real32/ DUM1(3000) , DUM2(3000)
 EQUIVALENCE (Q(1),WS(1))          !     Q--USED AND CHANGED
 EQUIVALENCE (R(1),WS(10001))      !     R--DEFINED
 EQUIVALENCE (D(1),WS(12501))      !     D--PERMANENTLY DEFINED
@@ -3764,7 +3824,7 @@ END SUBROUTINE DECOMP
 !!       SUBROUTINE DEFINE(X,N,Xnew)
 !!
 !!##DESCRIPTION
-!!    define(3f) sets all of the elements in the single precision vector
+!!    define(3f) sets all of the elements in the precision precision vector
 !!    x equal to xnew.
 !!
 !!    define(3f) is useful in defining a vector of constants.
@@ -3804,15 +3864,15 @@ SUBROUTINE DEFINE(X,N,Xnew)
 INTEGER i , N
 REAL(kind=wp) :: X , Xnew
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XNEW   = THE SINGLE PRECISION VALUE
+!                     --XNEW   = THE  VALUE
 !                                TO WHICH ALL OF THE
 !                                OBSERVATIONS IN THE VECTOR X
 !                                WILL BE SET.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             EVERY ELEMENT OF WHICH
 !             WILL BE EQUAL TO XNEW.
 !             ALSO, 3 LINES OF SUMMARY INFORMATION
@@ -3822,7 +3882,7 @@ REAL(kind=wp) :: X , Xnew
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED  VERSION--JULY      1976.
 !
@@ -3878,7 +3938,7 @@ END SUBROUTINE DEFINE
 !!
 !!##DESCRIPTION
 !!
-!!    delete(3f) deletes all observations in the single precision vector
+!!    delete(3f) deletes all observations in the precision precision vector
 !!    x which are inside the closed (inclusive) interval defined by xmin
 !!    and xmax, while retaining all observations outside of this interval.
 !!
@@ -3920,15 +3980,15 @@ SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE DELETED.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE DELETED.
@@ -3937,7 +3997,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !                                OF THE OBSERVATIONS INSIDE
 !                                (INCLUSIVELY) THE INTERVAL
 !                                OF INTEREST HAVE BEEN DELETED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             IN WHICH ALL THOSE VALUES INSIDE
 !             (INCLUSIVELY) THE INTERVAL OF INTEREST
 !             HAVE BEEN DELETED, AND
@@ -3953,7 +4013,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
 !              MADE WHATEVER DELETIONS ARE APPROPRIATE,
 !              THE OUTPUT VECTOR X WILL BE 'PACKED';
@@ -4116,9 +4176,9 @@ END SUBROUTINE DELETE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --GRANGER AND HATANAKA, PAGES 170 TO 189,
-!! !                 ESPECIALLY PAGES 173, 177, AND 182.
+!!##REFERENCES
+!!  o granger and hatanaka, pages 170 to 189, especially pages 173, 177,
+!!    and 182.
 !*==demod.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEMOD(X,N,F)
@@ -4126,11 +4186,11 @@ REAL(kind=wp) :: ai, aiflag, aimax2, alen1, alen2, an, del, F, fest, fmin, hold,
 REAL(kind=wp) :: Z, zmax, zmin, znew
 INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iupper, j, lenma1, lenma2, N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!                      F      = THE SINGLE PRECISION
+!                      F      = THE
 !                               DEMODULATION FREQUENCY.
 !                               F IS IN UNITS OF CYCLES PER DATA POINT.
 !                               F IS BETWEEN 0.0 AND 0.5 (EXCLUSIVELY).
@@ -4149,7 +4209,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 !                   SMALLER THAN 0.5.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTX.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IN ORDER THAT THE RESULTS OF THE COMPLEX DEMODULATION
 !              BE VALID AND PROPERLY INTERPRETED, THE INPUT DATA
 !              IN X SHOULD BE EQUI-SPACED IN TIME
@@ -4203,7 +4263,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 !
       DIMENSION X(:)
       DIMENSION Y1(5000) , Y2(5000) , Z(5000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y1(1),WS(1))
       EQUIVALENCE (Y2(1),WS(5001))
       EQUIVALENCE (Z(1),WS(10001))
@@ -4396,107 +4456,160 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 END SUBROUTINE DEMOD
 !>
 !!##NAME
-!!    dexcdf(3f) - [M_datapac:STATISTICS:CD] compute the double exponential
-!!    cumulative distribution function
+!!    dexcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the double
+!!    exponential cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE DEXCDF(X,Cdf)
 !!
+!!        real(kind=wp),intent(in)  :: X
+!!        real(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    dexcdf(3f) computes the cumulative distribution function value for the
-!!    double exponential (laplace) distribution with mean = 0 and standard
+!!    DEXCDF(3f) computes the cumulative distribution function value for the
+!!    double exponential (Laplace) distribution with mean = 0 and standard
 !!    deviation = sqrt(2).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = 0.5*exp(-abs(x)).
+!!        f(x) = 0.5*exp(-abs(x))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X     The precision precision value at which the cumulative distribution
+!!          function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!    CDF   The precision precision cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_dexcdf
-!!    use M_datapac, only : dexcdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : dexcdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call dexcdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call dexcdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_dexcdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                                  X
+!!      0.9166666E+02 I                                                  X
+!!      0.8333334E+02 I                                                  X
+!!      0.7500000E+02 I                                                  X
+!!      0.6666667E+02 I                                                  X
+!!      0.5833334E+02 I                                                  X
+!!      0.5000000E+02 -                                                  X
+!!      0.4166667E+02 I                                                 XX
+!!      0.3333334E+02 I                                                 X
+!!      0.2500000E+02 I                                               XXX
+!!      0.1666667E+02 I                                           XXXXX
+!!      0.8333336E+01 I                                   X XXXXXXX
+!!      0.0000000E+00 -                  X X X X X X X X X
+!!     -0.8333328E+01 I         XXXXXXX X
+!!     -0.1666666E+02 I     XXXXX
+!!     -0.2499999E+02 I   XXX
+!!     -0.3333333E+02 I   X
+!!     -0.4166666E+02 I  XX
+!!     -0.5000000E+02 -  X
+!!     -0.5833333E+02 I  X
+!!     -0.6666666E+02 I  X
+!!     -0.7500000E+02 I  X
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.2270E-04  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970, PAGES 22-36.
+!!
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!    Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==dexcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
-SUBROUTINE DEXCDF(X,Cdf)
-REAL(kind=wp) :: Cdf , X
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF.
-!---------------------------------------------------------------------
+subroutine dexcdf(X,Cdf)
+real(kind=wp),intent(in)  :: X
+real(kind=wp),intent(out) :: Cdf
 !
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
-!-----START POINT-----------------------------------------------------
-!
-      IF ( X<=0.0_wp ) Cdf = 0.5_wp*EXP(X)
-      IF ( X>0.0_wp ) Cdf = 1.0_wp - (0.5_wp*EXP(-X))
-!
-END SUBROUTINE DEXCDF
+      if ( X<=0.0_wp ) Cdf = 0.5_wp*exp(X)
+      if ( X>0.0_wp ) Cdf = 1.0_wp - (0.5_wp*exp(-X))
+
+end subroutine dexcdf
 !>
 !!##NAME
-!!    dexpdf(3f) - [M_datapac:STATISTICS:PD] compute the double exponential
-!!    probability density function
+!!    dexpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the double
+!!    exponential probability density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE DEXPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    dexpdf(3f) computes the probability density function value for the
-!!    double exponential (laplace) distribution with mean = 0 and standard
+!!    DEXPDF(3f) computes the probability density function value for the
+!!    double exponential (Laplace) distribution with mean = 0 and standard
 !!    deviation = sqrt(2).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = 0.5*exp(-abs(x)).
+!!        f(X) = 0.5*exp(-abs(X))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X     The value at which the probability density function is to
+!!          be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!    PDF   The probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_dexpdf
-!!    use M_datapac, only : dexpdf
+!!    !@(#) line plotter graph
+!!    !@(#) of probability density function for Laplace distribution
+!!    use M_datapac, only : dexpdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call dexpdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call dexpdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_dexpdf
 !!
 !!   Results:
@@ -4504,49 +4617,39 @@ END SUBROUTINE DEXCDF
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE DEXPDF(X,Pdf)
-REAL(kind=wp) :: arg , Pdf , X
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!    Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --SEPTEMBER 1978.
+!*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine dexpdf(X,Pdf)
+real(kind=wp),intent(in)  :: X
+real(kind=wp),intent(out) :: Pdf
+
+real(kind=wp) :: arg
+
 !
-!---------------------------------------------------------------------
-!
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS. -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
       arg = X
       IF ( X<0.0_wp ) arg = -X
       Pdf = 0.5_wp*EXP(-arg)
-!
-END SUBROUTINE DEXPDF
+
+end subroutine dexpdf
 !>
 !!##NAME
-!!    dexplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a double exponential
+!!    dexplt(3f) - [M_datapac:LINE_PLOT] generate a double exponential
 !!    probability plot
 !!
 !!##SYNOPSIS
@@ -4597,22 +4700,25 @@ END SUBROUTINE DEXPDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
+!!
+!!##REFERENCES
+!!  o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!    EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!    DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!    425-450.
+!!  o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!    260-308.
+!!  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!    PAGES 22-36.
 !*==dexplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEXPLT(X,N)
@@ -4620,7 +4726,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -4630,7 +4736,7 @@ INTEGER :: i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4640,7 +4746,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -4735,7 +4841,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE DEXPLT
 !>
 !!##NAME
-!!    dexppf(3f) - [M_datapac:STATISTICS:PP] compute the double exponential
+!!    dexppf(3f) - [M_datapac:PERCENT_POINT] compute the double exponential
 !!    percent point function
 !!
 !!##SYNOPSIS
@@ -4743,16 +4849,16 @@ END SUBROUTINE DEXPLT
 !!       SUBROUTINE DEXPPF(P,Ppf)
 !!
 !!##DESCRIPTION
-!!    dexppf(3f) computes the percent point function value for the double
+!!    DEXPPF(3f) computes the percent point function value for the double
 !!    exponential (laplace) distribution with mean = 0 and standard deviation
 !!    = sqrt(2).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all x and has the probability
 !!    density function
 !!
 !!       f(x) = 0.5*exp(-abs(x)).
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
@@ -4776,19 +4882,21 @@ END SUBROUTINE DEXPLT
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
+!!
+!!##REFERENCES
+!!  o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION PARAMETER
+!!    OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION, PRINCETON
+!!    UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!  o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!    1970, PAGES 28-31.
+!!  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!    PAGES 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4797,18 +4905,18 @@ END SUBROUTINE DEXPLT
 SUBROUTINE DEXPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -4833,26 +4941,41 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE DEXPPF
 !>
 !!##NAME
-!!    dexran(3f) - [M_datapac:STATISTICS:RANDOM] generate double exponential
+!!    dexran(3f) - [M_datapac:RANDOM] generate double exponential
 !!    random numbers
 !!
 !!##SYNOPSIS
 !!
-!!       SUBROUTINE DEXRAN(N,Istart,X)
+!!       subroutine dexran(N,Istart,X)
+!!
+!!        integer,intent(in) :: N
+!!        integer            :: Istart
+!!        real(kind=wp)      :: X(:)
 !!
 !!##DESCRIPTION
-!!    dexran(3f) generates a random sample of size n from the double
-!!    exponential (laplace) distribution with mean = 0 and standard deviation
+!!    DEXRAN(3f) generates a random sample of size n from the double
+!!    exponential (Laplace) distribution with mean = 0 and standard deviation
 !!    = sqrt(2).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = 0.5*exp(-abs(x)).
+!!        f(X) = 0.5*exp(-abs(X))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    N        The desired integer number of random numbers to be generated.
+!!
+!!    ISTART   An integer flag code which (if set to 0) will start the
+!!             generator over and hence produce the same random sample
+!!             over and over again upon successive calls to this subroutine
+!!             within a run; or (if set to some integer value not equal to
+!!             0, like, say, 1) will allow the generator to continue from
+!!             where it stopped and hence produce different random samples
+!!             upon successive calls to this subroutine within a run.
+!!##OUTPUT ARGUMENTS
+!!
+!!    X     A precision precision vector (of dimension at least N) into which
+!!          the generated random sample will be placed.
 !!
 !!##EXAMPLES
 !!
@@ -4868,104 +4991,66 @@ END SUBROUTINE DEXPPF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGE 231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
-!*==dexran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-      SUBROUTINE DEXRAN(N,Istart,X)
-INTEGER :: i , Istart , N
-REAL(kind=wp) :: q , X
-!
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --ISTART = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL START THE
-!                                GENERATOR OVER AND HENCE
-!                                PRODUCE THE SAME RANDOM SAMPLE
-!                                OVER AND OVER AGAIN
-!                                UPON SUCCESSIVE CALLS TO
-!                                THIS SUBROUTINE WITHIN A RUN; OR
-!                                (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0,
-!                                LIKE, SAY, 1) WILL ALLOW
-!                                THE GENERATOR TO CONTINUE
-!                                FROM WHERE IT STOPPED
-!                                AND HENCE PRODUCE DIFFERENT
-!                                RANDOM SAMPLES UPON
-!                                SUCCESSIVE CALLS TO
-!                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE DOUBLE EXPONENTIAL
-!             (LAPLACE) DISTRIBUTION WITH MEAN = 0 AND
-!             STANDARD DEVIATION = SQRT(2).
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!
+!!##REFERENCES
+!!  o Tocher, The Art of Simulation, 1963, Pages 14-15.
+!!  o Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+!!  o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!    of a Symmetric Distribution (Unpublished PH.D. dissertation, Princeton
+!!    University), 1969, Page 231.
+!!  o Filliben, 'The percent point function', (Unpublished manuscript),
+!!    1970, Pages 28-31.
+!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!    Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
+!*==dexran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine dexran(N,Istart,X)
+integer,intent(in) :: N
+integer,intent(in) :: Istart
+real(kind=wp)      :: X(:)
+
+integer            :: i
+real(kind=wp)      :: q
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE DEXRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
-         CALL UNIRAN(N,Istart,X)
-!
-!     GENERATE N DOUBLE EXPONENTIAL RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
-         DO i = 1 , N
-            q = X(i)
-            IF ( q<=0.5_wp ) X(i) = LOG(2.0_wp*q)
-            IF ( q>0.5_wp ) X(i) = -LOG(2.0_wp*(1.0-q))
-         ENDDO
-      ENDIF
-!
-END SUBROUTINE DEXRAN
+   if ( N<1 ) then
+      write (G_io,99001)
+      99001 format (' ***** FATAL ERROR--THE FIRST INPUT ARGUMENT TO DEXRAN(3f) IS NON-POSITIVE *****')
+      write (G_io,99002) N
+      99002 format (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+   else
+      !
+      !  GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+      !
+      call uniran(N,Istart,X)
+      !
+      !  GENERATE N DOUBLE EXPONENTIAL RANDOM NUMBERS
+      !  USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+      !
+      do i = 1 , N
+         q = X(i)
+         if ( q<=0.5_wp ) X(i) = log(2.0_wp*q)
+         if ( q>0.5_wp ) X(i) = -log(2.0_wp*(1.0-q))
+      enddo
+   endif
+
+end subroutine dexran
 !>
 !!##NAME
-!!    dexsf(3f) - [M_datapac:STATISTICS:SF] compute the double exponential
+!!    dexsf(3f) - [M_datapac:SPARSITY] compute the double exponential
 !!    sparsity function
 !!
 !!##SYNOPSIS
@@ -5004,37 +5089,40 @@ END SUBROUTINE DEXRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 22-36.
 !*==dexsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEXSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5071,7 +5159,7 @@ END SUBROUTINE DEXSF
 !!       SUBROUTINE DISCR2(X,N,Numcla,Y)
 !!
 !!##DESCRIPTION
-!!    discr2(3f) 'discretizes' the data of the single precision vector x
+!!    discr2(3f) 'discretizes' the data of the precision precision vector x
 !!    into numcla classes.
 !!
 !!    all values in the vector x within a given class will be mapped into
@@ -5127,20 +5215,20 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
      &     xmax , xmin , Y
 INTEGER i , icount , ip , iupncl , N , Numcla
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
 !                     --NUMLEV = THE INTEGER NUMBER OF CLASSES
 !                                DESIRED IN THE DISCRETIZATION.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                                DISCRETIZED VALUES (= THE CLASS
 !                                MIDPOINTS) CORRESPONDING TO
 !                                THE CONTINUOUS VALUES IN THE VECTOR X.
 !                                THERE WILL RESULT N SUCH DISCRETIZED
 !                                VALUES.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH CONTAINS N DISCRETIZED VALUES
 !             (= THE CLASS MIDPOINTS)
 !             CORRESPONDING TO THE N
@@ -5157,7 +5245,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NUMCLA SHOULD BE POSITIVE AND NOT EXCEED 1000
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THIS SUBROUTINE DIFFERS FROM THE DISCR3
 !              SUBROUTINE INASMUCH AS THIS SUBROUTINE
 !              PERFORMS ITS DISCRETIZATION BY OUTPUTING
@@ -5324,7 +5412,7 @@ END SUBROUTINE DISCR2
 !!       SUBROUTINE DISCR3(X,N,Numcla,Y)
 !!
 !!##DESCRIPTION
-!!    discr3(3f) 'discretizes' the data on the single precision vector x
+!!    discr3(3f) 'discretizes' the data on the precision precision vector x
 !!    into numcla classes.
 !!
 !!    all values in the vector x within a given class will be mapped into
@@ -5383,19 +5471,19 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
      &     xmin , Y
 INTEGER i , icount , ip , iupncl , N , Numcla
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
 !                     --NUMLEV = THE INTEGER NUMBER OF CLASSES
 !                                DESIRED IN THE DISCRETIZATION.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                                DISCRETIZED VALUES CORRESPONDING TO
 !                                THE CONTINUOUS VALUES IN THE VECTOR X.
 !                                THERE WILL RESULT N SUCH DISCRETIZED
 !                                VALUES.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH CONTAINS N DISCRETIZED VALUES
 !             CORRESPONDING TO THE N
 !             CONTINUOUS VALUES IN THE
@@ -5411,7 +5499,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NUMCLA SHOULD BE POSITIVE AND NOT EXCEED 1000
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THIS SUBROUTINE DIFFERS FROM THE DISCR2
 !              SUBROUTINE INASMUCH AS THIS SUBROUTINE
 !              PERFORMS ITS DISCRETIZATION BY OUTPUTING
@@ -5568,7 +5656,7 @@ END SUBROUTINE DISCR3
 !!       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
 !!
 !!##DESCRIPTION
-!!    discre(3f) 'discretizes' the data of the single precision vector x.
+!!    discre(3f) 'discretizes' the data of the precision precision vector x.
 !!    the first class interval is from xmin to xmin + xdel; the second
 !!    class interval is from xmin+ xdel to xmin + 2*xdel; etc.
 !!
@@ -5621,28 +5709,28 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
 INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER BOUNDARY
 !                                (INCLUSIVELY) OF THE LOWERMOST
 !                                CLASS.
-!                     --XDEL   = THE SINGLE PRECISION VALUE
+!                     --XDEL   = THE  VALUE
 !                                OF THE CLASS WIDTH.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER BOUNDARY
 !                                (INCLUSIVELY) OF THE UPPERMOST
 !                                CLASS.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                                DISCRETIZED VALUES (= CLASS
 !                                MIDPOINTS) CORRESPONDING TO
 !                                THE CONTINUOUS VALUES IN THE VECTOR X.
 !                                THERE WILL RESULT N SUCH DISCRETIZED
 !                                VALUES.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH CONTAINS N DISCRETIZED VALUES
 !             (= CLASS MIDPOINTS)
 !             CORRESPONDING TO THE N
@@ -5660,7 +5748,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 !                   OF N FOR THIS SUBROUTINE.
 !                 --XDEL SHOULD BE POSITIVE.
 !                 --(XMAX-XMIN)/XDEL SHOULD NOT EXCEED 999.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IT IS SUGGESTED THAT XMIN, XDEL,
 !              AND XMAX HAVE AT LEAST 1 MORE
 !              DECIMAL PLACE THAN THE DATA VALUES
@@ -5930,7 +6018,7 @@ double precision          :: sum , prod , dparpr
 end subroutine dot
 !>
 !!##NAME
-!!    ev1cdf(3f) - [M_datapac:STATISTICS:CD] compute the extreme value type 1
+!!    ev1cdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the extreme value type 1
 !!    (Gumbel) cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -5973,26 +6061,26 @@ end subroutine dot
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev1cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1CDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE EXTREME VALUE TYPE 1
 !             DISTRIBUTION WITH MEAN = EULER'S NUMBER = 0.57721566
 !             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6008,7 +6096,7 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE EV1CDF
 !>
 !!##NAME
-!!    ev1plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 1
+!!    ev1plt(3f) - [M_datapac:LINE_PLOT] generate a extreme value type 1
 !!    (Gumbel) probability plot
 !!
 !!##SYNOPSIS
@@ -6061,22 +6149,25 @@ END SUBROUTINE EV1CDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev1plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1PLT(X,N)
@@ -6084,7 +6175,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -6094,7 +6185,7 @@ INTEGER :: i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -6103,7 +6194,7 @@ INTEGER :: i , iupper , N
 !---------------------------------------------------------------------
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -6199,7 +6290,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE EV1PLT
 !>
 !!##NAME
-!!    ev1ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 1
+!!    ev1ppf(3f) - [M_datapac:PERCENT_POINT] compute the extreme value type 1
 !!    (Gumbel) percent point function
 !!
 !!##SYNOPSIS
@@ -6245,22 +6336,22 @@ END SUBROUTINE EV1PLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev1ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1PPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE EXTREME VALUE TYPE 1 DISTRIBUTION
 !             WITH MEAN = EULER'S NUMBER = 0.57721566
 !             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
@@ -6268,7 +6359,7 @@ REAL(kind=wp) :: P , Ppf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6295,7 +6386,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE EV1PPF
 !>
 !!##NAME
-!!    ev1ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 1
+!!    ev1ran(3f) - [M_datapac:RANDOM] generate extreme value type 1
 !!    (Gumbel) random numbers
 !!
 !!##SYNOPSIS
@@ -6337,10 +6428,11 @@ END SUBROUTINE EV1PPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -6351,10 +6443,10 @@ SUBROUTINE EV1RAN(N,Iseed,X)
 INTEGER i , Iseed , N
 REAL(kind=wp) :: X(:)
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -6390,7 +6482,7 @@ REAL(kind=wp) :: X(:)
 END SUBROUTINE EV1RAN
 !>
 !!##NAME
-!!    ev2cdf(3f) - [M_datapac:STATISTICS:CD] compute the extreme value type 2
+!!    ev2cdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the extreme value type 2
 !!    (Frechet) cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -6399,7 +6491,7 @@ END SUBROUTINE EV1RAN
 !!
 !!##DESCRIPTION
 !!    ev2cdf(3f) computes the cumulative distribution function value for
-!!    the extreme value type 2 distribution with single precision tail
+!!    the extreme value type 2 distribution with precision precision tail
 !!    length parameter = gamma.
 !!
 !!    the extreme value type 2 distribution used herein is defined for all
@@ -6431,31 +6523,31 @@ END SUBROUTINE EV1RAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev2cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2CDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE EXTREME VALUE TYPE 2
 !             DISTRIBUTION WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE NON-NEGATIVE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6491,7 +6583,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 END SUBROUTINE EV2CDF
 !>
 !!##NAME
-!!    ev2plt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a extreme value type 2
+!!    ev2plt(3f) - [M_datapac:LINE_PLOT] generate a extreme value type 2
 !!    (Frechet) probability plot
 !!
 !!##SYNOPSIS
@@ -6547,16 +6639,15 @@ END SUBROUTINE EV2CDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -6570,11 +6661,11 @@ REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE EXTREME VALUE TYPE 2 PROBABILITY PLOT.
@@ -6584,13 +6675,13 @@ INTEGER i , iupper , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -6706,7 +6797,7 @@ INTEGER i , iupper , N
 END SUBROUTINE EV2PLT
 !>
 !!##NAME
-!!    ev2ppf(3f) - [M_datapac:STATISTICS:PP] compute the extreme value type 2
+!!    ev2ppf(3f) - [M_datapac:PERCENT_POINT] compute the extreme value type 2
 !!    (Frechet) percent point function
 !!
 !!##SYNOPSIS
@@ -6715,7 +6806,7 @@ END SUBROUTINE EV2PLT
 !!
 !!##DESCRIPTION
 !!    ev2ppf(3f) computes the percent point function value for the extreme
-!!    value type 2 distribution with single precision tail length parameter
+!!    value type 2 distribution with precision precision tail length parameter
 !!    = gamma.
 !!
 !!    the extreme value type 2 distribution used herein is defined for all
@@ -6751,25 +6842,25 @@ END SUBROUTINE EV2PLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2PPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE EXTREME VALUE TYPE 2 DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -6777,7 +6868,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6811,7 +6902,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 END SUBROUTINE EV2PPF
 !>
 !!##NAME
-!!    ev2ran(3f) - [M_datapac:STATISTICS:RANDOM] generate extreme value type 2
+!!    ev2ran(3f) - [M_datapac:RANDOM] generate extreme value type 2
 !!    (Frechet) random numbers
 !!
 !!##SYNOPSIS
@@ -6865,13 +6956,13 @@ SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X(:)
 INTEGER i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -6884,7 +6975,7 @@ INTEGER i , Iseed , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !---------------------------------------------------------------------
 !
@@ -6921,7 +7012,7 @@ INTEGER i , Iseed , N
 END SUBROUTINE EV2RAN
 !>
 !!##NAME
-!!    expcdf(3f) - [M_datapac:STATISTICS:CD] compute the exponential cumulative
+!!    expcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the exponential cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -6955,32 +7046,36 @@ END SUBROUTINE EV2RAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!!
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
 !*==expcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPCDF(X,Cdf)
 IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7009,94 +7104,92 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE EXPCDF
 !>
 !!##NAME
-!!    exppdf(3f) - [M_datapac:STATISTICS:PD] compute the exponential probability
+!!    exppdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the exponential probability
 !!    density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE EXPPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in) :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    exppdf(3f) computes the probability density function value for the
+!!    EXPPDF(3f) computes the probability density function value for the
 !!    exponential distribution with mean = 1 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x, and has the
+!!    This distribution is defined for all non-negative X, and has the
 !!    probability density function
 !!
-!!       f(x) = exp(-x).
+!!       f(X) = exp(-X)
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X    The value at which the probability density
+!!         function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PDF  The probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_exppdf
-!!    use M_datapac, only : exppdf
+!!    !@(#) line plotter graph of probability density function
+!!    use M_datapac, only : exppdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call exppdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call exppdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_exppdf
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!*==exppdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE EXPPDF(X,Pdf)
-REAL(kind=wp) :: Pdf , X
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!    Pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
+!*==exppdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EXPPDF(X,Pdf)
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Pdf
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EXPP&
-     &DF SUBROUTINE IS NEGATIVE *****')
+         99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO EXPPDF(3f) IS NEGATIVE *****')
          WRITE (G_IO,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          Pdf = 0.0_wp
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          Pdf = EXP(-X)
       ENDIF
 !
 END SUBROUTINE EXPPDF
 !>
 !!##NAME
-!!    expplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a exponential probability
+!!    expplt(3f) - [M_datapac:LINE_PLOT] generate a exponential probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -7152,23 +7245,21 @@ END SUBROUTINE EXPPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
 !*==expplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
 INTEGER i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -7178,7 +7269,7 @@ INTEGER i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7188,7 +7279,7 @@ INTEGER i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -7283,7 +7374,7 @@ INTEGER i , iupper , N
 END SUBROUTINE EXPPLT
 !>
 !!##NAME
-!!    expppf(3f) - [M_datapac:STATISTICS:PP] compute the exponential percent
+!!    expppf(3f) - [M_datapac:PERCENT_POINT] compute the exponential percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -7327,15 +7418,14 @@ END SUBROUTINE EXPPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7344,13 +7434,13 @@ END SUBROUTINE EXPPLT
 SUBROUTINE EXPPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY) AND 1.0 (EXCLUSIVELY).
 !---------------------------------------------------------------------
@@ -7370,7 +7460,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE EXPPPF
 !>
 !!##NAME
-!!    expran(3f) - [M_datapac:STATISTICS:RANDOM] generate exponential random numbers
+!!    expran(3f) - [M_datapac:RANDOM] generate exponential random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -7409,29 +7499,25 @@ END SUBROUTINE EXPPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14, 35-36.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 58.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14, 35-36.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 58.
 !*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPRAN(N,Iseed,X)
 INTEGER i , Iseed , N
 REAL(kind=wp) :: X
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -7443,7 +7529,7 @@ REAL(kind=wp) :: X
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -7489,7 +7575,7 @@ REAL(kind=wp) :: X
 END SUBROUTINE EXPRAN
 !>
 !!##NAME
-!!    expsf(3f) - [M_datapac:STATISTICS:SF] compute the exponential sparsity function
+!!    expsf(3f) - [M_datapac:SPARSITY] compute the exponential sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -7532,32 +7618,31 @@ END SUBROUTINE EXPRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
 !*==expsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7637,15 +7722,13 @@ END SUBROUTINE EXPSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!! !                 ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!! !                 CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!! !                 ARMY RESEARCH AND TESTING, PAGES 425-450.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 UNPUBLISHED MANUSCRIPT.
-!! !               --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS-1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS
+!!     OF THE EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY
+!!     RESEARCH AND TESTING, PAGES 425-450.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', UNPUBLISHED MANUSCRIPT.
+!!   o JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE DISTRIBUTIONS-1,
+!!     1970, PAGES 272-295.
 !*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXTREM(X,N)
@@ -7653,7 +7736,7 @@ REAL(kind=wp) :: a, aindex, am, an, arg, cc, corr, corrmx, gamtab,   h, hold, p,
 REAL(kind=wp) :: wbar, WS, X, xmax, xmin, Y, ybar, yi, yint, ys, yslope, Z
 INTEGER       :: i, idis, idismx, iupper, j, jskip, k, N, numam, numdis, numdm1
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -7664,7 +7747,7 @@ INTEGER       :: i, idis, idismx, iupper, j, jskip, k, N, numam, numdis, numdm1
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, EV1PLT,
 !                                         EV2PLT, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --DECEMBER  1974.
 !     UPDATED         --NOVEMBER  1975.
@@ -7691,7 +7774,7 @@ CHARACTER(len=4) :: iflag3
 !
       DIMENSION aindex(50)
       DIMENSION h(60,2)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (Z(1),WS(7501))
       DATA blank , alpham , alphaa , alphax/' ' , 'M' , 'A' , 'X'/
@@ -8039,7 +8122,7 @@ CHARACTER(len=4) :: iflag3
 99999 END SUBROUTINE EXTREM
 !>
 !!##NAME
-!!    fcdf(3f) - [M_datapac:STATISTICS:CD] compute the F cumulative distribution
+!!    fcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the F cumulative distribution
 !!    function
 !!
 !!##SYNOPSIS
@@ -8071,26 +8154,26 @@ CHARACTER(len=4) :: iflag3
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGES 946-947,
-!! !                 FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGE 83, FORMULA 20,
-!! !                 AND PAGE 84, THIRD FORMULA.
-!! !               --PAULSON, AN APPROXIMATE NORMAILIZATION
-!! !                 OF THE ANALYSIS OF VARIANCE DISTRIBUTION,
-!! !                 ANNALS OF MATHEMATICAL STATISTICS, 1942,
-!! !                 NUMBER 13, PAGES 233-135.
-!! !               --SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES
-!! !                 FOR POPULATION TOLERANCE LIMITS, 1944,
-!! !                 NUMBER 15, PAGE 217.
+!!
+!!##REFERENCES
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGES 946-947, FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGE 83, FORMULA 20, AND PAGE 84, THIRD FORMULA.
+!!   o PAULSON, AN APPROXIMATE NORMALIZATION OF THE ANALYSIS OF VARIANCE
+!!     DISTRIBUTION, ANNALS OF MATHEMATICAL STATISTICS, 1942, NUMBER 13,
+!!     PAGES 233-135.
+!!   o SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES FOR POPULATION TOLERANCE
+!!     LIMITS, 1944, NUMBER 15, PAGE 217.
 !*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
@@ -8098,7 +8181,7 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
@@ -8108,9 +8191,9 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 !                     --NU2    = THE INTEGER DEGREES OF FREEDOM
 !                                FOR THE DENOMINATOR OF THE F RATIO.
 !                                NU2 SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE F DISTRIBUTION
 !             WITH DEGREES OF FREEDOM
 !             PARAMETERS = NU1 AND NU2.
@@ -8431,7 +8514,7 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 !!       1. computing (and printing)
 !!          (for each of the harmonic frequencies
 !!          1/n, 2/n, 3/n, ..., 1/2)
-!!          the corresponding fourier coeficients,
+!!          the corresponding fourier coefficients,
 !!          the amplitude, the phase,
 !!          the contribution to the total variance,
 !!          and the relative contribution to the total
@@ -8477,8 +8560,8 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JENKINS AND WATTS, ESPECIALLY PAGE 290.
+!!##REFERENCES
+!!   o JENKINS AND WATTS, ESPECIALLY PAGE 290.
 !*==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FOURIE(X,N)
 REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
@@ -8489,7 +8572,7 @@ INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
      &        maxpag , N , nhalf , nnpage
 !
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -8524,7 +8607,7 @@ INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
 !                   THAN OR EQUAL TO 3.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTSP AND CHSPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOURIER ANALYSIS DIFFERS FROM SPECTRAL ANALYSIS
 !              (AS, FOR EXAMPLE, PRODUCED BY THE DATAPAC
 !              TIMESE SUBROUTINE) IN THAT A
@@ -8584,7 +8667,7 @@ INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
 CHARACTER(len=4) :: alperc
       DIMENSION X(:)
       DIMENSION A(7500) , B(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (A(1),WS(1))
       EQUIVALENCE (B(1),WS(7501))
       DATA pi/3.14159265358979_wp/
@@ -8757,7 +8840,7 @@ CHARACTER(len=4) :: alperc
 END SUBROUTINE FOURIE
 !>
 !!##NAME
-!!    fran(3f) - [M_datapac:STATISTICS:RANDOM] generate F random numbers
+!!    fran(3f) - [M_datapac:RANDOM] generate F random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -8795,22 +8878,20 @@ END SUBROUTINE FOURIE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --MOOD AND GRABLE, INTRODUCTION TO THE
-!! !                 THEORY OF STATISTICS, 1963, PAGES 231-232.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 75-93.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 64.
+!!##REFERENCES
+!!   o MOOD AND GRABLE, INTRODUCTION TO THE THEORY OF STATISTICS, 1963,
+!!     PAGES 231-232.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 75-93.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 64.
 !*==fran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
 REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
      &     z
 INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --NU1    = THE INTEGER DEGREES OF FREEDOM
@@ -8833,7 +8914,7 @@ INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !                                RANDOM SAMPLES UPON
 !                                SUCCESSIVE CALLS TO
 !                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -8848,7 +8929,7 @@ INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -8974,16 +9055,16 @@ END SUBROUTINE FRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 8.
 !*==freq.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE FREQ(X,N)
 REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,    WS , X , xbar , Y
 INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -8998,7 +9079,7 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -9007,7 +9088,7 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
@@ -9118,7 +9199,7 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 END SUBROUTINE FREQ
 !>
 !!##NAME
-!!    gamcdf(3f) - [M_datapac:STATISTICS:CD] compute the gamma cumulative
+!!    gamcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the gamma cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -9127,7 +9208,7 @@ END SUBROUTINE FREQ
 !!
 !!##DESCRIPTION
 !!    gamcdf(3f) computes the cumulative distribution function value for the
-!!    gamma distribution with single precision tail length parameter = gamma.
+!!    gamma distribution with precision precision tail length parameter = gamma.
 !!
 !!    the gamma distribution used herein has mean = gamma and standard
 !!    deviation = sqrt(gamma).
@@ -9163,34 +9244,30 @@ END SUBROUTINE FREQ
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15,
-!! !                 ESPECIALLY PAGES 3-5.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 68-73.
+!!##REFERENCES
+!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 257, FORMULA 6.1.41.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 166-206.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
 !*==gamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 INTEGER :: i , maxit
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE GAMMA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -9304,7 +9381,7 @@ INTEGER :: i , maxit
 END SUBROUTINE GAMCDF
 !>
 !!##NAME
-!!    gamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a gamma probability plot
+!!    gamplt(3f) - [M_datapac:LINE_PLOT] generate a gamma probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -9363,21 +9440,19 @@ END SUBROUTINE GAMCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+!!##REFERENCES
+!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 257, FORMULA 6.1.41.
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 166-206.
 !*==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GAMPLT(X,N,Gamma)
 REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
@@ -9389,11 +9464,11 @@ REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
 REAL(kind=wp) :: yslope
 INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE GAMMA PROBABILITY PLOT.
@@ -9403,7 +9478,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ABS, EXP, DEXP, DLOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -9416,7 +9491,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
       DIMENSION d(10)
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
       DATA c/.918938533204672741D0/
@@ -9688,7 +9763,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 END SUBROUTINE GAMPLT
 !>
 !!##NAME
-!!    gamppf(3f) - [M_datapac:STATISTICS:PP] compute the gamma percent point function
+!!    gamppf(3f) - [M_datapac:PERCENT_POINT] compute the gamma percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -9696,7 +9771,7 @@ END SUBROUTINE GAMPLT
 !!
 !!##DESCRIPTION
 !!    gamppf(3f) computes the percent point function value for the gamma
-!!    distribution with single precision tail length parameter = gamma.
+!!    distribution with precision precision tail length parameter = gamma.
 !!
 !!    the gamma distribution used herein has mean = gamma and standard
 !!    deviation = sqrt(gamma). this distribution is defined for all positive
@@ -9734,35 +9809,31 @@ END SUBROUTINE GAMPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15,
-!! !                 ESPECIALLY PAGES 3-5.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 68-73.
+!!##REFERENCES
+!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 257, FORMULA 6.1.41.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 166-206.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
 !*==gamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 INTEGER :: icount , iloop , j , maxit
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE GAMMA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -9938,7 +10009,7 @@ INTEGER :: icount , iloop , j , maxit
 END SUBROUTINE GAMPPF
 !>
 !!##NAME
-!!    gamran(3f) - [M_datapac:STATISTICS:RANDOM] generate gamma random numbers
+!!    gamran(3f) - [M_datapac:RANDOM] generate gamma random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -9974,33 +10045,30 @@ END SUBROUTINE GAMPPF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --GREENWOOD, 'A FAST GENERATOR FOR
-!! !                 GAMMA-DISTRIBUTED RANDOM VARIABLES',
-!! !                 COMPSTAT 1974, PROCEEDINGS IN
-!! !                 COMPUTATIONAL STATISTICS, VIENNA,
-!! !                 SEPTEMBER, 1974, PAGES 19-27.
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 24-27.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGES 36-37.
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 68-73.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 952.
+!!
+!!##REFERENCES
+!!   o GREENWOOD, 'A FAST GENERATOR FOR GAMMA-DISTRIBUTED RANDOM VARIABLES',
+!!     COMPSTAT 1974, PROCEEDINGS IN COMPUTATIONAL STATISTICS, VIENNA,
+!!     SEPTEMBER, 1974, PAGES 19-27.
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 24-27.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGES 36-37.
+!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 166-206.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 952.
 !*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
@@ -10008,15 +10076,15 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 INTEGER :: i , Iseed , N
 !     ******STILL NEEDS ALGORITHM WORK ******
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !                                GAMMA SHOULD BE LARGER
 !                                THAN 1/3 (ALGORITHMIC RESTRICTION).
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -10031,7 +10099,7 @@ INTEGER :: i , Iseed , N
 !                   THAN 1/3 (ALGORITHMIC RESTRICTION).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -10129,7 +10197,7 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE GAMRAN
 !>
 !!##NAME
-!!    geocdf(3f) - [M_datapac:STATISTICS:CD] compute the geometric cumulative
+!!    geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -10138,7 +10206,7 @@ END SUBROUTINE GAMRAN
 !!
 !!##DESCRIPTION
 !!    geocdf(3f) computes the cumulative distribution function value at the
-!!    single precision value x for the geometric distribution with single
+!!    precision precision value x for the geometric distribution with precision
 !!    precision 'bernoulli probability' parameter = p.
 !!
 !!    the geometric distribution used herein herein has mean = (1-p)/p and
@@ -10151,7 +10219,7 @@ END SUBROUTINE GAMRAN
 !!
 !!    the geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = p.
 !!
 !!##OPTIONS
@@ -10190,21 +10258,21 @@ SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp) :: Cdf , del , fintx , P , X
 INTEGER intx
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
 !                                INTEGRAL-VALUED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
 !                                P SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE GEOMETRIC DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = P.
@@ -10212,7 +10280,7 @@ INTEGER intx
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
 !              DISTRIBUTION FUNCTION SUBROUTINE
@@ -10226,7 +10294,7 @@ INTEGER intx
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -10266,7 +10334,7 @@ INTEGER intx
 END SUBROUTINE GEOCDF
 !>
 !!##NAME
-!!    geoplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a geometric probability
+!!    geoplt(3f) - [M_datapac:LINE_PLOT] generate a geometric probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -10286,7 +10354,7 @@ END SUBROUTINE GEOCDF
 !!
 !!    the geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = p.
 !!
 !!    as used herein, a probability plot for a distribution is a plot
@@ -10328,17 +10396,15 @@ END SUBROUTINE GEOCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
 !*==geoplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPLT(X,N,P)
 REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
@@ -10347,11 +10413,11 @@ REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
@@ -10366,7 +10432,7 @@ INTEGER i , iupper , N
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT, GEOPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1976.
@@ -10376,7 +10442,7 @@ INTEGER i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -10492,7 +10558,7 @@ INTEGER i , iupper , N
 END SUBROUTINE GEOPLT
 !>
 !!##NAME
-!!    geoppf(3f) - [M_datapac:STATISTICS:PP] compute the geometric percent
+!!    geoppf(3f) - [M_datapac:PERCENT_POINT] compute the geometric percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -10501,7 +10567,7 @@ END SUBROUTINE GEOPLT
 !!
 !!##DESCRIPTION
 !!    geoppf(3f) computes the percent point function value for the geometric
-!!    distribution with single precision 'bernoulli probability' parameter
+!!    distribution with precision precision 'bernoulli probability' parameter
 !!    = ppar.
 !!
 !!    the geometric distribution used herein has mean = (1-ppar)/ppar and
@@ -10516,7 +10582,7 @@ END SUBROUTINE GEOPLT
 !!
 !!    the geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = ppar.
 !!
 !!    note that the percent point function of a distribution is identically
@@ -10541,38 +10607,38 @@ END SUBROUTINE GEOPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
+!!##REFERENCES
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
 !*==geoppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPPF(P,Ppar,Ppf)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 INTEGER iratio
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --PPAR   = THE SINGLE PRECISION VALUE
+!                     --PPAR   = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
 !                                PPAR SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE GEOMETRIC DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER VALUE = PPAR.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -10581,7 +10647,7 @@ INTEGER iratio
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -10592,7 +10658,7 @@ INTEGER iratio
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -10647,7 +10713,7 @@ INTEGER iratio
 99999 END SUBROUTINE GEOPPF
 !>
 !!##NAME
-!!    georan(3f) - [M_datapac:STATISTICS:RANDOM] generate geometric random numbers
+!!    georan(3f) - [M_datapac:RANDOM] generate geometric random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -10655,7 +10721,7 @@ INTEGER iratio
 !!
 !!##DESCRIPTION
 !!    GEORAN(3f) generates a random sample of size N from the geometric
-!!    distribution with single precision 'Bernoulli probability' parameter
+!!    distribution with precision precision 'Bernoulli probability' parameter
 !!    = P.
 !!
 !!    The geometric distribution used herein has mean = (1-P)/P and standard
@@ -10668,7 +10734,7 @@ INTEGER iratio
 !!
 !!    The geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    Bernoulli (0,1) trials where the probability of success in a single
+!!    Bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = P.
 !!
 !!##OPTIONS
@@ -10695,32 +10761,29 @@ INTEGER iratio
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
 !*==georan.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEORAN(N,P,Iseed,X)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 INTEGER :: i , iratio , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
 !                                P SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -10734,7 +10797,7 @@ INTEGER :: i , iratio , Iseed , N
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -10744,7 +10807,7 @@ INTEGER :: i , iratio , Iseed , N
 !              X HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -10815,7 +10878,7 @@ INTEGER :: i , iratio , Iseed , N
 END SUBROUTINE GEORAN
 !>
 !!##NAME
-!!    hfncdf(3f) - [M_datapac:STATISTICS:CD] compute the half-normal cumulative
+!!    hfncdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the half-normal cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -10862,30 +10925,29 @@ END SUBROUTINE GEORAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!! !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!! !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!! !                 TECHNOMETRICS, 1959, PAGES 311-341.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 53, 59, 81, 83.
+!!   o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
 !*==hfncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE HALFNORMAL
 !             DISTRIBUTION WITH MEAN = SQRT(2/PI) = 0.79788456
 !             AND STANDARD DEVIATION = 1.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 !
@@ -10914,7 +10976,7 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE HFNCDF
 !>
 !!##NAME
-!!    hfnplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a half-normal probability
+!!    hfnplt(3f) - [M_datapac:LINE_PLOT] generate a half-normal probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -10974,17 +11036,17 @@ END SUBROUTINE HFNCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!! !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!! !                 TECHNOMETRICS, 1959, PAGES 311-341.
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
+!!##REFERENCES
+!!   o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 53, 59, 81, 83.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -10997,7 +11059,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 INTEGER i , iupper , N
 !*** End of declarations inserted by SPAG
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -11007,13 +11069,13 @@ INTEGER i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -11110,7 +11172,7 @@ INTEGER i , iupper , N
 END SUBROUTINE HFNPLT
 !>
 !!##NAME
-!!    hfnppf(3f) - [M_datapac:STATISTICS:PP] compute the half-normal percent
+!!    hfnppf(3f) - [M_datapac:PERCENT_POINT] compute the half-normal percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -11159,24 +11221,23 @@ END SUBROUTINE HFNPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!! !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!! !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!! !                 TECHNOMETRICS, 1959, PAGES 311-341.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 53, 59, 81, 83.
+!!   o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
 !*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE HALFNORMAL DISTRIBUTION
 !             WITH MEAN = SQRT(2/PI) = 0.79788456
 !             AND STANDARD DEVIATION = 1.
@@ -11184,7 +11245,7 @@ REAL(kind=wp) :: arg , P , Ppf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 !
@@ -11208,7 +11269,7 @@ REAL(kind=wp) :: arg , P , Ppf
 END SUBROUTINE HFNPPF
 !>
 !!##NAME
-!!    hfnran(3f) - [M_datapac:STATISTICS:RANDOM] generate half-normal random numbers
+!!    hfnran(3f) - [M_datapac:RANDOM] generate half-normal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -11246,28 +11307,36 @@ END SUBROUTINE HFNPPF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
+!!
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   PAGES 53, 59, 81, 83.
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --JULY      1976.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
 !*==hfnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HFNRAN(N,Iseed,X)
+
+SUBROUTINE HFNRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER :: i , ip1 , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -11275,20 +11344,7 @@ INTEGER :: i , ip1 , Iseed , N
 !             FROM THE HALFNORMAL DISTRIBUTION
 !              WITH MEAN = SQRT(2/PI) = 0.79788456
 !              AND STANDARD DEVIATION = 1.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     VERSION NUMBER--82/7
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --JULY      1976.
-!     UPDATED         --DECEMBER  1981.
-!     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
+
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)
@@ -11398,9 +11454,9 @@ END SUBROUTINE HFNRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 4.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 4.
 !*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HIST(X,N)
 REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
@@ -11410,7 +11466,7 @@ INTEGER :: i , icoun2 , icount , ievodd , ihist , inc , irev , &
      &        mx , N , numcla , numhis
 INTEGER :: numout
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -11423,7 +11479,7 @@ INTEGER :: numout
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -11668,25 +11724,25 @@ END SUBROUTINE HIST
 !!       SUBROUTINE INVXWX(N,K)
 !!
 !!##DESCRIPTION
-!!    invxwx(3f) computes the inverse of x'wx which is done by computing
-!!    the inverse of r'r (where r has just recently been modified before
-!!    calling this subroutine. the input r = the square root of the
-!!    diagonal matrix d times the old matrix r. the inverse of x'wx will
-!!    be identical (except for the absence of s**2 = the residual variance)
+!!    INVXWX(3f) computes the inverse of X'WX which is done by computing
+!!    the inverse of R'R (where r has just recently been modified before
+!!    calling this subroutine. The input r = the square root of the
+!!    diagonal matrix D times the old matrix R. the inverse of X'WX will
+!!    be identical (except for the absence of S**2 = the residual variance)
 !!    to the covariance matrix of the coefficients.
 !!
-!!    the only reason invxwx(3f) exists is for the calculation of such
+!!    the only reason INVXWX(3f) exists is for the calculation of such
 !!    covariances.
 !!
-!!    unpivoting has also been done herein so as to undo the pivoting done
-!!    in the decomposition subroutine (decomp). the matrix c used herein
+!!    Unpivoting has also been done herein so as to undo the pivoting done
+!!    in the decomposition subroutine (DECOMP(3f)). The matrix C used herein
 !!    is an intermediate result matrix.
 !!
-!!    x--not used
-!!    q--not used
-!!    r--used and changed
-!!    d--not used
-!!    ipivot--used
+!!       x--not used
+!!       q--not used
+!!       r--used and changed
+!!       d--not used
+!!       ipivot--used
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -11696,18 +11752,19 @@ END SUBROUTINE HIST
 !!
 !!   Sample program:
 !!
-!!    program demo_invxwx
+!!    program test_invxwx
 !!    use M_datapac, only : invxwx
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
+!!    ! private routine
 !!    ! call invxwx(x,y)
-!!    end program demo_invxwx
+!!    end program test_invxwx
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
@@ -11717,15 +11774,15 @@ END SUBROUTINE HIST
 !*==invxwx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE INVXWX(N,K)
-REAL(kind=wp) :: anegri , D , dotpro , DUM1 , DUM2 , dum3 , Q , R , ri , WS
-INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj , K , l , N
+REAL(kind=wp) :: anegri, D, dotpro, DUM1, DUM2, dum3, Q, R, ri, WS
+INTEGER i, ii, im1, ip1, IPIvot, irarg, irarg1, irarg2, irarg3, j, jj, K, l, N
 
 !     INVERSION ALGORITHM USED--CHOLESKI DECOMPOSITION
 !---------------------------------------------------------------------
 !
       DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
-      COMMON /BLOCK2/ WS(15000)
-      COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+      COMMON /BLOCK2_real32/ WS(15000)
+      COMMON /BLOCK3_real32/ DUM1(3000) , DUM2(3000)
       EQUIVALENCE (Q(1),WS(1))
       EQUIVALENCE (R(1),WS(10001))
       EQUIVALENCE (D(1),WS(12501))
@@ -11800,7 +11857,7 @@ INTEGER i , ii , im1 , ip1 , IPIvot , irarg , irarg1 , irarg2 , irarg3 , j , jj 
 END SUBROUTINE INVXWX
 !>
 !!##NAME
-!!    lamcdf(3f) - [M_datapac:STATISTICS:CD] compute the Tukey-Lambda cumulative
+!!    lamcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Tukey-Lambda cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -11841,16 +11898,13 @@ END SUBROUTINE INVXWX
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+!!##REFERENCES
+!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
+!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -11861,14 +11915,14 @@ SUBROUTINE LAMCDF(X,Alamba,Cdf)
 REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , X , xcalc , xmax , xmin
 INTEGER :: icount
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE TUKEY LAMBDA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
 
@@ -11951,127 +12005,170 @@ INTEGER :: icount
 99999 END SUBROUTINE LAMCDF
 !>
 !!##NAME
-!!    lampdf(3f) - [M_datapac:STATISTICS:PD] compute the Tukey-Lambda
+!!    lampdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the Tukey-Lambda
 !!    probability density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LAMPDF(X,Alamba,Pdf)
 !!
+!!        REAL(kind=wp) :: X
+!!        REAL(kind=wp) :: Alamba
+!!
 !!##DESCRIPTION
-!!    lampdf(3f) computes the probability density function value for the
+!!    LAMPDF(3f) computes the probability density function value for the
 !!    (tukey) lambda distribution with tail length parameter value = alamba.
 !!
-!!    in general, the probability density function for this distribution
+!!    In general, the probability density function for this distribution
 !!    is not simple.
 !!
-!!    the percent point function for this distribution is
+!!    The percent point function for this distribution is
 !!
 !!       g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X       The precision precision value at which the probability density
+!!            function is to be evaluated.
+!!
+!!            For ALAMBA non-positive, no restrictions on X.
+!!
+!!            For ALAMBA positive, X should be between (-1/ALAMBA)
+!!            and (+1/ALAMBA), inclusively.
+!!
+!!    ALAMBA  The precision precision value of lambda (the tail length
+!!            parameter).
+!!
+!!##OUTPUT ARGUMENTS
+!!    PDF     The probability density function value for the Tukey Lambda
+!!            distribution
+!!
+!!##OUTPUT
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_lampdf
-!!    use M_datapac, only : lampdf
+!!    !@(#) line plotter graph of probability density function
+!!    use M_datapac, only : lampdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call lampdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    real              :: alamba
+!!    integer           :: i
+!!       alamba=0.0
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call LAMPDF(X(i)/100.0,Alamba,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_lampdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -  XXXX
+!!      0.9166666E+02 I      XXXXXXX
+!!      0.8333334E+02 I            XXXXXXX
+!!      0.7500000E+02 I                  XXXXXXX
+!!      0.6666667E+02 I                         XXXXX
+!!      0.5833334E+02 I                              XXXXX
+!!      0.5000000E+02 -                                  XXXXXX
+!!      0.4166667E+02 I                                       XXXX
+!!      0.3333334E+02 I                                          XXXX
+!!      0.2500000E+02 I                                             XXXX
+!!      0.1666667E+02 I                                                XX
+!!      0.8333336E+01 I                                                 XX
+!!      0.0000000E+00 -                                                  X
+!!     -0.8333328E+01 I                                                 XX
+!!     -0.1666666E+02 I                                                XX
+!!     -0.2499999E+02 I                                             XXXX
+!!     -0.3333333E+02 I                                          XXXX
+!!     -0.4166666E+02 I                                       XXXX
+!!     -0.5000000E+02 -                                  XXXXXX
+!!     -0.5833333E+02 I                              XXXXX
+!!     -0.6666666E+02 I                         XXXXX
+!!     -0.7500000E+02 I                  XXXXXXX
+!!     -0.8333333E+02 I            XXXXXXX
+!!     -0.9166666E+02 I      XXXXXXX
+!!     -0.1000000E+03 -  XXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1966E+00  0.2100E+00  0.2233E+00  0.2367E+00  0.2500E+00
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+!!
+!!##REFERENCES
+!!  o Hastings, Mosteller, Tukey, and Windsor, 'Low Moments for Small
+!!    Samples:  A Comparative Study of Order Statistics', Annals of MAthematical
+!!    Statistics, 18, 1947, Pages 413-426.
+!!  o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!    of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
+!!    University), 1969, Pages 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LAMPDF(X,Alamba,Pdf)
-REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
-!                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF FOR THE TUKEY LAMBDA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER = ALAMBA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--FOR ALAMBA NON-POSITIVE, NO RESTRICTIONS ON X.
-!                 --FOR ALAMBA POSITIVE, X SHOULD BE BETWEEN (-1/ALAMBA)
-!                   AND (+1/ALAMBA), INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--LAMCDF.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!
-!---------------------------------------------------------------------
-!
+
+SUBROUTINE LAMPDF(X,Alamba,Pdf)
+REAL(kind=wp) :: X
+REAL(kind=wp) :: Alamba
+
+REAL(kind=wp) :: cdf , Pdf , sf , xmax , xmin
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0_wp ) THEN
-         xmax = 1.0_wp/Alamba
-         xmin = -xmax
-         IF ( X<xmin .OR. X>xmax ) THEN
-            WRITE (G_IO,99001)
-            99001 FORMAT (&
-            &' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO LAMPDF(3f) IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
-            WRITE (G_IO,99002) X
-            99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-            IF ( X<xmin ) Pdf = 0.0_wp
-            IF ( X>xmax ) Pdf = 1.0_wp
-            RETURN
-         ENDIF
+   IF ( Alamba>0.0_wp ) THEN
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<xmin .OR. X>xmax ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (&
+         &' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO LAMPDF(3f) IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
+         WRITE (G_IO,99002) X
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+         IF ( X<xmin ) Pdf = 0.0_wp
+         IF ( X>xmax ) Pdf = 1.0_wp
+         RETURN
       ENDIF
+   ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( Alamba>0.0_wp ) THEN
-         xmax = 1.0_wp/Alamba
-         xmin = -xmax
-         IF ( X<=xmin .OR. X>=xmax ) THEN
-            IF ( X<xmin .OR. X>xmax ) Pdf = 0.0_wp
-            IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0_wp
-            IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0_wp
-            IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5_wp
-            IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5_wp
-            IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0_wp
-            IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0_wp
-            RETURN
-         ENDIF
+   IF ( Alamba>0.0_wp ) THEN
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<=xmin .OR. X>=xmax ) THEN
+         IF ( X<xmin .OR. X>xmax ) Pdf = 0.0_wp
+         IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0_wp
+         IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0_wp
+         IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5_wp
+         IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5_wp
+         IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0_wp
+         IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0_wp
+         RETURN
       ENDIF
+   ENDIF
 
-      CALL LAMCDF(X,Alamba,cdf)
-      sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
-      Pdf = 1.0_wp/sf
-!
+   CALL LAMCDF(X,Alamba,cdf)
+   sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
+   Pdf = 1.0_wp/sf
+
 END SUBROUTINE LAMPDF
 !>
 !!##NAME
-!!    lamplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Tukey-Lambda probability
+!!    lamplt(3f) - [M_datapac:LINE_PLOT] generate a Tukey-Lambda probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -12128,24 +12225,19 @@ END SUBROUTINE LAMPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY, 1969), PAGES 21-44, 229-231,
-!! !                 PAGES 53-58.
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY, 1969), PAGES 21-44, 229-231, PAGES 53-58.
+!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
+!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
 !*==lamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
@@ -12154,11 +12246,11 @@ REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
 REAL(kind=wp) :: yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
 !     OUTPUT--A ONE-PAGE LAMBDA PROBABILITY PLOT.
 !     PRINTING--YES.
@@ -12166,7 +12258,7 @@ INTEGER :: i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -12176,7 +12268,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -12284,7 +12376,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE LAMPLT
 !>
 !!##NAME
-!!    lamppf(3f) - [M_datapac:STATISTICS:PP] compute the Tukey-Lambda percent
+!!    lamppf(3f) - [M_datapac:PERCENT_POINT] compute the Tukey-Lambda percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -12330,32 +12422,28 @@ END SUBROUTINE LAMPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231,
-!! !                 PAGES 53-58.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231, PAGES 53-58.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
+!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
 !*==lamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF FOR THE TUKEY LAMBDA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -12364,7 +12452,7 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -12403,7 +12491,7 @@ REAL(kind=wp) :: Alamba , P , Ppf
 99999 END SUBROUTINE LAMPPF
 !>
 !!##NAME
-!!    lamran(3f) - [M_datapac:STATISTICS:RANDOM] generate Tukey-Lambda random numbers
+!!    lamran(3f) - [M_datapac:RANDOM] generate Tukey-Lambda random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -12442,28 +12530,25 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 53-58.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 53-58.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
 !*==lamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
 REAL(kind=wp) :: alamb2 , Alamba , q , X
 INTEGER :: i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -12475,7 +12560,7 @@ INTEGER :: i , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -12523,7 +12608,7 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE LAMRAN
 !>
 !!##NAME
-!!    lamsf(3f) - [M_datapac:STATISTICS:SF] compute the Tukey-Lambda sparsity function
+!!    lamsf(3f) - [M_datapac:SPARSITY] compute the Tukey-Lambda sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -12562,38 +12647,35 @@ END SUBROUTINE LAMRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231,
-!! !                 PAGES 53-58.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231, PAGES 53-58.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
+!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
 !*==lamsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMSF(P,Alamba,Sf)
 REAL(kind=wp) :: Alamba , P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF FOR THE TUKEY LAMBDA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -12601,7 +12683,7 @@ REAL(kind=wp) :: Alamba , P , Sf
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -12634,7 +12716,7 @@ REAL(kind=wp) :: Alamba , P , Sf
 99999 END SUBROUTINE LAMSF
 !>
 !!##NAME
-!!    lgncdf(3f) - [M_datapac:STATISTICS:CD] compute the lognormal cumulative
+!!    lgncdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the lognormal cumulative
 !!                 distribution function
 !!
 !!##SYNOPSIS
@@ -12679,22 +12761,22 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!! !                 1946, PAGES 219-220.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 112-136.
+!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !*==lgncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LGNCDF(X,Cdf)
+
+SUBROUTINE LGNCDF(X,Cdf)
 REAL(kind=wp) :: arg , Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE LOGNORMAL
 !             DISTRIBUTION WITH MEAN = SQRT(E) = 1.64872127
 !             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
@@ -12702,7 +12784,7 @@ REAL(kind=wp) :: arg , Cdf , X
 !     RESTRICTIONS--X SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -12730,7 +12812,7 @@ REAL(kind=wp) :: arg , Cdf , X
 END SUBROUTINE LGNCDF
 !>
 !!##NAME
-!!    lgnplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a lognormal probability plot
+!!    lgnplt(3f) - [M_datapac:LINE_PLOT] generates a lognormal probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -12782,31 +12864,33 @@ END SUBROUTINE LGNCDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!! !                 1946, PAGES 219-220.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 112-136.
+!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !*==lgnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -12824,7 +12908,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -12921,7 +13005,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE LGNPLT
 !>
 !!##NAME
-!!    lgnppf(3f) - [M_datapac:STATISTICS:PP] compute the lognormal percent
+!!    lgnppf(3f) - [M_datapac:PERCENT_POINT] compute the lognormal percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -12964,29 +13048,34 @@ END SUBROUTINE LGNPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+!!
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 112-136.
+!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !*==lgnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE LOGNORMAL DISTRIBUTION
 !             WITH MEAN = SQRT(E) = 1.64872127
 !             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
@@ -13012,7 +13101,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE LGNPPF
 !>
 !!##NAME
-!!    lgnran(3f) - [M_datapac:STATISTICS:RANDOM] generate lognormal random numbers
+!!    lgnran(3f) - [M_datapac:RANDOM] generate lognormal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -13057,19 +13146,14 @@ END SUBROUTINE LGNPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!! !                 1946, PAGES 219-220.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 88.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 112-136.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 88.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --JULY      1976.
@@ -13081,10 +13165,10 @@ SUBROUTINE LGNRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER i , ip1 , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -13097,7 +13181,7 @@ INTEGER i , ip1 , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS, EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -13213,12 +13297,12 @@ END SUBROUTINE LGNRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DIXON AND MASSEY, PAGES 14, 70, AND 71
-!! !               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 PAGES 357 AND 387
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
+!!##REFERENCES
+!!   o DIXON AND MASSEY, PAGES 14, 70, AND 71
+!!   o CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
+!!     AND 387
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 8.
 !*==loc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOC(X,N)
 REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
@@ -13226,7 +13310,7 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
      &        N , nmid , nmidp1
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -13242,7 +13326,7 @@ INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -13251,7 +13335,7 @@ INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
@@ -13362,7 +13446,7 @@ INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
 END SUBROUTINE LOC
 !>
 !!##NAME
-!!    logcdf(3f) - [M_datapac:STATISTICS:CD] compute the logistic cumulative
+!!    logcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the logistic cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -13403,8 +13487,9 @@ END SUBROUTINE LOC
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES--
-!! !               JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -13414,12 +13499,12 @@ END SUBROUTINE LOC
 SUBROUTINE LOGCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
 !
 !---------------------------------------------------------------------
@@ -13438,79 +13523,118 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE LOGCDF
 !>
 !!##NAME
-!!    logpdf(3f) - [M_datapac:STATISTICS:PD] compute the logistic probability
-!!    density function
+!!    logpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the logistic
+!!    probability density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LOGPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    logpdf(3f) computes the probability density function value for
+!!    LOGPDF(3f) computes the probability density function value for
 !!    the logistic distribution with mean = 0 and standard deviation =
 !!    pi/sqrt(3).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = exp(x)/(1+exp(x)).
+!!        f(X) = exp(X)/(1+exp(X))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The value at which the probability density function is to
+!!          be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PDF   the probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_logpdf
-!!    use M_datapac, only : logpdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : logpdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call logpdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call logpdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_logpdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -  X
+!!      0.9166666E+02 I  X
+!!      0.8333334E+02 I  X
+!!      0.7500000E+02 I  X
+!!      0.6666667E+02 I  X
+!!      0.5833334E+02 I  XX
+!!      0.5000000E+02 -   XX
+!!      0.4166667E+02 I    XXX
+!!      0.3333334E+02 I       XXXXX
+!!      0.2500000E+02 I           XXXXX XXX X
+!!      0.1666667E+02 I                      X XX X X XX X
+!!      0.8333336E+01 I                                    X X XX X XXX
+!!      0.0000000E+00 -                                                XXX
+!!     -0.8333328E+01 I                                    X X XX X XXX
+!!     -0.1666666E+02 I                      X XX X X XX X
+!!     -0.2499999E+02 I           XXXXX XXX X
+!!     -0.3333333E+02 I       XXXXX
+!!     -0.4166666E+02 I    XXX
+!!     -0.5000000E+02 -   XX
+!!     -0.5833333E+02 I  XX
+!!     -0.6666666E+02 I  X
+!!     -0.7500000E+02 I  X
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.4540E-04  0.6253E-01  0.1250E+00  0.1875E+00  0.2500E+00
+!!
+!!   Results:
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !              --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==logpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGPDF(X,Pdf)
-REAL(kind=wp) :: Pdf , X
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Pdf
+
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!
-!---------------------------------------------------------------------
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
-!
-      Pdf = EXP(X)/((1.0_wp+EXP(X))**2)
+      Pdf = exp(X)/((1.0_wp+exp(X))**2)
 !
 END SUBROUTINE LOGPDF
 !>
 !!##NAME
-!!    logplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a logistic probability
+!!    logplt(3f) - [M_datapac:LINE_PLOT] generate a logistic probability
 !!    plot
 !!
 !!##SYNOPSIS
@@ -13564,16 +13688,15 @@ END SUBROUTINE LOGPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13584,7 +13707,7 @@ SUBROUTINE LOGPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -13597,7 +13720,7 @@ INTEGER :: i , iupper , N
 !
 DIMENSION X(:)
 DIMENSION Y(7500) , W(7500)
-COMMON /BLOCK2/ WS(15000)
+COMMON /BLOCK2_real32/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 EQUIVALENCE (W(1),WS(7501))
 !
@@ -13688,7 +13811,7 @@ DATA tau/1.63473745_wp/
 END SUBROUTINE LOGPLT
 !>
 !!##NAME
-!!    logppf(3f) - [M_datapac:STATISTICS:PP] compute the logistic percent
+!!    logppf(3f) - [M_datapac:PERCENT_POINT] compute the logistic percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -13734,15 +13857,14 @@ END SUBROUTINE LOGPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13751,13 +13873,13 @@ END SUBROUTINE LOGPLT
 SUBROUTINE LOGPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
@@ -13778,7 +13900,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE LOGPPF
 !>
 !!##NAME
-!!    logran(3f) - [M_datapac:STATISTICS:RANDOM] generate logistic random numbers
+!!    logran(3f) - [M_datapac:RANDOM] generate logistic random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -13817,19 +13939,16 @@ END SUBROUTINE LOGPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGE 230.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGE 230.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -13842,10 +13961,10 @@ SUBROUTINE LOGRAN(N,Iseed,X)
 INTEGER i , Iseed , N
 REAL(kind=wp) :: X
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -13857,7 +13976,7 @@ REAL(kind=wp) :: X
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !---------------------------------------------------------------------
       DIMENSION X(:)
@@ -13892,7 +14011,7 @@ REAL(kind=wp) :: X
 END SUBROUTINE LOGRAN
 !>
 !!##NAME
-!!    logsf(3f) - [M_datapac:STATISTICS:SF] compute the logistic sparsity function
+!!    logsf(3f) - [M_datapac:SPARSITY] compute the logistic sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -13929,36 +14048,39 @@ END SUBROUTINE LOGRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !*==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14094,20 +14216,42 @@ ENDIF
 end subroutine max
 !>
 !!##NAME
-!!    mean(3f) - [M_datapac:STATISTICS] compute the mean of a data vector
+!!    mean(3f) - [M_datapac:STATISTICS] compute the sample mean of a data vector
 !!
 !!##SYNOPSIS
 !!
-!!       SUBROUTINE MEAN(X,N,Iwrite,Xmean)
+!!       subroutine mean(X,N,Iwrite,Xmean)
+!!
+!!        real(kind=wp),intent(in)  :: X(:)
+!!        integer,intent(in)        :: N
+!!        integer,intent(in)        :: Iwrite
+!!        real(kind=wp),intent(out) :: Xmean
 !!
 !!##DESCRIPTION
-!!    mean(3f) computes the sample mean of the data in the input vector x.
+!!    MEAN(3f) computes the sample mean of the data in the input vector X.
 !!
-!!    the sample mean = (sum of the observations)/n.
+!!    The sample mean = (sum of the observations)/n.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    For a data set, the arithmetic mean, also known as arithmetic
+!!    average, is a measure of central tendency of a finite set of numbers:
+!!    specifically, the sum of the values divided by the number of values. If
+!!    the data set were based on a series of observations obtained by
+!!    sampling from a statistical population, the arithmetic mean is the
+!!    sample mean.
+!!
+!!##INPUT ARGUMENTS
+!!  X        The vector of (unsorted or sorted) observations.
+!!
+!!  N        The integer number of observations in the vector X.
+!!
+!!  IWRITE   An integer flag code which (if set to 0) will suppress
+!!           the printing of the sample mean as it is computed; or (if set
+!!           to some integer value not equal to 0), like, say, 1) will cause
+!!           the printing of the sample mean at the time it is computed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!  XMEAN    The value of the computed sample mean.
 !!
 !!##EXAMPLES
 !!
@@ -14116,112 +14260,83 @@ end subroutine max
 !!    program demo_mean
 !!    use M_datapac, only : mean
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call mean(x,y)
+!!    real :: sp_mean
+!!    double precision :: dp_mean
+!!       call mean([4.0, 36.0, 45.0, 50.0, 75.0], 5, 1, sp_mean)
+!!       write(*,*)sp_mean,sp_mean==42.0
+!!       call mean([4.0d0, 36.0d0, 45.0d0, 50.0d0, 75.0d0], 5, 1, dp_mean)
+!!       write(*,*)dp_mean,dp_mean==42.0
 !!    end program demo_mean
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 4.
-!! !               --MOOD AND GRABLE, INTRODUCTION TO THE THEORY
-!! !                 OF STATISTICS, EDITION 2, 1963, PAGE 146.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 14.
-!*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE MEAN(X,N,Iwrite,Xmean)
-REAL(kind=wp) :: an, hold, sum, X, Xmean
-INTEGER       :: i, Iwrite, N
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --IWRITE = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL SUPPRESS
-!                                THE PRINTING OF THE
-!                                SAMPLE MEAN
-!                                AS IT IS COMPUTED;
-!                                OR (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0),
-!                                LIKE, SAY, 1) WILL CAUSE
-!                                THE PRINTING OF THE
-!                                SAMPLE MEAN
-!                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMEAN  = THE SINGLE PRECISION VALUE OF THE
-!                                COMPUTED SAMPLE MEAN.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
-!             SAMPLE MEAN.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!
+!!##REFERENCES
+!!  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
+!!    Edition 1, 1961, Page 4.
+!!  o Mood and Grable, Introduction to the Theory of Statistics, Edition 2,
+!!    1963, Page 146.
+!!  o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!    1957, Page 14.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
-!
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      an = N
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MEAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         RETURN
-      ELSE
-         IF ( N==1 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MEAN&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xmean = X(1)
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE MEAN   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xmean = X(1)
-         ENDIF
-         GOTO 100
-!
-!-----START POINT-----------------------------------------------------
-!
- 50      sum = 0.0_wp
-         DO i = 1 , N
+!*==mean.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine mean(X,N,Iwrite,Xmean)
+real(kind=wp),intent(in)  :: X(:)
+integer,intent(in)        :: N
+integer,intent(in)        :: Iwrite
+real(kind=wp),intent(out) :: Xmean
+
+integer                   :: i
+real(kind=wp)             :: an, hold, sum
+   an = real(N,kind=wp)
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   if ( N<1 ) then
+      write (G_io,99001)
+      99001 format (' ***** FATAL ERROR--The second input argument to MEAN(3f) is non-positive *****')
+      write (G_io,99002) N
+      99002 format (' ','***** The value of the argument is ',I0,' *****')
+      return
+   elseif ( N==1 ) then
+      write (G_io,99003)
+      99003 format (' ***** NON-FATAL DIAGNOSTIC--The second input argument to MEAN(3f) has the value 1 *****')
+      Xmean = X(1)
+   else
+      hold = X(1)
+      if(all(x(2:n) == hold)) then
+         write (G_io,99004) hold
+         99004 format(&
+         &' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to MEAN(3f) has all elements = ',g0,' *****')
+         Xmean = X(1)
+      else
+         sum = 0.0_wp
+         do i = 1 , N
             sum = sum + X(i)
-         ENDDO
+         enddo
          Xmean = sum/an
-      ENDIF
-!
- 100  IF ( Iwrite==0 ) RETURN
-      WRITE (G_IO,99005)
-99005 FORMAT (' ')
-      WRITE (G_IO,99006) N , Xmean
-99006 FORMAT (' ','THE SAMPLE MEAN OF THE ',I6,' OBSERVATIONS IS ',     &
-     &        E15.8)
-END SUBROUTINE MEAN
+      endif
+   endif
+
+   if ( Iwrite /= 0 ) then
+      write (G_io,99006) N , Xmean
+      99006 format (/,' The sample mean of the ',I0,' observations is ', g0)
+   endif
+
+end subroutine mean
 !>
 !!##NAME
 !!    median(3f) - [M_datapac:STATISTICS] compute the median of a data vector
@@ -14230,16 +14345,31 @@ END SUBROUTINE MEAN
 !!
 !!       SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
 !!
+!!        REAL(kind=wp) :: WS , X(:) , Xmed
+!!        INTEGER :: Iwrite , N
+!!
 !!##DESCRIPTION
-!!    median(3f) computes the sample median of the data in the input
-!!    vector x.
+!!    MEDIAN(3f) computes the sample median of the data in the input
+!!    vector X.
 !!
-!!    the sample median = that value such that half the data set is below
-!!    it and half above it.
+!!    The sample median equals that value such that half the data set is
+!!    below it and half above it.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X        The vector of (unsorted or sorted) observations.
+!!
+!!    N        The integer number of observations in the vector X.
+!!
+!!             The maximum allowable value of N for this subroutine is 15000.
+!!
+!!    IWRITE   An integer flag code which (if set to 0) will suppress the
+!!             printing of the sample median as it is computed; or (if set to
+!!             some integer value not equal to 0), like, say, 1) will cause
+!!             the printing of the sample median at the time it is computed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    XMED   The value of the computed sample median.
 !!
 !!##EXAMPLES
 !!
@@ -14248,71 +14378,60 @@ END SUBROUTINE MEAN
 !!    program demo_median
 !!    use M_datapac, only : median
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call median(x,y)
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    real,allocatable :: x(:)
+!!    real :: xmed
+!!    integer :: iwrite , n
+!!
+!!       x=[ -10.0, 10.0, 0.0, 1.0, 2.0 ]
+!!       n=size(x)
+!!       call median(x, n, 1, xmed)
+!!       write(*,g)' median of',x,'is',xmed
+!!
+!!       x=[ 10.0, 20.0, 3.0, 40.0 ]
+!!       n=size(x)
+!!       call median(x, n, 1, xmed)
+!!       write(*,g)' median of',x,'is',xmed
+!!
 !!    end program demo_median
 !!
 !!   Results:
 !!
+!!    The sample median of the 5 observations is  0.10000000E+01
+!!    median of  -10.00000 10.00000 .000000 1.000000 2.000000 is  1.000000
+!!
+!!    The sample median of the 4 observations is  0.15000000E+02
+!!    median of  10.00000 20.00000 3.000000 40.00000 is  15.00000
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 326.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 49.
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 139.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 123.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 70.
-!*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
-REAL(kind=wp) :: hold , WS , X , Xmed , Y
-INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --IWRITE = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL SUPPRESS
-!                                THE PRINTING OF THE
-!                                SAMPLE MEDIAN
-!                                AS IT IS COMPUTED;
-!                                OR (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0),
-!                                LIKE, SAY, 1) WILL CAUSE
-!                                THE PRINTING OF THE
-!                                SAMPLE MEDIAN
-!                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMED   = THE SINGLE PRECISION VALUE OF THE
-!                                COMPUTED SAMPLE MEDIAN.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
-!             SAMPLE MEDIAN.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!
+!!##REFERENCES
+!!  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1, Edition 2, 1963, Page 326.
+!!  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 2, Edition 1, 1961, Page 49.
+!!  o David, Order Statistics, 1970, Page 139.
+!!  o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 123.
+!!  o Dixon and Massey, Introduction to Statistical Analysis, Edition 2, 1957, Page 70.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
+!*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
+REAL(kind=wp) :: hold , WS , X(:) , Xmed , Y(15000)
+INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
+
+COMMON /BLOCK2_real32/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
 !
@@ -14320,18 +14439,16 @@ INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MEDIAN SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001 FORMAT (&
+          & ' ***** FATAL ERROR--The second input argument to MEDIAN(3f) is outside the allowable (1,',I6,') interval *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MEDI&
-     &AN SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ',&
+             & '***** NON-FATAL DIAGNOSTIC--The second input argument to MEDIAN(3f) has the value 1 *****')
             Xmed = X(1)
          ELSE
             hold = X(1)
@@ -14339,9 +14456,8 @@ INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE MEDIAN SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ',&
+             & '***** NON-FATAL DIAGNOSTIC--the first  input argument (a vector) to MEDIAN(3f) has all elements = ',g0,' *****')
             Xmed = X(1)
          ENDIF
          GOTO 100
@@ -14358,10 +14474,9 @@ INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
 !
  100  IF ( Iwrite==0 ) RETURN
       WRITE (G_IO,99005)
-99005 FORMAT (' ')
+      99005 FORMAT (' ')
       WRITE (G_IO,99006) N , Xmed
-99006 FORMAT (' ','THE SAMPLE MEDIAN OF THE ',I6,' OBSERVATIONS IS ',   &
-     &        E15.8)
+      99006 FORMAT (' The sample median of the ',I0,' observations is ', g0)
 END SUBROUTINE MEDIAN
 !>
 !!##NAME
@@ -14399,15 +14514,13 @@ END SUBROUTINE MEDIAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
-!! !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
-!! !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1967, PAGES 357, 387.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY, 1969).
+!!##REFERENCES
+!!   o DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
+!!   o CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION', JOURNAL OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, 1967, PAGES 357, 387.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY, 1969).
 !*==midm.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
 REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
@@ -14415,7 +14528,7 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -14430,9 +14543,9 @@ INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
 !                                THE PRINTING OF THE
 !                                SAMPLE MIDMEAN
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMIDM  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XMIDM  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE MIDMEAN.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE MIDMEAN.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -14440,7 +14553,7 @@ INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14450,7 +14563,7 @@ INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       DATA p1 , p2 , perp1 , perp2 , perp3/0.25_wp , 0.25_wp , 25.0_wp , 25.0_wp ,  &
      &     50.0_wp/
@@ -14571,20 +14684,20 @@ END SUBROUTINE MIDM
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 91.
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 97.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 71.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 338.
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2,
+!!     EDITION 1, 1961, PAGE 91.
+!!   o DAVID, ORDER STATISTICS, 1970, PAGE 97.
+!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
+!!     1957, PAGE 71.
 !*==midr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
 REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -14599,16 +14712,16 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE MIDRANGE
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMIDR  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XMIDR  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE MIDRANGE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE MIDRANGE.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14779,8 +14892,8 @@ end subroutine min
 !!       SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
 !!
 !!##DESCRIPTION
-!!    move(3f) moves (copies) m elements of the single precision vector
-!!    x (starting with position ix1) into the single precision vector y
+!!    move(3f) moves (copies) m elements of the precision precision vector
+!!    x (starting with position ix1) into the precision precision vector y
 !!    (starting with position iy1).
 !!
 !!    this allows the data analyst to take any subvector in x and place it
@@ -14816,7 +14929,7 @@ IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Y
 INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS, PART (OR ALL)
 !                                OF WHICH IS TO BE MOVED
 !                                (COPIED) OVER INTO THE VECTOR Y.
@@ -14829,11 +14942,11 @@ INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 !                                THE POSITION IN THE VECTOR Y
 !                                WHERE THE FIRST ELEMENT TO BE MOVED
 !                                WILL BE PLACED.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE COPIED DATA VALUES
 !                                FROM THE VECTOR X WILL BE SEQUENTIALLY
 !                                PLACED, STARTING IN POSITION IY1 OF Y.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y.
+!     OUTPUT--THE  VECTOR Y.
 !             IN WHICH THE M ELEMENTS IN POSITIONS
 !             IY1, IY1+1, ... , IY1+M-1
 !             WILL BE IDENTICAL TO THE M ELEMENTS
@@ -14842,7 +14955,7 @@ INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF M FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THE ELEMENT IN POSITION IX1 OF THE VECTOR X
 !            IS COPIED INTO POSITION IY1 OF THE VECTOR Y,
 !            THE ELEMENT IN POSITION (IX1+1) OF THE VECTOR X
@@ -14913,7 +15026,7 @@ INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 END SUBROUTINE MOVE
 !>
 !!##NAME
-!!    nbcdf(3f) - [M_datapac:STATISTICS:CD] compute the negative binomial
+!!    nbcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the negative binomial
 !!    cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -14923,8 +15036,8 @@ END SUBROUTINE MOVE
 !!##DESCRIPTION
 !!
 !!    nbcdf(3f) computes the cumulative distribution function value at the
-!!    single precision value x for the negative binomial distribution with
-!!    single precision 'bernoulli probability' parameter = p, and integer
+!!    precision precision value x for the negative binomial distribution with
+!!    precision precision 'bernoulli probability' parameter = p, and integer
 !!    'number of successes in bernoulli trials' parameter = n.
 !!
 !!    the negative binomial distribution used herein has mean = n*(1-p)/p
@@ -14939,7 +15052,7 @@ END SUBROUTINE MOVE
 !!
 !!    the negative binomial distribution is the distribution of the number
 !!    of failures before obtaining n successes in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = p.
 !!
 !!##OPTIONS
@@ -14966,39 +15079,32 @@ END SUBROUTINE MOVE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 945, FORMULAE 26.5.24 AND
-!! !                 26.5.28, AND PAGE 929.
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 122-142,
-!! !                 ESPECIALLY PAGE 127.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 92-95.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
-!! !               --WILLIAMSON AND BRETHERTON, TABLES OF
-!! !                 THE NEGATIVE BINOMIAL PROBABILITY
-!! !                 DISTRIBUTION, 1963.
-!! !               --OWEN, HANDBOOK OF STATISTICAL
-!! !                 TABLES, 1962, PAGE 304.
+!!##REFERENCES
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 945, FORMULAE 26.5.24 AND 26.5.28, AND PAGE 929.
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
+!!     ESPECIALLY PAGE 127.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 92-95.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGES 130-131.
+!!   o WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
+!!     DISTRIBUTION, 1963.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
 !*==nbcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBCDF(X,P,N,Cdf)
 REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
      &        k , N , n2 , nu1 , nu2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
 !                                INTEGRAL-VALUED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE NEGATIVE BINOMIAL
 !                                DISTRIBUTION.
@@ -15009,9 +15115,9 @@ INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
 !                                OF THE 'NUMBER OF SUCCESSES
 !                                IN BERNOULLI TRIALS' PARAMETER.
 !                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE NEGATIVE BINOMIAL DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
@@ -15037,7 +15143,7 @@ INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -15238,7 +15344,7 @@ INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
 END SUBROUTINE NBCDF
 !>
 !!##NAME
-!!    nbppf(3f) - [M_datapac:STATISTICS:PP] compute the negative binomial
+!!    nbppf(3f) - [M_datapac:PERCENT_POINT] compute the negative binomial
 !!    percent point function
 !!
 !!##SYNOPSIS
@@ -15246,8 +15352,8 @@ END SUBROUTINE NBCDF
 !!       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
 !!
 !!##DESCRIPTION
-!!    nbppf(3f) computes the percent point function value at the single
-!!    precision value p for the negative binomial distribution with single
+!!    nbppf(3f) computes the percent point function value at the precision
+!!    precision value p for the negative binomial distribution with precision
 !!    precision 'bernoulli probability' parameter = ppar, and integer
 !!    'number of successes in bernoulli trials' parameter = n.
 !!
@@ -15266,7 +15372,7 @@ END SUBROUTINE NBCDF
 !!
 !!    the negative binomial distribution is the distribution of the number
 !!    of failures before obtaining n successes in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = ppar.
 !!
 !!    note that the percent point function of a distribution is identically
@@ -15297,26 +15403,20 @@ END SUBROUTINE NBCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 122-142,
-!! !                 ESPECIALLY PAGE 127, FORMULA 22.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 92-95.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
-!! !               --WILLIAMSON AND BRETHERTON, TABLES OF
-!! !                 THE NEGATIVE BINOMIAL PROBABILITY
-!! !                 DISTRIBUTION, 1963.
-!! !               --OWEN, HANDBOOK OF STATISTICAL
-!! !                 TABLES, 1962, PAGE 304.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
+!!     ESPECIALLY PAGE 127, FORMULA 22.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 92-95.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGES 130-131.
+!!   o WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
+!!     DISTRIBUTION, 1963.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
 !*==nbppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
 REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
@@ -15324,12 +15424,12 @@ REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
 REAL(kind=wp) :: zppf
 INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --PPAR   = THE SINGLE PRECISION VALUE
+!                     --PPAR   = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE NEGATIVE BINOMIAL
 !                                DISTRIBUTION.
@@ -15340,9 +15440,9 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !                                OF THE 'NUMBER OF SUCCESSES
 !                                IN BERNOULLI TRIALS' PARAMETER.
 !                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
+!     OUTPUT--THE  PERCENT POINT  .
 !             FUNCTION VALUE PPF
 !             FOR THE NEGATIVE BINOMIAL DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
@@ -15356,7 +15456,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, NBCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -15367,7 +15467,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -15654,7 +15754,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 END SUBROUTINE NBPPF
 !>
 !!##NAME
-!!    nbran(3f) - [M_datapac:STATISTICS:RANDOM] generate negative binomial random numbers
+!!    nbran(3f) - [M_datapac:RANDOM] generate negative binomial random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -15662,7 +15762,7 @@ END SUBROUTINE NBPPF
 !!
 !!##DESCRIPTION
 !!    nbran(3f) generates a random sample of size n from the negative
-!!    binomial distribution with single precision 'bernoulli probability'
+!!    binomial distribution with precision precision 'bernoulli probability'
 !!    parameter = p, and integer 'number of successes in bernoulli trials'
 !!    parameter = npar. the negative binomial distribution used herein has
 !!    mean = npar*(1-p)/p and standard deviation = sqrt(npar*(1-p)/(p*p))).
@@ -15679,7 +15779,7 @@ END SUBROUTINE NBPPF
 !!
 !!    the negative binomial distribution is the distribution of the number
 !!    of failures before obtaining npar successes in an indefinite sequence
-!!    of bernoulli (0,1) trials where the probability of success in a single
+!!    of bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = p.
 !!
 !!##OPTIONS
@@ -15706,29 +15806,25 @@ END SUBROUTINE NBPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 95.
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 122-142.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
+!!##REFERENCES
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 95.
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGES 130-131.
 !*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
 REAL(kind=wp) :: b(1) , g(1) , P , X
 INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE NEGATIVE BINOMIAL
 !                                DISTRIBUTION.
@@ -15755,7 +15851,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !                                RANDOM SAMPLES UPON
 !                                SUCCESSIVE CALLS TO
 !                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -15771,7 +15867,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --NPAR SHOULD BE A POSITIVE INTEGER.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, BINRAN, GEORAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -15781,7 +15877,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !              X HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -15881,7 +15977,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 99999 END SUBROUTINE NBRAN
 !>
 !!##NAME
-!!    norcdf(3f) - [M_datapac:STATISTICS:CD] compute the normal cumulative
+!!    norcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the normal cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -15921,24 +16017,24 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 932, FORMULA 26.2.17.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!!##REFERENCES
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 932, FORMULA 26.2.17.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
 !*==norcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE NORCDF(X,Cdf)
 REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -15964,7 +16060,7 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 END SUBROUTINE NORCDF
 !>
 !!##NAME
-!!    norout(3f) - [M_datapac:STATISTICS:CD] Performs a normal outlier analysis
+!!    norout(3f) - [M_datapac:STATISTICS] Performs a normal outlier analysis
 !!                 on the data in the input vector X.
 !!
 !!##SYNOPSIS
@@ -15973,10 +16069,10 @@ END SUBROUTINE NORCDF
 !!
 !!##DESCRIPTION
 !!
-!!    norout(3f) performs a normal outlier analysis on the data in the
-!!    input vector x.
+!!    NOROUT(3f) performs a normal outlier analysis on the data in the
+!!    input vector X.
 !!
-!!    this analysis consists of--
+!!    This analysis consists of--
 !!
 !!      1. various normal outlier statistics;
 !!      2. various partial sample means
@@ -15985,14 +16081,14 @@ END SUBROUTINE NORCDF
 !!      5. a line plot; and
 !!      6. a normal probability plot.
 !!
-!!    when the first 40 and last 40 ordered observations are printed out,
+!!    When the first 40 and last 40 ordered observations are printed out,
 !!    also included for each of the 40+40 = 80 listed data values is the
 !!    corresponding residual about the (full) sample mean, the standardized
 !!    residual, the normal n(0,1) value for the standardized residual,
-!!    and the position number in the original data vector x.
+!!    and the position number in the original data vector X.
 !!
-!!    this last piece of information allows the data analyst to easily
-!!    locate back in the original data vector. a suspected outlier or
+!!    This last piece of information allows the data analyst to easily
+!!    locate back in the original data vector. A suspected outlier or
 !!    otherwise interesting observation.
 !!
 !!##OPTIONS
@@ -16013,30 +16109,28 @@ END SUBROUTINE NORCDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
+!!##REFERENCES
+!!   o GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 !*==norout.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NOROUT(X,N)
-REAL(kind=wp) :: ai , an , anm1 , anm2 , anm3 , anm4 , anm5 , cdf , hold ,    &
-     &     res , s , s1 , s13 , s14 , s2 , s23 , s24 , s3 , s4 , ssq
-REAL(kind=wp) :: ssq1 , ssq13 , ssq14 , ssq2 , ssq23 , ssq24 , ssq3 , ssq4 ,  &
-     &     st1 , st2 , st3 , st4 , st5 , st6 , st7 , st8 , st9 , stres ,&
-     &     sum , sum4
-REAL(kind=wp) :: WS , X , xb , xb1 , xb13 , xb14 , xb2 , xb23 , xb24 , xb3 ,  &
-     &     xb4 , xline , XPOs , Y
-INTEGER :: i , icount , iflag , irev , iupper , j , mx , N ,   &
-     &        nm1 , nm2 , nm3 , nm4 , nm5
+
+subroutine norout(X,N)
+real(kind=wp) :: ai, an, anm1, anm2, anm3, anm4, anm5, cdf, hold, res, s, s1, s13, s14, s2, s23, s24, s3, s4, ssq
+real(kind=wp) :: ssq1, ssq13, ssq14, ssq2, ssq23, ssq24, ssq3, ssq4,  st1, st2, st3, st4, st5, st6, st7, st8, st9, stres, sum, sum4
+real(kind=wp) :: WS, X, xb, xb1, xb13, xb14, xb2, xb23, xb24, xb3, xb4, xline, XPOs, Y
+integer :: i, icount, iflag, irev, iupper, j, mx, N,   nm1, nm2, nm3, nm4, nm5
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
+!     INPUT ARGUMENTS--X      = THE VECTOR OF (UNSORTED OR SORTED) OBSERVATIONS.
+!                      N      = THE INTEGER NUMBER OF OBSERVATIONS IN THE VECTOR X.
 !     OUTPUT--4 PAGES OF AUTOMATIC PRINTOUT--
 !             1) VARIOUS NORMAL OUTLIER STATISTICS;
 !             2) VARIOUS PARTIAL SAMPLE MEANS
@@ -16047,31 +16141,25 @@ INTEGER :: i , icount , iflag , irev , iupper , j , mx , N ,   &
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORTP, NORCDF, NORPLT,
-!                                         SORT, UNIMED, NORPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+
 !     WRITE OUT THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS,
 !     INCLUDING THEIR RESIDUALS ABOUT THE (FULL) SAMPLE MEAN,
 !     THE STANDARDIZED RESIDUALS,
 !     THE NORMAL N(0,1) CUMULATIVE DISTRIBUTION FUNCTION VALUE
 !     OF THE STANDARDIZED RESIDUAL, AND
 !     THE POSITION NUMBER IN THE ORIGINAL DATA VECTOR X.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
-CHARACTER(len=4) :: blank , hyphen , alphai , alphax
-CHARACTER(len=4) :: iline1
-CHARACTER(len=4) :: iline2
+character(len=4) :: blank , hyphen , alphai , alphax
+character(len=4) :: iline1
+character(len=4) :: iline2
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , XPOs(7500)
       DIMENSION iline1(130) , iline2(130)
       DIMENSION xline(13)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (XPOs(1),WS(7501))
 !
@@ -16451,84 +16539,85 @@ CHARACTER(len=4) :: iline2
 END SUBROUTINE NOROUT
 !>
 !!##NAME
-!!    norpdf(3f) - [M_datapac:STATISTICS:PD] compute the normal probability
-!!    density function
+!!    norpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the normal
+!!    probability density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE NORPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    norpdf(3f) computes the probability density function value for the
-!!    normal (gaussian) distribution with mean = 0 and standard deviation
+!!    NORPDF(3f) computes the probability density function value for the
+!!    normal (Gaussian) distribution with mean = 0 and standard deviation
 !!    = 1.
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!        f(X) = (1/sqrt(2*pi))*exp(-X*X/2)
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the probability density function is to
+!!           be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PDF    The probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_norpdf
-!!    use M_datapac, only : norpdf
+!!    !@(#) line plotter graph of probability density function
+!!    use M_datapac, only : norpdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call norpdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call norpdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_norpdf
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE NORPDF(X,Pdf)
-IMPLICIT NONE
-REAL(kind=wp) :: c , Pdf , X
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970, Pages 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
+!*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE NORPDF(X,Pdf)
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Pdf
+
+REAL(kind=wp),parameter   :: c=0.3989422804_wp
 !
-!---------------------------------------------------------------------
-!
-      DATA c/.3989422804_wp/
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS. -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
       Pdf = c*EXP(-(X*X)/2.0_wp)
 !
 END SUBROUTINE NORPDF
 !>
 !!##NAME
-!!    norplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a normal probability plot
+!!    norplt(3f) - [M_datapac:LINE_PLOT] generate a normal probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -16579,21 +16668,19 @@ END SUBROUTINE NORPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
-!! !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!! !               --RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS
-!! !                 FOR NORMALITY'  PENNSYLVANIA
-!! !                 STATE UNIVERSITY REPORT.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
+!!     NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!!   o RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS FOR NORMALITY'
+!!     PENNSYLVANIA STATE UNIVERSITY REPORT.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16604,7 +16691,7 @@ SUBROUTINE NORPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -16617,7 +16704,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -16710,7 +16797,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE NORPLT
 !>
 !!##NAME
-!!    norppf(3f) - [M_datapac:STATISTICS:PP] compute the normal percent point function
+!!    norppf(3f) - [M_datapac:PERCENT_POINT] compute the normal percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -16753,32 +16840,27 @@ END SUBROUTINE NORPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --ODEH AND EVANS, THE PERCENTAGE POINTS
-!! !                 OF THE NORMAL DISTRIBUTION, ALGORTIHM 70,
-!! !                 APPLIED STATISTICS, 1974, PAGES 96-97.
-!! !               --EVANS, ALGORITHMS FOR MINIMAL DEGREE
-!! !                 POLYNOMIAL AND RATIONAL APPROXIMATION,
-!! !                 M. SC. THESIS, 1972, UNIVERSITY
-!! !                 OF VICTORIA, B. C., CANADA.
-!! !               --HASTINGS, APPROXIMATIONS FOR DIGITAL
-!! !                 COMPUTERS, 1955, PAGES 113, 191, 192.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 933, FORMULA 26.2.23.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!! !               --THE KELLEY STATISTICAL TABLES, 1948.
-!! !               --OWEN, HANDBOOK OF STATISTICAL TABLES,
-!! !                 1962, PAGES 3-16.
-!! !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
-!! !                 FOR STATISTICIANS, VOLUME 1, 1954,
-!! !                 PAGES 104-113.
+!!##REFERENCES
+!!   o ODEH AND EVANS, THE PERCENTAGE POINTS OF THE NORMAL DISTRIBUTION,
+!!     ALGORITHM 70, APPLIED STATISTICS, 1974, PAGES 96-97.
+!!   o EVANS, ALGORITHMS FOR MINIMAL DEGREE POLYNOMIAL AND RATIONAL
+!!     APPROXIMATION, M. SC. THESIS, 1972, UNIVERSITY OF VICTORIA, B. C.,
+!!     CANADA.
+!!   o HASTINGS, APPROXIMATIONS FOR DIGITAL COMPUTERS, 1955, PAGES 113,
+!!     191, 192.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 933, FORMULA 26.2.23.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
+!!   o THE KELLEY STATISTICAL TABLES, 1948.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 3-16.
+!!   o PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
+!!     1954, PAGES 104-113.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16788,13 +16870,13 @@ END SUBROUTINE NORPLT
 SUBROUTINE NORPPF(P,Ppf)
 REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 , q3 , q4 , r , t
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
@@ -16802,7 +16884,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !     COMMENTS--THE CODING AS PRESENTED BELOW
 !               IS ESSENTIALLY IDENTICAL TO THAT
 !               PRESENTED BY ODEH AND EVANS
-!               AS ALGORTIHM 70 OF APPLIED STATISTICS.
+!               AS ALGORITHM 70 OF APPLIED STATISTICS.
 !               THE PRESENT AUTHOR HAS MODIFIED THE
 !               ORIGINAL ODEH AND EVANS CODE WITH ONLY
 !               MINOR STYLISTIC CHANGES.
@@ -16855,7 +16937,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 99999 END SUBROUTINE NORPPF
 !>
 !!##NAME
-!!    norran(3f) - [M_datapac:STATISTICS:RANDOM] generate normal random numbers
+!!    norran(3f) - [M_datapac:RANDOM] generate normal random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -16895,26 +16977,22 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --BOX AND MULLER, 'A NOTE ON THE GENERATION
-!! !                 OF RANDOM NORMAL DEVIATES', JOURNAL OF THE
-!! !                 ASSOCIATION FOR COMPUTING MACHINERY, 1958,
-!! !                 PAGES 610-611.
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 33-34.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 39.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!!##REFERENCES
+!!   o BOX AND MULLER, 'A NOTE ON THE GENERATION OF RANDOM NORMAL DEVIATES',
+!!     JOURNAL OF THE ASSOCIATION FOR COMPUTING MACHINERY, 1958, PAGES 610-611.
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 33-34.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 39.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
 !*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER :: i , ip1 , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -16926,7 +17004,7 @@ INTEGER :: i , ip1 , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     METHOD--BOX-MULLER ALGORITHM.
 !     VERSION NUMBER--82.6
@@ -16997,7 +17075,7 @@ INTEGER :: i , ip1 , Iseed , N
 END SUBROUTINE NORRAN
 !>
 !!##NAME
-!!    norsf(3f) - [M_datapac:STATISTICS:SF] compute the normal sparsity function
+!!    norsf(3f) - [M_datapac:SPARSITY] compute the normal sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -17040,15 +17118,14 @@ END SUBROUTINE NORRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -17056,13 +17133,13 @@ END SUBROUTINE NORRAN
       SUBROUTINE NORSF(P,Sf)
 REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
@@ -17091,7 +17168,7 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 END SUBROUTINE NORSF
 !>
 !!##NAME
-!!    parcdf(3f) - [M_datapac:STATISTICS:CD] compute the Pareto cumulative
+!!    parcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Pareto cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -17101,7 +17178,7 @@ END SUBROUTINE NORSF
 !!##DESCRIPTION
 !!
 !!    parcdf(3f) computes the cumulative distribution function value for
-!!    the pareto distribution with single precision tail length parameter
+!!    the pareto distribution with precision precision tail length parameter
 !!    = gamma.
 !!
 !!    the pareto distribution used herein is defined for all x greater than
@@ -17133,37 +17210,35 @@ END SUBROUTINE NORSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 102.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 233-249.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 102.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !*==parcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE GREATER THAN
 !                                OR EQUAL TO 1.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE PARETO
 !             DISTRIBUTION WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE GREATER THAN
 !                   OR EQUAL TO 1.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -17195,7 +17270,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 END SUBROUTINE PARCDF
 !>
 !!##NAME
-!!    parplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Pareto probability plot
+!!    parplt(3f) - [M_datapac:LINE_PLOT] generate a Pareto probability plot
 !!
 !!##SYNOPSIS
 !!
@@ -17243,22 +17318,25 @@ END SUBROUTINE PARCDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 233-249.
 !*==parplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARPLT(X,N,Gamma)
@@ -17266,11 +17344,11 @@ REAL(kind=wp) :: an, cc, Gamma, hold, pp0025, pp025, pp975, pp9975,   q, sum1, s
 REAL(kind=wp) :: yslope
 INTEGER       :: i, iupper, N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE PARETO PROBABILITY PLOT.
@@ -17280,13 +17358,13 @@ INTEGER       :: i, iupper, N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !---------------------------------------------------------------------
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -17403,7 +17481,7 @@ INTEGER       :: i, iupper, N
 END SUBROUTINE PARPLT
 !>
 !!##NAME
-!!    parppf(3f) - [M_datapac:STATISTICS:PP] compute the Pareto percent point function
+!!    parppf(3f) - [M_datapac:PERCENT_POINT] compute the Pareto percent point function
 !!
 !!##SYNOPSIS
 !!
@@ -17411,7 +17489,7 @@ END SUBROUTINE PARPLT
 !!
 !!##DESCRIPTION
 !!    parppf(3f) computes the percent point function value for the pareto
-!!    distribution with single precision tail length parameter = gamma.
+!!    distribution with precision precision tail length parameter = gamma.
 !!
 !!    the pareto distribution used herein is defined for all x greater than
 !!    or equal to 1, and has the probability density function
@@ -17446,35 +17524,33 @@ END SUBROUTINE PARPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 102.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 233-249.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 102.
 !*==parppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE PARETO DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -17508,7 +17584,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 END SUBROUTINE PARPPF
 !>
 !!##NAME
-!!    parran(3f) - [M_datapac:STATISTICS:RANDOM] generate Pareto random numbers
+!!    parran(3f) - [M_datapac:RANDOM] generate Pareto random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -17547,29 +17623,25 @@ END SUBROUTINE PARPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 104.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 233-249.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 104.
 !*==parran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
 INTEGER :: i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -17581,7 +17653,7 @@ INTEGER :: i , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -17633,7 +17705,7 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE PARRAN
 !>
 !!##NAME
-!!    plot10(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plot10(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -17720,14 +17792,11 @@ END SUBROUTINE PARRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot10.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
 IMPLICIT NONE
@@ -17738,34 +17807,34 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
 REAL(kind=wp) :: Ymax , Ymin
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -17789,7 +17858,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -18137,7 +18206,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT10
 !>
 !!##NAME
-!!    plot6(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot
+!!    plot6(3f) - [M_datapac:LINE_PLOT] generate a line printer plot
 !!
 !!##SYNOPSIS
 !!
@@ -18191,28 +18260,28 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax ,
 INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
 !     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
 !             WITH SPECIFIED AXIS LIMITS.
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -18457,7 +18526,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT6
 !>
 !!##NAME
-!!    plot7(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plot7(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -18527,39 +18596,36 @@ END SUBROUTINE PLOT6
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
-REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
-     &     x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
-INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
+
+SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
+REAL(kind=wp) :: aim1, Char, cutoff, hold, ratiox, ratioy, X, x25, x75, Xmax, xmid, Xmin, Y, ylable, Ymax, Ymin
+INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
 !     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
 !             WITH SPECIAL PLOT CHARACTERS,
@@ -18567,7 +18633,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -18865,7 +18931,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT7
 !>
 !!##NAME
-!!    plot8(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plot8(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -18942,14 +19008,11 @@ END SUBROUTINE PLOT7
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot8.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
@@ -18958,34 +19021,34 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -18996,7 +19059,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -19338,7 +19401,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT8
 !>
 !!##NAME
-!!    plot9(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer
+!!    plot9(3f) - [M_datapac:LINE_PLOT] generate a line printer
 !!    plot with special plot characters
 !!
 !!##SYNOPSIS
@@ -19411,20 +19474,21 @@ END SUBROUTINE PLOT8
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot9.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,Plchid)
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
@@ -19433,25 +19497,25 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
 !                    --YAXID  = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
@@ -19472,7 +19536,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -19776,7 +19840,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT9
 !>
 !!##NAME
-!!    plotc(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plotc(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -19838,27 +19902,24 @@ END SUBROUTINE PLOT9
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plotc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTC(Y,X,Char,N)
 REAL(kind=wp) :: aim1, Char, cutoff, hold, ratiox, ratioy, X, x25,  x75, xmax, xmid, xmin, Y, ylable, ymax, ymin
 INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
@@ -19869,7 +19930,7 @@ INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y),
 !              THE HORIZONTAL AXIS VECTOR (X),
 !              OR THE PLOT CHARACTER VECTOR (CHAR) WHICH ARE
@@ -20202,7 +20263,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTC
 !>
 !!##NAME
-!!    plotco(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer
+!!    plotco(3f) - [M_datapac:LINE_PLOT] generate a line printer
 !!    autocorrelation plot
 !!
 !!##SYNOPSIS
@@ -20420,7 +20481,7 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
 END SUBROUTINE PLOTCO
 !>
 !!##NAME
-!!    plotct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot for
+!!    plotct(3f) - [M_datapac:LINE_PLOT] generate a line printer plot for
 !!    the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -20479,20 +20540,21 @@ END SUBROUTINE PLOTCO
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plotct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTCT(Y,X,Char,N)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
@@ -20502,13 +20564,13 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
@@ -20521,7 +20583,7 @@ INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y),
 !              THE HORIZONTAL AXIS VECTOR (X),
 !              OR THE PLOT CHARACTER VECTOR (CHAR) WHICH ARE
@@ -20839,7 +20901,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai
 END SUBROUTINE PLOTCT
 !>
 !!##NAME
-!!    plot(3f) - [M_datapac:STATISTICS:LINE PLOT] yields a one-page printer
+!!    plot(3f) - [M_datapac:LINE_PLOT] yields a one-page printer
 !!    plot of y(i) versus x(i)
 !!
 !!##SYNOPSIS
@@ -20866,9 +20928,9 @@ END SUBROUTINE PLOTCT
 !!    10.0**10) and they will subsequently be ignored in the plot subroutine.
 !!
 !!##OPTIONS
-!!     Y     The single precision vector of (unsorted or sorted) observations
+!!     Y     The precision precision vector of (unsorted or sorted) observations
 !!           to be plotted vertically.
-!!     X     The single precision vector of (unsorted or sorted) observations
+!!     X     The precision precision vector of (unsorted or sorted) observations
 !!           to be plotted horizontally.
 !!     N     The integer number of observations in the vector Y.
 !!
@@ -21161,7 +21223,7 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 END SUBROUTINE PLOT
 !>
 !!##NAME
-!!    plotsc(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    plotsc(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters
 !!
 !!##SYNOPSIS
@@ -21232,14 +21294,11 @@ END SUBROUTINE PLOT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plotsc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTSC(Y,X,Char,N,D,Dmin,Dmax)
@@ -21248,26 +21307,26 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ymax , ymin
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -21277,7 +21336,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -21666,7 +21725,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTSC
 !>
 !!##NAME
-!!    plots(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of Y vs X
+!!    plots(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of Y vs X
 !!
 !!##SYNOPSIS
 !!
@@ -21714,22 +21773,22 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
      &     X , x25 , x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
 INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -22071,7 +22130,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTS
 !>
 !!##NAME
-!!    plotsp(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer spectrum plot
+!!    plotsp(3f) - [M_datapac:LINE_PLOT] generate a line printer spectrum plot
 !!
 !!##SYNOPSIS
 !!
@@ -22274,7 +22333,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax , dot
 END SUBROUTINE PLOTSP
 !>
 !!##NAME
-!!    plotst(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
+!!    plotst(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
 !!    Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -22295,22 +22354,22 @@ END SUBROUTINE PLOTSP
 !!    the capability of plotting subsets of the data, where the subset is
 !!    defined by values in the vector d.
 !!
-!! !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!! !     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !! !                               (UNSORTED OR SORTED) OBSERVATIONS
 !! !                               TO BE PLOTTED VERTICALLY.
-!! !                    --X      = THE SINGLE PRECISION VECTOR OF
+!! !                    --X      = THE  VECTOR OF
 !! !                               (UNSORTED OR SORTED) OBSERVATIONS
 !! !                               TO BE PLOTTED HORIZONTALLY.
 !! !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !! !                               IN THE VECTOR Y.
-!! !                    --D      = THE SINGLE PRECISION VECTOR
+!! !                    --D      = THE  VECTOR
 !! !                               WHICH 'DEFINES' THE VARIOUS
 !! !                               POSSIBLE SUBSETS.
-!! !                    --DMIN   = THE SINGLE PRECISION VALUE
+!! !                    --DMIN   = THE  VALUE
 !! !                               WHICH DEFINES THE LOWER BOUND
 !! !                               (INCLUSIVELY) OF THE PARTICULAR
 !! !                               SUBSET OF INTEREST TO BE PLOTTED.
-!! !                    --DMAX   = THE SINGLE PRECISION VALUE
+!! !                    --DMAX   = THE  VALUE
 !! !                               WHICH DEFINES THE UPPER BOUND
 !! !                               (INCLUSIVELY) OF THE PARTICULAR
 !! !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -22668,7 +22727,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 END SUBROUTINE PLOTST
 !>
 !!##NAME
-!!    plott(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot of
+!!    plott(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
 !!    Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -22694,14 +22753,14 @@ END SUBROUTINE PLOTST
 !!    10.0**10) and they will subsequently be ignored in the plot subroutine.
 !!
 !!    Note that the storage requirements for this (and the other) terminal
-!!    plot subroutiness are very small. This is due to the 'one line at
+!!    plot subroutines are very small. This is due to the 'one line at
 !!    a time' algorithm employed for the plot.
 !!
 !!##INPUT ARGUMENTS
 !!
 !!   Y   The vector of (unsorted or sorted) observations to be plotted
 !!       vertically.
-!!   X   The single precision vector of (unsorted or sorted) observations
+!!   X   The precision precision vector of (unsorted or sorted) observations
 !!       to be plotted horizontally.
 !!   N   The integer number of observations in the vector Y.
 !!       There is no restriction on the maximum value of N for this
@@ -22769,7 +22828,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99012)
          WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-         99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+         99001    FORMAT (' ','is non-negative (with value = ',I0,')')
          WRITE (G_IO,99011)
          RETURN
       ELSE
@@ -22778,7 +22837,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             WRITE (G_IO,99012)
             WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
             WRITE (G_IO,99002) N
-            99002       FORMAT (' ','HAS THE VALUE 1')
+            99002       FORMAT (' ','has the value 1')
             WRITE (G_IO,99011)
             RETURN
          ELSE
@@ -22841,13 +22900,13 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       WRITE (G_IO,99011)
       WRITE (G_IO,99012)
       WRITE (G_IO,99003) alph11 , alph12 , alph21 , alph22
-      99003 FORMAT (' ','THE ',A4,A4,', AND ',A4,A4)
+      99003 FORMAT (' ','The ',A4,A4,', and ',A4,A4)
       WRITE (G_IO,99004) sbnam1 , sbnam2
-      99004 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
+      99004 FORMAT (' ','input arguments to the ',A4,A4,' subroutine')
       WRITE (G_IO,99005)
-      99005 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN', ' EXCLUDED FROM THE PLOT.')
+      99005 FORMAT (' ','are such that too many points have been', ' excluded from the plot.')
       WRITE (G_IO,99006) n2
-      99006 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+      99006 FORMAT (' ','only ',I0,' points are left to be plotted.')
       WRITE (G_IO,99011)
       RETURN
 !
@@ -22877,7 +22936,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       99007 FORMAT (' ')
       WRITE (G_IO,99008)
 !
-      99008 FORMAT (' THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZONTALLY)')
+      99008 FORMAT (' The following is a plot of Y(I) (vertically) versus X(I) (horizontally)')
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
@@ -22967,17 +23026,17 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 
 99011 FORMAT (' ','**********************************************************************')
 99012 FORMAT (' ','                   FATAL ERROR                    ')
-99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
-99014 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
-99015 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
-99016 FORMAT (' ','VALUE OF ',E15.8)
+99013 FORMAT (' ','The ',A4,A4,' input argument to the ',A4,A4,' subroutine')
+99014 FORMAT (' ','has all elements = ',E15.8)
+99015 FORMAT (' ','has all elements in excess of the cutoff')
+99016 FORMAT (' ','value of ',E15.8)
 99017 FORMAT (' ',18X,54A1)
 99018 FORMAT (' ',15X,A1)
 
 END SUBROUTINE PLOTT
 !>
 !!##NAME
-!!    plotu(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer 4-plot
+!!    plotu(3f) - [M_datapac:LINE_PLOT] generate a line printer 4-plot
 !!
 !!##SYNOPSIS
 !!
@@ -23023,14 +23082,13 @@ END SUBROUTINE PLOTT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES
-!! !                 FOR DATA ANALYSIS', (UNPUBLISHED MANUSCRIPT
-!! !                 AVAILABLE FROM AUTHOR), 1975.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
-!! !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!!##REFERENCES
+!!   o FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES FOR DATA ANALYSIS',
+!!     (UNPUBLISHED MANUSCRIPT AVAILABLE FROM AUTHOR), 1975.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
+!!     NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
 !*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTU(X,N)
 REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
@@ -23049,7 +23107,7 @@ INTEGER :: iraxm2 , irev , iskipm , itax , itaxis , itaxp1 , itaxp2 ,&
 INTEGER :: my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
      &        numdis , nummax , nummin , numout
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -23067,7 +23125,7 @@ INTEGER :: my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION
+!     MODE OF INTERNAL OPERATIONS--
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -23087,7 +23145,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
       DIMENSION xmin(4) , xmax(4) , xmid(4) , x25(4) , x75(4)
       DIMENSION itaxis(4) , ibaxis(4) , ilaxis(4) , iraxis(4)
       COMMON /BLOCK1/ IGRaph(55,130)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
 !CCCC COMMON IGRAPH(45,110)
       EQUIVALENCE (X2(1),WS(1))
       EQUIVALENCE (Y2(1),WS(7501))
@@ -23545,7 +23603,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTU
 !>
 !!##NAME
-!!    plotx(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer run sequence plot
+!!    plotx(3f) - [M_datapac:LINE_PLOT] generate a line printer run sequence plot
 !!
 !!##SYNOPSIS
 !!
@@ -23593,7 +23651,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
      &     xmax , xmid , xmin , ylable , ymax , ymin
 INTEGER i , iflag , ip2 , j , k , mx , my , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -23809,7 +23867,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTX
 !>
 !!##NAME
-!!    plotxt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer run
+!!    plotxt(3f) - [M_datapac:LINE_PLOT] generate a line printer run
 !!    sequence plot for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -23853,7 +23911,7 @@ REAL(kind=wp) :: xupper , xwidth
 INTEGER :: i , icol , icolmx , irow , ixdel , N , numcol ,     &
      &        numlab , numr25 , numr50 , numr75 , numrow
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -23865,7 +23923,7 @@ INTEGER :: i , icol , icolmx , irow , ixdel , N , numcol ,     &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -24072,7 +24130,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 END SUBROUTINE PLOTXT
 !>
 !!##NAME
-!!    plotxx(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
+!!    plotxx(3f) - [M_datapac:LINE_PLOT] generate a line printer lag plot
 !!
 !!##SYNOPSIS
 !!
@@ -24113,28 +24171,23 @@ END SUBROUTINE PLOTXT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE
-!! !                 STATISTICAL ANALYSIS OF DATA', UNPUBLISHED
-!! !                 MANUSCRIPT (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE FALL CONFERENCE
-!! !                 OF THE CHEMICAL DIVISION OF THE AMERICAN
-!! !                 SOCIETY FOR QUALITY CONTROL, KNOXVILLE,
-!! !                 TENNESSEE, OCTOBER 19-20, 1972.
-!! !               --FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE
-!! !                 SUBROUTINES', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'STRATEGY FOR DATA ANALYSIS
-!! !                 BY COMPUTERS' SESSION AT THE NATIONAL
-!! !                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
+!!##REFERENCES
+!!   o FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE STATISTICAL ANALYSIS OF
+!!     DATA', UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT
+!!     THE FALL CONFERENCE OF THE CHEMICAL DIVISION OF THE AMERICAN SOCIETY
+!!     FOR QUALITY CONTROL, KNOXVILLE, TENNESSEE, OCTOBER 19-20, 1972.
+!!   o FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE SUBROUTINES',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'STRATEGY FOR DATA ANALYSIS BY COMPUTERS' SESSION AT THE NATIONAL
+!!     MEETING OF THE AMERICAN STATISTICAL ASSOCIATION, ST. LOUIS, MISSOURI,
+!!     AUGUST 26-29, 1974.
 !*==plotxx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTXX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     xmax , xmid , xmin , ylable , ymax , ymin
 INTEGER :: i , iflag , im1 , ip2 , j , k , mx , my , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS
 !                               TO BE GRAPHICALLY TESTED FOR
 !                               AUTOCORRELATION.
@@ -24144,7 +24197,7 @@ INTEGER :: i , iflag , im1 , ip2 , j , k , mx , my , N
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE INPUT VECTOR X WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -24366,7 +24419,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTXX
 !>
 !!##NAME
-!!    pltsct(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer plot with
+!!    pltsct(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
 !!    special plot characters for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -24439,14 +24492,11 @@ END SUBROUTINE PLOTXX
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF
+!!     THE AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==pltsct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTSCT(Y,X,Char,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
@@ -24457,26 +24507,26 @@ INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -24488,7 +24538,7 @@ INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -24850,7 +24900,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai
 END SUBROUTINE PLTSCT
 !>
 !!##NAME
-!!    pltxxt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a line printer lag plot
+!!    pltxxt(3f) - [M_datapac:LINE_PLOT] generate a line printer lag plot
 !!    for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
@@ -24888,27 +24938,26 @@ END SUBROUTINE PLTSCT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE
-!! !                 STATISTICAL ANALYSIS OF DATA', UNPUBLISHED
-!! !                 MANUSCRIPT (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE FALL CONFERENCE
-!! !                 OF THE CHEMICAL DIVISION OF THE AMERICAN
-!! !                 SOCIETY FOR QUALITY CONTROL, KNOXVILLE,
-!! !                 TENNESSEE, OCTOBER 19-20, 1972.
-!! !               --FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE
-!! !                 SUBROUTINES', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'STRATEGY FOR DATA ANALYSIS
-!! !                 BY COMPUTERS' SESSION AT THE NATIONAL
-!! !                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE STATISTICAL ANALYSIS OF
+!!     DATA', UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT
+!!     THE FALL CONFERENCE OF THE CHEMICAL DIVISION OF THE AMERICAN SOCIETY
+!!     FOR QUALITY CONTROL, KNOXVILLE, TENNESSEE, OCTOBER 19-20, 1972.
+!!   o FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE SUBROUTINES',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'STRATEGY FOR DATA ANALYSIS BY COMPUTERS' SESSION AT THE NATIONAL
+!!     MEETING OF THE AMERICAN STATISTICAL ASSOCIATION, ST. LOUIS, MISSOURI,
+!!     AUGUST 26-29, 1974.
 !*==pltxxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTXXT(X,N)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
@@ -24917,7 +24966,7 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
 INTEGER :: i , icol , icolmx , im1 , irow , ixdel , N ,        &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS
 !                               TO BE GRAPHICALLY TESTED FOR
 !                               AUTOCORRELATION.
@@ -24930,7 +24979,7 @@ INTEGER :: i , icol , icolmx , im1 , irow , ixdel , N ,        &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -25135,7 +25184,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 END SUBROUTINE PLTXXT
 !>
 !!##NAME
-!!    poicdf(3f) - [M_datapac:STATISTICS:CD] compute the Poisson cumulative
+!!    poicdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Poisson cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -25144,7 +25193,7 @@ END SUBROUTINE PLTXXT
 !!
 !!##DESCRIPTION
 !!    poicdf(3f) computes the cumulative distribution function value at
-!!    the single precision value x for the poisson distribution with single
+!!    the precision precision value x for the poisson distribution with precision
 !!    precision tail length parameter = alamba.
 !!
 !!    the poisson distribution used herein has mean = alamba and standard
@@ -25185,43 +25234,36 @@ END SUBROUTINE PLTXXT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 87-121,
-!! !                 ESPECIALLY PAGE 114, FORMULA 93.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 112.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5,
-!! !                 AND PAGE 929.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 146-154.
-!! !               --COX AND MILLER, THE THEORY OF STOCHASTIC
-!! !                 PROCESSES, 1965, PAGE 7.
-!! !               --GENERAL ELECTRIC COMPANY, TABLES OF THE
-!! !                 INDIVIDUAL AND CUMULATIVE TERMS OF POISSON
-!! !                 DISTRIBUTION, 1962.
-!! !               --OWEN, HANDBOOK OF STATISTICAL
-!! !                 TABLES, 1962, PAGES 259-261.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
+!!     ESPECIALLY PAGE 114, FORMULA 93.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 112.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 941, FORMULAE 26.4.4 AND 26.4.5, AND PAGE 929.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 146-154.
+!!   o COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
+!!   o GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
+!!     TERMS OF POISSON DISTRIBUTION, 1962.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
 !*==poicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE POICDF(X,Alamba,Cdf)
+
+SUBROUTINE POICDF(X,Alamba,Cdf)
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 INTEGER :: i , ievodd , imax , imin , intx , nu
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
 !                                INTEGRAL-VALUED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE
+!                     --ALAMBA = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE POISSON DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
@@ -25231,7 +25273,7 @@ INTEGER :: i , ievodd , imax , imin , intx , nu
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     COMMENT--THE SINGLE PRECISION TAIL LENGTH
+!     COMMENT--THE  TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
 !              ALAMBA CAN BE SET TO ANY POSITIVE REAL
@@ -25249,7 +25291,7 @@ INTEGER :: i , ievodd , imax , imin , intx , nu
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -25351,7 +25393,7 @@ INTEGER :: i , ievodd , imax , imin , intx , nu
 END SUBROUTINE POICDF
 !>
 !!##NAME
-!!    poiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Poisson probability plot
+!!    poiplt(3f) - [M_datapac:LINE_PLOT] generate a Poisson probability plot
 !!    (line printer graph)
 !!
 !!##SYNOPSIS
@@ -25359,7 +25401,7 @@ END SUBROUTINE POICDF
 !!       SUBROUTINE POIPLT(X,N,Alamba)
 !!
 !!##DESCRIPTION
-!!    poiplt(3f) generates a poisson probability plot (with single precision
+!!    poiplt(3f) generates a poisson probability plot (with precision precision
 !!    tail length parameter = alamba).
 !!
 !!    the prototype poisson distribution used herein has mean = alamba and
@@ -25414,22 +25456,24 @@ END SUBROUTINE POICDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 87-121.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
 !*==poiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
@@ -25438,11 +25482,11 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
      &        jm1 , k , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF THE
+!                     --ALAMBA = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE POISSON PROBABILITY PLOT.
@@ -25453,7 +25497,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT,
 !                                         CHSCDF, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOR LARGE VALUES OF ALAMBA (IN EXCESS OF 500.)
 !              THIS SUBROUTINE USES THE NORMAL APPROXIMATION TO
 !              THE POISSON.  THIS IS DONE TO SAVE EXECUTION TIME
@@ -25470,7 +25514,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
       DIMENSION X(:)
       DIMENSION Y(5000) , W(5000)
       DIMENSION Z(5000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(5001))
       EQUIVALENCE (Z(1),WS(10001))
@@ -25651,7 +25695,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
 END SUBROUTINE POIPLT
 !>
 !!##NAME
-!!    poippf(3f) - [M_datapac:STATISTICS:PP] compute the Poisson percent
+!!    poippf(3f) - [M_datapac:PERCENT_POINT] compute the Poisson percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -25659,8 +25703,8 @@ END SUBROUTINE POIPLT
 !!       SUBROUTINE POIPPF(P,Alamba,Ppf)
 !!
 !!##DESCRIPTION
-!!    poippf(3f) computes the percent point function value at the single
-!!    precision value p for the poisson distribution with single precision
+!!    poippf(3f) computes the percent point function value at the precision
+!!    precision value p for the poisson distribution with precision precision
 !!    tail length parameter = alamba.
 !!
 !!    the poisson distribution used herein has mean = alamba and standard
@@ -25703,43 +25747,35 @@ END SUBROUTINE POIPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 87-121,
-!! !                 ESPECIALLY PAGE 102, FORMULA 36.1.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 108-113.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 146-154.
-!! !               --COX AND MILLER, THE THEORY OF STOCHASTIC
-!! !                 PROCESSES, 1965, PAGE 7.
-!! !               --GENERAL ELECTRIC COMPANY, TABLES OF THE
-!! !                 INDIVIDUAL AND CUMULATIVE TERMS OF POISSON
-!! !                 DISTRIBUTION, 1962.
-!! !               --OWEN, HANDBOOK OF STATISTICAL
-!! !                 TABLES, 1962, PAGES 259-261.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
+!!     ESPECIALLY PAGE 102, FORMULA 36.1.  --HASTINGS AND PEACOCK, STATISTICAL
+!!     DISTRIBUTIONS--A HANDBOOK FOR STUDENTS AND PRACTITIONERS, 1975,
+!!     PAGES 108-113.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.  --FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS
+!!     APPLICATIONS, VOLUME 1, EDITION 2, 1957, PAGES 146-154.
+!!   o COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
+!!   o GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
+!!     TERMS OF POISSON DISTRIBUTION, 1962.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
 !*==poippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
 INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE
+!                     --ALAMBA = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
+!     OUTPUT--THE  PERCENT POINT  .
 !             FUNCTION VALUE PPF
 !             FOR THE POISSON DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
@@ -25749,8 +25785,8 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, POICDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, DEXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
-!     COMMENT--THE SINGLE PRECISION TAIL LENGTH
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION.
+!     COMMENT--THE  TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
 !              ALAMBA CAN BE SET TO ANY POSITIVE REAL
@@ -25765,7 +25801,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -26024,7 +26060,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 END SUBROUTINE POIPPF
 !>
 !!##NAME
-!!    poiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Poisson random numbers
+!!    poiran(3f) - [M_datapac:RANDOM] generate Poisson random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -26032,7 +26068,7 @@ END SUBROUTINE POIPPF
 !!
 !!##DESCRIPTION
 !!    poiran(3f) generates a random sample of size n from the poisson
-!!    distribution with single precision tail length parameter = alamba.
+!!    distribution with precision precision tail length parameter = alamba.
 !!
 !!    the poisson distribution used herein has mean = alamba and standard
 !!    deviation = sqrt(alamba).
@@ -26072,34 +26108,28 @@ END SUBROUTINE POIPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --COX AND MILLER, THE THEORY OF STOCHASTIC
-!! !                 PROCESSES, 1965, PAGE 7.
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 36-37.
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 87-121.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 108-113.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 146-154.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
+!!##REFERENCES
+!!   o COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 36-37.
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 108-113.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 146-154.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
 !*==poiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
 REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 INTEGER :: i , Iseed , j , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE
+!                     --ALAMBA = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -26112,8 +26142,8 @@ INTEGER :: i , Iseed , j , N
 !                 --ALAMBA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     COMMENT--THE SINGLE PRECISION TAIL LENGTH
+!     MODE OF INTERNAL OPERATIONS--.
+!     COMMENT--THE  TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
 !              ALAMBA CAN BE SET TO ANY POSITIVE REAL
@@ -26127,7 +26157,7 @@ INTEGER :: i , Iseed , j , N
 !              X HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -26205,8 +26235,8 @@ END SUBROUTINE POIRAN
 !!
 !!##DESCRIPTION
 !!    poly(3f) computes a least squares polynomial fit (of degree = ideg)
-!!    of the response variable data in the single precision vector y as
-!!    a function of the independent variable data in the single precision
+!!    of the response variable data in the precision precision vector y as
+!!    a function of the independent variable data in the precision precision
 !!    vector x.
 !!
 !!##OPTIONS
@@ -26251,12 +26281,12 @@ INTEGER :: iset , ism1 , iwflag , Iwrite , j , jm1 , jp1 , js ,      &
      &        nkmax
 INTEGER :: nm5 , nmax , numset
 !
-!     INPUT  ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      =  VECTOR OF
 !                                RESPONSE DATA (THAT IS, THE
 !                                DEPENDENT VARIABLE).
-!                     --X      = SINGLE PRECISION VECTOR OF
+!                     --X      =  VECTOR OF
 !                                THE INDEPENDENT VARIABLE.
-!                     --W      = THE SINGLE PRECISION VECTOR
+!                     --W      = THE  VECTOR
 !                                OF WEIGHTS FOR THE RESPONSE
 !                                VARIABLE.
 !                     --N      = THE INTEGER VALUE OF THE SAMPLE SIZE.
@@ -26269,9 +26299,9 @@ INTEGER :: nm5 , nmax , numset
 !                                SOME LIMITED PRINTED OUTPUT
 !                                (COEFFICIENTS, STANDARD DEVIATIONS OF
 !                                COEFFICIENTS, RESIDUAL STANDARD DEVIATION).
-!     OUTPUT ARGUMENTS--B      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--B      = THE  VECTOR OF
 !                                ESTIMATED REGRESSION COEFFICIENTS.
-!                     --SDB    = THE SINGLE PRECISION VECTOR OF
+!                     --SDB    = THE  VECTOR OF
 !                                ESTIMATED STANDARD DEVIATIONS OF THE
 !                                ESTIMATED REGRESSION COEFFICIENTS.
 !                     --S      = THE ESTIMATED RESIDUAL STANDARD
@@ -26282,10 +26312,10 @@ INTEGER :: nm5 , nmax , numset
 !                                NUMBER OF OBSERVATIONS MINUS
 !                                NUMBER OF PARAMETERS =
 !                                N - (IDEG + 1).
-!                     --PRED   = THE SINGLE PRECISION VECTOR OF
+!                     --PRED   = THE  VECTOR OF
 !                                PREDICTED VALUES FROM THE
 !                                LEAST SQUARES FIT.
-!                     --RES    = THE SINGLE PRECISION VECTOR OF
+!                     --RES    = THE  VECTOR OF
 !                                RESIDUALS FROM THE LEAST SQUARES FIT.
 !     SUBROUTINES NEEDED--DECOMP, INVXWX, DOT, FCDF.
 !     ORIGINAL VERSION--MARCH     1974
@@ -26307,8 +26337,8 @@ INTEGER :: nm5 , nmax , numset
       DIMENSION b2(50)
       DIMENSION f(3000) , wres(3000) , g(50) , h(50)
       DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
-      COMMON /BLOCK2/ WS(15000)
-      COMMON /BLOCK3/ DUM1(3000) , DUM2(3000)
+      COMMON /BLOCK2_real32/ WS(15000)
+      COMMON /BLOCK3_real32/ DUM1(3000) , DUM2(3000)
       EQUIVALENCE (Q(1),WS(1))
       EQUIVALENCE (R(1),WS(10001))
       EQUIVALENCE (D(1),WS(12501))
@@ -26878,7 +26908,7 @@ INTEGER :: nm5 , nmax , numset
 !!
 !!    the sample proportion = (the number of observations in the sample
 !!    between xmin and xmax, inclusively) / n. The sample proportion will
-!!    be a single precision value between 0.0 and 1.0 (inclusively).
+!!    be a precision precision value between 0.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26904,25 +26934,25 @@ INTEGER :: nm5 , nmax , numset
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 207-213.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGES 81-82, 228-231.
+!!##REFERENCES
+!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
+!!     207-213.
+!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
+!!     1957, PAGES 81-82, 228-231.
 !*==propor.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 INTEGER :: i , isum , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
@@ -26937,18 +26967,18 @@ INTEGER :: i , isum , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE PROPORTION
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XPROP  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XPROP  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE PROPORTION.
 !                                THIS WILL BE A VALUE BETWEEN
 !                                0.0 AND 1.0 (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE PROPORTION.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -27053,20 +27083,19 @@ END SUBROUTINE PROPOR
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 39.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 21.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 338.
+!!   o DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
+!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGE 39.
+!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
+!!     1957, PAGE 21.
 !*==range.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -27081,16 +27110,16 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE RANGE
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XRANGE = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XRANGE = THE  VALUE OF THE
 !                                COMPUTED SAMPLE RANGE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE RANGE.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JUNE      1974.
 !     UPDATED         --APRIL     1975.
@@ -27151,15 +27180,15 @@ INTEGER :: i , Iwrite , N
 END SUBROUTINE RANGE
 !>
 !!##NAME
-!!    rank(3f) - [M_datapac:STATISTICS:SORT] rank a vector of sample observations
+!!    rank(3f) - [M_datapac:SORT] rank a vector of sample observations
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE RANK(X,N,Xr)
 !!
 !!##DESCRIPTION
-!!    rank(3f) ranks (in ascending order) the n elements of the single
-!!    precision vector x, and puts the resulting n ranks into the single
+!!    rank(3f) ranks (in ascending order) the n elements of the precision
+!!    precision vector x, and puts the resulting n ranks into the precision
 !!    precision vector xr.
 !!
 !!    rank(3f) gives the data analyst the ability to (for example) rank
@@ -27189,34 +27218,34 @@ END SUBROUTINE RANGE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
-!! !                 BY RICHARD C. SINGLETON).
-!! !               --CACM JANUARY 1970, PAGE 54.
-!! !               --CACM OCTOBER 1970, PAGE 624.
-!! !               --JACM JANUARY 1961, PAGE 41.
+!!##REFERENCES
+!!   o CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD
+!!     C. SINGLETON).
+!!   o CACM JANUARY 1970, PAGE 54.
+!!   o CACM OCTOBER 1970, PAGE 624.
+!!   o JACM JANUARY 1961, PAGE 41.
 !*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE RANK(X,N,Xr)
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS TO BE RANKED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--XR     = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--XR     = THE  VECTOR
 !                                INTO WHICH THE RANKS
 !                                FROM X WILL BE PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR XR
+!     OUTPUT--THE  VECTOR XR
 !             CONTAINING THE RANKS
 !             (IN ASCENDING ORDER)
 !             OF THE VALUES
-!             IN THE SINGLE PRECISION VECTOR X.
+!             IN THE  VECTOR X.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THE RANK OF THE FIRST ELEMENT
 !              OF THE VECTOR X
 !              WILL BE PLACED IN THE FIRST POSITION
@@ -27233,25 +27262,25 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !     COMMENT--ALTHOUGH RANKS ARE USUALLY (UNLESS TIES EXIST)
 !              INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
 !              NOTED THAT THEY ARE OUTPUTED AS SINGLE
-!              PRECISION INTEGERS IN THE SINGLE PRECISION
+!              PRECISION INTEGERS IN THE
 !              VECTOR XR.
-!              XR IS SINGLE PRECISION SO AS TO BE
+!              XR IS  SO AS TO BE
 !              CONSISTENT WITH THE FACT THAT ALL
 !              VECTOR ARGUMENTS IN ALL OTHER
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION;
+!              DATAPAC SUBROUTINES ARE ;
 !              BUT MORE IMPORTANTLY, BECAUSE TIES FREQUENTLY
 !              DO EXIST IN DATA SETS AND SO SOME OF THE
 !              RESULTING RANKS WILL BE NON-INTEGRAL
 !              AND SO THE OUTPUT VECTOR OF RANKS MUST NECESSARILY
-!              BE SINGLE PRECISION AND NOT INTEGER.
+!              BE  AND NOT INTEGER.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     COMMENT--DUE TO CONFLICTING USE OF LABELED
-!              COMMON /BLOCK2/ BY THIS RANK
+!              COMMON /BLOCK2_real32/ BY THIS RANK
 !              SUBROUTINE AND THE SPCORR (SPEARMAN RANK
 !              CORRELATION COEFFICIENT) SUBROUTINE,
 !              THE VECTOR XS OF THIS RANK
 !              SUBROUTINE HAS BEEN PLACED IN
-!              LABELED COMMON /BLOCK4/
+!              LABELED COMMON /BLOCK4_real32/
 !     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE
 !              CALLING SEQUENCE MAY
 !              BE IDENTICAL; THAT IS, AN 'IN PLACE'
@@ -27284,7 +27313,7 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !---------------------------------------------------------------------
 !
       DIMENSION X(:) , Xr(:)
-      COMMON /BLOCK4/ XS(7500)
+      COMMON /BLOCK4_real32/ XS(7500)
 !
       an = N
       iupper = 7500
@@ -27399,7 +27428,7 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 END SUBROUTINE RANK
 !>
 !!##NAME
-!!    ranper(3f) - [M_datapac:STATISTICS:RANDOM] generates a random permutation
+!!    ranper(3f) - [M_datapac:RANDOM] generates a random permutation
 !!
 !!##SYNOPSIS
 !!
@@ -27438,7 +27467,7 @@ END SUBROUTINE RANK
 REAL(kind=wp) :: add , an , hold , u , X
 INTEGER :: i , iadd , Istart , j , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER SIZE
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER SIZE
 !                                OF THE RANDOM 1 TO N PERMUTATION.
 !                     --ISTART = AN INTEGER FLAG CODE WHICH
 !                                (IF SET TO 0) WILL START THE
@@ -27456,7 +27485,7 @@ INTEGER :: i , iadd , Istart , j , N
 !                                RANDOM PERMUTATIONS UPON
 !                                SUCCESSIVE CALLS TO
 !                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM PERMUTATION WILL BE PLACED.
@@ -27466,7 +27495,7 @@ INTEGER :: i , iadd , Istart , j , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--ALGORITHM SUGGESTED BY DAN LOZIER,
 !              NATIONAL BUREAU OF STANDARDS (205.01).
 !     ORIGINAL VERSION--JUNE      1972.
@@ -27576,7 +27605,7 @@ INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ird ,    &
 INTEGER :: nc , ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
 !
-!     INPUT  ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
+!     INPUT ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
 !                                WHICH DEFINES THE LOWER BOUND
 !                                (INCLUSIVELY) OF THE INTERVAL
 !                                ON EACH CARD TO BE SCANNED
@@ -27586,13 +27615,13 @@ REAL(kind=wp) :: sum , X , y
 !                                (INCLUSIVELY) OF THE INTERVAL
 !                                ON EACH CARD TO BE SCANNED
 !                                FOR THE READ.
-!     OUTPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = THE  VECTOR
 !                                INTO WHICH THE READ DATA VALUES
 !                                WILL BE SEQUENTIALLY PLACED.
 !                     --N      = THE INTEGER VALUE
 !                                WHICH WILL EQUAL THE NUMBER OF DATA
 !                                VALUES WHICH WERE READ.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X WHICH
+!     OUTPUT--THE  VECTOR X WHICH
 !             WILL CONTAIN THE READ
 !             DATA VALUES, AND
 !             THE INTEGER VALUE N WHICH WILL
@@ -27609,7 +27638,7 @@ REAL(kind=wp) :: sum , X , y
 !     PRINTING--YES.
 !     RESTRICTIONS--ICOL1 AND ICOL2 MUST BE BETWEEN 1 AND 80,
 !                   INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--ADJACENT DATA VALUES ON THE SAME CARD
 !              MUST BE SEPARATED BY AT LEAST 1 BLANK
 !              OR 1 ALPHABETIC CHARACTER, OR BY  ANY
@@ -28094,7 +28123,7 @@ INTEGER :: i , Icol1 , Icol2 , iend , ipower , Ird , istart ,  &
 INTEGER :: ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
 !
-!     INPUT  ARGUMENTS--IRD    = THE INTEGER VALUE SPECIFYING
+!     INPUT ARGUMENTS--IRD    = THE INTEGER VALUE SPECIFYING
 !                                THE INPUT UNIT FROM WHICH
 !                                THE CARD IMAGES WILL COME.
 !                     --ICOL1  = THE INTEGER CARD COLUMN NUMBER
@@ -28107,13 +28136,13 @@ REAL(kind=wp) :: sum , X , y
 !                                (INCLUSIVELY) OF THE INTERVAL
 !                                ON EACH CARD IMAGE TO BE SCANNED
 !                                FOR THE READ.
-!     OUTPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = THE  VECTOR
 !                                INTO WHICH THE READ DATA VALUES
 !                                WILL BE SEQUENTIALLY PLACED.
 !                     --N      = THE INTEGER VALUE
 !                                WHICH WILL EQUAL THE NUMBER OF DATA
 !                                VALUES WHICH WERE READ.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X WHICH
+!     OUTPUT--THE  VECTOR X WHICH
 !             WILL CONTAIN THE READ
 !             DATA VALUES, AND
 !             THE INTEGER VALUE N WHICH WILL
@@ -28130,7 +28159,7 @@ REAL(kind=wp) :: sum , X , y
 !     PRINTING--YES.
 !     RESTRICTIONS--ICOL1 AND ICOL2 MUST BE BETWEEN 1 AND 80,
 !                   INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--ADJACENT DATA VALUES ON THE SAME CARD
 !              MUST BE SEPARATED BY AT LEAST 1 BLANK
 !              OR 1 ALPHABETIC CHARACTER, OR BY  ANY
@@ -28602,17 +28631,17 @@ END SUBROUTINE READG
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 47, 233.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 62-65.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGES 47, 233.
+!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
+!!     62-65.
 !*==relsd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
 REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -28627,10 +28656,10 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE RELATIVE STANDARD DEVIATION
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XRELSD = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XRELSD = THE  VALUE OF THE
 !                                COMPUTED SAMPLE RELATIVE
 !                                STANDARD DEVIATION.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE RELATIVE STANDARD DEVIATION.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -28638,7 +28667,7 @@ INTEGER :: i , Iwrite , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MARCH     1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -28714,7 +28743,7 @@ END SUBROUTINE RELSD
 !!
 !!##DESCRIPTION
 !!    REPLAC(3f) replaces (with the value xnew) all observations in the
-!!    single precision vector X which are inside the closed (inclusive)
+!!    precision precision vector X which are inside the closed (inclusive)
 !!    interval defined by XMIN and XMAX.
 !!
 !!    All observations outside of this interval are left unchanged.
@@ -28756,24 +28785,24 @@ END SUBROUTINE RELSD
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 INTEGER :: i , k , N , ndel
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST FOR REPLACEMENT.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST FOR REPLACEMENT.
-!                     --XNEW   = THE SINGLE PRECISION VALUE
+!                     --XNEW   = THE  VALUE
 !                                WITH WHICH ALL OF THE
 !                                OBSERVATIONS IN THE INTERVAL
 !                                OF INTEREST
 !                                WILL BE REPLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             IN WHICH ONLY THOSE VALUES INSIDE
 !             (INCLUSIVELY) THE INTERVAL OF INTEREST
 !             HAVE BEEN REPLACED BY XNEW.
@@ -28786,7 +28815,7 @@ INTEGER :: i , k , N , ndel
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THIS SUBROUTINE MAY BE USEFULLY EMPLOYED
 !              IN CONJUNCTION WITH THE DATAPAC
 !              PLOTTING SUBROUTINES INASMUCH
@@ -28899,7 +28928,7 @@ END SUBROUTINE REPLAC
 !!       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 !!
 !!##DESCRIPTION
-!!    retain(3f) retains all observations in the single precision vector
+!!    retain(3f) retains all observations in the precision precision vector
 !!    x which are inside the closed (inclusive) interval defined by xmin
 !!    and xmax, while deleting all observations outside of this interval.
 !!
@@ -28939,15 +28968,15 @@ END SUBROUTINE REPLAC
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE RETAINED.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE RETAINED.
@@ -28956,7 +28985,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !                                OF THE OBSERVATIONS OUTSIDE THE
 !                                INTERVAL OF INTEREST HAVE BEEN
 !                                DELETED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             IN WHICH ONLY THOSE VALUES INSIDE
 !             (INCLUSIVELY) THE INTERVAL OF INTEREST
 !             HAVE BEEN RETAINED, AND
@@ -28972,7 +29001,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
 !              MADE WHATEVER DELETIONS ARE APPROPRIATE,
 !              THE OUTPUT VECTOR X WILL BE 'PACKED';
@@ -29105,7 +29134,7 @@ END SUBROUTINE RETAIN
 !!    of a data set.
 !!
 !!##INPUT ARGUMENTS
-!!    X  The single precision vector of (unsorted or sorted) observations.
+!!    X  The precision precision vector of (unsorted or sorted) observations.
 !!
 !!    N  The integer number of observations in the vector x.
 !!
@@ -29165,7 +29194,7 @@ DIMENSION znrtlg(16)
 DIMENSION c1(15) , c2(15) , c3(15) , c4(15)
 DIMENSION anrul(16) , anrdl(16) , anrtl(16)
 DIMENSION anrulg(16) , anrdlg(16) , anrtlg(16)
-COMMON /BLOCK2/ WS(15000)
+COMMON /BLOCK2_real32/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 
       DATA c1(1) , c1(2) , c1(3) , c1(4) , c1(5) , c1(6) , c1(7) ,      &
@@ -29500,7 +29529,7 @@ EQUIVALENCE (Y(1),WS(1))
 END SUBROUTINE RUNS
 !>
 !!##NAME
-!!    sampp(3f) - [M_datapac:STATISTICS:PP] compute the sample 100P percent
+!!    sampp(3f) - [M_datapac:PERCENT_POINT] compute the sample 100P percent
 !!    point (i.e., percentile)
 !!
 !!##SYNOPSIS
@@ -29532,31 +29561,32 @@ END SUBROUTINE RUNS
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 236-239,
-!! !                 243.
-!! !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!! !                 OF STATISTICS, EDITION 2, 1963, PAGES 406-407.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 125.
+!!
+!!##REFERENCES
+!!   o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Pages 236-239, 243.
+!!   o Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
+!!     1963, Pages 406-407.
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 125.
 !*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
-REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
-     &     Y
+SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
+REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , Y
 INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P      = THE SINGLE PRECISION FRACTION VALUE
+!                     --P      = THE  FRACTION VALUE
 !                                (BETWEEN 0.0 AND 1.0, EXCLUSIVELY)
 !                                WHICH DEFINES THE DESIRED PERCENT
 !                                POINT TO BE COMPUTED.
@@ -29571,9 +29601,9 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !                                THE PRINTING OF THE
 !                                SAMPLE 100P PERCENT POINT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--PP     = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--PP     = THE  VALUE OF THE
 !                                COMPUTED SAMPLE 100P PERCENT POINT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE 100P PERCENT POINT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -29591,7 +29621,7 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !                   BE PRINTED OUT AND PP WILL BE SET TO -999999999.0
 !                   IF(N+1)P IS LARGER THAN N, AN ERROR MESSAGE WILL
 !                   BE PRINTED OUT AND PP WILL BE SET TO 999999999.0.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -29599,10 +29629,10 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
+DIMENSION X(:)
+DIMENSION Y(15000)
+COMMON /BLOCK2_real32/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
 !
@@ -29721,21 +29751,21 @@ END SUBROUTINE SAMPP
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DIXON AND MASSEY, PAGES 19 AND 21
-!! !               --SNEDECOR AND COCHRAN, PAGE 62
-!! !               --DIXON AND MASSEY, PAGES 14, 70, AND 71
-!! !               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 PAGES 357 AND 387
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
+!!##REFERENCES
+!!   o DIXON AND MASSEY, PAGES 19 AND 21
+!!   o SNEDECOR AND COCHRAN, PAGE 62
+!!   o DIXON AND MASSEY, PAGES 14, 70, AND 71
+!!   o CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
+!!     AND 387
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 8.
 !*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SCALE(X,N)
 
 REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd , xsd , xvar
 INTEGER i , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -29751,7 +29781,7 @@ INTEGER i , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THE SAMPLE RELATIVE STANDARD DEVIATION
 !              IS THE SAMPLE STANDARD DEVIATION RELATIVE
 !              TO THE MAGNITUDE OF THE SAMPLE MEAN.
@@ -29900,23 +29930,26 @@ END SUBROUTINE SCALE
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 44.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGES 19, 76.
+!!
+!!##REFERENCES
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+!!   o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!     1957, Pages 19, 76.
 !*==sd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SD(X,N,Iwrite,Xsd)
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -29931,9 +29964,9 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE STANDARD DEVIATION
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XSD    = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XSD    = THE  VALUE OF THE
 !                                COMPUTED SAMPLE STANDARD DEVIATION.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE STANDARD DEVIATION (WITH DENOMINATOR N-1).
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -29941,7 +29974,7 @@ INTEGER :: i , Iwrite , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -30005,7 +30038,7 @@ INTEGER :: i , Iwrite , N
 END SUBROUTINE SD
 !>
 !!##NAME
-!!    sortc(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample
+!!    sortc(3f) - [M_datapac:SORT] sort a vector of sample
 !!    observations and "carry" a second vector
 !!
 !!##SYNOPSIS
@@ -30043,7 +30076,7 @@ END SUBROUTINE SD
 !!    for example, the calling sequence CALL SORTC(X,Y,N,X,YC) is allowable
 !!    and will result in the desired 'in-place' sort.
 !!
-!!    The sorting algorthm used herein is the binary sort. This algorthim
+!!    The sorting algorithm used herein is the binary sort. This algorithm
 !!    is extremely fast as the following time trials indicate. These time
 !!    trials were carried out on the UNIVAC 1108 EXEC 8 system at NBS in
 !!    August of 1974. By way of comparison, the time trial values for the
@@ -30307,7 +30340,7 @@ INTEGER i, il(36), ip1, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
 END SUBROUTINE SORTC
 !>
 !!##NAME
-!!    sort(3f) - [M_datapac:STATISTICS:SORT] sort a vector of sample
+!!    sort(3f) - [M_datapac:SORT] sort a vector of sample
 !!    observations, also return the positions in the original vector
 !!
 !!##SYNOPSIS
@@ -30321,12 +30354,12 @@ END SUBROUTINE SORTC
 !!##DESCRIPTION
 !!
 !!    This subroutine sorts (in ascending order) the N elements of the
-!!    single precision vector X using the binary sort algorithm and puts
-!!    the resulting N sorted values into the single precision vector Y.
+!!    precision precision vector X using the binary sort algorithm and puts
+!!    the resulting N sorted values into the precision precision vector Y.
 !!
 !!##OPTIONS
 !!##INPUT
-!!     X  The single precision vector of
+!!     X  The precision precision vector of
 !!        observations to be sorted.
 !!        The input vector X remains unaltered.
 !!
@@ -30335,7 +30368,7 @@ END SUBROUTINE SORTC
 !!
 !!##OUTPUT
 !!
-!!     Y  The single precision vector
+!!     Y  The precision precision vector
 !!        into which the sorted data values
 !!        from X will be placed in
 !!        ascending order.
@@ -30578,7 +30611,7 @@ DIMENSION iu(36), il(36)
 END SUBROUTINE SORT
 !>
 !!##NAME
-!!    sortp(3f) - [M_datapac:STATISTICS:SORT] sorts and ranks a numeric
+!!    sortp(3f) - [M_datapac:SORT] sorts and ranks a numeric
 !!    vector X
 !!
 !!##SYNOPSIS
@@ -30592,10 +30625,10 @@ END SUBROUTINE SORT
 !!
 !!##DESCRIPTION
 !!
-!!   SORTP(3f) sorts (in ascending order) the N elements of the single
-!!   precision vector X, puts the resulting N sorted values into the single
+!!   SORTP(3f) sorts (in ascending order) the N elements of the precision
+!!   precision vector X, puts the resulting N sorted values into the precision
 !!   precision vector Y; and puts the position (in the original vector X)
-!!   of each of the sorted values into the single precision vector XPOS.
+!!   of each of the sorted values into the precision precision vector XPOS.
 !!
 !!   This subroutine gives the data analyst not only the ability to determine
 !!   what the MIN and MAX (for example) of the data set are, but also where
@@ -30627,33 +30660,33 @@ END SUBROUTINE SORT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
-!! !               --CACM JANUARY 1970, PAGE 54.
-!! !               --CACM OCTOBER 1970, PAGE 624.
-!! !               --JACM JANUARY 1961, PAGE 41.
+!!##REFERENCES
+!!   o CACM March 1969, Page 186 (Binary Sort Algorithm by Richard C. Singleton).
+!!   o CACM January 1970, Page 54.
+!!   o CACM October 1970, Page 624.
+!!   o JACM January 1961, Page 41.
 !*==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS TO BE SORTED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE SORTED DATA VALUES
 !                                FROM X WILL BE PLACED.
-!                     --XPOS   = THE SINGLE PRECISION VECTOR
+!                     --XPOS   = THE  VECTOR
 !                                INTO WHICH THE POSITIONS
 !                                (IN THE ORIGINAL VECTOR X)
 !                                OF THE SORTED VALUES
 !                                WILL BE PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR XS
+!     OUTPUT--THE  VECTOR XS
 !             CONTAINING THE SORTED
 !             (IN ASCENDING ORDER) VALUES
-!             OF THE SINGLE PRECISION VECTOR X, AND
-!             THE SINGLE PRECISION VECTOR XPOS
+!             OF THE  VECTOR X, AND
+!             THE  VECTOR XPOS
 !             CONTAINING THE POSITIONS
 !             (IN THE ORIGINAL VECTOR X)
 !             OF THE SORTED VALUES.
@@ -30697,12 +30730,12 @@ INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , 
 !              ALTHOUGH THESE POSITIONS ARE NECESSARILY
 !              INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
 !              NOTED THAT THEY ARE OUTPUTED AS SINGLE
-!              PRECISION INTEGERS IN THE SINGLE PRECISION
+!              PRECISION INTEGERS IN THE
 !              VECTOR XPOS.
-!              XPOS IS SINGLE PRECISION SO AS TO BE
+!              XPOS IS  SO AS TO BE
 !              CONSISTENT WITH THE FACT THAT ALL
 !              VECTOR ARGUMENTS IN ALL OTHER
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     COMMENT--IF THE ANALYST DESIRES A SORT 'IN PLACE',
 !              THIS IS DONE BY HAVING THE SAME
@@ -30900,7 +30933,7 @@ END SUBROUTINE SORTP
 !!    spcorr(3f) computes the spearman rank correlation coefficient between
 !!    the 2 sets of data in the input vectors x and y.
 !!
-!!    the spearman rank correlation coefficient will be a single precision
+!!    the spearman rank correlation coefficient will be a precision precision
 !!    value between -1.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
@@ -30927,25 +30960,21 @@ END SUBROUTINE SORTP
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 193-195.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGES 294-295.
-!! !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!! !                 OF STATISTICS, EDITION 2, 1963, PAGE 424.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
+!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES 193-195.
+!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2, 1957, PAGES 294-295.
+!!   o MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY OF STATISTICS, EDITION 2, 1963, PAGE 424.
 !*==spcorr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 INTEGER :: i , iflag , iupper , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
 !                                OF DATA.
-!                     --Y      = THE SINGLE PRECISION VECTOR OF
+!                     --Y      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE SECOND SET
 !                                OF DATA.
@@ -30964,14 +30993,14 @@ INTEGER :: i , iflag , iupper , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SPEARMAN CORRELATION COEFFICIENT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--SPC    = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--SPC    = THE  VALUE OF THE
 !                                COMPUTED SPEARMAN RANK CORRELATION
 !                                COEFFICIENT BETWEEN THE 2 SETS OF DATA
 !                                IN THE INPUT VECTORS X AND Y.
-!                                THIS SINGLE PRECISION VALUE
+!                                THIS  VALUE
 !                                WILL BE BETWEEN -1.0 AND 1.0
 !                                (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SPEARMAN RANK CORRELATION COEFFICIENT BETWEEN THE 2 SETS
 !             OF DATA IN THE INPUT VECTORS X AND Y.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
@@ -30980,7 +31009,7 @@ INTEGER :: i , iflag , iupper , Iwrite , N
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--RANK AND SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --JANUARY   1975.
@@ -30992,7 +31021,7 @@ INTEGER :: i , iflag , iupper , Iwrite , N
 !
       DIMENSION X(:) , Y(:)
       DIMENSION XR(7500) , YR(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (XR(1),WS(1))
       EQUIVALENCE (YR(1),WS(7501))
 !
@@ -31094,24 +31123,27 @@ END SUBROUTINE SPCORR
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85,
-!! !                 234, 243, 297-298, 305.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 86-90.
+!!
+!!##REFERENCES
+!!   o Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Pages 85, 234, 243, 297-298, 305.
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
+!!     86-90.
 !*==stmom3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -31126,17 +31158,17 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE STANDARDIZED THIRD CENTRAL
 !                                MOMENT AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XSMOM3 = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XSMOM3 = THE  VALUE OF THE
 !                                COMPUTED SAMPLE STANDARDIZED THIRD
 !                                CENTRAL MOMENT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE STANDARDIZED THIRD CENTRAL MOMENT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -31241,23 +31273,31 @@ END SUBROUTINE STMOM3
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85, 243.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 86-90.
+!!
+!!##REFERENCES
+!!   o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Pages 85, 243.
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
+!!     86-90.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
+
+SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -31272,20 +31312,17 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE STANDARDIZED FOURTH CENTRAL
 !                                MOMENT AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XSMOM4 = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XSMOM4 = THE  VALUE OF THE
 !                                COMPUTED SAMPLE STANDARDIZED FOURTH
 !                                CENTRAL MOMENT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !---------------------------------------------------------------------
 !
@@ -31364,8 +31401,8 @@ END SUBROUTINE STMOM4
 !!
 !!##DESCRIPTION
 !!
-!!    This subroutine carries over into Y all observations of the single
-!!    precision vector X for which the corresponding elements in the single
+!!    This subroutine carries over into Y all observations of the precision
+!!    precision vector X for which the corresponding elements in the precision
 !!    precision vector D are inside the closed (inclusive) interval defined
 !!    by DMIN and DMAX, while not carrying over any observations of X
 !!    corresponding to elements of D outside of this interval.
@@ -31574,8 +31611,8 @@ END SUBROUTINE SUBSE1
 !!
 !!##DESCRIPTION
 !!
-!!    This subroutine carries over into Y all observations of the single
-!!    precision vector X for which the corresponding elements in the single
+!!    This subroutine carries over into Y all observations of the precision
+!!    precision vector X for which the corresponding elements in the precision
 !!    precision vector D1 are inside the closed (inclusive) interval defined
 !!    by D1MIN and D1MAX, and also for which the corresponding elements
 !!    in the vector D2 are inside the closed (inclusive)
@@ -32081,20 +32118,23 @@ END SUBROUTINE SUBSET
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!! !                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!! !                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!! !                ARMY RESEARCH AND TESTING, PAGES 425-450.
-!! !              --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                UNPUBLISHED MANUSCRIPT.
-!! !              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!! !                DISTRIBUTIONS-1, PAGES 250-271.
+!!
+!!##REFERENCE
+!!   o Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
+!!     of the Eighteenth Conference on the Design of Experiments in Army
+!!     Research and Testing, Pages 425-450.
+!!   o Filliben, 'The Percent Point Function', Unpublished Manuscript.
+!!   o Johnson and Kotz (1970), Continuous Univariate Distributions-1,
+!!     Pages 250-271.
 !*==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TAIL(X,N)
 REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
@@ -32105,7 +32145,7 @@ REAL(kind=wp) :: xbar
 REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
 INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -32124,7 +32164,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, irev, iuppe
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG, LOG10, EXP,
 !                                         SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -32150,7 +32190,7 @@ CHARACTER(len=4) :: alphax
       DIMENSION corr(50) , iflag1(50) , iflag2(50) , iflag3(50)
       DIMENSION iline1(130) , iline2(130)
       DIMENSION xline(13)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (Z(1),WS(3001))
       EQUIVALENCE (YM(1),WS(6001))
@@ -32738,7 +32778,7 @@ CHARACTER(len=4) :: alphax
 END SUBROUTINE TAIL
 !>
 !!##NAME
-!!    tcdf(3f) - [M_datapac:STATISTICS:CD] computes the cumulative distribution
+!!    tcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] computes the cumulative distribution
 !!    function value for student's t distribution with integer degrees of
 !!    freedom NU.
 !!
@@ -32777,36 +32817,32 @@ END SUBROUTINE TAIL
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
-!! !                 SERIES 55, 1964, PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 94-129.
-!! !               --FEDERIGHI, EXTENDED TABLES OF THE
-!! !                 PERCENTAGE POINTS OF STUDENT'S
-!! !                 T-DISTRIBUTION, JOURNAL OF THE
-!! !                 AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1959, PAGES 683-688.
-!! !               --OWEN, HANDBOOK OF STATISTICAL TABLES,
-!! !                 1962, PAGES 27-30.
-!! !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
-!! !                 FOR STATISTICIANS, VOLUME 1, 1954,
-!! !                 PAGES 132-134.
+!!##REFERENCES
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 94-129.
+!!   o FEDERIGHI, EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT'S
+!!     T-DISTRIBUTION, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, 1959,
+!!     PAGES 683-688.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 27-30.
+!!   o PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
+!!     1954, PAGES 132-134.
 !*==tcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TCDF(X,Nu,Cdf)
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 INTEGER :: i , ievodd , imax , imin , Nu , nucut
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE STUDENT'S T DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -33007,14 +33043,18 @@ END SUBROUTINE TCDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JENKINS AND WATTS, ESPECIALLY PAGE 290.
+!!
+!!##REFERENCES
+!!   o Jenkins and Watts, especially Page 290.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
@@ -33026,7 +33066,7 @@ REAL(kind=wp) :: r025, r975, rk, rmax, s, sd, sdr, ssq, sum, sum1,  sum2, var, v
 INTEGER :: i, i2, iarg1, iarg2, idf, ilower, imin, irev, j, jmax, jmin, k, kmax, krev, l, ll, llp1, lm1, lmax
 INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -33416,10 +33456,10 @@ END SUBROUTINE TIME
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
-!! !               --WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
-!! !               --MOOD AND GRABLE, PAGES 416-417
+!!##REFERENCES
+!!   o GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
+!!   o WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
+!!   o MOOD AND GRABLE, PAGES 416-417
 !*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TOL(X,N)
 REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
@@ -33431,7 +33471,7 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
      &        locmx2 , locmx3 , N , numsec
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -33442,7 +33482,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -33763,7 +33803,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
 END SUBROUTINE TOL
 !>
 !!##NAME
-!!    tplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generates a student's
+!!    tplt(3f) - [M_datapac:LINE_PLOT] generates a student's
 !!    t probability plot (with integer degrees of freedom parameter value
 !!    NU).
 !!
@@ -33818,28 +33858,22 @@ END SUBROUTINE TOL
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
-!! !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGE 102,
-!! !                 FORMULA 11.
-!! !               --FEDERIGHI, 'EXTENDED TABLES OF THE
-!! !                 PERCENTAGE POINTS OF STUDENT'S T
-!! !                 DISTRIBUTION, JOURNAL OF THE
-!! !                 AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1969, PAGES 683-688.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 120-123.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 949, FORMULA 26.7.5.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGE 102, FORMULA 11.
+!!   o FEDERIGHI, 'EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT'S
+!!     T DISTRIBUTION, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+!!     1969, PAGES 683-688.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 120-123.
 !*==tplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TPLT(X,N,Nu)
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
@@ -33847,7 +33881,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     yslope
 INTEGER :: i , iupper , N , Nu
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -33862,7 +33896,7 @@ INTEGER :: i , iupper , N , Nu
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, TPPF, NORPPF,
 !                                         PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
@@ -33871,7 +33905,7 @@ INTEGER :: i , iupper , N , Nu
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -33985,7 +34019,7 @@ INTEGER :: i , iupper , N , Nu
 END SUBROUTINE TPLT
 !>
 !!##NAME
-!!    tppf(3f) - [M_datapac:STATISTICS:PP] computes the percent
+!!    tppf(3f) - [M_datapac:PERCENT_POINT] computes the percent
 !!    point function value for the student's T distribution
 !!
 !!##SYNOPSIS
@@ -34021,33 +34055,32 @@ END SUBROUTINE TPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
-!! !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGE 102,
-!! !                 FORMULA 11.
-!! !               --FEDERIGHI, 'EXTENDED TABLES OF THE
-!! !                 PERCENTAGE POINTS OF STUDENT'S T
-!! !                 DISTRIBUTION, JOURNAL OF THE
-!! !                 AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1969, PAGES 683-688.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 120-123.
+!!
+!!##REFERENCES
+!!   o National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 949, Formula 26.7.5.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Page 102, Formula 11.
+!!   o Federighi, 'Extended Tables of the Percentage Points of Student's T
+!!     Distribution, Journal of the American Statistical Association, 1969,
+!!     Pages 683-688.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Pages 120-123.
 !*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TPPF(P,Nu,Ppf)
 INTEGER ipass , maxit , Nu
 REAL(kind=wp) :: P , Ppf , ppfn
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -34055,9 +34088,9 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE STUDENT'S T DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -34229,7 +34262,7 @@ REAL(kind=wp) :: P , Ppf , ppfn
 99999 END SUBROUTINE TPPF
 !>
 !!##NAME
-!!    tran(3f) - [M_datapac:STATISTICS:RANDOM] a random sample of size n from the
+!!    tran(3f) - [M_datapac:RANDOM] a random sample of size n from the
 !!    student's t distribution with integer degrees of freedom parameter NU.
 !!
 !!##SYNOPSIS
@@ -34259,33 +34292,35 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --MOOD AND GRABLE, INTRODUCTION TO THE
-!! !                 THEORY OF STATISTICS, 1963, PAGE 233.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGE 94.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 121.
+!!
+!!##REFERENCES
+!!   o Mood and Grable, Introduction to the Theory of Statistics, 1963,
+!!     Page 233.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Page 94.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 121.
 !*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 INTEGER i , Iseed , j , N , Nu
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --NU     = THE INTEGER DEGREES OF FREEDOM
 !                                (PARAMETER) FOR THE T
 !                                DISTRIBUTION.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -34298,7 +34333,7 @@ INTEGER i , Iseed , j , N , Nu
 !                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -34408,37 +34443,39 @@ END SUBROUTINE TRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
-!! !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
-!! !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1967, PAGES 357, 387.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY, 1969).
+!!
+!!##REFERENCES
+!!   o David, Order Statistics, 1970, Pages 126-130, 136.
+!!   o Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+!!     American Statistical Association, 1967, Pages 357, 387.
+!!   o Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University, 1969).
 !*==trim.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
 INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P1     = THE SINGLE PRECISION VALUE
+!                     --P1     = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE LOWER ORDER STATISTICS
 !                                IS TO BE TRIMMED OFF
 !                                BEFORE COMPUTING THE TRIMMED MEAN.
-!                     --P2     = THE SINGLE PRECISION VALUE
+!                     --P2     = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE UPPER ORDER STATISTICS
@@ -34455,7 +34492,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                                THE PRINTING OF THE
 !                                SAMPLE TRIMMED MEAN
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XTRIM  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XTRIM  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE TRIMMED MEAN
 !                                WHERE 100*P1 % OF THE SMALLEST
 !                                AND 100*P2 % OF THE LARGEST
@@ -34463,7 +34500,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                                TRIMMED AWAY BEFORE COMPUTING THE
 !                                MEAN OF THE REMAINING OBSERVATIONS
 !                                IN THE MIDDLE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE TRIMMED MEAN
 !             WHERE 100*P1 % OF THE SMALLEST
 !             AND   100*P2 % OF THE LARGEST
@@ -34480,7 +34517,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                 --THE SUM OF P1 AND P2 SHOULD BE
 !                   SMALLER THAN 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !
@@ -34488,7 +34525,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
@@ -34613,7 +34650,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 END SUBROUTINE TRIM
 !>
 !!##NAME
-!!    unicdf(3f) - [M_datapac:STATISTICS:CD] trivially compute the Uniform
+!!    unicdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] trivially compute the Uniform
 !!    cumulative distribution function
 !!
 !!##SYNOPSIS
@@ -34641,7 +34678,7 @@ END SUBROUTINE TRIM
 !!
 !!##OUTPUT ARGUMENTS
 !!
-!!   CDF   the single precision cumulative distribution function value.
+!!   CDF   the precision precision cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
@@ -34663,9 +34700,8 @@ END SUBROUTINE TRIM
 !!
 !!  Result:
 !!
-!!   THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZONTALLY)
+!!   The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
 !!                     I-----------I-----------I-----------I-----------I
-!!
 !!    0.1000000E+01 -                                                  X
 !!    0.9583333E+00 I                                                XX
 !!    0.9166667E+00 I                                             XX
@@ -34691,13 +34727,13 @@ END SUBROUTINE TRIM
 !!    0.8333331E-01 I      XX
 !!    0.4166663E-01 I   XX
 !!    0.0000000E+00 -  X
-!!
 !!                     I-----------I-----------I-----------I-----------I
 !!              0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
@@ -34706,7 +34742,8 @@ END SUBROUTINE TRIM
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o Johnson and Kotz, Continuous Univariate Distributions -- 2, 1970, Pages 57-74.
+!!  o Johnson and Kotz, Continuous Univariate Distributions -- 2, 1970,
+!!  Pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -34785,15 +34822,19 @@ end subroutine unicdf
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
-!! !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!!
+!!##REFERENCES
+!!   o Filliben, 'The Probability Plot Correlation Coefficient Test for
+!!     Normality', Technometrics, 1975, Pages 111-117.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -34802,10 +34843,10 @@ SUBROUTINE UNIMED(N,X)
 REAL(kind=wp) :: ai , an , gam , X(:)
 INTEGER i , imax , irev , N , nevodd , nhalf
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF UNIFORM ORDER STATISTIC MEDIANS
 !                                TO BE GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                UNIFORM ORDER STATISTIC MEDIANS
@@ -34867,90 +34908,102 @@ INTEGER i , imax , irev , N , nevodd , nhalf
 END SUBROUTINE UNIMED
 !>
 !!##NAME
-!!    unipdf(3f) - [M_datapac:STATISTICS:PD] compute the Uniform probability
-!!    density function
+!!    unipdf(3f) - [M_datapac:PROBABILITY_DENSITY] trivially compute the
+!!    Uniform probability density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE UNIPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    unipdf(3f) computes the probability density function value for the
+!!    UNIPDF(3f) computes the probability density function value for the
 !!    uniform (rectangular) distribution on the unit interval (0,1).
 !!
-!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
 !!    = 0.28867513. this distribution has the probability density function
-!!    f(x) = 1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!        f(X) = 1
+!!
+!!    That is, trivially no matter what the input the output is 1.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X     The precision precision value at which the probability density
+!!          function is to be evaluated. X should be between 0 and 1,
+!!          inclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PDF   The precision precision probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_unipdf
+!!    !@(#) line plotter graph of probability density function
 !!    use M_datapac, only : unipdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call unipdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i)/10.0,i=0,10,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call unipdf( x(i), y(i) )
+!!       enddo
+!!       write(*,*)y
 !!    end program demo_unipdf
 !!
 !!   Results:
 !!
+!!       1.00  1.000000  1.000000  1.000000  1.000000
+!!       1.00  1.000000  1.000000  1.000000  1.000000
+!!       1.00
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==unipdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE UNIPDF(X,Pdf)
-REAL(kind=wp) :: Pdf , X
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE BETWEEN 0 AND 1, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!
-!---------------------------------------------------------------------
-!
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Pdf
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp .OR. X>1.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO UNIPDF(3f) IS OUTSIDE THE USUAL (0,1) INTERVAL *****')
+         99001 FORMAT(&
+         & ' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO UNIPDF(3f) IS OUTSIDE THE USUAL (0,1) INTERVAL *****')
          WRITE (G_IO,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99002 FORMAT(' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
          Pdf = 0.0_wp
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          Pdf = 1.0_wp
       ENDIF
 !
 END SUBROUTINE UNIPDF
 !>
 !!##NAME
-!!    uniplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Uniform probability plot
+!!    uniplt(3f) - [M_datapac:LINE_PLOT] generate a Uniform probability plot
 !!    (line printer graph)
 !!
 !!##SYNOPSIS
@@ -35000,22 +35053,25 @@ END SUBROUTINE UNIPDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!   o Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army REsearch
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+!!     425-450.
+!!   o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!     260-308.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35026,7 +35082,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -35039,7 +35095,7 @@ INTEGER :: i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -35126,7 +35182,7 @@ INTEGER :: i , iupper , N
 END SUBROUTINE UNIPLT
 !>
 !!##NAME
-!!    unippf(3f) - [M_datapac:STATISTICS:PP] compute the Uniform percent
+!!    unippf(3f) - [M_datapac:PERCENT_POINT] compute the Uniform percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -35134,15 +35190,15 @@ END SUBROUTINE UNIPLT
 !!       SUBROUTINE UNIPPF(P,Ppf)
 !!
 !!##DESCRIPTION
-!!    unippf(3f) computes the percent point function value for the uniform
+!!    UNIPPF(3f) computes the percent point function value for the uniform
 !!    (rectangular) distribution on the unit interval (0,1).
 !!
-!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
 !!    = 0.28867513. This distribution has the probability density function
 !!
-!!        f(x) = 1.
+!!        f(X) = 1
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
@@ -35164,36 +35220,39 @@ END SUBROUTINE UNIPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!   o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!     of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
+!!     University), 1969, Pages 21-44, 229-231.
+!!   o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 57-74.
 !*==unippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35221,7 +35280,7 @@ REAL(kind=wp) :: P , Ppf
 END SUBROUTINE UNIPPF
 !>
 !!##NAME
-!!    uniran(3f) - [M_datapac:STATISTICS:RANDOM] generate Uniform random numbers
+!!    uniran(3f) - [M_datapac:RANDOM] generate Uniform random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -35258,31 +35317,33 @@ END SUBROUTINE UNIPPF
 !!    Engineering Division, National Institute of Standards and Technology.
 !!
 !!##WRITTEN BY
-!!      --james blue
+!!      o James Blue
 !!                  scientific computing division
 !!                  center for applied mathematics
 !!                  national bureau of standards
 !!                  washington, d. c. 20234
-!!      --david kahaner
+!!      o David Kahaner
 !!                  scientific computing division
 !!                  center for applied mathematics
 !!                  national bureau of standards
-!!      --george marsaglia
+!!      o George Marsaglia
 !!                  computer science department
 !!                  washington state university
-!!      --james j. filliben
+!!      o James J. Filliben
 !!                  statistical engineering division
 !!                  center for applied mathematics
 !!                  national bureau of standards
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --MARSAGLIA G., "COMMENTS ON THE PERFECT UNIFORM RANDOM
-!! !                 NUMBER GENERATOR", UNPUBLISHED NOTES, WASH S. U.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!   o Marsaglia G., "Comments on the Perfect Uniform Random Number
+!!     Generator", Unpublished Notes, Wash S. U.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 57-74.
 !*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIRAN(N,Iseed,X)
 REAL(kind=wp) :: ak , am1 , X(:)
@@ -35290,11 +35351,11 @@ INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
 INTEGER m(17)
 
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --ISEED  = AN INTEGER ISEED VALUE
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -35303,7 +35364,7 @@ INTEGER m(17)
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !     ALGORITHM--FIBONACCI GENERATOR
 !                AS DEFINED BY GEORGE MARSAGLIA.
@@ -35500,7 +35561,7 @@ INTEGER m(17)
 END SUBROUTINE UNIRAN
 !>
 !!##NAME
-!!    unisf(3f) - [M_datapac:STATISTICS:SF] compute the Uniform sparsity function
+!!    unisf(3f) - [M_datapac:SPARSITY] compute the Uniform sparsity function
 !!
 !!##SYNOPSIS
 !!
@@ -35539,34 +35600,36 @@ END SUBROUTINE UNIRAN
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!   o Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. DIssertation,
+!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!   o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 57-74.
 !*==unisf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNISF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION SPARSITY
+!     OUTPUT ARGUMENTS--SF     = THE  SPARSITY
 !                                FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION
+!     OUTPUT--THE
 !             SPARSITY FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35632,19 +35695,18 @@ END SUBROUTINE UNISF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 44.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 38.
-!! !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!! !                 OF STATISTICS, EDITION 2, 1963, PAGE 171.
+!!##REFERENCES
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+!!   o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!     1957, Page 38.
+!!   o Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
+!!     1963, Page 171.
 !*==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 INTEGER i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -35659,16 +35721,16 @@ INTEGER i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE VARIANCE
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XVAR   = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XVAR   = THE  VALUE OF THE
 !                                COMPUTED SAMPLE VARIANCE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE VARIANCE (WITH DENOMINATOR N-1).
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35775,20 +35837,23 @@ END SUBROUTINE VAR
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!! !                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!! !                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!! !                ARMY RESEARCH AND TESTING, PAGES 425-450.
-!! !              --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                UNPUBLISHED MANUSCRIPT.
-!! !              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!! !                DISTRIBUTIONS-1, PAGES 250-271.
+!!
+!!##REFERENCE
+!!   o Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
+!!     of the Eighteenth Conference on the Design of Experiments in Army
+!!     Research and Testing, Pages 425-450.
+!!   o Filliben, 'The Percent Point Function', UNpublished Manuscript.
+!!   o Johnson and Kotz (1970), Continuous Univariate Distributions-1,
+!!     Pages 250-271.
 !*==weib.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIB(X,N)
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
@@ -35796,7 +35861,7 @@ REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
 REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 INTEGER i , idis , idismx , iupper , N , numdis , numdm1
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -35807,7 +35872,7 @@ INTEGER i , idis , idismx , iupper , N , numdis , numdm1
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, WEIPLT,
 !                                         EV1PLT, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35838,7 +35903,7 @@ CHARACTER(len=4) :: equal
       DIMENSION yi(50) , ys(50) , t(50)
       DIMENSION iflag1(50) , iflag2(50) , iflag3(50)
       DIMENSION aindex(50)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (Z(1),WS(7501))
       DATA blank , alpham , alphaa , alphax/' ' , 'M' , 'A' , 'X'/
@@ -36080,7 +36145,7 @@ CHARACTER(len=4) :: equal
 END SUBROUTINE WEIB
 !>
 !!##NAME
-!!    weicdf(3f) - [M_datapac:STATISTICS:CD] compute the Weibull cumulative
+!!    weicdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Weibull cumulative
 !!    distribution function
 !!
 !!##SYNOPSIS
@@ -36088,14 +36153,14 @@ END SUBROUTINE WEIB
 !!       SUBROUTINE WEICDF(X,Gamma,Cdf)
 !!
 !!##DESCRIPTION
-!!    weicdf(3f) computes the cumulative distribution function value for
-!!    the weibull distribution with single precision tail length parameter
+!!    WEICDF(3f) computes the cumulative distribution function value for
+!!    the weibull distribution with precision precision tail length parameter
 !!    = gamma.
 !!
-!!    the weibull distribution used herein is defined for all positive x,
+!!    The weibull distribution used herein is defined for all positive x,
 !!    and has the probability density function
 !!
-!!        f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+!!        f(X) = gamma * (X**(gamma-1)) * exp(-(X**gamma)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36115,33 +36180,32 @@ END SUBROUTINE WEIB
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 124.
+!!##REFERENCES
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 250-271.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 124.
 !*==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE WEIBULL DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -36181,7 +36245,7 @@ REAL(kind=wp) :: Cdf , Gamma , X
 END SUBROUTINE WEICDF
 !>
 !!##NAME
-!!    weiplt(3f) - [M_datapac:STATISTICS:LINE PLOT] generate a Weibull probability plot
+!!    weiplt(3f) - [M_datapac:LINE_PLOT] generate a Weibull probability plot
 !!    (line printer graph)
 !!
 !!##SYNOPSIS
@@ -36236,16 +36300,15 @@ END SUBROUTINE WEICDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
+!!##REFERENCES
+!!   o Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+!!     425-450.
+!!   o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!     260-308.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 250-271.
 !*==weiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE WEIPLT(X,N,Gamma)
@@ -36255,11 +36318,11 @@ REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE WEIBULL PROBABILITY PLOT.
@@ -36269,7 +36332,7 @@ INTEGER i , iupper , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --MARCH     1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -36280,7 +36343,7 @@ INTEGER i , iupper , N
 !
       DIMENSION X(:)
       DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
       EQUIVALENCE (W(1),WS(7501))
 !
@@ -36397,7 +36460,7 @@ INTEGER i , iupper , N
 END SUBROUTINE WEIPLT
 !>
 !!##NAME
-!!    weippf(3f) - [M_datapac:STATISTICS:PP] compute the Weibull percent
+!!    weippf(3f) - [M_datapac:PERCENT_POINT] compute the Weibull percent
 !!    point function
 !!
 !!##SYNOPSIS
@@ -36406,7 +36469,7 @@ END SUBROUTINE WEIPLT
 !!
 !!##DESCRIPTION
 !!    weippf(3f) computes the percent point function value for the weibull
-!!    distribution with single precision tail length parameter = gamma.
+!!    distribution with precision precision tail length parameter = gamma.
 !!
 !!    the weibull distribution used herein is defined for all positive x,
 !!    and has the probability density function f(x) = gamma * (x**(gamma-1))
@@ -36440,28 +36503,26 @@ END SUBROUTINE WEIPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 124.
+!!##REFERENCES
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 250-271.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 124.
 !*==weippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE WEIBULL DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -36469,7 +36530,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -36503,7 +36564,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 END SUBROUTINE WEIPPF
 !>
 !!##NAME
-!!    weiran(3f) - [M_datapac:STATISTICS:RANDOM] generate Weibull random numbers
+!!    weiran(3f) - [M_datapac:RANDOM] generate Weibull random numbers
 !!
 !!##SYNOPSIS
 !!
@@ -36542,29 +36603,25 @@ END SUBROUTINE WEIPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 128.
+!!##REFERENCES
+!!   o Tocher, the Art of Simulation, 1963, Pages 14-15.
+!!   o Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 250-271.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 128.
 !*==weiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
 INTEGER i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -36577,7 +36634,7 @@ INTEGER i , Iseed , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -36664,19 +36721,20 @@ END SUBROUTINE WEIRAN
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
-!! !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
-!! !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1967, PAGES 357, 387.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY, 1969).
+!!
+!!##REFERENCES
+!!   o David, Order Statistics, 1970, Pages 126-130, 136.
+!!   o Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+!!     American Statistical Association, 1967, Pages 357, 387.
+!!   o Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University, 1969).
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -36684,7 +36742,7 @@ SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
 REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
 INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !
-!     INPUT  ARGUMENTS--X      = THE VECTOR OF
+!     INPUT ARGUMENTS--X      = THE VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -36740,7 +36798,7 @@ INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !
       DIMENSION X(:)
       DIMENSION Y(15000)
-      COMMON /BLOCK2/ WS(15000)
+      COMMON /BLOCK2_real32/ WS(15000)
       EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
@@ -36874,7 +36932,7 @@ END SUBROUTINE WIND
 !!
 !!##DESCRIPTION
 !!
-!!    WRITE(3f) writes out the contents of the single precision vector X
+!!    WRITE(3f) writes out the contents of the precision precision vector X
 !!    in an orderly and neat fashion.
 !!
 !!    WRITE(3f) gives the data analyst the ability to get data out of the
@@ -36882,7 +36940,7 @@ END SUBROUTINE WIND
 !!
 !!##INPUT ARGUMENTS
 !!
-!!    X       The single precision vector of
+!!    X       The precision precision vector of
 !!            observations to be printed out.
 !!
 !!    N       the integer number of observations

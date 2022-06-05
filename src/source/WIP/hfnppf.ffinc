@@ -55,7 +55,7 @@ REFERENCES
     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
 !

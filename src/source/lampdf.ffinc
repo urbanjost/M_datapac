@@ -116,7 +116,7 @@ $ENDBLOCK
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LAMPDF(X,Alamba,Pdf)
 REAL(kind=wp) :: X

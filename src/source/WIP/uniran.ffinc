@@ -66,7 +66,7 @@ REFERENCES
 
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIRAN(N,Iseed,X)
 REAL(kind=wp) :: ak , am1 , X(:)
 INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N

@@ -60,7 +60,7 @@ REFERENCES
     1970, PAGES 272-295.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXTREM(X,N)
 REAL(kind=wp) :: a, aindex, am, an, arg, cc, corr, corrmx, gamtab,   h, hold, p, r, scrat, sum1, sum2, sum3, sy, t, w

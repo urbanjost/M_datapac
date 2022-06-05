@@ -406,7 +406,7 @@ integer i , imax , imin
    imax=size(a)
    parpro=0.0
    call dot(a,b,imin,imax,parpro,dotpro)
-   call unit_check('dot', all([dotpro,dot_product(a,b)] == 32.0) ,'comparing',dotpro,dot_product(a,b))
+   call unit_check('dot', dotpro == 32.0 ,'comparing',dotpro,dot_product(a,b))
    call unit_check_done('dot',msg='')
 end subroutine test_dot
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -712,7 +712,7 @@ end subroutine test_logsf
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_max()
 real :: xmax
-double precision :: dmax
+real(kind=real64) :: dmax
 
    call unit_check_start('max',msg='')
 
@@ -727,8 +727,15 @@ double precision :: dmax
 end subroutine test_max
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_mean()
+real :: sp_mean
+double precision :: dp_mean
    call unit_check_start('mean',msg='')
-   !!call unit_check('mean', 0.eq.0, 'checking',100)
+   call mean([4.0, 36.0, 45.0, 50.0, 75.0], 5, 1, sp_mean)
+   call unit_check('mean', sp_mean.eq.42.0, 'checking',sp_mean,42.0)
+   call mean([4.0d0, 36.0d0, 45.0d0, 50.0d0, 75.0d0], 5, 1, dp_mean)
+   call unit_check('mean', dp_mean.eq.42.0d0, 'checking',dp_mean,42.0d0)
+   call mean([4.0d0], 1, 1, dp_mean)
+   call unit_check('mean', dp_mean.eq.4.0d0, 'checking',dp_mean,4.0d0)
    call unit_check_done('mean',msg='')
 end subroutine test_mean
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -752,7 +759,7 @@ end subroutine test_midr
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_min()
 real :: xmin
-double precision :: dmin
+real(kind=real64) :: dmin
 
    call unit_check_start('min',msg='')
 

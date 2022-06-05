@@ -41,9 +41,9 @@ EXAMPLES
    end program demo_max
 
   Results:
-    
+
     THE MAXIMUM OF THE SET OF      5 OBSERVATIONS IS  0.40000000E+03
-      400.0000    
+      400.0000
 
 AUTHOR
    The original DATAPAC library was written by James Filliben of the
@@ -60,7 +60,7 @@ $ENDBLOCK
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==max.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==max.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE MAX(X,N,Iwrite,Xmax)
 REAL(kind=wp) :: hold , X(:) , Xmax
@@ -99,7 +99,7 @@ ELSE
       IF ( X(i)>Xmax ) Xmax = X(i)
    ENDDO
 ENDIF
- 
+
 100  continue
    IF ( Iwrite==0 ) RETURN
    WRITE (G_IO,99005)

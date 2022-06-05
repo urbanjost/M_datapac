@@ -56,7 +56,7 @@ $ENDBLOCK
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4

@@ -173,11 +173,11 @@
       
       <a class="list-group-item" href="../proc/tppf.html#variable-iseed~17">Iseed</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-n~107">N</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-n~103">N</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-nu~7">Nu</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-x~127">X</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-x~120">X</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-anu~4">anu</a>
       
@@ -217,7 +217,7 @@
       
       <a class="list-group-item" href="../proc/tppf.html#variable-b56">b56</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-c~10">c</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-c~9">c</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-d1~4">d1</a>
       
@@ -241,25 +241,25 @@
       
       <a class="list-group-item" href="../proc/tppf.html#variable-dppfn">dppfn</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-i~116">i</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-i~113">i</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-ipass">ipass</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-j~45">j</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-j~43">j</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-maxit~4">maxit</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-pi~19">pi</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-pi~18">pi</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-pi~20">pi</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-pi~19">pi</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-ppfn">ppfn</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-s~8">s</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-s~7">s</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-sqrt2">sqrt2</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-sum~35">sum</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-sum~33">sum</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-term1~4">term1</a>
       
@@ -328,7 +328,7 @@ public subroutine TPPF(P, Nu, Ppf)
 
     
     <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">tran</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_datapac</span>:<span class="nv">STATISTICS</span>:<span class="k">RANDOM</span>] <span class="nv">a</span> <span class="k">random</span> <span class="nv">sample</span> <span class="nv">of</span> <span class="nv">size</span> <span class="nv">n</span> <span class="nv">from</span> <span class="nv">the</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">tran</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_datapac</span>:<span class="k">RANDOM</span>] <span class="nv">a</span> <span class="k">random</span> <span class="nv">sample</span> <span class="nv">of</span> <span class="nv">size</span> <span class="nv">n</span> <span class="nv">from</span> <span class="nv">the</span>
 <span class="nv">student</span><span class="s1">&#39;</span><span class="s">s t distribution with integer degrees of freedom parameter NU.</span>
 </code></pre></div>
 
@@ -358,8 +358,9 @@ public subroutine TPPF(P, Nu, Ppf)
 
 <p>Results:</p>
 <h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </code></pre></div>
 
 <h2 id="maintainer">MAINTAINER</h2>
@@ -370,15 +371,13 @@ Engineering Division, National Institute of Standards and Technology.
 <div class="codehilite"><pre><span></span><code>CC0-1.0
 </code></pre></div>
 
-<p>!     REFERENCES
- !               &ndash;MOOD AND GRABLE, INTRODUCTION TO THE
- !                 THEORY OF STATISTICS, 1963, PAGE 233.
- !               &ndash;JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
- !                 DISTRIBUTIONS&ndash;2, 1970, PAGE 94.
- !               &ndash;HASTINGS AND PEACOCK, STATISTICAL
- !                 DISTRIBUTIONS&ndash;A HANDBOOK FOR
- !                 STUDENTS AND PRACTITIONERS, 1975,
- !                 PAGE 121.
+<h2 id="references">REFERENCES</h2>
+<p>o Mood and Grable, Introduction to the Theory of Statistics, 1963,
+     Page 233.
+   o Johnson and Kotz, Continuous Univariate Distributions&ndash;2, 1970,
+     Page 94.
+   o Hastings and Peacock, Statistical Distributions&ndash;A Handbook for
+     Students and Practitioners, 1975, Page 121.
 ==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022</p>
     
 
@@ -463,11 +462,11 @@ Engineering Division, National Institute of Standards and Technology.
       
       <a class="list-group-item" href="../proc/tppf.html#variable-iseed~17">Iseed</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-n~107">N</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-n~103">N</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-nu~7">Nu</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-x~127">X</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-x~120">X</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-anu~4">anu</a>
       
@@ -507,7 +506,7 @@ Engineering Division, National Institute of Standards and Technology.
       
       <a class="list-group-item" href="../proc/tppf.html#variable-b56">b56</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-c~10">c</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-c~9">c</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-d1~4">d1</a>
       
@@ -531,25 +530,25 @@ Engineering Division, National Institute of Standards and Technology.
       
       <a class="list-group-item" href="../proc/tppf.html#variable-dppfn">dppfn</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-i~116">i</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-i~113">i</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-ipass">ipass</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-j~45">j</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-j~43">j</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-maxit~4">maxit</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-pi~19">pi</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-pi~18">pi</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-pi~20">pi</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-pi~19">pi</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-ppfn">ppfn</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-s~8">s</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-s~7">s</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-sqrt2">sqrt2</a>
       
-      <a class="list-group-item" href="../proc/tppf.html#variable-sum~35">sum</a>
+      <a class="list-group-item" href="../proc/tppf.html#variable-sum~33">sum</a>
       
       <a class="list-group-item" href="../proc/tppf.html#variable-term1~4">term1</a>
       
@@ -639,7 +638,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-n~107"></span>integer,</td>
+  <td><span class="anchor" id="variable-n~103"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -667,7 +666,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~127"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-x~120"></span>real(kind=wp),</td>
   
   <td>public,</td>
   <td>dimension(:)</td><td>::</td>
@@ -947,7 +946,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-c~10"></span>double precision,</td>
+  <td><span class="anchor" id="variable-c~9"></span>double precision,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1115,7 +1114,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-i~116"></span>integer,</td>
+  <td><span class="anchor" id="variable-i~113"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1143,7 +1142,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-j~45"></span>integer,</td>
+  <td><span class="anchor" id="variable-j~43"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1171,7 +1170,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-pi~19"></span>double precision,</td>
+  <td><span class="anchor" id="variable-pi~18"></span>double precision,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1185,7 +1184,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-pi~20"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-pi~19"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1213,7 +1212,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-s~8"></span>double precision,</td>
+  <td><span class="anchor" id="variable-s~7"></span>double precision,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1241,7 +1240,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-sum~35"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-sum~33"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -1402,7 +1401,7 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="kt">INTEGER </span><span class="n">ipass</span> <span class="p">,</span> <span class="n">maxit</span> <span class="p">,</span> <span class="n">Nu</span>
 <span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">P</span> <span class="p">,</span> <span class="n">Ppf</span> <span class="p">,</span> <span class="n">ppfn</span>
 <span class="c">!</span>
-<span class="c">!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE</span>
+<span class="c">!     INPUT ARGUMENTS--P      = THE  VALUE</span>
 <span class="c">!                                (BETWEEN 0.0 (EXCLUSIVELY)</span>
 <span class="c">!                                AND 1.0 (EXCLUSIVELY))</span>
 <span class="c">!                                AT WHICH THE PERCENT POINT</span>
@@ -1410,9 +1409,9 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="c">!                     --NU     = THE INTEGER NUMBER OF DEGREES</span>
 <span class="c">!                                OF FREEDOM.</span>
 <span class="c">!                                NU SHOULD BE POSITIVE.</span>
-<span class="c">!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT</span>
+<span class="c">!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT</span>
 <span class="c">!                                POINT FUNCTION VALUE.</span>
-<span class="c">!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .</span>
+<span class="c">!     OUTPUT--THE  PERCENT POINT FUNCTION .</span>
 <span class="c">!             VALUE PPF FOR THE STUDENT&#39;S T DISTRIBUTION</span>
 <span class="c">!             WITH DEGREES OF FREEDOM PARAMETER = NU.</span>
 <span class="c">!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.</span>
@@ -1603,7 +1602,7 @@ Engineering Division, National Institute of Standards and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-03 22:20  
+             on 2022-06-05 04:30  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

@@ -56,7 +56,7 @@ REFERENCES
 $ENDBLOCK
 !     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==geocdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==geocdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp) :: Cdf , del , fintx , P , X

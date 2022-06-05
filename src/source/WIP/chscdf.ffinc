@@ -54,7 +54,7 @@ $ENDBLOCK
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==chscdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CHSCDF(X,Nu,Cdf)
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z

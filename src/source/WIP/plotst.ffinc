@@ -67,7 +67,7 @@ LICENSE
    CC0-1.0
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==plotst.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==plotst.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTST(Y,X,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
      &     D , delx , dely , Dmax , Dmin , hold , X , xlable , xmax ,   &

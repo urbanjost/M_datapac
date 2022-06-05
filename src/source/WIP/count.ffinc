@@ -45,7 +45,7 @@ REFERENCES
    1957, pages 81-82, 228-231.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==count.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==count.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin

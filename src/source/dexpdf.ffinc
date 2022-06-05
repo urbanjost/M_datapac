@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE DEXPDF(X,Pdf)
 
        REAL(kind=wp),intent(in)  :: X
-       REAL(kind=wp),intent(out) :: Pdf 
+       REAL(kind=wp),intent(out) :: Pdf
 
 DESCRIPTION
    DEXPDF(3f) computes the probability density function value for the
@@ -19,7 +19,7 @@ DESCRIPTION
    density function
 
        f(X) = 0.5*exp(-abs(X))
- 
+
 INPUT ARGUMENTS
    X     The value at which the probability density function is to
          be evaluated.
@@ -31,7 +31,7 @@ EXAMPLES
   Sample program:
 
    program demo_dexpdf
-   !@(#) line plotter graph 
+   !@(#) line plotter graph
    !@(#) of probability density function for Laplace distribution
    use M_datapac, only : dexpdf, plott
    implicit none
@@ -68,19 +68,19 @@ $ENDBLOCK
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --SEPTEMBER 1978.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine dexpdf(X,Pdf)
 real(kind=wp),intent(in)  :: X
-real(kind=wp),intent(out) :: Pdf 
+real(kind=wp),intent(out) :: Pdf
 
-real(kind=wp) :: arg 
- 
+real(kind=wp) :: arg
+
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS. -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
       arg = X
       IF ( X<0.0_wp ) arg = -X
       Pdf = 0.5_wp*EXP(-arg)
- 
+
 end subroutine dexpdf

@@ -67,7 +67,7 @@ $ENDBLOCK
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==time.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==time.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE TIME(X,N)
 REAL(kind=wp) :: absr, ak, al, all, almax, an, an2, arg1, arg2, bw, df, dfroun, hold, p, perout, pi, pmsq, ps, pssq, r

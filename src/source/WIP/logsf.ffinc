@@ -56,7 +56,7 @@ REFERENCES
     PAGES 1-21.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
@@ -64,7 +64,7 @@ REAL(kind=wp) :: P , Sf
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE 
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
 !     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.

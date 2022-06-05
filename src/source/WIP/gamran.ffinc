@@ -61,7 +61,7 @@ REFERENCES
     PAGE 952.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
      &     X , xg , xg0 , xn(1) , xn0

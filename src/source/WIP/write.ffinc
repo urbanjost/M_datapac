@@ -74,7 +74,7 @@ $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==write.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==write.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WRITE(X,N,Nnline,Iwidth,Idec)
 INTEGER i, i10, i50, Idec, idecp1, iwidm2, iwidp1, Iwidth, j, jmax, jmin, maxcha, maxwid, N, nlines, Nnline, numcha
 REAL(kind=wp) :: X(:)

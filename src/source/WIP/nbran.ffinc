@@ -63,7 +63,7 @@ REFERENCES
     EDITION 2, 1963, PAGES 130-131.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
 REAL(kind=wp) :: b(1) , g(1) , P , X
 INTEGER :: i , ib , ig , Istart , isum , j , N , Npar

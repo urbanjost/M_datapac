@@ -7,7 +7,7 @@ SYNOPSIS
    subroutine dot(A,B,Imin,Imax,Parpro,Dotpro)
 
     real(kind=wp),intent(in)  :: A(:), B(:), Parpro
-    real(kind=wp),intent(out) :: Dotpro 
+    real(kind=wp),intent(out) :: Dotpro
     integer,intent(in)        :: Imax, Imin
 
 DESCRIPTION
@@ -66,13 +66,13 @@ LICENSE
 $ENDBLOCK
 !     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==dot.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine dot(A,B,Imin,Imax,Parpro,Dotpro)
 real(kind=wp),intent(in)  :: A(:) , B(:) , Parpro
-real(kind=wp),intent(out) :: Dotpro 
+real(kind=wp),intent(out) :: Dotpro
 integer,intent(in)        :: Imax , Imin
-integer                   :: i 
+integer                   :: i
 double precision          :: sum , prod , dparpr
 
    dparpr = Parpro
@@ -84,5 +84,5 @@ double precision          :: sum , prod , dparpr
       enddo
    endif
    Dotpro = sum + dparpr
- 
+
 end subroutine dot

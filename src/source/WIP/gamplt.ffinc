@@ -73,7 +73,7 @@ REFERENCES
     PAGES 166-206.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GAMPLT(X,N,Gamma)
 REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
      &     dx , g , Gamma , hold , pcalc , pp0025 , pp025 , pp975 ,     &

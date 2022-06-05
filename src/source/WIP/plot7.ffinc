@@ -76,7 +76,7 @@ REFERENCES
     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
 REAL(kind=wp) :: aim1, Char, cutoff, hold, ratiox, ratioy, X, x25, x75, Xmax, xmid, Xmin, Y, ylable, Ymax, Ymin

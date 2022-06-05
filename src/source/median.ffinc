@@ -56,10 +56,10 @@ EXAMPLES
    end program demo_median
 
   Results:
-    
+
    The sample median of the 5 observations is  0.10000000E+01
    median of  -10.00000 10.00000 .000000 1.000000 2.000000 is  1.000000
-    
+
    The sample median of the 4 observations is  0.15000000E+02
    median of  10.00000 20.00000 3.000000 40.00000 is  15.00000
 
@@ -86,12 +86,12 @@ $ENDBLOCK
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
 REAL(kind=wp) :: hold , WS , X(:) , Xmed , Y(15000)
 INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
- 
+
 COMMON /BLOCK2_${KIND}/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 !
@@ -102,7 +102,7 @@ EQUIVALENCE (Y(1),WS(1))
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
          99001 FORMAT (&
- 	  & ' ***** FATAL ERROR--The second input argument to MEDIAN(3f) is outside the allowable (1,',I6,') interval *****')
+          & ' ***** FATAL ERROR--The second input argument to MEDIAN(3f) is outside the allowable (1,',I6,') interval *****')
          WRITE (G_IO,99002) N
          99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN

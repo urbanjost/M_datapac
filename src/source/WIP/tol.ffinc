@@ -43,7 +43,7 @@ REFERENCES
   o MOOD AND GRABLE, PAGES 416-417
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TOL(X,N)
 REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
      &     an4 , an5 , an6 , b , c , c1 , c2 , c3

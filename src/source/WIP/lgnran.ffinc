@@ -59,7 +59,7 @@ $ENDBLOCK
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==lgnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==lgnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2

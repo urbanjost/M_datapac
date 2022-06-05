@@ -48,7 +48,7 @@ REFERENCES
     Students and Practitioners, 1975, Page 124.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-!*==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+! ==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
