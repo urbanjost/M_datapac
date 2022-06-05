@@ -1680,12 +1680,14 @@ real(kind=wp),parameter  :: c = 0.31830988618379_wp
 end subroutine caupdf
 !>
 !!##NAME
-!!    cauplt(3f) - [M_datapac:LINE_PLOT] generate a Cauchy
-!!    probability plot
+!!    cauplt(3f) - [M_datapac:LINE_PLOT] generate a Cauchy probability plot
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE CAUPLT(X,N)
+!!       SUBROUTINE CAUPLT(X,N)
+!!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
 !!
 !!##DESCRIPTION
 !!    CAUPLT(3f) generates a one-page Cauchy probability plot.
@@ -1696,7 +1698,7 @@ end subroutine caupdf
 !!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(X) = (1/pi) * (1/(1+X*X)).
+!!        f(X) = (1/pi) * (1/(1+X*X))
 !!
 !!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
@@ -1728,28 +1730,28 @@ end subroutine caupdf
 !!    program demo_cauplt
 !!    use M_datapac, only : cauplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call cauplt(x,y)
 !!    end program demo_cauplt
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   o filliben, 'techniques for tail length analysis', proceedings of the
-!!     eighteenth conference on the design of experiments in army research
-!!     development and testing (aberdeen, maryland, october, 1972),
-!!     pages 425-450.
-!!   o hahn and shapiro, statistical methods in engineering, 1967, pages
+!!   o Filliben, 'Techniques for Tail Length Analysis', proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and Testing (Aberdeen, Maryland, October, 1972),
+!!     Pages 425-450.
+!!   o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
 !!     260-308.
-!!   o johnson and kotz, continuous univariate distributions--1, 1970,
-!!     pages 154-165.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -1757,11 +1759,12 @@ end subroutine caupdf
 !*==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUPLT(X,N)
-REAL(kind=wp) :: X(:)
-INTEGER       :: N
-REAL(kind=wp) :: an, arg, cc, hold, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
-REAL(kind=wp) :: Y(7500), W(7500)
-INTEGER       ::  i, iupper
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+
+REAL(kind=wp)            :: an, arg, cc, hold, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
+REAL(kind=wp)            :: Y(7500), W(7500)
+INTEGER                  :: i, iupper
 
 COMMON /BLOCK2_real64/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
@@ -1855,7 +1858,11 @@ END SUBROUTINE CAUPLT
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE CAUPPF(P,Ppf)
+!!       SUBROUTINE CAUPPF(P,Ppf)
+!!
+!!        REAL(kind=wp) :: P
+!!        REAL(kind=wp) :: Ppf
+!!        REAL(kind=wp) :: arg
 !!
 !!##DESCRIPTION
 !!    CAUPPF(3f) computes the percent point function value for the cauchy
@@ -1921,29 +1928,25 @@ END SUBROUTINE CAUPLT
 !*==cauppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUPPF(P,Ppf)
-REAL(kind=wp) :: arg , P , pi , Ppf
-!
-!---------------------------------------------------------------------
-!
-   DATA pi/3.14159265358979_wp/
-!
-!  CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
+REAL(kind=wp) :: P
+REAL(kind=wp) :: Ppf
+REAL(kind=wp) :: arg
+
+   !
+   !  CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
    IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
       WRITE (G_IO,99001)
       99001    FORMAT (' ',&
-      & '***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAUPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      & '***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO CAUPPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
       WRITE (G_IO,99002) P
       99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
       RETURN
    ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-      arg = pi*P
+      arg = G_pi*P
       Ppf = -COS(arg)/SIN(arg)
    ENDIF
-!
+
 END SUBROUTINE CAUPPF
 !>
 !!##NAME

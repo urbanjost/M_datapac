@@ -158,7 +158,7 @@ The following subroutines are available in M_datapac:
   * [UNIPDF](src/source/unipdf.ffinc)  - compute the Uniform probability density function
 ## percent point function
   * [BINPPF](src/source/WIP/binppf.ffinc)  - compute the binomial percent point function
-  * [CAUPPF](src/source/WIP/cauppf.ffinc)  - compute the Cauchy percent point function
+  * [CAUPPF](src/source/cauppf.ffinc)  - compute the Cauchy percent point function
   * [CHSPPF](src/source/WIP/chsppf.ffinc)  - compute the chi-square percent point function
   * [LGNPPF](src/source/WIP/lgnppf.ffinc)  - compute the lognormal percent point function
   * [LOGPPF](src/source/WIP/logppf.ffinc)  - compute the logistic percent point function

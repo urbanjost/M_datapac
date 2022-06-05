@@ -1,11 +1,13 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file cauplt.3m_datapac.man
 NAME
-   cauplt(3f) - [M_datapac:LINE_PLOT] generate a Cauchy
-   probability plot
+   cauplt(3f) - [M_datapac:LINE_PLOT] generate a Cauchy probability plot
 
 SYNOPSIS
-    SUBROUTINE CAUPLT(X,N)
+      SUBROUTINE CAUPLT(X,N)
+
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER,intent(in)       :: N
 
 DESCRIPTION
    CAUPLT(3f) generates a one-page Cauchy probability plot.
@@ -16,7 +18,7 @@ DESCRIPTION
    This distribution is defined for all X and has the probability
    density function
 
-       f(X) = (1/pi) * (1/(1+X*X)).
+       f(X) = (1/pi) * (1/(1+X*X))
 
    As used herein, a probability plot for a distribution is a plot
    of the ordered observations versus the order statistic medians for
@@ -47,28 +49,28 @@ EXAMPLES
    program demo_cauplt
    use M_datapac, only : cauplt
    implicit none
-   character(len=*),parameter ::  g='(*(g0,1x))'
    ! call cauplt(x,y)
    end program demo_cauplt
 
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
 REFERENCES
-  o filliben, 'techniques for tail length analysis', proceedings of the
-    eighteenth conference on the design of experiments in army research
-    development and testing (aberdeen, maryland, october, 1972),
-    pages 425-450.
-  o hahn and shapiro, statistical methods in engineering, 1967, pages
+  o Filliben, 'Techniques for Tail Length Analysis', proceedings of the
+    Eighteenth Conference on the Design of Experiments in Army Research
+    Development and Testing (Aberdeen, Maryland, October, 1972),
+    Pages 425-450.
+  o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
     260-308.
-  o johnson and kotz, continuous univariate distributions--1, 1970,
-    pages 154-165.
+  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    Pages 154-165.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -78,11 +80,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==cauplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CAUPLT(X,N)
-REAL(kind=wp) :: X(:)
-INTEGER       :: N
-REAL(kind=wp) :: an, arg, cc, hold, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
-REAL(kind=wp) :: Y(7500), W(7500)
-INTEGER       ::  i, iupper
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+
+REAL(kind=wp)            :: an, arg, cc, hold, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
+REAL(kind=wp)            :: Y(7500), W(7500)
+INTEGER                  :: i, iupper
 
 COMMON /BLOCK2_${KIND}/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
