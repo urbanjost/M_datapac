@@ -746,14 +746,30 @@ subroutine test_median()
 end subroutine test_median
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_midm()
+   integer :: i
+   real :: xmidm
    call unit_check_start('midm',msg='')
-   !!call unit_check('midm', 0.eq.0, 'checking',100)
+
+   call midm([real :: (i,i=0,100) ],101,1,xmidm)
+   call unit_check('midm', xmidm==50.0, 'expecting',50.0,'got',xmidm)
+
+   call midm([real :: (i,i=0,101) ],102,1,xmidm)
+   call unit_check('midm', xmidm==50.5, 'expecting',50.5,'got',xmidm)
+
    call unit_check_done('midm',msg='')
 end subroutine test_midm
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_midr()
+   integer :: i
+   real :: xmidr
    call unit_check_start('midr',msg='')
-   !!call unit_check('midr', 0.eq.0, 'checking',100)
+
+   call midr([real :: (i,i=0,100) ],101,1,xmidr)
+   call unit_check('midr', xmidr==50.0, 'expecting',50.0,'got',xmidr)
+
+   call midr([real :: (i,i=0,101) ],102,1,xmidr)
+   call unit_check('midr', xmidr==50.5, 'expecting',50.5,'got',xmidr)
+
    call unit_check_done('midr',msg='')
 end subroutine test_midr
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT

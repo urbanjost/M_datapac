@@ -14423,13 +14423,30 @@ END SUBROUTINE MEDIAN
 !!
 !!       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
 !!
-!!##DESCRIPTION
-!!    midm(3f) computes the sample midmean = the sample 25% (on each side)
-!!    trimmed mean of the data in the input vector x.
+!!        REAL(kind=wp) :: X(:)
+!!        INTEGER       :: N
+!!        INTEGER       :: Iwrite
+!!        REAL(kind=wp) :: Xmidm
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##DESCRIPTION
+!!    MIDM(3f) computes the sample midmean = the sample 25% (on each side)
+!!    trimmed mean of the data in the input vector X.
+!!
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X       The vector of (unsorted or sorted) observations.
+!!
+!!    N       The integer number of observations in the vector X.
+!!
+!!    IWRITE  An integer flag code which (if set to 0) will suppress the
+!!            printing of the sample midmean as it is computed; or (if set
+!!            to some integer value not equal to 0), like, say, 1) will cause
+!!            the printing of the sample midmean at the time it is computed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    XMIDM  The value of the computed sample midmean.
 !!
 !!##EXAMPLES
 !!
@@ -14438,149 +14455,135 @@ END SUBROUTINE MEDIAN
 !!    program demo_midm
 !!    use M_datapac, only : midm
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call midm(x,y)
+!!    integer :: i
+!!    real :: xmidm
+!!
+!!       call midm([real :: (i,i=0,100) ],101,1,xmidm)
+!!       write(*,*)merge('GOOD','BAD ',xmidm == 50.0),xmidm
+!!
+!!       call midm([real :: (i,i=0,101) ],102,1,xmidm)
+!!       write(*,*)merge('GOOD','BAD ',xmidm == 50.5),xmidm
+!!
 !!    end program demo_midm
 !!
 !!   Results:
 !!
+!!     The sample MIDMEAN of the 101 observations is  0.50000000E+02
+!!        25.0000 PERCENT (=25 observations) of the data were trimmed from below
+!!        25.0000 PERCENT (=25 observations) of the data were trimmed from above
+!!        50.0000 PERCENT (=51 observations) of the data remain in the middle ...
+!!        after the trimming
+!!     GOOD   50.00000
+!!
+!!     The sample MIDMEAN of the 102 observations is  0.50500000E+02
+!!        25.0000 PERCENT (=25 observations) of the data were trimmed from below
+!!        25.0000 PERCENT (=25 observations) of the data were trimmed from above
+!!        50.0000 PERCENT (=52 observations) of the data remain in the middle ...
+!!        after the trimming
+!!     GOOD   50.50000
+!!
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
-!!   * CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION', JOURNAL OF THE
-!!     AMERICAN STATISTICAL ASSOCIATION, 1967, PAGES 357, 387.
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY, 1969).
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
-REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
-     &     X , Xmidm , Y
-INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
-     &        np2
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --IWRITE = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL SUPPRESS
-!                                THE PRINTING OF THE
-!                                SAMPLE MIDMEAN
-!                                AS IT IS COMPUTED;
-!                                OR (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0),
-!                                LIKE, SAY, 1) WILL CAUSE
-!                                THE PRINTING OF THE
-!                                SAMPLE MIDMEAN
-!                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMIDM  = THE  VALUE OF THE
-!                                COMPUTED SAMPLE MIDMEAN.
-!     OUTPUT--THE COMPUTED  VALUE OF THE
-!             SAMPLE MIDMEAN.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * David, Order Statistics, 1970, Pages 129, 136.
+!!   * Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+!!     American Statistical Association, 1967, Pages 357, 387.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University, 1969).
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
+REAL(kind=wp) :: X(:)
+INTEGER       :: N
+INTEGER       :: Iwrite
+REAL(kind=wp) :: Xmidm
+
+REAL(kind=wp) :: ak, an, hold, p1, p2, perp1, perp2, perp3, sum
+INTEGER :: i, istart, istop, iupper, k, np1, np2
+REAL(kind=wp) :: Y(N)
+
+DATA p1, p2, perp1, perp2, perp3/0.25_wp, 0.25_wp, 25.0_wp, 25.0_wp, 50.0_wp/
 !
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      DATA p1 , p2 , perp1 , perp2 , perp3/0.25_wp , 0.25_wp , 25.0_wp , 25.0_wp ,  &
-     &     50.0_wp/
-!
-      iupper = 15000
+      iupper = N
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      an = N
-      IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MIDM   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         RETURN
+   an = N
+   IF ( N<1 .OR. N>iupper ) THEN
+      WRITE (G_IO,99001) iupper
+      99001 FORMAT(' ***** FATAL ERROR--the second input argument to MIDM(3f) is outside the allowable (1,',I0,') interval *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ','***** the value of the argument is ',I8,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to midm(3f) has the value 1 *****')
+         Xmidm = X(1)
       ELSE
-         IF ( N==1 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MIDM&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xmidm = X(1)
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE MIDM   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xmidm = X(1)
-         ENDIF
-         GOTO 100
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (&
+         & ' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to midm(3F) has all elements = ',E15.8,' *****')
+         Xmidm = X(1)
+      ENDIF
+      GOTO 100
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      CALL SORT(X,N,Y)
+ 50   CALL SORT(X,N,Y)
 !
-         an = N
-         np1 = p1*an + 0.0001_wp
-         istart = np1 + 1
-         np2 = p2*an + 0.0001_wp
-         istop = N - np2
-         sum = 0.0_wp
-         k = 0
-         IF ( istart>istop ) THEN
-            WRITE (G_IO,99005)
-99005       FORMAT (' ','INTERNAL ERROR IN MIDM   SUBROUTINE--',        &
-     &              'THE START INDEX IS HIGHER THAN THE STOP INDEX')
-            Xmidm = 0.0_wp
-            RETURN
-         ELSE
-            DO i = istart , istop
-               k = k + 1
-!CCCC SUM=SUM+X(I)
-               sum = sum + Y(i)
-            ENDDO
-            ak = k
-            Xmidm = sum/ak
-         ENDIF
+      an = N
+      np1 = p1*an + 0.0001_wp
+      istart = np1 + 1
+      np2 = p2*an + 0.0001_wp
+      istop = N - np2
+      sum = 0.0_wp
+      k = 0
+      IF ( istart>istop ) THEN
+         WRITE (G_IO,99005)
+         99005 FORMAT (' ','INTERNAL ERROR in MIDM(3f) -- The start index is higher than the stop index')
+         Xmidm = 0.0_wp
+         RETURN
+      ELSE
+         DO i = istart , istop
+            k = k + 1
+            sum = sum + Y(i)
+         ENDDO
+         ak = k
+         Xmidm = sum/ak
       ENDIF
+   ENDIF
 !
  100  IF ( Iwrite==0 ) RETURN
       WRITE (G_IO,99006)
-99006 FORMAT (' ')
+      99006 FORMAT (' ')
       WRITE (G_IO,99007) N , Xmidm
-99007 FORMAT (' ','THE SAMPLE MIDMEAN OF THE ',I6,' OBSERVATIONS',      &
-     &        ' IS ',E15.8)
+      99007 FORMAT (' The sample MIDMEAN of the ',I0,' observations is ',E15.8)
       WRITE (G_IO,99008) perp1 , np1
-99008 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
-     &        'OF THE DATA WERE TRIMMED     FROM BELOW')
+      99008 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' observations) of the data were trimmed from below')
       WRITE (G_IO,99009) perp2 , np2
-99009 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
-     &        'OF THE DATA WERE TRIMMED     FROM ABOVE')
+      99009 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' observations) of the data were trimmed from above')
       WRITE (G_IO,99010) perp3 , k
-99010 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
-     &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
+      99010 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' observations) of the data remain in the middle after the trimming')
 !
 END SUBROUTINE MIDM
 !>
@@ -14591,15 +14594,31 @@ END SUBROUTINE MIDM
 !!
 !!       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
 !!
+!!        REAL(kind=wp),intent(in)  :: X(:)
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(in)        :: Iwrite
+!!        REAL(kind=wp),intent(out) :: Xmidr
+!!
 !!##DESCRIPTION
-!!    midr(3f) computes the sample midrange of the data in the input
-!!    vector x.
+!!    MIDR(3f) computes the sample midrange of the data in the input
+!!    vector X.
 !!
-!!    the sample midrange = (sample min + sample max)/2.
+!!    The sample midrange = (sample min + sample max)/2.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X       The vector of (unsorted or sorted) observations.
+!!
+!!    N       The integer number of observations in the vector X.
+!!
+!!    IWRITE  An integer flag code which (if set to 0) will suppress the
+!!            printing of the sample midrange as it is computed; or (if set
+!!            to some integer value not equal to 0), like, say, 1) will cause
+!!            the printing of the sample midrange at the time it is computed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    XMIDR  the value of the computed sample midrange.
 !!
 !!##EXAMPLES
 !!
@@ -14608,112 +14627,102 @@ END SUBROUTINE MIDM
 !!    program demo_midr
 !!    use M_datapac, only : midr
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call midr(x,y)
+!!    integer :: i
+!!    real :: xmidr
+!!
+!!       call midr([real :: (i,i=0,100) ],101,1,xmidr)
+!!       write(*,*)merge('GOOD','BAD ',xmidr == 50.0),xmidr
+!!
+!!       call midr([real :: (i,i=0,101) ],102,1,xmidr)
+!!       write(*,*)merge('GOOD','BAD ',xmidr == 50.5),xmidr
+!!
 !!    end program demo_midr
 !!
 !!   Results:
 !!
+!!     The sample MIDRANGE of the 101 observations IS  0.500000000000000E+02
+!!     GOOD   50.00000
+!!
+!!     The sample MIDRANGE of the 102 observations is  0.505000000000000E+02
+!!     GOOD   50.50000
+!!
+!!   Results:
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGE 338.
-!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2,
-!!     EDITION 1, 1961, PAGE 91.
-!!   * DAVID, ORDER STATISTICS, 1970, PAGE 97.
-!!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
-!!     1957, PAGE 71.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
-REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
-INTEGER :: i , Iwrite , N
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --IWRITE = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL SUPPRESS
-!                                THE PRINTING OF THE
-!                                SAMPLE MIDRANGE
-!                                AS IT IS COMPUTED;
-!                                OR (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0),
-!                                LIKE, SAY, 1) WILL CAUSE
-!                                THE PRINTING OF THE
-!                                SAMPLE MIDRANGE
-!                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMIDR  = THE  VALUE OF THE
-!                                COMPUTED SAMPLE MIDRANGE.
-!     OUTPUT--THE COMPUTED  VALUE OF THE
-!             SAMPLE MIDRANGE.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Page 338.
+!!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
+!!     Edition 1, 1961, Page 91.
+!!   * David, Order Statistics, 1970, Page 97.
+!!   * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!     1957, Page 71.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
+REAL(kind=wp),intent(in)  :: X(:)
+INTEGER,intent(in)        :: N
+INTEGER,intent(in)        :: Iwrite
+REAL(kind=wp),intent(out) :: Xmidr
+
+REAL(kind=wp) :: hold , xmax , xmin
+INTEGER :: i
 !
-!---------------------------------------------------------------------
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      DIMENSION X(:)
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MIDR   SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         RETURN
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--the second input argument to MIDR(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ','***** the value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--the second input argument to MIDR(3f) has the value 1 *****')
+         Xmidr = X(1)
       ELSE
-         IF ( N==1 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MIDR&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
-            Xmidr = X(1)
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE MIDR   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            Xmidr = X(1)
-         ENDIF
-         GOTO 100
-!
-!-----START POINT-----------------------------------------------------
-!
- 50      xmin = X(1)
-         xmax = X(1)
-         DO i = 1 , N
-            IF ( X(i)<xmin ) xmin = X(i)
-            IF ( X(i)>xmax ) xmax = X(i)
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
          ENDDO
-         Xmidr = (xmin+xmax)/2.0_wp
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (&
+         & ' ***** NON-FATAL DIAGNOSTIC--the first input argument (A VECTOR) to MIDR(3f) has all elements = ',E15.8,' *****')
+         Xmidr = X(1)
       ENDIF
+      GOTO 100
+!-----START POINT-----------------------------------------------------
+50    continue
+      xmin = X(1)
+      xmax = X(1)
+      DO i = 1 , N
+         IF ( X(i)<xmin ) xmin = X(i)
+         IF ( X(i)>xmax ) xmax = X(i)
+      ENDDO
+      Xmidr = (xmin+xmax)/2.0_wp
+   ENDIF
 !
- 100  IF ( Iwrite==0 ) RETURN
-      WRITE (G_IO,99005)
-99005 FORMAT (' ')
-      WRITE (G_IO,99006) N , Xmidr
-99006 FORMAT (' ','THE SAMPLE MIDRANGE OF THE ',I6,' OBSERVATIONS IS ', &
-     &        E22.15)
+100  continue
+   IF ( Iwrite==0 ) RETURN
+   WRITE (G_IO,99005)
+   99005 FORMAT (' ')
+   WRITE (G_IO,99006) N , Xmidr
+   99006 FORMAT (' The sample MIDRANGE of the ',I0,' observations is ', E22.15)
+
 END SUBROUTINE MIDR
 !>
 !!##NAME
@@ -14821,24 +14830,57 @@ integer       :: i , Iwrite , N
 end subroutine min
 !>
 !!##NAME
-!!    move(3f) - [M_datapac:STATISTICS] move selected elements of one vector
+!!
+!!    move(3f) - [M_datapac:ARRAY_OPERATION] move selected elements of one vector
 !!    into another vector
 !!
 !!##SYNOPSIS
 !!
+!!
 !!       SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
 !!
+!!        REAL(kind=wp),intent(in)  :: X(:)
+!!        INTEGER,intent(in)        :: M
+!!        INTEGER,intent(in)        :: Ix1
+!!        INTEGER,intent(in)        :: Iy1
+!!        REAL(kind=wp),intent(out) :: Y(:)
+!!
 !!##DESCRIPTION
-!!    move(3f) moves (copies) m elements of the precision precision vector
-!!    x (starting with position ix1) into the precision precision vector y
-!!    (starting with position iy1).
 !!
-!!    this allows the data analyst to take any subvector in x and place it
-!!    anywhere in the vector y.
+!!    MOVE(3f) moves (copies) M elements of the precision precision vector
+!!    X (starting with position Ix1) into the precision precision vector Y
+!!    (starting with position Iy1).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    This allows the data analyst to take any subvector in X and place it
+!!    anywhere in the vector Y.
+!!
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X     The vector of observations, part (or all) of which is to be moved
+!!          (copied) over into the vector Y. The input vector X remains
+!!          unaltered.
+!!
+!!    M     The integer number of elements in the vector X to be moved.
+!!
+!!    IX1   The integer value which defines the position in the vector X
+!!          of the first element to be moved.
+!!
+!!    IY1   The integer value which defines the position in the vector Y
+!!          where the first element to be moved will be placed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    Y     The vector into which the copied data values from the vector
+!!          X will be sequentially placed, starting in position IY1 of Y.
+!!          The m elements in positions
+!!
+!!                  IY1, IY1+1, ... , IY1+M-1
+!!
+!!               will be identical to the M elements
+!!               in the X vector IN positions
+!!
+!!                  IX1, IX1+1, ... , IX1+M-1.
 !!
 !!##EXAMPLES
 !!
@@ -14846,97 +14888,60 @@ end subroutine min
 !!
 !!    program demo_move
 !!    use M_datapac, only : move
-!!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call move(x,y)
+!!    real,allocatable :: x(:), y(:)
+!!       x=[10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0]
+!!       if(allocated(y))deallocate(y)
+!!       y=99.0
+!!       allocate(y(size(x)))
+!!       call MOVE(X,4,5,1,Y)
+!!       write(*,*)int(y)
 !!    end program demo_move
 !!
-!!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
-IMPLICIT NONE
-REAL(kind=wp) :: hold , X , Y
-INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                OBSERVATIONS, PART (OR ALL)
-!                                OF WHICH IS TO BE MOVED
-!                                (COPIED) OVER INTO THE VECTOR Y.
-!                     --M      = THE INTEGER NUMBER OF ELEMENTS
-!                                IN THE VECTOR X TO BE MOVED.
-!                     --IX1    = THE INTEGER VALUE WHICH DEFINES
-!                                THE POSITION IN THE VECTOR X
-!                                OF THE FIRST ELEMENT TO BE MOVED.
-!                     --IY1    = THE INTEGER VALUE WHICH DEFINES
-!                                THE POSITION IN THE VECTOR Y
-!                                WHERE THE FIRST ELEMENT TO BE MOVED
-!                                WILL BE PLACED.
-!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
-!                                INTO WHICH THE COPIED DATA VALUES
-!                                FROM THE VECTOR X WILL BE SEQUENTIALLY
-!                                PLACED, STARTING IN POSITION IY1 OF Y.
-!     OUTPUT--THE  VECTOR Y.
-!             IN WHICH THE M ELEMENTS IN POSITIONS
-!             IY1, IY1+1, ... , IY1+M-1
-!             WILL BE IDENTICAL TO THE M ELEMENTS
-!             IN THE X VECTOR IN POSITIONS
-!             IX1, IX1+1, ... , IX1+M-1.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF M FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--THE ELEMENT IN POSITION IX1 OF THE VECTOR X
-!            IS COPIED INTO POSITION IY1 OF THE VECTOR Y,
-!            THE ELEMENT IN POSITION (IX1+1) OF THE VECTOR X
-!            IS COPIED INTO POSITION (IY1+1) OF THE VECTOR Y,
-!            ... ,
-!            THE ELEMENT IN POSITION (IX1+M-1) OF THE VECTOR X
-!            IS COPIED INTO POSITION (IY1+M-1) OF THE VECTOR Y.
-!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:) , Y(:)
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
+REAL(kind=wp),intent(in)  :: X(:)
+INTEGER,intent(in)        :: M
+INTEGER,intent(in)        :: Ix1
+INTEGER,intent(in)        :: Iy1
+REAL(kind=wp)             :: Y(:)
+
+REAL(kind=wp)             :: hold
+INTEGER                   :: i, iend, istart, j, k
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( M<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MOVE   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--the second input argument to MOVE(3f) is non-positive *****')
          WRITE (G_IO,99006) M
          RETURN
       ELSEIF ( Ix1<1 ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE MOVE   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--the third input argument to MOVE(3f) is non-positive *****')
          WRITE (G_IO,99006) Ix1
          RETURN
       ELSEIF ( Iy1<1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE MOVE   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99003 FORMAT (' ***** FATAL ERROR--the fourth input argument to MOVE(3f) is non-positive *****')
          WRITE (G_IO,99006) Iy1
          RETURN
       ELSE
          IF ( M==1 ) THEN
             WRITE (G_IO,99004)
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MOVE&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--the second input argument to MOVE(3f) has the value 1 *****')
          ELSE
             hold = X(Ix1)
             istart = Ix1 + 1
@@ -14945,9 +14950,8 @@ INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99005) hold
-99005       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE MOVE   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+            99005 FORMAT (&
+            & ' ***** NON-FATAL DIAGNOSTIC--the first input argument (a vector) to MOVE(3f) has all elements =',E15.8,' *****')
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
@@ -14958,7 +14962,7 @@ INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
             Y(k) = X(j)
          ENDDO
       ENDIF
-99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+      99006 FORMAT (' ***** The value of the argument is ',I0,' *****')
 !
 END SUBROUTINE MOVE
 !>

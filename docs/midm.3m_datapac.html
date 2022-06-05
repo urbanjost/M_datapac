@@ -60,20 +60,29 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output Arguments</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
 </A>
 <BLOCKQUOTE>
 SUBROUTINE <B>MIDM</B>(X,N,Iwrite,Xmidm)
+<P>
+<PRE>
+       REAL(kind=wp) :: X(:)
+       INTEGER       :: N
+       INTEGER       :: Iwrite
+       REAL(kind=wp) :: Xmidm
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -81,26 +90,49 @@ SUBROUTINE <B>MIDM</B>(X,N,Iwrite,Xmidm)
 
 </A>
 <BLOCKQUOTE>
-<B>midm</B>(3f) computes the sample midmean = the sample 25% (on each side)
-trimmed mean of the data in the input vector x.
+<B>MIDM</B>(3f) computes the sample midmean = the sample 25% (on each side)
+trimmed mean of the data in the input vector X.
 </BLOCKQUOTE>
+<P>
+<P>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
+<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>X</B> </TD><TD valign=bottom>
-description of parameter
+The vector of (unsorted or sorted) observations.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+<B>N</B> </TD><TD valign=bottom>
+The integer number of observations in the vector X.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>IWRITE</B> </TD><TD valign=bottom>
+An integer flag code which (if set to 0) will suppress the
+printing of the sample midmean as it is computed; or (if set
+to some integer value not equal to 0), like, say, 1) will cause
+the printing of the sample midmean at the time it is computed.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
+
+     <H3>OUTPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B>XMIDM</B> </TD><TD valign=bottom>
+The value of the computed sample midmean.
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -112,23 +144,51 @@ Sample program:
    program demo_midm
    use M_datapac, only : midm
    implicit none
-   character(len=*),parameter ::  g=&#146;(*(g0,1x))&#146;
-   ! call midm(x,y)
-   end program demo_midm
+   integer :: i
+   real :: xmidm
+<P>
+      call midm([real :: (i,i=0,100) ],101,1,xmidm)
+      write(*,*)merge(&#146;GOOD&#146;,&#146;BAD &#146;,xmidm == 50.0),xmidm
+<P>
+      call midm([real :: (i,i=0,101) ],102,1,xmidm)
+      write(*,*)merge(&#146;GOOD&#146;,&#146;BAD &#146;,xmidm == 50.5),xmidm
 <P>
 </PRE>
-Results:
+<BLOCKQUOTE>
+end program demo_midm
 </BLOCKQUOTE>
-<A name=5>
+<P>
+Results:
+<P>
+<PRE>
+    The sample MIDMEAN of the 101 observations is  0.50000000E+02
+       25.0000 PERCENT (=25 observations) of the data were trimmed from below
+       25.0000 PERCENT (=25 observations) of the data were trimmed from above
+       50.0000 PERCENT (=51 observations) of the data remain in the middle &#46;&#46;&#46;
+       after the trimming
+    GOOD   50.00000
+<P>
+    The sample MIDMEAN of the 102 observations is  0.50500000E+02
+       25.0000 PERCENT (=25 observations) of the data were trimmed from below
+       25.0000 PERCENT (=25 observations) of the data were trimmed from above
+       50.0000 PERCENT (=52 observations) of the data remain in the middle &#46;&#46;&#46;
+       after the trimming
+    GOOD   50.50000
+<P>
+<P>
+</PRE>
+</BLOCKQUOTE>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -136,7 +196,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -144,7 +204,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -154,24 +214,24 @@ CC0-1.0
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
+David, Order Statistics, 1970, Pages 129, 136.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-CROW AND SIDDIQUI, &#146;ROBUST ESTIMATION OF LOCATION&#146;, JOURNAL OF THE
-AMERICAN STATISTICAL ASSOCIATION, 1967, PAGES 357, 387.
+Crow and Siddiqui, &#146;Robust Estimation of Location&#146;, Journal of the
+American Statistical Association, 1967, Pages 357, 387.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-PRINCETON UNIVERSITY, 1969).
+Filliben, Simple and Robust Linear Estimation of the Location
+Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+Princeton University, 1969).
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>midm (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 7ebbc18a-4cc6-4e87-8212-718ef5a5ba50 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>midm (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from a65b5a59-0d3e-41d5-9048-7702540d4dfe using man macros.</FONT>
 <br><br><center><img src="images/midm.gif"></center>
 </div>
 </div>

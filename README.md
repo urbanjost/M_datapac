@@ -92,9 +92,8 @@ The following subroutines are available in M_datapac:
   * [LOC](src/source/loc.ffinc)        - compute the sample mean, midrange, midmean, and median
   * [MEAN](src/source/mean.ffinc)      - compute the mean of a data vector
   * [MEDIAN](src/source/median.ffinc)  - compute the median of a data vector
-  * [MIDM](src/source/WIP/midm.ffinc)      - compute the midmean of a data vector
-  * [MIDR](src/source/WIP/midr.ffinc)      - compute the midrange of a data vector
-  * [MOVE](src/source/WIP/move.ffinc)      - move selected elements of one vector into another vector
+  * [MIDM](src/source/midm.ffinc)      - compute the midmean of a data vector
+  * [MIDR](src/source/midr.ffinc)      - compute the midrange of a data vector
   * [POLY](src/source/WIP/poly.ffinc)      - compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)
   * [PROPOR](src/source/WIP/propor.ffinc)  - compute the sample proportion
   * [RANGE](src/source/WIP/range.ffinc)    - compute the sample range
@@ -122,6 +121,7 @@ The following subroutines are available in M_datapac:
   * [MAX](src/source/max.ffinc)        - compute the maximum of a data vector (see Fortran intrinsic MAXVAL(3f))
   * [MIN](src/source/min.ffinc)        - compute the minimum of a data vector (see Fortran intrinsic MINVAL(3f))
   * [DOT](src/source/dot.ffinc)        - compute the dot product of two equal-sized vectors (see Fortran intrinsic DOT_PRODUCT(3f))
+  * [MOVE](src/source/move.ffinc)      - move selected elements of one vector into another vector
 ## sort
   * [RANK](src/source/WIP/rank.ffinc)      - rank a vector of sample observations
   * [SORTC](src/source/sortc.ffinc)    - sort a vector of sample observations and "carry" a second vector

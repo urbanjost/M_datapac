@@ -1,0 +1,172 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file midm.3m_datapac.man
+NAME
+   midm(3f) - [M_datapac:STATISTICS] compute the midmean of a data vector
+
+SYNOPSIS
+      SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
+
+       REAL(kind=wp) :: X(:)
+       INTEGER       :: N
+       INTEGER       :: Iwrite
+       REAL(kind=wp) :: Xmidm
+
+DESCRIPTION
+   MIDM(3f) computes the sample midmean = the sample 25% (on each side)
+   trimmed mean of the data in the input vector X.
+
+
+INPUT ARGUMENTS
+
+   X       The vector of (unsorted or sorted) observations.
+
+   N       The integer number of observations in the vector X.
+
+   IWRITE  An integer flag code which (if set to 0) will suppress the
+           printing of the sample midmean as it is computed; or (if set
+           to some integer value not equal to 0), like, say, 1) will cause
+           the printing of the sample midmean at the time it is computed.
+
+OUTPUT ARGUMENTS
+
+   XMIDM  The value of the computed sample midmean.
+
+EXAMPLES
+  Sample program:
+
+   program demo_midm
+   use M_datapac, only : midm
+   implicit none
+   integer :: i
+   real :: xmidm
+
+      call midm([real :: (i,i=0,100) ],101,1,xmidm)
+      write(*,*)merge('GOOD','BAD ',xmidm == 50.0),xmidm
+
+      call midm([real :: (i,i=0,101) ],102,1,xmidm)
+      write(*,*)merge('GOOD','BAD ',xmidm == 50.5),xmidm
+
+   end program demo_midm
+
+  Results:
+    
+    The sample MIDMEAN of the 101 observations is  0.50000000E+02
+       25.0000 PERCENT (=25 observations) of the data were trimmed from below
+       25.0000 PERCENT (=25 observations) of the data were trimmed from above
+       50.0000 PERCENT (=51 observations) of the data remain in the middle ...
+       after the trimming
+    GOOD   50.00000    
+    
+    The sample MIDMEAN of the 102 observations is  0.50500000E+02
+       25.0000 PERCENT (=25 observations) of the data were trimmed from below
+       25.0000 PERCENT (=25 observations) of the data were trimmed from above
+       50.0000 PERCENT (=52 observations) of the data remain in the middle ...
+       after the trimming
+    GOOD   50.50000    
+
+    
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * David, Order Statistics, 1970, Pages 129, 136.
+  * Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+    American Statistical Association, 1967, Pages 357, 387.
+  * Filliben, Simple and Robust Linear Estimation of the Location
+    Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+    Princeton University, 1969).
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
+REAL(kind=wp) :: X(:)
+INTEGER       :: N
+INTEGER       :: Iwrite
+REAL(kind=wp) :: Xmidm
+
+REAL(kind=wp) :: ak, an, hold, p1, p2, perp1, perp2, perp3, sum
+INTEGER :: i, istart, istop, iupper, k, np1, np2
+REAL(kind=wp) :: Y(N)
+
+DATA p1, p2, perp1, perp2, perp3/0.25_wp, 0.25_wp, 25.0_wp, 25.0_wp, 50.0_wp/
+!
+      iupper = N
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   an = N
+   IF ( N<1 .OR. N>iupper ) THEN
+      WRITE (G_IO,99001) iupper
+      99001 FORMAT(' ***** FATAL ERROR--the second input argument to MIDM(3f) is outside the allowable (1,',I0,') interval *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ','***** the value of the argument is ',I8,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to midm(3f) has the value 1 *****')
+         Xmidm = X(1)
+      ELSE
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (&
+         & ' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to midm(3F) has all elements = ',E15.8,' *****')
+         Xmidm = X(1)
+      ENDIF
+      GOTO 100
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50   CALL SORT(X,N,Y)
+!
+      an = N
+      np1 = p1*an + 0.0001_wp
+      istart = np1 + 1
+      np2 = p2*an + 0.0001_wp
+      istop = N - np2
+      sum = 0.0_wp
+      k = 0
+      IF ( istart>istop ) THEN
+         WRITE (G_IO,99005)
+         99005 FORMAT (' ','INTERNAL ERROR in MIDM(3f) -- The start index is higher than the stop index')
+         Xmidm = 0.0_wp
+         RETURN
+      ELSE
+         DO i = istart , istop
+            k = k + 1
+            sum = sum + Y(i)
+         ENDDO
+         ak = k
+         Xmidm = sum/ak
+      ENDIF
+   ENDIF
+!
+ 100  IF ( Iwrite==0 ) RETURN
+      WRITE (G_IO,99006)
+      99006 FORMAT (' ')
+      WRITE (G_IO,99007) N , Xmidm
+      99007 FORMAT (' The sample MIDMEAN of the ',I0,' observations is ',E15.8)
+      WRITE (G_IO,99008) perp1 , np1
+      99008 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' observations) of the data were trimmed from below')
+      WRITE (G_IO,99009) perp2 , np2
+      99009 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' observations) of the data were trimmed from above')
+      WRITE (G_IO,99010) perp3 , k
+      99010 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' observations) of the data remain in the middle after the trimming')
+!
+END SUBROUTINE MIDM

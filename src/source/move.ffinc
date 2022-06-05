@@ -1,0 +1,138 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file move.3m_datapac.man
+NAME
+
+   move(3f) - [M_datapac:ARRAY_OPERATION] move selected elements of one vector
+   into another vector
+
+SYNOPSIS
+
+      SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
+
+       REAL(kind=wp),intent(in)  :: X(:)
+       INTEGER,intent(in)        :: M
+       INTEGER,intent(in)        :: Ix1
+       INTEGER,intent(in)        :: Iy1
+       REAL(kind=wp),intent(out) :: Y(:)
+
+DESCRIPTION
+
+   MOVE(3f) moves (copies) M elements of the precision precision vector
+   X (starting with position Ix1) into the precision precision vector Y
+   (starting with position Iy1).
+
+   This allows the data analyst to take any subvector in X and place it
+   anywhere in the vector Y.
+
+
+INPUT ARGUMENTS
+
+   X     The vector of observations, part (or all) of which is to be moved
+         (copied) over into the vector Y. The input vector X remains
+         unaltered.
+
+   M     The integer number of elements in the vector X to be moved.
+
+   IX1   The integer value which defines the position in the vector X
+         of the first element to be moved.
+
+   IY1   The integer value which defines the position in the vector Y
+         where the first element to be moved will be placed.
+
+OUTPUT ARGUMENTS
+
+   Y     The vector into which the copied data values from the vector
+         X will be sequentially placed, starting in position IY1 of Y.
+         The m elements in positions
+
+                 IY1, IY1+1, ... , IY1+M-1
+
+              will be identical to the M elements
+              in the X vector IN positions
+
+                 IX1, IX1+1, ... , IX1+M-1.
+
+EXAMPLES
+  Sample program:
+
+   program demo_move
+   use M_datapac, only : move
+   real,allocatable :: x(:), y(:)
+      x=[10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0]
+      if(allocated(y))deallocate(y)
+      y=99.0
+      allocate(y(size(x)))
+      call MOVE(X,4,5,1,Y)
+      write(*,*)int(y)
+   end program demo_move
+
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1972.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
+REAL(kind=wp),intent(in)  :: X(:)
+INTEGER,intent(in)        :: M
+INTEGER,intent(in)        :: Ix1
+INTEGER,intent(in)        :: Iy1
+REAL(kind=wp)             :: Y(:)
+
+REAL(kind=wp)             :: hold 
+INTEGER                   :: i, iend, istart, j, k 
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( M<1 ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--the second input argument to MOVE(3f) is non-positive *****')
+         WRITE (G_IO,99006) M
+         RETURN
+      ELSEIF ( Ix1<1 ) THEN
+         WRITE (G_IO,99002)
+         99002 FORMAT (' ***** FATAL ERROR--the third input argument to MOVE(3f) is non-positive *****')
+         WRITE (G_IO,99006) Ix1
+         RETURN
+      ELSEIF ( Iy1<1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** FATAL ERROR--the fourth input argument to MOVE(3f) is non-positive *****')
+         WRITE (G_IO,99006) Iy1
+         RETURN
+      ELSE
+         IF ( M==1 ) THEN
+            WRITE (G_IO,99004)
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--the second input argument to MOVE(3f) has the value 1 *****')
+         ELSE
+            hold = X(Ix1)
+            istart = Ix1 + 1
+            iend = Ix1 + M - 1
+            DO i = istart , iend
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99005) hold
+            99005 FORMAT (&
+	    & ' ***** NON-FATAL DIAGNOSTIC--the first input argument (a vector) to MOVE(3f) has all elements =',E15.8,' *****')
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      DO i = 1 , M
+            j = Ix1 - 1 + i
+            k = Iy1 - 1 + i
+            Y(k) = X(j)
+         ENDDO
+      ENDIF
+      99006 FORMAT (' ***** The value of the argument is ',I0,' *****')
+!
+END SUBROUTINE MOVE

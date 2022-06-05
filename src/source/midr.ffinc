@@ -1,0 +1,139 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file midr.3m_datapac.man
+NAME
+   midr(3f) - [M_datapac:STATISTICS] compute the midrange of a data vector
+
+SYNOPSIS
+      SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
+
+       REAL(kind=wp),intent(in)  :: X(:) 
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(in)        :: Iwrite 
+       REAL(kind=wp),intent(out) :: Xmidr
+
+DESCRIPTION
+   MIDR(3f) computes the sample midrange of the data in the input
+   vector X.
+
+   The sample midrange = (sample min + sample max)/2.
+
+INPUT ARGUMENTS
+
+   X       The vector of (unsorted or sorted) observations.
+
+   N       The integer number of observations in the vector X.
+
+   IWRITE  An integer flag code which (if set to 0) will suppress the
+           printing of the sample midrange as it is computed; or (if set
+           to some integer value not equal to 0), like, say, 1) will cause
+           the printing of the sample midrange at the time it is computed.
+
+OUTPUT ARGUMENTS
+
+   XMIDR  the value of the computed sample midrange.
+
+EXAMPLES
+  Sample program:
+
+   program demo_midr
+   use M_datapac, only : midr
+   implicit none
+   integer :: i
+   real :: xmidr
+
+      call midr([real :: (i,i=0,100) ],101,1,xmidr)
+      write(*,*)merge('GOOD','BAD ',xmidr == 50.0),xmidr
+
+      call midr([real :: (i,i=0,101) ],102,1,xmidr)
+      write(*,*)merge('GOOD','BAD ',xmidr == 50.5),xmidr
+
+   end program demo_midr
+ 
+  Results:
+    
+    The sample MIDRANGE of the 101 observations IS  0.500000000000000E+02
+    GOOD   50.00000    
+    
+    The sample MIDRANGE of the 102 observations is  0.505000000000000E+02
+    GOOD   50.50000    
+
+  Results:
+    
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+    Edition 2, 1963, Page 338.
+  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
+    Edition 1, 1961, Page 91.
+  * David, Order Statistics, 1970, Page 97.
+  * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+    1957, Page 71.
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
+REAL(kind=wp),intent(in)  :: X(:) 
+INTEGER,intent(in)        :: N
+INTEGER,intent(in)        :: Iwrite 
+REAL(kind=wp),intent(out) :: Xmidr
+
+REAL(kind=wp) :: hold , xmax , xmin
+INTEGER :: i 
+!
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--the second input argument to MIDR(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ','***** the value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--the second input argument to MIDR(3f) has the value 1 *****')
+         Xmidr = X(1)
+      ELSE
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (&
+         & ' ***** NON-FATAL DIAGNOSTIC--the first input argument (A VECTOR) to MIDR(3f) has all elements = ',E15.8,' *****')
+         Xmidr = X(1)
+      ENDIF
+      GOTO 100
+!-----START POINT-----------------------------------------------------
+50    continue
+      xmin = X(1)
+      xmax = X(1)
+      DO i = 1 , N
+         IF ( X(i)<xmin ) xmin = X(i)
+         IF ( X(i)>xmax ) xmax = X(i)
+      ENDDO
+      Xmidr = (xmin+xmax)/2.0_wp
+   ENDIF
+!
+100  continue
+   IF ( Iwrite==0 ) RETURN
+   WRITE (G_IO,99005)
+   99005 FORMAT (' ')
+   WRITE (G_IO,99006) N , Xmidr
+   99006 FORMAT (' The sample MIDRANGE of the ',I0,' observations is ', E22.15)
+
+END SUBROUTINE MIDR
