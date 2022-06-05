@@ -243,9 +243,10 @@ contains
 !!   Sample program:
 !!
 !!    program demo_autoco
-!!    use M_datapac, only : autoco
+!!    use M_datapac, only : autoco, label
 !!    implicit none
 !!    real ::  x(100)
+!!    call label('autoco')
 !!    !call   call autoco(x,size(x),1,xautoc)
 !!    end program demo_autoco
 !!
@@ -601,7 +602,6 @@ END SUBROUTINE BETRAN
 !!    program demo_bincdf
 !!    use M_datapac, only : bincdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call bincdf(x,y)
 !!    end program demo_bincdf
 !!
@@ -1481,10 +1481,11 @@ END SUBROUTINE BINRAN
 !!
 !!    program demo_caucdf
 !!    !@(#) line plotter graph of cumulative distribution function
-!!    use M_datapac, only : caucdf, plott
+!!    use M_datapac, only : caucdf, plott, label
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
+!!       call label('caucdf')
 !!       x=[(real(i),i=-100,100,1)]
 !!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
@@ -1587,10 +1588,11 @@ end subroutine caucdf
 !!
 !!    program demo_caupdf
 !!    !@(#) line plotter graph of probability density function
-!!    use M_datapac, only : caupdf, plott
+!!    use M_datapac, only : caupdf, plott, label
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
+!!       call label('caupdf')
 !!       x=[(real(i),i=-100,100,1)]
 !!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
@@ -1877,9 +1879,10 @@ END SUBROUTINE CAUPLT
 !!   Sample program:
 !!
 !!    program demo_cauppf
-!!    use M_datapac, only : cauppf
+!!    use M_datapac, only : cauppf, label
 !!    implicit none
 !!    character(len=*),parameter ::  g='(*(g0,1x))'
+!!    call label('cauppf')
 !!    ! call cauppf(x,y)
 !!    end program demo_cauppf
 !!
@@ -4459,10 +4462,11 @@ END SUBROUTINE DEMOD
 !!
 !!    program demo_dexcdf
 !!    !@(#) line plotter graph of cumulative distribution function
-!!    use M_datapac, only : dexcdf, plott
+!!    use M_datapac, only : dexcdf, plott, label
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
+!!       call label('dexcdf')
 !!       x=[(real(i),i=-100,100,1)]
 !!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
@@ -4569,10 +4573,11 @@ end subroutine dexcdf
 !!    program demo_dexpdf
 !!    !@(#) line plotter graph
 !!    !@(#) of probability density function for Laplace distribution
-!!    use M_datapac, only : dexpdf, plott
+!!    use M_datapac, only : dexpdf, plott, label
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
+!!       call label('dexpdf')
 !!       x=[(real(i),i=-100,100,1)]
 !!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
@@ -5912,19 +5917,20 @@ END SUBROUTINE DISCRE
 !!   Sample program:
 !!
 !!    program demo_dot
-!!    use M_datapac
+!!    use M_datapac, only : dot, label
 !!    real, dimension(3) :: a, b
 !!    real :: dotpro , parpro
 !!    integer i , imax , imin
-!!        a = [ 1.0, 2.0, 3.0 ]
-!!        b = [ 4.0, 5.0, 6.0 ]
-!!        imin=1
-!!        imax=size(a)
-!!        parpro=0.0
-!!        call dot(a,b,imin,imax,parpro,dotpro)
-!!        write(*,*)a
-!!        write(*,*)b
-!!        write(*,*)dotpro, dot_product(a,b), dotpro == dot_product(a,b)
+!!       call label('dot')
+!!       a = [ 1.0, 2.0, 3.0 ]
+!!       b = [ 4.0, 5.0, 6.0 ]
+!!       imin=1
+!!       imax=size(a)
+!!       parpro=0.0
+!!       call dot(a,b,imin,imax,parpro,dotpro)
+!!       write(*,*)a
+!!       write(*,*)b
+!!       write(*,*)dotpro, dot_product(a,b), dotpro == dot_product(a,b)
 !!    end program demo_dot
 !!
 !!   Results:
@@ -6001,7 +6007,6 @@ end subroutine dot
 !!    program demo_ev1cdf
 !!    use M_datapac, only : ev1cdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1cdf(x,y)
 !!    end program demo_ev1cdf
 !!
@@ -6960,7 +6965,6 @@ END SUBROUTINE EV2RAN
 !!    program demo_expcdf
 !!    use M_datapac, only : expcdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expcdf(x,y)
 !!    end program demo_expcdf
 !!
@@ -7039,10 +7043,11 @@ END SUBROUTINE EXPCDF
 !!
 !!    program demo_exppdf
 !!    !@(#) line plotter graph of probability density function
-!!    use M_datapac, only : exppdf, plott
+!!    use M_datapac, only : exppdf, plott, label
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
+!!       call label('exppdf')
 !!       x=[(real(i),i=0,100,1)]
 !!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
@@ -8083,7 +8088,6 @@ CHARACTER(len=4) :: iflag3
 !!    program demo_fcdf
 !!    use M_datapac, only : fcdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call fcdf(x,y)
 !!    end program demo_fcdf
 !!
@@ -8437,7 +8441,7 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 99999 END SUBROUTINE FCDF
 !>
 !!##NAME
-!!    fourie(3f) - [M_datapac:STATISTICS] perform a Fourier analysis of a data set
+!!    fourie(3f) - [M_datapac:ANALYSIS] perform a Fourier analysis of a data set
 !!
 !!##SYNOPSIS
 !!
@@ -8783,16 +8787,34 @@ END SUBROUTINE FOURIE
 !!       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
 !!
 !!##DESCRIPTION
-!!    fran(3f) generates a random sample of size n from the f distribution
-!!    with integer degrees of freedom parameters = nu1 and nu2.
+!!    FRAN(3f) generates a random sample of size n from the F distribution
+!!    with integer degrees of freedom parameters = NU1 AND NU2.
 !!
-!!    this distribution is defined for all non-negative x.
+!!    This distribution is defined for all non-negative x.
 !!
-!!    the probability density function is given in the references below.
+!!    The probability density function is given in the references below.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    N       The desired integer number of random numbers to be generated.
+!!
+!!    NU1     The integer degrees of freedom for the numerator of the F ratio.
+!!            nu1 should be a positive integer variable.
+!!
+!!    NU2     The integer degrees of freedom NU2 should be a positive
+!!            integer variable for the denominator of the F ratio.
+!!
+!!    ISTART  An integer flag code which (if set to 0) will start the
+!!            generator over and hence produce the same random sample
+!!            over and over again upon successive calls to this subroutine
+!!            within a run; or (if set to some integer value not equal to 0,
+!!            like, say, 1) will allow the generator to continue from where
+!!            it stopped and hence produce different random samples upon
+!!            successive calls to this subroutine within a run.
+!!
+!!##OUTPUT ARGUMENTS
+!!    x       A vector (of dimension at least N) into which the generated
+!!            random sample will be placed.
 !!
 !!##EXAMPLES
 !!
@@ -8815,86 +8837,38 @@ END SUBROUTINE FOURIE
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * MOOD AND GRABLE, INTRODUCTION TO THE THEORY OF STATISTICS, 1963,
-!!     PAGES 231-232.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 75-93.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 64.
+!!   * Mood and Grable, Introduction to the Theory of Statistics, 1963,
+!!     Pages 231-232.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 75-93.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 64.
+!     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
-REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
-     &     z
+
+SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
+REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , z
 INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --NU1    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE NUMERATOR OF THE F RATIO.
-!                     --NU2    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE DENOMINATOR OF THE F RATIO.
-!                     --ISTART = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL START THE
-!                                GENERATOR OVER AND HENCE
-!                                PRODUCE THE SAME RANDOM SAMPLE
-!                                OVER AND OVER AGAIN
-!                                UPON SUCCESSIVE CALLS TO
-!                                THIS SUBROUTINE WITHIN A RUN; OR
-!                                (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0,
-!                                LIKE, SAY, 1) WILL ALLOW
-!                                THE GENERATOR TO CONTINUE
-!                                FROM WHERE IT STOPPED
-!                                AND HENCE PRODUCE DIFFERENT
-!                                RANDOM SAMPLES UPON
-!                                SUCCESSIVE CALLS TO
-!                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE F DISTRIBUTION
-!             WITH DEGREES OF FREEDOM
-!             PARAMETERS = NU1 AND NU2.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --NU1 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION y(2) , z(2)
-      DATA pi/3.14159265358979_wp/
+DIMENSION X(:)
+DIMENSION y(2) , z(2)
+DATA pi/3.14159265358979_wp/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE FRAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO FRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99004) N
          RETURN
       ELSEIF ( Nu1<=0 ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FRAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO FRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99004) Nu1
          RETURN
       ELSEIF ( Nu2<=0 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FRAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99003 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO FRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99004) Nu2
          RETURN
       ELSE
@@ -9167,7 +9141,6 @@ END SUBROUTINE FREQ
 !!    program demo_gamcdf
 !!    use M_datapac, only : gamcdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamcdf(x,y)
 !!    end program demo_gamcdf
 !!
@@ -10169,7 +10142,6 @@ END SUBROUTINE GAMRAN
 !!    program demo_geocdf
 !!    use M_datapac, only : geocdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call geocdf(x,y)
 !!    end program demo_geocdf
 !!
@@ -10848,7 +10820,6 @@ END SUBROUTINE GEORAN
 !!    program demo_hfncdf
 !!    use M_datapac, only : hfncdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfncdf(x,y)
 !!    end program demo_hfncdf
 !!
@@ -11821,7 +11792,6 @@ END SUBROUTINE INVXWX
 !!    program demo_lamcdf
 !!    use M_datapac, only : lamcdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamcdf(x,y)
 !!    end program demo_lamcdf
 !!
@@ -11986,11 +11956,12 @@ INTEGER :: icount
 !!
 !!    program demo_lampdf
 !!    !@(#) line plotter graph of probability density function
-!!    use M_datapac, only : lampdf, plott
+!!    use M_datapac, only : lampdf, plott, label
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    real              :: alamba
 !!    integer           :: i
+!!       call label('lampdf')
 !!       alamba=0.0
 !!       x=[(real(i),i=-100,100,1)]
 !!       if(allocated(y))deallocate(y)
@@ -12684,7 +12655,6 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!    program demo_lgncdf
 !!    use M_datapac, only : lgncdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgncdf(x,y)
 !!    end program demo_lgncdf
 !!
@@ -13233,10 +13203,11 @@ END SUBROUTINE LGNRAN
 !!   Sample program:
 !!
 !!      program demo_loc
-!!      use M_datapac, only : loc
+!!      use M_datapac, only : loc, label
 !!      implicit none
 !!      integer ::  i
 !!      real, allocatable ::  x(:), y(:)
+!!         call label('loc')
 !!         y=[(real(i)/10.0,i=1,20000)]
 !!         x=y**3.78-6*y**2.52+9*y**1.26
 !!         call loc(y,size(y))
@@ -13411,7 +13382,6 @@ END SUBROUTINE LOC
 !!    program demo_logcdf
 !!    use M_datapac, only : logcdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logcdf(x,y)
 !!    end program demo_logcdf
 !!
@@ -13495,10 +13465,11 @@ END SUBROUTINE LOGCDF
 !!
 !!    program demo_logpdf
 !!    !@(#) line plotter graph of cumulative distribution function
-!!    use M_datapac, only : logpdf, plott
+!!    use M_datapac, only : logpdf, plott, label
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
+!!       call label('logpdf')
 !!       x=[(real(i),i=-100,100,1)]
 !!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
@@ -14079,9 +14050,10 @@ END SUBROUTINE LOGSF
 !!   Sample program:
 !!
 !!    program demo_max
-!!    use M_datapac, only : max
+!!    use M_datapac, only : max, label
 !!    implicit none
 !!    real :: xmax
+!!       call label('max')
 !!       call max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
 !!       write(*,*)xmax
 !!    end program demo_max
@@ -14195,10 +14167,11 @@ end subroutine max
 !!   Sample program:
 !!
 !!    program demo_mean
-!!    use M_datapac, only : mean
+!!    use M_datapac, only : mean, label
 !!    implicit none
 !!    real :: sp_mean
 !!    double precision :: dp_mean
+!!       call label('mean')
 !!       call mean([4.0, 36.0, 45.0, 50.0, 75.0], 5, 1, sp_mean)
 !!       write(*,*)sp_mean,sp_mean==42.0
 !!       call mean([4.0d0, 36.0d0, 45.0d0, 50.0d0, 75.0d0], 5, 1, dp_mean)
@@ -14313,13 +14286,14 @@ end subroutine mean
 !!   Sample program:
 !!
 !!    program demo_median
-!!    use M_datapac, only : median
+!!    use M_datapac, only : median, label
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
 !!    real,allocatable :: x(:)
 !!    real :: xmed
 !!    integer :: iwrite , n
 !!
+!!       call label('median')
 !!       x=[ -10.0, 10.0, 0.0, 1.0, 2.0 ]
 !!       n=size(x)
 !!       call median(x, n, 1, xmed)
@@ -14453,10 +14427,11 @@ END SUBROUTINE MEDIAN
 !!   Sample program:
 !!
 !!    program demo_midm
-!!    use M_datapac, only : midm
+!!    use M_datapac, only : midm, label
 !!    implicit none
 !!    integer :: i
 !!    real :: xmidm
+!!       call label('midm')
 !!
 !!       call midm([real :: (i,i=0,100) ],101,1,xmidm)
 !!       write(*,*)merge('GOOD','BAD ',xmidm == 50.0),xmidm
@@ -14625,10 +14600,11 @@ END SUBROUTINE MIDM
 !!   Sample program:
 !!
 !!    program demo_midr
-!!    use M_datapac, only : midr
+!!    use M_datapac, only : midr, label
 !!    implicit none
 !!    integer :: i
 !!    real :: xmidr
+!!       call label('midr')
 !!
 !!       call midr([real :: (i,i=0,100) ],101,1,xmidr)
 !!       write(*,*)merge('GOOD','BAD ',xmidr == 50.0),xmidr
@@ -14760,9 +14736,10 @@ END SUBROUTINE MIDR
 !!   Sample program:
 !!
 !!    program demo_min
-!!    use M_datapac, only : min
+!!    use M_datapac, only : min, label
 !!    implicit none
 !!    real :: xmin
+!!       call label('min')
 !!       call min([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmin)
 !!       write(*,*)xmin
 !!    end program demo_min
@@ -14887,12 +14864,13 @@ end subroutine min
 !!   Sample program:
 !!
 !!    program demo_move
-!!    use M_datapac, only : move
+!!    use M_datapac, only : move, label
 !!    real,allocatable :: x(:), y(:)
+!!       call label('move')
 !!       x=[10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0]
 !!       if(allocated(y))deallocate(y)
-!!       y=99.0
 !!       allocate(y(size(x)))
+!!       y=99.0
 !!       call MOVE(X,4,5,1,Y)
 !!       write(*,*)int(y)
 !!    end program demo_move
@@ -15007,7 +14985,6 @@ END SUBROUTINE MOVE
 !!    program demo_nbcdf
 !!    use M_datapac, only : nbcdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call nbcdf(x,y)
 !!    end program demo_nbcdf
 !!
@@ -15945,7 +15922,6 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !!    program demo_norcdf
 !!    use M_datapac, only : norcdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norcdf(x,y)
 !!    end program demo_norcdf
 !!
@@ -16001,7 +15977,7 @@ REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 END SUBROUTINE NORCDF
 !>
 !!##NAME
-!!    norout(3f) - [M_datapac:STATISTICS] Performs a normal outlier analysis
+!!    norout(3f) - [M_datapac:ANALYSIS] Performs a normal outlier analysis
 !!                 on the data in the input vector X.
 !!
 !!##SYNOPSIS
@@ -16515,10 +16491,11 @@ END SUBROUTINE NOROUT
 !!
 !!    program demo_norpdf
 !!    !@(#) line plotter graph of probability density function
-!!    use M_datapac, only : norpdf, plott
+!!    use M_datapac, only : norpdf, plott, label
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
+!!       call label('norpdf')
 !!       x=[(real(i),i=-100,100,1)]
 !!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
@@ -17138,7 +17115,6 @@ END SUBROUTINE NORSF
 !!    program demo_parcdf
 !!    use M_datapac, only : parcdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parcdf(x,y)
 !!    end program demo_parcdf
 !!
@@ -17655,63 +17631,113 @@ END SUBROUTINE PARRAN
 !!       & Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
 !!
 !!##DESCRIPTION
-!!    plot10(3f) yields a one-page printer plot of y(i) versus x(i):
+!!    PLOT10(3f) yields a one-page printer plot of y(i) versus x(i):
 !!
-!!               1. with special plot characters;
-!!               2. with the vertical (y) axis min and max
-!!                  and the horizontal (x) axis min and max
-!!                  values specified by the data analyst;
-!!               3. with only those points (x(i),y(i)) plotted
-!!                  for which the corresponding value of d(i)
-!!                  is between the specified values of dmin and dmax; and
-!!               4. with hollerith labels (at most 6 characters)
-!!                 for the vertical axis variable,
-!!                  the horizontal axis variable, and
-!!                  the plotting character variable
-!!                  also being provided by the data analyst.
+!!     1. with special plot characters;
+!!     2. with the vertical (y) axis min and max
+!!        and the horizontal (x) axis min and max
+!!        values specified by the data analyst;
+!!     3. with only those points (x(i),y(i)) plotted
+!!        for which the corresponding value of d(i)
+!!        is between the specified values of dmin and dmax; and
+!!     4. with hollerith labels (at most 6 characters)
+!!        for the vertical axis variable,
+!!        the horizontal axis variable, and
+!!        the plotting character variable
+!!        also being provided by the data analyst.
 !!
-!!    the 'special plotting character' capability allows the data analyst
+!!    The 'special plotting character' capability allows the data analyst
 !!    to incorporate information from a third variable (aside from y and x)
 !!    into the plot.
 !!
-!!    the plot character used at the i-th plotting position (that is,
+!!    The plot character used at the i-th plotting position (that is,
 !!    at the coordinate (x(i),y(i))) will be
 !!
-!!               1 if char(i) is between  0.5 and  1.5
-!!               2 if char(i) is between  1.5 and  2.5
-!!                 .
-!!                .
-!!                 .
-!!               9 if char(i) is between  8.5 and  9.5
-!!               0 if char(i) is between  9.5 and 10.5
-!!               a if char(i) is between 10.5 and 11.5
-!!               b if char(i) is between 11.5 and 12.5
-!!               c if char(i) is between 12.5 and 13.5
-!!                .
-!!                 .
-!!                 .
-!!               w if char(i) is between 32.5 and 33.5
-!!               x if char(i) is between 33.5 and 34.5
-!!               y if char(i) is between 34.5 and 35.5
-!!               z if char(i) is between 35.5 and 36.5
-!!               x if char(i) is any value outside the range
-!!                                        0.5 to  36.5.
+!!      1 if char(i) is between  0.5 and  1.5
+!!      2 if char(i) is between  1.5 and  2.5
+!!        .
+!!        .
+!!        .
+!!      9 if char(i) is between  8.5 and  9.5
+!!      0 if char(i) is between  9.5 and 10.5
+!!      a if char(i) is between 10.5 and 11.5
+!!      b if char(i) is between 11.5 and 12.5
+!!      c if char(i) is between 12.5 and 13.5
+!!        .
+!!        .
+!!        .
+!!      w if char(i) is between 32.5 and 33.5
+!!      x if char(i) is between 33.5 and 34.5
+!!      y if char(i) is between 34.5 and 35.5
+!!      z if char(i) is between 35.5 and 36.5
+!!      x if char(i) is any value outside the range 0.5 to  36.5.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    The use of the ymin, ymax, xmin, and xmax specifications allows the
 !!    data analyst to control fully the plot axis limits, so as, for example,
 !!    to zero-in on an interesting sub-region of a previous plot.
 !!
-!!    the use of the subset definition vector d gives the data analyst
+!!    The use of the subset definition vector d gives the data analyst
 !!    the capability of plotting subsets of the data, where the subset is
 !!    defined by values in the vector d.
 !!
-!!    the use of hollerith identifying labels allows the data analyst to
+!!    The use of hollerith identifying labels allows the data analyst to
 !!    automatically have the plots labeled. this is particularly useful
 !!    in a large analysis when many plots are being generated.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Values in the vertical axis vector (Y) which are smaller than YMIN
+!!    or larger than YMAX, or values in the horizontal axis vector (X)
+!!    which are smaller than XMIN or larger than XMAX will not be plotted.
+!!
+!!    For a given dummy index I, if D(I) is smaller than DMIN or larger than
+!!    DMAX, then the corresponding point (X(I),Y(I)) will not be plotted.
+!!
+!!    Values in the vertical axis vector (Y), the horizontal axis vector
+!!    (X), or the plot character vector (CHAR) which are equal to or in
+!!    excess of 10.0**10 will not be plotted.
+!!
+!!    This convention greatly simplifies the problem of plotting when
+!!    some elements in the vector Y (or X, or CHAR) are 'missing data',
+!!    or when we purposely want to ignore certain elements in the vector Y
+!!    (or X, or CHAR) for plotting purposes (that is, we do not want certain
+!!    elements in Y (or X, or CHAR) to be plotted).
+!!
+!!    to cause specific elements in Y (or X, or CHAR) to be ignored,
+!!    we replace the elements beforehand (by, for example, use of the
+!!    REPLAC(3f) subroutine) by some large value (like, say, 10.0**10)
+!!    and they will subsequently be ignored in the PLOTC(3f) subroutine.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    Y       The vector of (unsorted or sorted) observations to be
+!!            plotted vertically.
+!!    X       The vector of (unsorted or sorted) observations to be plotted
+!!            horizontally.
+!!    CHAR    The vector of observations which control the value of each
+!!            individual plot character.
+!!    N       The integer number of observations in the vector y.
+!!            There is no restriction on the maximum value of n for this
+!!            subroutine.
+!!    YMIN    The value of desired minimum for the vertical axis.
+!!    YMAX    The value of desired maximum for the vertical axis.
+!!    XMIN    The value of desired minimum for the horizontal axis.
+!!    XMAX    The value of desired maximum for the horizontal axis.
+!!    D       The vector which 'defines' the various possible subsets.
+!!    DMIN    The value which defines the lower bound (inclusively) of
+!!            The particular subset of interest to be plotted.
+!!    DMAX    The value which defines the upper bound (inclusively) of
+!!            The particular subset of interest to be plotted.
+!!    YAXID   The hollerith value (at most 6 characters) of the desired
+!!            label for the vertical axis variable.
+!!    XAXID   The hollerith value (at most 6 characters) of the desired
+!!            label for the horizontal axis variable.
+!!    PLCHID  The hollerith value (at most 6 characters) of the desired
+!!            label for the plotting character variable.
+!!
+!!##OUTPUT
+!!
+!!    A one-page printer plot of Y(I) versus X(I), with special plot
+!!    characters, with specified axis limits, for only of a specified subset
+!!    of the data, and with specified labels.
 !!
 !!##EXAMPLES
 !!
@@ -17727,115 +17753,43 @@ END SUBROUTINE PARRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
-!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
-!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
-!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
-IMPLICIT NONE
-
-REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
-     &     ratiox , ratioy , X , x25 , x75 , Xaxid , Xmax , xmid ,      &
-     &     Xmin , Y , Yaxid , ylable
-REAL(kind=wp) :: Ymax , Ymin
-INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
-!
-!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE  VECTOR OF
-!                               OBSERVATIONS WHICH CONTROL THE
-!                               VALUE OF EACH INDIVIDUAL PLOT
-!                               CHARACTER.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR Y.
-!                    --YMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!                    --D      = THE  VECTOR
-!                               WHICH 'DEFINES' THE VARIOUS
-!                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE  VALUE
-!                               WHICH DEFINES THE LOWER BOUND
-!                               (INCLUSIVELY) OF THE PARTICULAR
-!                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE  VALUE
-!                               WHICH DEFINES THE UPPER BOUND
-!                               (INCLUSIVELY) OF THE PARTICULAR
-!                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --YAXID  = THE HOLLERITH VALUE
-!                               (AT MOST 6 CHARACTERS)
-!                               OF THE DESIRED LABEL FOR THE
-!                               VERTICAL AXIS VARIABLE.
-!                    --XAXID  = THE HOLLERITH VALUE
-!                               (AT MOST 6 CHARACTERS)
-!                               OF THE DESIRED LABEL FOR THE
-!                               HORIZONTAL AXIS VARIABLE.
-!                    --PLCHID = THE HOLLERITH VALUE
-!                               (AT MOST 6 CHARACTERS)
-!                               OF THE DESIRED LABEL FOR THE
-!                               PLOTTING CHARACTER VARIABLE.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
-!             WITH SPECIAL PLOT CHARACTERS,
-!             WITH SPECIFIED AXIS LIMITS,
-!             FOR ONLY OF A SPECIFIED SUBSET OF THE DATA, AND
-!             WITH SPECIFIED LABELS.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
-!              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
-!              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
-!              WHICH ARE SMALLER THAN XMIN OR LARGER THAN XMAX
-!              WILL NOT BE PLOTTED.
-!            --FOR A GIVEN DUMMY INDEX I,
-!              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
-!              THEN THE CORRESPONDING POINT (X(I),Y(I))
-!              WILL NOT BE PLOTTED.
-!            --VALUES IN THE VERTICAL AXIS VECTOR (Y),
-!              THE HORIZONTAL AXIS VECTOR (X),
-!              OR THE PLOT CHARACTER VECTOR (CHAR) WHICH ARE
-!              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
-!              PLOTTED.
-!              THIS CONVENTION GREATLY SIMPLIFIES THE PROBLEM
-!              OF PLOTTING WHEN SOME ELEMENTS IN THE VECTOR Y
-!              (OR X, OR CHAR) ARE 'MISSING DATA', OR WHEN WE PURPOSELY
-!              WANT TO IGNORE CERTAIN ELEMENTS IN THE VECTOR Y
-!              (OR X, OR CHAR) FOR PLOTTING PURPOSES (THAT IS, WE DO NOT
-!              WANT CERTAIN ELEMENTS IN Y (OR X, OR CHAR) TO BE
-!              PLOTTED).
-!              TO CAUSE SPECIFIC ELEMENTS IN Y (OR X, OR CHAR) TO BE
-!              IGNORED, WE REPLACE THE ELEMENTS BEFOREHAND
-!              (BY, FOR EXAMPLE, USE OF THE   REPLAC   SUBROUTINE)
-!              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
-!              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
-!              SUBROUTINE.
+!!   * Filliben, 'Statistical Analysis of Interlab Fatigue Time Data',
+!!     Unpublished Manuscript (available from Author) Presented at the
+!!     'Computer-Assisted Data Analysis' session at the National Meeting of the
+!!     American Statistical Association, New York City, December 27-30, 1973.
 !     ORIGINAL VERSION--JANUARY   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
 !     UPDATED         --JUNE      1977.
-!
-!---------------------------------------------------------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
+REAL(kind=wp) :: Y(:)
+REAL(kind=wp) :: X(:)
+REAL(kind=wp) :: Char(:)
+INTEGER       :: N
+REAL(kind=wp) :: Ymin, Ymax
+REAL(kind=wp) :: Xmin, Xmax
+REAL(kind=wp) :: D(:)
+REAL(kind=wp) :: Dmin, Dmax
+REAL(kind=wp) :: Yaxid, Xaxid
+REAL(kind=wp) :: Plchid
+
+REAL(kind=wp) :: aim1, cutoff, hold, ratiox, ratioy, x25, x75, xmid, ylable
+INTEGER :: i, iarg, iflag, ip2, j, k, mx, my, n2
 CHARACTER(len=4) :: IGRaph
 CHARACTER(len=4) :: iplotc
 CHARACTER(len=4) :: sbnam1 , sbnam2
@@ -17844,36 +17798,32 @@ CHARACTER(len=4) :: alph41 , alph42 , alph91 , alph92
 CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
-      DIMENSION Y(:)
-      DIMENSION X(:)
-      DIMENSION D(:)
-      DIMENSION Char(:)
-      DIMENSION ylable(11)
-      DIMENSION iplotc(37)
-      COMMON /BLOCK1/ IGRaph(55,130)
+DIMENSION ylable(11)
+DIMENSION iplotc(37)
+COMMON /BLOCK1/ IGRaph(55,130)
 !
-      DATA sbnam1 , sbnam2/'PLOT' , '10  '/
-      DATA alph11 , alph12/'FIRS' , 'T   '/
-      DATA alph21 , alph22/'SECO' , 'ND  '/
-      DATA alph31 , alph32/'THIR' , 'D   '/
-      DATA alph41 , alph42/'FOUR' , 'TH  '/
-      DATA alph91 , alph92/'FIFT' , 'H   '/
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
-     &     'N' , '='/
-      DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
-     &     iplotc(6) , iplotc(7) , iplotc(8) , iplotc(9) , iplotc(10) , &
-     &     iplotc(11) , iplotc(12) , iplotc(13) , iplotc(14) ,          &
-     &     iplotc(15) , iplotc(16) , iplotc(17) , iplotc(18) ,          &
-     &     iplotc(19) , iplotc(20) , iplotc(21) , iplotc(22) ,          &
-     &     iplotc(23) , iplotc(24) , iplotc(25) , iplotc(26) ,          &
-     &     iplotc(27) , iplotc(28) , iplotc(29) , iplotc(30) ,          &
-     &     iplotc(31) , iplotc(32) , iplotc(33) , iplotc(34) ,          &
-     &     iplotc(35) , iplotc(36) , iplotc(37)/'1' , '2' , '3' , '4' , &
-     &     '5' , '6' , '7' , '8' , '9' , '0' , 'A' , 'B' , 'C' , 'D' ,  &
-     &     'E' , 'F' , 'G' , 'H' , 'I' , 'J' , 'K' , 'L' , 'M' , 'N' ,  &
-     &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
-     &     'Y' , 'Z' , 'X'/
+DATA sbnam1 , sbnam2/'PLOT' , '10  '/
+DATA alph11 , alph12/'FIRS' , 'T   '/
+DATA alph21 , alph22/'SECO' , 'ND  '/
+DATA alph31 , alph32/'THIR' , 'D   '/
+DATA alph41 , alph42/'FOUR' , 'TH  '/
+DATA alph91 , alph92/'FIFT' , 'H   '/
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
+ &     'N' , '='/
+DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
+ &     iplotc(6) , iplotc(7) , iplotc(8) , iplotc(9) , iplotc(10) , &
+ &     iplotc(11) , iplotc(12) , iplotc(13) , iplotc(14) ,          &
+ &     iplotc(15) , iplotc(16) , iplotc(17) , iplotc(18) ,          &
+ &     iplotc(19) , iplotc(20) , iplotc(21) , iplotc(22) ,          &
+ &     iplotc(23) , iplotc(24) , iplotc(25) , iplotc(26) ,          &
+ &     iplotc(27) , iplotc(28) , iplotc(29) , iplotc(30) ,          &
+ &     iplotc(31) , iplotc(32) , iplotc(33) , iplotc(34) ,          &
+ &     iplotc(35) , iplotc(36) , iplotc(37)/'1' , '2' , '3' , '4' , &
+ &     '5' , '6' , '7' , '8' , '9' , '0' , 'A' , 'B' , 'C' , 'D' ,  &
+ &     'E' , 'F' , 'G' , 'H' , 'I' , 'J' , 'K' , 'L' , 'M' , 'N' ,  &
+ &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
+ &     'Y' , 'Z' , 'X'/
 !
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
@@ -17999,22 +17949,19 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
  800  n2 = 0
       DO i = 1 , N
-         IF ( Y(i)<cutoff .AND. X(i)<cutoff .AND. Char(i)<cutoff .AND.  &
-     &        D(i)<cutoff ) THEN
+         IF ( Y(i)<cutoff .AND. X(i)<cutoff .AND. Char(i)<cutoff .AND. D(i)<cutoff ) THEN
             IF ( Dmin<D(i) .AND. D(i)<Dmax ) n2 = n2 + 1
             IF ( n2>=2 ) GOTO 900
          ENDIF
       ENDDO
       WRITE (G_IO,99016)
       WRITE (G_IO,99017)
-      WRITE (G_IO,99007) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
-     &                  alph32 , alph91 , alph92
+      WRITE (G_IO,99007) alph11 , alph12 , alph21 , alph22 , alph31 , alph32 , alph91 , alph92
 99007 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', ',A4,A4,', AND ',A4,A4)
       WRITE (G_IO,99008) sbnam1 , sbnam2
 99008 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
       WRITE (G_IO,99009)
-99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
-     &        ' EXCLUDED FROM THE PLOT.')
+99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99010) n2
 99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99016)
@@ -18100,8 +18047,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
                               my = ratioy*(Y(i)-Ymin) + 0.5_wp
                               my = 43 - my
                               iarg = 37
-                              IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp )     &
-     &                             iarg = Char(i) + 0.5_wp
+                              IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp ) iarg = Char(i) + 0.5_wp
                               IGRaph(my,mx) = iplotc(iarg)
                            ENDIF
                         ENDIF
@@ -18121,25 +18067,20 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          IF ( iflag/=0 ) WRITE (G_IO,99011) (IGRaph(i,j),j=1,109)
 !
 99011    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (G_IO,99012) ylable(k) ,                  &
-     &                          (IGRaph(i,j),j=1,109)
+         IF ( iflag==0 ) WRITE (G_IO,99012) ylable(k) , (IGRaph(i,j),j=1,109)
 99012    FORMAT (' ',F20.7,109A1)
       ENDDO
       WRITE (G_IO,99013) Xmin , x25 , xmid , x75 , Xmax
 99013 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
       WRITE (G_IO,99014) Yaxid , Xaxid , Plchid
-99014 FORMAT (' ',9X,A4,A4,' (VERTICAL AXIS) VERSUS ',A4,A4,            &
-     &        ' (HORIZONTAL AXIS) ',20X,'THE PLOTTING CHARACTER IS ',A4,&
-     &        A4)
+99014 FORMAT (' ',9X,A4,A4,' (VERTICAL AXIS) VERSUS ',A4,A4,' (HORIZONTAL AXIS) ',20X,'THE PLOTTING CHARACTER IS ',A4,A4)
       WRITE (G_IO,99015) N
 99015 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I8)
 !
-99016 FORMAT (' ','**************************************************', &
-     &        '********************')
+99016 FORMAT (' ','**********************************************************************')
 99017 FORMAT (' ','                   FATAL ERROR                    ')
 99018 FORMAT (' ','               NON-FATAL DIAGNOSTIC               ')
-99019 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
-     &        ' SUBROUTINE')
+99019 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
 99020 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
 99021 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99022 FORMAT (' ','VALUE OF ',E15.8)
@@ -22723,11 +22664,12 @@ END SUBROUTINE PLOTST
 !!   Sample program:
 !!
 !!      program demo_plott
-!!      use M_datapac, only : plott
+!!      use M_datapac, only : plott, label
 !!      implicit none
 !!      integer ::  i
 !!      integer,parameter :: dp=kind(0.0d0)
 !!      real(kind=dp), allocatable ::  x(:), y(:)
+!!         call label('plott')
 !!         y=[(real(i)/10.0,i=1,30)]
 !!         x=y**3.78-6*y**2.52+9*y**1.26
 !!         call plott(x,y,size(x))
@@ -25207,7 +25149,6 @@ END SUBROUTINE PLTXXT
 !!    program demo_poicdf
 !!    use M_datapac, only : poicdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poicdf(x,y)
 !!    end program demo_poicdf
 !!
@@ -29098,7 +29039,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 END SUBROUTINE RETAIN
 !>
 !!##NAME
-!!    runs(3f) - [M_datapac:STATISTICS] perform a runs test
+!!    runs(3f) - [M_datapac:ANALYSIS] perform a runs test
 !!
 !!##SYNOPSIS
 !!
@@ -30099,7 +30040,7 @@ END SUBROUTINE SD
 !!   Sample program:
 !!
 !!    program demo_sortc
-!!    use M_datapac, only : sortc
+!!    use M_datapac, only : sortc, label
 !!    implicit none
 !!    integer,parameter            :: isz=20
 !!    real                         :: aa(isz)
@@ -30107,6 +30048,7 @@ END SUBROUTINE SD
 !!    real                         :: cc(isz)
 !!    real                         :: dd(isz)
 !!    integer                      :: i
+!!      call label('sortc')
 !!      write(*,*)'initializing array with ',isz,' random numbers'
 !!      call random_seed()
 !!      CALL RANDOM_NUMBER(aa)
@@ -32050,55 +31992,76 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 END SUBROUTINE SUBSET
 !>
 !!##NAME
-!!    tail(3f) - [M_datapac:STATISTICS] performs a symmetric distribution
+!!    tail(3f) - [M_datapac:ANALYSIS] performs a symmetric distribution
 !!    tail length analysis
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE TAIL(X,N)
 !!
+!!        REAL(kind=wp) :: X(:)
+!!        INTEGER       :: N
+!!
 !!##DESCRIPTION
-!!    tail(3f) performs a symmetric distribution tail length analysis on
-!!    the data in the input vector x.
+!!    TAIL(3f) performs a symmetric distribution tail length analysis on
+!!    the data in the input vector X.
 !!
-!!    the analysis consists of the following--
+!!    The analysis consists of the following--
 !!
-!!      1. various test statistics to test
+!!      1. Various test statistics to test
 !!         the specific hypothesis of normality;
-!!      2. a uniform probability plot
+!!      2. A uniform probability plot
 !!         (a short-tailed distribution);
-!!      3. a normal probability plot
+!!      3. A normal probability plot
 !!         (a moderate-tailed distribution);
-!!      4. a tukey lambda = -0.5 probability plot
+!!      4. A tukey lambda = -0.5 probability plot
 !!         (a moderate-long-tailed distribution);
-!!      5. a cauchy probability plot
+!!      5. A cauchy probability plot
 !!         (a long-tailed distribution);
-!!      6. a determination of the best-fit
+!!      6. A determination of the best-fit
 !!         symmetric distribution
 !!         to the data set from an
 !!         admissible set consisting of
 !!         43 symmetric distributions.
 !!
-!!    the admissible set of symmetric distributions considered includes
+!!    The admissible set of symmetric distributions considered includes
 !!    the uniform, normal, logistic, double exponential, cauchy, and 37
 !!    distributions drawn from the the tukey lambda distributional family.
 !!
-!!    the goodness of fit criterion is the maximum probability plot
+!!    The goodness of fit criterion is the maximum probability plot
 !!    correlation coefficient criterion.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X    The  vector of unsorted or sorted) observations.
+!!
+!!    N    The integer number of observations in the vector X.
+!!         The maximum allowable value of N for this subroutine is 3000.
+!!##OUTPUT
+!!    6 pages of automatic printout--
+!!
+!!      1. various test statistics for normality;
+!!      2. a uniform probability plot;
+!!      3. a normal probability plot;
+!!      4. a tukey lambda = -0.5 probability plot;
+!!      5. a cauchy probability plot;
+!!      6. a determination of the best-fit symmetric distribution to the
+!!         data set.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_tail
-!!    use M_datapac, only : tail
+!!    use M_datapac, only : tail, label
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call tail(x,y)
+!!    real,allocatable :: x(:)
+!!    integer :: i
+!!       call label('tail')
+!!       x=[(real(i)/10.0,i=1,2000)]
+!!       x=x**3.78-6*x**2.52+9*x**1.26
+!!       call tail(x,size(x))
 !!    end program demo_tail
 !!
 !!   Results:
@@ -32121,42 +32084,22 @@ END SUBROUTINE SUBSET
 !!   * Filliben, 'The Percent Point Function', Unpublished Manuscript.
 !!   * Johnson and Kotz (1970), Continuous Univariate Distributions-1,
 !!     Pages 250-271.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE TAIL(X,N)
-REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
-REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
-REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
-REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS, X
-REAL(kind=wp) :: xbar
-REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
-INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--6 PAGES OF AUTOMATIC PRINTOUT--
-!             1) VARIOUS TEST STATISTICS FOR NORMALITY;
-!             2) A UNIFORM PROBABILITY PLOT;
-!             3) A NORMAL PROBABILITY PLOT;
-!             4) A TUKEY LAMBDA = -0.5 PROBABILITY PLOT;
-!             5) A CAUCHY PROBABILITY PLOT;
-!             6) A DETERMINATION OF THE BEST-FIT
-!                SYMMETRIC DISTRIBUTION
-!                TO THE DATA SET.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 3000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG, LOG10, EXP,
-!                                         SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE TAIL(X,N)
+REAL(kind=wp) :: X(:)
+INTEGER       :: N
+
+REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
+REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
+REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
+REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS
+REAL(kind=wp) :: xbar
+REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
+INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, irev, iupper, mx, nhalf, nhalfp, nm1, numdis
 CHARACTER(len=4) :: iflag1
 CHARACTER(len=4) :: iflag2
 CHARACTER(len=4) :: iflag3
@@ -32170,23 +32113,22 @@ CHARACTER(len=4) :: hyphen
 CHARACTER(len=4) :: alphai
 CHARACTER(len=4) :: alphax
 !
-      DIMENSION X(:)
-      DIMENSION Y(3000) , Z(3000) , YM(3000)
-      DIMENSION P(3000) , PTEnth(3000)
-      DIMENSION corr(50) , iflag1(50) , iflag2(50) , iflag3(50)
-      DIMENSION iline1(130) , iline2(130)
-      DIMENSION xline(13)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (Z(1),WS(3001))
-      EQUIVALENCE (YM(1),WS(6001))
-      EQUIVALENCE (P(1),WS(9001))
-      EQUIVALENCE (PTEnth(1),WS(12001))
+DIMENSION Y(3000) , Z(3000) , YM(3000)
+DIMENSION P(3000) , PTEnth(3000)
+DIMENSION corr(50) , iflag1(50) , iflag2(50) , iflag3(50)
+DIMENSION iline1(130) , iline2(130)
+DIMENSION xline(13)
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (Z(1),WS(3001))
+EQUIVALENCE (YM(1),WS(6001))
+EQUIVALENCE (P(1),WS(9001))
+EQUIVALENCE (PTEnth(1),WS(12001))
 !
-      DATA alpham , alphaa/'M' , 'A'/
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-      DATA picons/3.14159265358979_wp/
-      DATA constn/.3989422804_wp/
+DATA alpham , alphaa/'M' , 'A'/
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+DATA picons/3.14159265358979_wp/
+DATA constn/.3989422804_wp/
 !
       iupper = 3000
 !
@@ -32790,7 +32732,6 @@ END SUBROUTINE TAIL
 !!    program demo_tcdf
 !!    use M_datapac, only : tcdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tcdf(x,y)
 !!    end program demo_tcdf
 !!
@@ -32979,7 +32920,7 @@ INTEGER :: i , ievodd , imax , imin , Nu , nucut
 END SUBROUTINE TCDF
 !>
 !!##NAME
-!!    time(3f) - [M_datapac:STATISTICS] perform a time series analysis
+!!    time(3f) - [M_datapac:ANALYSIS] perform a time series analysis
 !!    (autocorrelation plot, a test for white noise, a "pilot" spectrum,
 !!    and 4 other estimated spectra based on differing bandwidth)
 !!
@@ -34654,11 +34595,12 @@ END SUBROUTINE TRIM
 !!
 !!    program demo_unicdf
 !!    !@(#) line plotter graph of function
-!!    use M_datapac, only : unicdf, plott
+!!    use M_datapac, only : unicdf, plott, label
 !!    implicit none
 !!    integer,parameter :: n=40
 !!    real              :: x(0:n), y(0:n)
 !!    integer           :: i
+!!       call label('unicdf')
 !!       x=[(real(i)/real(n),i=0,n)]
 !!       do i=0,n
 !!          call unicdf(x(i),y(i))
@@ -34913,10 +34855,11 @@ END SUBROUTINE UNIMED
 !!
 !!    program demo_unipdf
 !!    !@(#) line plotter graph of probability density function
-!!    use M_datapac, only : unipdf
+!!    use M_datapac, only : unipdf, label
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
+!!       call label('unipdf')
 !!       x=[(real(i)/10.0,i=0,10,1)]
 !!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
@@ -35670,10 +35613,11 @@ END SUBROUTINE UNISF
 !!   Sample program:
 !!
 !!    program demo_var
-!!    use M_datapac, only : var
+!!    use M_datapac, only : var, label
 !!    implicit none
 !!    real,allocatable :: x(:)
 !!    real :: Xvar
+!!       call label('var')
 !!       x = [46.0, 69.0, 32.0, 60.0, 52.0, 41.0]
 !!       call VAR(X,size(x),1,Xvar)
 !!       write(*,*)merge('GOOD','BAD ',Xvar == 177.2), Xvar
@@ -35760,7 +35704,7 @@ INTEGER i
 END SUBROUTINE VAR
 !>
 !!##NAME
-!!    weib(3f) - [M_datapac:STATISTICS] perform a Weibull distribution
+!!    weib(3f) - [M_datapac:ANALYSIS] perform a Weibull distribution
 !!    analysis (Weibull PPCC analysis)
 !!
 !!##SYNOPSIS
@@ -36140,7 +36084,6 @@ END SUBROUTINE WEIB
 !!    program demo_weicdf
 !!    use M_datapac, only : weicdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weicdf(x,y)
 !!    end program demo_weicdf
 !!

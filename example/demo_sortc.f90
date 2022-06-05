@@ -1,5 +1,5 @@
      program demo_sortc
-     use M_datapac, only : sortc
+     use M_datapac, only : sortc, label
      implicit none
      integer,parameter            :: isz=20
      real                         :: aa(isz)
@@ -7,6 +7,7 @@
      real                         :: cc(isz)
      real                         :: dd(isz)
      integer                      :: i
+       call label('sortc')
        write(*,*)'initializing array with ',isz,' random numbers'
        call random_seed()
        CALL RANDOM_NUMBER(aa)

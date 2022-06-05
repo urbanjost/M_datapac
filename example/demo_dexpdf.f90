@@ -1,10 +1,11 @@
      program demo_dexpdf
      !@(#) line plotter graph
      !@(#) of probability density function for Laplace distribution
-     use M_datapac, only : dexpdf, plott
+     use M_datapac, only : dexpdf, plott, label
      implicit none
      real,allocatable  :: x(:), y(:)
      integer           :: i
+        call label('dexpdf')
         x=[(real(i),i=-100,100,1)]
         if(allocated(y))deallocate(y)
         allocate(y(size(x)))

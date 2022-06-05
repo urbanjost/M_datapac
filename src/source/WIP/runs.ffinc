@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file runs.3m_datapac.man
 NAME
-   runs(3f) - [M_datapac:STATISTICS] perform a runs test
+   runs(3f) - [M_datapac:ANALYSIS] perform a runs test
 
 SYNOPSIS
       SUBROUTINE RUNS(X,N)

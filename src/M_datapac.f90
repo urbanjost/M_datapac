@@ -3,6 +3,7 @@ use,intrinsic :: iso_fortran_env, only : stdin=>input_unit,  stdout=>output_unit
 use M_datapac_s
 use M_datapac_d
 public :: skipr
+public :: label
 private :: G_io
 integer, save           :: G_IO=stdout  ! IO LUN for all write statements
 contains
@@ -89,4 +90,18 @@ INTEGER i , ia , ird , Nlhead
       ENDIF
 !
 END SUBROUTINE SKIPR
+
+subroutine label(string)
+character(len=*),intent(in) :: string
+integer :: more
+intrinsic :: max, trim, repeat
+
+   more=max(0,80-len_trim(string)-2)
+   more=more/2
+   write(*,'(1x,a)')repeat('=',79)
+   write(*,'(1x,a)')repeat('=',more)//' '//trim(string)//' '//repeat('=',more)
+   write(*,'(1x,a)')repeat('=',79)
+
+end subroutine label
+
 end module M_datapac

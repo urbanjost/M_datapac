@@ -61,14 +61,15 @@ special plot characters
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
@@ -83,9 +84,9 @@ SUBROUTINE <B>PLOT10</B>( &
 
 </A>
 <BLOCKQUOTE>
-<B>plot10</B>(3f) yields a one-page printer plot of <B>y</B>(i) versus <B>x</B>(i):
+<B>PLOT10</B>(3f) yields a one-page printer plot of <B>y</B>(i) versus <B>x</B>(i):
 <BLOCKQUOTE>
-<TABLE cellpadding=3><!-- tsb: <B>plot10</B>(3f) yields a one-page printer plot of <B>y</B>(i) versus <B>x</B>(i):
+<TABLE cellpadding=3><!-- tsb: <B>PLOT10</B>(3f) yields a one-page printer plot of <B>y</B>(i) versus <B>x</B>(i):
  -->
 <TR></TR><TR></TR>
 <TR valign=top><TD width=4%>
@@ -118,14 +119,14 @@ also being provided by the data analyst.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P>
-the &#146;special plotting character&#146; capability allows the data analyst
+The &#146;special plotting character&#146; capability allows the data analyst
 to incorporate information from a third variable (aside from y and x)
 into the plot.
 <P>
-the plot character used at the i-th plotting position (that is,
+The plot character used at the i-th plotting position (that is,
 at the coordinate (<B>x</B>(i),<B>y</B>(i))) will be
 <BLOCKQUOTE>
-<TABLE cellpadding=3><!-- tsb: the plot character used at the i-th plotting position (that is,
+<TABLE cellpadding=3><!-- tsb: The plot character used at the i-th plotting position (that is,
  -->
 <TR></TR><TR></TR>
 <TR valign=top><TD colspan=2>
@@ -150,47 +151,134 @@ w if <B>char</B>(i) is between 32.5 and 33.5
 x if <B>char</B>(i) is between 33.5 and 34.5
 y if <B>char</B>(i) is between 34.5 and 35.5
 z if <B>char</B>(i) is between 35.5 and 36.5
-x if <B>char</B>(i) is any value outside the range
-<TABLE width=100% cellpadding=3><!-- tsb: 9.5 and 10.5
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>0.5 to</B> </TD><TD valign=bottom>
-36.5.
 </TD></TR>
-<TR></TR></TABLE><!-- .RE -->
+<TR valign=top><TD colspan=2>
+<B>x if </B><B>char</B>(i) is any value outside the range 0.5 to </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+36.5.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P>
-the use of the ymin, ymax, xmin, and xmax specifications allows the
+The use of the ymin, ymax, xmin, and xmax specifications allows the
 data analyst to control fully the plot axis limits, so as, for example,
 to zero-in on an interesting sub-region of a previous plot.
 <P>
-the use of the subset definition vector d gives the data analyst
+The use of the subset definition vector d gives the data analyst
 the capability of plotting subsets of the data, where the subset is
 defined by values in the vector d.
 <P>
-the use of hollerith identifying labels allows the data analyst to
+The use of hollerith identifying labels allows the data analyst to
 automatically have the plots labeled. this is particularly useful
 in a large analysis when many plots are being generated.
+<P>
+Values in the vertical axis vector (Y) which are smaller than YMIN
+or larger than YMAX, or values in the horizontal axis vector (X)
+which are smaller than XMIN or larger than XMAX will not be plotted.
+<P>
+For a given dummy index I, if <B>D</B>(I) is smaller than DMIN or larger than
+DMAX, then the corresponding point (X(I),Y(I)) will not be plotted.
+<P>
+Values in the vertical axis vector (Y), the horizontal axis vector
+(X), or the plot character vector (CHAR) which are equal to or in
+excess of 10.0**10 will not be plotted.
+<P>
+This convention greatly simplifies the problem of plotting when
+some elements in the vector Y (or X, or CHAR) are &#146;missing data&#146;,
+or when we purposely want to ignore certain elements in the vector Y
+(or X, or CHAR) for plotting purposes (that is, we do not want certain
+elements in Y (or X, or CHAR) to be plotted).
+<P>
+to cause specific elements in Y (or X, or CHAR) to be ignored,
+we replace the elements beforehand (by, for example, use of the
+<B>REPLAC</B>(3f) subroutine) by some large value (like, say, 10.0**10)
+and they will subsequently be ignored in the <B>PLOTC</B>(3f) subroutine.
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
+<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>X</B> </TD><TD valign=bottom>
-description of parameter
+<B>Y</B> </TD><TD valign=bottom>
+The vector of (unsorted or sorted) observations to be
+plotted vertically.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+<B>X</B> </TD><TD valign=bottom>
+The vector of (unsorted or sorted) observations to be plotted
+horizontally.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>CHAR</B> </TD><TD valign=bottom>
+The vector of observations which control the value of each
+individual plot character.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>N</B> </TD><TD valign=bottom>
+The integer number of observations in the vector y.
+There is no restriction on the maximum value of n for this
+subroutine.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>YMIN</B> </TD><TD valign=bottom>
+The value of desired minimum for the vertical axis.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>YMAX</B> </TD><TD valign=bottom>
+The value of desired maximum for the vertical axis.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>XMIN</B> </TD><TD valign=bottom>
+The value of desired minimum for the horizontal axis.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>XMAX</B> </TD><TD valign=bottom>
+The value of desired maximum for the horizontal axis.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>D</B> </TD><TD valign=bottom>
+The vector which &#146;defines&#146; the various possible subsets.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>DMIN</B> </TD><TD valign=bottom>
+The value which defines the lower bound (inclusively) of
+The particular subset of interest to be plotted.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>DMAX</B> </TD><TD valign=bottom>
+The value which defines the upper bound (inclusively) of
+The particular subset of interest to be plotted.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>YAXID</B> </TD><TD valign=bottom>
+The hollerith value (at most 6 characters) of the desired
+label for the vertical axis variable.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>XAXID</B> </TD><TD valign=bottom>
+The hollerith value (at most 6 characters) of the desired
+label for the horizontal axis variable.
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B>PLCHID</B> </TD><TD valign=bottom>
+The hollerith value (at most 6 characters) of the desired
+label for the plotting character variable.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
+
+     <H3>OUTPUT</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
+A one-page printer plot of <B>Y</B>(I) versus <B>X</B>(I), with special plot
+characters, with specified axis limits, for only of a specified subset
+of the data, and with specified labels.
+</BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -209,16 +297,17 @@ Sample program:
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=5>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -226,7 +315,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -234,7 +323,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -244,13 +333,14 @@ CC0-1.0
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-FILLIBEN, &#146;STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA&#146;,
-UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
-AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
+Filliben, &#146;Statistical Analysis of Interlab Fatigue Time Data&#146;,
+Unpublished Manuscript (available from Author) Presented at the
+<BR>.Computer-Assisted Data Analysis&#146; session at the National Meeting of the
+American Statistical Association, New York City, December 27-30, 1973.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>plot10 (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 70f99683-7574-4ddf-abde-f74aca51d5e1 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>plot10 (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 610145f0-5b34-4263-99e1-314b4db5cdb1 using man macros.</FONT>
 <br><br><center><img src="images/plot10.gif"></center>
 </div>
 </div>

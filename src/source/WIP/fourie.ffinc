@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file fourie.3m_datapac.man
 NAME
-   fourie(3f) - [M_datapac:STATISTICS] perform a Fourier analysis of a data set
+   fourie(3f) - [M_datapac:ANALYSIS] perform a Fourier analysis of a data set
 
 SYNOPSIS
       SUBROUTINE FOURIE(X,N)

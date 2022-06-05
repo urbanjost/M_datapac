@@ -9,63 +9,113 @@ SYNOPSIS
       & Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
 
 DESCRIPTION
-   plot10(3f) yields a one-page printer plot of y(i) versus x(i):
+   PLOT10(3f) yields a one-page printer plot of y(i) versus x(i):
 
-              1. with special plot characters;
-              2. with the vertical (y) axis min and max
-                 and the horizontal (x) axis min and max
-                 values specified by the data analyst;
-              3. with only those points (x(i),y(i)) plotted
-                 for which the corresponding value of d(i)
-                 is between the specified values of dmin and dmax; and
-              4. with hollerith labels (at most 6 characters)
-                for the vertical axis variable,
-                 the horizontal axis variable, and
-                 the plotting character variable
-                 also being provided by the data analyst.
+    1. with special plot characters;
+    2. with the vertical (y) axis min and max
+       and the horizontal (x) axis min and max
+       values specified by the data analyst;
+    3. with only those points (x(i),y(i)) plotted
+       for which the corresponding value of d(i)
+       is between the specified values of dmin and dmax; and
+    4. with hollerith labels (at most 6 characters)
+       for the vertical axis variable,
+       the horizontal axis variable, and
+       the plotting character variable
+       also being provided by the data analyst.
 
-   the 'special plotting character' capability allows the data analyst
+   The 'special plotting character' capability allows the data analyst
    to incorporate information from a third variable (aside from y and x)
    into the plot.
 
-   the plot character used at the i-th plotting position (that is,
+   The plot character used at the i-th plotting position (that is,
    at the coordinate (x(i),y(i))) will be
 
-              1 if char(i) is between  0.5 and  1.5
-              2 if char(i) is between  1.5 and  2.5
-                .
-               .
-                .
-              9 if char(i) is between  8.5 and  9.5
-              0 if char(i) is between  9.5 and 10.5
-              a if char(i) is between 10.5 and 11.5
-              b if char(i) is between 11.5 and 12.5
-              c if char(i) is between 12.5 and 13.5
-               .
-                .
-                .
-              w if char(i) is between 32.5 and 33.5
-              x if char(i) is between 33.5 and 34.5
-              y if char(i) is between 34.5 and 35.5
-              z if char(i) is between 35.5 and 36.5
-              x if char(i) is any value outside the range
-                                       0.5 to  36.5.
+     1 if char(i) is between  0.5 and  1.5
+     2 if char(i) is between  1.5 and  2.5
+       .
+       .
+       .
+     9 if char(i) is between  8.5 and  9.5
+     0 if char(i) is between  9.5 and 10.5
+     a if char(i) is between 10.5 and 11.5
+     b if char(i) is between 11.5 and 12.5
+     c if char(i) is between 12.5 and 13.5
+       .
+       .
+       .
+     w if char(i) is between 32.5 and 33.5
+     x if char(i) is between 33.5 and 34.5
+     y if char(i) is between 34.5 and 35.5
+     z if char(i) is between 35.5 and 36.5
+     x if char(i) is any value outside the range 0.5 to  36.5.
 
-   the use of the ymin, ymax, xmin, and xmax specifications allows the
+   The use of the ymin, ymax, xmin, and xmax specifications allows the
    data analyst to control fully the plot axis limits, so as, for example,
    to zero-in on an interesting sub-region of a previous plot.
 
-   the use of the subset definition vector d gives the data analyst
+   The use of the subset definition vector d gives the data analyst
    the capability of plotting subsets of the data, where the subset is
    defined by values in the vector d.
 
-   the use of hollerith identifying labels allows the data analyst to
+   The use of hollerith identifying labels allows the data analyst to
    automatically have the plots labeled. this is particularly useful
    in a large analysis when many plots are being generated.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+   Values in the vertical axis vector (Y) which are smaller than YMIN
+   or larger than YMAX, or values in the horizontal axis vector (X)
+   which are smaller than XMIN or larger than XMAX will not be plotted.
+
+   For a given dummy index I, if D(I) is smaller than DMIN or larger than
+   DMAX, then the corresponding point (X(I),Y(I)) will not be plotted.
+
+   Values in the vertical axis vector (Y), the horizontal axis vector
+   (X), or the plot character vector (CHAR) which are equal to or in
+   excess of 10.0**10 will not be plotted.
+
+   This convention greatly simplifies the problem of plotting when
+   some elements in the vector Y (or X, or CHAR) are 'missing data',
+   or when we purposely want to ignore certain elements in the vector Y
+   (or X, or CHAR) for plotting purposes (that is, we do not want certain
+   elements in Y (or X, or CHAR) to be plotted).
+
+   to cause specific elements in Y (or X, or CHAR) to be ignored,
+   we replace the elements beforehand (by, for example, use of the
+   REPLAC(3f) subroutine) by some large value (like, say, 10.0**10)
+   and they will subsequently be ignored in the PLOTC(3f) subroutine.
+
+INPUT ARGUMENTS
+
+   Y       The vector of (unsorted or sorted) observations to be
+           plotted vertically.
+   X       The vector of (unsorted or sorted) observations to be plotted
+           horizontally.
+   CHAR    The vector of observations which control the value of each
+           individual plot character.
+   N       The integer number of observations in the vector y.
+           There is no restriction on the maximum value of n for this
+           subroutine.
+   YMIN    The value of desired minimum for the vertical axis.
+   YMAX    The value of desired maximum for the vertical axis.
+   XMIN    The value of desired minimum for the horizontal axis.
+   XMAX    The value of desired maximum for the horizontal axis.
+   D       The vector which 'defines' the various possible subsets.
+   DMIN    The value which defines the lower bound (inclusively) of
+           The particular subset of interest to be plotted.
+   DMAX    The value which defines the upper bound (inclusively) of
+           The particular subset of interest to be plotted.
+   YAXID   The hollerith value (at most 6 characters) of the desired
+           label for the vertical axis variable.
+   XAXID   The hollerith value (at most 6 characters) of the desired
+           label for the horizontal axis variable.
+   PLCHID  The hollerith value (at most 6 characters) of the desired
+           label for the plotting character variable.
+
+OUTPUT
+
+   A one-page printer plot of Y(I) versus X(I), with special plot
+   characters, with specified axis limits, for only of a specified subset
+   of the data, and with specified labels.
 
 EXAMPLES
   Sample program:
@@ -80,117 +130,46 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
-REFERENCES
-  * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
-    UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
-    'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
-    AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
-$ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
-IMPLICIT NONE
 
-REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
-     &     ratiox , ratioy , X , x25 , x75 , Xaxid , Xmax , xmid ,      &
-     &     Xmin , Y , Yaxid , ylable
-REAL(kind=wp) :: Ymax , Ymin
-INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
-!
-!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE  VECTOR OF
-!                               OBSERVATIONS WHICH CONTROL THE
-!                               VALUE OF EACH INDIVIDUAL PLOT
-!                               CHARACTER.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR Y.
-!                    --YMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!                    --D      = THE  VECTOR
-!                               WHICH 'DEFINES' THE VARIOUS
-!                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE  VALUE
-!                               WHICH DEFINES THE LOWER BOUND
-!                               (INCLUSIVELY) OF THE PARTICULAR
-!                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE  VALUE
-!                               WHICH DEFINES THE UPPER BOUND
-!                               (INCLUSIVELY) OF THE PARTICULAR
-!                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --YAXID  = THE HOLLERITH VALUE
-!                               (AT MOST 6 CHARACTERS)
-!                               OF THE DESIRED LABEL FOR THE
-!                               VERTICAL AXIS VARIABLE.
-!                    --XAXID  = THE HOLLERITH VALUE
-!                               (AT MOST 6 CHARACTERS)
-!                               OF THE DESIRED LABEL FOR THE
-!                               HORIZONTAL AXIS VARIABLE.
-!                    --PLCHID = THE HOLLERITH VALUE
-!                               (AT MOST 6 CHARACTERS)
-!                               OF THE DESIRED LABEL FOR THE
-!                               PLOTTING CHARACTER VARIABLE.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
-!             WITH SPECIAL PLOT CHARACTERS,
-!             WITH SPECIFIED AXIS LIMITS,
-!             FOR ONLY OF A SPECIFIED SUBSET OF THE DATA, AND
-!             WITH SPECIFIED LABELS.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
-!              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
-!              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
-!              WHICH ARE SMALLER THAN XMIN OR LARGER THAN XMAX
-!              WILL NOT BE PLOTTED.
-!            --FOR A GIVEN DUMMY INDEX I,
-!              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
-!              THEN THE CORRESPONDING POINT (X(I),Y(I))
-!              WILL NOT BE PLOTTED.
-!            --VALUES IN THE VERTICAL AXIS VECTOR (Y),
-!              THE HORIZONTAL AXIS VECTOR (X),
-!              OR THE PLOT CHARACTER VECTOR (CHAR) WHICH ARE
-!              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
-!              PLOTTED.
-!              THIS CONVENTION GREATLY SIMPLIFIES THE PROBLEM
-!              OF PLOTTING WHEN SOME ELEMENTS IN THE VECTOR Y
-!              (OR X, OR CHAR) ARE 'MISSING DATA', OR WHEN WE PURPOSELY
-!              WANT TO IGNORE CERTAIN ELEMENTS IN THE VECTOR Y
-!              (OR X, OR CHAR) FOR PLOTTING PURPOSES (THAT IS, WE DO NOT
-!              WANT CERTAIN ELEMENTS IN Y (OR X, OR CHAR) TO BE
-!              PLOTTED).
-!              TO CAUSE SPECIFIC ELEMENTS IN Y (OR X, OR CHAR) TO BE
-!              IGNORED, WE REPLACE THE ELEMENTS BEFOREHAND
-!              (BY, FOR EXAMPLE, USE OF THE   REPLAC   SUBROUTINE)
-!              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
-!              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTC
-!              SUBROUTINE.
+REFERENCES
+  * Filliben, 'Statistical Analysis of Interlab Fatigue Time Data',
+    Unpublished Manuscript (available from Author) Presented at the
+    'Computer-Assisted Data Analysis' session at the National Meeting of the
+    American Statistical Association, New York City, December 27-30, 1973.
+
+$ENDBLOCK
 !     ORIGINAL VERSION--JANUARY   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
 !     UPDATED         --JUNE      1977.
-!
-!---------------------------------------------------------------------
-!
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
+REAL(kind=wp) :: Y(:)
+REAL(kind=wp) :: X(:)
+REAL(kind=wp) :: Char(:)
+INTEGER       :: N
+REAL(kind=wp) :: Ymin, Ymax
+REAL(kind=wp) :: Xmin, Xmax
+REAL(kind=wp) :: D(:)
+REAL(kind=wp) :: Dmin, Dmax
+REAL(kind=wp) :: Yaxid, Xaxid
+REAL(kind=wp) :: Plchid
+
+REAL(kind=wp) :: aim1, cutoff, hold, ratiox, ratioy, x25, x75, xmid, ylable
+INTEGER :: i, iarg, iflag, ip2, j, k, mx, my, n2
 CHARACTER(len=4) :: IGRaph
 CHARACTER(len=4) :: iplotc
 CHARACTER(len=4) :: sbnam1 , sbnam2
@@ -199,36 +178,32 @@ CHARACTER(len=4) :: alph41 , alph42 , alph91 , alph92
 CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
-      DIMENSION Y(:)
-      DIMENSION X(:)
-      DIMENSION D(:)
-      DIMENSION Char(:)
-      DIMENSION ylable(11)
-      DIMENSION iplotc(37)
-      COMMON /BLOCK1/ IGRaph(55,130)
+DIMENSION ylable(11)
+DIMENSION iplotc(37)
+COMMON /BLOCK1/ IGRaph(55,130)
 !
-      DATA sbnam1 , sbnam2/'PLOT' , '10  '/
-      DATA alph11 , alph12/'FIRS' , 'T   '/
-      DATA alph21 , alph22/'SECO' , 'ND  '/
-      DATA alph31 , alph32/'THIR' , 'D   '/
-      DATA alph41 , alph42/'FOUR' , 'TH  '/
-      DATA alph91 , alph92/'FIFT' , 'H   '/
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-      DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
-     &     'N' , '='/
-      DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
-     &     iplotc(6) , iplotc(7) , iplotc(8) , iplotc(9) , iplotc(10) , &
-     &     iplotc(11) , iplotc(12) , iplotc(13) , iplotc(14) ,          &
-     &     iplotc(15) , iplotc(16) , iplotc(17) , iplotc(18) ,          &
-     &     iplotc(19) , iplotc(20) , iplotc(21) , iplotc(22) ,          &
-     &     iplotc(23) , iplotc(24) , iplotc(25) , iplotc(26) ,          &
-     &     iplotc(27) , iplotc(28) , iplotc(29) , iplotc(30) ,          &
-     &     iplotc(31) , iplotc(32) , iplotc(33) , iplotc(34) ,          &
-     &     iplotc(35) , iplotc(36) , iplotc(37)/'1' , '2' , '3' , '4' , &
-     &     '5' , '6' , '7' , '8' , '9' , '0' , 'A' , 'B' , 'C' , 'D' ,  &
-     &     'E' , 'F' , 'G' , 'H' , 'I' , 'J' , 'K' , 'L' , 'M' , 'N' ,  &
-     &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
-     &     'Y' , 'Z' , 'X'/
+DATA sbnam1 , sbnam2/'PLOT' , '10  '/
+DATA alph11 , alph12/'FIRS' , 'T   '/
+DATA alph21 , alph22/'SECO' , 'ND  '/
+DATA alph31 , alph32/'THIR' , 'D   '/
+DATA alph41 , alph42/'FOUR' , 'TH  '/
+DATA alph91 , alph92/'FIFT' , 'H   '/
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' ,  &
+ &     'N' , '='/
+DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
+ &     iplotc(6) , iplotc(7) , iplotc(8) , iplotc(9) , iplotc(10) , &
+ &     iplotc(11) , iplotc(12) , iplotc(13) , iplotc(14) ,          &
+ &     iplotc(15) , iplotc(16) , iplotc(17) , iplotc(18) ,          &
+ &     iplotc(19) , iplotc(20) , iplotc(21) , iplotc(22) ,          &
+ &     iplotc(23) , iplotc(24) , iplotc(25) , iplotc(26) ,          &
+ &     iplotc(27) , iplotc(28) , iplotc(29) , iplotc(30) ,          &
+ &     iplotc(31) , iplotc(32) , iplotc(33) , iplotc(34) ,          &
+ &     iplotc(35) , iplotc(36) , iplotc(37)/'1' , '2' , '3' , '4' , &
+ &     '5' , '6' , '7' , '8' , '9' , '0' , 'A' , 'B' , 'C' , 'D' ,  &
+ &     'E' , 'F' , 'G' , 'H' , 'I' , 'J' , 'K' , 'L' , 'M' , 'N' ,  &
+ &     'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,  &
+ &     'Y' , 'Z' , 'X'/
 !
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
@@ -354,22 +329,19 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 !
  800  n2 = 0
       DO i = 1 , N
-         IF ( Y(i)<cutoff .AND. X(i)<cutoff .AND. Char(i)<cutoff .AND.  &
-     &        D(i)<cutoff ) THEN
+         IF ( Y(i)<cutoff .AND. X(i)<cutoff .AND. Char(i)<cutoff .AND. D(i)<cutoff ) THEN
             IF ( Dmin<D(i) .AND. D(i)<Dmax ) n2 = n2 + 1
             IF ( n2>=2 ) GOTO 900
          ENDIF
       ENDDO
       WRITE (G_IO,99016)
       WRITE (G_IO,99017)
-      WRITE (G_IO,99007) alph11 , alph12 , alph21 , alph22 , alph31 ,    &
-     &                  alph32 , alph91 , alph92
+      WRITE (G_IO,99007) alph11 , alph12 , alph21 , alph22 , alph31 , alph32 , alph91 , alph92
 99007 FORMAT (' ','THE ',A4,A4,', ',A4,A4,', ',A4,A4,', AND ',A4,A4)
       WRITE (G_IO,99008) sbnam1 , sbnam2
 99008 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
       WRITE (G_IO,99009)
-99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
-     &        ' EXCLUDED FROM THE PLOT.')
+99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99010) n2
 99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99016)
@@ -455,8 +427,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
                               my = ratioy*(Y(i)-Ymin) + 0.5_wp
                               my = 43 - my
                               iarg = 37
-                              IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp )     &
-     &                             iarg = Char(i) + 0.5_wp
+                              IF ( 0.5_wp<Char(i) .AND. Char(i)<36.5_wp ) iarg = Char(i) + 0.5_wp
                               IGRaph(my,mx) = iplotc(iarg)
                            ENDIF
                         ENDIF
@@ -476,25 +447,20 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          IF ( iflag/=0 ) WRITE (G_IO,99011) (IGRaph(i,j),j=1,109)
 !
 99011    FORMAT (' ',20X,109A1)
-         IF ( iflag==0 ) WRITE (G_IO,99012) ylable(k) ,                  &
-     &                          (IGRaph(i,j),j=1,109)
+         IF ( iflag==0 ) WRITE (G_IO,99012) ylable(k) , (IGRaph(i,j),j=1,109)
 99012    FORMAT (' ',F20.7,109A1)
       ENDDO
       WRITE (G_IO,99013) Xmin , x25 , xmid , x75 , Xmax
 99013 FORMAT (' ',14X,F20.7,5X,F20.7,5X,F20.7,5X,F20.7,1X,F20.7)
       WRITE (G_IO,99014) Yaxid , Xaxid , Plchid
-99014 FORMAT (' ',9X,A4,A4,' (VERTICAL AXIS) VERSUS ',A4,A4,            &
-     &        ' (HORIZONTAL AXIS) ',20X,'THE PLOTTING CHARACTER IS ',A4,&
-     &        A4)
+99014 FORMAT (' ',9X,A4,A4,' (VERTICAL AXIS) VERSUS ',A4,A4,' (HORIZONTAL AXIS) ',20X,'THE PLOTTING CHARACTER IS ',A4,A4)
       WRITE (G_IO,99015) N
 99015 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I8)
 !
-99016 FORMAT (' ','**************************************************', &
-     &        '********************')
+99016 FORMAT (' ','**********************************************************************')
 99017 FORMAT (' ','                   FATAL ERROR                    ')
 99018 FORMAT (' ','               NON-FATAL DIAGNOSTIC               ')
-99019 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
-     &        ' SUBROUTINE')
+99019 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
 99020 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
 99021 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
 99022 FORMAT (' ','VALUE OF ',E15.8)

@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file weib.3m_datapac.man
 NAME
-   weib(3f) - [M_datapac:STATISTICS] perform a Weibull distribution
+   weib(3f) - [M_datapac:ANALYSIS] perform a Weibull distribution
    analysis (Weibull PPCC analysis)
 
 SYNOPSIS

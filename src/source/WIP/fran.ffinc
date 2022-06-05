@@ -7,16 +7,34 @@ SYNOPSIS
       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
 
 DESCRIPTION
-   fran(3f) generates a random sample of size n from the f distribution
-   with integer degrees of freedom parameters = nu1 and nu2.
+   FRAN(3f) generates a random sample of size n from the F distribution
+   with integer degrees of freedom parameters = NU1 AND NU2.
 
-   this distribution is defined for all non-negative x.
+   This distribution is defined for all non-negative x.
 
-   the probability density function is given in the references below.
+   The probability density function is given in the references below.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   N       The desired integer number of random numbers to be generated.
+
+   NU1     The integer degrees of freedom for the numerator of the F ratio.
+           nu1 should be a positive integer variable.
+
+   NU2     The integer degrees of freedom NU2 should be a positive
+           integer variable for the denominator of the F ratio.
+
+   ISTART  An integer flag code which (if set to 0) will start the
+           generator over and hence produce the same random sample
+           over and over again upon successive calls to this subroutine
+           within a run; or (if set to some integer value not equal to 0,
+           like, say, 1) will allow the generator to continue from where
+           it stopped and hence produce different random samples upon
+           successive calls to this subroutine within a run.
+
+OUTPUT ARGUMENTS
+   x       A vector (of dimension at least N) into which the generated
+           random sample will be placed.
 
 EXAMPLES
   Sample program:
@@ -38,88 +56,40 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
-  * MOOD AND GRABLE, INTRODUCTION TO THE THEORY OF STATISTICS, 1963,
-    PAGES 231-232.
-  * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-    PAGES 75-93.
-  * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-    STUDENTS AND PRACTITIONERS, 1975, PAGE 64.
+  * Mood and Grable, Introduction to the Theory of Statistics, 1963,
+    Pages 231-232.
+  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+    Pages 75-93.
+  * Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, Page 64.
 $ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
-REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
-     &     z
+
+SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
+REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , z
 INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --NU1    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE NUMERATOR OF THE F RATIO.
-!                     --NU2    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE DENOMINATOR OF THE F RATIO.
-!                     --ISTART = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL START THE
-!                                GENERATOR OVER AND HENCE
-!                                PRODUCE THE SAME RANDOM SAMPLE
-!                                OVER AND OVER AGAIN
-!                                UPON SUCCESSIVE CALLS TO
-!                                THIS SUBROUTINE WITHIN A RUN; OR
-!                                (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0,
-!                                LIKE, SAY, 1) WILL ALLOW
-!                                THE GENERATOR TO CONTINUE
-!                                FROM WHERE IT STOPPED
-!                                AND HENCE PRODUCE DIFFERENT
-!                                RANDOM SAMPLES UPON
-!                                SUCCESSIVE CALLS TO
-!                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE F DISTRIBUTION
-!             WITH DEGREES OF FREEDOM
-!             PARAMETERS = NU1 AND NU2.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --NU1 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION y(2) , z(2)
-      DATA pi/3.14159265358979_wp/
+DIMENSION X(:)
+DIMENSION y(2) , z(2)
+DATA pi/3.14159265358979_wp/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE FRAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO FRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99004) N
          RETURN
       ELSEIF ( Nu1<=0 ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FRAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO FRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99004) Nu1
          RETURN
       ELSEIF ( Nu2<=0 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FRAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99003 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO FRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99004) Nu2
          RETURN
       ELSE

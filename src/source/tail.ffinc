@@ -1,53 +1,74 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tail.3m_datapac.man
 NAME
-   tail(3f) - [M_datapac:STATISTICS] performs a symmetric distribution
+   tail(3f) - [M_datapac:ANALYSIS] performs a symmetric distribution
    tail length analysis
 
 SYNOPSIS
       SUBROUTINE TAIL(X,N)
 
+       REAL(kind=wp) :: X(:)
+       INTEGER       :: N
+
 DESCRIPTION
-   tail(3f) performs a symmetric distribution tail length analysis on
-   the data in the input vector x.
+   TAIL(3f) performs a symmetric distribution tail length analysis on
+   the data in the input vector X.
 
-   the analysis consists of the following--
+   The analysis consists of the following--
 
-     1. various test statistics to test
+     1. Various test statistics to test
         the specific hypothesis of normality;
-     2. a uniform probability plot
+     2. A uniform probability plot
         (a short-tailed distribution);
-     3. a normal probability plot
+     3. A normal probability plot
         (a moderate-tailed distribution);
-     4. a tukey lambda = -0.5 probability plot
+     4. A tukey lambda = -0.5 probability plot
         (a moderate-long-tailed distribution);
-     5. a cauchy probability plot
+     5. A cauchy probability plot
         (a long-tailed distribution);
-     6. a determination of the best-fit
+     6. A determination of the best-fit
         symmetric distribution
         to the data set from an
         admissible set consisting of
         43 symmetric distributions.
 
-   the admissible set of symmetric distributions considered includes
+   The admissible set of symmetric distributions considered includes
    the uniform, normal, logistic, double exponential, cauchy, and 37
    distributions drawn from the the tukey lambda distributional family.
 
-   the goodness of fit criterion is the maximum probability plot
+   The goodness of fit criterion is the maximum probability plot
    correlation coefficient criterion.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+
+INPUT ARGUMENTS
+
+   X    The  vector of unsorted or sorted) observations.
+
+   N    The integer number of observations in the vector X.
+        The maximum allowable value of N for this subroutine is 3000.
+OUTPUT
+   6 pages of automatic printout--
+
+     1. various test statistics for normality;
+     2. a uniform probability plot;
+     3. a normal probability plot;
+     4. a tukey lambda = -0.5 probability plot;
+     5. a cauchy probability plot;
+     6. a determination of the best-fit symmetric distribution to the
+        data set.
 
 EXAMPLES
   Sample program:
 
    program demo_tail
-   use M_datapac, only : tail
+   use M_datapac, only : tail, label
    implicit none
-   character(len=*),parameter ::  g='(*(g0,1x))'
-   ! call tail(x,y)
+   real,allocatable :: x(:)
+   integer :: i
+      call label('tail')
+      x=[(real(i)/10.0,i=1,2000)]
+      x=x**3.78-6*x**2.52+9*x**1.26
+      call tail(x,size(x))
    end program demo_tail
 
   Results:
@@ -72,43 +93,23 @@ REFERENCE
     Pages 250-271.
 
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE TAIL(X,N)
-REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
-REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
-REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
-REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS, X
-REAL(kind=wp) :: xbar
-REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
-INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--6 PAGES OF AUTOMATIC PRINTOUT--
-!             1) VARIOUS TEST STATISTICS FOR NORMALITY;
-!             2) A UNIFORM PROBABILITY PLOT;
-!             3) A NORMAL PROBABILITY PLOT;
-!             4) A TUKEY LAMBDA = -0.5 PROBABILITY PLOT;
-!             5) A CAUCHY PROBABILITY PLOT;
-!             6) A DETERMINATION OF THE BEST-FIT
-!                SYMMETRIC DISTRIBUTION
-!                TO THE DATA SET.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 3000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG, LOG10, EXP,
-!                                         SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE TAIL(X,N)
+REAL(kind=wp) :: X(:)
+INTEGER       :: N
+
+REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
+REAL(kind=wp) :: coefi, constn, corr, corrmx, cox1xn, dd, del, eandev, eb1, eb2, ecc, ee, egeary, ei, er, ers, ersq, erssq, es, essq
+REAL(kind=wp) :: ewilks, ex1, ex1xn, exn, exnsq, g, gamma, geary, hold, P, p1, pi, picons, pn, ppfnor, PTEnth, q, rp1, rpn, rs
+REAL(kind=wp) :: s, sdb1, sdb2, sdcc, sdgear, sdrs, sdwilk, sfp1, sfpn, sum, sum1, sum2, sum3, sum4, varrs, varxn, wilksh, WS
+REAL(kind=wp) :: xbar
+REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
+INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, irev, iupper, mx, nhalf, nhalfp, nm1, numdis
 CHARACTER(len=4) :: iflag1
 CHARACTER(len=4) :: iflag2
 CHARACTER(len=4) :: iflag3
@@ -122,23 +123,22 @@ CHARACTER(len=4) :: hyphen
 CHARACTER(len=4) :: alphai
 CHARACTER(len=4) :: alphax
 !
-      DIMENSION X(:)
-      DIMENSION Y(3000) , Z(3000) , YM(3000)
-      DIMENSION P(3000) , PTEnth(3000)
-      DIMENSION corr(50) , iflag1(50) , iflag2(50) , iflag3(50)
-      DIMENSION iline1(130) , iline2(130)
-      DIMENSION xline(13)
-      COMMON /BLOCK2_${KIND}/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (Z(1),WS(3001))
-      EQUIVALENCE (YM(1),WS(6001))
-      EQUIVALENCE (P(1),WS(9001))
-      EQUIVALENCE (PTEnth(1),WS(12001))
+DIMENSION Y(3000) , Z(3000) , YM(3000)
+DIMENSION P(3000) , PTEnth(3000)
+DIMENSION corr(50) , iflag1(50) , iflag2(50) , iflag3(50)
+DIMENSION iline1(130) , iline2(130)
+DIMENSION xline(13)
+COMMON /BLOCK2_${KIND}/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (Z(1),WS(3001))
+EQUIVALENCE (YM(1),WS(6001))
+EQUIVALENCE (P(1),WS(9001))
+EQUIVALENCE (PTEnth(1),WS(12001))
 !
-      DATA alpham , alphaa/'M' , 'A'/
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
-      DATA picons/3.14159265358979_wp/
-      DATA constn/.3989422804_wp/
+DATA alpham , alphaa/'M' , 'A'/
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+DATA picons/3.14159265358979_wp/
+DATA constn/.3989422804_wp/
 !
       iupper = 3000
 !

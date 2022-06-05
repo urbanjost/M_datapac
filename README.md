@@ -104,24 +104,24 @@ The following subroutines are available in M_datapac:
   * [SPCORR](src/source/WIP/spcorr.ffinc)  - compute the sample Spearman rank correlation coefficient between two vectors of observations
   * [STMOM3](src/source/WIP/stmom3.ffinc)  - compute the third central moment (i.e., the skewness) of a vector of observations
   * [STMOM4](src/source/WIP/stmom4.ffinc)  - compute the fourth central moment (i.e., the kurtosis) of a vector of observations
-  * [TAIL](src/source/WIP/tail.ffinc)      - performs a symmetric distribution tail length analysis
+  * [TAIL](src/source/tail.ffinc)      - performs a symmetric distribution tail length analysis
   * [TOL](src/source/WIP/tol.ffinc)        - compute normal and distribution-free tolerance limits
   * [TRIM](src/source/WIP/trim.ffinc)      - computes the sample trimmed mean of the data in the input vector X.
   * [UNIMED](src/source/WIP/unimed.ffinc)  - generate the /N/ order statistic medians (used in creating probability plots)
   * [VAR](src/source/var.ffinc)        - compute the sample variance of a vector of observations
   * [WEIB](src/source/WIP/weib.ffinc)      - perform a Weibull distribution analysis (Weibull PPCC analysis)
   * [WIND](src/source/WIP/wind.ffinc)      - compute the sample Winsorized mean of a vector of observations
-## 
-  * [REPLAC](src/source/WIP/replac.ffinc)  - replace all observations in a vector within a given interval with a user-specified constant
-  * [RETAIN](src/source/WIP/retain.ffinc)  - retain all observations in a vector within a user-specified interval
-  * [SUBSE1](src/source/WIP/subse1.ffinc)  - extract the elements of a vector which fall into a user-specified subset (one subset variable)
-  * [SUBSE2](src/source/WIP/subse2.ffinc)  - extract the elements of a vector which fall into a user-specified subset (two subset variables)
-  * [SUBSET](src/source/WIP/subset.ffinc)  - extract the elements of a vector which fall into a user-specified subset (one subset variable)
+##
 ## now available in modern Fortran
   * [MAX](src/source/max.ffinc)        - compute the maximum of a data vector (see Fortran intrinsic MAXVAL(3f))
   * [MIN](src/source/min.ffinc)        - compute the minimum of a data vector (see Fortran intrinsic MINVAL(3f))
   * [DOT](src/source/dot.ffinc)        - compute the dot product of two equal-sized vectors (see Fortran intrinsic DOT_PRODUCT(3f))
   * [MOVE](src/source/move.ffinc)      - move selected elements of one vector into another vector
+  * [REPLAC](src/source/WIP/replac.ffinc)  - replace all observations in a vector within a given interval with a user-specified constant
+  * [RETAIN](src/source/WIP/retain.ffinc)  - retain all observations in a vector within a user-specified interval
+  * [SUBSE1](src/source/WIP/subse1.ffinc)  - extract the elements of a vector which fall into a user-specified subset (one subset variable)
+  * [SUBSE2](src/source/WIP/subse2.ffinc)  - extract the elements of a vector which fall into a user-specified subset (two subset variables)
+  * [SUBSET](src/source/WIP/subset.ffinc)  - extract the elements of a vector which fall into a user-specified subset (one subset variable)
 ## sort
   * [RANK](src/source/WIP/rank.ffinc)      - rank a vector of sample observations
   * [SORTC](src/source/sortc.ffinc)    - sort a vector of sample observations and "carry" a second vector
@@ -208,39 +208,41 @@ The following subroutines are available in M_datapac:
   * [LAMPLT](src/source/WIP/lamplt.ffinc)  - generate a Tukey-Lambda probability plot (line printer graph)
   * [LGNPLT](src/source/WIP/lgnplt.ffinc)  - generate a lognormal probability plot (line printer graph)
   * [LOGPLT](src/source/WIP/logplt.ffinc)  - generate a logistic probability plot (line printer graph)
-  * [NOROUT](src/source/WIP/norout.ffinc)  - Performs a normal outlier analysis on the data in the input vector X.
   * [NORPLT](src/source/WIP/norplt.ffinc)  - generate a normal probability plot (line printer graph)
   * [PARPLT](src/source/WIP/parplt.ffinc)  - generate a Pareto probability plot (line printer graph)
+  * [PLOTCO](src/source/WIP/plotco.ffinc)  - generate a line printer autocorrelation plot
+  * [PLOTSP](src/source/WIP/plotsp.ffinc)  - generate a line printer spectrum plot
+  * [PLOTX](src/source/WIP/plotx.ffinc)    - generate a line printer run sequence plot
+  * [PLOTXT](src/source/WIP/plotxt.ffinc)  - generate a line printer run sequence plot for the terminal (71 characters wide)
+  * [PLOTXX](src/source/WIP/plotxx.ffinc)  - generate a line printer lag plot
+  * [PLTXXT](src/source/WIP/pltxxt.ffinc)  - generate a line printer lag plot for the terminal (71 characters wide)
+  * [POIPLT](src/source/WIP/poiplt.ffinc)  - generate a Poisson probability plot (line printer graph)
+  * [TPLT](src/source/WIP/tplt.ffinc)      - generate a /t/ probability plot (line printer graph)
+  * [UNIPLT](src/source/WIP/uniplt.ffinc)  - generate a Uniform probability plot (line printer graph)
+  * [WEIPLT](src/source/WIP/weiplt.ffinc)  - generate a Weibull probability plot (line printer graph)
+## line printer analysis
+  * [NOROUT](src/source/WIP/norout.ffinc)  - Performs a normal outlier analysis on the data in the input vector X.
+  * [TIME](src/source/WIP/time.ffinc)      - perform a time series analysis (autocorrelation plot, a test for white noise, a "pilot" spectrum, and 4 other estimated spectra based on differing bandwidth)
+## generic line printer plots
+  * [PLOT](src/source/WIP/plot.ffinc)      - yields a one-page printer plot of y(i) versus x(i)
+  * [PLOTS](src/source/WIP/plots.ffinc)    - generate a line printer plot of Y vs X
+  * [PLTSCT](src/source/WIP/pltsct.ffinc)  - generate a line printer plot with special plot characters for the terminal (71 characters wide)
+  * [PLOTST](src/source/WIP/plotst.ffinc)  - generate a line printer plot of Y vs X for the terminal (71 characters wide)
+  * [PLOTT](src/source/plott.ffinc)    - generate a line printer plot of Y vs X for the terminal (71 characters wide)
   * [PLOT6](src/source/WIP/plot6.ffinc)    - generate a line printer plot
   * [PLOT7](src/source/WIP/plot7.ffinc)    - generate a line printer plot with special plot characters
   * [PLOT8](src/source/WIP/plot8.ffinc)    - generate a line printer plot with special plot characters
   * [PLOT9](src/source/WIP/plot9.ffinc)    - generate a line printer plot with special plot characters
   * [PLOT10](src/source/WIP/plot10.ffinc)  - generate a line printer plot with special plot characters
-  * [PLOTCO](src/source/WIP/plotco.ffinc)  - generate a line printer autocorrelation plot
   * [PLOTC](src/source/WIP/plotc.ffinc)    - generate a line printer plot with special plot characters
   * [PLOTCT](src/source/WIP/plotct.ffinc)  - generate a line printer plot for the terminal (71 characters wide)
   * [PLOTSC](src/source/WIP/plotsc.ffinc)  - generate a line printer plot with special plot characters
-  * [PLOTSP](src/source/WIP/plotsp.ffinc)  - generate a line printer spectrum plot
-  * [PLOT](src/source/WIP/plot.ffinc)      - yields a one-page printer plot of y(i) versus x(i)
-  * [PLOTS](src/source/WIP/plots.ffinc)    - generate a line printer plot of Y vs X
-  * [PLOTST](src/source/WIP/plotst.ffinc)  - generate a line printer plot of Y vs X for the terminal (71 characters wide)
-  * [PLOTT](src/source/plott.ffinc)    - generate a line printer plot of Y vs X for the terminal (71 characters wide)
   * [PLOTU](src/source/WIP/plotu.ffinc)    - generate a line printer 4-plot
-  * [PLOTX](src/source/WIP/plotx.ffinc)    - generate a line printer run sequence plot
-  * [PLOTXT](src/source/WIP/plotxt.ffinc)  - generate a line printer run sequence plot for the terminal (71 characters wide)
-  * [PLOTXX](src/source/WIP/plotxx.ffinc)  - generate a line printer lag plot
-  * [PLTSCT](src/source/WIP/pltsct.ffinc)  - generate a line printer plot with special plot characters for the terminal (71 characters wide)
-  * [PLTXXT](src/source/WIP/pltxxt.ffinc)  - generate a line printer lag plot for the terminal (71 characters wide)
-  * [POIPLT](src/source/WIP/poiplt.ffinc)  - generate a Poisson probability plot (line printer graph)
-  * [TIME](src/source/WIP/time.ffinc)      - perform a time series analysis (autocorrelation plot, a test for white noise, a "pilot" spectrum, and 4 other estimated spectra based on differing bandwidth)
-  * [TPLT](src/source/WIP/tplt.ffinc)      - generate a /t/ probability plot (line printer graph)
-  * [UNIPLT](src/source/WIP/uniplt.ffinc)  - generate a Uniform probability plot (line printer graph)
-  * [WEIPLT](src/source/WIP/weiplt.ffinc)  - generate a Weibull probability plot (line printer graph)
 ------------------------------------------------------------------------
 
 ## Documentation   ![docs](docs/images/docs.gif)
 
-### User (**UNDER CONSTRUCTION**)
+### User
    - a simple index to the man-pages in HTML form for the
    [routines](https://urbanjost.github.io/M_datapac/man3.html)
    and [programs](https://urbanjost.github.io/M_datapac/man1.html)
@@ -251,13 +253,13 @@ The following subroutines are available in M_datapac:
 
    - ![man-pages](docs/images/manpages.gif)
      There are man-pages in the repository download in the docs/ directory
-     that may be installed on ULS (Unix-Like Systems) 
+     that may be installed on ULS (Unix-Like Systems)
       + [manpages.zip](https://urbanjost.github.io/M_datapac/manpages.zip)
       + [manpages.tgz](https://urbanjost.github.io/M_datapac/manpages.tgz)
 
    - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
-### Developer(**UNDER CONSTRUCTION**)
+### Developer
    - [ford(1) output](https://urbanjost.github.io/M_datapac/fpm-ford/index.html).
    - [doxygen(1) output](https://urbanjost.github.io/M_datapac/doxygen_out/html/index.html).
    - [github action status](docs/STATUS.md)

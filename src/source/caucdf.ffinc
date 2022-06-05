@@ -34,10 +34,11 @@ EXAMPLES
 
    program demo_caucdf
    !@(#) line plotter graph of cumulative distribution function
-   use M_datapac, only : caucdf, plott
+   use M_datapac, only : caucdf, plott, label
    implicit none
    real,allocatable  :: x(:), y(:)
    integer           :: i
+      call label('caucdf')
       x=[(real(i),i=-100,100,1)]
       if(allocated(y))deallocate(y)
       allocate(y(size(x)))
