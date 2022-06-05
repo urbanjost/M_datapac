@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
 
-   delete(3f) deletes all observations in the single precision vector
+   delete(3f) deletes all observations in the precision precision vector
    x which are inside the closed (inclusive) interval defined by xmin
    and xmax, while retaining all observations outside of this interval.
 
@@ -52,15 +52,15 @@ SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE DELETED.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE DELETED.
@@ -69,7 +69,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !                                OF THE OBSERVATIONS INSIDE
 !                                (INCLUSIVELY) THE INTERVAL
 !                                OF INTEREST HAVE BEEN DELETED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             IN WHICH ALL THOSE VALUES INSIDE
 !             (INCLUSIVELY) THE INTERVAL OF INTEREST
 !             HAVE BEEN DELETED, AND
@@ -85,7 +85,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
 !              MADE WHATEVER DELETIONS ARE APPROPRIATE,
 !              THE OUTPUT VECTOR X WILL BE 'PACKED';

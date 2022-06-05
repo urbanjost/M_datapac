@@ -60,7 +60,7 @@ INTEGER :: i , ip1 , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -72,7 +72,7 @@ INTEGER :: i , ip1 , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     METHOD--BOX-MULLER ALGORITHM.
 !     VERSION NUMBER--82.6

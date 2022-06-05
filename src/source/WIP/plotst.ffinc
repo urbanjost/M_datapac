@@ -21,22 +21,22 @@ DESCRIPTION
    the capability of plotting subsets of the data, where the subset is
    defined by values in the vector d.
 
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.

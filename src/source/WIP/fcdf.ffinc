@@ -60,7 +60,7 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
@@ -70,9 +70,9 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 !                     --NU2    = THE INTEGER DEGREES OF FREEDOM
 !                                FOR THE DENOMINATOR OF THE F RATIO.
 !                                NU2 SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE F DISTRIBUTION
 !             WITH DEGREES OF FREEDOM
 !             PARAMETERS = NU1 AND NU2.

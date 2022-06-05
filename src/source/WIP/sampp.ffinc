@@ -53,11 +53,11 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
 INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P      = THE SINGLE PRECISION FRACTION VALUE
+!                     --P      = THE  FRACTION VALUE
 !                                (BETWEEN 0.0 AND 1.0, EXCLUSIVELY)
 !                                WHICH DEFINES THE DESIRED PERCENT
 !                                POINT TO BE COMPUTED.
@@ -72,9 +72,9 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !                                THE PRINTING OF THE
 !                                SAMPLE 100P PERCENT POINT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--PP     = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--PP     = THE  VALUE OF THE
 !                                COMPUTED SAMPLE 100P PERCENT POINT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE 100P PERCENT POINT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -92,7 +92,7 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !                   BE PRINTED OUT AND PP WILL BE SET TO -999999999.0
 !                   IF(N+1)P IS LARGER THAN N, AN ERROR MESSAGE WILL
 !                   BE PRINTED OUT AND PP WILL BE SET TO 999999999.0.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

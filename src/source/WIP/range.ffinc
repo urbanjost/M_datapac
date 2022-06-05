@@ -48,7 +48,7 @@ SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 INTEGER :: i , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -63,16 +63,16 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE RANGE
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XRANGE = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XRANGE = THE  VALUE OF THE
 !                                COMPUTED SAMPLE RANGE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE RANGE.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JUNE      1974.
 !     UPDATED         --APRIL     1975.

@@ -59,10 +59,10 @@ INTEGER :: i , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -74,7 +74,7 @@ INTEGER :: i , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.

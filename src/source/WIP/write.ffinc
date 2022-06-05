@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
 
-   WRITE(3f) writes out the contents of the single precision vector X
+   WRITE(3f) writes out the contents of the precision precision vector X
    in an orderly and neat fashion.
 
    WRITE(3f) gives the data analyst the ability to get data out of the
@@ -17,7 +17,7 @@ DESCRIPTION
 
 INPUT ARGUMENTS
 
-   X       The single precision vector of
+   X       The precision precision vector of
            observations to be printed out.
 
    N       the integer number of observations

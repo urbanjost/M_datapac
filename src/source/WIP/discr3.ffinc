@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE DISCR3(X,N,Numcla,Y)
 
 DESCRIPTION
-   discr3(3f) 'discretizes' the data on the single precision vector x
+   discr3(3f) 'discretizes' the data on the precision precision vector x
    into numcla classes.
 
    all values in the vector x within a given class will be mapped into
@@ -68,19 +68,19 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
      &     xmin , Y
 INTEGER i , icount , ip , iupncl , N , Numcla
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
 !                     --NUMLEV = THE INTEGER NUMBER OF CLASSES
 !                                DESIRED IN THE DISCRETIZATION.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                                DISCRETIZED VALUES CORRESPONDING TO
 !                                THE CONTINUOUS VALUES IN THE VECTOR X.
 !                                THERE WILL RESULT N SUCH DISCRETIZED
 !                                VALUES.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH CONTAINS N DISCRETIZED VALUES
 !             CORRESPONDING TO THE N
 !             CONTINUOUS VALUES IN THE
@@ -96,7 +96,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NUMCLA SHOULD BE POSITIVE AND NOT EXCEED 1000
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THIS SUBROUTINE DIFFERS FROM THE DISCR2
 !              SUBROUTINE INASMUCH AS THIS SUBROUTINE
 !              PERFORMS ITS DISCRETIZATION BY OUTPUTING

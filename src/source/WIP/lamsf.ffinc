@@ -63,15 +63,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       SUBROUTINE LAMSF(P,Alamba,Sf)
 REAL(kind=wp) :: Alamba , P , Sf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE 
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF FOR THE TUKEY LAMBDA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -79,7 +79,7 @@ REAL(kind=wp) :: Alamba , P , Sf
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

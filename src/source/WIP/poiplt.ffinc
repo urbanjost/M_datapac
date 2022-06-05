@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE POIPLT(X,N,Alamba)
 
 DESCRIPTION
-   poiplt(3f) generates a poisson probability plot (with single precision
+   poiplt(3f) generates a poisson probability plot (with precision precision
    tail length parameter = alamba).
 
    the prototype poisson distribution used herein has mean = alamba and
@@ -88,11 +88,11 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
      &        jm1 , k , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF THE
+!                     --ALAMBA = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE POISSON PROBABILITY PLOT.
@@ -103,7 +103,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT,
 !                                         CHSCDF, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOR LARGE VALUES OF ALAMBA (IN EXCESS OF 500.)
 !              THIS SUBROUTINE USES THE NORMAL APPROXIMATION TO
 !              THE POISSON.  THIS IS DONE TO SAVE EXECUTION TIME

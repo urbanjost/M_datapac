@@ -60,16 +60,16 @@ SUBROUTINE CHSCDF(X,Nu,Cdf)
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE CHI-SQUARED DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.

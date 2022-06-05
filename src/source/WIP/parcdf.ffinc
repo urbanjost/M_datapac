@@ -10,7 +10,7 @@ SYNOPSIS
 DESCRIPTION
 
    parcdf(3f) computes the cumulative distribution function value for
-   the pareto distribution with single precision tail length parameter
+   the pareto distribution with precision precision tail length parameter
    = gamma.
 
    the pareto distribution used herein is defined for all x greater than
@@ -56,24 +56,24 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE PARCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE GREATER THAN
 !                                OR EQUAL TO 1.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE PARETO
 !             DISTRIBUTION WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE GREATER THAN
 !                   OR EQUAL TO 1.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS

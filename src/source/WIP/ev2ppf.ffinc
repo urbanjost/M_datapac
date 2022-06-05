@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
    ev2ppf(3f) computes the percent point function value for the extreme
-   value type 2 distribution with single precision tail length parameter
+   value type 2 distribution with precision precision tail length parameter
    = gamma.
 
    the extreme value type 2 distribution used herein is defined for all
@@ -54,17 +54,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE EV2PPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE EXTREME VALUE TYPE 2 DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -72,7 +72,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------

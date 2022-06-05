@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
    poicdf(3f) computes the cumulative distribution function value at
-   the single precision value x for the poisson distribution with single
+   the precision precision value x for the poisson distribution with precision
    precision tail length parameter = alamba.
 
    the poisson distribution used herein has mean = alamba and standard
@@ -77,17 +77,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 INTEGER :: i , ievodd , imax , imin , intx , nu
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
 !                                INTEGRAL-VALUED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE
+!                     --ALAMBA = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE POISSON DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
@@ -97,7 +97,7 @@ INTEGER :: i , ievodd , imax , imin , intx , nu
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     COMMENT--THE SINGLE PRECISION TAIL LENGTH
+!     COMMENT--THE  TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
 !              ALAMBA CAN BE SET TO ANY POSITIVE REAL
@@ -115,7 +115,7 @@ INTEGER :: i , ievodd , imax , imin , intx , nu
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND

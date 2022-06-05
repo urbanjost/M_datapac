@@ -16,11 +16,11 @@ DESCRIPTION
    AUTOCO(3f) computes the sample autocorrelation coefficient of the
    data in the input vector X. The sample autocorrelation coefficient
    equals the correlation between X(I) and X(I+1) over the entire sample.
-   The autocorrelation coefficient coefficient will be a single precision
+   The autocorrelation coefficient coefficient will be a precision precision
    value between -1.0 and 1.0 (inclusively).
 
 INPUT ARGUMENTS
-   X        The single precision vector of (unsorted) observations.
+   X        The precision precision vector of (unsorted) observations.
    N        The integer number of observations in the vector x.
    IWRITE   An integer flag code which (if set to 0) will suppress
             the printing of the sample autocorrelation coefficient
@@ -30,8 +30,8 @@ INPUT ARGUMENTS
 
 OUTPUT ARGUMENTS
 
-   XAUTOC   The single precision value of the computed sample autocorrelation coefficient.
-            This single precision value will be between -1.0 and 1.0 (inclusively).
+   XAUTOC   The precision precision value of the computed sample autocorrelation coefficient.
+            This precision precision value will be between -1.0 and 1.0 (inclusively).
 
 EXAMPLES
   Sample program:

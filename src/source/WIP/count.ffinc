@@ -51,15 +51,15 @@ SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 INTEGER i , isum , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
@@ -74,16 +74,16 @@ INTEGER i , isum , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE COUNT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XCOUNT = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XCOUNT = THE  VALUE OF THE
 !                                COMPUTED SAMPLE COUNT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE COUNT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--FEBRUARY  1976.
 !
 !---------------------------------------------------------------------

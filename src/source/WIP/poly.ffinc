@@ -8,8 +8,8 @@ SYNOPSIS
 
 DESCRIPTION
    poly(3f) computes a least squares polynomial fit (of degree = ideg)
-   of the response variable data in the single precision vector y as
-   a function of the independent variable data in the single precision
+   of the response variable data in the precision precision vector y as
+   a function of the independent variable data in the precision precision
    vector x.
 
 OPTIONS
@@ -55,12 +55,12 @@ INTEGER :: iset , ism1 , iwflag , Iwrite , j , jm1 , jp1 , js ,      &
      &        nkmax
 INTEGER :: nm5 , nmax , numset
 !
-!     INPUT ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      =  VECTOR OF
 !                                RESPONSE DATA (THAT IS, THE
 !                                DEPENDENT VARIABLE).
-!                     --X      = SINGLE PRECISION VECTOR OF
+!                     --X      =  VECTOR OF
 !                                THE INDEPENDENT VARIABLE.
-!                     --W      = THE SINGLE PRECISION VECTOR
+!                     --W      = THE  VECTOR
 !                                OF WEIGHTS FOR THE RESPONSE
 !                                VARIABLE.
 !                     --N      = THE INTEGER VALUE OF THE SAMPLE SIZE.
@@ -73,9 +73,9 @@ INTEGER :: nm5 , nmax , numset
 !                                SOME LIMITED PRINTED OUTPUT
 !                                (COEFFICIENTS, STANDARD DEVIATIONS OF
 !                                COEFFICIENTS, RESIDUAL STANDARD DEVIATION).
-!     OUTPUT ARGUMENTS--B      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--B      = THE  VECTOR OF
 !                                ESTIMATED REGRESSION COEFFICIENTS.
-!                     --SDB    = THE SINGLE PRECISION VECTOR OF
+!                     --SDB    = THE  VECTOR OF
 !                                ESTIMATED STANDARD DEVIATIONS OF THE
 !                                ESTIMATED REGRESSION COEFFICIENTS.
 !                     --S      = THE ESTIMATED RESIDUAL STANDARD
@@ -86,10 +86,10 @@ INTEGER :: nm5 , nmax , numset
 !                                NUMBER OF OBSERVATIONS MINUS
 !                                NUMBER OF PARAMETERS =
 !                                N - (IDEG + 1).
-!                     --PRED   = THE SINGLE PRECISION VECTOR OF
+!                     --PRED   = THE  VECTOR OF
 !                                PREDICTED VALUES FROM THE
 !                                LEAST SQUARES FIT.
-!                     --RES    = THE SINGLE PRECISION VECTOR OF
+!                     --RES    = THE  VECTOR OF
 !                                RESIDUALS FROM THE LEAST SQUARES FIT.
 !     SUBROUTINES NEEDED--DECOMP, INVXWX, DOT, FCDF.
 !     ORIGINAL VERSION--MARCH     1974

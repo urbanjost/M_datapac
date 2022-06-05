@@ -65,7 +65,7 @@ SUBROUTINE CHSPPF(P,Nu,Ppf)
 REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 INTEGER icount , iloop , j , maxit , Nu
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -73,9 +73,9 @@ INTEGER icount , iloop , j , maxit , Nu
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE CHI-SQUARED DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.

@@ -60,7 +60,7 @@ INTEGER :: i , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -72,7 +72,7 @@ INTEGER :: i , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.

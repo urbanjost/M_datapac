@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
    ev2cdf(3f) computes the cumulative distribution function value for
-   the extreme value type 2 distribution with single precision tail
+   the extreme value type 2 distribution with precision precision tail
    length parameter = gamma.
 
    the extreme value type 2 distribution used herein is defined for all
@@ -50,23 +50,23 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE EV2CDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE EXTREME VALUE TYPE 2
 !             DISTRIBUTION WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE NON-NEGATIVE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------

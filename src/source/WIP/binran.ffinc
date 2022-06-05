@@ -25,7 +25,7 @@ DESCRIPTION
 
    the binomial distribution is the distribution of the number of
    successes in npar bernoulli (0,1) trials where the probability of
-   success in a single trial = p.
+   success in a precision trial = p.
 
 OPTIONS
 INPUT ARGUMENTS

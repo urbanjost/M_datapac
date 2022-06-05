@@ -33,7 +33,7 @@ INPUT ARGUMENTS
 
   Y   The vector of (unsorted or sorted) observations to be plotted
       vertically.
-  X   The single precision vector of (unsorted or sorted) observations
+  X   The precision precision vector of (unsorted or sorted) observations
       to be plotted horizontally.
   N   The integer number of observations in the vector Y.
       There is no restriction on the maximum value of N for this
@@ -102,7 +102,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99012)
          WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-         99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+         99001    FORMAT (' ','is non-negative (with value = ',I0,')')
          WRITE (G_IO,99011)
          RETURN
       ELSE
@@ -111,7 +111,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             WRITE (G_IO,99012)
             WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
             WRITE (G_IO,99002) N
-            99002       FORMAT (' ','HAS THE VALUE 1')
+            99002       FORMAT (' ','has the value 1')
             WRITE (G_IO,99011)
             RETURN
          ELSE
@@ -174,13 +174,13 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       WRITE (G_IO,99011)
       WRITE (G_IO,99012)
       WRITE (G_IO,99003) alph11 , alph12 , alph21 , alph22
-      99003 FORMAT (' ','THE ',A4,A4,', AND ',A4,A4)
+      99003 FORMAT (' ','The ',A4,A4,', and ',A4,A4)
       WRITE (G_IO,99004) sbnam1 , sbnam2
-      99004 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
+      99004 FORMAT (' ','input arguments to the ',A4,A4,' subroutine')
       WRITE (G_IO,99005)
-      99005 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN', ' EXCLUDED FROM THE PLOT.')
+      99005 FORMAT (' ','are such that too many points have been', ' excluded from the plot.')
       WRITE (G_IO,99006) n2
-      99006 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+      99006 FORMAT (' ','only ',I0,' points are left to be plotted.')
       WRITE (G_IO,99011)
       RETURN
 !
@@ -210,7 +210,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       99007 FORMAT (' ')
       WRITE (G_IO,99008)
 !
-      99008 FORMAT (' THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZONTALLY)')
+      99008 FORMAT (' The following is a plot of Y(I) (vertically) versus X(I) (horizontally)')
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
@@ -300,10 +300,10 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 
 99011 FORMAT (' ','**********************************************************************')
 99012 FORMAT (' ','                   FATAL ERROR                    ')
-99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
-99014 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
-99015 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
-99016 FORMAT (' ','VALUE OF ',E15.8)
+99013 FORMAT (' ','The ',A4,A4,' input argument to the ',A4,A4,' subroutine')
+99014 FORMAT (' ','has all elements = ',E15.8)
+99015 FORMAT (' ','has all elements in excess of the cutoff')
+99016 FORMAT (' ','value of ',E15.8)
 99017 FORMAT (' ',18X,54A1)
 99018 FORMAT (' ',15X,A1)
 

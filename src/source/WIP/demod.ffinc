@@ -65,11 +65,11 @@ REAL(kind=wp) :: ai, aiflag, aimax2, alen1, alen2, an, del, F, fest, fmin, hold,
 REAL(kind=wp) :: Z, zmax, zmin, znew
 INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iupper, j, lenma1, lenma2, N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!                      F      = THE SINGLE PRECISION
+!                      F      = THE 
 !                               DEMODULATION FREQUENCY.
 !                               F IS IN UNITS OF CYCLES PER DATA POINT.
 !                               F IS BETWEEN 0.0 AND 0.5 (EXCLUSIVELY).
@@ -88,7 +88,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 !                   SMALLER THAN 0.5.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTX.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IN ORDER THAT THE RESULTS OF THE COMPLEX DEMODULATION
 !              BE VALID AND PROPERLY INTERPRETED, THE INPUT DATA
 !              IN X SHOULD BE EQUI-SPACED IN TIME

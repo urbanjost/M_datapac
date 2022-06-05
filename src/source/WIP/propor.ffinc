@@ -12,7 +12,7 @@ DESCRIPTION
 
    the sample proportion = (the number of observations in the sample
    between xmin and xmax, inclusively) / n. The sample proportion will
-   be a single precision value between 0.0 and 1.0 (inclusively).
+   be a precision precision value between 0.0 and 1.0 (inclusively).
 
 OPTIONS
     X   description of parameter
@@ -49,15 +49,15 @@ SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 INTEGER :: i , isum , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
@@ -72,18 +72,18 @@ INTEGER :: i , isum , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE PROPORTION
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XPROP  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XPROP  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE PROPORTION.
 !                                THIS WILL BE A VALUE BETWEEN
 !                                0.0 AND 1.0 (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE PROPORTION.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

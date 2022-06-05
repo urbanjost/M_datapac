@@ -20,7 +20,7 @@ DESCRIPTION
 
    the geometric distribution is the distribution of the number of
    failures before obtaining 1 success in an indefinite sequence of
-   bernoulli (0,1) trials where the probability of success in a single
+   bernoulli (0,1) trials where the probability of success in a precision
    trial = p.
 
    as used herein, a probability plot for a distribution is a plot
@@ -82,11 +82,11 @@ REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
@@ -101,7 +101,7 @@ INTEGER i , iupper , N
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT, GEOPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1976.

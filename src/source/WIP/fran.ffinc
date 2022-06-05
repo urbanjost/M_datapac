@@ -77,7 +77,7 @@ INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !                                RANDOM SAMPLES UPON
 !                                SUCCESSIVE CALLS TO
 !                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -92,7 +92,7 @@ INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------

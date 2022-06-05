@@ -22,7 +22,7 @@ DESCRIPTION
    of a data set.
 
 INPUT ARGUMENTS
-   X  The single precision vector of (unsorted or sorted) observations.
+   X  The precision precision vector of (unsorted or sorted) observations.
 
    N  The integer number of observations in the vector x.
 

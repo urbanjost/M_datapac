@@ -14,10 +14,10 @@ SYNOPSIS
 
 DESCRIPTION
 
-  SORTP(3f) sorts (in ascending order) the N elements of the single
-  precision vector X, puts the resulting N sorted values into the single
+  SORTP(3f) sorts (in ascending order) the N elements of the precision
+  precision vector X, puts the resulting N sorted values into the precision
   precision vector Y; and puts the position (in the original vector X)
-  of each of the sorted values into the single precision vector XPOS.
+  of each of the sorted values into the precision precision vector XPOS.
 
   This subroutine gives the data analyst not only the ability to determine
   what the MIN and MAX (for example) of the data set are, but also where
@@ -60,23 +60,23 @@ SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS TO BE SORTED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE SORTED DATA VALUES
 !                                FROM X WILL BE PLACED.
-!                     --XPOS   = THE SINGLE PRECISION VECTOR
+!                     --XPOS   = THE  VECTOR
 !                                INTO WHICH THE POSITIONS
 !                                (IN THE ORIGINAL VECTOR X)
 !                                OF THE SORTED VALUES
 !                                WILL BE PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR XS
+!     OUTPUT--THE  VECTOR XS
 !             CONTAINING THE SORTED
 !             (IN ASCENDING ORDER) VALUES
-!             OF THE SINGLE PRECISION VECTOR X, AND
-!             THE SINGLE PRECISION VECTOR XPOS
+!             OF THE  VECTOR X, AND
+!             THE  VECTOR XPOS
 !             CONTAINING THE POSITIONS
 !             (IN THE ORIGINAL VECTOR X)
 !             OF THE SORTED VALUES.
@@ -120,12 +120,12 @@ INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , 
 !              ALTHOUGH THESE POSITIONS ARE NECESSARILY
 !              INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
 !              NOTED THAT THEY ARE OUTPUTED AS SINGLE
-!              PRECISION INTEGERS IN THE SINGLE PRECISION
+!              PRECISION INTEGERS IN THE 
 !              VECTOR XPOS.
-!              XPOS IS SINGLE PRECISION SO AS TO BE
+!              XPOS IS  SO AS TO BE
 !              CONSISTENT WITH THE FACT THAT ALL
 !              VECTOR ARGUMENTS IN ALL OTHER
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     COMMENT--IF THE ANALYST DESIRES A SORT 'IN PLACE',
 !              THIS IS DONE BY HAVING THE SAME

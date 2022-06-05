@@ -73,7 +73,7 @@ INTEGER :: iraxm2 , irev , iskipm , itax , itaxis , itaxp1 , itaxp2 ,&
 INTEGER :: my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
      &        numdis , nummax , nummin , numout
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -91,7 +91,7 @@ INTEGER :: my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION
+!     MODE OF INTERNAL OPERATIONS--
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.

@@ -221,11 +221,11 @@ contains
 !!    AUTOCO(3f) computes the sample autocorrelation coefficient of the
 !!    data in the input vector X. The sample autocorrelation coefficient
 !!    equals the correlation between X(I) and X(I+1) over the entire sample.
-!!    The autocorrelation coefficient coefficient will be a single precision
+!!    The autocorrelation coefficient coefficient will be a precision precision
 !!    value between -1.0 and 1.0 (inclusively).
 !!
 !!##INPUT ARGUMENTS
-!!    X        The single precision vector of (unsorted) observations.
+!!    X        The precision precision vector of (unsorted) observations.
 !!    N        The integer number of observations in the vector x.
 !!    IWRITE   An integer flag code which (if set to 0) will suppress
 !!             the printing of the sample autocorrelation coefficient
@@ -235,8 +235,8 @@ contains
 !!
 !!##OUTPUT ARGUMENTS
 !!
-!!    XAUTOC   The single precision value of the computed sample autocorrelation coefficient.
-!!             This single precision value will be between -1.0 and 1.0 (inclusively).
+!!    XAUTOC   The precision precision value of the computed sample autocorrelation coefficient.
+!!             This precision precision value will be between -1.0 and 1.0 (inclusively).
 !!
 !!##EXAMPLES
 !!
@@ -550,8 +550,8 @@ END SUBROUTINE BETRAN
 !!
 !!##DESCRIPTION
 !!    BINCDF(3f) computes the cumulative distribution function value
-!!    at the single precision value X for the binomial distribution with
-!!    single precision 'Bernoulli probability' parameter = P, and integer
+!!    at the precision precision value X for the binomial distribution with
+!!    precision precision 'Bernoulli probability' parameter = P, and integer
 !!    'number of Bernoulli trials' parameter = N.
 !!
 !!    The binomial distribution used herein has mean = N*P and standard
@@ -569,7 +569,7 @@ END SUBROUTINE BETRAN
 !!
 !!    The binomial distribution is the distribution of the number of
 !!    successes in N Bernoulli (0,1) trials where the probability of success
-!!    in a single trial = P.
+!!    in a precision trial = P.
 !!
 !!##OPTIONS
 !!     x   description of parameter
@@ -620,13 +620,13 @@ SUBROUTINE BINCDF(X,P,N,Cdf)
 REAL(kind=wp) :: an, Cdf, del, fintx, P, X
 INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE INTEGRAL-VALUED,
 !                                AND BETWEEN 0.0 (INCLUSIVELY)
 !                                AND N (INCLUSIVELY).
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE BINOMIAL
 !                                DISTRIBUTION.
@@ -637,9 +637,9 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !                                OF THE 'NUMBER OF BERNOULLI TRIALS'
 !                                PARAMETER.
 !                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE BINOMIAL DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
@@ -666,7 +666,7 @@ INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -880,8 +880,8 @@ END SUBROUTINE BINCDF
 !!     SUBROUTINE BINPPF(P,Ppar,N,Ppf)
 !!
 !!##DESCRIPTION
-!!    BINPPF(3f) computes the percent point function value at the single
-!!    precision value P for the binomial distribution with single precision
+!!    BINPPF(3f) computes the percent point function value at the precision
+!!    precision value P for the binomial distribution with precision precision
 !!    'Bernoulli probability' parameter = PPAR, and integer 'number of
 !!    Bernoulli trials' parameter = N.
 !!
@@ -900,18 +900,18 @@ END SUBROUTINE BINCDF
 !!
 !!    The binomial distribution is the distribution of the number of
 !!    successes in N Bernoulli (0,1) trials where the probability of success
-!!    in a single trial = PPAR.
+!!    in a precision trial = PPAR.
 !!
 !!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!! !     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!! !     INPUT ARGUMENTS--P      = THE  VALUE
 !! !                                (BETWEEN 0.0 (INCLUSIVELY)
 !! !                                AND 1.0 (INCLUSIVELY))
 !! !                                AT WHICH THE PERCENT POINT
 !! !                                FUNCTION IS TO BE EVALUATED.
-!! !                     --PPAR   = THE SINGLE PRECISION VALUE
+!! !                     --PPAR   = THE  VALUE
 !! !                                OF THE 'BERNOULLI PROBABILITY'
 !! !                                PARAMETER FOR THE BINOMIAL
 !! !                                DISTRIBUTION.
@@ -922,9 +922,9 @@ END SUBROUTINE BINCDF
 !! !                                OF THE 'NUMBER OF BERNOULLI TRIALS'
 !! !                                PARAMETER.
 !! !                                N SHOULD BE A POSITIVE INTEGER.
-!! !     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!! !     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !! !                                POINT FUNCTION VALUE.
-!! !     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
+!! !     OUTPUT--THE  PERCENT POINT  .
 !! !             FUNCTION VALUE PPF
 !! !             FOR THE BINOMIAL DISTRIBUTION
 !! !             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
@@ -982,7 +982,7 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (INCLUSIVELY).
 
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -993,7 +993,7 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -1299,7 +1299,7 @@ END SUBROUTINE BINPPF
 !!
 !!    the binomial distribution is the distribution of the number of
 !!    successes in npar bernoulli (0,1) trials where the probability of
-!!    success in a single trial = p.
+!!    success in a precision trial = p.
 !!
 !!##OPTIONS
 !!##INPUT ARGUMENTS
@@ -1602,7 +1602,7 @@ end subroutine caucdf
 !!   Sample program:
 !!
 !!    program demo_caupdf
-!!    !@(#) line plotter graph of cumulative distribution function
+!!    !@(#) line plotter graph of probability density function
 !!    use M_datapac, only : caupdf, plott
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
@@ -2006,7 +2006,7 @@ INTEGER :: i , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -2018,7 +2018,7 @@ INTEGER :: i , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -2131,13 +2131,13 @@ END SUBROUTINE CAURAN
 SUBROUTINE CAUSF(P,Sf)
 REAL(kind=wp) :: arg , P , pi , Sf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
@@ -2226,16 +2226,16 @@ SUBROUTINE CHSCDF(X,Nu,Cdf)
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE CHI-SQUARED DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -2507,7 +2507,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     yslope
 INTEGER i , iupper , N , Nu
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -2521,7 +2521,7 @@ INTEGER i , iupper , N , Nu
 !                 --NU SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, CHSPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
@@ -2707,7 +2707,7 @@ SUBROUTINE CHSPPF(P,Nu,Ppf)
 REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 INTEGER icount , iloop , j , maxit , Nu
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -2715,9 +2715,9 @@ INTEGER icount , iloop , j , maxit , Nu
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE CHI-SQUARED DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -2955,7 +2955,7 @@ INTEGER i , Iseed , j , N , Nu
 !                     --NU     = THE INTEGER DEGREES OF FREEDOM
 !                                (PARAMETER) FOR THE CHI-SQUARED
 !                                DISTRIBUTION.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -2968,7 +2968,7 @@ INTEGER i , Iseed , j , N , Nu
 !                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--FEBRUARY  1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -3085,14 +3085,14 @@ SUBROUTINE CODE(X,N,Y)
 REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 INTEGER i , iupper , j , N , numdis
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!     INPUT ARGUMENTS--X      = THE  VECTOR
 !                                OF OBSERVATIONS TO BE CODED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE CODED VALUES
 !                                WILL BE PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH WILL CONTAIN THE CODED VALUES
 !             CORRESPONDING TO THE OBSERVATIONS IN
 !             THE VECTOR X.
@@ -3213,8 +3213,8 @@ END SUBROUTINE CODE
 !!       SUBROUTINE COPY(X,N,Y)
 !!
 !!##DESCRIPTION
-!!    copy(3f) copies the contents of the single precision vector x into
-!!    the single precision vector y.
+!!    copy(3f) copies the contents of the precision precision vector x into
+!!    the precision precision vector y.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3248,17 +3248,17 @@ SUBROUTINE COPY(X,N,Y)
 REAL(kind=wp) :: hold , X , Y
 INTEGER i , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS TO BE COPIED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE COPIED DATA VALUES
 !                                FROM X WILL BE SEQUENTIALLY PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y.
+!     OUTPUT--THE  VECTOR Y.
 !             WHICH WILL HAVE ITS
 !             FIRST N ELEMENTS IDENTICAL
-!             TO THE SINGLE PRECISION VECTOR X.
+!             TO THE  VECTOR X.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
@@ -3319,7 +3319,7 @@ END SUBROUTINE COPY
 !!##DESCRIPTION
 !!    corr(3f) computes the sample correlation coefficient between the 2
 !!    sets of data in the input vectors x and y. The sample correlation
-!!    coefficient will be a single precision value between -1.0 and 1.0
+!!    coefficient will be a precision precision value between -1.0 and 1.0
 !!    (inclusively).
 !!
 !!##OPTIONS
@@ -3363,11 +3363,11 @@ SUBROUTINE CORR(X,Y,N,Iwrite,C)
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 INTEGER i , iflag , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
 !                                OF DATA.
-!                     --Y      = THE SINGLE PRECISION VECTOR OF
+!                     --Y      = THE  VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE SECOND SET
 !                                OF DATA.
@@ -3386,14 +3386,14 @@ INTEGER i , iflag , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE CORRELATION COEFFICIENT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--C      = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--C      = THE  VALUE OF THE
 !                                COMPUTED SAMPLE CORRELATION COEFFICIENT
 !                                BETWEEN THE 2 SETS OF DATA
 !                                IN THE INPUT VECTORS X AND Y.
-!                                THIS SINGLE PRECISION VALUE
+!                                THIS  VALUE
 !                                WILL BE BETWEEN -1.0 AND 1.0
 !                                (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE CORRELATION COEFFICIENT BETWEEN THE 2 SETS
 !             OF DATA IN THE INPUT VECTORS X AND Y.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
@@ -3402,7 +3402,7 @@ INTEGER i , iflag , Iwrite , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -3532,15 +3532,15 @@ SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 INTEGER i , isum , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
@@ -3555,16 +3555,16 @@ INTEGER i , isum , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE COUNT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XCOUNT = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XCOUNT = THE  VALUE OF THE
 !                                COMPUTED SAMPLE COUNT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE COUNT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
@@ -3834,7 +3834,7 @@ END SUBROUTINE DECOMP
 !!       SUBROUTINE DEFINE(X,N,Xnew)
 !!
 !!##DESCRIPTION
-!!    define(3f) sets all of the elements in the single precision vector
+!!    define(3f) sets all of the elements in the precision precision vector
 !!    x equal to xnew.
 !!
 !!    define(3f) is useful in defining a vector of constants.
@@ -3874,15 +3874,15 @@ SUBROUTINE DEFINE(X,N,Xnew)
 INTEGER i , N
 REAL(kind=wp) :: X , Xnew
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XNEW   = THE SINGLE PRECISION VALUE
+!                     --XNEW   = THE  VALUE
 !                                TO WHICH ALL OF THE
 !                                OBSERVATIONS IN THE VECTOR X
 !                                WILL BE SET.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             EVERY ELEMENT OF WHICH
 !             WILL BE EQUAL TO XNEW.
 !             ALSO, 3 LINES OF SUMMARY INFORMATION
@@ -3892,7 +3892,7 @@ REAL(kind=wp) :: X , Xnew
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED  VERSION--JULY      1976.
 !
@@ -3948,7 +3948,7 @@ END SUBROUTINE DEFINE
 !!
 !!##DESCRIPTION
 !!
-!!    delete(3f) deletes all observations in the single precision vector
+!!    delete(3f) deletes all observations in the precision precision vector
 !!    x which are inside the closed (inclusive) interval defined by xmin
 !!    and xmax, while retaining all observations outside of this interval.
 !!
@@ -3990,15 +3990,15 @@ SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE DELETED.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE DELETED.
@@ -4007,7 +4007,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !                                OF THE OBSERVATIONS INSIDE
 !                                (INCLUSIVELY) THE INTERVAL
 !                                OF INTEREST HAVE BEEN DELETED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             IN WHICH ALL THOSE VALUES INSIDE
 !             (INCLUSIVELY) THE INTERVAL OF INTEREST
 !             HAVE BEEN DELETED, AND
@@ -4023,7 +4023,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
 !              MADE WHATEVER DELETIONS ARE APPROPRIATE,
 !              THE OUTPUT VECTOR X WILL BE 'PACKED';
@@ -4196,11 +4196,11 @@ REAL(kind=wp) :: ai, aiflag, aimax2, alen1, alen2, an, del, F, fest, fmin, hold,
 REAL(kind=wp) :: Z, zmax, zmin, znew
 INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iupper, j, lenma1, lenma2, N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!                      F      = THE SINGLE PRECISION
+!                      F      = THE
 !                               DEMODULATION FREQUENCY.
 !                               F IS IN UNITS OF CYCLES PER DATA POINT.
 !                               F IS BETWEEN 0.0 AND 0.5 (EXCLUSIVELY).
@@ -4219,7 +4219,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 !                   SMALLER THAN 0.5.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTX.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IN ORDER THAT THE RESULTS OF THE COMPLEX DEMODULATION
 !              BE VALID AND PROPERLY INTERPRETED, THE INPUT DATA
 !              IN X SHOULD BE EQUI-SPACED IN TIME
@@ -4466,108 +4466,160 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 END SUBROUTINE DEMOD
 !>
 !!##NAME
-!!    dexcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the double exponential
-!!    cumulative distribution function
+!!    dexcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the double
+!!    exponential cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE DEXCDF(X,Cdf)
 !!
+!!        real(kind=wp),intent(in)  :: X
+!!        real(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    dexcdf(3f) computes the cumulative distribution function value for the
-!!    double exponential (laplace) distribution with mean = 0 and standard
+!!    DEXCDF(3f) computes the cumulative distribution function value for the
+!!    double exponential (Laplace) distribution with mean = 0 and standard
 !!    deviation = sqrt(2).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = 0.5*exp(-abs(x)).
+!!        f(x) = 0.5*exp(-abs(x))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X     The precision precision value at which the cumulative distribution
+!!          function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!    CDF   The precision precision cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_dexcdf
-!!    use M_datapac, only : dexcdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : dexcdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call dexcdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call dexcdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_dexcdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                                  X
+!!      0.9166666E+02 I                                                  X
+!!      0.8333334E+02 I                                                  X
+!!      0.7500000E+02 I                                                  X
+!!      0.6666667E+02 I                                                  X
+!!      0.5833334E+02 I                                                  X
+!!      0.5000000E+02 -                                                  X
+!!      0.4166667E+02 I                                                 XX
+!!      0.3333334E+02 I                                                 X
+!!      0.2500000E+02 I                                               XXX
+!!      0.1666667E+02 I                                           XXXXX
+!!      0.8333336E+01 I                                   X XXXXXXX
+!!      0.0000000E+00 -                  X X X X X X X X X
+!!     -0.8333328E+01 I         XXXXXXX X
+!!     -0.1666666E+02 I     XXXXX
+!!     -0.2499999E+02 I   XXX
+!!     -0.3333333E+02 I   X
+!!     -0.4166666E+02 I  XX
+!!     -0.5000000E+02 -  X
+!!     -0.5833333E+02 I  X
+!!     -0.6666666E+02 I  X
+!!     -0.7500000E+02 I  X
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.2270E-04  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!  o johnson and kotz, continuous univariate distributions--2, 1970,
-!!    pages 22-36.
+!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!    Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==dexcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
-SUBROUTINE DEXCDF(X,Cdf)
-REAL(kind=wp) :: Cdf , X
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF.
-!---------------------------------------------------------------------
+subroutine dexcdf(X,Cdf)
+real(kind=wp),intent(in)  :: X
+real(kind=wp),intent(out) :: Cdf
 !
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
-!-----START POINT-----------------------------------------------------
-!
-      IF ( X<=0.0_wp ) Cdf = 0.5_wp*EXP(X)
-      IF ( X>0.0_wp ) Cdf = 1.0_wp - (0.5_wp*EXP(-X))
-!
-END SUBROUTINE DEXCDF
+      if ( X<=0.0_wp ) Cdf = 0.5_wp*exp(X)
+      if ( X>0.0_wp ) Cdf = 1.0_wp - (0.5_wp*exp(-X))
+
+end subroutine dexcdf
 !>
 !!##NAME
-!!    dexpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the double exponential
-!!    probability density function
+!!    dexpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the double
+!!    exponential probability density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE DEXPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    dexpdf(3f) computes the probability density function value for the
-!!    double exponential (laplace) distribution with mean = 0 and standard
+!!    DEXPDF(3f) computes the probability density function value for the
+!!    double exponential (Laplace) distribution with mean = 0 and standard
 !!    deviation = sqrt(2).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = 0.5*exp(-abs(x)).
+!!        f(X) = 0.5*exp(-abs(X))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X     The value at which the probability density function is to
+!!          be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!    PDF   The probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_dexpdf
-!!    use M_datapac, only : dexpdf
+!!    !@(#) line plotter graph
+!!    !@(#) of probability density function for Laplace distribution
+!!    use M_datapac, only : dexpdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call dexpdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call dexpdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_dexpdf
 !!
 !!   Results:
@@ -4583,41 +4635,28 @@ END SUBROUTINE DEXCDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  o johnson and kotz, continuous univariate distributions--2, 1970,
-!!    pages 22-36.
-!*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE DEXPDF(X,Pdf)
-REAL(kind=wp) :: arg , Pdf , X
-!
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!    Pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --SEPTEMBER 1978.
+!*==dexpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine dexpdf(X,Pdf)
+real(kind=wp),intent(in)  :: X
+real(kind=wp),intent(out) :: Pdf
+
+real(kind=wp) :: arg
+
 !
-!---------------------------------------------------------------------
-!
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS. -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
       arg = X
       IF ( X<0.0_wp ) arg = -X
       Pdf = 0.5_wp*EXP(-arg)
-!
-END SUBROUTINE DEXPDF
+
+end subroutine dexpdf
 !>
 !!##NAME
 !!    dexplt(3f) - [M_datapac:LINE_PLOT] generate a double exponential
@@ -4697,7 +4736,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -4707,7 +4746,7 @@ INTEGER :: i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4876,18 +4915,18 @@ END SUBROUTINE DEXPLT
 SUBROUTINE DEXPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -4945,7 +4984,7 @@ END SUBROUTINE DEXPPF
 !!             upon successive calls to this subroutine within a run.
 !!##OUTPUT ARGUMENTS
 !!
-!!    X     A single precision vector (of dimension at least N) into which
+!!    X     A precision precision vector (of dimension at least N) into which
 !!          the generated random sample will be placed.
 !!
 !!##EXAMPLES
@@ -5080,17 +5119,17 @@ end subroutine dexran
 SUBROUTINE DEXSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5127,7 +5166,7 @@ END SUBROUTINE DEXSF
 !!       SUBROUTINE DISCR2(X,N,Numcla,Y)
 !!
 !!##DESCRIPTION
-!!    discr2(3f) 'discretizes' the data of the single precision vector x
+!!    discr2(3f) 'discretizes' the data of the precision precision vector x
 !!    into numcla classes.
 !!
 !!    all values in the vector x within a given class will be mapped into
@@ -5183,20 +5222,20 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
      &     xmax , xmin , Y
 INTEGER i , icount , ip , iupncl , N , Numcla
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
 !                     --NUMLEV = THE INTEGER NUMBER OF CLASSES
 !                                DESIRED IN THE DISCRETIZATION.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                                DISCRETIZED VALUES (= THE CLASS
 !                                MIDPOINTS) CORRESPONDING TO
 !                                THE CONTINUOUS VALUES IN THE VECTOR X.
 !                                THERE WILL RESULT N SUCH DISCRETIZED
 !                                VALUES.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH CONTAINS N DISCRETIZED VALUES
 !             (= THE CLASS MIDPOINTS)
 !             CORRESPONDING TO THE N
@@ -5213,7 +5252,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NUMCLA SHOULD BE POSITIVE AND NOT EXCEED 1000
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THIS SUBROUTINE DIFFERS FROM THE DISCR3
 !              SUBROUTINE INASMUCH AS THIS SUBROUTINE
 !              PERFORMS ITS DISCRETIZATION BY OUTPUTING
@@ -5380,7 +5419,7 @@ END SUBROUTINE DISCR2
 !!       SUBROUTINE DISCR3(X,N,Numcla,Y)
 !!
 !!##DESCRIPTION
-!!    discr3(3f) 'discretizes' the data on the single precision vector x
+!!    discr3(3f) 'discretizes' the data on the precision precision vector x
 !!    into numcla classes.
 !!
 !!    all values in the vector x within a given class will be mapped into
@@ -5439,19 +5478,19 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
      &     xmin , Y
 INTEGER i , icount , ip , iupncl , N , Numcla
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
 !                     --NUMLEV = THE INTEGER NUMBER OF CLASSES
 !                                DESIRED IN THE DISCRETIZATION.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                                DISCRETIZED VALUES CORRESPONDING TO
 !                                THE CONTINUOUS VALUES IN THE VECTOR X.
 !                                THERE WILL RESULT N SUCH DISCRETIZED
 !                                VALUES.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH CONTAINS N DISCRETIZED VALUES
 !             CORRESPONDING TO THE N
 !             CONTINUOUS VALUES IN THE
@@ -5467,7 +5506,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !                 --NUMCLA SHOULD BE POSITIVE AND NOT EXCEED 1000
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THIS SUBROUTINE DIFFERS FROM THE DISCR2
 !              SUBROUTINE INASMUCH AS THIS SUBROUTINE
 !              PERFORMS ITS DISCRETIZATION BY OUTPUTING
@@ -5624,7 +5663,7 @@ END SUBROUTINE DISCR3
 !!       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
 !!
 !!##DESCRIPTION
-!!    discre(3f) 'discretizes' the data of the single precision vector x.
+!!    discre(3f) 'discretizes' the data of the precision precision vector x.
 !!    the first class interval is from xmin to xmin + xdel; the second
 !!    class interval is from xmin+ xdel to xmin + 2*xdel; etc.
 !!
@@ -5677,28 +5716,28 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
 INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER BOUNDARY
 !                                (INCLUSIVELY) OF THE LOWERMOST
 !                                CLASS.
-!                     --XDEL   = THE SINGLE PRECISION VALUE
+!                     --XDEL   = THE  VALUE
 !                                OF THE CLASS WIDTH.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER BOUNDARY
 !                                (INCLUSIVELY) OF THE UPPERMOST
 !                                CLASS.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                                DISCRETIZED VALUES (= CLASS
 !                                MIDPOINTS) CORRESPONDING TO
 !                                THE CONTINUOUS VALUES IN THE VECTOR X.
 !                                THERE WILL RESULT N SUCH DISCRETIZED
 !                                VALUES.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH CONTAINS N DISCRETIZED VALUES
 !             (= CLASS MIDPOINTS)
 !             CORRESPONDING TO THE N
@@ -5716,7 +5755,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 !                   OF N FOR THIS SUBROUTINE.
 !                 --XDEL SHOULD BE POSITIVE.
 !                 --(XMAX-XMIN)/XDEL SHOULD NOT EXCEED 999.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IT IS SUGGESTED THAT XMIN, XDEL,
 !              AND XMAX HAVE AT LEAST 1 MORE
 !              DECIMAL PLACE THAN THE DATA VALUES
@@ -6037,18 +6076,18 @@ end subroutine dot
 SUBROUTINE EV1CDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE EXTREME VALUE TYPE 1
 !             DISTRIBUTION WITH MEAN = EULER'S NUMBER = 0.57721566
 !             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6140,7 +6179,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -6150,7 +6189,7 @@ INTEGER :: i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -6309,14 +6348,14 @@ END SUBROUTINE EV1PLT
 SUBROUTINE EV1PPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE EXTREME VALUE TYPE 1 DISTRIBUTION
 !             WITH MEAN = EULER'S NUMBER = 0.57721566
 !             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
@@ -6324,7 +6363,7 @@ REAL(kind=wp) :: P , Ppf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6410,7 +6449,7 @@ REAL(kind=wp) :: X(:)
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -6455,7 +6494,7 @@ END SUBROUTINE EV1RAN
 !!
 !!##DESCRIPTION
 !!    ev2cdf(3f) computes the cumulative distribution function value for
-!!    the extreme value type 2 distribution with single precision tail
+!!    the extreme value type 2 distribution with precision precision tail
 !!    length parameter = gamma.
 !!
 !!    the extreme value type 2 distribution used herein is defined for all
@@ -6495,23 +6534,23 @@ END SUBROUTINE EV1RAN
 SUBROUTINE EV2CDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE EXTREME VALUE TYPE 2
 !             DISTRIBUTION WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE NON-NEGATIVE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6626,11 +6665,11 @@ REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE EXTREME VALUE TYPE 2 PROBABILITY PLOT.
@@ -6640,7 +6679,7 @@ INTEGER i , iupper , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !---------------------------------------------------------------------
 !
@@ -6771,7 +6810,7 @@ END SUBROUTINE EV2PLT
 !!
 !!##DESCRIPTION
 !!    ev2ppf(3f) computes the percent point function value for the extreme
-!!    value type 2 distribution with single precision tail length parameter
+!!    value type 2 distribution with precision precision tail length parameter
 !!    = gamma.
 !!
 !!    the extreme value type 2 distribution used herein is defined for all
@@ -6815,17 +6854,17 @@ END SUBROUTINE EV2PLT
 SUBROUTINE EV2PPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE EXTREME VALUE TYPE 2 DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -6833,7 +6872,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -6924,10 +6963,10 @@ INTEGER i , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -6940,7 +6979,7 @@ INTEGER i , Iseed , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !---------------------------------------------------------------------
 !
@@ -7026,17 +7065,17 @@ SUBROUTINE EXPCDF(X,Cdf)
 IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7072,80 +7111,78 @@ END SUBROUTINE EXPCDF
 !!
 !!       SUBROUTINE EXPPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in) :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    exppdf(3f) computes the probability density function value for the
+!!    EXPPDF(3f) computes the probability density function value for the
 !!    exponential distribution with mean = 1 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x, and has the
+!!    This distribution is defined for all non-negative X, and has the
 !!    probability density function
 !!
-!!       f(x) = exp(-x).
+!!       f(X) = exp(-X)
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X    The value at which the probability density
+!!         function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PDF  The probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_exppdf
-!!    use M_datapac, only : exppdf
+!!    !@(#) line plotter graph of probability density function
+!!    use M_datapac, only : exppdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call exppdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call exppdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_exppdf
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!*==exppdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE EXPPDF(X,Pdf)
-REAL(kind=wp) :: Pdf , X
-!
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!    Pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
+!*==exppdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EXPPDF(X,Pdf)
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Pdf
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE EXPP&
-     &DF SUBROUTINE IS NEGATIVE *****')
+         99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO EXPPDF(3f) IS NEGATIVE *****')
          WRITE (G_IO,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          Pdf = 0.0_wp
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          Pdf = EXP(-X)
       ENDIF
 !
@@ -7224,7 +7261,7 @@ SUBROUTINE EXPPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
 INTEGER i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -7234,7 +7271,7 @@ INTEGER i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7400,13 +7437,13 @@ END SUBROUTINE EXPPLT
 SUBROUTINE EXPPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY) AND 1.0 (EXCLUSIVELY).
 !---------------------------------------------------------------------
@@ -7487,7 +7524,7 @@ REAL(kind=wp) :: X
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -7499,7 +7536,7 @@ REAL(kind=wp) :: X
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -7602,18 +7639,18 @@ END SUBROUTINE EXPRAN
 SUBROUTINE EXPSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7709,7 +7746,7 @@ REAL(kind=wp) :: a, aindex, am, an, arg, cc, corr, corrmx, gamtab,   h, hold, p,
 REAL(kind=wp) :: wbar, WS, X, xmax, xmin, Y, ybar, yi, yint, ys, yslope, Z
 INTEGER       :: i, idis, idismx, iupper, j, jskip, k, N, numam, numdis, numdm1
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -7720,7 +7757,7 @@ INTEGER       :: i, idis, idismx, iupper, j, jskip, k, N, numam, numdis, numdm1
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, EV1PLT,
 !                                         EV2PLT, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --DECEMBER  1974.
 !     UPDATED         --NOVEMBER  1975.
@@ -8154,7 +8191,7 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
@@ -8164,9 +8201,9 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 !                     --NU2    = THE INTEGER DEGREES OF FREEDOM
 !                                FOR THE DENOMINATOR OF THE F RATIO.
 !                                NU2 SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE F DISTRIBUTION
 !             WITH DEGREES OF FREEDOM
 !             PARAMETERS = NU1 AND NU2.
@@ -8545,7 +8582,7 @@ INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
      &        maxpag , N , nhalf , nnpage
 !
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -8580,7 +8617,7 @@ INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
 !                   THAN OR EQUAL TO 3.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTSP AND CHSPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOURIER ANALYSIS DIFFERS FROM SPECTRAL ANALYSIS
 !              (AS, FOR EXAMPLE, PRODUCED BY THE DATAPAC
 !              TIMESE SUBROUTINE) IN THAT A
@@ -8889,7 +8926,7 @@ INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !                                RANDOM SAMPLES UPON
 !                                SUCCESSIVE CALLS TO
 !                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -8904,7 +8941,7 @@ INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -9039,7 +9076,7 @@ SUBROUTINE FREQ(X,N)
 REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,    WS , X , xbar , Y
 INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -9054,7 +9091,7 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -9183,7 +9220,7 @@ END SUBROUTINE FREQ
 !!
 !!##DESCRIPTION
 !!    gamcdf(3f) computes the cumulative distribution function value for the
-!!    gamma distribution with single precision tail length parameter = gamma.
+!!    gamma distribution with precision precision tail length parameter = gamma.
 !!
 !!    the gamma distribution used herein has mean = gamma and standard
 !!    deviation = sqrt(gamma).
@@ -9237,16 +9274,16 @@ END SUBROUTINE FREQ
 REAL(kind=wp) :: Cdf , Gamma , X
 INTEGER :: i , maxit
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE GAMMA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -9445,11 +9482,11 @@ REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
 REAL(kind=wp) :: yslope
 INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE GAMMA PROBABILITY PLOT.
@@ -9459,7 +9496,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ABS, EXP, DEXP, DLOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -9752,7 +9789,7 @@ END SUBROUTINE GAMPLT
 !!
 !!##DESCRIPTION
 !!    gamppf(3f) computes the percent point function value for the gamma
-!!    distribution with single precision tail length parameter = gamma.
+!!    distribution with precision precision tail length parameter = gamma.
 !!
 !!    the gamma distribution used herein has mean = gamma and standard
 !!    deviation = sqrt(gamma). this distribution is defined for all positive
@@ -9808,17 +9845,17 @@ END SUBROUTINE GAMPLT
 REAL(kind=wp) :: Gamma , P , Ppf
 INTEGER :: icount , iloop , j , maxit
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE GAMMA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -10067,12 +10104,12 @@ INTEGER :: i , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !                                GAMMA SHOULD BE LARGER
 !                                THAN 1/3 (ALGORITHMIC RESTRICTION).
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -10087,7 +10124,7 @@ INTEGER :: i , Iseed , N
 !                   THAN 1/3 (ALGORITHMIC RESTRICTION).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -10194,7 +10231,7 @@ END SUBROUTINE GAMRAN
 !!
 !!##DESCRIPTION
 !!    geocdf(3f) computes the cumulative distribution function value at the
-!!    single precision value x for the geometric distribution with single
+!!    precision precision value x for the geometric distribution with precision
 !!    precision 'bernoulli probability' parameter = p.
 !!
 !!    the geometric distribution used herein herein has mean = (1-p)/p and
@@ -10207,7 +10244,7 @@ END SUBROUTINE GAMRAN
 !!
 !!    the geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = p.
 !!
 !!##OPTIONS
@@ -10246,21 +10283,21 @@ SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp) :: Cdf , del , fintx , P , X
 INTEGER intx
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
 !                                INTEGRAL-VALUED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
 !                                P SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE GEOMETRIC DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = P.
@@ -10268,7 +10305,7 @@ INTEGER intx
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
 !              DISTRIBUTION FUNCTION SUBROUTINE
@@ -10282,7 +10319,7 @@ INTEGER intx
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -10342,7 +10379,7 @@ END SUBROUTINE GEOCDF
 !!
 !!    the geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = p.
 !!
 !!    as used herein, a probability plot for a distribution is a plot
@@ -10403,11 +10440,11 @@ REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
@@ -10422,7 +10459,7 @@ INTEGER i , iupper , N
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT, GEOPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1976.
@@ -10557,7 +10594,7 @@ END SUBROUTINE GEOPLT
 !!
 !!##DESCRIPTION
 !!    geoppf(3f) computes the percent point function value for the geometric
-!!    distribution with single precision 'bernoulli probability' parameter
+!!    distribution with precision precision 'bernoulli probability' parameter
 !!    = ppar.
 !!
 !!    the geometric distribution used herein has mean = (1-ppar)/ppar and
@@ -10572,7 +10609,7 @@ END SUBROUTINE GEOPLT
 !!
 !!    the geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = ppar.
 !!
 !!    note that the percent point function of a distribution is identically
@@ -10614,21 +10651,21 @@ SUBROUTINE GEOPPF(P,Ppar,Ppf)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 INTEGER iratio
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --PPAR   = THE SINGLE PRECISION VALUE
+!                     --PPAR   = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
 !                                PPAR SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE GEOMETRIC DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER VALUE = PPAR.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -10637,7 +10674,7 @@ INTEGER iratio
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -10648,7 +10685,7 @@ INTEGER iratio
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -10711,7 +10748,7 @@ INTEGER iratio
 !!
 !!##DESCRIPTION
 !!    GEORAN(3f) generates a random sample of size N from the geometric
-!!    distribution with single precision 'Bernoulli probability' parameter
+!!    distribution with precision precision 'Bernoulli probability' parameter
 !!    = P.
 !!
 !!    The geometric distribution used herein has mean = (1-P)/P and standard
@@ -10724,7 +10761,7 @@ INTEGER iratio
 !!
 !!    The geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    Bernoulli (0,1) trials where the probability of success in a single
+!!    Bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = P.
 !!
 !!##OPTIONS
@@ -10769,14 +10806,14 @@ INTEGER :: i , iratio , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
 !                                P SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -10790,7 +10827,7 @@ INTEGER :: i , iratio , Iseed , N
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -10800,7 +10837,7 @@ INTEGER :: i , iratio , Iseed , N
 !              X HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -10928,20 +10965,20 @@ END SUBROUTINE GEORAN
       SUBROUTINE HFNCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE HALFNORMAL
 !             DISTRIBUTION WITH MEAN = SQRT(2/PI) = 0.79788456
 !             AND STANDARD DEVIATION = 1.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 !
@@ -11053,7 +11090,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 INTEGER i , iupper , N
 !*** End of declarations inserted by SPAG
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -11063,7 +11100,7 @@ INTEGER i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !---------------------------------------------------------------------
 !
@@ -11225,14 +11262,14 @@ END SUBROUTINE HFNPLT
 SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE HALFNORMAL DISTRIBUTION
 !             WITH MEAN = SQRT(2/PI) = 0.79788456
 !             AND STANDARD DEVIATION = 1.
@@ -11240,7 +11277,7 @@ REAL(kind=wp) :: arg , P , Ppf
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 !
@@ -11323,7 +11360,7 @@ INTEGER :: i , ip1 , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -11336,7 +11373,7 @@ INTEGER :: i , ip1 , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --JULY      1976.
@@ -11466,7 +11503,7 @@ INTEGER :: i , icoun2 , icount , ievodd , ihist , inc , irev , &
      &        mx , N , numcla , numhis
 INTEGER :: numout
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -11479,7 +11516,7 @@ INTEGER :: numout
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -11918,14 +11955,14 @@ SUBROUTINE LAMCDF(X,Alamba,Cdf)
 REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , X , xcalc , xmax , xmin
 INTEGER :: icount
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE TUKEY LAMBDA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
 
@@ -12015,116 +12052,159 @@ INTEGER :: icount
 !!
 !!       SUBROUTINE LAMPDF(X,Alamba,Pdf)
 !!
+!!        REAL(kind=wp) :: X
+!!        REAL(kind=wp) :: Alamba
+!!
 !!##DESCRIPTION
-!!    lampdf(3f) computes the probability density function value for the
+!!    LAMPDF(3f) computes the probability density function value for the
 !!    (tukey) lambda distribution with tail length parameter value = alamba.
 !!
-!!    in general, the probability density function for this distribution
+!!    In general, the probability density function for this distribution
 !!    is not simple.
 !!
-!!    the percent point function for this distribution is
+!!    The percent point function for this distribution is
 !!
 !!       g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X       The precision precision value at which the probability density
+!!            function is to be evaluated.
+!!
+!!            For ALAMBA non-positive, no restrictions on X.
+!!
+!!            For ALAMBA positive, X should be between (-1/ALAMBA)
+!!            and (+1/ALAMBA), inclusively.
+!!
+!!    ALAMBA  The precision precision value of lambda (the tail length
+!!            parameter).
+!!
+!!##OUTPUT ARGUMENTS
+!!    PDF     The probability density function value for the Tukey Lambda
+!!            distribution
+!!
+!!##OUTPUT
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_lampdf
-!!    use M_datapac, only : lampdf
+!!    !@(#) line plotter graph of probability density function
+!!    use M_datapac, only : lampdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call lampdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    real              :: alamba
+!!    integer           :: i
+!!       alamba=0.0
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call LAMPDF(X(i)/100.0,Alamba,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_lampdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -  XXXX
+!!      0.9166666E+02 I      XXXXXXX
+!!      0.8333334E+02 I            XXXXXXX
+!!      0.7500000E+02 I                  XXXXXXX
+!!      0.6666667E+02 I                         XXXXX
+!!      0.5833334E+02 I                              XXXXX
+!!      0.5000000E+02 -                                  XXXXXX
+!!      0.4166667E+02 I                                       XXXX
+!!      0.3333334E+02 I                                          XXXX
+!!      0.2500000E+02 I                                             XXXX
+!!      0.1666667E+02 I                                                XX
+!!      0.8333336E+01 I                                                 XX
+!!      0.0000000E+00 -                                                  X
+!!     -0.8333328E+01 I                                                 XX
+!!     -0.1666666E+02 I                                                XX
+!!     -0.2499999E+02 I                                             XXXX
+!!     -0.3333333E+02 I                                          XXXX
+!!     -0.4166666E+02 I                                       XXXX
+!!     -0.5000000E+02 -                                  XXXXXX
+!!     -0.5833333E+02 I                              XXXXX
+!!     -0.6666666E+02 I                         XXXXX
+!!     -0.7500000E+02 I                  XXXXXXX
+!!     -0.8333333E+02 I            XXXXXXX
+!!     -0.9166666E+02 I      XXXXXXX
+!!     -0.1000000E+03 -  XXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1966E+00  0.2100E+00  0.2233E+00  0.2367E+00  0.2500E+00
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+!!
+!!##REFERENCES
+!!  o Hastings, Mosteller, Tukey, and Windsor, 'Low Moments for Small
+!!    Samples:  A Comparative Study of Order Statistics', Annals of MAthematical
+!!    Statistics, 18, 1947, Pages 413-426.
+!!  o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!    of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
+!!    University), 1969, Pages 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LAMPDF(X,Alamba,Pdf)
-REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
-!
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
-!                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF FOR THE TUKEY LAMBDA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER = ALAMBA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--FOR ALAMBA NON-POSITIVE, NO RESTRICTIONS ON X.
-!                 --FOR ALAMBA POSITIVE, X SHOULD BE BETWEEN (-1/ALAMBA)
-!                   AND (+1/ALAMBA), INCLUSIVELY.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--LAMCDF.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!
-!---------------------------------------------------------------------
-!
+
+SUBROUTINE LAMPDF(X,Alamba,Pdf)
+REAL(kind=wp) :: X
+REAL(kind=wp) :: Alamba
+
+REAL(kind=wp) :: cdf , Pdf , sf , xmax , xmin
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0_wp ) THEN
-         xmax = 1.0_wp/Alamba
-         xmin = -xmax
-         IF ( X<xmin .OR. X>xmax ) THEN
-            WRITE (G_IO,99001)
-            99001 FORMAT (&
-            &' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO LAMPDF(3f) IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
-            WRITE (G_IO,99002) X
-            99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-            IF ( X<xmin ) Pdf = 0.0_wp
-            IF ( X>xmax ) Pdf = 1.0_wp
-            RETURN
-         ENDIF
+   IF ( Alamba>0.0_wp ) THEN
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<xmin .OR. X>xmax ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (&
+         &' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO LAMPDF(3f) IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
+         WRITE (G_IO,99002) X
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+         IF ( X<xmin ) Pdf = 0.0_wp
+         IF ( X>xmax ) Pdf = 1.0_wp
+         RETURN
       ENDIF
+   ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( Alamba>0.0_wp ) THEN
-         xmax = 1.0_wp/Alamba
-         xmin = -xmax
-         IF ( X<=xmin .OR. X>=xmax ) THEN
-            IF ( X<xmin .OR. X>xmax ) Pdf = 0.0_wp
-            IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0_wp
-            IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0_wp
-            IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5_wp
-            IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5_wp
-            IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0_wp
-            IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0_wp
-            RETURN
-         ENDIF
+   IF ( Alamba>0.0_wp ) THEN
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<=xmin .OR. X>=xmax ) THEN
+         IF ( X<xmin .OR. X>xmax ) Pdf = 0.0_wp
+         IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0_wp
+         IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0_wp
+         IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5_wp
+         IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5_wp
+         IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0_wp
+         IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0_wp
+         RETURN
       ENDIF
+   ENDIF
 
-      CALL LAMCDF(X,Alamba,cdf)
-      sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
-      Pdf = 1.0_wp/sf
-!
+   CALL LAMCDF(X,Alamba,cdf)
+   sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
+   Pdf = 1.0_wp/sf
+
 END SUBROUTINE LAMPDF
 !>
 !!##NAME
@@ -12211,11 +12291,11 @@ REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
 REAL(kind=wp) :: yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
 !     OUTPUT--A ONE-PAGE LAMBDA PROBABILITY PLOT.
 !     PRINTING--YES.
@@ -12223,7 +12303,7 @@ INTEGER :: i , iupper , N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -12404,15 +12484,15 @@ END SUBROUTINE LAMPLT
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF FOR THE TUKEY LAMBDA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -12421,7 +12501,7 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -12518,9 +12598,9 @@ INTEGER :: i , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -12532,7 +12612,7 @@ INTEGER :: i , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -12642,15 +12722,15 @@ END SUBROUTINE LAMRAN
       SUBROUTINE LAMSF(P,Alamba,Sf)
 REAL(kind=wp) :: Alamba , P , Sf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
+!                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF FOR THE TUKEY LAMBDA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -12658,7 +12738,7 @@ REAL(kind=wp) :: Alamba , P , Sf
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
 !                   IF ALAMBA IS NON-POSITIVE,
 !                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -12745,13 +12825,13 @@ REAL(kind=wp) :: Alamba , P , Sf
       SUBROUTINE LGNCDF(X,Cdf)
 REAL(kind=wp) :: arg , Cdf , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE LOGNORMAL
 !             DISTRIBUTION WITH MEAN = SQRT(E) = 1.64872127
 !             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
@@ -12759,7 +12839,7 @@ REAL(kind=wp) :: arg , Cdf , X
 !     RESTRICTIONS--X SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -12863,7 +12943,7 @@ SUBROUTINE LGNPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -13036,14 +13116,14 @@ END SUBROUTINE LGNPLT
 SUBROUTINE LGNPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE LOGNORMAL DISTRIBUTION
 !             WITH MEAN = SQRT(E) = 1.64872127
 !             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
@@ -13141,7 +13221,7 @@ INTEGER i , ip1 , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -13154,7 +13234,7 @@ INTEGER i , ip1 , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS, EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -13283,7 +13363,7 @@ REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
 INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
      &        N , nmid , nmidp1
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -13299,7 +13379,7 @@ INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -13471,12 +13551,12 @@ END SUBROUTINE LOC
 SUBROUTINE LOGCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
 !
 !---------------------------------------------------------------------
@@ -13680,7 +13760,7 @@ SUBROUTINE LOGPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -13847,13 +13927,13 @@ END SUBROUTINE LOGPLT
 SUBROUTINE LOGPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
@@ -13941,7 +14021,7 @@ REAL(kind=wp) :: X
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -13953,7 +14033,7 @@ REAL(kind=wp) :: X
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !---------------------------------------------------------------------
       DIMENSION X(:)
@@ -14044,17 +14124,17 @@ END SUBROUTINE LOGRAN
       SUBROUTINE LOGSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14504,7 +14584,7 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -14519,9 +14599,9 @@ INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
 !                                THE PRINTING OF THE
 !                                SAMPLE MIDMEAN
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMIDM  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XMIDM  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE MIDMEAN.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE MIDMEAN.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -14529,7 +14609,7 @@ INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14673,7 +14753,7 @@ END SUBROUTINE MIDM
 REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 INTEGER :: i , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -14688,16 +14768,16 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE MIDRANGE
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMIDR  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XMIDR  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE MIDRANGE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE MIDRANGE.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14868,8 +14948,8 @@ end subroutine min
 !!       SUBROUTINE MOVE(X,M,Ix1,Iy1,Y)
 !!
 !!##DESCRIPTION
-!!    move(3f) moves (copies) m elements of the single precision vector
-!!    x (starting with position ix1) into the single precision vector y
+!!    move(3f) moves (copies) m elements of the precision precision vector
+!!    x (starting with position ix1) into the precision precision vector y
 !!    (starting with position iy1).
 !!
 !!    this allows the data analyst to take any subvector in x and place it
@@ -14905,7 +14985,7 @@ IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Y
 INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS, PART (OR ALL)
 !                                OF WHICH IS TO BE MOVED
 !                                (COPIED) OVER INTO THE VECTOR Y.
@@ -14918,11 +14998,11 @@ INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 !                                THE POSITION IN THE VECTOR Y
 !                                WHERE THE FIRST ELEMENT TO BE MOVED
 !                                WILL BE PLACED.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE COPIED DATA VALUES
 !                                FROM THE VECTOR X WILL BE SEQUENTIALLY
 !                                PLACED, STARTING IN POSITION IY1 OF Y.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y.
+!     OUTPUT--THE  VECTOR Y.
 !             IN WHICH THE M ELEMENTS IN POSITIONS
 !             IY1, IY1+1, ... , IY1+M-1
 !             WILL BE IDENTICAL TO THE M ELEMENTS
@@ -14931,7 +15011,7 @@ INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF M FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THE ELEMENT IN POSITION IX1 OF THE VECTOR X
 !            IS COPIED INTO POSITION IY1 OF THE VECTOR Y,
 !            THE ELEMENT IN POSITION (IX1+1) OF THE VECTOR X
@@ -15012,8 +15092,8 @@ END SUBROUTINE MOVE
 !!##DESCRIPTION
 !!
 !!    nbcdf(3f) computes the cumulative distribution function value at the
-!!    single precision value x for the negative binomial distribution with
-!!    single precision 'bernoulli probability' parameter = p, and integer
+!!    precision precision value x for the negative binomial distribution with
+!!    precision precision 'bernoulli probability' parameter = p, and integer
 !!    'number of successes in bernoulli trials' parameter = n.
 !!
 !!    the negative binomial distribution used herein has mean = n*(1-p)/p
@@ -15028,7 +15108,7 @@ END SUBROUTINE MOVE
 !!
 !!    the negative binomial distribution is the distribution of the number
 !!    of failures before obtaining n successes in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = p.
 !!
 !!##OPTIONS
@@ -15082,12 +15162,12 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
      &        k , N , n2 , nu1 , nu2
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
 !                                INTEGRAL-VALUED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE NEGATIVE BINOMIAL
 !                                DISTRIBUTION.
@@ -15098,9 +15178,9 @@ INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
 !                                OF THE 'NUMBER OF SUCCESSES
 !                                IN BERNOULLI TRIALS' PARAMETER.
 !                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE NEGATIVE BINOMIAL DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
@@ -15126,7 +15206,7 @@ INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -15335,8 +15415,8 @@ END SUBROUTINE NBCDF
 !!       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
 !!
 !!##DESCRIPTION
-!!    nbppf(3f) computes the percent point function value at the single
-!!    precision value p for the negative binomial distribution with single
+!!    nbppf(3f) computes the percent point function value at the precision
+!!    precision value p for the negative binomial distribution with precision
 !!    precision 'bernoulli probability' parameter = ppar, and integer
 !!    'number of successes in bernoulli trials' parameter = n.
 !!
@@ -15355,7 +15435,7 @@ END SUBROUTINE NBCDF
 !!
 !!    the negative binomial distribution is the distribution of the number
 !!    of failures before obtaining n successes in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a single
+!!    bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = ppar.
 !!
 !!    note that the percent point function of a distribution is identically
@@ -15413,12 +15493,12 @@ REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
 REAL(kind=wp) :: zppf
 INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --PPAR   = THE SINGLE PRECISION VALUE
+!                     --PPAR   = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE NEGATIVE BINOMIAL
 !                                DISTRIBUTION.
@@ -15429,9 +15509,9 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !                                OF THE 'NUMBER OF SUCCESSES
 !                                IN BERNOULLI TRIALS' PARAMETER.
 !                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
+!     OUTPUT--THE  PERCENT POINT  .
 !             FUNCTION VALUE PPF
 !             FOR THE NEGATIVE BINOMIAL DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
@@ -15445,7 +15525,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, NBCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -15456,7 +15536,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -15751,7 +15831,7 @@ END SUBROUTINE NBPPF
 !!
 !!##DESCRIPTION
 !!    nbran(3f) generates a random sample of size n from the negative
-!!    binomial distribution with single precision 'bernoulli probability'
+!!    binomial distribution with precision precision 'bernoulli probability'
 !!    parameter = p, and integer 'number of successes in bernoulli trials'
 !!    parameter = npar. the negative binomial distribution used herein has
 !!    mean = npar*(1-p)/p and standard deviation = sqrt(npar*(1-p)/(p*p))).
@@ -15768,7 +15848,7 @@ END SUBROUTINE NBPPF
 !!
 !!    the negative binomial distribution is the distribution of the number
 !!    of failures before obtaining npar successes in an indefinite sequence
-!!    of bernoulli (0,1) trials where the probability of success in a single
+!!    of bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = p.
 !!
 !!##OPTIONS
@@ -15817,7 +15897,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE NEGATIVE BINOMIAL
 !                                DISTRIBUTION.
@@ -15844,7 +15924,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !                                RANDOM SAMPLES UPON
 !                                SUCCESSIVE CALLS TO
 !                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -15860,7 +15940,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --NPAR SHOULD BE A POSITIVE INTEGER.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, BINRAN, GEORAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -15870,7 +15950,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !              X HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -16019,15 +16099,15 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 SUBROUTINE NORCDF(X,Cdf)
 REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16532,77 +16612,78 @@ character(len=4) :: iline2
 END SUBROUTINE NOROUT
 !>
 !!##NAME
-!!    norpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the normal probability
-!!    density function
+!!    norpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the normal
+!!    probability density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE NORPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    norpdf(3f) computes the probability density function value for the
-!!    normal (gaussian) distribution with mean = 0 and standard deviation
+!!    NORPDF(3f) computes the probability density function value for the
+!!    normal (Gaussian) distribution with mean = 0 and standard deviation
 !!    = 1.
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!        f(X) = (1/sqrt(2*pi))*exp(-X*X/2)
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the probability density function is to
+!!           be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PDF    The probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_norpdf
-!!    use M_datapac, only : norpdf
+!!    !@(#) line plotter graph of probability density function
+!!    use M_datapac, only : norpdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call norpdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call norpdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_norpdf
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE NORPDF(X,Pdf)
-IMPLICIT NONE
-REAL(kind=wp) :: c , Pdf , X
-!
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--1, 1970, Pages 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
+!*==norpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE NORPDF(X,Pdf)
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Pdf
+
+REAL(kind=wp),parameter   :: c=0.3989422804_wp
 !
-!---------------------------------------------------------------------
-!
-      DATA c/.3989422804_wp/
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS. -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
       Pdf = c*EXP(-(X*X)/2.0_wp)
 !
@@ -16685,7 +16766,7 @@ SUBROUTINE NORPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -16869,13 +16950,13 @@ END SUBROUTINE NORPLT
 SUBROUTINE NORPPF(P,Ppf)
 REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 , q3 , q4 , r , t
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
@@ -16995,7 +17076,7 @@ INTEGER :: i , ip1 , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -17007,7 +17088,7 @@ INTEGER :: i , ip1 , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     METHOD--BOX-MULLER ALGORITHM.
 !     VERSION NUMBER--82.6
@@ -17137,13 +17218,13 @@ END SUBROUTINE NORRAN
       SUBROUTINE NORSF(P,Sf)
 REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION
+!     OUTPUT ARGUMENTS--SF     = THE
 !                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION SPARSITY
+!     OUTPUT--THE  SPARSITY
 !             FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
@@ -17182,7 +17263,7 @@ END SUBROUTINE NORSF
 !!##DESCRIPTION
 !!
 !!    parcdf(3f) computes the cumulative distribution function value for
-!!    the pareto distribution with single precision tail length parameter
+!!    the pareto distribution with precision precision tail length parameter
 !!    = gamma.
 !!
 !!    the pareto distribution used herein is defined for all x greater than
@@ -17227,24 +17308,24 @@ END SUBROUTINE NORSF
 SUBROUTINE PARCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE GREATER THAN
 !                                OR EQUAL TO 1.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE PARETO
 !             DISTRIBUTION WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --X SHOULD BE GREATER THAN
 !                   OR EQUAL TO 1.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -17347,11 +17428,11 @@ REAL(kind=wp) :: an, cc, Gamma, hold, pp0025, pp025, pp975, pp9975,   q, sum1, s
 REAL(kind=wp) :: yslope
 INTEGER       :: i, iupper, N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE PARETO PROBABILITY PLOT.
@@ -17361,7 +17442,7 @@ INTEGER       :: i, iupper, N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !---------------------------------------------------------------------
@@ -17492,7 +17573,7 @@ END SUBROUTINE PARPLT
 !!
 !!##DESCRIPTION
 !!    parppf(3f) computes the percent point function value for the pareto
-!!    distribution with single precision tail length parameter = gamma.
+!!    distribution with precision precision tail length parameter = gamma.
 !!
 !!    the pareto distribution used herein is defined for all x greater than
 !!    or equal to 1, and has the probability density function
@@ -17538,24 +17619,24 @@ END SUBROUTINE PARPLT
       SUBROUTINE PARPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE PARETO DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -17647,10 +17728,10 @@ INTEGER :: i , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -17662,7 +17743,7 @@ INTEGER :: i , Iseed , N
 !                   OF N FOR THIS SUBROUTINE.
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -17819,34 +17900,34 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , Plchid ,     &
 REAL(kind=wp) :: Ymax , Ymin
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -17870,7 +17951,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -18272,28 +18353,28 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax ,
 INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
 !     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
 !             WITH SPECIFIED AXIS LIMITS.
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -18622,25 +18703,25 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
      &     x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
 !     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
 !             WITH SPECIAL PLOT CHARACTERS,
@@ -18648,7 +18729,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -19039,34 +19120,34 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -19077,7 +19158,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -19514,25 +19595,25 @@ REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
 !                    --YAXID  = THE HOLLERITH VALUE
 !                               (AT MOST 6 CHARACTERS)
@@ -19553,7 +19634,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -19933,13 +20014,13 @@ SUBROUTINE PLOTC(Y,X,Char,N)
 REAL(kind=wp) :: aim1, Char, cutoff, hold, ratiox, ratioy, X, x25,  x75, xmax, xmid, xmin, Y, ylable, ymax, ymin
 INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
@@ -19950,7 +20031,7 @@ INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y),
 !              THE HORIZONTAL AXIS VECTOR (X),
 !              OR THE PLOT CHARACTER VECTOR (CHAR) WHICH ARE
@@ -20583,13 +20664,13 @@ REAL(kind=wp) :: ymin , yupper , ywidth
 INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
@@ -20602,7 +20683,7 @@ INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y),
 !              THE HORIZONTAL AXIS VECTOR (X),
 !              OR THE PLOT CHARACTER VECTOR (CHAR) WHICH ARE
@@ -20947,9 +21028,9 @@ END SUBROUTINE PLOTCT
 !!    10.0**10) and they will subsequently be ignored in the plot subroutine.
 !!
 !!##OPTIONS
-!!     Y     The single precision vector of (unsorted or sorted) observations
+!!     Y     The precision precision vector of (unsorted or sorted) observations
 !!           to be plotted vertically.
-!!     X     The single precision vector of (unsorted or sorted) observations
+!!     X     The precision precision vector of (unsorted or sorted) observations
 !!           to be plotted horizontally.
 !!     N     The integer number of observations in the vector Y.
 !!
@@ -21329,26 +21410,26 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ymax , ymin
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -21358,7 +21439,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -21795,22 +21876,22 @@ REAL(kind=wp) :: aim1 , cutoff , D , Dmax , Dmin , hold , ratiox , ratioy ,   &
      &     X , x25 , x75 , xmax , xmid , xmin , Y , ylable , ymax , ymin
 INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -22376,22 +22457,22 @@ END SUBROUTINE PLOTSP
 !!    the capability of plotting subsets of the data, where the subset is
 !!    defined by values in the vector d.
 !!
-!! !     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!! !     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !! !                               (UNSORTED OR SORTED) OBSERVATIONS
 !! !                               TO BE PLOTTED VERTICALLY.
-!! !                    --X      = THE SINGLE PRECISION VECTOR OF
+!! !                    --X      = THE  VECTOR OF
 !! !                               (UNSORTED OR SORTED) OBSERVATIONS
 !! !                               TO BE PLOTTED HORIZONTALLY.
 !! !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !! !                               IN THE VECTOR Y.
-!! !                    --D      = THE SINGLE PRECISION VECTOR
+!! !                    --D      = THE  VECTOR
 !! !                               WHICH 'DEFINES' THE VARIOUS
 !! !                               POSSIBLE SUBSETS.
-!! !                    --DMIN   = THE SINGLE PRECISION VALUE
+!! !                    --DMIN   = THE  VALUE
 !! !                               WHICH DEFINES THE LOWER BOUND
 !! !                               (INCLUSIVELY) OF THE PARTICULAR
 !! !                               SUBSET OF INTEREST TO BE PLOTTED.
-!! !                    --DMAX   = THE SINGLE PRECISION VALUE
+!! !                    --DMAX   = THE  VALUE
 !! !                               WHICH DEFINES THE UPPER BOUND
 !! !                               (INCLUSIVELY) OF THE PARTICULAR
 !! !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -22782,7 +22863,7 @@ END SUBROUTINE PLOTST
 !!
 !!   Y   The vector of (unsorted or sorted) observations to be plotted
 !!       vertically.
-!!   X   The single precision vector of (unsorted or sorted) observations
+!!   X   The precision precision vector of (unsorted or sorted) observations
 !!       to be plotted horizontally.
 !!   N   The integer number of observations in the vector Y.
 !!       There is no restriction on the maximum value of N for this
@@ -22850,7 +22931,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99012)
          WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-         99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+         99001    FORMAT (' ','is non-negative (with value = ',I0,')')
          WRITE (G_IO,99011)
          RETURN
       ELSE
@@ -22859,7 +22940,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             WRITE (G_IO,99012)
             WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
             WRITE (G_IO,99002) N
-            99002       FORMAT (' ','HAS THE VALUE 1')
+            99002       FORMAT (' ','has the value 1')
             WRITE (G_IO,99011)
             RETURN
          ELSE
@@ -22922,13 +23003,13 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       WRITE (G_IO,99011)
       WRITE (G_IO,99012)
       WRITE (G_IO,99003) alph11 , alph12 , alph21 , alph22
-      99003 FORMAT (' ','THE ',A4,A4,', AND ',A4,A4)
+      99003 FORMAT (' ','The ',A4,A4,', and ',A4,A4)
       WRITE (G_IO,99004) sbnam1 , sbnam2
-      99004 FORMAT (' ','INPUT ARGUMENTS TO THE ',A4,A4,' SUBROUTINE')
+      99004 FORMAT (' ','input arguments to the ',A4,A4,' subroutine')
       WRITE (G_IO,99005)
-      99005 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN', ' EXCLUDED FROM THE PLOT.')
+      99005 FORMAT (' ','are such that too many points have been', ' excluded from the plot.')
       WRITE (G_IO,99006) n2
-      99006 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+      99006 FORMAT (' ','only ',I0,' points are left to be plotted.')
       WRITE (G_IO,99011)
       RETURN
 !
@@ -22958,7 +23039,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       99007 FORMAT (' ')
       WRITE (G_IO,99008)
 !
-      99008 FORMAT (' THE FOLLOWING IS A PLOT OF Y(I) (VERTICALLY) VERSUS X(I) (HORIZONTALLY)')
+      99008 FORMAT (' The following is a plot of Y(I) (vertically) versus X(I) (horizontally)')
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
@@ -23048,10 +23129,10 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 
 99011 FORMAT (' ','**********************************************************************')
 99012 FORMAT (' ','                   FATAL ERROR                    ')
-99013 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
-99014 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
-99015 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
-99016 FORMAT (' ','VALUE OF ',E15.8)
+99013 FORMAT (' ','The ',A4,A4,' input argument to the ',A4,A4,' subroutine')
+99014 FORMAT (' ','has all elements = ',E15.8)
+99015 FORMAT (' ','has all elements in excess of the cutoff')
+99016 FORMAT (' ','value of ',E15.8)
 99017 FORMAT (' ',18X,54A1)
 99018 FORMAT (' ',15X,A1)
 
@@ -23130,7 +23211,7 @@ INTEGER :: iraxm2 , irev , iskipm , itax , itaxis , itaxp1 , itaxp2 ,&
 INTEGER :: my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
      &        numdis , nummax , nummin , numout
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -23148,7 +23229,7 @@ INTEGER :: my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION
+!     MODE OF INTERNAL OPERATIONS--
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -23674,7 +23755,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , xi ,&
      &     xmax , xmid , xmin , ylable , ymax , ymin
 INTEGER i , iflag , ip2 , j , k , mx , my , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -23934,7 +24015,7 @@ REAL(kind=wp) :: xupper , xwidth
 INTEGER :: i , icol , icolmx , irow , ixdel , N , numcol ,     &
      &        numlab , numr25 , numr50 , numr75 , numrow
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -23946,7 +24027,7 @@ INTEGER :: i , icol , icolmx , irow , ixdel , N , numcol ,     &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -24215,7 +24296,7 @@ REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
      &     xmax , xmid , xmin , ylable , ymax , ymin
 INTEGER :: i , iflag , im1 , ip2 , j , k , mx , my , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS
 !                               TO BE GRAPHICALLY TESTED FOR
 !                               AUTOCORRELATION.
@@ -24225,7 +24306,7 @@ INTEGER :: i , iflag , im1 , ip2 , j , k , mx , my , N
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE INPUT VECTOR X WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -24538,26 +24619,26 @@ INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -24569,7 +24650,7 @@ INTEGER :: i , ia , icol , icolmx , irow , ixdel , N , n2 ,    &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
 !              IF D(I) IS SMALLER THAN DMIN OR LARGER THAN DMAX,
 !              THEN THE CORRESPONDING POINT (X(I),Y(I))
@@ -24998,7 +25079,7 @@ REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
 INTEGER :: i , icol , icolmx , im1 , irow , ixdel , N ,        &
      &        numcol , numlab , numr25 , numr50 , numr75 , numrow
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS
 !                               TO BE GRAPHICALLY TESTED FOR
 !                               AUTOCORRELATION.
@@ -25011,7 +25092,7 @@ INTEGER :: i , icol , icolmx , im1 , irow , ixdel , N ,        &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.
@@ -25225,7 +25306,7 @@ END SUBROUTINE PLTXXT
 !!
 !!##DESCRIPTION
 !!    poicdf(3f) computes the cumulative distribution function value at
-!!    the single precision value x for the poisson distribution with single
+!!    the precision precision value x for the poisson distribution with precision
 !!    precision tail length parameter = alamba.
 !!
 !!    the poisson distribution used herein has mean = alamba and standard
@@ -25292,17 +25373,17 @@ END SUBROUTINE PLTXXT
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 INTEGER :: i , ievodd , imax , imin , intx , nu
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
 !                                INTEGRAL-VALUED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE
+!                     --ALAMBA = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE POISSON DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
@@ -25312,7 +25393,7 @@ INTEGER :: i , ievodd , imax , imin , intx , nu
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
 !     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     COMMENT--THE SINGLE PRECISION TAIL LENGTH
+!     COMMENT--THE  TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
 !              ALAMBA CAN BE SET TO ANY POSITIVE REAL
@@ -25330,7 +25411,7 @@ INTEGER :: i , ievodd , imax , imin , intx , nu
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -25440,7 +25521,7 @@ END SUBROUTINE POICDF
 !!       SUBROUTINE POIPLT(X,N,Alamba)
 !!
 !!##DESCRIPTION
-!!    poiplt(3f) generates a poisson probability plot (with single precision
+!!    poiplt(3f) generates a poisson probability plot (with precision precision
 !!    tail length parameter = alamba).
 !!
 !!    the prototype poisson distribution used herein has mean = alamba and
@@ -25519,11 +25600,11 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
      &        jm1 , k , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE OF THE
+!                     --ALAMBA = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE POISSON PROBABILITY PLOT.
@@ -25534,7 +25615,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT,
 !                                         CHSCDF, NORPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOR LARGE VALUES OF ALAMBA (IN EXCESS OF 500.)
 !              THIS SUBROUTINE USES THE NORMAL APPROXIMATION TO
 !              THE POISSON.  THIS IS DONE TO SAVE EXECUTION TIME
@@ -25740,8 +25821,8 @@ END SUBROUTINE POIPLT
 !!       SUBROUTINE POIPPF(P,Alamba,Ppf)
 !!
 !!##DESCRIPTION
-!!    poippf(3f) computes the percent point function value at the single
-!!    precision value p for the poisson distribution with single precision
+!!    poippf(3f) computes the percent point function value at the precision
+!!    precision value p for the poisson distribution with precision precision
 !!    tail length parameter = alamba.
 !!
 !!    the poisson distribution used herein has mean = alamba and standard
@@ -25810,17 +25891,17 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
 INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE
+!                     --ALAMBA = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
+!     OUTPUT--THE  PERCENT POINT  .
 !             FUNCTION VALUE PPF
 !             FOR THE POISSON DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER = ALAMBA.
@@ -25830,8 +25911,8 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF, POICDF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, DEXP.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
-!     COMMENT--THE SINGLE PRECISION TAIL LENGTH
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION.
+!     COMMENT--THE  TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
 !              ALAMBA CAN BE SET TO ANY POSITIVE REAL
@@ -25846,7 +25927,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -26113,7 +26194,7 @@ END SUBROUTINE POIPPF
 !!
 !!##DESCRIPTION
 !!    poiran(3f) generates a random sample of size n from the poisson
-!!    distribution with single precision tail length parameter = alamba.
+!!    distribution with precision precision tail length parameter = alamba.
 !!
 !!    the poisson distribution used herein has mean = alamba and standard
 !!    deviation = sqrt(alamba).
@@ -26177,10 +26258,10 @@ INTEGER :: i , Iseed , j , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE
+!                     --ALAMBA = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -26193,8 +26274,8 @@ INTEGER :: i , Iseed , j , N
 !                 --ALAMBA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     COMMENT--THE SINGLE PRECISION TAIL LENGTH
+!     MODE OF INTERNAL OPERATIONS--.
+!     COMMENT--THE  TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
 !              ALAMBA CAN BE SET TO ANY POSITIVE REAL
@@ -26208,7 +26289,7 @@ INTEGER :: i , Iseed , j , N
 !              X HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND
@@ -26286,8 +26367,8 @@ END SUBROUTINE POIRAN
 !!
 !!##DESCRIPTION
 !!    poly(3f) computes a least squares polynomial fit (of degree = ideg)
-!!    of the response variable data in the single precision vector y as
-!!    a function of the independent variable data in the single precision
+!!    of the response variable data in the precision precision vector y as
+!!    a function of the independent variable data in the precision precision
 !!    vector x.
 !!
 !!##OPTIONS
@@ -26332,12 +26413,12 @@ INTEGER :: iset , ism1 , iwflag , Iwrite , j , jm1 , jp1 , js ,      &
      &        nkmax
 INTEGER :: nm5 , nmax , numset
 !
-!     INPUT ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      =  VECTOR OF
 !                                RESPONSE DATA (THAT IS, THE
 !                                DEPENDENT VARIABLE).
-!                     --X      = SINGLE PRECISION VECTOR OF
+!                     --X      =  VECTOR OF
 !                                THE INDEPENDENT VARIABLE.
-!                     --W      = THE SINGLE PRECISION VECTOR
+!                     --W      = THE  VECTOR
 !                                OF WEIGHTS FOR THE RESPONSE
 !                                VARIABLE.
 !                     --N      = THE INTEGER VALUE OF THE SAMPLE SIZE.
@@ -26350,9 +26431,9 @@ INTEGER :: nm5 , nmax , numset
 !                                SOME LIMITED PRINTED OUTPUT
 !                                (COEFFICIENTS, STANDARD DEVIATIONS OF
 !                                COEFFICIENTS, RESIDUAL STANDARD DEVIATION).
-!     OUTPUT ARGUMENTS--B      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--B      = THE  VECTOR OF
 !                                ESTIMATED REGRESSION COEFFICIENTS.
-!                     --SDB    = THE SINGLE PRECISION VECTOR OF
+!                     --SDB    = THE  VECTOR OF
 !                                ESTIMATED STANDARD DEVIATIONS OF THE
 !                                ESTIMATED REGRESSION COEFFICIENTS.
 !                     --S      = THE ESTIMATED RESIDUAL STANDARD
@@ -26363,10 +26444,10 @@ INTEGER :: nm5 , nmax , numset
 !                                NUMBER OF OBSERVATIONS MINUS
 !                                NUMBER OF PARAMETERS =
 !                                N - (IDEG + 1).
-!                     --PRED   = THE SINGLE PRECISION VECTOR OF
+!                     --PRED   = THE  VECTOR OF
 !                                PREDICTED VALUES FROM THE
 !                                LEAST SQUARES FIT.
-!                     --RES    = THE SINGLE PRECISION VECTOR OF
+!                     --RES    = THE  VECTOR OF
 !                                RESIDUALS FROM THE LEAST SQUARES FIT.
 !     SUBROUTINES NEEDED--DECOMP, INVXWX, DOT, FCDF.
 !     ORIGINAL VERSION--MARCH     1974
@@ -26959,7 +27040,7 @@ INTEGER :: nm5 , nmax , numset
 !!
 !!    the sample proportion = (the number of observations in the sample
 !!    between xmin and xmax, inclusively) / n. The sample proportion will
-!!    be a single precision value between 0.0 and 1.0 (inclusively).
+!!    be a precision precision value between 0.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26995,15 +27076,15 @@ SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 INTEGER :: i , isum , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE REGION
 !                                OF INTEREST.
@@ -27018,18 +27099,18 @@ INTEGER :: i , isum , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE PROPORTION
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XPROP  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XPROP  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE PROPORTION.
 !                                THIS WILL BE A VALUE BETWEEN
 !                                0.0 AND 1.0 (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE PROPORTION.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -27147,7 +27228,7 @@ SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 INTEGER :: i , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -27162,16 +27243,16 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE RANGE
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XRANGE = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XRANGE = THE  VALUE OF THE
 !                                COMPUTED SAMPLE RANGE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE RANGE.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JUNE      1974.
 !     UPDATED         --APRIL     1975.
@@ -27239,8 +27320,8 @@ END SUBROUTINE RANGE
 !!       SUBROUTINE RANK(X,N,Xr)
 !!
 !!##DESCRIPTION
-!!    rank(3f) ranks (in ascending order) the n elements of the single
-!!    precision vector x, and puts the resulting n ranks into the single
+!!    rank(3f) ranks (in ascending order) the n elements of the precision
+!!    precision vector x, and puts the resulting n ranks into the precision
 !!    precision vector xr.
 !!
 !!    rank(3f) gives the data analyst the ability to (for example) rank
@@ -27281,23 +27362,23 @@ SUBROUTINE RANK(X,N,Xr)
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS TO BE RANKED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--XR     = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--XR     = THE  VECTOR
 !                                INTO WHICH THE RANKS
 !                                FROM X WILL BE PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR XR
+!     OUTPUT--THE  VECTOR XR
 !             CONTAINING THE RANKS
 !             (IN ASCENDING ORDER)
 !             OF THE VALUES
-!             IN THE SINGLE PRECISION VECTOR X.
+!             IN THE  VECTOR X.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THE RANK OF THE FIRST ELEMENT
 !              OF THE VECTOR X
 !              WILL BE PLACED IN THE FIRST POSITION
@@ -27314,17 +27395,17 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !     COMMENT--ALTHOUGH RANKS ARE USUALLY (UNLESS TIES EXIST)
 !              INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
 !              NOTED THAT THEY ARE OUTPUTED AS SINGLE
-!              PRECISION INTEGERS IN THE SINGLE PRECISION
+!              PRECISION INTEGERS IN THE
 !              VECTOR XR.
-!              XR IS SINGLE PRECISION SO AS TO BE
+!              XR IS  SO AS TO BE
 !              CONSISTENT WITH THE FACT THAT ALL
 !              VECTOR ARGUMENTS IN ALL OTHER
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION;
+!              DATAPAC SUBROUTINES ARE ;
 !              BUT MORE IMPORTANTLY, BECAUSE TIES FREQUENTLY
 !              DO EXIST IN DATA SETS AND SO SOME OF THE
 !              RESULTING RANKS WILL BE NON-INTEGRAL
 !              AND SO THE OUTPUT VECTOR OF RANKS MUST NECESSARILY
-!              BE SINGLE PRECISION AND NOT INTEGER.
+!              BE  AND NOT INTEGER.
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     COMMENT--DUE TO CONFLICTING USE OF LABELED
 !              COMMON /BLOCK2_real64/ BY THIS RANK
@@ -27537,7 +27618,7 @@ INTEGER :: i , iadd , Istart , j , N
 !                                RANDOM PERMUTATIONS UPON
 !                                SUCCESSIVE CALLS TO
 !                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM PERMUTATION WILL BE PLACED.
@@ -27547,7 +27628,7 @@ INTEGER :: i , iadd , Istart , j , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--ALGORITHM SUGGESTED BY DAN LOZIER,
 !              NATIONAL BUREAU OF STANDARDS (205.01).
 !     ORIGINAL VERSION--JUNE      1972.
@@ -27667,13 +27748,13 @@ REAL(kind=wp) :: sum , X , y
 !                                (INCLUSIVELY) OF THE INTERVAL
 !                                ON EACH CARD TO BE SCANNED
 !                                FOR THE READ.
-!     OUTPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = THE  VECTOR
 !                                INTO WHICH THE READ DATA VALUES
 !                                WILL BE SEQUENTIALLY PLACED.
 !                     --N      = THE INTEGER VALUE
 !                                WHICH WILL EQUAL THE NUMBER OF DATA
 !                                VALUES WHICH WERE READ.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X WHICH
+!     OUTPUT--THE  VECTOR X WHICH
 !             WILL CONTAIN THE READ
 !             DATA VALUES, AND
 !             THE INTEGER VALUE N WHICH WILL
@@ -27690,7 +27771,7 @@ REAL(kind=wp) :: sum , X , y
 !     PRINTING--YES.
 !     RESTRICTIONS--ICOL1 AND ICOL2 MUST BE BETWEEN 1 AND 80,
 !                   INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--ADJACENT DATA VALUES ON THE SAME CARD
 !              MUST BE SEPARATED BY AT LEAST 1 BLANK
 !              OR 1 ALPHABETIC CHARACTER, OR BY  ANY
@@ -28188,13 +28269,13 @@ REAL(kind=wp) :: sum , X , y
 !                                (INCLUSIVELY) OF THE INTERVAL
 !                                ON EACH CARD IMAGE TO BE SCANNED
 !                                FOR THE READ.
-!     OUTPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = THE  VECTOR
 !                                INTO WHICH THE READ DATA VALUES
 !                                WILL BE SEQUENTIALLY PLACED.
 !                     --N      = THE INTEGER VALUE
 !                                WHICH WILL EQUAL THE NUMBER OF DATA
 !                                VALUES WHICH WERE READ.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X WHICH
+!     OUTPUT--THE  VECTOR X WHICH
 !             WILL CONTAIN THE READ
 !             DATA VALUES, AND
 !             THE INTEGER VALUE N WHICH WILL
@@ -28211,7 +28292,7 @@ REAL(kind=wp) :: sum , X , y
 !     PRINTING--YES.
 !     RESTRICTIONS--ICOL1 AND ICOL2 MUST BE BETWEEN 1 AND 80,
 !                   INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--ADJACENT DATA VALUES ON THE SAME CARD
 !              MUST BE SEPARATED BY AT LEAST 1 BLANK
 !              OR 1 ALPHABETIC CHARACTER, OR BY  ANY
@@ -28693,7 +28774,7 @@ END SUBROUTINE READG
 REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 INTEGER :: i , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -28708,10 +28789,10 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE RELATIVE STANDARD DEVIATION
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XRELSD = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XRELSD = THE  VALUE OF THE
 !                                COMPUTED SAMPLE RELATIVE
 !                                STANDARD DEVIATION.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE RELATIVE STANDARD DEVIATION.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -28719,7 +28800,7 @@ INTEGER :: i , Iwrite , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MARCH     1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -28795,7 +28876,7 @@ END SUBROUTINE RELSD
 !!
 !!##DESCRIPTION
 !!    REPLAC(3f) replaces (with the value xnew) all observations in the
-!!    single precision vector X which are inside the closed (inclusive)
+!!    precision precision vector X which are inside the closed (inclusive)
 !!    interval defined by XMIN and XMAX.
 !!
 !!    All observations outside of this interval are left unchanged.
@@ -28837,24 +28918,24 @@ END SUBROUTINE RELSD
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 INTEGER :: i , k , N , ndel
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST FOR REPLACEMENT.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST FOR REPLACEMENT.
-!                     --XNEW   = THE SINGLE PRECISION VALUE
+!                     --XNEW   = THE  VALUE
 !                                WITH WHICH ALL OF THE
 !                                OBSERVATIONS IN THE INTERVAL
 !                                OF INTEREST
 !                                WILL BE REPLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             IN WHICH ONLY THOSE VALUES INSIDE
 !             (INCLUSIVELY) THE INTERVAL OF INTEREST
 !             HAVE BEEN REPLACED BY XNEW.
@@ -28867,7 +28948,7 @@ INTEGER :: i , k , N , ndel
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THIS SUBROUTINE MAY BE USEFULLY EMPLOYED
 !              IN CONJUNCTION WITH THE DATAPAC
 !              PLOTTING SUBROUTINES INASMUCH
@@ -28980,7 +29061,7 @@ END SUBROUTINE REPLAC
 !!       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 !!
 !!##DESCRIPTION
-!!    retain(3f) retains all observations in the single precision vector
+!!    retain(3f) retains all observations in the precision precision vector
 !!    x which are inside the closed (inclusive) interval defined by xmin
 !!    and xmax, while deleting all observations outside of this interval.
 !!
@@ -29020,15 +29101,15 @@ END SUBROUTINE REPLAC
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE RETAINED.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST TO BE RETAINED.
@@ -29037,7 +29118,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !                                OF THE OBSERVATIONS OUTSIDE THE
 !                                INTERVAL OF INTEREST HAVE BEEN
 !                                DELETED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             IN WHICH ONLY THOSE VALUES INSIDE
 !             (INCLUSIVELY) THE INTERVAL OF INTEREST
 !             HAVE BEEN RETAINED, AND
@@ -29053,7 +29134,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS
 !              MADE WHATEVER DELETIONS ARE APPROPRIATE,
 !              THE OUTPUT VECTOR X WILL BE 'PACKED';
@@ -29186,7 +29267,7 @@ END SUBROUTINE RETAIN
 !!    of a data set.
 !!
 !!##INPUT ARGUMENTS
-!!    X  The single precision vector of (unsorted or sorted) observations.
+!!    X  The precision precision vector of (unsorted or sorted) observations.
 !!
 !!    N  The integer number of observations in the vector x.
 !!
@@ -29633,11 +29714,11 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
 INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P      = THE SINGLE PRECISION FRACTION VALUE
+!                     --P      = THE  FRACTION VALUE
 !                                (BETWEEN 0.0 AND 1.0, EXCLUSIVELY)
 !                                WHICH DEFINES THE DESIRED PERCENT
 !                                POINT TO BE COMPUTED.
@@ -29652,9 +29733,9 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !                                THE PRINTING OF THE
 !                                SAMPLE 100P PERCENT POINT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--PP     = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--PP     = THE  VALUE OF THE
 !                                COMPUTED SAMPLE 100P PERCENT POINT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE 100P PERCENT POINT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -29672,7 +29753,7 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !                   BE PRINTED OUT AND PP WILL BE SET TO -999999999.0
 !                   IF(N+1)P IS LARGER THAN N, AN ERROR MESSAGE WILL
 !                   BE PRINTED OUT AND PP WILL BE SET TO 999999999.0.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -29816,7 +29897,7 @@ SUBROUTINE SCALE(X,N)
 REAL(kind=wp) :: an , hold , sum , X , xmax , xmean , xmin , xrange , xrelsd , xsd , xvar
 INTEGER i , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -29832,7 +29913,7 @@ INTEGER i , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THE SAMPLE RELATIVE STANDARD DEVIATION
 !              IS THE SAMPLE STANDARD DEVIATION RELATIVE
 !              TO THE MAGNITUDE OF THE SAMPLE MEAN.
@@ -29997,7 +30078,7 @@ SUBROUTINE SD(X,N,Iwrite,Xsd)
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 INTEGER :: i , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -30012,9 +30093,9 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE STANDARD DEVIATION
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XSD    = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XSD    = THE  VALUE OF THE
 !                                COMPUTED SAMPLE STANDARD DEVIATION.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE STANDARD DEVIATION (WITH DENOMINATOR N-1).
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -30022,7 +30103,7 @@ INTEGER :: i , Iwrite , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -30402,12 +30483,12 @@ END SUBROUTINE SORTC
 !!##DESCRIPTION
 !!
 !!    This subroutine sorts (in ascending order) the N elements of the
-!!    single precision vector X using the binary sort algorithm and puts
-!!    the resulting N sorted values into the single precision vector Y.
+!!    precision precision vector X using the binary sort algorithm and puts
+!!    the resulting N sorted values into the precision precision vector Y.
 !!
 !!##OPTIONS
 !!##INPUT
-!!     X  The single precision vector of
+!!     X  The precision precision vector of
 !!        observations to be sorted.
 !!        The input vector X remains unaltered.
 !!
@@ -30416,7 +30497,7 @@ END SUBROUTINE SORTC
 !!
 !!##OUTPUT
 !!
-!!     Y  The single precision vector
+!!     Y  The precision precision vector
 !!        into which the sorted data values
 !!        from X will be placed in
 !!        ascending order.
@@ -30673,10 +30754,10 @@ END SUBROUTINE SORT
 !!
 !!##DESCRIPTION
 !!
-!!   SORTP(3f) sorts (in ascending order) the N elements of the single
-!!   precision vector X, puts the resulting N sorted values into the single
+!!   SORTP(3f) sorts (in ascending order) the N elements of the precision
+!!   precision vector X, puts the resulting N sorted values into the precision
 !!   precision vector Y; and puts the position (in the original vector X)
-!!   of each of the sorted values into the single precision vector XPOS.
+!!   of each of the sorted values into the precision precision vector XPOS.
 !!
 !!   This subroutine gives the data analyst not only the ability to determine
 !!   what the MIN and MAX (for example) of the data set are, but also where
@@ -30718,23 +30799,23 @@ SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS TO BE SORTED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE SORTED DATA VALUES
 !                                FROM X WILL BE PLACED.
-!                     --XPOS   = THE SINGLE PRECISION VECTOR
+!                     --XPOS   = THE  VECTOR
 !                                INTO WHICH THE POSITIONS
 !                                (IN THE ORIGINAL VECTOR X)
 !                                OF THE SORTED VALUES
 !                                WILL BE PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR XS
+!     OUTPUT--THE  VECTOR XS
 !             CONTAINING THE SORTED
 !             (IN ASCENDING ORDER) VALUES
-!             OF THE SINGLE PRECISION VECTOR X, AND
-!             THE SINGLE PRECISION VECTOR XPOS
+!             OF THE  VECTOR X, AND
+!             THE  VECTOR XPOS
 !             CONTAINING THE POSITIONS
 !             (IN THE ORIGINAL VECTOR X)
 !             OF THE SORTED VALUES.
@@ -30778,12 +30859,12 @@ INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , 
 !              ALTHOUGH THESE POSITIONS ARE NECESSARILY
 !              INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
 !              NOTED THAT THEY ARE OUTPUTED AS SINGLE
-!              PRECISION INTEGERS IN THE SINGLE PRECISION
+!              PRECISION INTEGERS IN THE
 !              VECTOR XPOS.
-!              XPOS IS SINGLE PRECISION SO AS TO BE
+!              XPOS IS  SO AS TO BE
 !              CONSISTENT WITH THE FACT THAT ALL
 !              VECTOR ARGUMENTS IN ALL OTHER
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     COMMENT--IF THE ANALYST DESIRES A SORT 'IN PLACE',
 !              THIS IS DONE BY HAVING THE SAME
@@ -30981,7 +31062,7 @@ END SUBROUTINE SORTP
 !!    spcorr(3f) computes the spearman rank correlation coefficient between
 !!    the 2 sets of data in the input vectors x and y.
 !!
-!!    the spearman rank correlation coefficient will be a single precision
+!!    the spearman rank correlation coefficient will be a precision precision
 !!    value between -1.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
@@ -31022,11 +31103,11 @@ END SUBROUTINE SORTP
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 INTEGER :: i , iflag , iupper , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
 !                                OF DATA.
-!                     --Y      = THE SINGLE PRECISION VECTOR OF
+!                     --Y      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE SECOND SET
 !                                OF DATA.
@@ -31045,14 +31126,14 @@ INTEGER :: i , iflag , iupper , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SPEARMAN CORRELATION COEFFICIENT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--SPC    = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--SPC    = THE  VALUE OF THE
 !                                COMPUTED SPEARMAN RANK CORRELATION
 !                                COEFFICIENT BETWEEN THE 2 SETS OF DATA
 !                                IN THE INPUT VECTORS X AND Y.
-!                                THIS SINGLE PRECISION VALUE
+!                                THIS  VALUE
 !                                WILL BE BETWEEN -1.0 AND 1.0
 !                                (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SPEARMAN RANK CORRELATION COEFFICIENT BETWEEN THE 2 SETS
 !             OF DATA IN THE INPUT VECTORS X AND Y.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
@@ -31061,7 +31142,7 @@ INTEGER :: i , iflag , iupper , Iwrite , N
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--RANK AND SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --JANUARY   1975.
@@ -31192,7 +31273,7 @@ END SUBROUTINE SPCORR
 REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 INTEGER :: i , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -31207,17 +31288,17 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE STANDARDIZED THIRD CENTRAL
 !                                MOMENT AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XSMOM3 = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XSMOM3 = THE  VALUE OF THE
 !                                COMPUTED SAMPLE STANDARDIZED THIRD
 !                                CENTRAL MOMENT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE STANDARDIZED THIRD CENTRAL MOMENT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -31338,7 +31419,7 @@ END SUBROUTINE STMOM3
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
 INTEGER :: i , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -31353,17 +31434,17 @@ INTEGER :: i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE STANDARDIZED FOURTH CENTRAL
 !                                MOMENT AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XSMOM4 = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XSMOM4 = THE  VALUE OF THE
 !                                COMPUTED SAMPLE STANDARDIZED FOURTH
 !                                CENTRAL MOMENT.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -31445,8 +31526,8 @@ END SUBROUTINE STMOM4
 !!
 !!##DESCRIPTION
 !!
-!!    This subroutine carries over into Y all observations of the single
-!!    precision vector X for which the corresponding elements in the single
+!!    This subroutine carries over into Y all observations of the precision
+!!    precision vector X for which the corresponding elements in the precision
 !!    precision vector D are inside the closed (inclusive) interval defined
 !!    by DMIN and DMAX, while not carrying over any observations of X
 !!    corresponding to elements of D outside of this interval.
@@ -31655,8 +31736,8 @@ END SUBROUTINE SUBSE1
 !!
 !!##DESCRIPTION
 !!
-!!    This subroutine carries over into Y all observations of the single
-!!    precision vector X for which the corresponding elements in the single
+!!    This subroutine carries over into Y all observations of the precision
+!!    precision vector X for which the corresponding elements in the precision
 !!    precision vector D1 are inside the closed (inclusive) interval defined
 !!    by D1MIN and D1MAX, and also for which the corresponding elements
 !!    in the vector D2 are inside the closed (inclusive)
@@ -32186,7 +32267,7 @@ REAL(kind=wp) :: xbar
 REAL(kind=wp) :: xline, Y, YM, Z, zb1, zb2, zcc, zgeary, zrs, zwilks
 INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, irev, iupper, mx, N, nhalf, nhalfp, nm1, numdis
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -32205,7 +32286,7 @@ INTEGER       :: i, icount, idis, idis2, idismx, ievodd, imax, imin, irev, iuppe
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG, LOG10, EXP,
 !                                         SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -32878,16 +32959,16 @@ SUBROUTINE TCDF(X,Nu,Cdf)
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 INTEGER :: i , ievodd , imax , imin , Nu , nucut
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE  VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE STUDENT'S T DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -33107,7 +33188,7 @@ REAL(kind=wp) :: r025, r975, rk, rmax, s, sd, sdr, ssq, sum, sum1,  sum2, var, v
 INTEGER :: i, i2, iarg1, iarg2, idf, ilower, imin, irev, j, jmax, jmin, k, kmax, krev, l, ll, llp1, lm1, lmax
 INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -33512,7 +33593,7 @@ REAL(kind=wp) :: u , univ , usmall , var , X , xbar , xmax , xmax2 , xmax3 ,  &
 INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
      &        locmx2 , locmx3 , N , numsec
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -33523,7 +33604,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !
@@ -33928,7 +34009,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     yslope
 INTEGER :: i , iupper , N , Nu
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -33943,7 +34024,7 @@ INTEGER :: i , iupper , N , Nu
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, TPPF, NORPPF,
 !                                         PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
@@ -34128,7 +34209,7 @@ SUBROUTINE TPPF(P,Nu,Ppf)
 INTEGER ipass , maxit , Nu
 REAL(kind=wp) :: P , Ppf , ppfn
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -34136,9 +34217,9 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE STUDENT'S T DISTRIBUTION
 !             WITH DEGREES OF FREEDOM PARAMETER = NU.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -34366,7 +34447,7 @@ INTEGER i , Iseed , j , N , Nu
 !                     --NU     = THE INTEGER DEGREES OF FREEDOM
 !                                (PARAMETER) FOR THE T
 !                                DISTRIBUTION.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -34379,7 +34460,7 @@ INTEGER i , Iseed , j , N , Nu
 !                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -34509,17 +34590,17 @@ SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
 INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P1     = THE SINGLE PRECISION VALUE
+!                     --P1     = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE LOWER ORDER STATISTICS
 !                                IS TO BE TRIMMED OFF
 !                                BEFORE COMPUTING THE TRIMMED MEAN.
-!                     --P2     = THE SINGLE PRECISION VALUE
+!                     --P2     = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE UPPER ORDER STATISTICS
@@ -34536,7 +34617,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                                THE PRINTING OF THE
 !                                SAMPLE TRIMMED MEAN
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XTRIM  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XTRIM  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE TRIMMED MEAN
 !                                WHERE 100*P1 % OF THE SMALLEST
 !                                AND 100*P2 % OF THE LARGEST
@@ -34544,7 +34625,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                                TRIMMED AWAY BEFORE COMPUTING THE
 !                                MEAN OF THE REMAINING OBSERVATIONS
 !                                IN THE MIDDLE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE TRIMMED MEAN
 !             WHERE 100*P1 % OF THE SMALLEST
 !             AND   100*P2 % OF THE LARGEST
@@ -34561,7 +34642,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                 --THE SUM OF P1 AND P2 SHOULD BE
 !                   SMALLER THAN 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !
@@ -34722,7 +34803,7 @@ END SUBROUTINE TRIM
 !!
 !!##OUTPUT ARGUMENTS
 !!
-!!   CDF   the single precision cumulative distribution function value.
+!!   CDF   the precision precision cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
@@ -34886,7 +34967,7 @@ INTEGER i , imax , irev , N , nevodd , nhalf
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF UNIFORM ORDER STATISTIC MEDIANS
 !                                TO BE GENERATED.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                UNIFORM ORDER STATISTIC MEDIANS
@@ -34948,83 +35029,95 @@ INTEGER i , imax , irev , N , nevodd , nhalf
 END SUBROUTINE UNIMED
 !>
 !!##NAME
-!!    unipdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the Uniform probability
-!!    density function
+!!    unipdf(3f) - [M_datapac:PROBABILITY_DENSITY] trivially compute the
+!!    Uniform probability density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE UNIPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    unipdf(3f) computes the probability density function value for the
+!!    UNIPDF(3f) computes the probability density function value for the
 !!    uniform (rectangular) distribution on the unit interval (0,1).
 !!
-!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
 !!    = 0.28867513. this distribution has the probability density function
-!!    f(x) = 1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!        f(X) = 1
+!!
+!!    That is, trivially no matter what the input the output is 1.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X     The precision precision value at which the probability density
+!!          function is to be evaluated. X should be between 0 and 1,
+!!          inclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PDF   The precision precision probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_unipdf
+!!    !@(#) line plotter graph of probability density function
 !!    use M_datapac, only : unipdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call unipdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i)/10.0,i=0,10,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call unipdf( x(i), y(i) )
+!!       enddo
+!!       write(*,*)y
 !!    end program demo_unipdf
 !!
 !!   Results:
 !!
+!!       1.00  1.000000  1.000000  1.000000  1.000000
+!!       1.00  1.000000  1.000000  1.000000  1.000000
+!!       1.00
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==unipdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE UNIPDF(X,Pdf)
-REAL(kind=wp) :: Pdf , X
-!
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE BETWEEN 0 AND 1, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!
-!---------------------------------------------------------------------
-!
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Pdf
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<0.0_wp .OR. X>1.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO UNIPDF(3f) IS OUTSIDE THE USUAL (0,1) INTERVAL *****')
+         99001 FORMAT(&
+         & ' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO UNIPDF(3f) IS OUTSIDE THE USUAL (0,1) INTERVAL *****')
          WRITE (G_IO,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99002 FORMAT(' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
          Pdf = 0.0_wp
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          Pdf = 1.0_wp
       ENDIF
 !
@@ -35107,7 +35200,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -35264,17 +35357,17 @@ END SUBROUTINE UNIPLT
 SUBROUTINE UNIPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT
+!     OUTPUT--THE  PERCENT POINT
 !             FUNCTION VALUE PPF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35375,7 +35468,7 @@ INTEGER m(17)
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --ISEED  = AN INTEGER ISEED VALUE
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -35384,7 +35477,7 @@ INTEGER m(17)
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !
 !     ALGORITHM--FIBONACCI GENERATOR
 !                AS DEFINED BY GEORGE MARSAGLIA.
@@ -35637,17 +35730,17 @@ END SUBROUTINE UNIRAN
 SUBROUTINE UNISF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE SINGLE PRECISION SPARSITY
+!     OUTPUT ARGUMENTS--SF     = THE  SPARSITY
 !                                FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION
+!     OUTPUT--THE
 !             SPARSITY FUNCTION VALUE SF.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35725,7 +35818,7 @@ SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 INTEGER i , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -35740,16 +35833,16 @@ INTEGER i , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE VARIANCE
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XVAR   = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XVAR   = THE  VALUE OF THE
 !                                COMPUTED SAMPLE VARIANCE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE VARIANCE (WITH DENOMINATOR N-1).
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35877,7 +35970,7 @@ REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
 REAL(kind=wp) :: ybar , yi , yint , ys , yslope , Z
 INTEGER i , idis , idismx , iupper , N , numdis , numdm1
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -35888,7 +35981,7 @@ INTEGER i , idis , idismx , iupper , N , numdis , numdm1
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, WEIPLT,
 !                                         EV1PLT, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -36170,7 +36263,7 @@ END SUBROUTINE WEIB
 !!
 !!##DESCRIPTION
 !!    weicdf(3f) computes the cumulative distribution function value for
-!!    the weibull distribution with single precision tail length parameter
+!!    the weibull distribution with precision precision tail length parameter
 !!    = gamma.
 !!
 !!    the weibull distribution used herein is defined for all positive x,
@@ -36213,16 +36306,16 @@ END SUBROUTINE WEIB
 SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF FOR THE WEIBULL DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -36336,11 +36429,11 @@ REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE WEIBULL PROBABILITY PLOT.
@@ -36350,7 +36443,7 @@ INTEGER i , iupper , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --MARCH     1975.
 !     UPDATED         --SEPTEMBER 1975.
@@ -36487,7 +36580,7 @@ END SUBROUTINE WEIPLT
 !!
 !!##DESCRIPTION
 !!    weippf(3f) computes the percent point function value for the weibull
-!!    distribution with single precision tail length parameter = gamma.
+!!    distribution with precision precision tail length parameter = gamma.
 !!
 !!    the weibull distribution used herein is defined for all positive x,
 !!    and has the probability density function f(x) = gamma * (x**(gamma-1))
@@ -36532,17 +36625,17 @@ END SUBROUTINE WEIPLT
 SUBROUTINE WEIPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE
+!                     --GAMMA  = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE WEIBULL DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -36550,7 +36643,7 @@ REAL(kind=wp) :: Gamma , P , Ppf
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
@@ -36642,10 +36735,10 @@ INTEGER i , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -36658,7 +36751,7 @@ INTEGER i , Iseed , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -36955,7 +37048,7 @@ END SUBROUTINE WIND
 !!
 !!##DESCRIPTION
 !!
-!!    WRITE(3f) writes out the contents of the single precision vector X
+!!    WRITE(3f) writes out the contents of the precision precision vector X
 !!    in an orderly and neat fashion.
 !!
 !!    WRITE(3f) gives the data analyst the ability to get data out of the
@@ -36963,7 +37056,7 @@ END SUBROUTINE WIND
 !!
 !!##INPUT ARGUMENTS
 !!
-!!    X       The single precision vector of
+!!    X       The precision precision vector of
 !!            observations to be printed out.
 !!
 !!    N       the integer number of observations

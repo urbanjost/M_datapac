@@ -1,5 +1,5 @@
      program demo_caupdf
-     !@(#) line plotter graph of cumulative distribution function
+     !@(#) line plotter graph of probability density function
      use M_datapac, only : caupdf, plott
      implicit none
      real,allocatable  :: x(:), y(:)

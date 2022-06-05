@@ -8,8 +8,8 @@ SYNOPSIS
       SUBROUTINE COPY(X,N,Y)
 
 DESCRIPTION
-   copy(3f) copies the contents of the single precision vector x into
-   the single precision vector y.
+   copy(3f) copies the contents of the precision precision vector x into
+   the precision precision vector y.
 
 OPTIONS
     X   description of parameter
@@ -44,17 +44,17 @@ SUBROUTINE COPY(X,N,Y)
 REAL(kind=wp) :: hold , X , Y
 INTEGER i , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                OBSERVATIONS TO BE COPIED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
 !                                INTO WHICH THE COPIED DATA VALUES
 !                                FROM X WILL BE SEQUENTIALLY PLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y.
+!     OUTPUT--THE  VECTOR Y.
 !             WHICH WILL HAVE ITS
 !             FIRST N ELEMENTS IDENTICAL
-!             TO THE SINGLE PRECISION VECTOR X.
+!             TO THE  VECTOR X.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.

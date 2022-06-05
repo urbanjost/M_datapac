@@ -53,28 +53,35 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>dexcdf</B>(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the double exponential
-cumulative distribution function
+<B>dexcdf</B>(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the double
+exponential cumulative distribution function
 <P>
 </BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output Arguments</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
 </A>
 <BLOCKQUOTE>
 SUBROUTINE <B>DEXCDF</B>(X,Cdf)
+<P>
+<PRE>
+       real(kind=wp),intent(in)  :: X
+       real(kind=wp),intent(out) :: Cdf
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -82,35 +89,44 @@ SUBROUTINE <B>DEXCDF</B>(X,Cdf)
 
 </A>
 <BLOCKQUOTE>
-<B>dexcdf</B>(3f) computes the cumulative distribution function value for the
-double exponential (laplace) distribution with mean = 0 and standard
+<B>DEXCDF</B>(3f) computes the cumulative distribution function value for the
+double exponential (Laplace) distribution with mean = 0 and standard
 deviation = <B>sqrt</B>(2).
 <P>
-this distribution is defined for all x and has the probability
+This distribution is defined for all X and has the probability
 density function
 <P>
 <PRE>
-       f(x) = 0.5*exp(-abs(x)).
+       f(x) = 0.5*exp(-abs(x))
 <P>
 </PRE>
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>X</B> </TD><TD valign=bottom>
-description of parameter
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+The precision precision value at which the cumulative distribution
+function is to be evaluated.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
+
+     <H3>OUTPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B>CDF</B> </TD><TD valign=bottom>
+The precision precision cumulative distribution function value.
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -120,25 +136,67 @@ Sample program:
 <P>
 <PRE>
    program demo_dexcdf
-   use M_datapac, only : dexcdf
+   !@(#) line plotter graph of cumulative distribution function
+   use M_datapac, only : dexcdf, plott
    implicit none
-   character(len=*),parameter ::  g=&#146;(*(g0,1x))&#146;
-   ! call dexcdf(x,y)
+   real,allocatable  :: x(:), y(:)
+   integer           :: i
+      x=[(real(i),i=-100,100,1)]
+      if(allocated(y))deallocate(y)
+      allocate(y(size(x)))
+      do i=1,size(x)
+         call dexcdf(x(i)/10.0,y(i))
+      enddo
+      call plott(x,y,size(x))
    end program demo_dexcdf
 <P>
 </PRE>
 Results:
+<P>
+<PRE>
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.1000000E+03 -                                                  X
+     0.9166666E+02 I                                                  X
+     0.8333334E+02 I                                                  X
+     0.7500000E+02 I                                                  X
+     0.6666667E+02 I                                                  X
+     0.5833334E+02 I                                                  X
+     0.5000000E+02 -                                                  X
+     0.4166667E+02 I                                                 XX
+     0.3333334E+02 I                                                 X
+     0.2500000E+02 I                                               XXX
+     0.1666667E+02 I                                           XXXXX
+     0.8333336E+01 I                                   X XXXXXXX
+     0.0000000E+00 -                  X X X X X X X X X
+    -0.8333328E+01 I         XXXXXXX X
+    -0.1666666E+02 I     XXXXX
+    -0.2499999E+02 I   XXX
+    -0.3333333E+02 I   X
+    -0.4166666E+02 I  XX
+    -0.5000000E+02 -  X
+    -0.5833333E+02 I  X
+    -0.6666666E+02 I  X
+    -0.7500000E+02 I  X
+    -0.8333333E+02 I  X
+    -0.9166666E+02 I  X
+    -0.1000000E+03 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.2270E-04  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+<P>
+</PRE>
 </BLOCKQUOTE>
-<A name=5>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -146,7 +204,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -154,7 +212,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -164,12 +222,12 @@ CC0-1.0
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-johnson and kotz, continuous univariate distributions-<B>-2</B>, 1970,
-pages 22-36.
+Johnson and Kotz, Continuous Univariate Distributions-<B>-2</B>, 1970,
+Pages 22-36.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>dexcdf (3m_datapac)</TD> <TD align=right width=33%><I>June 04, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from fdffda29-b6a8-4dd4-80aa-d7ecb7434dc9 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>dexcdf (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from f27612e6-8d6e-40b4-a331-21ba14757b41 using man macros.</FONT>
 <br><br><center><img src="images/dexcdf.gif"></center>
 </div>
 </div>

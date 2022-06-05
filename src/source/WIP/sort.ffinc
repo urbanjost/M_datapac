@@ -14,12 +14,12 @@ SYNOPSIS
 DESCRIPTION
 
    This subroutine sorts (in ascending order) the N elements of the
-   single precision vector X using the binary sort algorithm and puts
-   the resulting N sorted values into the single precision vector Y.
+   precision precision vector X using the binary sort algorithm and puts
+   the resulting N sorted values into the precision precision vector Y.
 
 OPTIONS
 INPUT
-    X  The single precision vector of
+    X  The precision precision vector of
        observations to be sorted.
        The input vector X remains unaltered.
 
@@ -28,7 +28,7 @@ INPUT
 
 OUTPUT
 
-    Y  The single precision vector
+    Y  The precision precision vector
        into which the sorted data values
        from X will be placed in
        ascending order.

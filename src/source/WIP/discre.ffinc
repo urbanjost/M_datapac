@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
 
 DESCRIPTION
-   discre(3f) 'discretizes' the data of the single precision vector x.
+   discre(3f) 'discretizes' the data of the precision precision vector x.
    the first class interval is from xmin to xmin + xdel; the second
    class interval is from xmin+ xdel to xmin + 2*xdel; etc.
 
@@ -62,28 +62,28 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
 INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER BOUNDARY
 !                                (INCLUSIVELY) OF THE LOWERMOST
 !                                CLASS.
-!                     --XDEL   = THE SINGLE PRECISION VALUE
+!                     --XDEL   = THE  VALUE
 !                                OF THE CLASS WIDTH.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER BOUNDARY
 !                                (INCLUSIVELY) OF THE UPPERMOST
 !                                CLASS.
-!     OUTPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     OUTPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                                DISCRETIZED VALUES (= CLASS
 !                                MIDPOINTS) CORRESPONDING TO
 !                                THE CONTINUOUS VALUES IN THE VECTOR X.
 !                                THERE WILL RESULT N SUCH DISCRETIZED
 !                                VALUES.
-!     OUTPUT--THE SINGLE PRECISION VECTOR Y
+!     OUTPUT--THE  VECTOR Y
 !             WHICH CONTAINS N DISCRETIZED VALUES
 !             (= CLASS MIDPOINTS)
 !             CORRESPONDING TO THE N
@@ -101,7 +101,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 !                   OF N FOR THIS SUBROUTINE.
 !                 --XDEL SHOULD BE POSITIVE.
 !                 --(XMAX-XMIN)/XDEL SHOULD NOT EXCEED 999.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--IT IS SUGGESTED THAT XMIN, XDEL,
 !              AND XMAX HAVE AT LEAST 1 MORE
 !              DECIMAL PLACE THAN THE DATA VALUES

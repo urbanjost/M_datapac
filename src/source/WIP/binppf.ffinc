@@ -8,8 +8,8 @@ SYNOPSIS
     SUBROUTINE BINPPF(P,Ppar,N,Ppf)
 
 DESCRIPTION
-   BINPPF(3f) computes the percent point function value at the single
-   precision value P for the binomial distribution with single precision
+   BINPPF(3f) computes the percent point function value at the precision
+   precision value P for the binomial distribution with precision precision
    'Bernoulli probability' parameter = PPAR, and integer 'number of
    Bernoulli trials' parameter = N.
 
@@ -28,18 +28,18 @@ DESCRIPTION
 
    The binomial distribution is the distribution of the number of
    successes in N Bernoulli (0,1) trials where the probability of success
-   in a single trial = PPAR.
+   in a precision trial = PPAR.
 
    Note that the percent point function of a distribution is identically
    the same as the inverse cumulative distribution function of the
    distribution.
 
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (INCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --PPAR   = THE SINGLE PRECISION VALUE
+!                     --PPAR   = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE BINOMIAL
 !                                DISTRIBUTION.
@@ -50,9 +50,9 @@ DESCRIPTION
 !                                OF THE 'NUMBER OF BERNOULLI TRIALS'
 !                                PARAMETER.
 !                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT  .
+!     OUTPUT--THE  PERCENT POINT  .
 !             FUNCTION VALUE PPF
 !             FOR THE BINOMIAL DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
@@ -111,7 +111,7 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (INCLUSIVELY).
 
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -122,7 +122,7 @@ INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND

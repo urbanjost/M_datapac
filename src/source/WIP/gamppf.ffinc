@@ -8,7 +8,7 @@ SYNOPSIS
 
 DESCRIPTION
    gamppf(3f) computes the percent point function value for the gamma
-   distribution with single precision tail length parameter = gamma.
+   distribution with precision precision tail length parameter = gamma.
 
    the gamma distribution used herein has mean = gamma and standard
    deviation = sqrt(gamma). this distribution is defined for all positive
@@ -65,17 +65,17 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: Gamma , P , Ppf
 INTEGER :: icount , iloop , j , maxit
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE GAMMA DISTRIBUTION
 !             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.

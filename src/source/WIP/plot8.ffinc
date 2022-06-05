@@ -94,34 +94,34 @@ REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
 INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !
 !
-!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE SINGLE PRECISION VECTOR OF
+!                    --X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED HORIZONTALLY.
-!                    --CHAR   = THE SINGLE PRECISION VECTOR OF
+!                    --CHAR   = THE  VECTOR OF
 !                               OBSERVATIONS WHICH CONTROL THE
 !                               VALUE OF EACH INDIVIDUAL PLOT
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!                    --YMIN   = THE SINGLE PRECISION VALUE OF
+!                    --YMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE SINGLE PRECISION VALUE OF
+!                    --YMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE SINGLE PRECISION VALUE OF
+!                    --XMIN   = THE  VALUE OF
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE SINGLE PRECISION VALUE OF
+!                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!                    --D      = THE SINGLE PRECISION VECTOR
+!                    --D      = THE  VECTOR
 !                               WHICH 'DEFINES' THE VARIOUS
 !                               POSSIBLE SUBSETS.
-!                    --DMIN   = THE SINGLE PRECISION VALUE
+!                    --DMIN   = THE  VALUE
 !                               WHICH DEFINES THE LOWER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!                    --DMAX   = THE SINGLE PRECISION VALUE
+!                    --DMAX   = THE  VALUE
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
@@ -132,7 +132,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)

@@ -33,7 +33,7 @@ INPUT ARGUMENTS
             upon successive calls to this subroutine within a run.
 OUTPUT ARGUMENTS
 
-   X     A single precision vector (of dimension at least N) into which
+   X     A precision precision vector (of dimension at least N) into which
          the generated random sample will be placed.
 
 EXAMPLES

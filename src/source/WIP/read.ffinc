@@ -63,13 +63,13 @@ REAL(kind=wp) :: sum , X , y
 !                                (INCLUSIVELY) OF THE INTERVAL
 !                                ON EACH CARD TO BE SCANNED
 !                                FOR THE READ.
-!     OUTPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = THE  VECTOR
 !                                INTO WHICH THE READ DATA VALUES
 !                                WILL BE SEQUENTIALLY PLACED.
 !                     --N      = THE INTEGER VALUE
 !                                WHICH WILL EQUAL THE NUMBER OF DATA
 !                                VALUES WHICH WERE READ.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X WHICH
+!     OUTPUT--THE  VECTOR X WHICH
 !             WILL CONTAIN THE READ
 !             DATA VALUES, AND
 !             THE INTEGER VALUE N WHICH WILL
@@ -86,7 +86,7 @@ REAL(kind=wp) :: sum , X , y
 !     PRINTING--YES.
 !     RESTRICTIONS--ICOL1 AND ICOL2 MUST BE BETWEEN 1 AND 80,
 !                   INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--ADJACENT DATA VALUES ON THE SAME CARD
 !              MUST BE SEPARATED BY AT LEAST 1 BLANK
 !              OR 1 ALPHABETIC CHARACTER, OR BY  ANY

@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE DEFINE(X,N,Xnew)
 
 DESCRIPTION
-   define(3f) sets all of the elements in the single precision vector
+   define(3f) sets all of the elements in the precision precision vector
    x equal to xnew.
 
    define(3f) is useful in defining a vector of constants.
@@ -49,15 +49,15 @@ SUBROUTINE DEFINE(X,N,Xnew)
 INTEGER i , N
 REAL(kind=wp) :: X , Xnew
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XNEW   = THE SINGLE PRECISION VALUE
+!                     --XNEW   = THE  VALUE
 !                                TO WHICH ALL OF THE
 !                                OBSERVATIONS IN THE VECTOR X
 !                                WILL BE SET.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             EVERY ELEMENT OF WHICH
 !             WILL BE EQUAL TO XNEW.
 !             ALSO, 3 LINES OF SUMMARY INFORMATION
@@ -67,7 +67,7 @@ REAL(kind=wp) :: X , Xnew
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED  VERSION--JULY      1976.
 !

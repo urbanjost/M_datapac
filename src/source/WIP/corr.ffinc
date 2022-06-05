@@ -10,7 +10,7 @@ SYNOPSIS
 DESCRIPTION
    corr(3f) computes the sample correlation coefficient between the 2
    sets of data in the input vectors x and y. The sample correlation
-   coefficient will be a single precision value between -1.0 and 1.0
+   coefficient will be a precision precision value between -1.0 and 1.0
    (inclusively).
 
 OPTIONS
@@ -56,11 +56,11 @@ SUBROUTINE CORR(X,Y,N,Iwrite,C)
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 INTEGER i , iflag , Iwrite , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
 !                                OF DATA.
-!                     --Y      = THE SINGLE PRECISION VECTOR OF
+!                     --Y      = THE  VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE SECOND SET
 !                                OF DATA.
@@ -79,14 +79,14 @@ INTEGER i , iflag , Iwrite , N
 !                                THE PRINTING OF THE
 !                                SAMPLE CORRELATION COEFFICIENT
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--C      = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--C      = THE  VALUE OF THE
 !                                COMPUTED SAMPLE CORRELATION COEFFICIENT
 !                                BETWEEN THE 2 SETS OF DATA
 !                                IN THE INPUT VECTORS X AND Y.
-!                                THIS SINGLE PRECISION VALUE
+!                                THIS  VALUE
 !                                WILL BE BETWEEN -1.0 AND 1.0
 !                                (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE CORRELATION COEFFICIENT BETWEEN THE 2 SETS
 !             OF DATA IN THE INPUT VECTORS X AND Y.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
@@ -95,7 +95,7 @@ INTEGER i , iflag , Iwrite , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

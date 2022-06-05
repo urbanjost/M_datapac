@@ -152,10 +152,10 @@ The following subroutines are available in M_datapac:
   * [WEIRAN](src/source/WIP/weiran.ffinc)  - generate Weibull random numbers
 ## probability density function
   * [CAUPDF](src/source/caupdf.ffinc)  - compute the Cauchy probability density function
-  * [LGNPDF](src/source/WIP/lgnpdf.ffinc)  - compute the lognormal probability density function
+  * [LGNPDF](src/source/lgnpdf.ffinc)  - compute the lognormal probability density function
   * [LOGPDF](src/source/logpdf.ffinc)  - compute the logistic probability density function
-  * [NORPDF](src/source/WIP/norpdf.ffinc)  - compute the normal probability density function
-  * [UNIPDF](src/source/WIP/unipdf.ffinc)  - compute the Uniform probability density function
+  * [NORPDF](src/source/norpdf.ffinc)  - compute the normal probability density function
+  * [UNIPDF](src/source/unipdf.ffinc)  - compute the Uniform probability density function
 ## percent point function
   * [BINPPF](src/source/WIP/binppf.ffinc)  - compute the binomial percent point function
   * [CAUPPF](src/source/WIP/cauppf.ffinc)  - compute the Cauchy percent point function
@@ -198,7 +198,7 @@ The following subroutines are available in M_datapac:
 ## line printer plots
   * [CAUPLT](src/source/WIP/cauplt.ffinc)  - generate a Cauchy probability plot (line printer graph)
   * [CHSPLT](src/source/WIP/chsplt.ffinc)  - generate a chi-square probability plot (line printer graph)
-  * [DEXPLT](src/source/WIP/dexplt.ffinc)  - generate a double exponential probability plot (line printer graph)
+  * [DEXPLT](src/source/dexplt.ffinc)  - generate a double exponential probability plot (line printer graph)
   * [EV1PLT](src/source/WIP/ev1plt.ffinc)  - generate a extreme value type 1 (Gumbel) probability plot (line printer graph)
   * [EV2PLT](src/source/WIP/ev2plt.ffinc)  - generate a extreme value type 2 (Frechet) probability plot (line printer graph)
   * [EXPPLT](src/source/WIP/expplt.ffinc)  - generate a exponential probability plot (line printer graph)
@@ -268,5 +268,4 @@ The following subroutines are available in M_datapac:
 ## References
    * [datapac](https://www.nist.gov/itl/sed/datapac)
    * [dataplot](https://github.com/usnistgov/dataplot)
-
 ---

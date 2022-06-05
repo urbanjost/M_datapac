@@ -51,7 +51,7 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -66,9 +66,9 @@ INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
 !                                THE PRINTING OF THE
 !                                SAMPLE MIDMEAN
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMIDM  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XMIDM  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE MIDMEAN.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE MIDMEAN.
 !     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
 !               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
@@ -76,7 +76,7 @@ INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 15000.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.

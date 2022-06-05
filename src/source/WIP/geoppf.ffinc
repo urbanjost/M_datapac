@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
    geoppf(3f) computes the percent point function value for the geometric
-   distribution with single precision 'bernoulli probability' parameter
+   distribution with precision precision 'bernoulli probability' parameter
    = ppar.
 
    the geometric distribution used herein has mean = (1-ppar)/ppar and
@@ -24,7 +24,7 @@ DESCRIPTION
 
    the geometric distribution is the distribution of the number of
    failures before obtaining 1 success in an indefinite sequence of
-   bernoulli (0,1) trials where the probability of success in a single
+   bernoulli (0,1) trials where the probability of success in a precision
    trial = ppar.
 
    note that the percent point function of a distribution is identically
@@ -67,21 +67,21 @@ SUBROUTINE GEOPPF(P,Ppar,Ppf)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 INTEGER iratio
 !
-!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
-!                     --PPAR   = THE SINGLE PRECISION VALUE
+!                     --PPAR   = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
 !                                PPAR SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--PPF    = THE SINGLE PRECISION PERCENT
+!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
 !                                POINT FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PERCENT POINT FUNCTION .
+!     OUTPUT--THE  PERCENT POINT FUNCTION .
 !             VALUE PPF FOR THE GEOMETRIC DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER VALUE = PPAR.
 !     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
@@ -90,7 +90,7 @@ INTEGER iratio
 !                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE DISTRIBUTION
 !              PERCENT POINT FUNCTION
@@ -101,7 +101,7 @@ INTEGER iratio
 !              PPF HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VARIABLES FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND

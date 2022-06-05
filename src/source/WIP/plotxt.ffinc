@@ -45,7 +45,7 @@ REAL(kind=wp) :: xupper , xwidth
 INTEGER :: i , icol , icolmx , irow , ixdel , N , numcol ,     &
      &        numlab , numr25 , numr50 , numr75 , numrow
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
 !                               TO BE PLOTTED VERTICALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -57,7 +57,7 @@ INTEGER :: i , icol , icolmx , irow , ixdel , N , numcol ,     &
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
 !              PLOTTED.

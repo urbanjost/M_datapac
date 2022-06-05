@@ -72,7 +72,7 @@ INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
      &        maxpag , N , nhalf , nnpage
 !
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
@@ -107,7 +107,7 @@ INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
 !                   THAN OR EQUAL TO 3.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTSP AND CHSPPF.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--FOURIER ANALYSIS DIFFERS FROM SPECTRAL ANALYSIS
 !              (AS, FOR EXAMPLE, PRODUCED BY THE DATAPAC
 !              TIMESE SUBROUTINE) IN THAT A

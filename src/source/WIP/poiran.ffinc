@@ -8,7 +8,7 @@ SYNOPSIS
 
 DESCRIPTION
    poiran(3f) generates a random sample of size n from the poisson
-   distribution with single precision tail length parameter = alamba.
+   distribution with precision precision tail length parameter = alamba.
 
    the poisson distribution used herein has mean = alamba and standard
    deviation = sqrt(alamba).
@@ -73,10 +73,10 @@ INTEGER :: i , Iseed , j , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --ALAMBA = THE SINGLE PRECISION VALUE
+!                     --ALAMBA = THE  VALUE
 !                                OF THE TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -89,8 +89,8 @@ INTEGER :: i , Iseed , j , N
 !                 --ALAMBA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
-!     COMMENT--THE SINGLE PRECISION TAIL LENGTH
+!     MODE OF INTERNAL OPERATIONS--.
+!     COMMENT--THE  TAIL LENGTH
 !              PARAMETER ALAMBA IS     NOT     RESTRICTED
 !              TO ONLY INTEGER VALUES.
 !              ALAMBA CAN BE SET TO ANY POSITIVE REAL
@@ -104,7 +104,7 @@ INTEGER :: i , Iseed , j , N
 !              X HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND

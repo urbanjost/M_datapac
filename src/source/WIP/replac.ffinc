@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
    REPLAC(3f) replaces (with the value xnew) all observations in the
-   single precision vector X which are inside the closed (inclusive)
+   precision precision vector X which are inside the closed (inclusive)
    interval defined by XMIN and XMAX.
 
    All observations outside of this interval are left unchanged.
@@ -52,24 +52,24 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 INTEGER :: i , k , N , ndel
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --XMIN   = THE SINGLE PRECISION VALUE
+!                     --XMIN   = THE  VALUE
 !                                WHICH DEFINES THE LOWER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST FOR REPLACEMENT.
-!                     --XMAX   = THE SINGLE PRECISION VALUE
+!                     --XMAX   = THE  VALUE
 !                                WHICH DEFINES THE UPPER LIMIT
 !                                (INCLUSIVELY) OF THE PARTICULAR
 !                                INTERVAL OF INTEREST FOR REPLACEMENT.
-!                     --XNEW   = THE SINGLE PRECISION VALUE
+!                     --XNEW   = THE  VALUE
 !                                WITH WHICH ALL OF THE
 !                                OBSERVATIONS IN THE INTERVAL
 !                                OF INTEREST
 !                                WILL BE REPLACED.
-!     OUTPUT--THE SINGLE PRECISION VECTOR X
+!     OUTPUT--THE  VECTOR X
 !             IN WHICH ONLY THOSE VALUES INSIDE
 !             (INCLUSIVELY) THE INTERVAL OF INTEREST
 !             HAVE BEEN REPLACED BY XNEW.
@@ -82,7 +82,7 @@ INTEGER :: i , k , N , ndel
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--THIS SUBROUTINE MAY BE USEFULLY EMPLOYED
 !              IN CONJUNCTION WITH THE DATAPAC
 !              PLOTTING SUBROUTINES INASMUCH

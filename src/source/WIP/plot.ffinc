@@ -27,9 +27,9 @@ DESCRIPTION
    10.0**10) and they will subsequently be ignored in the plot subroutine.
 
 OPTIONS
-    Y     The single precision vector of (unsorted or sorted) observations
+    Y     The precision precision vector of (unsorted or sorted) observations
           to be plotted vertically.
-    X     The single precision vector of (unsorted or sorted) observations
+    X     The precision precision vector of (unsorted or sorted) observations
           to be plotted horizontally.
     N     The integer number of observations in the vector Y.
 

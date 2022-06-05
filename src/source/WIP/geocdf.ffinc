@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
    geocdf(3f) computes the cumulative distribution function value at the
-   single precision value x for the geometric distribution with single
+   precision precision value x for the geometric distribution with precision
    precision 'bernoulli probability' parameter = p.
 
    the geometric distribution used herein herein has mean = (1-p)/p and
@@ -22,7 +22,7 @@ DESCRIPTION
 
    the geometric distribution is the distribution of the number of
    failures before obtaining 1 success in an indefinite sequence of
-   bernoulli (0,1) trials where the probability of success in a single
+   bernoulli (0,1) trials where the probability of success in a precision
    trial = p.
 
 OPTIONS
@@ -62,21 +62,21 @@ SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp) :: Cdf , del , fintx , P , X
 INTEGER intx
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE  VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
 !                                INTEGRAL-VALUED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
 !                                P SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
+!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
 !                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION CUMULATIVE DISTRIBUTION
+!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
 !             FUNCTION VALUE CDF
 !             FOR THE GEOMETRIC DISTRIBUTION
 !             WITH 'BERNOULLI PROBABILITY' PARAMETER = P.
@@ -84,7 +84,7 @@ INTEGER intx
 !     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
 !                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
 !              TO THIS CUMULATIVE
 !              DISTRIBUTION FUNCTION SUBROUTINE
@@ -98,7 +98,7 @@ INTEGER intx
 !              CONVENTION THAT ALL INPUT ****DATA****
 !              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
 !              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND

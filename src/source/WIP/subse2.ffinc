@@ -12,8 +12,8 @@ SYNOPSIS
 
 DESCRIPTION
 
-   This subroutine carries over into Y all observations of the single
-   precision vector X for which the corresponding elements in the single
+   This subroutine carries over into Y all observations of the precision
+   precision vector X for which the corresponding elements in the precision
    precision vector D1 are inside the closed (inclusive) interval defined
    by D1MIN and D1MAX, and also for which the corresponding elements
    in the vector D2 are inside the closed (inclusive)

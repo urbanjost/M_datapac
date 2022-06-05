@@ -8,7 +8,7 @@ SYNOPSIS
 
 DESCRIPTION
    GEORAN(3f) generates a random sample of size N from the geometric
-   distribution with single precision 'Bernoulli probability' parameter
+   distribution with precision precision 'Bernoulli probability' parameter
    = P.
 
    The geometric distribution used herein has mean = (1-P)/P and standard
@@ -21,7 +21,7 @@ DESCRIPTION
 
    The geometric distribution is the distribution of the number of
    failures before obtaining 1 success in an indefinite sequence of
-   Bernoulli (0,1) trials where the probability of success in a single
+   Bernoulli (0,1) trials where the probability of success in a precision
    trial = P.
 
 OPTIONS
@@ -67,14 +67,14 @@ INTEGER :: i , iratio , Iseed , N
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
-!                     --P      = THE SINGLE PRECISION VALUE
+!                     --P      = THE  VALUE
 !                                OF THE 'BERNOULLI PROBABILITY'
 !                                PARAMETER FOR THE GEOMETRIC
 !                                DISTRIBUTION.
 !                                P SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+!     OUTPUT ARGUMENTS--X      = A  VECTOR
 !                                (OF DIMENSION AT LEAST N)
 !                                INTO WHICH THE GENERATED
 !                                RANDOM SAMPLE WILL BE PLACED.
@@ -88,7 +88,7 @@ INTEGER :: i , iratio , Iseed , N
 !                   AND 1.0 (EXCLUSIVELY).
 !     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
 !              FROM THIS DISCRETE RANDOM NUMBER
 !              GENERATOR MUST NECESSARILY BE A
@@ -98,7 +98,7 @@ INTEGER :: i , iratio , Iseed , N
 !              X HAS BEEN SPECIFIED AS SINGLE
 !              PRECISION SO AS TO CONFORM WITH THE DATAPAC
 !              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE SINGLE PRECISION.
+!              DATAPAC SUBROUTINES ARE .
 !              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !              1) A MIXTURE OF MODES (FLOATING POINT
 !              VERSUS INTEGER) IS INCONSISTENT AND

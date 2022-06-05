@@ -1,0 +1,165 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file lampdf.3m_datapac.man
+NAME
+   lampdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the Tukey-Lambda
+   probability density function
+
+SYNOPSIS
+      SUBROUTINE LAMPDF(X,Alamba,Pdf)
+
+       REAL(kind=wp) :: X
+       REAL(kind=wp) :: Alamba
+
+DESCRIPTION
+   LAMPDF(3f) computes the probability density function value for the
+   (tukey) lambda distribution with tail length parameter value = alamba.
+
+   In general, the probability density function for this distribution
+   is not simple.
+
+   The percent point function for this distribution is
+
+      g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+
+INPUT ARGUMENTS
+   X       The precision precision value at which the probability density
+           function is to be evaluated.
+
+           For ALAMBA non-positive, no restrictions on X.
+
+           For ALAMBA positive, X should be between (-1/ALAMBA)
+           and (+1/ALAMBA), inclusively.
+
+   ALAMBA  The precision precision value of lambda (the tail length
+           parameter).
+
+OUTPUT ARGUMENTS
+   PDF     The probability density function value for the Tukey Lambda
+           distribution
+
+OUTPUT
+
+EXAMPLES
+  Sample program:
+
+   program demo_lampdf
+   !@(#) line plotter graph of probability density function
+   use M_datapac, only : lampdf, plott
+   implicit none
+   real,allocatable  :: x(:), y(:)
+   real              :: alamba
+   integer           :: i
+      alamba=0.0
+      x=[(real(i),i=-100,100,1)]
+      if(allocated(y))deallocate(y)
+      allocate(y(size(x)))
+      do i=1,size(x)
+         call LAMPDF(X(i)/100.0,Alamba,y(i))
+      enddo
+      call plott(x,y,size(x))
+   end program demo_lampdf
+
+  Results:
+
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.1000000E+03 -  XXXX
+     0.9166666E+02 I      XXXXXXX
+     0.8333334E+02 I            XXXXXXX
+     0.7500000E+02 I                  XXXXXXX
+     0.6666667E+02 I                         XXXXX
+     0.5833334E+02 I                              XXXXX
+     0.5000000E+02 -                                  XXXXXX
+     0.4166667E+02 I                                       XXXX
+     0.3333334E+02 I                                          XXXX
+     0.2500000E+02 I                                             XXXX
+     0.1666667E+02 I                                                XX
+     0.8333336E+01 I                                                 XX
+     0.0000000E+00 -                                                  X
+    -0.8333328E+01 I                                                 XX
+    -0.1666666E+02 I                                                XX
+    -0.2499999E+02 I                                             XXXX
+    -0.3333333E+02 I                                          XXXX
+    -0.4166666E+02 I                                       XXXX
+    -0.5000000E+02 -                                  XXXXXX
+    -0.5833333E+02 I                              XXXXX
+    -0.6666666E+02 I                         XXXXX
+    -0.7500000E+02 I                  XXXXXXX
+    -0.8333333E+02 I            XXXXXXX
+    -0.9166666E+02 I      XXXXXXX
+    -0.1000000E+03 -  XXXX
+                      I-----------I-----------I-----------I-----------I
+               0.1966E+00  0.2100E+00  0.2233E+00  0.2367E+00  0.2500E+00
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+ o Hastings, Mosteller, Tukey, and Windsor, 'Low Moments for Small
+   Samples:  A Comparative Study of Order Statistics', Annals of MAthematical
+   Statistics, 18, 1947, Pages 413-426.
+ o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+   of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
+   University), 1969, Pages 42-44, 53-58.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --AUGUST    1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==lampdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LAMPDF(X,Alamba,Pdf)
+REAL(kind=wp) :: X
+REAL(kind=wp) :: Alamba
+
+REAL(kind=wp) :: cdf , Pdf , sf , xmax , xmin
+
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( Alamba>0.0_wp ) THEN
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<xmin .OR. X>xmax ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (&
+         &' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO LAMPDF(3f) IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
+         WRITE (G_IO,99002) X
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+         IF ( X<xmin ) Pdf = 0.0_wp
+         IF ( X>xmax ) Pdf = 1.0_wp
+         RETURN
+      ENDIF
+   ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+   IF ( Alamba>0.0_wp ) THEN
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<=xmin .OR. X>=xmax ) THEN
+         IF ( X<xmin .OR. X>xmax ) Pdf = 0.0_wp
+         IF ( X==xmin .AND. Alamba<1.0 ) Pdf = 0.0_wp
+         IF ( X==xmax .AND. Alamba<1.0 ) Pdf = 0.0_wp
+         IF ( X==xmin .AND. Alamba==1.0 ) Pdf = 0.5_wp
+         IF ( X==xmax .AND. Alamba==1.0 ) Pdf = 0.5_wp
+         IF ( X==xmin .AND. Alamba>1.0 ) Pdf = 1.0_wp
+         IF ( X==xmax .AND. Alamba>1.0 ) Pdf = 1.0_wp
+         RETURN
+      ENDIF
+   ENDIF
+
+   CALL LAMCDF(X,Alamba,cdf)
+   sf = cdf**(Alamba-1.0_wp) + (1.0_wp-cdf)**(Alamba-1.0_wp)
+   Pdf = 1.0_wp/sf
+
+END SUBROUTINE LAMPDF

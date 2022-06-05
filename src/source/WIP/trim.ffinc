@@ -53,17 +53,17 @@ SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
 INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --P1     = THE SINGLE PRECISION VALUE
+!                     --P1     = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE LOWER ORDER STATISTICS
 !                                IS TO BE TRIMMED OFF
 !                                BEFORE COMPUTING THE TRIMMED MEAN.
-!                     --P2     = THE SINGLE PRECISION VALUE
+!                     --P2     = THE  VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                WHICH DEFINES WHAT FRACTION
 !                                OF THE UPPER ORDER STATISTICS
@@ -80,7 +80,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                                THE PRINTING OF THE
 !                                SAMPLE TRIMMED MEAN
 !                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XTRIM  = THE SINGLE PRECISION VALUE OF THE
+!     OUTPUT ARGUMENTS--XTRIM  = THE  VALUE OF THE
 !                                COMPUTED SAMPLE TRIMMED MEAN
 !                                WHERE 100*P1 % OF THE SMALLEST
 !                                AND 100*P2 % OF THE LARGEST
@@ -88,7 +88,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                                TRIMMED AWAY BEFORE COMPUTING THE
 !                                MEAN OF THE REMAINING OBSERVATIONS
 !                                IN THE MIDDLE.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE TRIMMED MEAN
 !             WHERE 100*P1 % OF THE SMALLEST
 !             AND   100*P2 % OF THE LARGEST
@@ -105,7 +105,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 !                 --THE SUM OF P1 AND P2 SHOULD BE
 !                   SMALLER THAN 1.0.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !

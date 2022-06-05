@@ -86,11 +86,11 @@ REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
 REAL(kind=wp) :: yslope
 INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !
-!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
+!                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE GAMMA PROBABILITY PLOT.
@@ -100,7 +100,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !                 --GAMMA SHOULD BE POSITIVE.
 !     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
 !     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ABS, EXP, DEXP, DLOG.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION AND DOUBLE PRECISION
+!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
