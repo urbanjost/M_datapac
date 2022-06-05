@@ -406,7 +406,7 @@ integer i , imax , imin
    imax=size(a)
    parpro=0.0
    call dot(a,b,imin,imax,parpro,dotpro)
-   call unit_check('dot', all([dotpro,dot_product(a,b)] == 32.0) ,'comparing',dotpro,dot_product(a,b))
+   call unit_check('dot', dotpro == 32.0 ,'comparing',dotpro,dot_product(a,b))
    call unit_check_done('dot',msg='')
 end subroutine test_dot
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
