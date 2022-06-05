@@ -60,7 +60,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT

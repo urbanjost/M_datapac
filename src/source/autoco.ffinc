@@ -19,7 +19,7 @@ DESCRIPTION
    The autocorrelation coefficient coefficient will be a single precision
    value between -1.0 and 1.0 (inclusively).
 
-INPUT  ARGUMENTS
+INPUT ARGUMENTS
    X        The single precision vector of (unsorted) observations.
    N        The integer number of observations in the vector x.
    IWRITE   An integer flag code which (if set to 0) will suppress

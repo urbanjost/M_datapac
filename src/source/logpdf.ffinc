@@ -1,0 +1,113 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file logpdf.3m_datapac.man
+NAME
+   logpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the logistic
+   probability density function
+
+SYNOPSIS
+      SUBROUTINE LOGPDF(X,Pdf)
+
+       REAL(kind=wp),intent(in)  :: X
+       REAL(kind=wp),intent(out) :: Pdf
+
+DESCRIPTION
+   LOGPDF(3f) computes the probability density function value for
+   the logistic distribution with mean = 0 and standard deviation =
+   pi/sqrt(3).
+
+   This distribution is defined for all X and has the probability
+   density function
+
+       f(X) = exp(X)/(1+exp(X))
+
+INPUT ARGUMENTS
+
+   X     The value at which the probability density function is to
+         be evaluated.
+
+OUTPUT ARGUMENTS
+
+   PDF   the probability density function value.
+
+EXAMPLES
+  Sample program:
+
+   program demo_logpdf
+   !@(#) line plotter graph of cumulative distribution function
+   use M_datapac, only : logpdf, plott
+   implicit none
+   real,allocatable  :: x(:), y(:)
+   integer           :: i
+      x=[(real(i),i=-100,100,1)]
+      if(allocated(y))deallocate(y)
+      allocate(y(size(x)))
+      do i=1,size(x)
+         call logpdf(x(i)/10.0,y(i))
+      enddo
+      call plott(x,y,size(x))
+   end program demo_logpdf
+
+  Results:
+
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.1000000E+03 -  X
+     0.9166666E+02 I  X
+     0.8333334E+02 I  X
+     0.7500000E+02 I  X
+     0.6666667E+02 I  X
+     0.5833334E+02 I  XX
+     0.5000000E+02 -   XX
+     0.4166667E+02 I    XXX
+     0.3333334E+02 I       XXXXX
+     0.2500000E+02 I           XXXXX XXX X
+     0.1666667E+02 I                      X XX X X XX X
+     0.8333336E+01 I                                    X X XX X XXX
+     0.0000000E+00 -                                                XXX
+    -0.8333328E+01 I                                    X X XX X XXX
+    -0.1666666E+02 I                      X XX X X XX X
+    -0.2499999E+02 I           XXXXX XXX X
+    -0.3333333E+02 I       XXXXX
+    -0.4166666E+02 I    XXX
+    -0.5000000E+02 -   XX
+    -0.5833333E+02 I  XX
+    -0.6666666E+02 I  X
+    -0.7500000E+02 I  X
+    -0.8333333E+02 I  X
+    -0.9166666E+02 I  X
+    -0.1000000E+03 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.4540E-04  0.6253E-01  0.1250E+00  0.1875E+00  0.2500E+00
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+ o Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 1-21.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!*==logpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LOGPDF(X,Pdf)
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Pdf
+
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
+!
+      Pdf = exp(X)/((1.0_wp+exp(X))**2)
+!
+END SUBROUTINE LOGPDF

@@ -38,7 +38,7 @@ DESCRIPTION
    for example, the calling sequence CALL SORTC(X,Y,N,X,YC) is allowable
    and will result in the desired 'in-place' sort.
 
-   The sorting algorthm used herein is the binary sort. This algorthim
+   The sorting algorithm used herein is the binary sort. This algorithm
    is extremely fast as the following time trials indicate. These time
    trials were carried out on the UNIVAC 1108 EXEC 8 system at NBS in
    August of 1974. By way of comparison, the time trial values for the

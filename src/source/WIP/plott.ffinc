@@ -26,7 +26,7 @@ DESCRIPTION
    10.0**10) and they will subsequently be ignored in the plot subroutine.
 
    Note that the storage requirements for this (and the other) terminal
-   plot subroutiness are very small. This is due to the 'one line at
+   plot subroutines are very small. This is due to the 'one line at
    a time' algorithm employed for the plot.
 
 INPUT ARGUMENTS

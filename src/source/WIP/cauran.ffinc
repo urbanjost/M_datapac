@@ -57,7 +57,7 @@ SUBROUTINE CAURAN(N,Iseed,X)
 REAL(kind=wp) :: arg , pi , X
 INTEGER :: i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR

@@ -53,7 +53,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 INTEGER :: i , iflag , iupper , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
 !                                OF DATA.

@@ -40,7 +40,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: add , an , hold , u , X
 INTEGER :: i , iadd , Istart , j , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER SIZE
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER SIZE
 !                                OF THE RANDOM 1 TO N PERMUTATION.
 !                     --ISTART = AN INTEGER FLAG CODE WHICH
 !                                (IF SET TO 0) WILL START THE

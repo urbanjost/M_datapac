@@ -49,7 +49,7 @@ SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 INTEGER :: i , isum , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

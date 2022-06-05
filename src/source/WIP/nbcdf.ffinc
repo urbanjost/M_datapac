@@ -81,7 +81,7 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
      &        k , N , n2 , nu1 , nu2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND

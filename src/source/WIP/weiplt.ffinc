@@ -75,7 +75,7 @@ REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

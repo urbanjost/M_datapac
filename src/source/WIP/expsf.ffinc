@@ -58,7 +58,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE EXPSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.

@@ -54,7 +54,7 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
      &     z
 INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --NU1    = THE INTEGER DEGREES OF FREEDOM

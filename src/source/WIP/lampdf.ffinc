@@ -61,7 +61,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       SUBROUTINE LAMPDF(X,Alamba,Pdf)
 REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
 !                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA

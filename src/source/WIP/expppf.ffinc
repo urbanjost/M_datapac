@@ -62,7 +62,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE EXPPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.

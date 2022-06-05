@@ -67,7 +67,7 @@ SUBROUTINE UNIMED(N,X)
 REAL(kind=wp) :: ai , an , gam , X(:)
 INTEGER i , imax , irev , N , nevodd , nhalf
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF UNIFORM ORDER STATISTIC MEDIANS
 !                                TO BE GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR

@@ -13,7 +13,7 @@ DESCRIPTION
       1. computing (and printing)
          (for each of the harmonic frequencies
          1/n, 2/n, 3/n, ..., 1/2)
-         the corresponding fourier coeficients,
+         the corresponding fourier coefficients,
          the amplitude, the phase,
          the contribution to the total variance,
          and the relative contribution to the total

@@ -70,7 +70,7 @@ INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
 INTEGER m(17)
 
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --ISEED  = AN INTEGER ISEED VALUE

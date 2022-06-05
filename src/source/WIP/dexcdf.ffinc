@@ -52,7 +52,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 SUBROUTINE DEXCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE

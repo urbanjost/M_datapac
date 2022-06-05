@@ -50,7 +50,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE NORCDF(X,Cdf)
 REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE

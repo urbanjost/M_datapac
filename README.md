@@ -151,9 +151,9 @@ The following subroutines are available in M_datapac:
   * [UNIRAN](src/source/WIP/uniran.ffinc)  - generate Uniform random numbers
   * [WEIRAN](src/source/WIP/weiran.ffinc)  - generate Weibull random numbers
 ## probability density function
-  * [CAUPDF](src/source/WIP/caupdf.ffinc)  - compute the Cauchy probability density function
+  * [CAUPDF](src/source/caupdf.ffinc)  - compute the Cauchy probability density function
   * [LGNPDF](src/source/WIP/lgnpdf.ffinc)  - compute the lognormal probability density function
-  * [LOGPDF](src/source/WIP/logpdf.ffinc)  - compute the logistic probability density function
+  * [LOGPDF](src/source/logpdf.ffinc)  - compute the logistic probability density function
   * [NORPDF](src/source/WIP/norpdf.ffinc)  - compute the normal probability density function
   * [UNIPDF](src/source/WIP/unipdf.ffinc)  - compute the Uniform probability density function
 ## percent point function

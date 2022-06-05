@@ -65,7 +65,7 @@ SUBROUTINE LOGRAN(N,Iseed,X)
 INTEGER i , Iseed , N
 REAL(kind=wp) :: X
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR

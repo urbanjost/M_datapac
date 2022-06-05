@@ -49,7 +49,7 @@ SUBROUTINE CHSRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 INTEGER i , Iseed , j , N , Nu
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --NU     = THE INTEGER DEGREES OF FREEDOM

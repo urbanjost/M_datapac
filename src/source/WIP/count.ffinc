@@ -51,7 +51,7 @@ SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 INTEGER i , isum , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

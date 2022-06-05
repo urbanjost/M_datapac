@@ -77,7 +77,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

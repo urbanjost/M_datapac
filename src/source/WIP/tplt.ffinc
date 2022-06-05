@@ -62,7 +62,7 @@ LICENSE
 !                 OCTOBER, 1972), PAGES 425-450.
 !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
 !                 1967, PAGES 260-308.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGE 102,
@@ -85,7 +85,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     yslope
 INTEGER :: i , iupper , N , Nu
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

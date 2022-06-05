@@ -50,7 +50,7 @@ contains
 SUBROUTINE SKIPR(Nlhead)
 INTEGER i , ia , ird , Nlhead
 !
-!     INPUT  ARGUMENTS--NLHEAD = THE INTEGER NUMBER OF CARD
+!     INPUT ARGUMENTS--NLHEAD = THE INTEGER NUMBER OF CARD
 !                                IMAGES TO BE READ THROUGH
 !                                (SKIPPED OVER).
 !     PRINTING--NO.

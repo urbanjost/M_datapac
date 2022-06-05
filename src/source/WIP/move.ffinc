@@ -46,7 +46,7 @@ IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Y
 INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS, PART (OR ALL)
 !                                OF WHICH IS TO BE MOVED
 !                                (COPIED) OVER INTO THE VECTOR Y.

@@ -23,7 +23,7 @@ DESCRIPTION
    sampling from a statistical population, the arithmetic mean is the
    sample mean.
 
-INPUT  ARGUMENTS
+INPUT ARGUMENTS
  X        The vector of (unsorted or sorted) observations.
 
  N        The integer number of observations in the vector X.

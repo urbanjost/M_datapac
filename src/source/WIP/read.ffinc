@@ -53,7 +53,7 @@ INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ird ,    &
 INTEGER :: nc , ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
 !
-!     INPUT  ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
+!     INPUT ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
 !                                WHICH DEFINES THE LOWER BOUND
 !                                (INCLUSIVELY) OF THE INTERVAL
 !                                ON EACH CARD TO BE SCANNED

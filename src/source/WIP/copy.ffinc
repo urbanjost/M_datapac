@@ -44,7 +44,7 @@ SUBROUTINE COPY(X,N,Y)
 REAL(kind=wp) :: hold , X , Y
 INTEGER i , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE COPIED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

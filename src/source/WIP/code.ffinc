@@ -50,7 +50,7 @@ SUBROUTINE CODE(X,N,Y)
 REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 INTEGER i , iupper , j , N , numdis
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
 !                                OF OBSERVATIONS TO BE CODED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

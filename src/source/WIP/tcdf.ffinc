@@ -39,7 +39,7 @@ MAINTAINER
 LICENSE
    CC0-1.0
 !     REFERENCES
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGES 94-129.
@@ -60,7 +60,7 @@ SUBROUTINE TCDF(X,Nu,Cdf)
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 INTEGER :: i , ievodd , imax , imin , Nu , nucut
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.

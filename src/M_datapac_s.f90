@@ -224,7 +224,7 @@ contains
 !!    The autocorrelation coefficient coefficient will be a single precision
 !!    value between -1.0 and 1.0 (inclusively).
 !!
-!!##INPUT  ARGUMENTS
+!!##INPUT ARGUMENTS
 !!    X        The single precision vector of (unsorted) observations.
 !!    N        The integer number of observations in the vector x.
 !!    IWRITE   An integer flag code which (if set to 0) will suppress
@@ -620,7 +620,7 @@ SUBROUTINE BINCDF(X,P,N,Cdf)
 REAL(kind=wp) :: an, Cdf, del, fintx, P, X
 INTEGER       :: i, ievodd, iflag1, iflag2, imax, imin, intx, N, nu1, nu2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE INTEGRAL-VALUED,
@@ -906,7 +906,7 @@ END SUBROUTINE BINCDF
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!! !     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!! !     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !! !                                (BETWEEN 0.0 (INCLUSIVELY)
 !! !                                AND 1.0 (INCLUSIVELY))
 !! !                                AT WHICH THE PERCENT POINT
@@ -1574,7 +1574,10 @@ end subroutine caucdf
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE CAUPDF(X,Pdf)
+!!       subroutine caupdf(X,Pdf)
+!!
+!!        real(kind=wp),intent(in) :: X
+!!        real(kind=wp),intent(out):: Pdf
 !!
 !!##DESCRIPTION
 !!    CAUPDF(3f) computes the probability density function value for the
@@ -1583,12 +1586,12 @@ end subroutine caucdf
 !!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/pi)*(1/(1+x*x)).
+!!        f(x) = (1/pi)*(1/(1+x*x))
 !!
 !!##INPUT ARGUMENTS
 !!
-!!    X    The value at which the probability density
-!!         function is to be evaluated.
+!!    X    The value at which the probability density function is to be
+!!         evaluated.
 !!
 !!##OUTPUT ARGUMENTS
 !!
@@ -1599,13 +1602,51 @@ end subroutine caucdf
 !!   Sample program:
 !!
 !!    program demo_caupdf
-!!    use M_datapac, only : caupdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : caupdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call caupdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call caupdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_caupdf
 !!
 !!   Results:
+!!
+!!     The following is a plot of Y(i) (vertically) versus X(i) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -  X
+!!      0.9166666E+02 I  X
+!!      0.8333334E+02 I  X
+!!      0.7500000E+02 I  X
+!!      0.6666667E+02 I  XX
+!!      0.5833334E+02 I   X
+!!      0.5000000E+02 -   XX
+!!      0.4166667E+02 I    XX
+!!      0.3333334E+02 I     XX
+!!      0.2500000E+02 I       XXXX
+!!      0.1666667E+02 I           XXXXXX X X
+!!      0.8333336E+01 I                     X X  X X  X  X  X  X
+!!      0.0000000E+00 -                                           X  X X X
+!!     -0.8333328E+01 I                     X X  X X  X  X  X  X
+!!     -0.1666666E+02 I           XXXXXX X X
+!!     -0.2499999E+02 I       XXXX
+!!     -0.3333333E+02 I     XX
+!!     -0.4166666E+02 I    XX
+!!     -0.5000000E+02 -   XX
+!!     -0.5833333E+02 I   X
+!!     -0.6666666E+02 I  XX
+!!     -0.7500000E+02 I  X
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.3152E-02  0.8194E-01  0.1607E+00  0.2395E+00  0.3183E+00
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -1627,16 +1668,16 @@ end subroutine caucdf
 !     UPDATED         --NOVEMBER  1975.
 !*==caupdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
-SUBROUTINE CAUPDF(X,Pdf)
-REAL(kind=wp),intent(in) :: X
-REAL(kind=wp),intent(out):: Pdf
-REAL(kind=wp),parameter :: c = 0.31830988618379_wp
-!
-!  CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
-!
+subroutine caupdf(X,Pdf)
+real(kind=wp),intent(in) :: X
+real(kind=wp),intent(out):: Pdf
+real(kind=wp),parameter  :: c = 0.31830988618379_wp
+   !
+   !  CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
+   !
    Pdf = c*(1.0_wp/(1.0_wp+X*X))
-!
-END SUBROUTINE CAUPDF
+
+end subroutine caupdf
 !>
 !!##NAME
 !!    cauplt(3f) - [M_datapac:LINE_PLOT] generate a Cauchy
@@ -1962,7 +2003,7 @@ SUBROUTINE CAURAN(N,Iseed,X)
 REAL(kind=wp) :: arg , pi , X
 INTEGER :: i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
@@ -2090,7 +2131,7 @@ END SUBROUTINE CAURAN
 SUBROUTINE CAUSF(P,Sf)
 REAL(kind=wp) :: arg , P , pi , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -2185,7 +2226,7 @@ SUBROUTINE CHSCDF(X,Nu,Cdf)
 REAL(kind=wp) :: amean , anu , Cdf , cdfn , danu , sd , spchi , u , X , z
 INTEGER i , ibran , ievodd , imax , imin , Nu , nucut
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
@@ -2466,7 +2507,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     yslope
 INTEGER i , iupper , N , Nu
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -2666,7 +2707,7 @@ SUBROUTINE CHSPPF(P,Nu,Ppf)
 REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 INTEGER icount , iloop , j , maxit , Nu
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -2908,7 +2949,7 @@ SUBROUTINE CHSRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
 INTEGER i , Iseed , j , N , Nu
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --NU     = THE INTEGER DEGREES OF FREEDOM
@@ -3044,7 +3085,7 @@ SUBROUTINE CODE(X,N,Y)
 REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
 INTEGER i , iupper , j , N , numdis
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR
 !                                OF OBSERVATIONS TO BE CODED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -3207,7 +3248,7 @@ SUBROUTINE COPY(X,N,Y)
 REAL(kind=wp) :: hold , X , Y
 INTEGER i , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE COPIED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -3322,7 +3363,7 @@ SUBROUTINE CORR(X,Y,N,Iwrite,C)
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 INTEGER i , iflag , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
 !                                OF DATA.
@@ -3491,7 +3532,7 @@ SUBROUTINE COUNT(X,N,Xmin,Xmax,Iwrite,Xcount)
 REAL(kind=wp) :: an , hold , X , Xcount , Xmax , Xmin
 INTEGER i , isum , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -3833,7 +3874,7 @@ SUBROUTINE DEFINE(X,N,Xnew)
 INTEGER i , N
 REAL(kind=wp) :: X , Xnew
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -3949,7 +3990,7 @@ SUBROUTINE DELETE(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -4476,7 +4517,7 @@ END SUBROUTINE DEMOD
 
 SUBROUTINE DEXCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
@@ -4549,7 +4590,7 @@ END SUBROUTINE DEXCDF
 SUBROUTINE DEXPDF(X,Pdf)
 REAL(kind=wp) :: arg , Pdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
@@ -4656,7 +4697,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
      &     WS , X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -4835,7 +4876,7 @@ END SUBROUTINE DEXPLT
 SUBROUTINE DEXPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
@@ -5039,7 +5080,7 @@ end subroutine dexran
 SUBROUTINE DEXSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -5142,7 +5183,7 @@ REAL(kind=wp) :: ai , anuml , classm , cmax , cmin , hold , p , X , xdel ,    &
      &     xmax , xmin , Y
 INTEGER i , icount , ip , iupncl , N , Numcla
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -5398,7 +5439,7 @@ REAL(kind=wp) :: ai , anuml , cmax , cmin , hold , p , X , xdel , xmax ,      &
      &     xmin , Y
 INTEGER i , icount , ip , iupncl , N , Numcla
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -5636,7 +5677,7 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
 INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
@@ -5996,7 +6037,7 @@ end subroutine dot
 SUBROUTINE EV1CDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
@@ -6099,7 +6140,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -6268,7 +6309,7 @@ END SUBROUTINE EV1PLT
 SUBROUTINE EV1PPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -6366,7 +6407,7 @@ SUBROUTINE EV1RAN(N,Iseed,X)
 INTEGER i , Iseed , N
 REAL(kind=wp) :: X(:)
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
@@ -6454,7 +6495,7 @@ END SUBROUTINE EV1RAN
 SUBROUTINE EV2CDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
@@ -6585,7 +6626,7 @@ REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -6774,7 +6815,7 @@ END SUBROUTINE EV2PLT
 SUBROUTINE EV2PPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -6880,7 +6921,7 @@ SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X(:)
 INTEGER i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
@@ -6985,7 +7026,7 @@ SUBROUTINE EXPCDF(X,Cdf)
 IMPLICIT NONE
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
@@ -7072,7 +7113,7 @@ END SUBROUTINE EXPCDF
 SUBROUTINE EXPPDF(X,Pdf)
 REAL(kind=wp) :: Pdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
@@ -7183,7 +7224,7 @@ SUBROUTINE EXPPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
 INTEGER i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -7359,7 +7400,7 @@ END SUBROUTINE EXPPLT
 SUBROUTINE EXPPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
@@ -7443,7 +7484,7 @@ SUBROUTINE EXPRAN(N,Iseed,X)
 INTEGER i , Iseed , N
 REAL(kind=wp) :: X
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
@@ -7561,7 +7602,7 @@ END SUBROUTINE EXPRAN
 SUBROUTINE EXPSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -8099,7 +8140,7 @@ CHARACTER(len=4) :: iflag3
 !! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !! !                 DISTRIBUTIONS--2, 1970, PAGE 83, FORMULA 20,
 !! !                 AND PAGE 84, THIRD FORMULA.
-!! !               --PAULSON, AN APPROXIMATE NORMAILIZATION
+!! !               --PAULSON, AN APPROXIMATE NORMALIZATION
 !! !                 OF THE ANALYSIS OF VARIANCE DISTRIBUTION,
 !! !                 ANNALS OF MATHEMATICAL STATISTICS, 1942,
 !! !                 NUMBER 13, PAGES 233-135.
@@ -8113,7 +8154,7 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
@@ -8446,7 +8487,7 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 !!       1. computing (and printing)
 !!          (for each of the harmonic frequencies
 !!          1/n, 2/n, 3/n, ..., 1/2)
-!!          the corresponding fourier coeficients,
+!!          the corresponding fourier coefficients,
 !!          the amplitude, the phase,
 !!          the contribution to the total variance,
 !!          and the relative contribution to the total
@@ -8825,7 +8866,7 @@ REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
      &     z
 INTEGER :: i , Istart , j , N , Nu1 , Nu2
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --NU1    = THE INTEGER DEGREES OF FREEDOM
@@ -9196,7 +9237,7 @@ END SUBROUTINE FREQ
 REAL(kind=wp) :: Cdf , Gamma , X
 INTEGER :: i , maxit
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.
@@ -9404,7 +9445,7 @@ REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
 REAL(kind=wp) :: yslope
 INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -9767,7 +9808,7 @@ END SUBROUTINE GAMPLT
 REAL(kind=wp) :: Gamma , P , Ppf
 INTEGER :: icount , iloop , j , maxit
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -10023,7 +10064,7 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 INTEGER :: i , Iseed , N
 !     ******STILL NEEDS ALGORITHM WORK ******
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
@@ -10205,7 +10246,7 @@ SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp) :: Cdf , del , fintx , P , X
 INTEGER intx
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
@@ -10362,7 +10403,7 @@ REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -10573,7 +10614,7 @@ SUBROUTINE GEOPPF(P,Ppar,Ppf)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
 INTEGER iratio
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -10725,7 +10766,7 @@ INTEGER iratio
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
 INTEGER :: i , iratio , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --P      = THE SINGLE PRECISION VALUE
@@ -10887,7 +10928,7 @@ END SUBROUTINE GEORAN
       SUBROUTINE HFNCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
@@ -11012,7 +11053,7 @@ REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
 INTEGER i , iupper , N
 !*** End of declarations inserted by SPAG
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -11184,7 +11225,7 @@ END SUBROUTINE HFNPLT
 SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -11279,7 +11320,7 @@ END SUBROUTINE HFNPPF
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER :: i , ip1 , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
@@ -11877,7 +11918,7 @@ SUBROUTINE LAMCDF(X,Alamba,Cdf)
 REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , X , xcalc , xmax , xmin
 INTEGER :: icount
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
@@ -12027,7 +12068,7 @@ INTEGER :: icount
       SUBROUTINE LAMPDF(X,Alamba,Pdf)
 REAL(kind=wp) :: Alamba , cdf , Pdf , sf , X , xmax , xmin
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
 !                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
@@ -12170,7 +12211,7 @@ REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
 REAL(kind=wp) :: yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -12363,7 +12404,7 @@ END SUBROUTINE LAMPLT
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
@@ -12474,7 +12515,7 @@ REAL(kind=wp) :: Alamba , P , Ppf
 REAL(kind=wp) :: alamb2 , Alamba , q , X
 INTEGER :: i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA
@@ -12601,7 +12642,7 @@ END SUBROUTINE LAMRAN
       SUBROUTINE LAMSF(P,Alamba,Sf)
 REAL(kind=wp) :: Alamba , P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -12704,7 +12745,7 @@ REAL(kind=wp) :: Alamba , P , Sf
       SUBROUTINE LGNCDF(X,Cdf)
 REAL(kind=wp) :: arg , Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.
@@ -12822,7 +12863,7 @@ SUBROUTINE LGNPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -12995,7 +13036,7 @@ END SUBROUTINE LGNPLT
 SUBROUTINE LGNPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -13097,7 +13138,7 @@ SUBROUTINE LGNRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER i , ip1 , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
@@ -13430,7 +13471,7 @@ END SUBROUTINE LOC
 SUBROUTINE LOGCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
@@ -13454,74 +13495,113 @@ REAL(kind=wp) :: Cdf , X
 END SUBROUTINE LOGCDF
 !>
 !!##NAME
-!!    logpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the logistic probability
-!!    density function
+!!    logpdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the logistic
+!!    probability density function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LOGPDF(X,Pdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Pdf
+!!
 !!##DESCRIPTION
-!!    logpdf(3f) computes the probability density function value for
+!!    LOGPDF(3f) computes the probability density function value for
 !!    the logistic distribution with mean = 0 and standard deviation =
 !!    pi/sqrt(3).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = exp(x)/(1+exp(x)).
+!!        f(X) = exp(X)/(1+exp(X))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The value at which the probability density function is to
+!!          be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PDF   the probability density function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_logpdf
-!!    use M_datapac, only : logpdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : logpdf, plott
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call logpdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call logpdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_logpdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -  X
+!!      0.9166666E+02 I  X
+!!      0.8333334E+02 I  X
+!!      0.7500000E+02 I  X
+!!      0.6666667E+02 I  X
+!!      0.5833334E+02 I  XX
+!!      0.5000000E+02 -   XX
+!!      0.4166667E+02 I    XXX
+!!      0.3333334E+02 I       XXXXX
+!!      0.2500000E+02 I           XXXXX XXX X
+!!      0.1666667E+02 I                      X XX X X XX X
+!!      0.8333336E+01 I                                    X X XX X XXX
+!!      0.0000000E+00 -                                                XXX
+!!     -0.8333328E+01 I                                    X X XX X XXX
+!!     -0.1666666E+02 I                      X XX X X XX X
+!!     -0.2499999E+02 I           XXXXX XXX X
+!!     -0.3333333E+02 I       XXXXX
+!!     -0.4166666E+02 I    XXX
+!!     -0.5000000E+02 -   XX
+!!     -0.5833333E+02 I  XX
+!!     -0.6666666E+02 I  X
+!!     -0.7500000E+02 I  X
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.4540E-04  0.6253E-01  0.1250E+00  0.1875E+00  0.2500E+00
+!!
+!!   Results:
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !              --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!
+!!##REFERENCES
+!!  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !*==logpdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGPDF(X,Pdf)
-REAL(kind=wp) :: Pdf , X
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Pdf
+
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
-!                                WHICH THE PROBABILITY DENSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
-!                                DENSITY FUNCTION VALUE.
-!     OUTPUT--THE SINGLE PRECISION PROBABILITY DENSITY
-!             FUNCTION VALUE PDF.
-!
-!---------------------------------------------------------------------
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
-!
-      Pdf = EXP(X)/((1.0_wp+EXP(X))**2)
+      Pdf = exp(X)/((1.0_wp+exp(X))**2)
 !
 END SUBROUTINE LOGPDF
 !>
@@ -13600,7 +13680,7 @@ SUBROUTINE LOGPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -13767,7 +13847,7 @@ END SUBROUTINE LOGPLT
 SUBROUTINE LOGPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
@@ -13858,7 +13938,7 @@ SUBROUTINE LOGRAN(N,Iseed,X)
 INTEGER i , Iseed , N
 REAL(kind=wp) :: X
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
@@ -13964,7 +14044,7 @@ END SUBROUTINE LOGRAN
       SUBROUTINE LOGSF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -14133,7 +14213,7 @@ end subroutine max
 !!    sampling from a statistical population, the arithmetic mean is the
 !!    sample mean.
 !!
-!!##INPUT  ARGUMENTS
+!!##INPUT ARGUMENTS
 !!  X        The vector of (unsorted or sorted) observations.
 !!
 !!  N        The integer number of observations in the vector X.
@@ -14424,7 +14504,7 @@ REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
 INTEGER :: i , istart , istop , iupper , Iwrite , k , N , np1 ,&
      &        np2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -14593,7 +14673,7 @@ END SUBROUTINE MIDM
 REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -14825,7 +14905,7 @@ IMPLICIT NONE
 REAL(kind=wp) :: hold , X , Y
 INTEGER i , iend , istart , Ix1 , Iy1 , j , k , M
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS, PART (OR ALL)
 !                                OF WHICH IS TO BE MOVED
 !                                (COPIED) OVER INTO THE VECTOR Y.
@@ -15002,7 +15082,7 @@ REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
 INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
      &        k , N , n2 , nu1 , nu2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
@@ -15333,7 +15413,7 @@ REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
 REAL(kind=wp) :: zppf
 INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -15734,7 +15814,7 @@ END SUBROUTINE NBPPF
 REAL(kind=wp) :: b(1) , g(1) , P , X
 INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --P      = THE SINGLE PRECISION VALUE
@@ -15939,7 +16019,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 SUBROUTINE NORCDF(X,Cdf)
 REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--CDF    = THE SINGLE PRECISION CUMULATIVE
@@ -16501,7 +16581,7 @@ SUBROUTINE NORPDF(X,Pdf)
 IMPLICIT NONE
 REAL(kind=wp) :: c , Pdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
@@ -16605,7 +16685,7 @@ SUBROUTINE NORPLT(X,N)
 REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -16756,7 +16836,7 @@ END SUBROUTINE NORPLT
 !!    CC0-1.0
 !! !     REFERENCES
 !! !               --ODEH AND EVANS, THE PERCENTAGE POINTS
-!! !                 OF THE NORMAL DISTRIBUTION, ALGORTIHM 70,
+!! !                 OF THE NORMAL DISTRIBUTION, ALGORITHM 70,
 !! !                 APPLIED STATISTICS, 1974, PAGES 96-97.
 !! !               --EVANS, ALGORITHMS FOR MINIMAL DEGREE
 !! !                 POLYNOMIAL AND RATIONAL APPROXIMATION,
@@ -16789,7 +16869,7 @@ END SUBROUTINE NORPLT
 SUBROUTINE NORPPF(P,Ppf)
 REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 , q3 , q4 , r , t
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
@@ -16803,7 +16883,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !     COMMENTS--THE CODING AS PRESENTED BELOW
 !               IS ESSENTIALLY IDENTICAL TO THAT
 !               PRESENTED BY ODEH AND EVANS
-!               AS ALGORTIHM 70 OF APPLIED STATISTICS.
+!               AS ALGORITHM 70 OF APPLIED STATISTICS.
 !               THE PRESENT AUTHOR HAS MODIFIED THE
 !               ORIGINAL ODEH AND EVANS CODE WITH ONLY
 !               MINOR STYLISTIC CHANGES.
@@ -16912,7 +16992,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER :: i , ip1 , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
@@ -17057,7 +17137,7 @@ END SUBROUTINE NORRAN
       SUBROUTINE NORSF(P,Sf)
 REAL(kind=wp) :: c , P , pdf , ppf , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -17147,7 +17227,7 @@ END SUBROUTINE NORSF
 SUBROUTINE PARCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE GREATER THAN
@@ -17267,7 +17347,7 @@ REAL(kind=wp) :: an, cc, Gamma, hold, pp0025, pp025, pp975, pp9975,   q, sum1, s
 REAL(kind=wp) :: yslope
 INTEGER       :: i, iupper, N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -17458,7 +17538,7 @@ END SUBROUTINE PARPLT
       SUBROUTINE PARPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -17564,7 +17644,7 @@ END SUBROUTINE PARPPF
 REAL(kind=wp) :: Gamma , X
 INTEGER :: i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
@@ -22695,7 +22775,7 @@ END SUBROUTINE PLOTST
 !!    10.0**10) and they will subsequently be ignored in the plot subroutine.
 !!
 !!    Note that the storage requirements for this (and the other) terminal
-!!    plot subroutiness are very small. This is due to the 'one line at
+!!    plot subroutines are very small. This is due to the 'one line at
 !!    a time' algorithm employed for the plot.
 !!
 !!##INPUT ARGUMENTS
@@ -25212,7 +25292,7 @@ END SUBROUTINE PLTXXT
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 INTEGER :: i , ievodd , imax , imin , intx , nu
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND
@@ -25439,7 +25519,7 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
      &        jm1 , k , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -25730,7 +25810,7 @@ REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
      &     x1 , x2 , zppf
 INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -26094,7 +26174,7 @@ END SUBROUTINE POIPPF
 REAL(kind=wp) :: Alamba , e , sum , u(1) , X
 INTEGER :: i , Iseed , j , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --ALAMBA = THE SINGLE PRECISION VALUE
@@ -26252,7 +26332,7 @@ INTEGER :: iset , ism1 , iwflag , Iwrite , j , jm1 , jp1 , js ,      &
      &        nkmax
 INTEGER :: nm5 , nmax , numset
 !
-!     INPUT  ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
 !                                RESPONSE DATA (THAT IS, THE
 !                                DEPENDENT VARIABLE).
 !                     --X      = SINGLE PRECISION VECTOR OF
@@ -26915,7 +26995,7 @@ SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
 INTEGER :: i , isum , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -27067,7 +27147,7 @@ SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -27201,7 +27281,7 @@ SUBROUTINE RANK(X,N,Xr)
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
 INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE RANKED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -27439,7 +27519,7 @@ END SUBROUTINE RANK
 REAL(kind=wp) :: add , an , hold , u , X
 INTEGER :: i , iadd , Istart , j , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER SIZE
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER SIZE
 !                                OF THE RANDOM 1 TO N PERMUTATION.
 !                     --ISTART = AN INTEGER FLAG CODE WHICH
 !                                (IF SET TO 0) WILL START THE
@@ -27577,7 +27657,7 @@ INTEGER i , ibug , Icol1 , Icol2 , iend , ipower , ird ,    &
 INTEGER :: nc , ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
 !
-!     INPUT  ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
+!     INPUT ARGUMENTS--ICOL1  = THE INTEGER CARD COLUMN NUMBER
 !                                WHICH DEFINES THE LOWER BOUND
 !                                (INCLUSIVELY) OF THE INTERVAL
 !                                ON EACH CARD TO BE SCANNED
@@ -28095,7 +28175,7 @@ INTEGER :: i , Icol1 , Icol2 , iend , ipower , Ird , istart ,  &
 INTEGER :: ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
 !
-!     INPUT  ARGUMENTS--IRD    = THE INTEGER VALUE SPECIFYING
+!     INPUT ARGUMENTS--IRD    = THE INTEGER VALUE SPECIFYING
 !                                THE INPUT UNIT FROM WHICH
 !                                THE CARD IMAGES WILL COME.
 !                     --ICOL1  = THE INTEGER CARD COLUMN NUMBER
@@ -28613,7 +28693,7 @@ END SUBROUTINE READG
 REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -28757,7 +28837,7 @@ END SUBROUTINE RELSD
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 INTEGER :: i , k , N , ndel
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -28940,7 +29020,7 @@ END SUBROUTINE REPLAC
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -29553,7 +29633,7 @@ REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
      &     Y
 INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -29917,7 +29997,7 @@ SUBROUTINE SD(X,N,Iwrite,Xsd)
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -30044,7 +30124,7 @@ END SUBROUTINE SD
 !!    for example, the calling sequence CALL SORTC(X,Y,N,X,YC) is allowable
 !!    and will result in the desired 'in-place' sort.
 !!
-!!    The sorting algorthm used herein is the binary sort. This algorthim
+!!    The sorting algorithm used herein is the binary sort. This algorithm
 !!    is extremely fast as the following time trials indicate. These time
 !!    trials were carried out on the UNIVAC 1108 EXEC 8 system at NBS in
 !!    August of 1974. By way of comparison, the time trial values for the
@@ -30638,7 +30718,7 @@ SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE SORTED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -30942,7 +31022,7 @@ END SUBROUTINE SORTP
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
 INTEGER :: i , iflag , iupper , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
 !                                OF DATA.
@@ -31112,7 +31192,7 @@ END SUBROUTINE SPCORR
 REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -31258,7 +31338,7 @@ END SUBROUTINE STMOM3
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
 INTEGER :: i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -32779,7 +32859,7 @@ END SUBROUTINE TAIL
 !!##LICENSE
 !!    CC0-1.0
 !! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !! !                 SERIES 55, 1964, PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
 !! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !! !                 DISTRIBUTIONS--2, 1970, PAGES 94-129.
@@ -32798,7 +32878,7 @@ SUBROUTINE TCDF(X,Nu,Cdf)
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
 INTEGER :: i , ievodd , imax , imin , Nu , nucut
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.
@@ -33827,7 +33907,7 @@ END SUBROUTINE TOL
 !! !                 OCTOBER, 1972), PAGES 425-450.
 !! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
 !! !                 1967, PAGES 260-308.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !! !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
 !! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !! !                 DISTRIBUTIONS--2, 1970, PAGE 102,
@@ -33848,7 +33928,7 @@ REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
      &     yslope
 INTEGER :: i , iupper , N , Nu
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -34029,7 +34109,7 @@ END SUBROUTINE TPLT
 !!##LICENSE
 !!    CC0-1.0
 !! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !! !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
 !! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !! !                 DISTRIBUTIONS--2, 1970, PAGE 102,
@@ -34048,7 +34128,7 @@ SUBROUTINE TPPF(P,Nu,Ppf)
 INTEGER ipass , maxit , Nu
 REAL(kind=wp) :: P , Ppf , ppfn
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -34280,7 +34360,7 @@ SUBROUTINE TRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 INTEGER i , Iseed , j , N , Nu
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --NU     = THE INTEGER DEGREES OF FREEDOM
@@ -34429,7 +34509,7 @@ SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
 INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
 
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -34803,7 +34883,7 @@ SUBROUTINE UNIMED(N,X)
 REAL(kind=wp) :: ai , an , gam , X(:)
 INTEGER i , imax , irev , N , nevodd , nhalf
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF UNIFORM ORDER STATISTIC MEDIANS
 !                                TO BE GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
@@ -34917,7 +34997,7 @@ END SUBROUTINE UNIMED
 SUBROUTINE UNIPDF(X,Pdf)
 REAL(kind=wp) :: Pdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY
@@ -35027,7 +35107,7 @@ REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
      &     X , Y , ybar , yint , yslope
 INTEGER :: i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -35184,7 +35264,7 @@ END SUBROUTINE UNIPLT
 SUBROUTINE UNIPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
@@ -35291,7 +35371,7 @@ INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
 INTEGER m(17)
 
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --ISEED  = AN INTEGER ISEED VALUE
@@ -35557,7 +35637,7 @@ END SUBROUTINE UNIRAN
 SUBROUTINE UNISF(P,Sf)
 REAL(kind=wp) :: P , Sf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE SPARSITY
 !                                FUNCTION IS TO BE EVALUATED.
@@ -35645,7 +35725,7 @@ SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 INTEGER i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -36133,7 +36213,7 @@ END SUBROUTINE WEIB
 SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.
@@ -36256,7 +36336,7 @@ REAL(kind=wp) :: an , cc , Gamma , hold , pp0025 , pp025 , pp975 , pp9975 ,   &
 REAL(kind=wp) :: yslope
 INTEGER i , iupper , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
@@ -36452,7 +36532,7 @@ END SUBROUTINE WEIPLT
 SUBROUTINE WEIPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
@@ -36559,7 +36639,7 @@ SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
 INTEGER i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE
@@ -36685,7 +36765,7 @@ SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
 REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
 INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !
-!     INPUT  ARGUMENTS--X      = THE VECTOR OF
+!     INPUT ARGUMENTS--X      = THE VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

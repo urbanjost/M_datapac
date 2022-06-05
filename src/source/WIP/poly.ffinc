@@ -55,7 +55,7 @@ INTEGER :: iset , ism1 , iwflag , Iwrite , j , jm1 , jp1 , js ,      &
      &        nkmax
 INTEGER :: nm5 , nmax , numset
 !
-!     INPUT  ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--Y      = SINGLE PRECISION VECTOR OF
 !                                RESPONSE DATA (THAT IS, THE
 !                                DEPENDENT VARIABLE).
 !                     --X      = SINGLE PRECISION VECTOR OF

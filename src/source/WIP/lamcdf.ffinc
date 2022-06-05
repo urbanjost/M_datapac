@@ -62,7 +62,7 @@ SUBROUTINE LAMCDF(X,Alamba,Cdf)
 REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , X , xcalc , xmax , xmin
 INTEGER :: icount
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                     --ALAMBA = THE SINGLE PRECISION VALUE OF LAMBDA

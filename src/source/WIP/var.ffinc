@@ -51,7 +51,7 @@ SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
 INTEGER i , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

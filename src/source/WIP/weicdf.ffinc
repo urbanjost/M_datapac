@@ -53,7 +53,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.

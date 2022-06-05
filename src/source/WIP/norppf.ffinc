@@ -44,7 +44,7 @@ LICENSE
    CC0-1.0
 !     REFERENCES
 !               --ODEH AND EVANS, THE PERCENTAGE POINTS
-!                 OF THE NORMAL DISTRIBUTION, ALGORTIHM 70,
+!                 OF THE NORMAL DISTRIBUTION, ALGORITHM 70,
 !                 APPLIED STATISTICS, 1974, PAGES 96-97.
 !               --EVANS, ALGORITHMS FOR MINIMAL DEGREE
 !                 POLYNOMIAL AND RATIONAL APPROXIMATION,
@@ -79,7 +79,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE NORPPF(P,Ppf)
 REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 , q3 , q4 , r , t
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 AND 1.0)
 !                                AT WHICH THE PERCENT POINT
 !                                FUNCTION IS TO BE EVALUATED.
@@ -93,7 +93,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !     COMMENTS--THE CODING AS PRESENTED BELOW
 !               IS ESSENTIALLY IDENTICAL TO THAT
 !               PRESENTED BY ODEH AND EVANS
-!               AS ALGORTIHM 70 OF APPLIED STATISTICS.
+!               AS ALGORITHM 70 OF APPLIED STATISTICS.
 !               THE PRESENT AUTHOR HAS MODIFIED THE
 !               ORIGINAL ODEH AND EVANS CODE WITH ONLY
 !               MINOR STYLISTIC CHANGES.

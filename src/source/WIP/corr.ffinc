@@ -56,7 +56,7 @@ SUBROUTINE CORR(X,Y,N,Iwrite,C)
 REAL(kind=wp) :: an , C , hold , sum1 , sum2 , sum3 , X , xbar , Y , ybar
 INTEGER i , iflag , Iwrite , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED) OBSERVATIONS
 !                                WHICH CONSTITUTE THE FIRST SET
 !                                OF DATA.

@@ -77,7 +77,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 INTEGER :: i , ievodd , imax , imin , intx , nu
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE AND

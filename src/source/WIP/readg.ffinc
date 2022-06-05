@@ -59,7 +59,7 @@ INTEGER :: i , Icol1 , Icol2 , iend , ipower , Ird , istart ,  &
 INTEGER :: ncp1 , ndp , numcrd , numdec , numint
 REAL(kind=wp) :: sum , X , y
 !
-!     INPUT  ARGUMENTS--IRD    = THE INTEGER VALUE SPECIFYING
+!     INPUT ARGUMENTS--IRD    = THE INTEGER VALUE SPECIFYING
 !                                THE INPUT UNIT FROM WHICH
 !                                THE CARD IMAGES WILL COME.
 !                     --ICOL1  = THE INTEGER CARD COLUMN NUMBER

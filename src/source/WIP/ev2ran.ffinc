@@ -55,7 +55,7 @@ SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X(:)
 INTEGER i , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE

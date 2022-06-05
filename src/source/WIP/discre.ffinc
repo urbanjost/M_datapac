@@ -62,7 +62,7 @@ REAL(kind=wp) :: ai , clasml , clasmu , classm , cmax , cmin , hold , pointl ,&
      &     pointu , totdel , X , Xdel , Xmax , Xmin , Y
 INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                                TO BE DISCRETIZED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS

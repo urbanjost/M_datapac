@@ -71,7 +71,7 @@ REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) , 
 INTEGER :: i , Iseed , N
 !     ******STILL NEEDS ALGORITHM WORK ******
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --GAMMA  = THE SINGLE PRECISION VALUE OF THE

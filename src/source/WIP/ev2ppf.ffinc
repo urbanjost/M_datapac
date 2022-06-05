@@ -54,7 +54,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE EV2PPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT

@@ -88,7 +88,7 @@ REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
 INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
      &        jm1 , k , N
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

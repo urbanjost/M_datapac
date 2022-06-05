@@ -57,7 +57,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER :: i , ip1 , Iseed , N
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR

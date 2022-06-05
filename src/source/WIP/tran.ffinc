@@ -51,7 +51,7 @@ SUBROUTINE TRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
 INTEGER i , Iseed , j , N , Nu
 !
-!     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
 !                                GENERATED.
 !                     --NU     = THE INTEGER DEGREES OF FREEDOM

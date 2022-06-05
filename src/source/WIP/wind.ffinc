@@ -58,7 +58,7 @@ SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
 REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
 INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
 !
-!     INPUT  ARGUMENTS--X      = THE VECTOR OF
+!     INPUT ARGUMENTS--X      = THE VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

@@ -60,7 +60,7 @@ SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
 INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , nm1
 
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
 !                                OBSERVATIONS TO BE SORTED.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.

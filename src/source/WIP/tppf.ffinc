@@ -42,7 +42,7 @@ MAINTAINER
 LICENSE
    CC0-1.0
 !     REFERENCES
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHMATICS
+!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
 !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGE 102,
@@ -63,7 +63,7 @@ SUBROUTINE TPPF(P,Nu,Ppf)
 INTEGER ipass , maxit , Nu
 REAL(kind=wp) :: P , Ppf , ppfn
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (EXCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT

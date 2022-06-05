@@ -49,7 +49,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE EXPPDF(X,Pdf)
 REAL(kind=wp) :: Pdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE PROBABILITY DENSITY
 !                                FUNCTION IS TO BE EVALUATED.
 !     OUTPUT ARGUMENTS--PDF    = THE SINGLE PRECISION PROBABILITY

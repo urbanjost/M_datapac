@@ -34,7 +34,7 @@ DESCRIPTION
    the same as the inverse cumulative distribution function of the
    distribution.
 
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (INCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT

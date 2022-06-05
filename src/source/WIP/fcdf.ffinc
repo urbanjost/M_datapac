@@ -44,7 +44,7 @@ LICENSE
 !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
 !                 DISTRIBUTIONS--2, 1970, PAGE 83, FORMULA 20,
 !                 AND PAGE 84, THIRD FORMULA.
-!               --PAULSON, AN APPROXIMATE NORMAILIZATION
+!               --PAULSON, AN APPROXIMATE NORMALIZATION
 !                 OF THE ANALYSIS OF VARIANCE DISTRIBUTION,
 !                 ANNALS OF MATHEMATICAL STATISTICS, 1942,
 !                 NUMBER 13, PAGES 233-135.
@@ -60,7 +60,7 @@ REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
 INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
      &        m , n , Nu1 , Nu2 , nucut1 , nucut2
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE AT
 !                                WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE NON-NEGATIVE.

@@ -55,7 +55,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       SUBROUTINE LGNCDF(X,Cdf)
 REAL(kind=wp) :: arg , Cdf , X
 !
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--X      = THE SINGLE PRECISION VALUE
 !                                AT WHICH THE CUMULATIVE DISTRIBUTION
 !                                FUNCTION IS TO BE EVALUATED.
 !                                X SHOULD BE POSITIVE.

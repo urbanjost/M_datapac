@@ -65,7 +65,7 @@ SUBROUTINE CHSPPF(P,Nu,Ppf)
 REAL(kind=wp) :: anu , dnu , gamma , P , Ppf
 INTEGER icount , iloop , j , maxit , Nu
 !
-!     INPUT  ARGUMENTS--P      = THE SINGLE PRECISION VALUE
+!     INPUT ARGUMENTS--P      = THE SINGLE PRECISION VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
 !                                AND 1.0 (EXCLUSIVELY))
 !                                AT WHICH THE PERCENT POINT
