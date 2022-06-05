@@ -1290,8 +1290,12 @@ subroutine test_unisf()
 end subroutine test_unisf
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_var()
+   real,allocatable :: x(:)
+   real :: Xvar
    call unit_check_start('var',msg='')
-   !!call unit_check('var', 0.eq.0, 'checking',100)
+   x = [46.0, 69.0, 32.0, 60.0, 52.0, 41.0]
+   call VAR(X,size(x),1,Xvar)
+   call unit_check('var', Xvar == 177.2 ,'got',Xvar,'expecting',177.2)
    call unit_check_done('var',msg='')
 end subroutine test_var
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT

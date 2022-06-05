@@ -1,6 +1,9 @@
-     program demo_loc
-     use M_datapac, only : loc
-     implicit none
-     character(len=*),parameter ::  g='(*(g0,1x))'
-     ! call loc(x,y)
-     end program demo_loc
+       program demo_loc
+       use M_datapac, only : loc
+       implicit none
+       integer ::  i
+       real, allocatable ::  x(:), y(:)
+          y=[(real(i)/10.0,i=1,20000)]
+          x=y**3.78-6*y**2.52+9*y**1.26
+          call loc(y,size(y))
+       end program demo_loc

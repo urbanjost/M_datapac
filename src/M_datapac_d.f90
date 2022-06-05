@@ -7027,7 +7027,7 @@ END SUBROUTINE EXPCDF
 !!##INPUT ARGUMENTS
 !!
 !!    X    The value at which the probability density
-!!         function is to be evaluated.
+!!         function is to be evaluated. Values should be non-negative.
 !!
 !!##OUTPUT ARGUMENTS
 !!
@@ -7043,7 +7043,7 @@ END SUBROUTINE EXPCDF
 !!    implicit none
 !!    real,allocatable  :: x(:), y(:)
 !!    integer           :: i
-!!       x=[(real(i),i=-100,100,1)]
+!!       x=[(real(i),i=0,100,1)]
 !!       if(allocated(y))deallocate(y)
 !!       allocate(y(size(x)))
 !!       do i=1,size(x)
@@ -7051,8 +7051,38 @@ END SUBROUTINE EXPCDF
 !!       enddo
 !!       call plott(x,y,size(x))
 !!    end program demo_exppdf
-!!
+!! ```
 !!   Results:
+!!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -  X
+!!      0.9583334E+02 I  X
+!!      0.9166666E+02 I  X
+!!      0.8750000E+02 I  X
+!!      0.8333334E+02 I  X
+!!      0.7916667E+02 I  X
+!!      0.7500000E+02 -  X
+!!      0.7083334E+02 I  X
+!!      0.6666667E+02 I  X
+!!      0.6250000E+02 I  X
+!!      0.5833334E+02 I  X
+!!      0.5416667E+02 I  X
+!!      0.5000000E+02 -  X
+!!      0.4583334E+02 I  XX
+!!      0.4166667E+02 I   X
+!!      0.3750000E+02 I   X
+!!      0.3333334E+02 I   XX
+!!      0.2916667E+02 I    XX
+!!      0.2500000E+02 -     XXX
+!!      0.2083334E+02 I       XXX
+!!      0.1666667E+02 I          XXXX
+!!      0.1250000E+02 I              XXX X
+!!      0.8333336E+01 I                    X X X X
+!!      0.4166672E+01 I                            X  X  X   X
+!!      0.0000000E+00 -                                         X   X    X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.4540E-04  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -13156,16 +13186,19 @@ INTEGER i , ip1 , Iseed , N
 END SUBROUTINE LGNRAN
 !>
 !!##NAME
-!!    loc(3f) - [M_datapac:STATISTICS] compute the sample mean, midrange,
+!!    loc(3f) - [M_datapac:STATISTICS] print the sample mean, midrange,
 !!    midmean, and median
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LOC(X,N)
 !!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in) :: N
+!!
 !!##DESCRIPTION
-!!    loc(3f) computes 4 estimates of the location (typical value, measure
-!!    of central tendency) of the data in the input vector x.
+!!    LOC(3f) computes 4 estimates of the location (typical value, measure
+!!    of central tendency) of the data in the input vector X.
 !!
 !!    the 4 estimators employed are--
 !!
@@ -13174,77 +13207,87 @@ END SUBROUTINE LGNRAN
 !!            3. the sample midmean; and
 !!            4. the sample median.
 !!
-!!    the above 4 estimators are near-optimal estimators of location for
+!!    The above 4 estimators are near-optimal estimators of location for
 !!    shorter-tailed symmetric distributions, moderate-tailed distributions,
 !!    moderate-long-tailed distributions, and long-tailed distributions,
 !!    respectively.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The vector of (unsorted or sorted) observations.
+!!
+!!    N     The integer number of observations in the vector X.
+!!
+!!##OUTPUT
+!!
+!!    1/4 page of automatic output consisting of the following 4 estimates
+!!    of location for the data in the input vector X
+!!
+!!     1. The sample midrange;
+!!     2. The sample mean;
+!!     3. The sample midmean; and
+!!     4. The sample median.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_loc
-!!    use M_datapac, only : loc
-!!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call loc(x,y)
-!!    end program demo_loc
+!!      program demo_loc
+!!      use M_datapac, only : loc
+!!      implicit none
+!!      integer ::  i
+!!      real, allocatable ::  x(:), y(:)
+!!         y=[(real(i)/10.0,i=1,20000)]
+!!         x=y**3.78-6*y**2.52+9*y**1.26
+!!         call loc(y,size(y))
+!!      end program demo_loc
 !!
 !!   Results:
 !!
+!!
+!!
+!!
+!!
+!!                                   Estimates of the Location Parameter
+!!
+!!                                       (The sample size N =    30)
+!!
+!!
+!!     The sample midrange is                 0.15500000E+01
+!!     The sample mean is                     0.15500000E+01
+!!     The sample 25 percent trimmed mean is  0.15500001E+01
+!!     The sample median is                   0.15500000E+01
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * DIXON AND MASSEY, PAGES 14, 70, AND 71
-!!   * CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
-!!     AND 387
-!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGE 8.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LOC(X,N)
-REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
-     &     xmidm , Y
-INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
-     &        N , nmid , nmidp1
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--1/4 PAGE OF AUTOMATIC OUTPUT
-!             CONSISTING OF THE FOLLOWING 4
-!             ESTIMATES OF LOCATION
-!             FOR THE DATA IN THE INPUT VECTOR X--
-!             1) THE SAMPLE MIDRANGE;
-!             2) THE SAMPLE MEAN;
-!             3) THE SAMPLE MIDMEAN; AND
-!             4) THE SAMPLE MEDIAN.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Dixon and Massey, Pages 14, 70, and 71
+!!   * Crow, Journal of the American Statistical Association, Pages 357
+!!     and 387
+!!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Page 8.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-!
-      iupper = 15000
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LOC(X,N)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp)            :: aiflag, an, hold, sum, WS, xmean, xmed, xmid, xmidm
+INTEGER                  :: i, iflag, imax, imaxm1, imin, iminp1, iupper, nmid, nmidp1
+REAL(kind=wp)            :: Y(N)
+
+      iupper = N
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -13254,18 +13297,14 @@ INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
       xmed = 0.0_wp
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LOC    SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001 FORMAT(' ***** FATAL ERROR--The second input argument to LOC(3f) is outside the allowable (1,',I6,') interval *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** the value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE LOC &
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to LOC(3f) has the value 1 *****')
             xmid = X(1)
             xmean = X(1)
             xmidm = X(1)
@@ -13276,13 +13315,13 @@ INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
                IF ( X(i)/=hold ) GOTO 20
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE LOC    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (&
+            & ' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO LOC(3f)HAS ALL ELEMENTS = ',E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
- 20         an = N
+ 20         continue
+            an = N
 !
 !     SORT THE DATA,
 !     THEN COMPUTE THE SAMPLE MIDRANGE.
@@ -13327,27 +13366,19 @@ INTEGER :: i , iflag , imax , imaxm1 , imin , iminp1 , iupper ,&
 !
 !     WRITE EVERYTHING OUT
 !
-         DO i = 1 , 5
-            WRITE (G_IO,99011)
-         ENDDO
          WRITE (G_IO,99005)
-!
-99005    FORMAT (' ',30X,'ESTIMATES OF THE LOCATION PARAMETER')
-         WRITE (G_IO,99011)
+         99005 FORMAT (/,/,/,/,/,' ',30X,'Estimates of the LOCATION Parameter')
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',34X,'(THE SAMPLE SIZE N = ',I5,')')
-         WRITE (G_IO,99011)
-         WRITE (G_IO,99011)
+         99006 FORMAT (/,' ',34X,'(The sample size N = ',I5,')')
          WRITE (G_IO,99007) xmid
-99007    FORMAT (' ','THE SAMPLE MIDRANGE IS                ',E15.8)
+         99007 FORMAT (/,/,' The sample midrange is                ',E15.8)
          WRITE (G_IO,99008) xmean
-99008    FORMAT (' ','THE SAMPLE MEAN IS                    ',E15.8)
+         99008 FORMAT (' The sample mean is                    ',E15.8)
          WRITE (G_IO,99009) xmidm
-99009    FORMAT (' ','THE SAMPLE 25 PERCENT TRIMMED MEAN IS ',E15.8)
+         99009 FORMAT (' The sample 25 Percent Trimmed Mean is ',E15.8)
          WRITE (G_IO,99010) xmed
-99010    FORMAT (' ','THE SAMPLE MEDIAN IS                  ',E15.8)
+         99010 FORMAT (' The Sample Median is                  ',E15.8)
       ENDIF
-99011 FORMAT (' ')
 !
 END SUBROUTINE LOC
 !>
@@ -22640,6 +22671,10 @@ END SUBROUTINE PLOTST
 !!
 !!       SUBROUTINE PLOTT(Y,X,N)
 !!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        REAL(kind=wp),intent(in) :: Y(:)
+!!        INTEGER,intent(in)       :: N
+!!
 !!##DESCRIPTION
 !!
 !!    PLOTT(3f) yields a narrow-width (71-character) plot of Y(i) versus
@@ -22659,15 +22694,17 @@ END SUBROUTINE PLOTST
 !!    10.0**10) and they will subsequently be ignored in the plot subroutine.
 !!
 !!    Note that the storage requirements for this (and the other) terminal
-!!    plot subroutines are very small. This is due to the 'one line at
-!!    a time' algorithm employed for the plot.
+!!    plot subroutines are very small. This is due to the "one line at
+!!    a time" algorithm employed for the plot.
 !!
 !!##INPUT ARGUMENTS
 !!
 !!   Y   The vector of (unsorted or sorted) observations to be plotted
 !!       vertically.
+!!
 !!   X   The precision precision vector of (unsorted or sorted) observations
 !!       to be plotted horizontally.
+!!
 !!   N   The integer number of observations in the vector Y.
 !!       There is no restriction on the maximum value of N for this
 !!       subroutine.
@@ -22681,19 +22718,57 @@ END SUBROUTINE PLOTST
 !!
 !!   Sample program:
 !!
-!!    program demo_plott
-!!    use M_datapac, only : plott
-!!    implicit none
-!!    ! call plott(x,y)
-!!    end program demo_plott
+!!      program demo_plott
+!!      use M_datapac, only : plott
+!!      implicit none
+!!      integer ::  i
+!!      integer,parameter :: dp=kind(0.0d0)
+!!      real(kind=dp), allocatable ::  x(:), y(:)
+!!         y=[(real(i)/10.0,i=1,30)]
+!!         x=y**3.78-6*y**2.52+9*y**1.26
+!!         call plott(x,y,size(x))
+!!      end program demo_plott
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.4000000E+01 -               X X X                              X
+!!      0.3833356E+01 I              X     X
+!!      0.3666712E+01 I                      X
+!!      0.3500068E+01 I            X
+!!      0.3333424E+01 I                        X
+!!      0.3166780E+01 I          X
+!!      0.3000137E+01 -                         X
+!!      0.2833493E+01 I         X
+!!      0.2666849E+01 I                                                X
+!!      0.2500205E+01 I                           X
+!!      0.2333561E+01 I       X
+!!      0.2166917E+01 I                            X
+!!      0.2000273E+01 -
+!!      0.1833629E+01 I
+!!      0.1666985E+01 I     X                        X                X
+!!      0.1500341E+01 I
+!!      0.1333698E+01 I                                X
+!!      0.1167054E+01 I
+!!      0.1000410E+01 -    X
+!!      0.8337659E+00 I                                 X           X
+!!      0.6671220E+00 I
+!!      0.5004781E+00 I  X                                X
+!!      0.3338342E+00 I                                           X
+!!      0.1671903E+00 I                                     X    X
+!!      0.5463774E-03 -                                      X X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+00  0.8250E+00  0.1550E+01  0.2275E+01  0.3000E+01
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
 !     ORIGINAL VERSION--FEBRUARY  1974.
@@ -22705,7 +22780,8 @@ END SUBROUTINE PLOTST
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTT(Y,X,N)
-REAL(kind=wp),intent(in) :: X(:), Y(:)
+REAL(kind=wp),intent(in) :: X(:)
+REAL(kind=wp),intent(in) :: Y(:)
 INTEGER,intent(in)       :: N
 REAL(kind=wp) :: aim1, airow, anumcm, anumlm, anumr, anumrm
 REAL(kind=wp) :: cutoff,  delx, dely, hold, xlable, xmax, xmin, xwidth, ylable, ylower, ymax, ymin
@@ -22734,7 +22810,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99012)
          WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-         99001    FORMAT (' ','is non-negative (with value = ',I0,')')
+         99001    FORMAT (' is non-negative (with value = ',I0,')')
          WRITE (G_IO,99011)
          RETURN
       ELSE
@@ -22743,7 +22819,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             WRITE (G_IO,99012)
             WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
             WRITE (G_IO,99002) N
-            99002       FORMAT (' ','has the value 1')
+            99002       FORMAT (' has the value 1')
             WRITE (G_IO,99011)
             RETURN
          ELSE
@@ -22806,13 +22882,13 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       WRITE (G_IO,99011)
       WRITE (G_IO,99012)
       WRITE (G_IO,99003) alph11 , alph12 , alph21 , alph22
-      99003 FORMAT (' ','The ',A4,A4,', and ',A4,A4)
+      99003 FORMAT (' The ',A4,A4,', and ',A4,A4)
       WRITE (G_IO,99004) sbnam1 , sbnam2
-      99004 FORMAT (' ','input arguments to the ',A4,A4,' subroutine')
+      99004 FORMAT (' input arguments to the ',A4,A4,' subroutine')
       WRITE (G_IO,99005)
-      99005 FORMAT (' ','are such that too many points have been', ' excluded from the plot.')
+      99005 FORMAT (' are such that too many points have been', ' excluded from the plot.')
       WRITE (G_IO,99006) n2
-      99006 FORMAT (' ','only ',I0,' points are left to be plotted.')
+      99006 FORMAT (' only ',I0,' points are left to be plotted.')
       WRITE (G_IO,99011)
       RETURN
 !
@@ -22930,12 +23006,12 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       WRITE (G_IO,99010) (xlable(i),i=1,numlab)
       99010 FORMAT (' ',9X,5E12.4)
 
-99011 FORMAT (' ','**********************************************************************')
-99012 FORMAT (' ','                   FATAL ERROR                    ')
-99013 FORMAT (' ','The ',A4,A4,' input argument to the ',A4,A4,' subroutine')
-99014 FORMAT (' ','has all elements = ',E15.8)
-99015 FORMAT (' ','has all elements in excess of the cutoff')
-99016 FORMAT (' ','value of ',E15.8)
+99011 FORMAT (' **********************************************************************')
+99012 FORMAT ('                    FATAL ERROR                    ')
+99013 FORMAT (' The ',A4,A4,' input argument to the ',A4,A4,' subroutine')
+99014 FORMAT (' has all elements = ',E15.8)
+99015 FORMAT (' has all elements in excess of the cutoff')
+99016 FORMAT (' value of ',E15.8)
 99017 FORMAT (' ',18X,54A1)
 99018 FORMAT (' ',15X,A1)
 
@@ -35552,16 +35628,38 @@ END SUBROUTINE UNISF
 !!
 !!       SUBROUTINE VAR(X,N,Iwrite,Xvar)
 !!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in) :: N
+!!        INTEGER,intent(in) :: Iwrite
+!!        REAL(kind=wp),intent(out) :: Xvar
+!!
 !!##DESCRIPTION
-!!    var(3f) computes the sample variance (with denominator n-1) of the
-!!    data in the input vector x.
+!!    VAR(3f) computes the sample variance (with denominator N-1) of the
+!!    data in the input vector X.
 !!
-!!    the sample variance = (the sum of the squared deviations about the
-!!    sample mean)/(n-1).
+!!    The sample variance = (the sum of the squared deviations about the
+!!    sample mean)/(N-1).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Variance is the expectation of the squared deviation of a random
+!!    variable from its population mean or sample mean. Variance is a
+!!    measure of dispersion, meaning it is a measure of how far a set of
+!!    numbers is spread out from their average value.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X    The vector of (unsorted or sorted) observations.
+!!
+!!    N    The integer number of observations in the vector X.
+!!
+!!    IWRITE  An integer flag code which (if set to 0) will suppress the
+!!            printing of the sample variance as it is computed; or (if set
+!!            to some integer value not equal to 0), like, say, 1) will cause
+!!            the printing of the sample variance at the time it is computed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    XVAR   The value of the computed sample variance (with denominator
+!!           N-1).
 !!
 !!##EXAMPLES
 !!
@@ -35570,15 +35668,22 @@ END SUBROUTINE UNISF
 !!    program demo_var
 !!    use M_datapac, only : var
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call var(x,y)
+!!    real,allocatable :: x(:)
+!!    real :: Xvar
+!!       x = [46.0, 69.0, 32.0, 60.0, 52.0, 41.0]
+!!       call VAR(X,size(x),1,Xvar)
+!!       write(*,*)merge('GOOD','BAD ',Xvar == 177.2), Xvar
 !!    end program demo_var
 !!
 !!   Results:
 !!
+!!     The sample variance of the 6 observations is  0.17720000E+03
+!!     GOOD   177.2000
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
@@ -35589,61 +35694,33 @@ END SUBROUTINE UNISF
 !!     1957, Page 38.
 !!   * Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
 !!     1963, Page 171.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE VAR(X,N,Iwrite,Xvar)
-REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
-INTEGER i , Iwrite , N
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --IWRITE = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL SUPPRESS
-!                                THE PRINTING OF THE
-!                                SAMPLE VARIANCE
-!                                AS IT IS COMPUTED;
-!                                OR (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0),
-!                                LIKE, SAY, 1) WILL CAUSE
-!                                THE PRINTING OF THE
-!                                SAMPLE VARIANCE
-!                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XVAR   = THE  VALUE OF THE
-!                                COMPUTED SAMPLE VARIANCE.
-!     OUTPUT--THE COMPUTED  VALUE OF THE
-!             SAMPLE VARIANCE (WITH DENOMINATOR N-1).
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE VAR(X,N,Iwrite,Xvar)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in) :: N
+INTEGER,intent(in) :: Iwrite
+REAL(kind=wp),intent(out) :: Xvar
+
+REAL(kind=wp) :: an , hold , sum , xmean
+INTEGER i
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE VAR    SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--The second input argument to VAR(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE VAR &
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to VAR(3f) has the value 1 *****')
             Xvar = 0.0_wp
          ELSE
             hold = X(1)
@@ -35651,9 +35728,8 @@ INTEGER i , Iwrite , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE VAR    SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (&
+            & ' ***** NON-FATAL DIAGNOSTIC--The first  input argument (a vector) to VAR(3f) has all elements = ',E15.8,' *****')
             Xvar = 0.0_wp
          ENDIF
          GOTO 100
@@ -35674,10 +35750,9 @@ INTEGER i , Iwrite , N
 !
  100  IF ( Iwrite==0 ) RETURN
       WRITE (G_IO,99005)
-99005 FORMAT (' ')
+      99005 FORMAT (' ')
       WRITE (G_IO,99006) N , Xvar
-99006 FORMAT (' ','THE SAMPLE VARIANCE OF THE ',I6,' OBSERVATIONS IS ', &
-     &        E15.8)
+      99006 FORMAT (' ','The sample variance of the ',I0,' observations is ', E15.8)
 END SUBROUTINE VAR
 !>
 !!##NAME

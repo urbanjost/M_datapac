@@ -4,7 +4,7 @@
      implicit none
      real,allocatable  :: x(:), y(:)
      integer           :: i
-        x=[(real(i),i=-100,100,1)]
+        x=[(real(i),i=0,100,1)]
         if(allocated(y))deallocate(y)
         allocate(y(size(x)))
         do i=1,size(x)

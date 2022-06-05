@@ -89,7 +89,7 @@ The following subroutines are available in M_datapac:
 ( Note they all contain a man-page template at the top that is a place-holder as the documentation is being re-composed)
 
   * [AUTOCO](src/source/autoco.ffinc)  - compute the sample autocorrelation coefficient
-  * [LOC](src/source/WIP/loc.ffinc)        - compute the sample mean, midrange, midmean, and median
+  * [LOC](src/source/loc.ffinc)        - compute the sample mean, midrange, midmean, and median
   * [MEAN](src/source/mean.ffinc)      - compute the mean of a data vector
   * [MEDIAN](src/source/median.ffinc)  - compute the median of a data vector
   * [MIDM](src/source/WIP/midm.ffinc)      - compute the midmean of a data vector
@@ -109,7 +109,7 @@ The following subroutines are available in M_datapac:
   * [TOL](src/source/WIP/tol.ffinc)        - compute normal and distribution-free tolerance limits
   * [TRIM](src/source/WIP/trim.ffinc)      - computes the sample trimmed mean of the data in the input vector X.
   * [UNIMED](src/source/WIP/unimed.ffinc)  - generate the /N/ order statistic medians (used in creating probability plots)
-  * [VAR](src/source/WIP/var.ffinc)        - compute the sample variance of a vector of observations
+  * [VAR](src/source/var.ffinc)        - compute the sample variance of a vector of observations
   * [WEIB](src/source/WIP/weib.ffinc)      - perform a Weibull distribution analysis (Weibull PPCC analysis)
   * [WIND](src/source/WIP/wind.ffinc)      - compute the sample Winsorized mean of a vector of observations
 ## 
@@ -224,7 +224,7 @@ The following subroutines are available in M_datapac:
   * [PLOT](src/source/WIP/plot.ffinc)      - yields a one-page printer plot of y(i) versus x(i)
   * [PLOTS](src/source/WIP/plots.ffinc)    - generate a line printer plot of Y vs X
   * [PLOTST](src/source/WIP/plotst.ffinc)  - generate a line printer plot of Y vs X for the terminal (71 characters wide)
-  * [PLOTT](src/source/WIP/plott.ffinc)    - generate a line printer plot of Y vs X for the terminal (71 characters wide)
+  * [PLOTT](src/source/plott.ffinc)    - generate a line printer plot of Y vs X for the terminal (71 characters wide)
   * [PLOTU](src/source/WIP/plotu.ffinc)    - generate a line printer 4-plot
   * [PLOTX](src/source/WIP/plotx.ffinc)    - generate a line printer run sequence plot
   * [PLOTXT](src/source/WIP/plotxt.ffinc)  - generate a line printer run sequence plot for the terminal (71 characters wide)

@@ -1,0 +1,199 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file loc.3m_datapac.man
+NAME
+   loc(3f) - [M_datapac:STATISTICS] print the sample mean, midrange,
+   midmean, and median
+
+SYNOPSIS
+      SUBROUTINE LOC(X,N)
+
+       REAL(kind=wp),intent(in) :: X(:) 
+       INTEGER,intent(in) :: N
+
+DESCRIPTION
+   LOC(3f) computes 4 estimates of the location (typical value, measure
+   of central tendency) of the data in the input vector X.
+
+   the 4 estimators employed are--
+
+           1. the sample midrange;
+           2. the sample mean;
+           3. the sample midmean; and
+           4. the sample median.
+
+   The above 4 estimators are near-optimal estimators of location for
+   shorter-tailed symmetric distributions, moderate-tailed distributions,
+   moderate-long-tailed distributions, and long-tailed distributions,
+   respectively.
+
+INPUT ARGUMENTS
+
+   X     The vector of (unsorted or sorted) observations.
+
+   N     The integer number of observations in the vector X.
+
+OUTPUT
+
+   1/4 page of automatic output consisting of the following 4 estimates
+   of location for the data in the input vector X
+
+    1. The sample midrange;
+    2. The sample mean;
+    3. The sample midmean; and
+    4. The sample median.
+
+EXAMPLES
+  Sample program:
+
+     program demo_loc
+     use M_datapac, only : loc
+     implicit none
+     integer ::  i
+     real, allocatable ::  x(:), y(:)
+        y=[(real(i)/10.0,i=1,20000)]
+        x=y**3.78-6*y**2.52+9*y**1.26
+        call loc(y,size(y))
+     end program demo_loc
+
+  Results:
+    
+    
+    
+    
+    
+                                  Estimates of the Location Parameter
+    
+                                      (The sample size N =    30)
+    
+    
+    The sample midrange is                 0.15500000E+01
+    The sample mean is                     0.15500000E+01
+    The sample 25 percent trimmed mean is  0.15500001E+01
+    The sample median is                   0.15500000E+01
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Dixon and Massey, Pages 14, 70, and 71
+  * Crow, Journal of the American Statistical Association, Pages 357
+    and 387
+  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+    Edition 2, 1963, Page 8.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LOC(X,N)
+REAL(kind=wp),intent(in) :: X(:) 
+INTEGER,intent(in)       :: N
+REAL(kind=wp)            :: aiflag, an, hold, sum, WS, xmean, xmed, xmid, xmidm 
+INTEGER                  :: i, iflag, imax, imaxm1, imin, iminp1, iupper, nmid, nmidp1
+REAL(kind=wp)            :: Y(N)
+ 
+      iupper = N
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      xmid = 0.0_wp
+      xmean = 0.0_wp
+      xmidm = 0.0_wp
+      xmed = 0.0_wp
+      IF ( N<1 .OR. N>iupper ) THEN
+         WRITE (G_IO,99001) iupper
+         99001 FORMAT(' ***** FATAL ERROR--The second input argument to LOC(3f) is outside the allowable (1,',I6,') interval *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ','***** the value of the argument is ',I0,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (G_IO,99003)
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to LOC(3f) has the value 1 *****')
+            xmid = X(1)
+            xmean = X(1)
+            xmidm = X(1)
+            xmed = X(1)
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 20
+            ENDDO
+            WRITE (G_IO,99004) hold
+            99004 FORMAT (&
+	    & ' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO LOC(3f)HAS ALL ELEMENTS = ',E15.8,' *****')
+!
+!-----START POINT-----------------------------------------------------
+!
+ 20         continue
+            an = N
+!
+!     SORT THE DATA,
+!     THEN COMPUTE THE SAMPLE MIDRANGE.
+!
+            CALL SORT(X,N,Y)
+            xmid = (Y(1)+Y(N))/2.0_wp
+!
+!     COMPUTE THE SAMPLE MEAN
+!
+            sum = 0.0_wp
+            DO i = 1 , N
+               sum = sum + Y(i)
+            ENDDO
+            xmean = sum/an
+!
+!     COMPUTE THE SAMPLE MIDMEAN
+!
+            iflag = N - (N/4)*4
+            aiflag = iflag
+            imin = N/4 + 1
+            imax = N - imin + 1
+            sum = 0.0_wp
+            sum = sum + Y(imin)*(4.0_wp-aiflag)/4.0_wp
+            sum = sum + Y(imax)*(4.0_wp-aiflag)/4.0_wp
+            iminp1 = imin + 1
+            imaxm1 = imax - 1
+            IF ( iminp1<=imaxm1 ) THEN
+               DO i = iminp1 , imaxm1
+                  sum = sum + Y(i)
+               ENDDO
+            ENDIF
+            xmidm = sum/(an/2.0_wp)
+!
+!     COMPUTE THE SAMPLE MEDIAN
+!
+            iflag = N - (N/2)*2
+            nmid = N/2
+            nmidp1 = nmid + 1
+            IF ( iflag==0 ) xmed = (Y(nmid)+Y(nmidp1))/2.0_wp
+            IF ( iflag==1 ) xmed = Y(nmidp1)
+         ENDIF
+!
+!     WRITE EVERYTHING OUT
+!
+         WRITE (G_IO,99005)
+         99005 FORMAT (/,/,/,/,/,' ',30X,'Estimates of the LOCATION Parameter')
+         WRITE (G_IO,99006) N
+         99006 FORMAT (/,' ',34X,'(The sample size N = ',I5,')')
+         WRITE (G_IO,99007) xmid
+         99007 FORMAT (/,/,' The sample midrange is                ',E15.8)
+         WRITE (G_IO,99008) xmean
+         99008 FORMAT (' The sample mean is                    ',E15.8)
+         WRITE (G_IO,99009) xmidm
+         99009 FORMAT (' The sample 25 Percent Trimmed Mean is ',E15.8)
+         WRITE (G_IO,99010) xmed
+         99010 FORMAT (' The Sample Median is                  ',E15.8)
+      ENDIF
+!
+END SUBROUTINE LOC

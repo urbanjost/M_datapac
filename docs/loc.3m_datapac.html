@@ -53,7 +53,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>loc</B>(3f) - [M_datapac:STATISTICS] compute the sample mean, midrange,
+<B>loc</B>(3f) - [M_datapac:STATISTICS] print the sample mean, midrange,
 midmean, and median
 <P>
 </BLOCKQUOTE>
@@ -61,20 +61,27 @@ midmean, and median
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
 </A>
 <BLOCKQUOTE>
 SUBROUTINE <B>LOC</B>(X,N)
+<P>
+<PRE>
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER,intent(in) :: N
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -82,8 +89,8 @@ SUBROUTINE <B>LOC</B>(X,N)
 
 </A>
 <BLOCKQUOTE>
-<B>loc</B>(3f) computes 4 estimates of the location (typical value, measure
-of central tendency) of the data in the input vector x.
+<B>LOC</B>(3f) computes 4 estimates of the location (typical value, measure
+of central tendency) of the data in the input vector X.
 <P>
 the 4 estimators employed are--
 <BLOCKQUOTE>
@@ -112,28 +119,64 @@ the sample median.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P>
-the above 4 estimators are near-optimal estimators of location for
+The above 4 estimators are near-optimal estimators of location for
 shorter-tailed symmetric distributions, moderate-tailed distributions,
 moderate-long-tailed distributions, and long-tailed distributions,
 respectively.
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
+<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>X</B> </TD><TD valign=bottom>
-description of parameter
+The vector of (unsorted or sorted) observations.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+<B>N</B> </TD><TD valign=bottom>
+The integer number of observations in the vector X.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
+
+     <H3>OUTPUT</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
+1/4 page of automatic output consisting of the following 4 estimates
+of location for the data in the input vector X
+<BLOCKQUOTE>
+<TABLE cellpadding=3><!-- tsb: 1/4 page of automatic output consisting of the following 4 estimates
+ -->
+<TR></TR><TR></TR>
+<TR valign=top><TD width=4%>
+1.
+</TD><TD>
+The sample midrange;
+</TD></TR>
+<TR valign=top><TD width=4%>
+2.
+</TD><TD>
+The sample mean;
+</TD></TR>
+<TR valign=top><TD width=4%>
+3.
+</TD><TD>
+The sample midmean; and
+</TD></TR>
+<TR valign=top><TD width=4%>
+4.
+</TD><TD>
+The sample median.
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+</BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -142,26 +185,61 @@ description of parameter
 Sample program:
 <P>
 <PRE>
-   program demo_loc
-   use M_datapac, only : loc
-   implicit none
-   character(len=*),parameter ::  g=&#146;(*(g0,1x))&#146;
-   ! call loc(x,y)
-   end program demo_loc
+     program demo_loc
+     use M_datapac, only : loc
+     implicit none
+     integer ::  i
+     real, allocatable ::  x(:), y(:)
+        y=[(real(i)/10.0,i=1,20000)]
+        x=y**3.78-6*y**2.52+9*y**1.26
+        call loc(y,size(y))
+     end program demo_loc
 <P>
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=5>
+<P>
+<P>
+<P>
+<P>
+<P>
+<PRE>
+                                  Estimates of the Location Parameter
+<P>
+                                      (The sample size N =    30)
+<P>
+<P>
+</PRE>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
+<TR valign=top><TD colspan=2>
+<B>The sample midrange is</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+0.15500000E+01
+</TD></TR>
+<TR valign=top><TD colspan=2>
+<B>The sample mean is</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+0.15500000E+01
+</TD></TR>
+<TR valign=top><TD colspan=2>
+<B>The sample 25 percent trimmed mean is</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+0.15500001E+01
+</TD></TR>
+<TR valign=top><TD colspan=2>
+<B>The sample median is</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+0.15500000E+01
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -169,7 +247,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -177,7 +255,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -187,23 +265,23 @@ CC0-1.0
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-DIXON AND MASSEY, PAGES 14, 70, AND 71
+Dixon and Massey, Pages 14, 70, and 71
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
-AND 387
+Crow, Journal of the American Statistical Association, Pages 357
+and 387
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-EDITION 2, 1963, PAGE 8.
+Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+Edition 2, 1963, Page 8.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>loc (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 3077787e-bac8-4226-94ab-3e3fff9f285c using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>loc (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from cba6bf86-9a21-4b70-8e48-53d21a8f6559 using man macros.</FONT>
 <br><br><center><img src="images/loc.gif"></center>
 </div>
 </div>

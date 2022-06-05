@@ -1,0 +1,136 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file var.3m_datapac.man
+NAME
+   var(3f) - [M_datapac:STATISTICS] compute the sample variance of a
+   vector of observations
+
+SYNOPSIS
+      SUBROUTINE VAR(X,N,Iwrite,Xvar)
+
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER,intent(in) :: N
+       INTEGER,intent(in) :: Iwrite
+       REAL(kind=wp),intent(out) :: Xvar
+
+DESCRIPTION
+   VAR(3f) computes the sample variance (with denominator N-1) of the
+   data in the input vector X.
+
+   The sample variance = (the sum of the squared deviations about the
+   sample mean)/(N-1).
+
+   Variance is the expectation of the squared deviation of a random
+   variable from its population mean or sample mean. Variance is a
+   measure of dispersion, meaning it is a measure of how far a set of
+   numbers is spread out from their average value.
+
+INPUT ARGUMENTS
+
+   X    The vector of (unsorted or sorted) observations.
+
+   N    The integer number of observations in the vector X.
+
+   IWRITE  An integer flag code which (if set to 0) will suppress the
+           printing of the sample variance as it is computed; or (if set
+           to some integer value not equal to 0), like, say, 1) will cause
+           the printing of the sample variance at the time it is computed.
+
+OUTPUT ARGUMENTS
+
+   XVAR   The value of the computed sample variance (with denominator
+          N-1).
+
+EXAMPLES
+  Sample program:
+
+   program demo_var
+   use M_datapac, only : var
+   implicit none
+   real,allocatable :: x(:)
+   real :: Xvar
+      x = [46.0, 69.0, 32.0, 60.0, 52.0, 41.0]
+      call VAR(X,size(x),1,Xvar)
+      write(*,*)merge('GOOD','BAD ',Xvar == 177.2), Xvar
+   end program demo_var
+
+  Results:
+    
+    The sample variance of the 6 observations is  0.17720000E+03
+    GOOD   177.2000    
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+REFERENCES
+  * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+  * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+    1957, Page 38.
+  * Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
+    1963, Page 171.
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE VAR(X,N,Iwrite,Xvar)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in) :: N
+INTEGER,intent(in) :: Iwrite
+REAL(kind=wp),intent(out) :: Xvar
+
+REAL(kind=wp) :: an , hold , sum , xmean
+INTEGER i 
+ 
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      an = N
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--The second input argument to VAR(3f) is non-positive *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (G_IO,99003)
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to VAR(3f) has the value 1 *****')
+            Xvar = 0.0_wp
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99004) hold
+            99004 FORMAT (&
+	    & ' ***** NON-FATAL DIAGNOSTIC--The first  input argument (a vector) to VAR(3f) has all elements = ',E15.8,' *****')
+            Xvar = 0.0_wp
+         ENDIF
+         GOTO 100
+!
+!-----START POINT-----------------------------------------------------
+!
+ 50      sum = 0.0_wp
+         DO i = 1 , N
+            sum = sum + X(i)
+         ENDDO
+         xmean = sum/an
+         sum = 0.0_wp
+         DO i = 1 , N
+            sum = sum + (X(i)-xmean)**2
+         ENDDO
+         Xvar = sum/(an-1.0_wp)
+      ENDIF
+!
+ 100  IF ( Iwrite==0 ) RETURN
+      WRITE (G_IO,99005)
+      99005 FORMAT (' ')
+      WRITE (G_IO,99006) N , Xvar
+      99006 FORMAT (' ','The sample variance of the ',I0,' observations is ', E15.8)
+END SUBROUTINE VAR

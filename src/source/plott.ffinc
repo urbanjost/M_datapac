@@ -7,6 +7,10 @@ NAME
 SYNOPSIS
       SUBROUTINE PLOTT(Y,X,N)
 
+       REAL(kind=wp),intent(in) :: X(:)
+       REAL(kind=wp),intent(in) :: Y(:)
+       INTEGER,intent(in)       :: N
+
 DESCRIPTION
 
    PLOTT(3f) yields a narrow-width (71-character) plot of Y(i) versus
@@ -26,15 +30,17 @@ DESCRIPTION
    10.0**10) and they will subsequently be ignored in the plot subroutine.
 
    Note that the storage requirements for this (and the other) terminal
-   plot subroutines are very small. This is due to the 'one line at
-   a time' algorithm employed for the plot.
+   plot subroutines are very small. This is due to the "one line at
+   a time" algorithm employed for the plot.
 
 INPUT ARGUMENTS
 
   Y   The vector of (unsorted or sorted) observations to be plotted
       vertically.
+
   X   The precision precision vector of (unsorted or sorted) observations
       to be plotted horizontally.
+
   N   The integer number of observations in the vector Y.
       There is no restriction on the maximum value of N for this
       subroutine.
@@ -47,21 +53,60 @@ OUTPUT
 EXAMPLES
   Sample program:
 
-   program demo_plott
-   use M_datapac, only : plott
-   implicit none
-   ! call plott(x,y)
-   end program demo_plott
+     program demo_plott
+     use M_datapac, only : plott
+     implicit none
+     integer ::  i
+     integer,parameter :: dp=kind(0.0d0)
+     real(kind=dp), allocatable ::  x(:), y(:)
+        y=[(real(i)/10.0,i=1,30)]
+        x=y**3.78-6*y**2.52+9*y**1.26
+        call plott(x,y,size(x))
+     end program demo_plott
 
   Results:
+    
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.4000000E+01 -               X X X                              X
+     0.3833356E+01 I              X     X
+     0.3666712E+01 I                      X
+     0.3500068E+01 I            X
+     0.3333424E+01 I                        X
+     0.3166780E+01 I          X
+     0.3000137E+01 -                         X
+     0.2833493E+01 I         X
+     0.2666849E+01 I                                                X
+     0.2500205E+01 I                           X
+     0.2333561E+01 I       X
+     0.2166917E+01 I                            X
+     0.2000273E+01 -   
+     0.1833629E+01 I   
+     0.1666985E+01 I     X                        X                X
+     0.1500341E+01 I   
+     0.1333698E+01 I                                X
+     0.1167054E+01 I   
+     0.1000410E+01 -    X
+     0.8337659E+00 I                                 X           X
+     0.6671220E+00 I   
+     0.5004781E+00 I  X                                X
+     0.3338342E+00 I                                           X
+     0.1671903E+00 I                                     X    X
+     0.5463774E-03 -                                      X X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+00  0.8250E+00  0.1550E+01  0.2275E+01  0.3000E+01
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 $ENDBLOCK
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
@@ -73,7 +118,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTT(Y,X,N)
-REAL(kind=wp),intent(in) :: X(:), Y(:)
+REAL(kind=wp),intent(in) :: X(:)
+REAL(kind=wp),intent(in) :: Y(:)
 INTEGER,intent(in)       :: N
 REAL(kind=wp) :: aim1, airow, anumcm, anumlm, anumr, anumrm
 REAL(kind=wp) :: cutoff,  delx, dely, hold, xlable, xmax, xmin, xwidth, ylable, ylower, ymax, ymin
@@ -102,7 +148,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99012)
          WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-         99001    FORMAT (' ','is non-negative (with value = ',I0,')')
+         99001    FORMAT (' is non-negative (with value = ',I0,')')
          WRITE (G_IO,99011)
          RETURN
       ELSE
@@ -111,7 +157,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             WRITE (G_IO,99012)
             WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
             WRITE (G_IO,99002) N
-            99002       FORMAT (' ','has the value 1')
+            99002       FORMAT (' has the value 1')
             WRITE (G_IO,99011)
             RETURN
          ELSE
@@ -174,13 +220,13 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       WRITE (G_IO,99011)
       WRITE (G_IO,99012)
       WRITE (G_IO,99003) alph11 , alph12 , alph21 , alph22
-      99003 FORMAT (' ','The ',A4,A4,', and ',A4,A4)
+      99003 FORMAT (' The ',A4,A4,', and ',A4,A4)
       WRITE (G_IO,99004) sbnam1 , sbnam2
-      99004 FORMAT (' ','input arguments to the ',A4,A4,' subroutine')
+      99004 FORMAT (' input arguments to the ',A4,A4,' subroutine')
       WRITE (G_IO,99005)
-      99005 FORMAT (' ','are such that too many points have been', ' excluded from the plot.')
+      99005 FORMAT (' are such that too many points have been', ' excluded from the plot.')
       WRITE (G_IO,99006) n2
-      99006 FORMAT (' ','only ',I0,' points are left to be plotted.')
+      99006 FORMAT (' only ',I0,' points are left to be plotted.')
       WRITE (G_IO,99011)
       RETURN
 !
@@ -298,12 +344,12 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       WRITE (G_IO,99010) (xlable(i),i=1,numlab)
       99010 FORMAT (' ',9X,5E12.4)
 
-99011 FORMAT (' ','**********************************************************************')
-99012 FORMAT (' ','                   FATAL ERROR                    ')
-99013 FORMAT (' ','The ',A4,A4,' input argument to the ',A4,A4,' subroutine')
-99014 FORMAT (' ','has all elements = ',E15.8)
-99015 FORMAT (' ','has all elements in excess of the cutoff')
-99016 FORMAT (' ','value of ',E15.8)
+99011 FORMAT (' **********************************************************************')
+99012 FORMAT ('                    FATAL ERROR                    ')
+99013 FORMAT (' The ',A4,A4,' input argument to the ',A4,A4,' subroutine')
+99014 FORMAT (' has all elements = ',E15.8)
+99015 FORMAT (' has all elements in excess of the cutoff')
+99016 FORMAT (' value of ',E15.8)
 99017 FORMAT (' ',18X,54A1)
 99018 FORMAT (' ',15X,A1)
 
