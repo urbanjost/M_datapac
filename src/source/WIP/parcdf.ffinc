@@ -41,13 +41,11 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 102.
+REFERENCES
+  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+    PAGES 233-249.
+  o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+    STUDENTS AND PRACTITIONERS, 1975, PAGE 102.
 $ENDBLOCK
 !     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

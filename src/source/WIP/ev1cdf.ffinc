@@ -42,9 +42,9 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+REFERENCES
+  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+    PAGES 272-295.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==ev1cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

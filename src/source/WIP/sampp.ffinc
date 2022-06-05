@@ -31,26 +31,27 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 236-239,
-!                 243.
-!               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!                 OF STATISTICS, EDITION 2, 1963, PAGES 406-407.
-!               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!                 EDITION 6, 1967, PAGE 125.
+
+REFERENCES
+  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+    Edition 2, 1963, Pages 236-239, 243.
+  o Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
+    1963, Pages 406-407.
+  o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 125.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
-REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
-     &     Y
+SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
+REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , Y
 INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
 !     INPUT ARGUMENTS--X      = THE  VECTOR OF
@@ -100,10 +101,10 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2_${KIND}/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
+DIMENSION X(:)
+DIMENSION Y(15000)
+COMMON /BLOCK2_${KIND}/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
 !

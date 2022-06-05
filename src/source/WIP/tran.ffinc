@@ -29,21 +29,24 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --MOOD AND GRABLE, INTRODUCTION TO THE
-!                 THEORY OF STATISTICS, 1963, PAGE 233.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGE 94.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 121.
+
+REFERENCES
+  o Mood and Grable, Introduction to the Theory of Statistics, 1963,
+    Page 233.
+  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+    Page 94.
+  o Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, Page 121.
+
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

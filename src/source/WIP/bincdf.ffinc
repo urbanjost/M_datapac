@@ -21,7 +21,7 @@ DESCRIPTION
 
    This distribution has the probability function
 
-       f(X) = c(N,X) * P**X * (1-P)**(N-X).
+       f(X) = c(N,X) * P**X * (1-P)**(N-X)
 
    where c(N,X) is the combinatorial function equaling the number of
    combinations of N items taken X at a time.
@@ -54,22 +54,22 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
-   o hastings and peacock, statistical
-     distributions--a handbook for students and practitioners, 1975,
-     page 38.
-   o national bureau of standards applied mathematics
-     series 55, 1964, page 945, formulae 26.5.24 and 26.5.28, and
-     page 929.
-   o johnson and kotz, discrete
-     distributions, 1969, pages 50-86, especially pages 63-64.
-   o feller, an introduction to probability
-     theory and its applications, volume 1, edition 2, 1957, pages
-     135-142.
-   o kendall and stuart, the advanced theory of
-     statistics, volume 1, edition 2, 1963, pages 120-125.
-   o mood and grable, introduction to the theory
-     of statistics, edition 2, 1963, pages 64-69.
-   o owen, handbook of statistical tables, 1962, pages 264-272.
+  o hastings and peacock, statistical
+    distributions--a handbook for students and practitioners, 1975,
+    page 38.
+  o national bureau of standards applied mathematics
+    series 55, 1964, page 945, formulae 26.5.24 and 26.5.28, and
+    page 929.
+  o johnson and kotz, discrete
+    distributions, 1969, pages 50-86, especially pages 63-64.
+  o feller, an introduction to probability
+    theory and its applications, volume 1, edition 2, 1957, pages
+    135-142.
+  o kendall and stuart, the advanced theory of
+    statistics, volume 1, edition 2, 1963, pages 120-125.
+  o mood and grable, introduction to the theory
+    of statistics, edition 2, 1963, pages 64-69.
+  o owen, handbook of statistical tables, 1962, pages 264-272.
 $ENDBLOCK
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --MAY       1977.

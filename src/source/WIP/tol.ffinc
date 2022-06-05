@@ -37,10 +37,10 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
-!               --WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
-!               --MOOD AND GRABLE, PAGES 416-417
+REFERENCES
+  o GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
+  o WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
+  o MOOD AND GRABLE, PAGES 416-417
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

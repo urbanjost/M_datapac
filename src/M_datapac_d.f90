@@ -562,7 +562,7 @@ END SUBROUTINE BETRAN
 !!
 !!    This distribution has the probability function
 !!
-!!        f(X) = c(N,X) * P**X * (1-P)**(N-X).
+!!        f(X) = c(N,X) * P**X * (1-P)**(N-X)
 !!
 !!    where c(N,X) is the combinatorial function equaling the number of
 !!    combinations of N items taken X at a time.
@@ -596,22 +596,22 @@ END SUBROUTINE BETRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!    o hastings and peacock, statistical
-!!      distributions--a handbook for students and practitioners, 1975,
-!!      page 38.
-!!    o national bureau of standards applied mathematics
-!!      series 55, 1964, page 945, formulae 26.5.24 and 26.5.28, and
-!!      page 929.
-!!    o johnson and kotz, discrete
-!!      distributions, 1969, pages 50-86, especially pages 63-64.
-!!    o feller, an introduction to probability
-!!      theory and its applications, volume 1, edition 2, 1957, pages
-!!      135-142.
-!!    o kendall and stuart, the advanced theory of
-!!      statistics, volume 1, edition 2, 1963, pages 120-125.
-!!    o mood and grable, introduction to the theory
-!!      of statistics, edition 2, 1963, pages 64-69.
-!!    o owen, handbook of statistical tables, 1962, pages 264-272.
+!!   o hastings and peacock, statistical
+!!     distributions--a handbook for students and practitioners, 1975,
+!!     page 38.
+!!   o national bureau of standards applied mathematics
+!!     series 55, 1964, page 945, formulae 26.5.24 and 26.5.28, and
+!!     page 929.
+!!   o johnson and kotz, discrete
+!!     distributions, 1969, pages 50-86, especially pages 63-64.
+!!   o feller, an introduction to probability
+!!     theory and its applications, volume 1, edition 2, 1957, pages
+!!     135-142.
+!!   o kendall and stuart, the advanced theory of
+!!     statistics, volume 1, edition 2, 1963, pages 120-125.
+!!   o mood and grable, introduction to the theory
+!!     of statistics, edition 2, 1963, pages 64-69.
+!!   o owen, handbook of statistical tables, 1962, pages 264-272.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --MAY       1977.
 !*==bincdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -906,29 +906,17 @@ END SUBROUTINE BINCDF
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!! !     INPUT ARGUMENTS--P      = THE  VALUE
-!! !                                (BETWEEN 0.0 (INCLUSIVELY)
-!! !                                AND 1.0 (INCLUSIVELY))
-!! !                                AT WHICH THE PERCENT POINT
-!! !                                FUNCTION IS TO BE EVALUATED.
-!! !                     --PPAR   = THE  VALUE
-!! !                                OF THE 'BERNOULLI PROBABILITY'
-!! !                                PARAMETER FOR THE BINOMIAL
-!! !                                DISTRIBUTION.
-!! !                                PPAR SHOULD BE BETWEEN
-!! !                                0.0 (EXCLUSIVELY) AND
-!! !                                1.0 (EXCLUSIVELY).
-!! !                     --N      = THE INTEGER VALUE
-!! !                                OF THE 'NUMBER OF BERNOULLI TRIALS'
-!! !                                PARAMETER.
-!! !                                N SHOULD BE A POSITIVE INTEGER.
-!! !     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!! !                                POINT FUNCTION VALUE.
-!! !     OUTPUT--THE  PERCENT POINT  .
-!! !             FUNCTION VALUE PPF
-!! !             FOR THE BINOMIAL DISTRIBUTION
-!! !             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
-!! !             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = N.
+!!##INPUT ARGUMENTS
+!!    P     The value (between 0.0 (inclusively) and 1.0 (inclusively))
+!!          at which the percent point function is to be evaluated.
+!!    PPAR  The value of the 'Bernoulli probability' parameter for the binomial
+!!          distribution. PPAR should be between 0.0 (exclusively) and
+!!          1.0 (exclusively).
+!!    N     The integer value of the 'number of Bernoulli trials' parameter.
+!!          N should be a positive integer.
+!!
+!!##OUTPUT ARGUMENTS
+!!   PPF    The  percent point function value.
 !!
 !!##EXAMPLES
 !!
@@ -975,7 +963,6 @@ SUBROUTINE BINPPF(P,Ppar,N,Ppf)
 REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd , x0 , x1 , x2 , zppf
 INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--PPAR SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --N SHOULD BE A POSITIVE INTEGER.
@@ -1304,21 +1291,21 @@ END SUBROUTINE BINPPF
 !!##OPTIONS
 !!##INPUT ARGUMENTS
 !!
-!!   n      the desired integer number of random numbers to be generated.
+!!   N      The desired integer number of random numbers to be generated.
 !!
-!!   p      the value of the 'bernoulli probability' parameter for the
-!!          binomial distribution.  p should be between 0.0 (exclusively)
+!!   P      The value of the 'Bernoulli probability' parameter for the
+!!          binomial distribution.  P should be between 0.0 (exclusively)
 !!          and 1.0 (exclusively).
 !!
-!!   npar   the integer value of the 'number of bernoulli trials'
-!!          parameter.  npar should be a positive integer.
+!!   NPAR   The integer value of the 'number of Bernoulli trials'
+!!          parameter.  NPAR should be a positive integer.
 !!
 !!##OUTPUT ARGUMENTS
 !!
-!!   x     a vector (of dimension at least n) into which the generated
+!!   X     A vector (of dimension at least N) into which the generated
 !!         random sample of size n from the binomial distribution
-!!         will be placed; with 'bernoulli probability' parameter = p
-!!         and 'number of bernoulli trials' parameter = npar.
+!!         will be placed; with 'Bernoulli probability' parameter = P
+!!         and 'number of Bernoulli trials' parameter = NPAR.
 !!
 !!##EXAMPLES
 !!
@@ -1341,19 +1328,19 @@ END SUBROUTINE BINPPF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!! o Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
-!! o Hastings and Peacock, Statistical Distributions,
-!!   A Handbook for Students and Practitioners, 1975,
-!!   Page 41.
-!! o Feller, An Introduction to Probability Theory and Its Applications,
-!!   Volume 1, Edition 2, 1957, Pages 135-142.
-!! o National Bureau of Standards Applied Mathematics
-!!   Series 55, 1964, Page 929.
-!! o Kendall and Stuart, The Advanced Theory of Statistics,
-!!   Volume 1, Edition 2, 1963, Pages 120-125.
-!! o Mood and Grable, Introduction to the Theory of Statistics,
-!!   Edition 2, 1963, Pages 64-69.
-!! o Tocher, The Art Of Simulation, 1963, Pages 39-40.
+!!   o Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
+!!   o Hastings and Peacock, Statistical Distributions,
+!!     A Handbook for Students and Practitioners, 1975,
+!!     Page 41.
+!!   o Feller, An Introduction to Probability Theory and Its Applications,
+!!     Volume 1, Edition 2, 1957, Pages 135-142.
+!!   o National Bureau of Standards Applied Mathematics
+!!     Series 55, 1964, Page 929.
+!!   o Kendall and Stuart, The Advanced Theory of Statistics,
+!!     Volume 1, Edition 2, 1963, Pages 120-125.
+!!   o Mood and Grable, Introduction to the Theory of Statistics,
+!!     Edition 2, 1963, Pages 64-69.
+!!   o Tocher, The Art Of Simulation, 1963, Pages 39-40.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -5102,21 +5089,24 @@ end subroutine dexran
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 22-36.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 22-36.
 !*==dexsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEXSF(P,Sf)
@@ -6071,9 +6061,9 @@ end subroutine dot
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev1cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1CDF(X,Cdf)
@@ -6159,22 +6149,25 @@ END SUBROUTINE EV1CDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev1plt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1PLT(X,N)
@@ -6343,9 +6336,9 @@ END SUBROUTINE EV1PLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev1ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1PPF(P,Ppf)
@@ -6435,10 +6428,11 @@ END SUBROUTINE EV1PPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -6529,9 +6523,9 @@ END SUBROUTINE EV1RAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev2cdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2CDF(X,Gamma,Cdf)
@@ -6645,16 +6639,15 @@ END SUBROUTINE EV2CDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -6849,9 +6842,9 @@ END SUBROUTINE EV2PLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 272-295.
 !*==ev2ppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2PPF(P,Gamma,Ppf)
@@ -7053,15 +7046,19 @@ END SUBROUTINE EV2RAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!!
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
 !*==expcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPCDF(X,Cdf)
@@ -7248,16 +7245,14 @@ END SUBROUTINE EXPPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
 !*==expplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPPLT(X,N)
@@ -7423,15 +7418,14 @@ END SUBROUTINE EXPPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7505,19 +7499,15 @@ END SUBROUTINE EXPPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14, 35-36.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 58.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14, 35-36.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 58.
 !*==expran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPRAN(N,Iseed,X)
@@ -7628,15 +7618,14 @@ END SUBROUTINE EXPRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 207-232.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 207-232.
 !*==expsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPSF(P,Sf)
@@ -7733,15 +7722,13 @@ END SUBROUTINE EXPSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!! !                 ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!! !                 CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!! !                 ARMY RESEARCH AND TESTING, PAGES 425-450.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 UNPUBLISHED MANUSCRIPT.
-!! !               --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS-1, 1970, PAGES 272-295.
+!!##REFERENCES
+!!   o FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS
+!!     OF THE EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY
+!!     RESEARCH AND TESTING, PAGES 425-450.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', UNPUBLISHED MANUSCRIPT.
+!!   o JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE DISTRIBUTIONS-1,
+!!     1970, PAGES 272-295.
 !*==extrem.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXTREM(X,N)
@@ -8167,26 +8154,26 @@ CHARACTER(len=4) :: iflag3
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGES 946-947,
-!! !                 FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGE 83, FORMULA 20,
-!! !                 AND PAGE 84, THIRD FORMULA.
-!! !               --PAULSON, AN APPROXIMATE NORMALIZATION
-!! !                 OF THE ANALYSIS OF VARIANCE DISTRIBUTION,
-!! !                 ANNALS OF MATHEMATICAL STATISTICS, 1942,
-!! !                 NUMBER 13, PAGES 233-135.
-!! !               --SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES
-!! !                 FOR POPULATION TOLERANCE LIMITS, 1944,
-!! !                 NUMBER 15, PAGE 217.
+!!
+!!##REFERENCES
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGES 946-947, FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGE 83, FORMULA 20, AND PAGE 84, THIRD FORMULA.
+!!   o PAULSON, AN APPROXIMATE NORMALIZATION OF THE ANALYSIS OF VARIANCE
+!!     DISTRIBUTION, ANNALS OF MATHEMATICAL STATISTICS, 1942, NUMBER 13,
+!!     PAGES 233-135.
+!!   o SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES FOR POPULATION TOLERANCE
+!!     LIMITS, 1944, NUMBER 15, PAGE 217.
 !*==fcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
@@ -8573,8 +8560,8 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JENKINS AND WATTS, ESPECIALLY PAGE 290.
+!!##REFERENCES
+!!   o JENKINS AND WATTS, ESPECIALLY PAGE 290.
 !*==fourie.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FOURIE(X,N)
 REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
@@ -8891,15 +8878,13 @@ END SUBROUTINE FOURIE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --MOOD AND GRABLE, INTRODUCTION TO THE
-!! !                 THEORY OF STATISTICS, 1963, PAGES 231-232.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 75-93.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 64.
+!!##REFERENCES
+!!   o MOOD AND GRABLE, INTRODUCTION TO THE THEORY OF STATISTICS, 1963,
+!!     PAGES 231-232.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 75-93.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 64.
 !*==fran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
 REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , &
@@ -9070,9 +9055,9 @@ END SUBROUTINE FRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 8.
 !*==freq.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE FREQ(X,N)
@@ -9259,19 +9244,15 @@ END SUBROUTINE FREQ
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15,
-!! !                 ESPECIALLY PAGES 3-5.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 68-73.
+!!##REFERENCES
+!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 257, FORMULA 6.1.41.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 166-206.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
 !*==gamcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMCDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
@@ -9459,21 +9440,19 @@ END SUBROUTINE GAMCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
+!!##REFERENCES
+!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 257, FORMULA 6.1.41.
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 166-206.
 !*==gamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GAMPLT(X,N,Gamma)
 REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
@@ -9830,19 +9809,15 @@ END SUBROUTINE GAMPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15,
-!! !                 ESPECIALLY PAGES 3-5.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 257, FORMULA 6.1.41.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 68-73.
+!!##REFERENCES
+!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 257, FORMULA 6.1.41.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 166-206.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
 !*==gamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
@@ -10070,33 +10045,30 @@ END SUBROUTINE GAMPPF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --GREENWOOD, 'A FAST GENERATOR FOR
-!! !                 GAMMA-DISTRIBUTED RANDOM VARIABLES',
-!! !                 COMPSTAT 1974, PROCEEDINGS IN
-!! !                 COMPUTATIONAL STATISTICS, VIENNA,
-!! !                 SEPTEMBER, 1974, PAGES 19-27.
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 24-27.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGES 36-37.
-!! !               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!! !                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!! !                 TECHNOMETRICS, 1962, PAGES 1-15.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 68-73.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 952.
+!!
+!!##REFERENCES
+!!   o GREENWOOD, 'A FAST GENERATOR FOR GAMMA-DISTRIBUTED RANDOM VARIABLES',
+!!     COMPSTAT 1974, PROCEEDINGS IN COMPUTATIONAL STATISTICS, VIENNA,
+!!     SEPTEMBER, 1974, PAGES 19-27.
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 24-27.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGES 36-37.
+!!   o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 166-206.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 952.
 !*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
@@ -10424,17 +10396,15 @@ END SUBROUTINE GEOCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
 !*==geoplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPLT(X,N,P)
 REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
@@ -10637,18 +10607,18 @@ END SUBROUTINE GEOPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
+!!##REFERENCES
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
 !*==geoppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPPF(P,Ppar,Ppf)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
@@ -10791,16 +10761,13 @@ INTEGER iratio
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
 !*==georan.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GEORAN(N,P,Iseed,X)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
@@ -10958,12 +10925,11 @@ END SUBROUTINE GEORAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!! !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!! !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!! !                 TECHNOMETRICS, 1959, PAGES 311-341.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 53, 59, 81, 83.
+!!   o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
 !*==hfncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HFNCDF(X,Cdf)
 REAL(kind=wp) :: Cdf , X
@@ -11070,17 +11036,17 @@ END SUBROUTINE HFNCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!! !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!! !                 TECHNOMETRICS, 1959, PAGES 311-341.
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
+!!##REFERENCES
+!!   o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 53, 59, 81, 83.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -11255,12 +11221,11 @@ END SUBROUTINE HFNPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!! !               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!! !                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!! !                 TECHNOMETRICS, 1959, PAGES 311-341.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 53, 59, 81, 83.
+!!   o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
 !*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE HFNPPF(P,Ppf)
 REAL(kind=wp) :: arg , P , Ppf
@@ -11342,21 +11307,29 @@ END SUBROUTINE HFNPPF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
+!!
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   PAGES 53, 59, 81, 83.
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --JULY      1976.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
 !*==hfnran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HFNRAN(N,Iseed,X)
+
+SUBROUTINE HFNRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
 INTEGER :: i , ip1 , Iseed , N
 !
@@ -11371,20 +11344,7 @@ INTEGER :: i , ip1 , Iseed , N
 !             FROM THE HALFNORMAL DISTRIBUTION
 !              WITH MEAN = SQRT(2/PI) = 0.79788456
 !              AND STANDARD DEVIATION = 1.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--.
-!     VERSION NUMBER--82/7
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED         --JULY      1976.
-!     UPDATED         --DECEMBER  1981.
-!     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
+
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)
@@ -11494,9 +11454,9 @@ END SUBROUTINE HFNRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 4.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 4.
 !*==hist.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE HIST(X,N)
 REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
@@ -11938,16 +11898,13 @@ END SUBROUTINE INVXWX
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+!!##REFERENCES
+!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
+!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -12268,24 +12225,19 @@ END SUBROUTINE LAMPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY, 1969), PAGES 21-44, 229-231,
-!! !                 PAGES 53-58.
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY, 1969), PAGES 21-44, 229-231, PAGES 53-58.
+!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
+!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
 !*==lamplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
@@ -12470,19 +12422,15 @@ END SUBROUTINE LAMPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231,
-!! !                 PAGES 53-58.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231, PAGES 53-58.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
+!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
 !*==lamppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , P , Ppf
@@ -12582,17 +12530,14 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 53-58.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 53-58.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
 !*==lamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
 REAL(kind=wp) :: alamb2 , Alamba , q , X
@@ -12702,25 +12647,22 @@ END SUBROUTINE LAMRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231,
-!! !                 PAGES 53-58.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --HASTINGS, MOSTELLER, TUKEY, AND WINDSOR,
-!! !                 'LOW MOMENTS FOR SMALL SAMPLES:  A COMPARATIVE
-!! !                 STUDY OF ORDER STATISTICS', ANNALS OF
-!! !                 MATHEMATICAL STATISTICS, 18, 1947,
-!! !                 PAGES 413-426.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231, PAGES 53-58.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
+!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
+!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
 !*==lamsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMSF(P,Alamba,Sf)
 REAL(kind=wp) :: Alamba , P , Sf
@@ -12819,13 +12761,13 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!! !                 1946, PAGES 219-220.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 112-136.
+!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !*==lgncdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LGNCDF(X,Cdf)
+
+SUBROUTINE LGNCDF(X,Cdf)
 REAL(kind=wp) :: arg , Cdf , X
 !
 !     INPUT ARGUMENTS--X      = THE  VALUE
@@ -12922,24 +12864,26 @@ END SUBROUTINE LGNCDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!! !                 1946, PAGES 219-220.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 112-136.
+!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !*==lgnplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNPLT(X,N)
@@ -13104,15 +13048,20 @@ END SUBROUTINE LGNPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+!!
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 112-136.
+!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !*==lgnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -13197,19 +13146,14 @@ END SUBROUTINE LGNPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --CRAMER, MATHEMATICAL METHODS OF STATISTICS,
-!! !                 1946, PAGES 219-220.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 112-136.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 88.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 112-136.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 88.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --JULY      1976.
@@ -13353,12 +13297,12 @@ END SUBROUTINE LGNRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DIXON AND MASSEY, PAGES 14, 70, AND 71
-!! !               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 PAGES 357 AND 387
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
+!!##REFERENCES
+!!   o DIXON AND MASSEY, PAGES 14, 70, AND 71
+!!   o CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
+!!     AND 387
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 8.
 !*==loc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOC(X,N)
 REAL(kind=wp) :: aiflag , an , hold , sum , WS , X , xmean , xmed , xmid ,    &
@@ -13543,8 +13487,9 @@ END SUBROUTINE LOC
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES--
-!! !               JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -13743,16 +13688,15 @@ END SUBROUTINE LOGPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13913,15 +13857,14 @@ END SUBROUTINE LOGPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13996,19 +13939,16 @@ END SUBROUTINE LOGPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGE 230.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGE 230.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -14108,21 +14048,24 @@ END SUBROUTINE LOGRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 1-21.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 1-21.
 !*==logsf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LOGSF(P,Sf)
 REAL(kind=wp) :: P , Sf
@@ -14571,15 +14514,13 @@ END SUBROUTINE MEDIAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
-!! !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
-!! !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1967, PAGES 357, 387.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY, 1969).
+!!##REFERENCES
+!!   o DAVID, ORDER STATISTICS, 1970, PAGES 129, 136.
+!!   o CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION', JOURNAL OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, 1967, PAGES 357, 387.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY, 1969).
 !*==midm.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDM(X,N,Iwrite,Xmidm)
 REAL(kind=wp) :: ak , an , hold , p1 , p2 , perp1 , perp2 , perp3 , sum , WS ,&
@@ -14743,14 +14684,14 @@ END SUBROUTINE MIDM
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 91.
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 97.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 71.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 338.
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2,
+!!     EDITION 1, 1961, PAGE 91.
+!!   o DAVID, ORDER STATISTICS, 1970, PAGE 97.
+!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
+!!     1957, PAGE 71.
 !*==midr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE MIDR(X,N,Iwrite,Xmidr)
 REAL(kind=wp) :: hold , X , xmax , Xmidr , xmin
@@ -15138,27 +15079,20 @@ END SUBROUTINE MOVE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 945, FORMULAE 26.5.24 AND
-!! !                 26.5.28, AND PAGE 929.
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 122-142,
-!! !                 ESPECIALLY PAGE 127.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 92-95.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
-!! !               --WILLIAMSON AND BRETHERTON, TABLES OF
-!! !                 THE NEGATIVE BINOMIAL PROBABILITY
-!! !                 DISTRIBUTION, 1963.
-!! !               --OWEN, HANDBOOK OF STATISTICAL
-!! !                 TABLES, 1962, PAGE 304.
+!!##REFERENCES
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 945, FORMULAE 26.5.24 AND 26.5.28, AND PAGE 929.
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
+!!     ESPECIALLY PAGE 127.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 92-95.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGES 130-131.
+!!   o WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
+!!     DISTRIBUTION, 1963.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
 !*==nbcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBCDF(X,P,N,Cdf)
 REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
@@ -15469,26 +15403,20 @@ END SUBROUTINE NBCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 122-142,
-!! !                 ESPECIALLY PAGE 127, FORMULA 22.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 92-95.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
-!! !               --WILLIAMSON AND BRETHERTON, TABLES OF
-!! !                 THE NEGATIVE BINOMIAL PROBABILITY
-!! !                 DISTRIBUTION, 1963.
-!! !               --OWEN, HANDBOOK OF STATISTICAL
-!! !                 TABLES, 1962, PAGE 304.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
+!!     ESPECIALLY PAGE 127, FORMULA 22.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 92-95.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGES 130-131.
+!!   o WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
+!!     DISTRIBUTION, 1963.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
 !*==nbppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
 REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
@@ -15878,20 +15806,16 @@ END SUBROUTINE NBPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 95.
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 122-142.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 155-157, 210.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 130-131.
+!!##REFERENCES
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 95.
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGES 130-131.
 !*==nbran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
 REAL(kind=wp) :: b(1) , g(1) , P , X
@@ -16093,11 +16017,11 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 932, FORMULA 26.2.17.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!!##REFERENCES
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 932, FORMULA 26.2.17.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
 !*==norcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE NORCDF(X,Cdf)
 REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
@@ -16192,8 +16116,8 @@ END SUBROUTINE NORCDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
+!!##REFERENCES
+!!   o GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -16744,21 +16668,19 @@ END SUBROUTINE NORPDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
-!! !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
-!! !               --RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS
-!! !                 FOR NORMALITY'  PENNSYLVANIA
-!! !                 STATE UNIVERSITY REPORT.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
+!!     NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!!   o RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS FOR NORMALITY'
+!!     PENNSYLVANIA STATE UNIVERSITY REPORT.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16918,32 +16840,27 @@ END SUBROUTINE NORPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --ODEH AND EVANS, THE PERCENTAGE POINTS
-!! !                 OF THE NORMAL DISTRIBUTION, ALGORITHM 70,
-!! !                 APPLIED STATISTICS, 1974, PAGES 96-97.
-!! !               --EVANS, ALGORITHMS FOR MINIMAL DEGREE
-!! !                 POLYNOMIAL AND RATIONAL APPROXIMATION,
-!! !                 M. SC. THESIS, 1972, UNIVERSITY
-!! !                 OF VICTORIA, B. C., CANADA.
-!! !               --HASTINGS, APPROXIMATIONS FOR DIGITAL
-!! !                 COMPUTERS, 1955, PAGES 113, 191, 192.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 933, FORMULA 26.2.23.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
-!! !               --THE KELLEY STATISTICAL TABLES, 1948.
-!! !               --OWEN, HANDBOOK OF STATISTICAL TABLES,
-!! !                 1962, PAGES 3-16.
-!! !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
-!! !                 FOR STATISTICIANS, VOLUME 1, 1954,
-!! !                 PAGES 104-113.
+!!##REFERENCES
+!!   o ODEH AND EVANS, THE PERCENTAGE POINTS OF THE NORMAL DISTRIBUTION,
+!!     ALGORITHM 70, APPLIED STATISTICS, 1974, PAGES 96-97.
+!!   o EVANS, ALGORITHMS FOR MINIMAL DEGREE POLYNOMIAL AND RATIONAL
+!!     APPROXIMATION, M. SC. THESIS, 1972, UNIVERSITY OF VICTORIA, B. C.,
+!!     CANADA.
+!!   o HASTINGS, APPROXIMATIONS FOR DIGITAL COMPUTERS, 1955, PAGES 113,
+!!     191, 192.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 933, FORMULA 26.2.23.
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
+!!   o THE KELLEY STATISTICAL TABLES, 1948.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 3-16.
+!!   o PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
+!!     1954, PAGES 104-113.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -17060,17 +16977,13 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --BOX AND MULLER, 'A NOTE ON THE GENERATION
-!! !                 OF RANDOM NORMAL DEVIATES', JOURNAL OF THE
-!! !                 ASSOCIATION FOR COMPUTING MACHINERY, 1958,
-!! !                 PAGES 610-611.
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 33-34.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 39.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!!##REFERENCES
+!!   o BOX AND MULLER, 'A NOTE ON THE GENERATION OF RANDOM NORMAL DEVIATES',
+!!     JOURNAL OF THE ASSOCIATION FOR COMPUTING MACHINERY, 1958, PAGES 610-611.
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 33-34.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 39.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
 !*==norran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NORRAN(N,Iseed,X)
 REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
@@ -17205,15 +17118,14 @@ END SUBROUTINE NORRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 40-111.
+!!##REFERENCES
+!!   o FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
+!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
+!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!   o FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!     1970, PAGES 28-31.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -17298,13 +17210,11 @@ END SUBROUTINE NORSF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 102.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 233-249.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 102.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !*==parcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -17408,22 +17318,25 @@ END SUBROUTINE PARCDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 233-249.
 !*==parplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARPLT(X,N,Gamma)
@@ -17611,13 +17524,11 @@ END SUBROUTINE PARPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 102.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 233-249.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 102.
 !*==parppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
@@ -17712,17 +17623,13 @@ END SUBROUTINE PARPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 233-249.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 104.
+!!##REFERENCES
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
+!!   o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!     PAGES 233-249.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 104.
 !*==parran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
@@ -17885,14 +17792,11 @@ END SUBROUTINE PARRAN
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot10.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOT10(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
 IMPLICIT NONE
@@ -18692,19 +18596,16 @@ END SUBROUTINE PLOT6
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
-REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
-     &     x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
-INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
+
+SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
+REAL(kind=wp) :: aim1, Char, cutoff, hold, ratiox, ratioy, X, x25, x75, Xmax, xmid, Xmin, Y, ylable, Ymax, Ymin
+INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !
 !     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS
@@ -19107,14 +19008,11 @@ END SUBROUTINE PLOT7
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot8.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
@@ -19576,20 +19474,21 @@ END SUBROUTINE PLOT8
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plot9.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,Plchid)
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
@@ -20003,14 +19902,11 @@ END SUBROUTINE PLOT9
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plotc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTC(Y,X,Char,N)
@@ -20644,20 +20540,21 @@ END SUBROUTINE PLOTCO
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plotct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLOTCT(Y,X,Char,N)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
@@ -21397,14 +21294,11 @@ END SUBROUTINE PLOT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==plotsc.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOTSC(Y,X,Char,N,D,Dmin,Dmax)
@@ -23188,14 +23082,13 @@ END SUBROUTINE PLOTT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES
-!! !                 FOR DATA ANALYSIS', (UNPUBLISHED MANUSCRIPT
-!! !                 AVAILABLE FROM AUTHOR), 1975.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
-!! !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!!##REFERENCES
+!!   o FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES FOR DATA ANALYSIS',
+!!     (UNPUBLISHED MANUSCRIPT AVAILABLE FROM AUTHOR), 1975.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
+!!     NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
 !*==plotu.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTU(X,N)
 REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
@@ -24278,21 +24171,16 @@ END SUBROUTINE PLOTXT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE
-!! !                 STATISTICAL ANALYSIS OF DATA', UNPUBLISHED
-!! !                 MANUSCRIPT (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE FALL CONFERENCE
-!! !                 OF THE CHEMICAL DIVISION OF THE AMERICAN
-!! !                 SOCIETY FOR QUALITY CONTROL, KNOXVILLE,
-!! !                 TENNESSEE, OCTOBER 19-20, 1972.
-!! !               --FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE
-!! !                 SUBROUTINES', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'STRATEGY FOR DATA ANALYSIS
-!! !                 BY COMPUTERS' SESSION AT THE NATIONAL
-!! !                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
+!!##REFERENCES
+!!   o FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE STATISTICAL ANALYSIS OF
+!!     DATA', UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT
+!!     THE FALL CONFERENCE OF THE CHEMICAL DIVISION OF THE AMERICAN SOCIETY
+!!     FOR QUALITY CONTROL, KNOXVILLE, TENNESSEE, OCTOBER 19-20, 1972.
+!!   o FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE SUBROUTINES',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'STRATEGY FOR DATA ANALYSIS BY COMPUTERS' SESSION AT THE NATIONAL
+!!     MEETING OF THE AMERICAN STATISTICAL ASSOCIATION, ST. LOUIS, MISSOURI,
+!!     AUGUST 26-29, 1974.
 !*==plotxx.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTXX(X,N)
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 ,     &
@@ -24604,14 +24492,11 @@ END SUBROUTINE PLOTXX
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!! !                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!! !                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!! !                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 NEW YORK CITY, DECEMBER 27-30, 1973.
+!!##REFERENCES
+!!   o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF
+!!     THE AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 !*==pltsct.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTSCT(Y,X,Char,N,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , Char ,     &
@@ -25053,27 +24938,26 @@ END SUBROUTINE PLTSCT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE
-!! !                 STATISTICAL ANALYSIS OF DATA', UNPUBLISHED
-!! !                 MANUSCRIPT (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE FALL CONFERENCE
-!! !                 OF THE CHEMICAL DIVISION OF THE AMERICAN
-!! !                 SOCIETY FOR QUALITY CONTROL, KNOXVILLE,
-!! !                 TENNESSEE, OCTOBER 19-20, 1972.
-!! !               --FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE
-!! !                 SUBROUTINES', UNPUBLISHED MANUSCRIPT
-!! !                 (AVAILABLE FROM AUTHOR)
-!! !                 PRESENTED AT THE 'STRATEGY FOR DATA ANALYSIS
-!! !                 BY COMPUTERS' SESSION AT THE NATIONAL
-!! !                 MEETING OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 ST. LOUIS, MISSOURI, AUGUST 26-29, 1974.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'SOME USEFUL PROCEDURES FOR THE STATISTICAL ANALYSIS OF
+!!     DATA', UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT
+!!     THE FALL CONFERENCE OF THE CHEMICAL DIVISION OF THE AMERICAN SOCIETY
+!!     FOR QUALITY CONTROL, KNOXVILLE, TENNESSEE, OCTOBER 19-20, 1972.
+!!   o FILLIBEN, 'DATA EXPLORATION USING STAND-ALONE SUBROUTINES',
+!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+!!     'STRATEGY FOR DATA ANALYSIS BY COMPUTERS' SESSION AT THE NATIONAL
+!!     MEETING OF THE AMERICAN STATISTICAL ASSOCIATION, ST. LOUIS, MISSOURI,
+!!     AUGUST 26-29, 1974.
 !*==pltxxt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE PLTXXT(X,N)
 REAL(kind=wp) :: aim1 , airow , anumcm , anumlm , anumr , anumrm , cutoff ,   &
@@ -25350,29 +25234,22 @@ END SUBROUTINE PLTXXT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 87-121,
-!! !                 ESPECIALLY PAGE 114, FORMULA 93.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 112.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 941, FORMULAE 26.4.4 AND 26.4.5,
-!! !                 AND PAGE 929.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 146-154.
-!! !               --COX AND MILLER, THE THEORY OF STOCHASTIC
-!! !                 PROCESSES, 1965, PAGE 7.
-!! !               --GENERAL ELECTRIC COMPANY, TABLES OF THE
-!! !                 INDIVIDUAL AND CUMULATIVE TERMS OF POISSON
-!! !                 DISTRIBUTION, 1962.
-!! !               --OWEN, HANDBOOK OF STATISTICAL
-!! !                 TABLES, 1962, PAGES 259-261.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
+!!     ESPECIALLY PAGE 114, FORMULA 93.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 112.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 941, FORMULAE 26.4.4 AND 26.4.5, AND PAGE 929.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 146-154.
+!!   o COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
+!!   o GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
+!!     TERMS OF POISSON DISTRIBUTION, 1962.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
 !*==poicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE POICDF(X,Alamba,Cdf)
+
+SUBROUTINE POICDF(X,Alamba,Cdf)
 REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
 INTEGER :: i , ievodd , imax , imin , intx , nu
 !
@@ -25579,22 +25456,24 @@ END SUBROUTINE POICDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 87-121.
+!!
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
 !*==poiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
@@ -25868,26 +25747,18 @@ END SUBROUTINE POIPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 87-121,
-!! !                 ESPECIALLY PAGE 102, FORMULA 36.1.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 108-113.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 146-154.
-!! !               --COX AND MILLER, THE THEORY OF STOCHASTIC
-!! !                 PROCESSES, 1965, PAGE 7.
-!! !               --GENERAL ELECTRIC COMPANY, TABLES OF THE
-!! !                 INDIVIDUAL AND CUMULATIVE TERMS OF POISSON
-!! !                 DISTRIBUTION, 1962.
-!! !               --OWEN, HANDBOOK OF STATISTICAL
-!! !                 TABLES, 1962, PAGES 259-261.
+!!##REFERENCES
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
+!!     ESPECIALLY PAGE 102, FORMULA 36.1.  --HASTINGS AND PEACOCK, STATISTICAL
+!!     DISTRIBUTIONS--A HANDBOOK FOR STUDENTS AND PRACTITIONERS, 1975,
+!!     PAGES 108-113.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.  --FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS
+!!     APPLICATIONS, VOLUME 1, EDITION 2, 1957, PAGES 146-154.
+!!   o COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
+!!   o GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
+!!     TERMS OF POISSON DISTRIBUTION, 1962.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
 !*==poippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
@@ -26237,22 +26108,16 @@ END SUBROUTINE POIPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --COX AND MILLER, THE THEORY OF STOCHASTIC
-!! !                 PROCESSES, 1965, PAGE 7.
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 36-37.
-!! !               --JOHNSON AND KOTZ, DISCRETE
-!! !                 DISTRIBUTIONS, 1969, PAGES 87-121.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 108-113.
-!! !               --FELLER, AN INTRODUCTION TO PROBABILITY
-!! !                 THEORY AND ITS APPLICATIONS, VOLUME 1,
-!! !                 EDITION 2, 1957, PAGES 146-154.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 929.
+!!##REFERENCES
+!!   o COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
+!!   o TOCHER, THE ART OF SIMULATION, 1963, PAGES 36-37.
+!!   o JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 108-113.
+!!   o FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
+!!     VOLUME 1, EDITION 2, 1957, PAGES 146-154.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 929.
 !*==poiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
 REAL(kind=wp) :: Alamba , e , sum , u(1) , X
@@ -27069,11 +26934,11 @@ INTEGER :: nm5 , nmax , numset
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 207-213.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGES 81-82, 228-231.
+!!##REFERENCES
+!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
+!!     207-213.
+!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
+!!     1957, PAGES 81-82, 228-231.
 !*==propor.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
@@ -27218,14 +27083,13 @@ END SUBROUTINE PROPOR
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 338.
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 39.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 21.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 338.
+!!   o DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
+!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGE 39.
+!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
+!!     1957, PAGE 21.
 !*==range.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
@@ -27354,12 +27218,12 @@ END SUBROUTINE RANGE
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
-!! !                 BY RICHARD C. SINGLETON).
-!! !               --CACM JANUARY 1970, PAGE 54.
-!! !               --CACM OCTOBER 1970, PAGE 624.
-!! !               --JACM JANUARY 1961, PAGE 41.
+!!##REFERENCES
+!!   o CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD
+!!     C. SINGLETON).
+!!   o CACM JANUARY 1970, PAGE 54.
+!!   o CACM OCTOBER 1970, PAGE 624.
+!!   o JACM JANUARY 1961, PAGE 41.
 !*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE RANK(X,N,Xr)
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
@@ -28767,11 +28631,11 @@ END SUBROUTINE READG
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 47, 233.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 62-65.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGES 47, 233.
+!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
+!!     62-65.
 !*==relsd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
 REAL(kind=wp) :: an , hold , sd , sum , var , X , xmean , Xrelsd
@@ -29697,24 +29561,25 @@ END SUBROUTINE RUNS
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 236-239,
-!! !                 243.
-!! !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!! !                 OF STATISTICS, EDITION 2, 1963, PAGES 406-407.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 125.
+!!
+!!##REFERENCES
+!!   o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Pages 236-239, 243.
+!!   o Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
+!!     1963, Pages 406-407.
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 125.
 !*==sampp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
-REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , &
-     &     Y
+SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
+REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , Y
 INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
 !     INPUT ARGUMENTS--X      = THE  VECTOR OF
@@ -29764,10 +29629,10 @@ INTEGER :: i , iupper , Iwrite , j , jp1 , N
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
+DIMENSION X(:)
+DIMENSION Y(15000)
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
 !
@@ -29886,14 +29751,14 @@ END SUBROUTINE SAMPP
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DIXON AND MASSEY, PAGES 19 AND 21
-!! !               --SNEDECOR AND COCHRAN, PAGE 62
-!! !               --DIXON AND MASSEY, PAGES 14, 70, AND 71
-!! !               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 PAGES 357 AND 387
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
+!!##REFERENCES
+!!   o DIXON AND MASSEY, PAGES 19 AND 21
+!!   o SNEDECOR AND COCHRAN, PAGE 62
+!!   o DIXON AND MASSEY, PAGES 14, 70, AND 71
+!!   o CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
+!!     AND 387
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+!!     EDITION 2, 1963, PAGE 8.
 !*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SCALE(X,N)
 
@@ -30065,17 +29930,20 @@ END SUBROUTINE SCALE
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 44.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGES 19, 76.
+!!
+!!##REFERENCES
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+!!   o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!     1957, Pages 19, 76.
 !*==sd.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SD(X,N,Iwrite,Xsd)
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
@@ -30792,11 +30660,11 @@ END SUBROUTINE SORT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
-!! !               --CACM JANUARY 1970, PAGE 54.
-!! !               --CACM OCTOBER 1970, PAGE 624.
-!! !               --JACM JANUARY 1961, PAGE 41.
+!!##REFERENCES
+!!   o CACM March 1969, Page 186 (Binary Sort Algorithm by Richard C. Singleton).
+!!   o CACM January 1970, Page 54.
+!!   o CACM October 1970, Page 624.
+!!   o JACM January 1961, Page 41.
 !*==sortp.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
@@ -31092,15 +30960,11 @@ END SUBROUTINE SORTP
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 193-195.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGES 294-295.
-!! !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!! !                 OF STATISTICS, EDITION 2, 1963, PAGE 424.
+!!##REFERENCES
+!!   o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
+!!   o SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES 193-195.
+!!   o DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2, 1957, PAGES 294-295.
+!!   o MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY OF STATISTICS, EDITION 2, 1963, PAGE 424.
 !*==spcorr.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
 REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
@@ -31259,18 +31123,21 @@ END SUBROUTINE SPCORR
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85,
-!! !                 234, 243, 297-298, 305.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 86-90.
+!!
+!!##REFERENCES
+!!   o Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Pages 85, 234, 243, 297-298, 305.
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
+!!     86-90.
 !*==stmom3.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum3 , vb , X , xmean , Xsmom3
@@ -31406,19 +31273,27 @@ END SUBROUTINE STMOM3
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGES 85, 243.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGES 86-90.
+!!
+!!##REFERENCES
+!!   o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Pages 85, 243.
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
+!!     86-90.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 !*==stmom4.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
+
+SUBROUTINE STMOM4(X,N,Iwrite,Xsmom4)
 REAL(kind=wp) :: an , hold , sum , sum2 , sum4 , vb , X , xmean , Xsmom4
 INTEGER :: i , Iwrite , N
 !
@@ -31448,9 +31323,6 @@ INTEGER :: i , Iwrite , N
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
 !     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
@@ -32246,20 +32118,23 @@ END SUBROUTINE SUBSET
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!! !                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!! !                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!! !                ARMY RESEARCH AND TESTING, PAGES 425-450.
-!! !              --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                UNPUBLISHED MANUSCRIPT.
-!! !              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!! !                DISTRIBUTIONS-1, PAGES 250-271.
+!!
+!!##REFERENCE
+!!   o Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
+!!     of the Eighteenth Conference on the Design of Experiments in Army
+!!     Research and Testing, Pages 425-450.
+!!   o Filliben, 'The Percent Point Function', Unpublished Manuscript.
+!!   o Johnson and Kotz (1970), Continuous Univariate Distributions-1,
+!!     Pages 250-271.
 !*==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TAIL(X,N)
 REAL(kind=wp) :: a2, a3, a4, aa, ai, al, alamba, am2, am3, am4, an, arg, asub1, asubn, b1, b2, bb, bs, cc, coef
@@ -32942,21 +32817,17 @@ END SUBROUTINE TAIL
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 94-129.
-!! !               --FEDERIGHI, EXTENDED TABLES OF THE
-!! !                 PERCENTAGE POINTS OF STUDENT'S
-!! !                 T-DISTRIBUTION, JOURNAL OF THE
-!! !                 AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1959, PAGES 683-688.
-!! !               --OWEN, HANDBOOK OF STATISTICAL TABLES,
-!! !                 1962, PAGES 27-30.
-!! !               --PEARSON AND HARTLEY, BIOMETRIKA TABLES
-!! !                 FOR STATISTICIANS, VOLUME 1, 1954,
-!! !                 PAGES 132-134.
+!!##REFERENCES
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGES 94-129.
+!!   o FEDERIGHI, EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT'S
+!!     T-DISTRIBUTION, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, 1959,
+!!     PAGES 683-688.
+!!   o OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 27-30.
+!!   o PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
+!!     1954, PAGES 132-134.
 !*==tcdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TCDF(X,Nu,Cdf)
 REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
@@ -33172,14 +33043,18 @@ END SUBROUTINE TCDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JENKINS AND WATTS, ESPECIALLY PAGE 290.
+!!
+!!##REFERENCES
+!!   o Jenkins and Watts, especially Page 290.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
@@ -33581,10 +33456,10 @@ END SUBROUTINE TIME
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
-!! !               --WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
-!! !               --MOOD AND GRABLE, PAGES 416-417
+!!##REFERENCES
+!!   o GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
+!!   o WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
+!!   o MOOD AND GRABLE, PAGES 416-417
 !*==tol.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TOL(X,N)
 REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
@@ -33983,28 +33858,22 @@ END SUBROUTINE TOL
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGE 102,
-!! !                 FORMULA 11.
-!! !               --FEDERIGHI, 'EXTENDED TABLES OF THE
-!! !                 PERCENTAGE POINTS OF STUDENT'S T
-!! !                 DISTRIBUTION, JOURNAL OF THE
-!! !                 AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1969, PAGES 683-688.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 120-123.
+!!##REFERENCES
+!!   o FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
+!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     425-450.
+!!   o HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!     260-308.
+!!   o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+!!     PAGE 949, FORMULA 26.7.5.
+!!   o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+!!     PAGE 102, FORMULA 11.
+!!   o FEDERIGHI, 'EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT'S
+!!     T DISTRIBUTION, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
+!!     1969, PAGES 683-688.
+!!   o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 120-123.
 !*==tplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TPLT(X,N,Nu)
 REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
@@ -34186,27 +34055,26 @@ END SUBROUTINE TPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!! !                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGE 102,
-!! !                 FORMULA 11.
-!! !               --FEDERIGHI, 'EXTENDED TABLES OF THE
-!! !                 PERCENTAGE POINTS OF STUDENT'S T
-!! !                 DISTRIBUTION, JOURNAL OF THE
-!! !                 AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1969, PAGES 683-688.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGES 120-123.
+!!
+!!##REFERENCES
+!!   o National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 949, Formula 26.7.5.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Page 102, Formula 11.
+!!   o Federighi, 'Extended Tables of the Percentage Points of Student's T
+!!     Distribution, Journal of the American Statistical Association, 1969,
+!!     Pages 683-688.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Pages 120-123.
 !*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TPPF(P,Nu,Ppf)
 INTEGER ipass , maxit , Nu
@@ -34424,21 +34292,23 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --MOOD AND GRABLE, INTRODUCTION TO THE
-!! !                 THEORY OF STATISTICS, 1963, PAGE 233.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGE 94.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 121.
+!!
+!!##REFERENCES
+!!   o Mood and Grable, Introduction to the Theory of Statistics, 1963,
+!!     Page 233.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Page 94.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 121.
 !*==tran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TRAN(N,Nu,Iseed,X)
 REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
@@ -34573,21 +34443,23 @@ END SUBROUTINE TRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
-!! !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
-!! !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1967, PAGES 357, 387.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY, 1969).
+!!
+!!##REFERENCES
+!!   o David, Order Statistics, 1970, Pages 126-130, 136.
+!!   o Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+!!     American Statistical Association, 1967, Pages 357, 387.
+!!   o Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University, 1969).
 !*==trim.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
@@ -34950,15 +34822,19 @@ end subroutine unicdf
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT
-!! !                 TEST FOR NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!!
+!!##REFERENCES
+!!   o Filliben, 'The Probability Plot Correlation Coefficient Test for
+!!     Normality', Technometrics, 1975, Pages 111-117.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35177,22 +35053,25 @@ END SUBROUTINE UNIPDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!   o Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army REsearch
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+!!     425-450.
+!!   o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!     260-308.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -35311,15 +35190,15 @@ END SUBROUTINE UNIPLT
 !!       SUBROUTINE UNIPPF(P,Ppf)
 !!
 !!##DESCRIPTION
-!!    unippf(3f) computes the percent point function value for the uniform
+!!    UNIPPF(3f) computes the percent point function value for the uniform
 !!    (rectangular) distribution on the unit interval (0,1).
 !!
-!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
 !!    = 0.28867513. This distribution has the probability density function
 !!
-!!        f(x) = 1.
+!!        f(X) = 1
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
@@ -35341,21 +35220,24 @@ END SUBROUTINE UNIPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!   o Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!     of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
+!!     University), 1969, Pages 21-44, 229-231.
+!!   o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 57-74.
 !*==unippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIPPF(P,Ppf)
 REAL(kind=wp) :: P , Ppf
@@ -35435,31 +35317,33 @@ END SUBROUTINE UNIPPF
 !!    Engineering Division, National Institute of Standards and Technology.
 !!
 !!##WRITTEN BY
-!!      --james blue
+!!      o James Blue
 !!                  scientific computing division
 !!                  center for applied mathematics
 !!                  national bureau of standards
 !!                  washington, d. c. 20234
-!!      --david kahaner
+!!      o David Kahaner
 !!                  scientific computing division
 !!                  center for applied mathematics
 !!                  national bureau of standards
-!!      --george marsaglia
+!!      o George Marsaglia
 !!                  computer science department
 !!                  washington state university
-!!      --james j. filliben
+!!      o James J. Filliben
 !!                  statistical engineering division
 !!                  center for applied mathematics
 !!                  national bureau of standards
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --MARSAGLIA G., "COMMENTS ON THE PERFECT UNIFORM RANDOM
-!! !                 NUMBER GENERATOR", UNPUBLISHED NOTES, WASH S. U.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!   o Marsaglia G., "Comments on the Perfect Uniform Random Number
+!!     Generator", Unpublished Notes, Wash S. U.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 57-74.
 !*==uniran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNIRAN(N,Iseed,X)
 REAL(kind=wp) :: ak , am1 , X(:)
@@ -35716,19 +35600,21 @@ END SUBROUTINE UNIRAN
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!! !               --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                 (UNPUBLISHED MANUSCRIPT), 1970, PAGES 28-31.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+!!
+!!##REFERENCES
+!!   o Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. DIssertation,
+!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!   o Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 57-74.
 !*==unisf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE UNISF(P,Sf)
 REAL(kind=wp) :: P , Sf
@@ -35809,13 +35695,12 @@ END SUBROUTINE UNISF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 44.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 38.
-!! !               --MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY
-!! !                 OF STATISTICS, EDITION 2, 1963, PAGE 171.
+!!##REFERENCES
+!!   o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+!!   o Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!     1957, Page 38.
+!!   o Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
+!!     1963, Page 171.
 !*==var.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE VAR(X,N,Iwrite,Xvar)
 REAL(kind=wp) :: an , hold , sum , X , xmean , Xvar
@@ -35952,20 +35837,23 @@ END SUBROUTINE VAR
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!! !                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!! !                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!! !                ARMY RESEARCH AND TESTING, PAGES 425-450.
-!! !              --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!! !                UNPUBLISHED MANUSCRIPT.
-!! !              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!! !                DISTRIBUTIONS-1, PAGES 250-271.
+!!
+!!##REFERENCE
+!!   o Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
+!!     of the Eighteenth Conference on the Design of Experiments in Army
+!!     Research and Testing, Pages 425-450.
+!!   o Filliben, 'The Percent Point Function', UNpublished Manuscript.
+!!   o Johnson and Kotz (1970), Continuous Univariate Distributions-1,
+!!     Pages 250-271.
 !*==weib.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIB(X,N)
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
@@ -36265,14 +36153,14 @@ END SUBROUTINE WEIB
 !!       SUBROUTINE WEICDF(X,Gamma,Cdf)
 !!
 !!##DESCRIPTION
-!!    weicdf(3f) computes the cumulative distribution function value for
+!!    WEICDF(3f) computes the cumulative distribution function value for
 !!    the weibull distribution with precision precision tail length parameter
 !!    = gamma.
 !!
-!!    the weibull distribution used herein is defined for all positive x,
+!!    The weibull distribution used herein is defined for all positive x,
 !!    and has the probability density function
 !!
-!!        f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+!!        f(X) = gamma * (X**(gamma-1)) * exp(-(X**gamma)).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -36292,19 +36180,18 @@ END SUBROUTINE WEIB
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 124.
+!!##REFERENCES
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 250-271.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 124.
 !*==weicdf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEICDF(X,Gamma,Cdf)
 REAL(kind=wp) :: Cdf , Gamma , X
@@ -36413,16 +36300,15 @@ END SUBROUTINE WEICDF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!! !                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!! !                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!! !                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!! !                 OCTOBER, 1972), PAGES 425-450.
-!! !               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!! !                 1967, PAGES 260-308.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
+!!##REFERENCES
+!!   o Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+!!     425-450.
+!!   o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!     260-308.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 250-271.
 !*==weiplt.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE WEIPLT(X,N,Gamma)
@@ -36617,13 +36503,11 @@ END SUBROUTINE WEIPLT
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 124.
+!!##REFERENCES
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 250-271.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 124.
 !*==weippf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
@@ -36719,17 +36603,13 @@ END SUBROUTINE WEIPPF
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --TOCHER, THE ART OF SIMULATION,
-!! !                 1963, PAGES 14-15.
-!! !               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!! !                 1964, PAGE 36.
-!! !               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!! !                 DISTRIBUTIONS--1, 1970, PAGES 250-271.
-!! !               --HASTINGS AND PEACOCK, STATISTICAL
-!! !                 DISTRIBUTIONS--A HANDBOOK FOR
-!! !                 STUDENTS AND PRACTITIONERS, 1975,
-!! !                 PAGE 128.
+!!##REFERENCES
+!!   o Tocher, the Art of Simulation, 1963, Pages 14-15.
+!!   o Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+!!   o Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 250-271.
+!!   o Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 128.
 !*==weiran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
@@ -36841,19 +36721,20 @@ END SUBROUTINE WEIRAN
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGES 126-130, 136.
-!! !               --CROW AND SIDDIQUI, 'ROBUST ESTIMATION OF LOCATION',
-!! !                 JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!! !                 1967, PAGES 357, 387.
-!! !               --FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION
-!! !                 OF THE LOCATION PARAMETER OF A SYMMETRIC
-!! !                 DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!! !                 PRINCETON UNIVERSITY, 1969).
+!!
+!!##REFERENCES
+!!   o David, Order Statistics, 1970, Pages 126-130, 136.
+!!   o Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+!!     American Statistical Association, 1967, Pages 357, 387.
+!!   o Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University, 1969).
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !*==wind.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

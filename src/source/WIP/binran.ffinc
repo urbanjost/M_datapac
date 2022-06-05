@@ -30,21 +30,21 @@ DESCRIPTION
 OPTIONS
 INPUT ARGUMENTS
 
-  n      the desired integer number of random numbers to be generated.
+  N      The desired integer number of random numbers to be generated.
 
-  p      the value of the 'bernoulli probability' parameter for the
-         binomial distribution.  p should be between 0.0 (exclusively)
+  P      The value of the 'Bernoulli probability' parameter for the
+         binomial distribution.  P should be between 0.0 (exclusively)
          and 1.0 (exclusively).
 
-  npar   the integer value of the 'number of bernoulli trials'
-         parameter.  npar should be a positive integer.
+  NPAR   The integer value of the 'number of Bernoulli trials'
+         parameter.  NPAR should be a positive integer.
 
 OUTPUT ARGUMENTS
 
-  x     a vector (of dimension at least n) into which the generated
+  X     A vector (of dimension at least N) into which the generated
         random sample of size n from the binomial distribution
-        will be placed; with 'bernoulli probability' parameter = p
-        and 'number of bernoulli trials' parameter = npar.
+        will be placed; with 'Bernoulli probability' parameter = P
+        and 'number of Bernoulli trials' parameter = NPAR.
 
 EXAMPLES
   Sample program:
@@ -66,19 +66,19 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
-o Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
-o Hastings and Peacock, Statistical Distributions,
-  A Handbook for Students and Practitioners, 1975,
-  Page 41.
-o Feller, An Introduction to Probability Theory and Its Applications,
-  Volume 1, Edition 2, 1957, Pages 135-142.
-o National Bureau of Standards Applied Mathematics
-  Series 55, 1964, Page 929.
-o Kendall and Stuart, The Advanced Theory of Statistics,
-  Volume 1, Edition 2, 1963, Pages 120-125.
-o Mood and Grable, Introduction to the Theory of Statistics,
-  Edition 2, 1963, Pages 64-69.
-o Tocher, The Art Of Simulation, 1963, Pages 39-40.
+  o Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
+  o Hastings and Peacock, Statistical Distributions,
+    A Handbook for Students and Practitioners, 1975,
+    Page 41.
+  o Feller, An Introduction to Probability Theory and Its Applications,
+    Volume 1, Edition 2, 1957, Pages 135-142.
+  o National Bureau of Standards Applied Mathematics
+    Series 55, 1964, Page 929.
+  o Kendall and Stuart, The Advanced Theory of Statistics,
+    Volume 1, Edition 2, 1963, Pages 120-125.
+  o Mood and Grable, Introduction to the Theory of Statistics,
+    Edition 2, 1963, Pages 64-69.
+  o Tocher, The Art Of Simulation, 1963, Pages 39-40.
 $ENDBLOCK
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.

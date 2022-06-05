@@ -35,27 +35,27 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 949, FORMULA 26.7.5.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGE 102,
-!                 FORMULA 11.
-!               --FEDERIGHI, 'EXTENDED TABLES OF THE
-!                 PERCENTAGE POINTS OF STUDENT'S T
-!                 DISTRIBUTION, JOURNAL OF THE
-!                 AMERICAN STATISTICAL ASSOCIATION,
-!                 1969, PAGES 683-688.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 120-123.
+
+REFERENCES
+  o National Bureau of Standards Applied Mathematics Series 55, 1964,
+    Page 949, Formula 26.7.5.
+  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+    Page 102, Formula 11.
+  o Federighi, 'Extended Tables of the Percentage Points of Student's T
+    Distribution, Journal of the American Statistical Association, 1969,
+    Pages 683-688.
+  o Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, Pages 120-123.
+
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==tppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

@@ -37,12 +37,12 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM
-!                 BY RICHARD C. SINGLETON).
-!               --CACM JANUARY 1970, PAGE 54.
-!               --CACM OCTOBER 1970, PAGE 624.
-!               --JACM JANUARY 1961, PAGE 41.
+REFERENCES
+  o CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD
+    C. SINGLETON).
+  o CACM JANUARY 1970, PAGE 54.
+  o CACM OCTOBER 1970, PAGE 624.
+  o JACM JANUARY 1961, PAGE 41.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==rank.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

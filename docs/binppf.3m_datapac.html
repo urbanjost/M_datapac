@@ -61,13 +61,15 @@ point function
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Examples</A><BR>
-<A HREF=#4>Author</A><BR>
-<A HREF=#5>Maintainer</A><BR>
-<A HREF=#6>License</A><BR>
-<A HREF=#7>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output Arguments</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=8>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
@@ -109,105 +111,43 @@ Note that the percent point function of a distribution is identically
 the same as the inverse cumulative distribution function of the
 distribution.
 </BLOCKQUOTE>
-<TABLE cellpadding=3><!-- tsb: Note that the percent point function of a distribution is identically
- -->
-<TR></TR><TR></TR>
+<A name=3>
+
+     <H3>INPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-INPUT ARGUMENTS-<B>-P</B>      = THE  VALUE
-<TABLE width=100% cellpadding=3><!-- tsb: INPUT ARGUMENTS-<B>-P</B>      = THE  VALUE
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-(BETWEEN 0.0 (INCLUSIVELY)
+<B>P</B> </TD><TD valign=bottom>
+The value (between 0.0 (inclusively) and 1.0 (inclusively))
+at which the percent point function is to be evaluated.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-AND 1.0 (INCLUSIVELY))
+<B>PPAR</B> </TD><TD valign=bottom>
+The value of the &#146;Bernoulli probability&#146; parameter for the binomial
+distribution. PPAR should be between 0.0 (exclusively) and
+1.0 (exclusively).
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-AT WHICH THE PERCENT POINT
+<B>N</B> </TD><TD valign=bottom>
+The integer value of the &#146;number of Bernoulli trials&#146; parameter.
+N should be a positive integer.
 </TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=4>
+
+     <H3>OUTPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-FUNCTION IS TO BE EVALUATED.
+<B>PPF</B> </TD><TD valign=bottom>
+The  percent point function value.
 </TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--PPAR</B>   = THE  VALUE
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OF THE &#146;BERNOULLI PROBABILITY&#146;
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-PARAMETER FOR THE BINOMIAL
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-DISTRIBUTION.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-PPAR SHOULD BE BETWEEN
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-0.0 (EXCLUSIVELY) AND
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-1.0 (EXCLUSIVELY).
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-<B>--N</B>      = THE INTEGER VALUE
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OF THE &#146;NUMBER OF BERNOULLI TRIALS&#146;
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-PARAMETER.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-N SHOULD BE A POSITIVE INTEGER.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OUTPUT ARGUMENTS-<B>-PPF</B>    = THE  PERCENT
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-POINT FUNCTION VALUE.
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-OUTPUT-<B>-THE</B>  PERCENT POINT  .
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-FUNCTION VALUE PPF
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-FOR THE BINOMIAL DISTRIBUTION
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-WITH &#146;BERNOULLI PROBABILITY&#146; PARAMETER = PPAR
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>!</B> </TD><TD valign=bottom>
-AND &#146;NUMBER OF BERNOULLI TRIALS&#146; PARAMETER = N.
-</TD></TR>
-<TR></TR></TABLE></TD></TR>
-<TR></TR></TABLE><A name=3>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -226,7 +166,7 @@ Sample program:
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=4>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
@@ -235,7 +175,7 @@ Results:
 The original DATAPAC library was written by James Filliben of the Statistical
 Engineering Division, National Institute of Standards and Technology.
 </BLOCKQUOTE>
-<A name=5>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -243,7 +183,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=6>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -251,7 +191,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=7>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -305,7 +245,7 @@ Owen, Handbook of Statistical Tables, 1962, PAGES 264-272.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>binppf (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from c991985c-e056-4e31-af52-f42b446be82f using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>binppf (3m_datapac)</TD> <TD align=right width=33%><I>June 05, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 87cd2435-fdec-4e14-b4ea-498dcbd7de2c using man macros.</FONT>
 <br><br><center><img src="images/binppf.gif"></center>
 </div>
 </div>

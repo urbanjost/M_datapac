@@ -53,20 +53,24 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
-!     REFERENCE--FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH
-!                ANALYSIS', PROCEEDINGS OF THE EIGHTEENTH
-!                CONFERENCE ON THE DESIGN OF EXPERIMENTS IN
-!                ARMY RESEARCH AND TESTING, PAGES 425-450.
-!              --FILLIBEN, 'THE PERCENT POINT FUNCTION',
-!                UNPUBLISHED MANUSCRIPT.
-!              --JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE
-!                DISTRIBUTIONS-1, PAGES 250-271.
+
+REFERENCE
+  o Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
+    of the Eighteenth Conference on the Design of Experiments in Army
+    Research and Testing, Pages 425-450.
+  o Filliben, 'The Percent Point Function', Unpublished Manuscript.
+  o Johnson and Kotz (1970), Continuous Univariate Distributions-1,
+    Pages 250-271.
+
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==tail.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

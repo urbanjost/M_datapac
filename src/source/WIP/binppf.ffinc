@@ -34,29 +34,17 @@ DESCRIPTION
    the same as the inverse cumulative distribution function of the
    distribution.
 
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (INCLUSIVELY)
-!                                AND 1.0 (INCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --PPAR   = THE  VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE BINOMIAL
-!                                DISTRIBUTION.
-!                                PPAR SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!                     --N      = THE INTEGER VALUE
-!                                OF THE 'NUMBER OF BERNOULLI TRIALS'
-!                                PARAMETER.
-!                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT  .
-!             FUNCTION VALUE PPF
-!             FOR THE BINOMIAL DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = PPAR
-!             AND 'NUMBER OF BERNOULLI TRIALS' PARAMETER = N.
+INPUT ARGUMENTS
+   P     The value (between 0.0 (inclusively) and 1.0 (inclusively))
+         at which the percent point function is to be evaluated.
+   PPAR  The value of the 'Bernoulli probability' parameter for the binomial
+         distribution. PPAR should be between 0.0 (exclusively) and
+         1.0 (exclusively).
+   N     The integer value of the 'number of Bernoulli trials' parameter.
+         N should be a positive integer.
+
+OUTPUT ARGUMENTS
+  PPF    The  percent point function value.
 
 EXAMPLES
   Sample program:
@@ -104,7 +92,6 @@ SUBROUTINE BINPPF(P,Ppar,N,Ppf)
 REAL(kind=wp) :: amean , an , P , p0 , p1 , p2 , pf0 , Ppar , Ppf , qfn , sd , x0 , x1 , x2 , zppf
 INTEGER i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
 !     RESTRICTIONS--PPAR SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
 !                   AND 1.0 (EXCLUSIVELY).
 !                 --N SHOULD BE A POSITIVE INTEGER.

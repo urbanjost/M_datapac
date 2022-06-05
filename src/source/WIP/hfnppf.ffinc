@@ -48,12 +48,11 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 53, 59, 81, 83.
-!               --DANIEL, 'USE OF HALF-NORMAL PLOTS IN
-!                 INTERPRETING FACTORIAL TWO-LEVEL EXPERIMENTS',
-!                 TECHNOMETRICS, 1959, PAGES 311-341.
+REFERENCES
+  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+    PAGES 53, 59, 81, 83.
+  o DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
+    EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==hfnppf.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

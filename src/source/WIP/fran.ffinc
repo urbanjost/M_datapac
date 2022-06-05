@@ -37,15 +37,13 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --MOOD AND GRABLE, INTRODUCTION TO THE
-!                 THEORY OF STATISTICS, 1963, PAGES 231-232.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 75-93.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGE 64.
+REFERENCES
+  o MOOD AND GRABLE, INTRODUCTION TO THE THEORY OF STATISTICS, 1963,
+    PAGES 231-232.
+  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
+    PAGES 75-93.
+  o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+    STUDENTS AND PRACTITIONERS, 1975, PAGE 64.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==fran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

@@ -35,33 +35,30 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --GREENWOOD, 'A FAST GENERATOR FOR
-!                 GAMMA-DISTRIBUTED RANDOM VARIABLES',
-!                 COMPSTAT 1974, PROCEEDINGS IN
-!                 COMPUTATIONAL STATISTICS, VIENNA,
-!                 SEPTEMBER, 1974, PAGES 19-27.
-!               --TOCHER, THE ART OF SIMULATION,
-!                 1963, PAGES 24-27.
-!               --HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS,
-!                 1964, PAGES 36-37.
-!               --WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY
-!                 PLOTS FOR THE GAMMA DISTRIBUTION',
-!                 TECHNOMETRICS, 1962, PAGES 1-15.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--1, 1970, PAGES 166-206.
-!               --HASTINGS AND PEACOCK, STATISTICAL
-!                 DISTRIBUTIONS--A HANDBOOK FOR
-!                 STUDENTS AND PRACTITIONERS, 1975,
-!                 PAGES 68-73.
-!               --NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS
-!                 SERIES 55, 1964, PAGE 952.
+
+REFERENCES
+  o GREENWOOD, 'A FAST GENERATOR FOR GAMMA-DISTRIBUTED RANDOM VARIABLES',
+    COMPSTAT 1974, PROCEEDINGS IN COMPUTATIONAL STATISTICS, VIENNA,
+    SEPTEMBER, 1974, PAGES 19-27.
+  o TOCHER, THE ART OF SIMULATION, 1963, PAGES 24-27.
+  o HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGES 36-37.
+  o WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
+    DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15.
+  o JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+    PAGES 166-206.
+  o HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
+    STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
+  o NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
+    PAGE 952.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==gamran.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

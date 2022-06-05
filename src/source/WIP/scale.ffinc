@@ -46,14 +46,14 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --DIXON AND MASSEY, PAGES 19 AND 21
-!               --SNEDECOR AND COCHRAN, PAGE 62
-!               --DIXON AND MASSEY, PAGES 14, 70, AND 71
-!               --CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 PAGES 357 AND 387
-!               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 8.
+REFERENCES
+  o DIXON AND MASSEY, PAGES 19 AND 21
+  o SNEDECOR AND COCHRAN, PAGE 62
+  o DIXON AND MASSEY, PAGES 14, 70, AND 71
+  o CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
+    AND 387
+  o KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
+    EDITION 2, 1963, PAGE 8.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==scale.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

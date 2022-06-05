@@ -69,21 +69,18 @@ MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB
-!                 FATIGUE TIME DATA', UNPUBLISHED MANUSCRIPT
-!                 (AVAILABLE FROM AUTHOR)
-!                 PRESENTED AT THE 'COMPUTER-ASSISTED DATA
-!                 ANALYSIS' SESSION AT THE NATIONAL MEETING
-!                 OF THE AMERICAN STATISTICAL ASSOCIATION,
-!                 NEW YORK CITY, DECEMBER 27-30, 1973.
+REFERENCES
+  o FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
+    UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
+    'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
+    AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 !*==plot7.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
-REAL(kind=wp) :: aim1 , Char , cutoff , hold , ratiox , ratioy , X , x25 ,    &
-     &     x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
-INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
+
+SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
+REAL(kind=wp) :: aim1, Char, cutoff, hold, ratiox, ratioy, X, x25, x75, Xmax, xmid, Xmin, Y, ylable, Ymax, Ymin
+INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !
 !     INPUT ARGUMENTS--Y      = THE  VECTOR OF
 !                               (UNSORTED OR SORTED) OBSERVATIONS

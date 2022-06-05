@@ -49,22 +49,25 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
-!     REFERENCES
-!               --FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS',
-!                 PROCEEDINGS OF THE EIGHTEENTH CONFERENCE
-!                 ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!                 DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND,
-!                 OCTOBER, 1972), PAGES 425-450.
-!               --HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING,
-!                 1967, PAGES 260-308.
-!               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
-!                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+
+REFERENCES
+  o Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+    Eighteenth Conference on the Design of Experiments in Army REsearch
+    Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+    425-450.
+  o Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+    260-308.
+  o Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+    Pages 57-74.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
