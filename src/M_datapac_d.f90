@@ -14239,16 +14239,31 @@ end subroutine mean
 !!
 !!       SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
 !!
+!!        REAL(kind=wp) :: WS , X(:) , Xmed
+!!        INTEGER :: Iwrite , N
+!!
 !!##DESCRIPTION
-!!    median(3f) computes the sample median of the data in the input
-!!    vector x.
+!!    MEDIAN(3f) computes the sample median of the data in the input
+!!    vector X.
 !!
-!!    the sample median = that value such that half the data set is below
-!!    it and half above it.
+!!    The sample median equals that value such that half the data set is
+!!    below it and half above it.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X        The vector of (unsorted or sorted) observations.
+!!
+!!    N        The integer number of observations in the vector X.
+!!
+!!             The maximum allowable value of N for this subroutine is 15000.
+!!
+!!    IWRITE   An integer flag code which (if set to 0) will suppress the
+!!             printing of the sample median as it is computed; or (if set to
+!!             some integer value not equal to 0), like, say, 1) will cause
+!!             the printing of the sample median at the time it is computed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    XMED   The value of the computed sample median.
 !!
 !!##EXAMPLES
 !!
@@ -14257,71 +14272,60 @@ end subroutine mean
 !!    program demo_median
 !!    use M_datapac, only : median
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call median(x,y)
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    real,allocatable :: x(:)
+!!    real :: xmed
+!!    integer :: iwrite , n
+!!
+!!       x=[ -10.0, 10.0, 0.0, 1.0, 2.0 ]
+!!       n=size(x)
+!!       call median(x, n, 1, xmed)
+!!       write(*,g)' median of',x,'is',xmed
+!!
+!!       x=[ 10.0, 20.0, 3.0, 40.0 ]
+!!       n=size(x)
+!!       call median(x, n, 1, xmed)
+!!       write(*,g)' median of',x,'is',xmed
+!!
 !!    end program demo_median
 !!
 !!   Results:
 !!
+!!    The sample median of the 5 observations is  0.10000000E+01
+!!    median of  -10.00000 10.00000 .000000 1.000000 2.000000 is  1.000000
+!!
+!!    The sample median of the 4 observations is  0.15000000E+02
+!!    median of  10.00000 20.00000 3.000000 40.00000 is  15.00000
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-!! !     REFERENCES
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 1, EDITION 2, 1963, PAGE 326.
-!! !               --KENDALL AND STUART, THE ADVANCED THEORY OF
-!! !                 STATISTICS, VOLUME 2, EDITION 1, 1961, PAGE 49.
-!! !               --DAVID, ORDER STATISTICS, 1970, PAGE 139.
-!! !               --SNEDECOR AND COCHRAN, STATISTICAL METHODS,
-!! !                 EDITION 6, 1967, PAGE 123.
-!! !               --DIXON AND MASSEY, INTRODUCTION TO STATISTICAL
-!! !                 ANALYSIS, EDITION 2, 1957, PAGE 70.
-!*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
-REAL(kind=wp) :: hold , WS , X , Xmed , Y
-INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
-!
-!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --IWRITE = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL SUPPRESS
-!                                THE PRINTING OF THE
-!                                SAMPLE MEDIAN
-!                                AS IT IS COMPUTED;
-!                                OR (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0),
-!                                LIKE, SAY, 1) WILL CAUSE
-!                                THE PRINTING OF THE
-!                                SAMPLE MEDIAN
-!                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XMED   = THE SINGLE PRECISION VALUE OF THE
-!                                COMPUTED SAMPLE MEDIAN.
-!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
-!             SAMPLE MEDIAN.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!!
+!!##REFERENCES
+!!  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 1, Edition 2, 1963, Page 326.
+!!  o Kendall and Stuart, The Advanced Theory of Statistics, Volume 2, Edition 1, 1961, Page 49.
+!!  o David, Order Statistics, 1970, Page 139.
+!!  o Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 123.
+!!  o Dixon and Massey, Introduction to Statistical Analysis, Edition 2, 1957, Page 70.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
+!*==median.f90  processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE MEDIAN(X,N,Iwrite,Xmed)
+REAL(kind=wp) :: hold , WS , X(:) , Xmed , Y(15000)
+INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
+
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
 !
@@ -14329,18 +14333,16 @@ INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MEDIAN SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001 FORMAT (&
+          & ' ***** FATAL ERROR--The second input argument to MEDIAN(3f) is outside the allowable (1,',I6,') interval *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MEDI&
-     &AN SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ',&
+             & '***** NON-FATAL DIAGNOSTIC--The second input argument to MEDIAN(3f) has the value 1 *****')
             Xmed = X(1)
          ELSE
             hold = X(1)
@@ -14348,9 +14350,8 @@ INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE MEDIAN SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ',&
+             & '***** NON-FATAL DIAGNOSTIC--the first  input argument (a vector) to MEDIAN(3f) has all elements = ',g0,' *****')
             Xmed = X(1)
          ENDIF
          GOTO 100
@@ -14367,10 +14368,9 @@ INTEGER :: i , iflag , iupper , Iwrite , N , nmid , nmidp1
 !
  100  IF ( Iwrite==0 ) RETURN
       WRITE (G_IO,99005)
-99005 FORMAT (' ')
+      99005 FORMAT (' ')
       WRITE (G_IO,99006) N , Xmed
-99006 FORMAT (' ','THE SAMPLE MEDIAN OF THE ',I6,' OBSERVATIONS IS ',   &
-     &        E15.8)
+      99006 FORMAT (' The sample median of the ',I0,' observations is ', g0)
 END SUBROUTINE MEDIAN
 !>
 !!##NAME
