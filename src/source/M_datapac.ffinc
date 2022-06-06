@@ -18,12 +18,12 @@ logppf  ,  logran  ,  logsf   ,  max     ,  mean    ,  median  ,  midm    ,  mid
 nbcdf   ,  nbppf   ,  nbran   ,  norcdf  ,  norout  ,  norpdf  ,  norplt  ,  norppf  ,  norran  ,  norsf   , &
 parcdf  ,  parplt  ,  parppf  ,  parran  ,  plot10  ,  plot6   ,  plot7   ,  plot8   ,  plot9   ,  plotc   , &
 plotco  ,  plotct  ,  plot    ,  plotsc  ,  plots   ,  plotsp  ,  plotst  ,  plott   ,  plotu   ,  plotx   , &
-plotxt  ,  plotxx  ,  pltsct  ,  pltxxt  ,  poicdf  ,  poiplt  ,  poippf  ,  poiran  ,  poly    ,  propor  , &
-range   ,  rank    ,  ranper  ,  read    ,  readg   ,  relsd   ,  replac  ,  retain  ,  runs    ,  sampp   , &
+plotxt  ,  plotxx  ,  pltsct  ,  pltxxt  ,  poicdf  ,  poiplt  ,  poippf  ,  poiran  ,             propor  , &
+range   ,  rank    ,  ranper  ,                        relsd   ,  replac  ,  retain  ,  runs    ,  sampp   , &
 scale   ,  sd      ,             sortc   ,  sort    ,  sortp   ,  spcorr  ,  stmom3  ,  stmom4  ,  subse1  , &
 subse2  ,  subset  ,  tail    ,  tcdf    ,  time    ,  tol     ,  tplt    ,  tppf    ,  tran    ,  trim    , &
 unicdf  ,  unimed  ,  unipdf  ,  uniplt  ,  unippf  ,  uniran  ,  unisf   ,  var     ,  weib    ,  weicdf  , &
-weiplt  ,  weippf  ,  weiran  ,  wind    ,  write 
+weiplt  ,  weippf  ,  weiran  ,  wind               
 
 interface  autoco;  module  procedure  autoco  ;  end  interface
 interface  betran;  module  procedure  betran  ;  end  interface
@@ -152,13 +152,10 @@ interface  poicdf;  module  procedure  poicdf  ;  end  interface
 interface  poiplt;  module  procedure  poiplt  ;  end  interface
 interface  poippf;  module  procedure  poippf  ;  end  interface
 interface  poiran;  module  procedure  poiran  ;  end  interface
-interface  poly;    module  procedure  poly    ;  end  interface
 interface  propor;  module  procedure  propor  ;  end  interface
 interface  range;   module  procedure  range   ;  end  interface
 interface  rank;    module  procedure  rank    ;  end  interface
 interface  ranper;  module  procedure  ranper  ;  end  interface
-interface  read;    module  procedure  read    ;  end  interface
-interface  readg;   module  procedure  readg   ;  end  interface
 interface  relsd;   module  procedure  relsd   ;  end  interface
 interface  replac;  module  procedure  replac  ;  end  interface
 interface  retain;  module  procedure  retain  ;  end  interface
@@ -197,7 +194,6 @@ interface  weiplt;  module  procedure  weiplt  ;  end  interface
 interface  weippf;  module  procedure  weippf  ;  end  interface
 interface  weiran;  module  procedure  weiran  ;  end  interface
 interface  wind;    module  procedure  wind    ;  end  interface
-interface  write;   module  procedure  write   ;  end  interface
 
 contains
 $INCLUDE "autoco.ffinc"
@@ -328,13 +324,10 @@ $INCLUDE "WIP/poicdf.ffinc"
 $INCLUDE "WIP/poiplt.ffinc"
 $INCLUDE "WIP/poippf.ffinc"
 $INCLUDE "WIP/poiran.ffinc"
-$INCLUDE "WIP/poly.ffinc"
 $INCLUDE "WIP/propor.ffinc"
 $INCLUDE "WIP/range.ffinc"
 $INCLUDE "WIP/rank.ffinc"
 $INCLUDE "WIP/ranper.ffinc"
-$INCLUDE "WIP/read.ffinc"
-$INCLUDE "WIP/readg.ffinc"
 $INCLUDE "WIP/relsd.ffinc"
 $INCLUDE "WIP/replac.ffinc"
 $INCLUDE "WIP/retain.ffinc"
@@ -373,4 +366,16 @@ $INCLUDE "WIP/weiplt.ffinc"
 $INCLUDE "WIP/weippf.ffinc"
 $INCLUDE "WIP/weiran.ffinc"
 $INCLUDE "WIP/wind.ffinc"
-$INCLUDE "WIP/write.ffinc"
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK NULL
+! DELETED
+!interface  read;    module  procedure  read    ;  end  interface
+!interface  readg;   module  procedure  readg   ;  end  interface
+!interface  write;   module  procedure  write   ;  end  interface
+!interface  poly;    module  procedure  poly    ;  end  interface
+!$INCLUDE "WIP/read.ffinc"
+!!$INCLUDE "WIP/readg.ffinc"
+!$INCLUDE "WIP/write.ffinc"
+!$INCLUDE "WIP/poly.ffinc"
+$ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

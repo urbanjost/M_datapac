@@ -711,15 +711,16 @@ subroutine test_logsf()
 end subroutine test_logsf
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_max()
+use M_datapac, only : intel_max=>max
 real :: xmax
 real(kind=real64) :: dmax
 
    call unit_check_start('max',msg='')
 
-   call max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
+   call intel_max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
    call unit_check('max', xmax.eq.400.0, 'checking',xmax,400.0)
 
-   call max([-100.0d0, 200.0d0, 0.0d0, 400.0d0, -200.0d0],5,1,dmax)
+   call intel_max([-100.0d0, 200.0d0, 0.0d0, 400.0d0, -200.0d0],5,1,dmax)
    call unit_check('max', dmax.eq.400.0d0, 'checking',dmax,400.0d0)
 
    call unit_check_done('max',msg='')

@@ -94,7 +94,6 @@ The following subroutines are available in M_datapac:
   * [MEDIAN](src/source/median.ffinc)  - compute the median of a data vector
   * [MIDM](src/source/midm.ffinc)      - compute the midmean of a data vector
   * [MIDR](src/source/midr.ffinc)      - compute the midrange of a data vector
-  * [POLY](src/source/WIP/poly.ffinc)      - compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)
   * [PROPOR](src/source/WIP/propor.ffinc)  - compute the sample proportion
   * [RANGE](src/source/WIP/range.ffinc)    - compute the sample range
   * [RELSD](src/source/WIP/relsd.ffinc)    - compute the relative standard deviation of a vector of observations
@@ -190,11 +189,6 @@ The following subroutines are available in M_datapac:
   * [TCDF](src/source/WIP/tcdf.ffinc)      - compute the /t/ cumulative distribution function
   * [UNICDF](src/source/unicdf.ffinc)  - trivially compute the Uniform cumulative distribution function
   * [WEICDF](src/source/WIP/weicdf.ffinc)  - compute the Weibull cumulative distribution function
-## input and output formatting
-  * [READG](src/source/WIP/readg.ffinc)    - perform a format-free read of data from a file restricted to a user-specified set of columns
-  * [READ](src/source/WIP/read.ffinc)      - perform a format-free read of data from a file
-  * [SKIPR](src/source/WIP/skipr.ffinc)    - skip over a user-specified number of rows in reading a data file
-  * [WRITE](src/source/WIP/write.ffinc)    - write a vector of observations in a "neat" fashion
 ## line printer plots
   * [CAUPLT](src/source/WIP/cauplt.ffinc)  - generate a Cauchy probability plot (line printer graph)
   * [CHSPLT](src/source/WIP/chsplt.ffinc)  - generate a chi-square probability plot (line printer graph)
@@ -239,6 +233,18 @@ The following subroutines are available in M_datapac:
   * [PLOTSC](src/source/WIP/plotsc.ffinc)  - generate a line printer plot with special plot characters
   * [PLOTU](src/source/WIP/plotu.ffinc)    - generate a line printer 4-plot
 ------------------------------------------------------------------------
+<!--
+
+## input and output formatting
+  * [SKIPR](src/source/WIP/skipr.ffinc)    - skip over a user-specified number of rows in reading a data file
+  * [WRITE](src/source/WIP/write.ffinc)    - write a vector of observations in a "neat" fashion
+  * [READG](src/source/WIP/readg.ffinc)    - perform a format-free read of data from a file restricted to a user-specified set of columns
+  * [READ](src/source/WIP/read.ffinc)      - perform a format-free read of data from a file
+   
+
+  * [POLY](src/source/WIP/poly.ffinc)      - compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)
+
+-->
 
 ## Documentation   ![docs](docs/images/docs.gif)
 
