@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Statistics">
+    
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>VAR &ndash; M_datapac</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">M_datapac </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            <li><a href="../lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>VAR
+      <small>Subroutine</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 0.2% of total for procedures.">46 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/M_datapac_d.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/m_datapac_d.f90.html'>M_datapac_d.f90</a></li>
+    
+     <li><a href='../module/m_datapac_d.html'>M_datapac_d</a></li>
+    
+  
+     <li class="active">VAR</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/var.html#variable-an~49">an</a>
+      
+      <a class="list-group-item" href="../proc/var.html#variable-hold~82">hold</a>
+      
+      <a class="list-group-item" href="../proc/var.html#variable-i~114">i</a>
+      
+      <a class="list-group-item" href="../proc/var.html#variable-sum~32">sum</a>
+      
+      <a class="list-group-item" href="../proc/var.html#variable-xmean~8">xmean</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/var.html#src">VAR</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+public subroutine VAR(X, N, Iwrite, Xvar)
+    
+    
+   
+</h2>
+    
+  
+
+
+    
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">var</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="o">-</span> <span class="p">[</span><span class="n">M_datapac</span><span class="p">:</span><span class="n">STATISTICS</span><span class="p">]</span> <span class="n">compute</span> <span class="n">the</span> <span class="n">sample</span> <span class="n">variance</span> <span class="n">of</span> <span class="n">a</span>
+<span class="n">vector</span> <span class="n">of</span> <span class="n">observations</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>   <span class="n">SUBROUTINE</span> <span class="n">VAR</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">Iwrite</span><span class="p">,</span><span class="n">Xvar</span><span class="p">)</span>
+
+    <span class="n">REAL</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="ow">in</span><span class="p">)</span> <span class="p">::</span> <span class="n">X</span><span class="p">(:)</span>
+    <span class="n">INTEGER</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="ow">in</span><span class="p">)</span> <span class="p">::</span> <span class="n">N</span>
+    <span class="n">INTEGER</span><span class="p">,</span><span class="n">intent</span><span class="p">(</span><span class="ow">in</span><span class="p">)</span> <span class="p">::</span> <span class="n">Iwrite</span>
+    <span class="n">REAL</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="n">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="p">::</span> <span class="n">Xvar</span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">VAR</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="n">computes</span> <span class="n">the</span> <span class="n">sample</span> <span class="n">variance</span> <span class="p">(</span><span class="n">with</span> <span class="n">denominator</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">of</span> <span class="n">the</span>
+<span class="n">data</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">input</span> <span class="n">vector</span> <span class="n">X</span><span class="o">.</span>
+
+<span class="n">The</span> <span class="n">sample</span> <span class="n">variance</span> <span class="o">=</span> <span class="p">(</span><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="n">the</span> <span class="n">squared</span> <span class="n">deviations</span> <span class="n">about</span> <span class="n">the</span>
+<span class="n">sample</span> <span class="n">mean</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span>
+
+<span class="n">Variance</span> <span class="k">is</span> <span class="n">the</span> <span class="n">expectation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">squared</span> <span class="n">deviation</span> <span class="n">of</span> <span class="n">a</span> <span class="n">random</span>
+<span class="n">variable</span> <span class="n">from</span> <span class="n">its</span> <span class="n">population</span> <span class="n">mean</span> <span class="ow">or</span> <span class="n">sample</span> <span class="n">mean</span><span class="o">.</span> <span class="n">Variance</span> <span class="k">is</span> <span class="n">a</span>
+<span class="n">measure</span> <span class="n">of</span> <span class="n">dispersion</span><span class="p">,</span> <span class="n">meaning</span> <span class="n">it</span> <span class="k">is</span> <span class="n">a</span> <span class="n">measure</span> <span class="n">of</span> <span class="n">how</span> <span class="n">far</span> <span class="n">a</span> <span class="n">set</span> <span class="n">of</span>
+<span class="n">numbers</span> <span class="k">is</span> <span class="n">spread</span> <span class="n">out</span> <span class="n">from</span> <span class="n">their</span> <span class="n">average</span> <span class="n">value</span><span class="o">.</span>
+</code></pre></div>
+
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">X</span>    <span class="n">The</span> <span class="n">vector</span> <span class="n">of</span> <span class="p">(</span><span class="n">unsorted</span> <span class="ow">or</span> <span class="n">sorted</span><span class="p">)</span> <span class="n">observations</span><span class="o">.</span>
+
+<span class="n">N</span>    <span class="n">The</span> <span class="n">integer</span> <span class="n">number</span> <span class="n">of</span> <span class="n">observations</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">vector</span> <span class="n">X</span><span class="o">.</span>
+
+<span class="n">IWRITE</span>  <span class="n">An</span> <span class="n">integer</span> <span class="n">flag</span> <span class="n">code</span> <span class="n">which</span> <span class="p">(</span><span class="k">if</span> <span class="n">set</span> <span class="n">to</span> <span class="mi">0</span><span class="p">)</span> <span class="n">will</span> <span class="n">suppress</span> <span class="n">the</span>
+        <span class="n">printing</span> <span class="n">of</span> <span class="n">the</span> <span class="n">sample</span> <span class="n">variance</span> <span class="k">as</span> <span class="n">it</span> <span class="k">is</span> <span class="n">computed</span><span class="p">;</span> <span class="ow">or</span> <span class="p">(</span><span class="k">if</span> <span class="n">set</span>
+        <span class="n">to</span> <span class="n">some</span> <span class="n">integer</span> <span class="n">value</span> <span class="ow">not</span> <span class="n">equal</span> <span class="n">to</span> <span class="mi">0</span><span class="p">),</span> <span class="n">like</span><span class="p">,</span> <span class="n">say</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="n">will</span> <span class="n">cause</span>
+        <span class="n">the</span> <span class="n">printing</span> <span class="n">of</span> <span class="n">the</span> <span class="n">sample</span> <span class="n">variance</span> <span class="n">at</span> <span class="n">the</span> <span class="n">time</span> <span class="n">it</span> <span class="k">is</span> <span class="n">computed</span><span class="o">.</span>
+</code></pre></div>
+
+<h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">XVAR</span>   <span class="n">The</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">computed</span> <span class="n">sample</span> <span class="n">variance</span> <span class="p">(</span><span class="n">with</span> <span class="n">denominator</span>
+       <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">program</span> <span class="n">demo_var</span>
+<span class="n">use</span> <span class="n">M_datapac</span><span class="p">,</span> <span class="n">only</span> <span class="p">:</span> <span class="k">var</span><span class="p">,</span> <span class="n">label</span>
+<span class="n">implicit</span> <span class="n">none</span>
+<span class="n">real</span><span class="p">,</span><span class="n">allocatable</span> <span class="p">::</span> <span class="n">x</span><span class="p">(:)</span>
+<span class="n">real</span> <span class="p">::</span> <span class="n">Xvar</span>
+   <span class="n">call</span> <span class="n">label</span><span class="p">(</span><span class="s1">&#39;var&#39;</span><span class="p">)</span>
+   <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mf">46.0</span><span class="p">,</span> <span class="mf">69.0</span><span class="p">,</span> <span class="mf">32.0</span><span class="p">,</span> <span class="mf">60.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">41.0</span><span class="p">]</span>
+   <span class="n">call</span> <span class="n">VAR</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="n">Xvar</span><span class="p">)</span>
+   <span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="n">merge</span><span class="p">(</span><span class="s1">&#39;GOOD&#39;</span><span class="p">,</span><span class="s1">&#39;BAD &#39;</span><span class="p">,</span><span class="n">Xvar</span> <span class="o">==</span> <span class="mf">177.2</span><span class="p">),</span> <span class="n">Xvar</span>
+<span class="n">end</span> <span class="n">program</span> <span class="n">demo_var</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code> <span class="n">The</span> <span class="n">sample</span> <span class="n">variance</span> <span class="n">of</span> <span class="n">the</span> <span class="mi">6</span> <span class="n">observations</span> <span class="k">is</span>  <span class="mf">0.17720000E+03</span>
+ <span class="n">GOOD</span>   <span class="mf">177.2000</span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+
+<h2 id="references">REFERENCES</h2>
+<ul>
+<li>Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.</li>
+<li>Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+     1957, Page 38.</li>
+<li>Mood and Grable, &lsquo;Introduction to the Theory of Statistics, Edition 2,
+     1963, Page 171.</li>
+</ul>
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-x~123"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>X</strong>(:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n~105"></span>integer,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>N</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-iwrite~16"></span>integer,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>Iwrite</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-xvar"></span>real(kind=wp),</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>Xvar</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../proc/var.html#variable-an~49">an</a>
+      
+      <a class="list-group-item" href="../proc/var.html#variable-hold~82">hold</a>
+      
+      <a class="list-group-item" href="../proc/var.html#variable-i~114">i</a>
+      
+      <a class="list-group-item" href="../proc/var.html#variable-sum~32">sum</a>
+      
+      <a class="list-group-item" href="../proc/var.html#variable-xmean~8">xmean</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/var.html#src">VAR</a>
+  </div>
+</div>
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    <section>    
+      <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-an~49"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>an</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-hold~82"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>hold</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i~114"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>i</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-sum~32"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>sum</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-xmean~8"></span>real(kind=wp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>xmean</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">VAR</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">Iwrite</span><span class="p">,</span><span class="n">Xvar</span><span class="p">)</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">X</span><span class="p">(:)</span>
+<span class="kt">INTEGER</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">N</span>
+<span class="kt">INTEGER</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Iwrite</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Xvar</span>
+
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">an</span> <span class="p">,</span> <span class="n">hold</span> <span class="p">,</span> <span class="nb">sum</span> <span class="p">,</span> <span class="n">xmean</span>
+<span class="kt">INTEGER </span><span class="n">i</span>
+
+<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
+<span class="c">!</span>
+      <span class="n">an</span> <span class="o">=</span> <span class="n">N</span>
+      <span class="k">IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">&lt;</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span>
+         <span class="mi">99001</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--The second input argument to VAR(3f) is non-positive *****&#39;</span><span class="p">)</span>
+         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span> <span class="n">N</span>
+         <span class="mi">99002</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** The value of the argument is &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+         <span class="k">RETURN</span>
+<span class="k">      ELSE</span>
+<span class="k">         IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="k">            WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span>
+            <span class="mi">99003</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--The second input argument to VAR(3f) has the value 1 *****&#39;</span><span class="p">)</span>
+            <span class="n">Xvar</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+         <span class="k">ELSE</span>
+<span class="k">            </span><span class="n">hold</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">,</span> <span class="n">N</span>
+               <span class="k">IF</span> <span class="p">(</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span> <span class="p">)</span> <span class="k">GOTO </span><span class="mi">50</span>
+            <span class="k">ENDDO</span>
+<span class="k">            WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span> <span class="n">hold</span>
+            <span class="mi">99004</span> <span class="k">FORMAT</span> <span class="p">(&amp;</span>
+            <span class="p">&amp;</span> <span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--The first  input argument (a vector) to VAR(3f) has all elements = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+            <span class="n">Xvar</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+         <span class="k">ENDIF</span>
+<span class="k">         GOTO </span><span class="mi">100</span>
+<span class="c">!</span>
+<span class="c">!-----START POINT-----------------------------------------------------</span>
+<span class="c">!</span>
+ <span class="mi">50</span>      <span class="nb">sum</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">N</span>
+            <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">+</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+         <span class="k">ENDDO</span>
+<span class="k">         </span><span class="n">xmean</span> <span class="o">=</span> <span class="nb">sum</span><span class="o">/</span><span class="n">an</span>
+         <span class="nb">sum</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+         <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">N</span>
+            <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">+</span> <span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">xmean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+         <span class="k">ENDDO</span>
+<span class="k">         </span><span class="n">Xvar</span> <span class="o">=</span> <span class="nb">sum</span><span class="o">/</span><span class="p">(</span><span class="n">an</span><span class="o">-</span><span class="mf">1.0_wp</span><span class="p">)</span>
+      <span class="k">ENDIF</span>
+<span class="c">!</span>
+ <span class="mi">100</span>  <span class="k">IF</span> <span class="p">(</span> <span class="n">Iwrite</span><span class="o">==</span><span class="mi">0</span> <span class="p">)</span> <span class="k">RETURN</span>
+<span class="k">      WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span>
+      <span class="mi">99005</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+      <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span> <span class="n">N</span> <span class="p">,</span> <span class="n">Xvar</span>
+      <span class="mi">99006</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;The sample variance of the &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; observations is &#39;</span><span class="p">,</span> <span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
+<span class="k">END SUBROUTINE </span><span class="n">VAR</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2022 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+             on 2022-06-06 08:39  
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>
