@@ -20,7 +20,7 @@ DESCRIPTION
    This distribution is defined for all X and has the probability
    density function
 
-       f(x) = (exp(-x)) * (exp(-(exp(-x))))
+       f(X) = (exp(-X)) * (exp(-(exp(-X))))
 
 INPUT ARGUMENTS
 

@@ -9,13 +9,14 @@ contains
 
 subroutine label(string)
 character(len=*),intent(in) :: string
-integer :: more
-intrinsic :: max, trim, repeat
+integer                     :: more
+integer                     :: slen
+intrinsic                   :: max, trim, repeat
 
-   more=max(0,80-len_trim(string)-2)
-   more=more/2
+   slen=len_trim(string)
+   more=max(0,80-slen-2)/2
    write(*,'(1x,a)')repeat('=',79)
-   write(*,'(1x,a)')repeat('=',more)//' '//trim(string)//' '//repeat('=',more)
+   write(*,'(1x,a)')repeat('=',more)//' '//string(:slen)//' '//repeat('=',80-more-3-slen)
    write(*,'(1x,a)')repeat('=',79)
 
 end subroutine label

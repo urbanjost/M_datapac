@@ -60,8 +60,9 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 
 MAINTAINER
    John Urban, 2022.05.31
@@ -79,12 +80,14 @@ REFERENCES
 
   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Pages 36-37.
 
-  * Johnson and Kotz, Continuous Univariate Distributions --2, 1970, Pages 37-56.
+  * Johnson and Kotz, Continuous Univariate Distributions --2, 1970,
+    Pages 37-56.
 
   * Hastings and Peacock, Statistical Distributions--A Handbook For
     Students and Practitioners, 1975, Pages 30-35.
 
-  * National Bureau of Standards Applied Mathematics Series 55, 1964, Page 952.
+  * National Bureau of Standards Applied Mathematics Series 55, 1964,
+    Page 952.
 
 $ENDBLOCK
 !     VERSION NUMBER--82.3
@@ -102,18 +105,10 @@ INTEGER ::  i , Iseed , N
 
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-      DIMENSION X(:)
-      DIMENSION u(10)
-!---------------------------------------------------------------------
-!
-!-----DATA STATEMENTS-------------------------------------------------
-!
-      DATA athird/0.33333333_wp/
-      DATA sqrt3/1.73205081_wp/
-!
-!
+DIMENSION X(:)
+DIMENSION u(10)
+DATA athird/0.33333333_wp/
+DATA sqrt3/1.73205081_wp/
 !
 !-----START POINT-----------------------------------------------------
 !

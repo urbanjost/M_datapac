@@ -12,13 +12,13 @@ SYNOPSIS
        INTEGER,intent(in) :: Nu 
 
 DESCRIPTION
-   chscdf(3f) computes the cumulative distribution function value for
+   CHSCDF(3f) computes the cumulative distribution function value for
    the chi-squared distribution with integer degrees of freedom parameter
-   = nu.
+   = NU.
 
-   this distribution is defined for all non-negative x.
+   This distribution is defined for all non-negative X.
 
-   the probability density function is given in the references below.
+   The probability density function is given in the references below.
 
 INPUT ARGUMENTS
 
@@ -50,13 +50,13 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
- * national bureau of standards applied mathematics series 55, 1964,
-   page 941, formulae 26.4.4 and 26.4.5.
- * johnson and kotz, continuous univariate distributions--1, 1970,
-   page 176, formula 28, and page 180, formula 33.1.
- * owen, handbook of statistical tables, 1962, pages 50-55.
- * pearson and hartley, biometrika tables for statisticians, volume 1,
-   1954, pages 122-131.
+ * National Bureau of Standards Applied Mathematics Series 55, 1964,
+   Page 941, Formulae 26.4.4 and 26.4.5.
+ * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+   Page 176, Formula 28, and Page 180, Formula 33.1.
+ * Owen, Handbook of Statistical Tables, 1962, Pages 50-55.
+ * Pearson and Hartley, Biometrika Tables for Statisticians, Volume 1,
+   1954, Pages 122-131.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.

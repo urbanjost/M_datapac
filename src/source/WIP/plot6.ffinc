@@ -17,9 +17,21 @@ DESCRIPTION
    data analyst to control fully the plot axis limits, so as, for example,
    to zero-in on an interesting sub-region of a previous plot.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+   Y      the vector of (unsorted or sorted) observations to be plotted
+          vertically.
+   X      the vector of (unsorted or sorted) observations to be plotted
+          horizontally.
+   N      the integer number of observations in the vector y. there is
+          no restriction on the maximum value of n for this subroutine.
+   YMIN   the value of desired minimum for the vertical axis.
+   YMAX   the value of desired maximum for the vertical axis.
+   XMIN   the value of desired minimum for the horizontal axis.
+   XMAX   the value of desired maximum for the horizontal axis.
+
+OUTPUT
+   A one-page printer plot of y(i) versus x(i), with specified axis limits.
+
 
 EXAMPLES
   Sample program:
@@ -54,29 +66,6 @@ IMPLICIT NONE
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
 INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !
-!
-!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED HORIZONTALLY.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR Y.
-!                    --YMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
-!             WITH SPECIFIED AXIS LIMITS.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)

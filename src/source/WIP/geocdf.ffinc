@@ -1,33 +1,60 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file geocdf.3m_datapac.man
 NAME
-   geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric cumulative
-   distribution function
+   geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric
+   cumulative distribution function
 
 SYNOPSIS
       SUBROUTINE GEOCDF(X,P,Cdf)
 
+       REAL(kind=wp),intent(in)  :: X
+       REAL(kind=wp),intent(in)  :: P 
+       REAL(kind=wp),intent(out) :: Cdf 
+
 DESCRIPTION
-   geocdf(3f) computes the cumulative distribution function value at the
-   precision precision value x for the geometric distribution with precision
-   precision 'bernoulli probability' parameter = p.
+   GEOCDF(3f) computes the cumulative distribution function value at the
+   precision precision value X for the geometric distribution with precision
+   precision 'Bernoulli probability' parameter = P.
 
-   the geometric distribution used herein herein has mean = (1-p)/p and
-   standard deviation = sqrt((1-p)/(p*p))).
+   The geometric distribution used herein herein has mean = (1-P)/P and
+   standard deviation = sqrt((1-P)/(P*P))).
 
-   this distribution is defined for all non-negative integer x--x = 0,
-   1, 2, ... . this distribution has the probability function
+   This distribution is defined for all non-negative integer X where X =
+   0, 1, 2, ... . This distribution has the probability function
 
-       f(x) = p * (1-p)**x.
+       f(X) = P * (1-P)**X
 
-   the geometric distribution is the distribution of the number of
+   The geometric distribution is the distribution of the number of
    failures before obtaining 1 success in an indefinite sequence of
-   bernoulli (0,1) trials where the probability of success in a precision
-   trial = p.
+   Bernoulli (0,1) trials where the probability of success in a precision
+   trial = P.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+   Note that even though the input to this cumulative distribution
+   function subroutine for this discrete distribution should (under normal
+   circumstances) be a discrete integer value, the input variable X is REAL.
+   X has been specified as REAL so as to conform with the datapac convention
+   that all input ****data**** (as opposed to sample size, for example)
+   variables to all datapac subroutines are.
+
+   This convention is based on the belief that
+
+    1. A mixture of modes (floating point versus integer) is inconsistent
+       and an unnecessary complication in a data analysis; and
+    2. Floating point machine arithmetic (as opposed to integer
+       arithmetic) is the more natural mode for doing data analysis.
+
+INPUT ARGUMENTS
+
+   X      The value at which the cumulative distribution function is
+          to be evaluated. X should be non-negative and integral-valued.
+   P      The value of the 'Bernoulli probability' parameter for the
+          geometric distribution.  P should be between 0.0 (exclusively)
+          and 1.0 (exclusively).
+
+OUTPUT ARGUMENTS
+
+   CDF    The cumulative distribution function value for the geometric
+          distribution
 
 EXAMPLES
   Sample program:
@@ -41,8 +68,9 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
@@ -58,56 +86,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE GEOCDF(X,P,Cdf)
-REAL(kind=wp) :: Cdf , del , fintx , P , X
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(in) :: P 
+REAL(kind=wp),intent(out) :: Cdf 
+REAL(kind=wp) :: del , fintx 
 INTEGER intx
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE AND
-!                                INTEGRAL-VALUED.
-!                     --P      = THE  VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE GEOMETRIC
-!                                DISTRIBUTION.
-!                                P SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF
-!             FOR THE GEOMETRIC DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
-!              TO THIS CUMULATIVE
-!              DISTRIBUTION FUNCTION SUBROUTINE
-!              FOR THIS DISCRETE DISTRIBUTION
-!              SHOULD (UNDER NORMAL CIRCUMSTANCES) BE A
-!              DISCRETE INTEGER VALUE,
-!              THE INPUT VARIABLE X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL INPUT ****DATA****
-!              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
-!              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE .
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
-!---------------------------------------------------------------------
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
@@ -129,6 +113,7 @@ INTEGER intx
          ENDIF
          Cdf = 1.0_wp - (1.0_wp-P)**(X+1.0_wp)
       ENDIF
+
 99001 FORMAT(' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
 99002 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NEGATIVE *****')
 99003 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NON-INTEGRAL *****')

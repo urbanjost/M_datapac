@@ -388,8 +388,9 @@ end subroutine autoco
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
@@ -407,12 +408,14 @@ end subroutine autoco
 !!
 !!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Pages 36-37.
 !!
-!!   * Johnson and Kotz, Continuous Univariate Distributions --2, 1970, Pages 37-56.
+!!   * Johnson and Kotz, Continuous Univariate Distributions --2, 1970,
+!!     Pages 37-56.
 !!
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook For
 !!     Students and Practitioners, 1975, Pages 30-35.
 !!
-!!   * National Bureau of Standards Applied Mathematics Series 55, 1964, Page 952.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 952.
 !     VERSION NUMBER--82.3
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -427,18 +430,10 @@ INTEGER ::  i , Iseed , N
 
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-      DIMENSION X(:)
-      DIMENSION u(10)
-!---------------------------------------------------------------------
-!
-!-----DATA STATEMENTS-------------------------------------------------
-!
-      DATA athird/0.33333333_wp/
-      DATA sqrt3/1.73205081_wp/
-!
-!
+DIMENSION X(:)
+DIMENSION u(10)
+DATA athird/0.33333333_wp/
+DATA sqrt3/1.73205081_wp/
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -598,7 +593,7 @@ END SUBROUTINE BETRAN
 !!    program demo_bincdf
 !!    use M_datapac, only : bincdf
 !!    implicit none
-!!    ! call bincdf(x,y)
+!!    SUBROUTINE BINCDF(X,P,N,Cdf)
 !!    end program demo_bincdf
 !!
 !!   Results:
@@ -1580,25 +1575,25 @@ end subroutine caucdf
 !!
 !!##EXAMPLES
 !!
-!!   Sample program:
+!!    Sample program:
 !!
-!!    program demo_caupdf
-!!    !@(#) line plotter graph of probability density function
-!!    use M_datapac, only : caupdf, plott, label
-!!    implicit none
-!!    real,allocatable  :: x(:), y(:)
-!!    integer           :: i
-!!       call label('caupdf')
-!!       x=[(real(i),i=-100,100,1)]
-!!       if(allocated(y))deallocate(y)
-!!       allocate(y(size(x)))
-!!       do i=1,size(x)
-!!          call caupdf(x(i)/10.0,y(i))
-!!       enddo
-!!       call plott(x,y,size(x))
-!!    end program demo_caupdf
+!!     program demo_caupdf
+!!     !@(#) line plotter graph of probability density function
+!!     use M_datapac, only : caupdf, plott, label
+!!     implicit none
+!!     real,allocatable  :: x(:), y(:)
+!!     integer           :: i
+!!        call label('caupdf')
+!!        x=[(real(i),i=-100,100,1)]
+!!        if(allocated(y))deallocate(y)
+!!        allocate(y(size(x)))
+!!        do i=1,size(x)
+!!           call caupdf(x(i)/10.0,y(i))
+!!        enddo
+!!        call plott(x,y,size(x))
+!!     end program demo_caupdf
 !!
-!!   Results:
+!!    Results:
 !!
 !!     The following is a plot of Y(i) (vertically) versus X(i) (horizontally)
 !!                       I-----------I-----------I-----------I-----------I
@@ -2155,13 +2150,13 @@ END SUBROUTINE CAUSF
 !!        INTEGER,intent(in) :: Nu
 !!
 !!##DESCRIPTION
-!!    chscdf(3f) computes the cumulative distribution function value for
+!!    CHSCDF(3f) computes the cumulative distribution function value for
 !!    the chi-squared distribution with integer degrees of freedom parameter
-!!    = nu.
+!!    = NU.
 !!
-!!    this distribution is defined for all non-negative x.
+!!    This distribution is defined for all non-negative X.
 !!
-!!    the probability density function is given in the references below.
+!!    The probability density function is given in the references below.
 !!
 !!##INPUT ARGUMENTS
 !!
@@ -2194,13 +2189,13 @@ END SUBROUTINE CAUSF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  * national bureau of standards applied mathematics series 55, 1964,
-!!    page 941, formulae 26.4.4 and 26.4.5.
-!!  * johnson and kotz, continuous univariate distributions--1, 1970,
-!!    page 176, formula 28, and page 180, formula 33.1.
-!!  * owen, handbook of statistical tables, 1962, pages 50-55.
-!!  * pearson and hartley, biometrika tables for statisticians, volume 1,
-!!    1954, pages 122-131.
+!!  * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!    Page 941, Formulae 26.4.4 and 26.4.5.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!    Page 176, Formula 28, and Page 180, Formula 33.1.
+!!  * Owen, Handbook of Statistical Tables, 1962, Pages 50-55.
+!!  * Pearson and Hartley, Biometrika Tables for Statisticians, Volume 1,
+!!    1954, Pages 122-131.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -5985,7 +5980,7 @@ end subroutine dot
 !!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (exp(-x)) * (exp(-(exp(-x))))
+!!        f(X) = (exp(-X)) * (exp(-(exp(-X))))
 !!
 !!##INPUT ARGUMENTS
 !!
@@ -8067,15 +8062,25 @@ CHARACTER(len=4) :: iflag3
 !!       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 !!
 !!##DESCRIPTION
-!!    fcdf(3f) computes the cumulative distribution function value for the f
-!!    distribution with integer degrees of freedom parameters = nu1 and nu2.
+!!    FCDF(3f) computes the cumulative distribution function value for the F
+!!    distribution with integer degrees of freedom parameters = NU1 and NU2.
 !!
-!!    this distribution is defined for all non-negative x. the probability
+!!    This distribution is defined for all non-negative X. The probability
 !!    density function is given in the references below.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X      The value at which the cumulative distribution function is to
+!!           be evaluated. X should be non-negative.
+!!
+!!    NU1    The integer degrees of freedom for the numerator of the F
+!!           ratio. NU1 should be positive.
+!!
+!!    NU2    The integer degrees of freedom for the denominator of the F
+!!           ratio. NU2 should be positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the F distribution
 !!
 !!##EXAMPLES
 !!
@@ -8101,64 +8106,35 @@ CHARACTER(len=4) :: iflag3
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGES 946-947, FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGE 83, FORMULA 20, AND PAGE 84, THIRD FORMULA.
-!!   * PAULSON, AN APPROXIMATE NORMALIZATION OF THE ANALYSIS OF VARIANCE
-!!     DISTRIBUTION, ANNALS OF MATHEMATICAL STATISTICS, 1942, NUMBER 13,
-!!     PAGES 233-135.
-!!   * SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES FOR POPULATION TOLERANCE
-!!     LIMITS, 1944, NUMBER 15, PAGE 217.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
-REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
-     &     zratio
-INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
-     &        m , n , Nu1 , Nu2 , nucut1 , nucut2
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE.
-!                     --NU1    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE NUMERATOR OF THE F RATIO.
-!                                NU1 SHOULD BE POSITIVE.
-!                     --NU2    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE DENOMINATOR OF THE F RATIO.
-!                                NU2 SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE F DISTRIBUTION
-!             WITH DEGREES OF FREEDOM
-!             PARAMETERS = NU1 AND NU2.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!                 --NU1 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF,CHSCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Pages 946-947, Formulae 26.6.4, 26.6.5, 26.6.8, and 26.6.15.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Page 83, Formula 20, and Page 84, Third formula.
+!!   * Paulson, An Approximate Normalization of the Analysis of Variance
+!!     Distribution, Annals of Mathematical Statistics, 1942, Number 13,
+!!     Pages 233-135.
+!!   * Scheffe and Tukey, A Formula for Sample Sizes for Population Tolerance
+!!     Limits, 1944, Number 15, Page 217.
 !     ORIGINAL VERSION--AUGUST    1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai ,    &
-     &                 coef1 , coef2 , arg
-      DOUBLE PRECISION coef
-      DOUBLE PRECISION theta , sinth , costh , a , b
-      DOUBLE PRECISION DSQRT , DATAN
-      DOUBLE PRECISION dfact1 , dfact2 , dnum , dden
-      DOUBLE PRECISION dpow1 , dpow2
-      DOUBLE PRECISION dnu1 , dnu2
-      DOUBLE PRECISION term1 , term2 , term3
-      DATA pi/3.14159265358979D0/
-      DATA dpow1 , dpow2/0.33333333333333D0 , 0.66666666666667D0/
-      DATA nucut1 , nucut2/100 , 1000/
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
+REAL(kind=wp)    :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X , zratio
+INTEGER          :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , m , n , Nu1 , Nu2 , nucut1 , nucut2
+DOUBLE PRECISION :: dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
+DOUBLE PRECISION :: coef
+DOUBLE PRECISION :: theta , sinth , costh , a , b
+DOUBLE PRECISION :: DSQRT , DATAN
+DOUBLE PRECISION :: dfact1 , dfact2 , dnum , dden
+DOUBLE PRECISION :: dpow1 , dpow2
+DOUBLE PRECISION :: dnu1 , dnu2
+DOUBLE PRECISION :: term1 , term2 , term3
+DATA pi/3.14159265358979D0/
+DATA dpow1 , dpow2/0.33333333333333D0 , 0.66666666666667D0/
+DATA nucut1 , nucut2/100 , 1000/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -9112,23 +9088,45 @@ END SUBROUTINE FREQ
 !!
 !!       SUBROUTINE GAMCDF(X,Gamma,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: Gamma
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    gamcdf(3f) computes the cumulative distribution function value for the
-!!    gamma distribution with precision precision tail length parameter = gamma.
+!!    GAMCDF(3f) computes the cumulative distribution function value for
+!!    the gamma distribution with precision precision tail length parameter
+!!    = GAMMA.
 !!
-!!    the gamma distribution used herein has mean = gamma and standard
-!!    deviation = sqrt(gamma).
+!!    The Gamma distribution used herein has mean = GAMMA and standard
+!!    deviation = sqrt(GAMMA).
 !!
-!!    this distribution is defined for all positive x, and has the
+!!    This distribution is defined for all positive X, and has the
 !!    probability density function
 !!
-!!        f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!        f(X) = (1/constant) * (X**(GAMMA-1)) * exp(-X)
 !!
-!!    where the constant = the gamma function evaluated at the value gamma.
+!!    Where the constant = the Gamma function evaluated at the value GAMMA.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Note the mode of internal operations is DOUBLE PRECISION.
+!!
+!!##ACCURACY
+!!
+!!   (On the UNIVAC 1108, EXEC 8 system at NBS)
+!!
+!!    Compared to the known GAMMA = 1 (exponential) results, agreement
+!!    was had out to 7 significant digits for all tested X.  The tested X
+!!    values covered the entire range of the distribution--from the 0.00001
+!!    percent point up to the 99.99999 percent point of the distribution.
+!!
+!!##INPUT ARGUMENTS
+!!    X      The value at which the cumulative distribution function is
+!!           to be evaluated. X should be positive.
+!!    GAMMA  The value of the tail length parameter. GAMMA should be positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the gamma
+!!           distribution
 !!
 !!##EXAMPLES
 !!
@@ -9143,12 +9141,16 @@ END SUBROUTINE FREQ
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
 !!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
@@ -9158,50 +9160,24 @@ END SUBROUTINE FREQ
 !!     PAGES 166-206.
 !!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GAMCDF(X,Gamma,Cdf)
-REAL(kind=wp) :: Cdf , Gamma , X
-INTEGER :: i , maxit
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE POSITIVE.
-!                     --GAMMA  = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE GAMMA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --X SHOULD BE POSITIVE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
-!               COMPARED TO THE KNOWN GAMMA = 1 (EXPONENTIAL)
-!               RESULTS, AGREEMENT WAS HAD OUT TO 7 SIGNIFICANT
-!               DIGITS FOR ALL TESTED X.
-!               THE TESTED X VALUES COVERED THE ENTIRE
-!               RANGE OF THE DISTRIBUTION--FROM THE 0.00001
-!               PERCENT POINT UP TO THE 99.99999 PERCENT POINT
-!               OF THE DISTRIBUTION.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , dgamma , ai , term , sum , cut1 , cut2 ,    &
-     &                 cutoff , t
-      DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d , g
-      DOUBLE PRECISION DEXP , DLOG
-      DIMENSION d(10)
-      DATA c/.918938533204672741D0/
-      DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE GAMCDF(X,Gamma,Cdf)
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Cdf
+INTEGER :: i , maxit
+DOUBLE PRECISION dx , dgamma , ai , term , sum , cut1 , cut2 , cutoff , t
+DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d , g
+DOUBLE PRECISION DEXP , DLOG
+DIMENSION d(10)
+DATA c/.918938533204672741D0/
+DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
      &     -.277777777777777778D-2 , +.793650793650793651D-3 ,          &
      &     -.595238095238095238D-3 , +.841750841750841751D-3/
-      DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
+DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
      &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
      &     +.179644372368830573D0 , -.139243221690590111D1/
 !
@@ -10102,34 +10078,61 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE GAMRAN
 !>
 !!##NAME
-!!    geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric cumulative
-!!    distribution function
+!!    geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE GEOCDF(X,P,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    geocdf(3f) computes the cumulative distribution function value at the
-!!    precision precision value x for the geometric distribution with precision
-!!    precision 'bernoulli probability' parameter = p.
+!!    GEOCDF(3f) computes the cumulative distribution function value at the
+!!    precision precision value X for the geometric distribution with precision
+!!    precision 'Bernoulli probability' parameter = P.
 !!
-!!    the geometric distribution used herein herein has mean = (1-p)/p and
-!!    standard deviation = sqrt((1-p)/(p*p))).
+!!    The geometric distribution used herein herein has mean = (1-P)/P and
+!!    standard deviation = sqrt((1-P)/(P*P))).
 !!
-!!    this distribution is defined for all non-negative integer x--x = 0,
-!!    1, 2, ... . this distribution has the probability function
+!!    This distribution is defined for all non-negative integer X where X =
+!!    0, 1, 2, ... . This distribution has the probability function
 !!
-!!        f(x) = p * (1-p)**x.
+!!        f(X) = P * (1-P)**X
 !!
-!!    the geometric distribution is the distribution of the number of
+!!    The geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a precision
-!!    trial = p.
+!!    Bernoulli (0,1) trials where the probability of success in a precision
+!!    trial = P.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Note that even though the input to this cumulative distribution
+!!    function subroutine for this discrete distribution should (under normal
+!!    circumstances) be a discrete integer value, the input variable X is REAL.
+!!    X has been specified as REAL so as to conform with the datapac convention
+!!    that all input ****data**** (as opposed to sample size, for example)
+!!    variables to all datapac subroutines are.
+!!
+!!    This convention is based on the belief that
+!!
+!!     1. A mixture of modes (floating point versus integer) is inconsistent
+!!        and an unnecessary complication in a data analysis; and
+!!     2. Floating point machine arithmetic (as opposed to integer
+!!        arithmetic) is the more natural mode for doing data analysis.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the cumulative distribution function is
+!!           to be evaluated. X should be non-negative and integral-valued.
+!!    P      The value of the 'Bernoulli probability' parameter for the
+!!           geometric distribution.  P should be between 0.0 (exclusively)
+!!           and 1.0 (exclusively).
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the geometric
+!!           distribution
 !!
 !!##EXAMPLES
 !!
@@ -10144,8 +10147,9 @@ END SUBROUTINE GAMRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
@@ -10159,56 +10163,12 @@ END SUBROUTINE GAMRAN
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE GEOCDF(X,P,Cdf)
-REAL(kind=wp) :: Cdf , del , fintx , P , X
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(in) :: P
+REAL(kind=wp),intent(out) :: Cdf
+REAL(kind=wp) :: del , fintx
 INTEGER intx
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE AND
-!                                INTEGRAL-VALUED.
-!                     --P      = THE  VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE GEOMETRIC
-!                                DISTRIBUTION.
-!                                P SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF
-!             FOR THE GEOMETRIC DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
-!              TO THIS CUMULATIVE
-!              DISTRIBUTION FUNCTION SUBROUTINE
-!              FOR THIS DISCRETE DISTRIBUTION
-!              SHOULD (UNDER NORMAL CIRCUMSTANCES) BE A
-!              DISCRETE INTEGER VALUE,
-!              THE INPUT VARIABLE X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL INPUT ****DATA****
-!              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
-!              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE .
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
-!---------------------------------------------------------------------
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
@@ -10230,6 +10190,7 @@ INTEGER intx
          ENDIF
          Cdf = 1.0_wp - (1.0_wp-P)**(X+1.0_wp)
       ENDIF
+
 99001 FORMAT(' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
 99002 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NEGATIVE *****')
 99003 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NON-INTEGRAL *****')
@@ -10788,95 +10749,127 @@ END SUBROUTINE GEORAN
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE HFNCDF(X,Cdf)
+!!       REAL(kind=wp),intent(in) :: X
+!!       REAL(kind=wp),intent(out) :: Cdf
 !!
 !!##DESCRIPTION
-!!    hfncdf(3f) computes the cumulative distribution function value for
+!!    HFNCDF(3f) computes the cumulative distribution function value for
 !!    the halfnormal distribution.
 !!
-!!    the halfnormal distribution used herein has mean = sqrt(2/pi) =
+!!    The halfnormal distribution used herein has mean = sqrt(2/pi) =
 !!    0.79788456 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x and has the
+!!    This distribution is defined for all non-negative x and has the
 !!    probability density function
 !!
-!!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!    f(X) = (2/sqrt(2*pi)) * exp(-X*X/2).
 !!
-!!    the halfnormal distribution used herein is the distribution of the
-!!    variate x = abs(z) where the variate z is normally distributed with
+!!    The halfnormal distribution used herein is the distribution of the
+!!    variate X = abs(z) where the variate z is normally distributed with
 !!    mean = 0 and standard deviation = 1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The value at which the cumulative distribution function is
+!!          to be evaluated.  X should be non-negative.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF   The cumulative distribution function value.
+!!          for the halfnormal distribution
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_hfncdf
-!!    use M_datapac, only : hfncdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    !@(#) for the halfnormal distribution
+!!    use M_datapac, only : hfncdf, plott, label
 !!    implicit none
-!!    ! call hfncdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       call label('hfncdf')
+!!       x=[(real(i),i=0,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call hfncdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_hfncdf
-!!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                                  X
+!!      0.9583334E+02 I                                                  X
+!!      0.9166666E+02 I                                                  X
+!!      0.8750000E+02 I                                                  X
+!!      0.8333334E+02 I                                                  X
+!!      0.7916667E+02 I                                                  X
+!!      0.7500000E+02 -                                                  X
+!!      0.7083334E+02 I                                                  X
+!!      0.6666667E+02 I                                                  X
+!!      0.6250000E+02 I                                                  X
+!!      0.5833334E+02 I                                                  X
+!!      0.5416667E+02 I                                                  X
+!!      0.5000000E+02 -                                                  X
+!!      0.4583334E+02 I                                                  X
+!!      0.4166667E+02 I                                                  X
+!!      0.3750000E+02 I                                                  X
+!!      0.3333334E+02 I                                                  X
+!!      0.2916667E+02 I                                                  X
+!!      0.2500000E+02 -                                                 XX
+!!      0.2083334E+02 I                                               XXX
+!!      0.1666667E+02 I                                            XXXX
+!!      0.1250000E+02 I                                     X X XX
+!!      0.8333336E+01 I                           X  X X  X
+!!      0.4166672E+01 I             X   X  X   X
+!!      0.0000000E+00 -  X   X   X
+!!                       I-----------I-----------I-----------I-----------I
+!!               -0.1192E-06  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+!! ================================================================================
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 53, 59, 81, 83.
-!!   * DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
-!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HFNCDF(X,Cdf)
-REAL(kind=wp) :: Cdf , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE HALFNORMAL
-!             DISTRIBUTION WITH MEAN = SQRT(2/PI) = 0.79788456
-!             AND STANDARD DEVIATION = 1.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 53, 59, 81, 83.
+!!   * Daniel, 'Use of Half-Normal Plots in Interpreting Factorial Two-level
+!!     Experiments', Technometrics, 1959, Pages 311-341.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
-!
-!---------------------------------------------------------------------
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine hfncdf(X,Cdf)
+real(kind=wp),intent(in) :: X
+real(kind=wp),intent(out) :: Cdf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<0.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE HFNC&
-     &DF SUBROUTINE IS NEGATIVE *****')
-         WRITE (G_IO,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         Cdf = 0.0_wp
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         CALL NORCDF(X,Cdf)
-         Cdf = 2.0_wp*Cdf - 1.0_wp
-      ENDIF
-!
-END SUBROUTINE HFNCDF
+   if ( X<0.0_wp ) then
+      write (G_io,99001)
+      99001 format (' ***** NON-FATAL DIAGNOSTIC--The first input argument to HFNCDF(3f) is negative *****')
+      write (G_io,99002) X
+      99002 format (' ***** The value of the argument is ',E15.8,' *****')
+      Cdf = 0.0_wp
+      return
+   else
+      call norcdf(X,Cdf)
+      Cdf = 2.0_wp*Cdf - 1.0_wp
+   endif
+
+end subroutine hfncdf
 !>
 !!##NAME
 !!    hfnplt(3f) - [M_datapac:LINE_PLOT] generate a half-normal probability
@@ -11768,12 +11761,12 @@ END SUBROUTINE INVXWX
 !!       SUBROUTINE LAMCDF(X,Alamba,Cdf)
 !!
 !!##DESCRIPTION
-!!    lamcdf(3f) computes the cumulative distribution function value for the
-!!    (tukey) lambda distribution with tail length parameter value = alamba.
-!!    in general, the probability density function for this distribution
+!!    LAMCDF(3f) computes the cumulative distribution function value for the
+!!    (Tukey) lambda distribution with tail length parameter value = ALAMBA.
+!!    In general, the probability density function for this distribution
 !!    is not simple.
 !!
-!!    the percent point function for this distribution is
+!!    The percent point function for this distribution is
 !!
 !!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
@@ -11794,19 +11787,23 @@ END SUBROUTINE INVXWX
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
-!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
-!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+!!   * Hastings, Mosteller, Tukey, and windsor, 'Low MOments for Small
+!!     Samples:  A Comparative Study of Order Statistics', Annals of
+!!     Mathematical Statistics, 18, 1947, Pages 413-426.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, Pages 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -18104,9 +18101,21 @@ END SUBROUTINE PLOT10
 !!    data analyst to control fully the plot axis limits, so as, for example,
 !!    to zero-in on an interesting sub-region of a previous plot.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    Y      the vector of (unsorted or sorted) observations to be plotted
+!!           vertically.
+!!    X      the vector of (unsorted or sorted) observations to be plotted
+!!           horizontally.
+!!    N      the integer number of observations in the vector y. there is
+!!           no restriction on the maximum value of n for this subroutine.
+!!    YMIN   the value of desired minimum for the vertical axis.
+!!    YMAX   the value of desired maximum for the vertical axis.
+!!    XMIN   the value of desired minimum for the horizontal axis.
+!!    XMAX   the value of desired maximum for the horizontal axis.
+!!
+!!##OUTPUT
+!!    A one-page printer plot of y(i) versus x(i), with specified axis limits.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -18140,29 +18149,6 @@ IMPLICIT NONE
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
 INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !
-!
-!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED HORIZONTALLY.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR Y.
-!                    --YMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
-!             WITH SPECIFIED AXIS LIMITS.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -27340,9 +27326,15 @@ END SUBROUTINE RETAIN
 !!
 !!       SUBROUTINE RUNS(X,N)
 !!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
+!!
 !!##DESCRIPTION
 !!
 !!    RUNS(3f) performs a runs analysis of the data in the input vector x.
+!!
+!!    This runs analysis is a useful distribution-free test of the randomness
+!!    of a data set.
 !!
 !!    The analysis consists of first determining the observed number of
 !!    runs from the data, and then computing the expected number of runs,
@@ -27352,17 +27344,16 @@ END SUBROUTINE RETAIN
 !!
 !!    This is done for runs up, runs down, and runs up and down.
 !!
-!!    This runs analysis is a useful distribution-free test of the randomness
-!!    of a data set.
-!!
 !!##INPUT ARGUMENTS
-!!    X  The precision precision vector of (unsorted or sorted) observations.
+!!
+!!    X  The precision vector of (unsorted or sorted) observations.
 !!
 !!    N  The integer number of observations in the vector x.
 !!
 !!       restrictions-- The maximum allowable value of n for this subroutine
 !!       is 15000.
 !!##OUTPUT
+!!
 !!    4 pages of automatic printout consisting of the observed number,
 !!    expected number, standard deviation and resulting standardized
 !!    statistic for runs of various lengths, and the cumulative frequency.
@@ -27383,10 +27374,13 @@ END SUBROUTINE RETAIN
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!  * Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, Pages
 !!    58-69; especially pages 60, 63, and 64.
@@ -27398,8 +27392,8 @@ END SUBROUTINE RETAIN
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE RUNS(X,N)
-REAL(kind=wp) :: X(:)
-INTEGER       :: N
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
 REAL(kind=wp) :: ai, an, anrdl, anrdlg, anrtl, anrtlg, anrul, anrulg
 REAL(kind=wp) :: c1, c2, c3, c4, den, enrtl, enrtlg, enrul, enrulg, hold, snrtl, snrtlg
 REAL(kind=wp) :: snrul, snrulg, stat, WS, Y, znrdl, znrdlg, znrtl, znrtlg, znrul, znrulg

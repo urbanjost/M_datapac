@@ -6,9 +6,15 @@ NAME
 SYNOPSIS
       SUBROUTINE RUNS(X,N)
 
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER,intent(in)       :: N
+
 DESCRIPTION
 
    RUNS(3f) performs a runs analysis of the data in the input vector x.
+
+   This runs analysis is a useful distribution-free test of the randomness
+   of a data set.
 
    The analysis consists of first determining the observed number of
    runs from the data, and then computing the expected number of runs,
@@ -18,17 +24,16 @@ DESCRIPTION
 
    This is done for runs up, runs down, and runs up and down.
 
-   This runs analysis is a useful distribution-free test of the randomness
-   of a data set.
-
 INPUT ARGUMENTS
-   X  The precision precision vector of (unsorted or sorted) observations.
+
+   X  The precision vector of (unsorted or sorted) observations.
 
    N  The integer number of observations in the vector x.
 
       restrictions-- The maximum allowable value of n for this subroutine
       is 15000.
 OUTPUT
+
    4 pages of automatic printout consisting of the observed number,
    expected number, standard deviation and resulting standardized
    statistic for runs of various lengths, and the cumulative frequency.
@@ -48,15 +53,19 @@ EXAMPLES
 AUTHOR
    The original DATAPAC library was written by James Filliben of the Statistical
    Engineering Division, National Institute of Standards and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
  * Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, Pages
    58-69; especially pages 60, 63, and 64.
  * Bradley, Distribution-free Statistical Tests, 1968, Chapter 12,
    Pages 271-282.
+
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
@@ -65,8 +74,8 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE RUNS(X,N)
-REAL(kind=wp) :: X(:)
-INTEGER       :: N
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
 REAL(kind=wp) :: ai, an, anrdl, anrdlg, anrtl, anrtlg, anrul, anrulg
 REAL(kind=wp) :: c1, c2, c3, c4, den, enrtl, enrtlg, enrul, enrulg, hold, snrtl, snrtlg
 REAL(kind=wp) :: snrul, snrulg, stat, WS, Y, znrdl, znrdlg, znrtl, znrtlg, znrul, znrulg

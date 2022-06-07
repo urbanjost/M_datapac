@@ -8,12 +8,12 @@ SYNOPSIS
       SUBROUTINE LAMCDF(X,Alamba,Cdf)
 
 DESCRIPTION
-   lamcdf(3f) computes the cumulative distribution function value for the
-   (tukey) lambda distribution with tail length parameter value = alamba.
-   in general, the probability density function for this distribution
+   LAMCDF(3f) computes the cumulative distribution function value for the
+   (Tukey) lambda distribution with tail length parameter value = ALAMBA.
+   In general, the probability density function for this distribution
    is not simple.
 
-   the percent point function for this distribution is
+   The percent point function for this distribution is
 
        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 
@@ -33,19 +33,23 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
-    SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
-    MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
-  * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-    PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-    PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+  * Hastings, Mosteller, Tukey, and windsor, 'Low MOments for Small
+    Samples:  A Comparative Study of Order Statistics', Annals of
+    Mathematical Statistics, 18, 1947, Pages 413-426.
+  * Filliben, Simple and Robust Linear Estimation of the Location
+    Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+    Princeton University), 1969, Pages 42-44, 53-58.
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.

@@ -8,15 +8,25 @@ SYNOPSIS
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 
 DESCRIPTION
-   fcdf(3f) computes the cumulative distribution function value for the f
-   distribution with integer degrees of freedom parameters = nu1 and nu2.
+   FCDF(3f) computes the cumulative distribution function value for the F
+   distribution with integer degrees of freedom parameters = NU1 and NU2.
 
-   this distribution is defined for all non-negative x. the probability
+   This distribution is defined for all non-negative X. The probability
    density function is given in the references below.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+   X      The value at which the cumulative distribution function is to
+          be evaluated. X should be non-negative.
+
+   NU1    The integer degrees of freedom for the numerator of the F
+          ratio. NU1 should be positive.
+
+   NU2    The integer degrees of freedom for the denominator of the F
+          ratio. NU2 should be positive.
+
+OUTPUT ARGUMENTS
+
+   CDF    The cumulative distribution function value for the F distribution
 
 EXAMPLES
   Sample program:
@@ -41,66 +51,37 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-    PAGES 946-947, FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
-  * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-    PAGE 83, FORMULA 20, AND PAGE 84, THIRD FORMULA.
-  * PAULSON, AN APPROXIMATE NORMALIZATION OF THE ANALYSIS OF VARIANCE
-    DISTRIBUTION, ANNALS OF MATHEMATICAL STATISTICS, 1942, NUMBER 13,
-    PAGES 233-135.
-  * SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES FOR POPULATION TOLERANCE
-    LIMITS, 1944, NUMBER 15, PAGE 217.
+  * National Bureau of Standards Applied Mathematics Series 55, 1964,
+    Pages 946-947, Formulae 26.6.4, 26.6.5, 26.6.8, and 26.6.15.
+  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+    Page 83, Formula 20, and Page 84, Third formula.
+  * Paulson, An Approximate Normalization of the Analysis of Variance
+    Distribution, Annals of Mathematical Statistics, 1942, Number 13,
+    Pages 233-135.
+  * Scheffe and Tukey, A Formula for Sample Sizes for Population Tolerance
+    Limits, 1944, Number 15, Page 217.
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
-REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
-     &     zratio
-INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
-     &        m , n , Nu1 , Nu2 , nucut1 , nucut2
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE.
-!                     --NU1    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE NUMERATOR OF THE F RATIO.
-!                                NU1 SHOULD BE POSITIVE.
-!                     --NU2    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE DENOMINATOR OF THE F RATIO.
-!                                NU2 SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE F DISTRIBUTION
-!             WITH DEGREES OF FREEDOM
-!             PARAMETERS = NU1 AND NU2.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!                 --NU1 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF,CHSCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
 !     ORIGINAL VERSION--AUGUST    1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai ,    &
-     &                 coef1 , coef2 , arg
-      DOUBLE PRECISION coef
-      DOUBLE PRECISION theta , sinth , costh , a , b
-      DOUBLE PRECISION DSQRT , DATAN
-      DOUBLE PRECISION dfact1 , dfact2 , dnum , dden
-      DOUBLE PRECISION dpow1 , dpow2
-      DOUBLE PRECISION dnu1 , dnu2
-      DOUBLE PRECISION term1 , term2 , term3
-      DATA pi/3.14159265358979D0/
-      DATA dpow1 , dpow2/0.33333333333333D0 , 0.66666666666667D0/
-      DATA nucut1 , nucut2/100 , 1000/
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
+REAL(kind=wp)    :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X , zratio
+INTEGER          :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , m , n , Nu1 , Nu2 , nucut1 , nucut2
+DOUBLE PRECISION :: dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
+DOUBLE PRECISION :: coef
+DOUBLE PRECISION :: theta , sinth , costh , a , b
+DOUBLE PRECISION :: DSQRT , DATAN
+DOUBLE PRECISION :: dfact1 , dfact2 , dnum , dden
+DOUBLE PRECISION :: dpow1 , dpow2
+DOUBLE PRECISION :: dnu1 , dnu2
+DOUBLE PRECISION :: term1 , term2 , term3
+DATA pi/3.14159265358979D0/
+DATA dpow1 , dpow2/0.33333333333333D0 , 0.66666666666667D0/
+DATA nucut1 , nucut2/100 , 1000/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
