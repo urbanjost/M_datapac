@@ -381,7 +381,6 @@ end subroutine autoco
 !!    program demo_betran
 !!    use M_datapac, only : betran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call betran(x,y)
 !!    end program demo_betran
 !!
@@ -593,7 +592,7 @@ END SUBROUTINE BETRAN
 !!    program demo_bincdf
 !!    use M_datapac, only : bincdf
 !!    implicit none
-!!    SUBROUTINE BINCDF(X,P,N,Cdf)
+!!    !call BINCDF(X,P,N,Cdf)
 !!    end program demo_bincdf
 !!
 !!   Results:
@@ -914,7 +913,6 @@ END SUBROUTINE BINCDF
 !!    program demo_binppf
 !!    use M_datapac, only : binppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call binppf(x,y)
 !!    end program demo_binppf
 !!
@@ -1302,7 +1300,6 @@ END SUBROUTINE BINPPF
 !!    program demo_binran
 !!    use M_datapac, only : binran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call binran(x,y)
 !!    end program demo_binran
 !!
@@ -1872,7 +1869,6 @@ END SUBROUTINE CAUPLT
 !!    program demo_cauppf
 !!    use M_datapac, only : cauppf, label
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    call label('cauppf')
 !!    ! call cauppf(x,y)
 !!    end program demo_cauppf
@@ -1954,7 +1950,6 @@ END SUBROUTINE CAUPPF
 !!    program demo_cauran
 !!    use M_datapac, only : cauran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call cauran(x,y)
 !!    end program demo_cauran
 !!
@@ -2085,7 +2080,6 @@ END SUBROUTINE CAURAN
 !!    program demo_causf
 !!    use M_datapac, only : causf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call causf(x,y)
 !!    end program demo_causf
 !!
@@ -2433,7 +2427,6 @@ DATA b43/17.0D0/
 !!    program demo_chsplt
 !!    use M_datapac, only : chsplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chsplt(x,y)
 !!    end program demo_chsplt
 !!
@@ -2659,7 +2652,6 @@ END SUBROUTINE CHSPLT
 !!    program demo_chsppf
 !!    use M_datapac, only : chsppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chsppf(x,y)
 !!    end program demo_chsppf
 !!
@@ -2876,7 +2868,6 @@ END SUBROUTINE CHSPPF
 !!    program demo_chsran
 !!    use M_datapac, only : chsran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chsran(x,y)
 !!    end program demo_chsran
 !!
@@ -3020,7 +3011,6 @@ END SUBROUTINE CHSRAN
 !!    program demo_code
 !!    use M_datapac, only : code
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call code(x,y)
 !!    end program demo_code
 !!
@@ -3181,7 +3171,6 @@ END SUBROUTINE CODE
 !!    program demo_copy
 !!    use M_datapac, only : copy
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call copy(x,y)
 !!    end program demo_copy
 !!
@@ -3287,7 +3276,6 @@ END SUBROUTINE COPY
 !!    program demo_corr
 !!    use M_datapac, only : corr
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call corr(x,y)
 !!    end program demo_corr
 !!
@@ -3458,7 +3446,6 @@ END SUBROUTINE CORR
 !!    program demo_count
 !!    use M_datapac, only : count
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call count(x,y)
 !!    end program demo_count
 !!
@@ -3620,7 +3607,6 @@ END SUBROUTINE COUNT
 !!    program demo_decomp
 !!    use M_datapac, only : decomp
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call decomp(x,y)
 !!    end program demo_decomp
 !!
@@ -3809,7 +3795,6 @@ END SUBROUTINE DECOMP
 !!    program demo_define
 !!    use M_datapac, only : define
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call define(x,y)
 !!    end program demo_define
 !!
@@ -3925,7 +3910,6 @@ END SUBROUTINE DEFINE
 !!    program demo_delete
 !!    use M_datapac, only : delete
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call delete(x,y)
 !!    end program demo_delete
 !!
@@ -4127,7 +4111,6 @@ END SUBROUTINE DELETE
 !!    program demo_demod
 !!    use M_datapac, only : demod
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call demod(x,y)
 !!    end program demo_demod
 !!
@@ -4659,7 +4642,6 @@ end subroutine dexpdf
 !!    program demo_dexplt
 !!    use M_datapac, only : dexplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexplt(x,y)
 !!    end program demo_dexplt
 !!
@@ -4847,7 +4829,6 @@ END SUBROUTINE DEXPLT
 !!    program demo_dexppf
 !!    use M_datapac, only : dexppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexppf(x,y)
 !!    end program demo_dexppf
 !!
@@ -4939,7 +4920,6 @@ END SUBROUTINE DEXPPF
 !!    program demo_dexran
 !!    use M_datapac, only : dexran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexran(x,y)
 !!    end program demo_dexran
 !!
@@ -5042,7 +5022,6 @@ end subroutine dexran
 !!    program demo_dexsf
 !!    use M_datapac, only : dexsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexsf(x,y)
 !!    end program demo_dexsf
 !!
@@ -5136,7 +5115,6 @@ END SUBROUTINE DEXSF
 !!    program demo_discr2
 !!    use M_datapac, only : discr2
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call discr2(x,y)
 !!    end program demo_discr2
 !!
@@ -5392,7 +5370,6 @@ END SUBROUTINE DISCR2
 !!    program demo_discr3
 !!    use M_datapac, only : discr3
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call discr3(x,y)
 !!    end program demo_discr3
 !!
@@ -5630,7 +5607,6 @@ END SUBROUTINE DISCR3
 !!    program demo_discre
 !!    use M_datapac, only : discre
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call discre(x,y)
 !!    end program demo_discre
 !!
@@ -6077,7 +6053,6 @@ END SUBROUTINE EV1CDF
 !!    program demo_ev1plt
 !!    use M_datapac, only : ev1plt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1plt(x,y)
 !!    end program demo_ev1plt
 !!
@@ -6267,7 +6242,6 @@ END SUBROUTINE EV1PLT
 !!    program demo_ev1ppf
 !!    use M_datapac, only : ev1ppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1ppf(x,y)
 !!    end program demo_ev1ppf
 !!
@@ -6337,7 +6311,6 @@ END SUBROUTINE EV1PPF
 !!    program demo_ev1ran
 !!    use M_datapac, only : ev1ran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1ran(x,y)
 !!    end program demo_ev1ran
 !!
@@ -6445,7 +6418,6 @@ END SUBROUTINE EV1RAN
 !!    program demo_ev2cdf
 !!    use M_datapac, only : ev2cdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2cdf(x,y)
 !!    end program demo_ev2cdf
 !!
@@ -6538,7 +6510,6 @@ END SUBROUTINE EV2CDF
 !!    program demo_ev2plt
 !!    use M_datapac, only : ev2plt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2plt(x,y)
 !!    end program demo_ev2plt
 !!
@@ -6754,7 +6725,6 @@ END SUBROUTINE EV2PLT
 !!    program demo_ev2ppf
 !!    use M_datapac, only : ev2ppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2ppf(x,y)
 !!    end program demo_ev2ppf
 !!
@@ -6838,7 +6808,6 @@ END SUBROUTINE EV2PPF
 !!    program demo_ev2ran
 !!    use M_datapac, only : ev2ran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2ran(x,y)
 !!    end program demo_ev2ran
 !!
@@ -7159,7 +7128,6 @@ END SUBROUTINE EXPPDF
 !!    program demo_expplt
 !!    use M_datapac, only : expplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expplt(x,y)
 !!    end program demo_expplt
 !!
@@ -7341,7 +7309,6 @@ END SUBROUTINE EXPPLT
 !!    program demo_expppf
 !!    use M_datapac, only : expppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expppf(x,y)
 !!    end program demo_expppf
 !!
@@ -7418,7 +7385,6 @@ END SUBROUTINE EXPPPF
 !!    program demo_expran
 !!    use M_datapac, only : expran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expran(x,y)
 !!    end program demo_expran
 !!
@@ -7537,7 +7503,6 @@ END SUBROUTINE EXPRAN
 !!    program demo_expsf
 !!    use M_datapac, only : expsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expsf(x,y)
 !!    end program demo_expsf
 !!
@@ -7641,7 +7606,6 @@ END SUBROUTINE EXPSF
 !!    program demo_extrem
 !!    use M_datapac, only : extrem
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call extrem(x,y)
 !!    end program demo_extrem
 !!
@@ -8459,7 +8423,6 @@ DATA nucut1 , nucut2/100 , 1000/
 !!    program demo_fourie
 !!    use M_datapac, only : fourie
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call fourie(x,y)
 !!    end program demo_fourie
 !!
@@ -8795,7 +8758,6 @@ END SUBROUTINE FOURIE
 !!    program demo_fran
 !!    use M_datapac, only : fran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call fran(x,y)
 !!    end program demo_fran
 !!
@@ -8924,7 +8886,6 @@ END SUBROUTINE FRAN
 !!    program demo_freq
 !!    use M_datapac, only : freq
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call freq(x,y)
 !!    end program demo_freq
 !!
@@ -9308,7 +9269,6 @@ END SUBROUTINE GAMCDF
 !!    program demo_gamplt
 !!    use M_datapac, only : gamplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamplt(x,y)
 !!    end program demo_gamplt
 !!
@@ -9677,7 +9637,6 @@ END SUBROUTINE GAMPLT
 !!    program demo_gamppf
 !!    use M_datapac, only : gamppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamppf(x,y)
 !!    end program demo_gamppf
 !!
@@ -9919,7 +9878,6 @@ END SUBROUTINE GAMPPF
 !!    program demo_gamran
 !!    use M_datapac, only : gamran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamran(x,y)
 !!    end program demo_gamran
 !!
@@ -10248,7 +10206,6 @@ END SUBROUTINE GEOCDF
 !!    program demo_geoplt
 !!    use M_datapac, only : geoplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call geoplt(x,y)
 !!    end program demo_geoplt
 !!
@@ -10465,7 +10422,6 @@ END SUBROUTINE GEOPLT
 !!    program demo_geoppf
 !!    use M_datapac, only : geoppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call geoppf(x,y)
 !!    end program demo_geoppf
 !!
@@ -10613,7 +10569,6 @@ INTEGER iratio
 !!    program demo_georan
 !!    use M_datapac, only : georan
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call georan(x,y)
 !!    end program demo_georan
 !!
@@ -10919,7 +10874,6 @@ end subroutine hfncdf
 !!    program demo_hfnplt
 !!    use M_datapac, only : hfnplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfnplt(x,y)
 !!    end program demo_hfnplt
 !!
@@ -11104,7 +11058,6 @@ END SUBROUTINE HFNPLT
 !!    program demo_hfnppf
 !!    use M_datapac, only : hfnppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfnppf(x,y)
 !!    end program demo_hfnppf
 !!
@@ -11196,7 +11149,6 @@ END SUBROUTINE HFNPPF
 !!    program demo_hfnran
 !!    use M_datapac, only : hfnran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfnran(x,y)
 !!    end program demo_hfnran
 !!
@@ -11337,7 +11289,6 @@ END SUBROUTINE HFNRAN
 !!    program demo_hist
 !!    use M_datapac, only : hist
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hist(x,y)
 !!    end program demo_hist
 !!
@@ -12112,7 +12063,6 @@ END SUBROUTINE LAMPDF
 !!    program demo_lamplt
 !!    use M_datapac, only : lamplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamplt(x,y)
 !!    end program demo_lamplt
 !!
@@ -12309,7 +12259,6 @@ END SUBROUTINE LAMPLT
 !!    program demo_lamppf
 !!    use M_datapac, only : lamppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamppf(x,y)
 !!    end program demo_lamppf
 !!
@@ -12417,7 +12366,6 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!    program demo_lamran
 !!    use M_datapac, only : lamran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamran(x,y)
 !!    end program demo_lamran
 !!
@@ -12540,7 +12488,6 @@ END SUBROUTINE LAMRAN
 !!    program demo_lamsf
 !!    use M_datapac, only : lamsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamsf(x,y)
 !!    end program demo_lamsf
 !!
@@ -12756,7 +12703,6 @@ END SUBROUTINE LGNCDF
 !!    program demo_lgnplt
 !!    use M_datapac, only : lgnplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgnplt(x,y)
 !!    end program demo_lgnplt
 !!
@@ -12940,7 +12886,6 @@ END SUBROUTINE LGNPLT
 !!    program demo_lgnppf
 !!    use M_datapac, only : lgnppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgnppf(x,y)
 !!    end program demo_lgnppf
 !!
@@ -13032,7 +12977,6 @@ END SUBROUTINE LGNPPF
 !!    program demo_lgnran
 !!    use M_datapac, only : lgnran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgnran(x,y)
 !!    end program demo_lgnran
 !!
@@ -13576,7 +13520,6 @@ END SUBROUTINE LOGPDF
 !!    program demo_logplt
 !!    use M_datapac, only : logplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logplt(x,y)
 !!    end program demo_logplt
 !!
@@ -13745,7 +13688,6 @@ END SUBROUTINE LOGPLT
 !!    program demo_logppf
 !!    use M_datapac, only : logppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logppf(x,y)
 !!    end program demo_logppf
 !!
@@ -13827,7 +13769,6 @@ END SUBROUTINE LOGPPF
 !!    program demo_logran
 !!    use M_datapac, only : logran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logran(x,y)
 !!    end program demo_logran
 !!
@@ -13942,7 +13883,6 @@ END SUBROUTINE LOGRAN
 !!    program demo_logsf
 !!    use M_datapac, only : logsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logsf(x,y)
 !!    end program demo_logsf
 !!
@@ -15304,7 +15244,6 @@ END SUBROUTINE NBCDF
 !!    program demo_nbppf
 !!    use M_datapac, only : nbppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call nbppf(x,y)
 !!    end program demo_nbppf
 !!
@@ -15707,7 +15646,6 @@ END SUBROUTINE NBPPF
 !!    program demo_nbran
 !!    use M_datapac, only : nbran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call nbran(x,y)
 !!    end program demo_nbran
 !!
@@ -16015,7 +15953,6 @@ END SUBROUTINE NORCDF
 !!    program demo_norout
 !!    use M_datapac, only : norout
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norout(x,y)
 !!    end program demo_norout
 !!
@@ -16569,7 +16506,6 @@ END SUBROUTINE NORPDF
 !!    program demo_norplt
 !!    use M_datapac, only : norplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norplt(x,y)
 !!    end program demo_norplt
 !!
@@ -16741,7 +16677,6 @@ END SUBROUTINE NORPLT
 !!    program demo_norppf
 !!    use M_datapac, only : norppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norppf(x,y)
 !!    end program demo_norppf
 !!
@@ -16878,7 +16813,6 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !!    program demo_norran
 !!    use M_datapac, only : norran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norran(x,y)
 !!    end program demo_norran
 !!
@@ -17019,7 +16953,6 @@ END SUBROUTINE NORRAN
 !!    program demo_norsf
 !!    use M_datapac, only : norsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norsf(x,y)
 !!    end program demo_norsf
 !!
@@ -17224,7 +17157,6 @@ END SUBROUTINE PARCDF
 !!    program demo_parplt
 !!    use M_datapac, only : parplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parplt(x,y)
 !!    end program demo_parplt
 !!
@@ -17424,7 +17356,6 @@ END SUBROUTINE PARPLT
 !!    program demo_parppf
 !!    use M_datapac, only : parppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parppf(x,y)
 !!    end program demo_parppf
 !!
@@ -17523,7 +17454,6 @@ END SUBROUTINE PARPPF
 !!    program demo_parran
 !!    use M_datapac, only : parran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parran(x,y)
 !!    end program demo_parran
 !!
@@ -17742,7 +17672,6 @@ END SUBROUTINE PARRAN
 !!    program demo_plot10
 !!    use M_datapac, only : plot10
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot10(x,y)
 !!    end program demo_plot10
 !!
@@ -18124,7 +18053,6 @@ END SUBROUTINE PLOT10
 !!    program demo_plot6
 !!    use M_datapac, only : plot6
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot6(x,y)
 !!    end program demo_plot6
 !!
@@ -18450,7 +18378,6 @@ END SUBROUTINE PLOT6
 !!    program demo_plot7
 !!    use M_datapac, only : plot7
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot7(x,y)
 !!    end program demo_plot7
 !!
@@ -18862,7 +18789,6 @@ END SUBROUTINE PLOT7
 !!    program demo_plot8
 !!    use M_datapac, only : plot8
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot8(x,y)
 !!    end program demo_plot8
 !!
@@ -19334,7 +19260,6 @@ END SUBROUTINE PLOT8
 !!    program demo_plot9
 !!    use M_datapac, only : plot9
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot9(x,y)
 !!    end program demo_plot9
 !!
@@ -19756,7 +19681,6 @@ END SUBROUTINE PLOT9
 !!    program demo_plotc
 !!    use M_datapac, only : plotc
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotc(x,y)
 !!    end program demo_plotc
 !!
@@ -20157,7 +20081,6 @@ END SUBROUTINE PLOTC
 !!    program demo_plotco
 !!    use M_datapac, only : plotco
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotco(x,y)
 !!    end program demo_plotco
 !!
@@ -20400,7 +20323,6 @@ END SUBROUTINE PLOTCO
 !!    program demo_plotct
 !!    use M_datapac, only : plotct
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotct(x,y)
 !!    end program demo_plotct
 !!
@@ -20810,7 +20732,6 @@ END SUBROUTINE PLOTCT
 !!    implicit none
 !!    integer ::  i
 !!    real, allocatable ::  x(:), y(:)
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!      x=[(real(i),i=1,30)]
 !!      y=0.075*(x**4)-0.525*(x**3)+0.75*(x**2)+2.40
 !!      call plot(x,y,size(x))
@@ -21148,7 +21069,6 @@ END SUBROUTINE PLOT
 !!    program demo_plotsc
 !!    use M_datapac, only : plotsc
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotsc(x,y)
 !!    end program demo_plotsc
 !!
@@ -21620,7 +21540,6 @@ END SUBROUTINE PLOTSC
 !!    program demo_plots
 !!    use M_datapac, only : plots
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plots(x,y)
 !!    end program demo_plots
 !!
@@ -22028,7 +21947,6 @@ END SUBROUTINE PLOTS
 !!    program demo_plotsp
 !!    use M_datapac, only : plotsp
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotsp(x,y)
 !!    end program demo_plotsp
 !!
@@ -22253,7 +22171,6 @@ END SUBROUTINE PLOTSP
 !!    program demo_plotst
 !!    use M_datapac, only : plotst
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotst(x,y)
 !!    end program demo_plotst
 !!
@@ -22982,7 +22899,6 @@ END SUBROUTINE PLOTT
 !!    program demo_plotu
 !!    use M_datapac, only : plotu
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotu(x,y)
 !!    end program demo_plotu
 !!
@@ -23536,7 +23452,6 @@ END SUBROUTINE PLOTU
 !!    program demo_plotx
 !!    use M_datapac, only : plotx
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotx(x,y)
 !!    end program demo_plotx
 !!
@@ -23802,7 +23717,6 @@ END SUBROUTINE PLOTX
 !!    program demo_plotxt
 !!    use M_datapac, only : plotxt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotxt(x,y)
 !!    end program demo_plotxt
 !!
@@ -24071,7 +23985,6 @@ END SUBROUTINE PLOTXT
 !!    program demo_plotxx
 !!    use M_datapac, only : plotxx
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotxx(x,y)
 !!    end program demo_plotxx
 !!
@@ -24392,7 +24305,6 @@ END SUBROUTINE PLOTXX
 !!    program demo_pltsct
 !!    use M_datapac, only : pltsct
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call pltsct(x,y)
 !!    end program demo_pltsct
 !!
@@ -24844,7 +24756,6 @@ END SUBROUTINE PLTSCT
 !!    program demo_pltxxt
 !!    use M_datapac, only : pltxxt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call pltxxt(x,y)
 !!    end program demo_pltxxt
 !!
@@ -25361,7 +25272,6 @@ END SUBROUTINE POICDF
 !!    program demo_poiplt
 !!    use M_datapac, only : poiplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poiplt(x,y)
 !!    end program demo_poiplt
 !!
@@ -25646,7 +25556,6 @@ END SUBROUTINE POIPLT
 !!    program demo_poippf
 !!    use M_datapac, only : poippf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poippf(x,y)
 !!    end program demo_poippf
 !!
@@ -26007,7 +25916,6 @@ END SUBROUTINE POIPPF
 !!    program demo_poiran
 !!    use M_datapac, only : poiran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poiran(x,y)
 !!    end program demo_poiran
 !!
@@ -26164,7 +26072,6 @@ END SUBROUTINE POIRAN
 !!    program demo_propor
 !!    use M_datapac, only : propor
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call propor(x,y)
 !!    end program demo_propor
 !!
@@ -26313,7 +26220,6 @@ END SUBROUTINE PROPOR
 !!    program demo_range
 !!    use M_datapac, only : range
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call range(x,y)
 !!    end program demo_range
 !!
@@ -26448,7 +26354,6 @@ END SUBROUTINE RANGE
 !!    program demo_rank
 !!    use M_datapac, only : rank
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call rank(x,y)
 !!    end program demo_rank
 !!
@@ -26692,7 +26597,6 @@ END SUBROUTINE RANK
 !!    program demo_ranper
 !!    use M_datapac, only : ranper
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ranper(x,y)
 !!    end program demo_ranper
 !!
@@ -26826,7 +26730,6 @@ END SUBROUTINE RANPER
 !!    program demo_relsd
 !!    use M_datapac, only : relsd
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call relsd(x,y)
 !!    end program demo_relsd
 !!
@@ -26975,7 +26878,6 @@ END SUBROUTINE RELSD
 !!    program demo_replac
 !!    use M_datapac, only : replac
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call replac(x,y)
 !!    end program demo_replac
 !!
@@ -27158,7 +27060,6 @@ END SUBROUTINE REPLAC
 !!    program demo_retain
 !!    use M_datapac, only : retain
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call retain(x,y)
 !!    end program demo_retain
 !!
@@ -27365,7 +27266,6 @@ END SUBROUTINE RETAIN
 !!    program demo_runs
 !!    use M_datapac, only : runs
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call runs(x,y)
 !!    end program demo_runs
 !!
@@ -27770,7 +27670,6 @@ END SUBROUTINE RUNS
 !!    program demo_sampp
 !!    use M_datapac, only : sampp
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sampp(x,y)
 !!    end program demo_sampp
 !!
@@ -27954,7 +27853,6 @@ END SUBROUTINE SAMPP
 !!    program demo_scale
 !!    use M_datapac, only : scale
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call scale(x,y)
 !!    end program demo_scale
 !!
@@ -28139,7 +28037,6 @@ END SUBROUTINE SCALE
 !!    program demo_sd
 !!    use M_datapac, only : sd
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sd(x,y)
 !!    end program demo_sd
 !!
@@ -28864,7 +28761,6 @@ END SUBROUTINE SORT
 !!    program demo_sortp
 !!    use M_datapac, only : sortp
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sortp(x,y)
 !!    end program demo_sortp
 !!
@@ -29164,7 +29060,6 @@ END SUBROUTINE SORTP
 !!    program demo_spcorr
 !!    use M_datapac, only : spcorr
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call spcorr(x,y)
 !!    end program demo_spcorr
 !!
@@ -29333,7 +29228,6 @@ END SUBROUTINE SPCORR
 !!    program demo_stmom3
 !!    use M_datapac, only : stmom3
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call stmom3(x,y)
 !!    end program demo_stmom3
 !!
@@ -29483,7 +29377,6 @@ END SUBROUTINE STMOM3
 !!    program demo_stmom4
 !!    use M_datapac, only : stmom4
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call stmom4(x,y)
 !!    end program demo_stmom4
 !!
@@ -29664,7 +29557,6 @@ END SUBROUTINE STMOM4
 !!    program demo_subse1
 !!    use M_datapac, only : subse1
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call subse1(x,y)
 !!    end program demo_subse1
 !!
@@ -29894,7 +29786,6 @@ END SUBROUTINE SUBSE1
 !!    program demo_subse2
 !!    use M_datapac, only : subse2
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call subse2(x,y)
 !!    end program demo_subse2
 !!
@@ -30106,7 +29997,6 @@ END SUBROUTINE SUBSE2
 !!    program demo_subset
 !!    use M_datapac, only : subset
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call subset(x,y)
 !!    end program demo_subset
 !!
@@ -31252,7 +31142,6 @@ END SUBROUTINE TCDF
 !!    program demo_time
 !!    use M_datapac, only : time
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call time(x,y)
 !!    end program demo_time
 !!
@@ -31659,7 +31548,6 @@ END SUBROUTINE TIME
 !!    program demo_tol
 !!    use M_datapac, only : tol
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tol(x,y)
 !!    end program demo_tol
 !!
@@ -32067,7 +31955,6 @@ END SUBROUTINE TOL
 !!    program demo_tplt
 !!    use M_datapac, only : tplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tplt(x,y)
 !!    end program demo_tplt
 !!
@@ -32246,7 +32133,6 @@ END SUBROUTINE TPLT
 !!    program demo_tppf
 !!    use M_datapac, only : tppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tppf(x,y)
 !!    end program demo_tppf
 !!
@@ -32483,7 +32369,6 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!    program demo_tran
 !!    use M_datapac, only : tran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tran(x,y)
 !!    end program demo_tran
 !!
@@ -32634,7 +32519,6 @@ END SUBROUTINE TRAN
 !!    program demo_trim
 !!    use M_datapac, only : trim
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call trim(x,y)
 !!    end program demo_trim
 !!
@@ -33014,7 +32898,6 @@ end subroutine unicdf
 !!    program demo_unimed
 !!    use M_datapac, only : unimed
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unimed(x,y)
 !!    end program demo_unimed
 !!
@@ -33246,7 +33129,6 @@ END SUBROUTINE UNIPDF
 !!    program demo_uniplt
 !!    use M_datapac, only : uniplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call uniplt(x,y)
 !!    end program demo_uniplt
 !!
@@ -33413,7 +33295,6 @@ END SUBROUTINE UNIPLT
 !!    program demo_unippf
 !!    use M_datapac, only : unippf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unippf(x,y)
 !!    end program demo_unippf
 !!
@@ -33506,7 +33387,6 @@ END SUBROUTINE UNIPPF
 !!    program demo_uniran
 !!    use M_datapac, only : uniran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call uniran(x,y)
 !!    end program demo_uniran
 !!
@@ -33791,7 +33671,6 @@ END SUBROUTINE UNIRAN
 !!    program demo_unisf
 !!    use M_datapac, only : unisf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unisf(x,y)
 !!    end program demo_unisf
 !!
@@ -34030,7 +33909,6 @@ END SUBROUTINE VAR
 !!    program demo_weib
 !!    use M_datapac, only : weib
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weib(x,y)
 !!    end program demo_weib
 !!
@@ -34486,7 +34364,6 @@ END SUBROUTINE WEICDF
 !!    program demo_weiplt
 !!    use M_datapac, only : weiplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weiplt(x,y)
 !!    end program demo_weiplt
 !!
@@ -34689,7 +34566,6 @@ END SUBROUTINE WEIPLT
 !!    program demo_weippf
 !!    use M_datapac, only : weippf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weippf(x,y)
 !!    end program demo_weippf
 !!
@@ -34789,7 +34665,6 @@ END SUBROUTINE WEIPPF
 !!    program demo_weiran
 !!    use M_datapac, only : weiran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weiran(x,y)
 !!    end program demo_weiran
 !!
@@ -34911,7 +34786,6 @@ END SUBROUTINE WEIRAN
 !!    program demo_wind
 !!    use M_datapac, only : wind
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call wind(x,y)
 !!    end program demo_wind
 !!
