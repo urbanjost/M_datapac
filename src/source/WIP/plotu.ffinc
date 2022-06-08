@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotu.3m_datapac.man
 NAME
-   plotu(3f) - [M_datapac:LINE_PLOT] generate a line printer 4-plot
+   plotu(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+   4-plot
 
 SYNOPSIS
       SUBROUTINE PLOTU(X,N)

@@ -4,10 +4,13 @@ NAME
    betran(3f) - [M_datapac:RANDOM] generate beta random numbers
 
 SYNOPSIS
-    subroutine BETRAN (N,Alpha,Beta,Iseed,X)
+      subroutine BETRAN (N,Alpha,Beta,Iseed,X)
 
-      REAL(kind=wp) :: Alpha, Beta, X(N)
-      INTEGER       :: Iseed, N
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(in)  :: Alpha
+       REAL(kind=wp),intent(in)  :: Beta
+       INTEGER,intent(inout)     :: Iseed 
+       REAL(kind=wp),intent(out) :: X(:)
 
 DESCRIPTION
 
@@ -39,6 +42,12 @@ OPTIONS
 
    BETA   The value of the second shape parameter.
           BETA should be greater than or equal to 1.0.
+
+  ISEED   An integer iseed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
 OUTPUT
 
    X      A random sample of size N from the beta distribution
@@ -98,16 +107,19 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
-REAL(kind=wp) :: a1, a2, Alpha, arg, athird, b1, b2, Beta, funct, sqrt3, term, u, X, xg, xg01, xg02, xg1, xg2, xn(1)
-REAL(kind=wp) :: xn01, xn02
-INTEGER ::  i , Iseed , N
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: Alpha
+REAL(kind=wp),intent(in)  :: Beta
+INTEGER,intent(inout)     :: Iseed 
+REAL(kind=wp),intent(out) :: X(:)
 
-!     ***** STILL NEEDS ALGORITHM WORK ******
+REAL(kind=wp) :: a1, a2, arg, b1, b2, funct, term, u(10), xg, xg01, xg02, xg1, xg2
+REAL(kind=wp) :: xn01, xn02, xn(1)
+INTEGER       :: i 
+real,parameter :: athird = 0.33333333_wp
+real,parameter :: sqrt3= 1.73205081_wp
 !
-DIMENSION X(:)
-DIMENSION u(10)
-DATA athird/0.33333333_wp/
-DATA sqrt3/1.73205081_wp/
+!     ***** STILL NEEDS ALGORITHM WORK ******
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -132,11 +144,9 @@ DATA sqrt3/1.73205081_wp/
       ELSE
 !
 !     GENERATE N BETA RANDOM NUMBERS
-!     BY USING THE FACT THAT
-!     IF X1 IS A GAMMA VARIATE WITH PARAMETER ALPHA
+!     BY USING THE FACT THAT IF X1 IS A GAMMA VARIATE WITH PARAMETER ALPHA
 !     AND IF X2 IS A GAMMA VARIATE WITH PARAMETER BETA,
-!     THEN THE RATIO X1/(X1+X2) IS A BETA VARIATE
-!     WITH PARAMETERS ALPHA AND BETA.
+!     THEN THE RATIO X1/(X1+X2) IS A BETA VARIATE WITH PARAMETERS ALPHA AND BETA.
 !
 !     TO GENERATE N GAMMA DISTRIBUTION RANDOM NUMBERS,
 !     USE GREENWOOD'S REJECTION ALGORITHM--

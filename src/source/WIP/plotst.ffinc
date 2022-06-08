@@ -1,8 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotst.3m_datapac.man
 NAME
-   plotst(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
-   Y vs X for the terminal (71 characters wide)
+   plotst(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+   plot of Y vs X for the terminal (71 characters wide)
 
 SYNOPSIS
       SUBROUTINE PLOTST(Y,X,N,D,Dmin,Dmax)

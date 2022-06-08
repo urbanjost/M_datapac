@@ -175,7 +175,7 @@
       
       <a class="list-group-item" href="../proc/lamcdf.html#variable-pdf~2">Pdf</a>
       
-      <a class="list-group-item" href="../proc/lamcdf.html#variable-x~45">X</a>
+      <a class="list-group-item" href="../proc/lamcdf.html#variable-x~44">X</a>
       
       <a class="list-group-item" href="../proc/lamcdf.html#variable-cdf">cdf</a>
       
@@ -263,12 +263,12 @@ distribution function
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">lamcdf</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">computes</span> <span class="nv">the</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span> <span class="nv">value</span> <span class="k">for</span> <span class="nv">the</span>
-<span class="ss">(</span><span class="nv">tukey</span><span class="ss">)</span> <span class="nv">lambda</span> <span class="nv">distribution</span> <span class="nv">with</span> <span class="nv">tail</span> <span class="nv">length</span> <span class="nv">parameter</span> <span class="nv">value</span> <span class="o">=</span> <span class="nv">alamba</span>.
-<span class="nv">in</span> <span class="nv">general</span>, <span class="nv">the</span> <span class="nv">probability</span> <span class="nv">density</span> <span class="nv">function</span> <span class="k">for</span> <span class="nv">this</span> <span class="nv">distribution</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">LAMCDF</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">computes</span> <span class="nv">the</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span> <span class="nv">value</span> <span class="k">for</span> <span class="nv">the</span>
+<span class="ss">(</span><span class="nv">Tukey</span><span class="ss">)</span> <span class="nv">lambda</span> <span class="nv">distribution</span> <span class="nv">with</span> <span class="nv">tail</span> <span class="nv">length</span> <span class="nv">parameter</span> <span class="nv">value</span> <span class="o">=</span> <span class="nv">ALAMBA</span>.
+<span class="nv">In</span> <span class="nv">general</span>, <span class="nv">the</span> <span class="nv">probability</span> <span class="nv">density</span> <span class="nv">function</span> <span class="k">for</span> <span class="nv">this</span> <span class="nv">distribution</span>
 <span class="nv">is</span> <span class="nv">not</span> <span class="nv">simple</span>.
 
-<span class="nv">the</span> <span class="nv">percent</span> <span class="nv">point</span> <span class="nv">function</span> <span class="k">for</span> <span class="nv">this</span> <span class="nv">distribution</span> <span class="nv">is</span>
+<span class="nv">The</span> <span class="nv">percent</span> <span class="nv">point</span> <span class="nv">function</span> <span class="k">for</span> <span class="nv">this</span> <span class="nv">distribution</span> <span class="nv">is</span>
 
     <span class="nv">g</span><span class="ss">(</span><span class="nv">p</span><span class="ss">)</span> <span class="o">=</span> <span class="ss">((</span><span class="nv">p</span><span class="o">**</span><span class="nv">alamba</span><span class="ss">)</span><span class="o">-</span><span class="ss">((</span><span class="mi">1</span><span class="o">-</span><span class="nv">p</span><span class="ss">)</span><span class="o">**</span><span class="nv">alamba</span><span class="ss">))</span><span class="o">/</span><span class="nv">alamba</span>
 </code></pre></div>
@@ -289,8 +289,9 @@ distribution function
 
 <p>Results:</p>
 <h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </code></pre></div>
 
 <h2 id="maintainer">MAINTAINER</h2>
@@ -303,12 +304,12 @@ Engineering Division, National Institute of Standards and Technology.
 
 <h2 id="references">REFERENCES</h2>
 <ul>
-<li>HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, &lsquo;LOW MOMENTS FOR SMALL
-     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS&rsquo;, ANNALS OF
-     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.</li>
-<li>FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-     PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.</li>
+<li>Hastings, Mosteller, Tukey, and windsor, &lsquo;Low MOments for Small
+     Samples:  A Comparative Study of Order Statistics&rsquo;, Annals of
+     Mathematical Statistics, 18, 1947, Pages 413-426.</li>
+<li>Filliben, Simple and Robust Linear Estimation of the Location
+     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+     Princeton University), 1969, Pages 42-44, 53-58.</li>
 </ul>
 <h2 id="name_1">NAME</h2>
 <div class="codehilite"><pre><span></span><code>lampdf(3f) - [M_datapac:PROBABILITY_DENSITY] compute the Tukey-Lambda
@@ -449,7 +450,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~46"></span>real(kind=wp)</td>
+  <td><span class="anchor" id="variable-x~45"></span>real(kind=wp)</td>
   <td></td>
   <td></td>
   
@@ -479,7 +480,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-cdf~10"></span>real(kind=wp)</td>
+  <td><span class="anchor" id="variable-cdf~9"></span>real(kind=wp)</td>
   <td></td>
   <td></td>
   
@@ -514,7 +515,7 @@ and Technology.
       
       <a class="list-group-item" href="../proc/lamcdf.html#variable-pdf~2">Pdf</a>
       
-      <a class="list-group-item" href="../proc/lamcdf.html#variable-x~45">X</a>
+      <a class="list-group-item" href="../proc/lamcdf.html#variable-x~44">X</a>
       
       <a class="list-group-item" href="../proc/lamcdf.html#variable-cdf">cdf</a>
       
@@ -628,7 +629,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~45"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-x~44"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -968,7 +969,7 @@ and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-06 08:39  
+             on 2022-06-07 21:20  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

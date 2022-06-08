@@ -6,18 +6,34 @@ NAME
 SYNOPSIS
       SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 
+       INTEGER       :: N
+       REAL(kind=wp) :: Gamma
+       INTEGER       :: Iseed
+       REAL(kind=wp) :: X(:)
+
 DESCRIPTION
-   weiran(3f) generates a random sample of size n from the weibull
-   distribution with tail length parameter value = gamma.
+   WEIRAN(3f) generates a random sample of size N from the Weibull
+   distribution with tail length parameter value = GAMMA.
 
-   the prototype weibull distribution used herein is defined for all
-   positive x, and has the probability density function
+   The prototype Weibull distribution used herein is defined for all
+   positive X, and has the probability density function
 
-       f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+       f(X) = GAMMA * (X**(GAMMA-1)) * exp(-(X**GAMMA)).
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   N      The desired integer number of random numbers to be generated.
+   GAMMA  The value of the tail length parameter. gamma should
+          be positive.
+   ISEED  An integer iseed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+OUTPUT ARGUMENTS
+
+   X      A vector (of dimension at least N) into which the generated
+          random sample will be placed.
 
 EXAMPLES
   Sample program:
@@ -31,12 +47,16 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
   * Tocher, the Art of Simulation, 1963, Pages 14-15.
   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
@@ -44,74 +64,46 @@ REFERENCES
     Pages 250-271.
   * Hastings and Peacock, Statistical Distributions--A Handbook for
     Students and Practitioners, 1975, Page 128.
+
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
-REAL(kind=wp) :: Gamma , X
-INTEGER i , Iseed , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --GAMMA  = THE  VALUE OF THE
-!                                TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE WEIBULL DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --GAMMA SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!-----START POINT-----------------------------------------------------
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
+INTEGER       :: N
+REAL(kind=wp) :: Gamma
+INTEGER       :: Iseed
+REAL(kind=wp) :: X(:)
+
+INTEGER       :: i 
+
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE WEIRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001    FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO WEIRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99003    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO WEIRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99004) Gamma
-99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          RETURN
       ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
          CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N WEIBULL DISTRIBUTION RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
+         !
+         !     GENERATE N WEIBULL DISTRIBUTION RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
          DO i = 1 , N
             X(i) = (-LOG(1.0_wp-X(i)))**(1.0_wp/Gamma)
          ENDDO

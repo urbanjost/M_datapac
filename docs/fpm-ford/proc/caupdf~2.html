@@ -251,54 +251,55 @@ density function
 <h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
 <p>PDF   The probability density function value.</p>
 <h2 id="examples">EXAMPLES</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_caupdf</span>
-<span class="o">!</span>@<span class="ss">(</span>#<span class="ss">)</span> <span class="nv">line</span> <span class="nv">plotter</span> <span class="nv">graph</span> <span class="nv">of</span> <span class="nv">probability</span> <span class="nv">density</span> <span class="nv">function</span>
-<span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">caupdf</span>, <span class="nv">plott</span>, <span class="nv">label</span>
-<span class="nv">implicit</span> <span class="nv">none</span>
-<span class="nv">real</span>,<span class="nv">allocatable</span>  :: <span class="nv">x</span><span class="ss">(</span>:<span class="ss">)</span>, <span class="nv">y</span><span class="ss">(</span>:<span class="ss">)</span>
-<span class="nv">integer</span>           :: <span class="nv">i</span>
-   <span class="k">call</span> <span class="nl">label</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">caupdf</span><span class="s1">&#39;</span><span class="ss">)</span>
-   <span class="nv">x</span><span class="o">=</span>[<span class="ss">(</span><span class="nv">real</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">i</span><span class="o">=-</span><span class="mi">100</span>,<span class="mi">100</span>,<span class="mi">1</span><span class="ss">)</span>]
-   <span class="k">if</span><span class="ss">(</span><span class="nv">allocated</span><span class="ss">(</span><span class="nv">y</span><span class="ss">))</span><span class="nv">deallocate</span><span class="ss">(</span><span class="nv">y</span><span class="ss">)</span>
-   <span class="nv">allocate</span><span class="ss">(</span><span class="nv">y</span><span class="ss">(</span><span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)))</span>
-   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span>
-      <span class="k">call</span> <span class="nl">caupdf</span><span class="ss">(</span><span class="nv">x</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span><span class="o">/</span><span class="mi">10</span>.<span class="mi">0</span>,<span class="nv">y</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>
-   <span class="nv">enddo</span>
-   <span class="k">call</span> <span class="nl">plott</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">))</span>
-<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_caupdf</span>
-</code></pre></div>
+<div class="codehilite"><pre><span></span><code><span class="nv">Sample</span> <span class="nv">program</span>:
 
-<p>Results:</p>
-<div class="codehilite"><pre><span></span><code> The following is a plot of Y(i) (vertically) versus X(i) (horizontally)
-                   I-----------I-----------I-----------I-----------I
-  0.1000000E+03 -  X
-  0.9166666E+02 I  X
-  0.8333334E+02 I  X
-  0.7500000E+02 I  X
-  0.6666667E+02 I  XX
-  0.5833334E+02 I   X
-  0.5000000E+02 -   XX
-  0.4166667E+02 I    XX
-  0.3333334E+02 I     XX
-  0.2500000E+02 I       XXXX
-  0.1666667E+02 I           XXXXXX X X
-  0.8333336E+01 I                     X X  X X  X  X  X  X
-  0.0000000E+00 -                                           X  X X X
- -0.8333328E+01 I                     X X  X X  X  X  X  X
- -0.1666666E+02 I           XXXXXX X X
- -0.2499999E+02 I       XXXX
- -0.3333333E+02 I     XX
- -0.4166666E+02 I    XX
- -0.5000000E+02 -   XX
- -0.5833333E+02 I   X
- -0.6666666E+02 I  XX
- -0.7500000E+02 I  X
- -0.8333333E+02 I  X
- -0.9166666E+02 I  X
- -0.1000000E+03 -  X
-                   I-----------I-----------I-----------I-----------I
-            0.3152E-02  0.8194E-01  0.1607E+00  0.2395E+00  0.3183E+00
+ <span class="nv">program</span> <span class="nv">demo_caupdf</span>
+ <span class="o">!</span>@<span class="ss">(</span>#<span class="ss">)</span> <span class="nv">line</span> <span class="nv">plotter</span> <span class="nv">graph</span> <span class="nv">of</span> <span class="nv">probability</span> <span class="nv">density</span> <span class="nv">function</span>
+ <span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">caupdf</span>, <span class="nv">plott</span>, <span class="nv">label</span>
+ <span class="nv">implicit</span> <span class="nv">none</span>
+ <span class="nv">real</span>,<span class="nv">allocatable</span>  :: <span class="nv">x</span><span class="ss">(</span>:<span class="ss">)</span>, <span class="nv">y</span><span class="ss">(</span>:<span class="ss">)</span>
+ <span class="nv">integer</span>           :: <span class="nv">i</span>
+    <span class="k">call</span> <span class="nl">label</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">caupdf</span><span class="s1">&#39;</span><span class="ss">)</span>
+    <span class="nv">x</span><span class="o">=</span>[<span class="ss">(</span><span class="nv">real</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">i</span><span class="o">=-</span><span class="mi">100</span>,<span class="mi">100</span>,<span class="mi">1</span><span class="ss">)</span>]
+    <span class="k">if</span><span class="ss">(</span><span class="nv">allocated</span><span class="ss">(</span><span class="nv">y</span><span class="ss">))</span><span class="nv">deallocate</span><span class="ss">(</span><span class="nv">y</span><span class="ss">)</span>
+    <span class="nv">allocate</span><span class="ss">(</span><span class="nv">y</span><span class="ss">(</span><span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)))</span>
+    <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span>
+       <span class="k">call</span> <span class="nl">caupdf</span><span class="ss">(</span><span class="nv">x</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span><span class="o">/</span><span class="mi">10</span>.<span class="mi">0</span>,<span class="nv">y</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>
+    <span class="nv">enddo</span>
+    <span class="k">call</span> <span class="nl">plott</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">))</span>
+ <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_caupdf</span>
+
+<span class="nv">Results</span>:
+
+ <span class="nv">The</span> <span class="nv">following</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">plot</span> <span class="nv">of</span> <span class="nv">Y</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span> <span class="ss">(</span><span class="nv">vertically</span><span class="ss">)</span> <span class="nv">versus</span> <span class="nv">X</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span> <span class="ss">(</span><span class="nv">horizontally</span><span class="ss">)</span>
+                   <span class="nv">I</span><span class="o">-----------</span><span class="nv">I</span><span class="o">-----------</span><span class="nv">I</span><span class="o">-----------</span><span class="nv">I</span><span class="o">-----------</span><span class="nv">I</span>
+  <span class="mi">0</span>.<span class="mi">1000000</span><span class="nv">E</span><span class="o">+</span><span class="mi">03</span> <span class="o">-</span>  <span class="nv">X</span>
+  <span class="mi">0</span>.<span class="mi">9166666</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>  <span class="nv">X</span>
+  <span class="mi">0</span>.<span class="mi">8333334</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>  <span class="nv">X</span>
+  <span class="mi">0</span>.<span class="mi">7500000</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>  <span class="nv">X</span>
+  <span class="mi">0</span>.<span class="mi">6666667</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>  <span class="nv">XX</span>
+  <span class="mi">0</span>.<span class="mi">5833334</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>   <span class="nv">X</span>
+  <span class="mi">0</span>.<span class="mi">5000000</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="o">-</span>   <span class="nv">XX</span>
+  <span class="mi">0</span>.<span class="mi">4166667</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>    <span class="nv">XX</span>
+  <span class="mi">0</span>.<span class="mi">3333334</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>     <span class="nv">XX</span>
+  <span class="mi">0</span>.<span class="mi">2500000</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>       <span class="nv">XXXX</span>
+  <span class="mi">0</span>.<span class="mi">1666667</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>           <span class="nv">XXXXXX</span> <span class="nv">X</span> <span class="nv">X</span>
+  <span class="mi">0</span>.<span class="mi">8333336</span><span class="nv">E</span><span class="o">+</span><span class="mi">01</span> <span class="nv">I</span>                     <span class="nv">X</span> <span class="nv">X</span>  <span class="nv">X</span> <span class="nv">X</span>  <span class="nv">X</span>  <span class="nv">X</span>  <span class="nv">X</span>  <span class="nv">X</span>
+  <span class="mi">0</span>.<span class="mi">0000000</span><span class="nv">E</span><span class="o">+</span><span class="mi">00</span> <span class="o">-</span>                                           <span class="nv">X</span>  <span class="nv">X</span> <span class="nv">X</span> <span class="nv">X</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">8333328</span><span class="nv">E</span><span class="o">+</span><span class="mi">01</span> <span class="nv">I</span>                     <span class="nv">X</span> <span class="nv">X</span>  <span class="nv">X</span> <span class="nv">X</span>  <span class="nv">X</span>  <span class="nv">X</span>  <span class="nv">X</span>  <span class="nv">X</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">1666666</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>           <span class="nv">XXXXXX</span> <span class="nv">X</span> <span class="nv">X</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">2499999</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>       <span class="nv">XXXX</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">3333333</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>     <span class="nv">XX</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">4166666</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>    <span class="nv">XX</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">5000000</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="o">-</span>   <span class="nv">XX</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">5833333</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>   <span class="nv">X</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">6666666</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>  <span class="nv">XX</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">7500000</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>  <span class="nv">X</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">8333333</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>  <span class="nv">X</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">9166666</span><span class="nv">E</span><span class="o">+</span><span class="mi">02</span> <span class="nv">I</span>  <span class="nv">X</span>
+ <span class="o">-</span><span class="mi">0</span>.<span class="mi">1000000</span><span class="nv">E</span><span class="o">+</span><span class="mi">03</span> <span class="o">-</span>  <span class="nv">X</span>
+                   <span class="nv">I</span><span class="o">-----------</span><span class="nv">I</span><span class="o">-----------</span><span class="nv">I</span><span class="o">-----------</span><span class="nv">I</span><span class="o">-----------</span><span class="nv">I</span>
+            <span class="mi">0</span>.<span class="mi">3152</span><span class="nv">E</span><span class="o">-</span><span class="mi">02</span>  <span class="mi">0</span>.<span class="mi">8194</span><span class="nv">E</span><span class="o">-</span><span class="mi">01</span>  <span class="mi">0</span>.<span class="mi">1607</span><span class="nv">E</span><span class="o">+</span><span class="mi">00</span>  <span class="mi">0</span>.<span class="mi">2395</span><span class="nv">E</span><span class="o">+</span><span class="mi">00</span>  <span class="mi">0</span>.<span class="mi">3183</span><span class="nv">E</span><span class="o">+</span><span class="mi">00</span>
 </code></pre></div>
 
 <h2 id="author">AUTHOR</h2>
@@ -340,7 +341,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~267"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-x~266"></span>real(kind=wp),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -506,7 +507,7 @@ and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-06 08:39  
+             on 2022-06-07 21:20  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

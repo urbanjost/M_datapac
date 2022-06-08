@@ -6,17 +6,28 @@ NAME
 SYNOPSIS
       SUBROUTINE RANK(X,N,Xr)
 
-DESCRIPTION
-   rank(3f) ranks (in ascending order) the n elements of the precision
-   precision vector x, and puts the resulting n ranks into the precision
-   precision vector xr.
+       REAL(kind=wp),intent(in)  :: X(:)
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(out) :: Xr(:)
 
-   rank(3f) gives the data analyst the ability to (for example) rank
+DESCRIPTION
+   RANK(3f) ranks (in ascending order) the N elements of the precision
+   precision vector X, and puts the resulting N ranks into the precision
+   precision vector XR.
+
+   RANK(3f) gives the data analyst the ability to (for example) rank
    the data preliminary to certain distribution-free analyses.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   X     The vector of observations to be ranked.
+   N     The integer number of observations in the vector X.
+         The maximum allowable value of N for this subroutine is 7500.
+
+OUTPUT ARGUMENTS
+
+   XR    The vector into which the ranks of the X values will be placed
+         (in ascending order)
 
 EXAMPLES
   Sample program:
@@ -30,94 +41,69 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  * CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD
-    C. SINGLETON).
-  * CACM JANUARY 1970, PAGE 54.
-  * CACM OCTOBER 1970, PAGE 624.
-  * JACM JANUARY 1961, PAGE 41.
+  * CACM March 1969, Page 186 (Binary Sort Algorithm by Richard
+    C. Singleton).
+  * CACM January 1970, Page 54.
+  * CACM October 1970, Page 624.
+  * JACM January 1961, Page 41.
 $ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --JANUARY   1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --JANUARY   1977.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE RANK(X,N,Xr)
+REAL(kind=wp),intent(in)  :: X(:)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(out) :: Xr(:)
+
 REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
-INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
+INTEGER       :: i , ibran , iupper , j , jmin , jp1 , k , nm1
+COMMON /BLOCK4_${KIND}/ XS(7500)
+
+
+
+!     COMMENT--THE RANK OF THE FIRST ELEMENT OF THE VECTOR X WILL BE PLACED IN THE FIRST POSITION OF THE VECTOR XR,
+!              THE RANK OF THE SECOND ELEMENT OF THE VECTOR X WILL BE PLACED IN THE SECOND POSITION OF THE VECTOR XR, ETC.
 !
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                OBSERVATIONS TO BE RANKED.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--XR     = THE  VECTOR
-!                                INTO WHICH THE RANKS
-!                                FROM X WILL BE PLACED.
-!     OUTPUT--THE  VECTOR XR
-!             CONTAINING THE RANKS
-!             (IN ASCENDING ORDER)
-!             OF THE VALUES
-!             IN THE  VECTOR X.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--THE RANK OF THE FIRST ELEMENT
-!              OF THE VECTOR X
-!              WILL BE PLACED IN THE FIRST POSITION
-!              OF THE VECTOR XR,
-!              THE RANK OF THE SECOND ELEMENT
-!              OF THE VECTOR X
-!              WILL BE PLACED IN THE SECOND POSITION
-!              OF THE VECTOR XR,
-!              ETC.
-!     COMMENT--THE SMALLEST ELEMENT IN THE VECTOR X
-!              WILL HAVE A RANK OF 1 (UNLESS TIES EXIST).
-!              THE LARGEST ELEMENT IN THE VECTOR X
-!              WILL HAVE A RANK OF N (UNLESS TIES EXIST).
-!     COMMENT--ALTHOUGH RANKS ARE USUALLY (UNLESS TIES EXIST)
-!              INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
-!              NOTED THAT THEY ARE OUTPUTED AS SINGLE
-!              PRECISION INTEGERS IN THE
-!              VECTOR XR.
-!              XR IS  SO AS TO BE
-!              CONSISTENT WITH THE FACT THAT ALL
-!              VECTOR ARGUMENTS IN ALL OTHER
-!              DATAPAC SUBROUTINES ARE ;
-!              BUT MORE IMPORTANTLY, BECAUSE TIES FREQUENTLY
-!              DO EXIST IN DATA SETS AND SO SOME OF THE
-!              RESULTING RANKS WILL BE NON-INTEGRAL
-!              AND SO THE OUTPUT VECTOR OF RANKS MUST NECESSARILY
-!              BE  AND NOT INTEGER.
+!     COMMENT--THE SMALLEST ELEMENT IN THE VECTOR X WILL HAVE A RANK OF 1 (UNLESS TIES EXIST).
+!              THE LARGEST ELEMENT IN THE VECTOR X WILL HAVE A RANK OF N (UNLESS TIES EXIST).
+!
+!     COMMENT--ALTHOUGH RANKS ARE USUALLY (UNLESS TIES EXIST) INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
+!              NOTED THAT THEY ARE OUTPUTTED AS SINGLE PRECISION INTEGERS IN THE VECTOR XR.
+!              XR IS  SO AS TO BE CONSISTENT WITH THE FACT THAT ALL VECTOR ARGUMENTS IN ALL OTHER
+!              DATAPAC SUBROUTINES ARE ; BUT MORE IMPORTANTLY, BECAUSE TIES FREQUENTLY
+!              DO EXIST IN DATA SETS AND SO SOME OF THE RESULTING RANKS WILL BE NON-INTEGRAL
+!              AND SO THE OUTPUT VECTOR OF RANKS MUST NECESSARILY BE  AND NOT INTEGER.
+!
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     COMMENT--DUE TO CONFLICTING USE OF LABELED
-!              COMMON /BLOCK2_${KIND}/ BY THIS RANK
-!              SUBROUTINE AND THE SPCORR (SPEARMAN RANK
-!              CORRELATION COEFFICIENT) SUBROUTINE,
-!              THE VECTOR XS OF THIS RANK
-!              SUBROUTINE HAS BEEN PLACED IN
+!
+!     COMMENT--DUE TO CONFLICTING USE OF LABELED COMMON /BLOCK2_${KIND}/ BY THIS RANK SUBROUTINE AND THE SPCORR (SPEARMAN RANK
+!              CORRELATION COEFFICIENT) SUBROUTINE, THE VECTOR XS OF THIS RANK SUBROUTINE HAS BEEN PLACED IN
 !              LABELED COMMON /BLOCK4_${KIND}/
-!     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE
-!              CALLING SEQUENCE MAY
-!              BE IDENTICAL; THAT IS, AN 'IN PLACE'
-!              RANKING IS PERMITTED.
-!              THE CALLING SEQUENCE
-!              CALL RANK(X,N,X) IS VALID, IF DESIRED.
-!     COMMENT--THE SORTING ALGORTHM USED HEREIN
-!              IS THE BINARY SORT.
-!              THIS ALGORTHIM IS EXTREMELY FAST AS THE
-!              FOLLOWING TIME TRIALS INDICATE.
-!              THESE TIME TRIALS WERE CARRIED OUT ON THE
-!              UNIVAC 1108 EXEC 8 SYSTEM AT NBS
+!
+!     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE CALLING SEQUENCE MAY BE IDENTICAL; THAT IS, AN 'IN PLACE' RANKING IS PERMITTED.
+!              THE CALLING SEQUENCE CALL RANK(X,N,X) IS VALID, IF DESIRED.
+!
+!     COMMENT--THE SORTING ALGORTHM USED HEREIN IS THE BINARY SORT. THIS ALGORTHIM IS EXTREMELY FAST AS THE
+!              FOLLOWING TIME TRIALS INDICATE.  THESE TIME TRIALS WERE CARRIED OUT ON THE UNIVAC 1108 EXEC 8 SYSTEM AT NBS
 !              IN AUGUST OF 1974.
-!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES
-!              FOR THE EASY-TO-PROGRAM BUT EXTREMELY
-!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE
-!              ALSO BEEN INCLUDED--
+!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES FOR THE EASY-TO-PROGRAM BUT EXTREMELY
+!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE ALSO BEEN INCLUDED--
+!
 !              NUMBER OF RANDOM        BINARY SORT       BUBBLE SORT
 !               NUMBERS SORTED
 !                N = 10                 .002 SEC          .002 SEC
@@ -125,16 +111,8 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !                N = 1000               .141 SEC         4.332 SEC
 !                N = 3000               .476 SEC        37.683 SEC
 !                N = 10000             1.887 SEC      NOT COMPUTED
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --JANUARY   1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --JANUARY   1977.
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:) , Xr(:)
-      COMMON /BLOCK4_${KIND}/ XS(7500)
-!
       an = N
       iupper = 7500
 !
@@ -142,18 +120,15 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RANK   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001 FORMAT(&
+	 & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO RANK(3f) IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RANK&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO RANK(3f) HAS THE VALUE 1 *****')
             Xr(1) = 1.0_wp
             RETURN
          ELSE
@@ -162,9 +137,8 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE RANK   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO RANK(3f) HAS ALL ELEMENTS = ', &
+            & E15.8,' *****')
             avrank = (an+1.0_wp)/2.0_wp
             DO i = 1 , N
                Xr(i) = avrank
@@ -205,7 +179,7 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
                   ibran = 1
                   WRITE (G_IO,99007) ibran
                   WRITE (G_IO,99005) jmin
-99005             FORMAT (' ','JMIN = ',I8)
+                  99005 FORMAT (' ','JMIN = ',I8)
                   STOP
                ENDIF
             ELSEIF ( i/=1 ) THEN
@@ -235,14 +209,13 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
                ibran = 2
                WRITE (G_IO,99007) ibran
                WRITE (G_IO,99006) X(i) , XS(j)
-99006          FORMAT (' ','X(I) = ',F15.7,'   XS(J) = ',F15.7)
+               99006 FORMAT (' ','X(I) = ',F15.7,'   XS(J) = ',F15.7)
                STOP
             ENDIF
  80         xprev = X(i)
             rprev = Xr(i)
          ENDDO
       ENDIF
-99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE--',           &
-     &        'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
-!
+99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE-- IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
+ 
 END SUBROUTINE RANK

@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.1% of total for procedures.">27 statements</a>
+    title=" 0.1% of total for procedures.">30 statements</a>
      </li> 
      
      
@@ -226,36 +226,62 @@ public subroutine GEOCDF(X, P, Cdf)
 
     
     <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric cumulative
-distribution function
+<div class="codehilite"><pre><span></span><code>geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric
+cumulative distribution function
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>   SUBROUTINE GEOCDF(X,P,Cdf)
+
+    REAL(kind=wp),intent(in)  :: X
+    REAL(kind=wp),intent(in)  :: P
+    REAL(kind=wp),intent(out) :: Cdf
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">geocdf</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">computes</span> <span class="nv">the</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span> <span class="nv">value</span> <span class="nv">at</span> <span class="nv">the</span>
-<span class="nv">precision</span> <span class="nv">precision</span> <span class="nv">value</span> <span class="nv">x</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">geometric</span> <span class="nv">distribution</span> <span class="nv">with</span> <span class="nv">precision</span>
-<span class="nv">precision</span> <span class="s1">&#39;</span><span class="s">bernoulli probability</span><span class="s1">&#39;</span> <span class="nv">parameter</span> <span class="o">=</span> <span class="nv">p</span>.
+<div class="codehilite"><pre><span></span><code><span class="n">GEOCDF</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="n">computes</span> <span class="n">the</span> <span class="n">cumulative</span> <span class="n">distribution</span> <span class="n">function</span> <span class="n">value</span> <span class="n">at</span> <span class="n">the</span>
+<span class="n">precision</span> <span class="n">precision</span> <span class="n">value</span> <span class="n">X</span> <span class="k">for</span> <span class="n">the</span> <span class="n">geometric</span> <span class="n">distribution</span> <span class="n">with</span> <span class="n">precision</span>
+<span class="n">precision</span> <span class="s1">&#39;Bernoulli probability&#39;</span> <span class="n">parameter</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span>
 
-<span class="nv">the</span> <span class="nv">geometric</span> <span class="nv">distribution</span> <span class="nv">used</span> <span class="nv">herein</span> <span class="nv">herein</span> <span class="nv">has</span> <span class="nv">mean</span> <span class="o">=</span> <span class="ss">(</span><span class="mi">1</span><span class="o">-</span><span class="nv">p</span><span class="ss">)</span><span class="o">/</span><span class="nv">p</span> <span class="nv">and</span>
-<span class="nv">standard</span> <span class="nv">deviation</span> <span class="o">=</span> <span class="nv">sqrt</span><span class="ss">((</span><span class="mi">1</span><span class="o">-</span><span class="nv">p</span><span class="ss">)</span><span class="o">/</span><span class="ss">(</span><span class="nv">p</span><span class="o">*</span><span class="nv">p</span><span class="ss">)))</span>.
+<span class="n">The</span> <span class="n">geometric</span> <span class="n">distribution</span> <span class="n">used</span> <span class="n">herein</span> <span class="n">herein</span> <span class="n">has</span> <span class="n">mean</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="o">/</span><span class="n">P</span> <span class="ow">and</span>
+<span class="n">standard</span> <span class="n">deviation</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">P</span><span class="o">*</span><span class="n">P</span><span class="p">)))</span><span class="o">.</span>
 
-<span class="nv">this</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">defined</span> <span class="k">for</span> <span class="nv">all</span> <span class="nv">non</span><span class="o">-</span><span class="nv">negative</span> <span class="nv">integer</span> <span class="nv">x</span><span class="o">--</span><span class="nv">x</span> <span class="o">=</span> <span class="mi">0</span>,
-<span class="mi">1</span>, <span class="mi">2</span>, ... . <span class="nv">this</span> <span class="nv">distribution</span> <span class="nv">has</span> <span class="nv">the</span> <span class="nv">probability</span> <span class="nv">function</span>
+<span class="n">This</span> <span class="n">distribution</span> <span class="k">is</span> <span class="n">defined</span> <span class="k">for</span> <span class="n">all</span> <span class="n">non</span><span class="o">-</span><span class="n">negative</span> <span class="n">integer</span> <span class="n">X</span> <span class="n">where</span> <span class="n">X</span> <span class="o">=</span>
+<span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">...</span> <span class="o">.</span> <span class="n">This</span> <span class="n">distribution</span> <span class="n">has</span> <span class="n">the</span> <span class="n">probability</span> <span class="n">function</span>
 
-    <span class="nv">f</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">p</span> <span class="o">*</span> <span class="ss">(</span><span class="mi">1</span><span class="o">-</span><span class="nv">p</span><span class="ss">)</span><span class="o">**</span><span class="nv">x</span>.
+    <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">=</span> <span class="n">P</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="o">**</span><span class="n">X</span>
 
-<span class="nv">the</span> <span class="nv">geometric</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">distribution</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span>
-<span class="nv">failures</span> <span class="nv">before</span> <span class="nv">obtaining</span> <span class="mi">1</span> <span class="nv">success</span> <span class="nv">in</span> <span class="nv">an</span> <span class="nv">indefinite</span> <span class="nv">sequence</span> <span class="nv">of</span>
-<span class="nv">bernoulli</span> <span class="ss">(</span><span class="mi">0</span>,<span class="mi">1</span><span class="ss">)</span> <span class="nv">trials</span> <span class="nv">where</span> <span class="nv">the</span> <span class="nv">probability</span> <span class="nv">of</span> <span class="nv">success</span> <span class="nv">in</span> <span class="nv">a</span> <span class="nv">precision</span>
-<span class="nv">trial</span> <span class="o">=</span> <span class="nv">p</span>.
+<span class="n">The</span> <span class="n">geometric</span> <span class="n">distribution</span> <span class="k">is</span> <span class="n">the</span> <span class="n">distribution</span> <span class="n">of</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span>
+<span class="n">failures</span> <span class="n">before</span> <span class="n">obtaining</span> <span class="mi">1</span> <span class="n">success</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">indefinite</span> <span class="n">sequence</span> <span class="n">of</span>
+<span class="n">Bernoulli</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="n">trials</span> <span class="n">where</span> <span class="n">the</span> <span class="n">probability</span> <span class="n">of</span> <span class="n">success</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">precision</span>
+<span class="n">trial</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span>
+
+<span class="n">Note</span> <span class="n">that</span> <span class="n">even</span> <span class="n">though</span> <span class="n">the</span> <span class="n">input</span> <span class="n">to</span> <span class="n">this</span> <span class="n">cumulative</span> <span class="n">distribution</span>
+<span class="n">function</span> <span class="n">subroutine</span> <span class="k">for</span> <span class="n">this</span> <span class="n">discrete</span> <span class="n">distribution</span> <span class="n">should</span> <span class="p">(</span><span class="n">under</span> <span class="n">normal</span>
+<span class="n">circumstances</span><span class="p">)</span> <span class="n">be</span> <span class="n">a</span> <span class="n">discrete</span> <span class="n">integer</span> <span class="n">value</span><span class="p">,</span> <span class="n">the</span> <span class="n">input</span> <span class="n">variable</span> <span class="n">X</span> <span class="k">is</span> <span class="n">REAL</span><span class="o">.</span>
+<span class="n">X</span> <span class="n">has</span> <span class="n">been</span> <span class="n">specified</span> <span class="k">as</span> <span class="n">REAL</span> <span class="n">so</span> <span class="k">as</span> <span class="n">to</span> <span class="n">conform</span> <span class="n">with</span> <span class="n">the</span> <span class="n">datapac</span> <span class="n">convention</span>
+<span class="n">that</span> <span class="n">all</span> <span class="n">input</span> <span class="o">****</span><span class="n">data</span><span class="o">****</span> <span class="p">(</span><span class="k">as</span> <span class="n">opposed</span> <span class="n">to</span> <span class="n">sample</span> <span class="n">size</span><span class="p">,</span> <span class="k">for</span> <span class="n">example</span><span class="p">)</span>
+<span class="n">variables</span> <span class="n">to</span> <span class="n">all</span> <span class="n">datapac</span> <span class="n">subroutines</span> <span class="n">are</span><span class="o">.</span>
+
+<span class="n">This</span> <span class="n">convention</span> <span class="k">is</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">belief</span> <span class="n">that</span>
+
+ <span class="mf">1.</span> <span class="n">A</span> <span class="n">mixture</span> <span class="n">of</span> <span class="n">modes</span> <span class="p">(</span><span class="n">floating</span> <span class="n">point</span> <span class="n">versus</span> <span class="n">integer</span><span class="p">)</span> <span class="k">is</span> <span class="n">inconsistent</span>
+    <span class="ow">and</span> <span class="n">an</span> <span class="n">unnecessary</span> <span class="n">complication</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">data</span> <span class="n">analysis</span><span class="p">;</span> <span class="ow">and</span>
+ <span class="mf">2.</span> <span class="n">Floating</span> <span class="n">point</span> <span class="n">machine</span> <span class="n">arithmetic</span> <span class="p">(</span><span class="k">as</span> <span class="n">opposed</span> <span class="n">to</span> <span class="n">integer</span>
+    <span class="n">arithmetic</span><span class="p">)</span> <span class="k">is</span> <span class="n">the</span> <span class="n">more</span> <span class="n">natural</span> <span class="n">mode</span> <span class="k">for</span> <span class="n">doing</span> <span class="n">data</span> <span class="n">analysis</span><span class="o">.</span>
 </code></pre></div>
 
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> X   description of parameter
- Y   description of parameter
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">X</span>      <span class="nv">The</span> <span class="nv">value</span> <span class="nv">at</span> <span class="nv">which</span> <span class="nv">the</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span> <span class="nv">is</span>
+       <span class="nv">to</span> <span class="nv">be</span> <span class="nv">evaluated</span>. <span class="nv">X</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">non</span><span class="o">-</span><span class="nv">negative</span> <span class="nv">and</span> <span class="nv">integral</span><span class="o">-</span><span class="nv">valued</span>.
+<span class="nv">P</span>      <span class="nv">The</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">the</span> <span class="s1">&#39;</span><span class="s">Bernoulli probability</span><span class="s1">&#39;</span> <span class="nv">parameter</span> <span class="k">for</span> <span class="nv">the</span>
+       <span class="nv">geometric</span> <span class="nv">distribution</span>.  <span class="nv">P</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">between</span> <span class="mi">0</span>.<span class="mi">0</span> <span class="ss">(</span><span class="nv">exclusively</span><span class="ss">)</span>
+       <span class="nv">and</span> <span class="mi">1</span>.<span class="mi">0</span> <span class="ss">(</span><span class="nv">exclusively</span><span class="ss">)</span>.
+</code></pre></div>
+
+<h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">CDF</span>    <span class="nv">The</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span> <span class="nv">value</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">geometric</span>
+       <span class="nv">distribution</span>
 </code></pre></div>
 
 <h2 id="examples">EXAMPLES</h2>
@@ -269,8 +295,9 @@ distribution function
 
 <p>Results:</p>
 <h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </code></pre></div>
 
 <h2 id="maintainer">MAINTAINER</h2>
@@ -307,8 +334,8 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~38"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-x~38"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -322,8 +349,8 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-p~14"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-p~14"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -337,8 +364,8 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-cdf~8"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-cdf~8"></span>real(kind=wp),</td>
+  <td>intent(out)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -490,56 +517,12 @@ Engineering Division, National Institute of Standards and Technology.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">GEOCDF</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">Cdf</span><span class="p">)</span>
-<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Cdf</span> <span class="p">,</span> <span class="n">del</span> <span class="p">,</span> <span class="n">fintx</span> <span class="p">,</span> <span class="n">P</span> <span class="p">,</span> <span class="n">X</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">X</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">P</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Cdf</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">del</span> <span class="p">,</span> <span class="n">fintx</span>
 <span class="kt">INTEGER </span><span class="n">intx</span>
-<span class="c">!</span>
-<span class="c">!     INPUT ARGUMENTS--X      = THE  VALUE</span>
-<span class="c">!                                AT WHICH THE CUMULATIVE DISTRIBUTION</span>
-<span class="c">!                                FUNCTION IS TO BE EVALUATED.</span>
-<span class="c">!                                X SHOULD BE NON-NEGATIVE AND</span>
-<span class="c">!                                INTEGRAL-VALUED.</span>
-<span class="c">!                     --P      = THE  VALUE</span>
-<span class="c">!                                OF THE &#39;BERNOULLI PROBABILITY&#39;</span>
-<span class="c">!                                PARAMETER FOR THE GEOMETRIC</span>
-<span class="c">!                                DISTRIBUTION.</span>
-<span class="c">!                                P SHOULD BE BETWEEN</span>
-<span class="c">!                                0.0 (EXCLUSIVELY) AND</span>
-<span class="c">!                                1.0 (EXCLUSIVELY).</span>
-<span class="c">!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE</span>
-<span class="c">!                                DISTRIBUTION FUNCTION VALUE.</span>
-<span class="c">!     OUTPUT--THE  CUMULATIVE DISTRIBUTION</span>
-<span class="c">!             FUNCTION VALUE CDF</span>
-<span class="c">!             FOR THE GEOMETRIC DISTRIBUTION</span>
-<span class="c">!             WITH &#39;BERNOULLI PROBABILITY&#39; PARAMETER = P.</span>
-<span class="c">!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.</span>
-<span class="c">!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.</span>
-<span class="c">!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)</span>
-<span class="c">!                   AND 1.0 (EXCLUSIVELY).</span>
-<span class="c">!     MODE OF INTERNAL OPERATIONS--.</span>
-<span class="c">!     COMMENT--NOTE THAT EVEN THOUGH THE INPUT</span>
-<span class="c">!              TO THIS CUMULATIVE</span>
-<span class="c">!              DISTRIBUTION FUNCTION SUBROUTINE</span>
-<span class="c">!              FOR THIS DISCRETE DISTRIBUTION</span>
-<span class="c">!              SHOULD (UNDER NORMAL CIRCUMSTANCES) BE A</span>
-<span class="c">!              DISCRETE INTEGER VALUE,</span>
-<span class="c">!              THE INPUT VARIABLE X IS SINGLE</span>
-<span class="c">!              PRECISION IN MODE.</span>
-<span class="c">!              X HAS BEEN SPECIFIED AS SINGLE</span>
-<span class="c">!              PRECISION SO AS TO CONFORM WITH THE DATAPAC</span>
-<span class="c">!              CONVENTION THAT ALL INPUT ****DATA****</span>
-<span class="c">!              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)</span>
-<span class="c">!              VARIABLES TO ALL</span>
-<span class="c">!              DATAPAC SUBROUTINES ARE .</span>
-<span class="c">!              THIS CONVENTION IS BASED ON THE BELIEF THAT</span>
-<span class="c">!              1) A MIXTURE OF MODES (FLOATING POINT</span>
-<span class="c">!              VERSUS INTEGER) IS INCONSISTENT AND</span>
-<span class="c">!              AN UNNECESSARY COMPLICATION</span>
-<span class="c">!              IN A DATA ANALYSIS; AND</span>
-<span class="c">!              2) FLOATING POINT MACHINE ARITHMETIC</span>
-<span class="c">!              (AS OPPOSED TO INTEGER ARITHMETIC)</span>
-<span class="c">!              IS THE MORE NATURAL MODE FOR DOING</span>
-<span class="c">!              DATA ANALYSIS.</span>
-<span class="c">!---------------------------------------------------------------------</span>
+
 <span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
 <span class="c">!</span>
       <span class="k">IF</span> <span class="p">(</span> <span class="n">P</span><span class="o">&lt;=</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">OR</span><span class="p">.</span> <span class="n">P</span><span class="o">&gt;=</span><span class="mf">1.0_wp</span> <span class="p">)</span> <span class="k">THEN</span>
@@ -561,6 +544,7 @@ Engineering Division, National Institute of Standards and Technology.
          <span class="k">ENDIF</span>
 <span class="k">         </span><span class="n">Cdf</span> <span class="o">=</span> <span class="mf">1.0_wp</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.0_wp</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">X</span><span class="o">+</span><span class="mf">1.0_wp</span><span class="p">)</span>
       <span class="k">ENDIF</span>
+
 <span class="mi">99001</span> <span class="k">FORMAT</span><span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****&#39;</span><span class="p">)</span>
 <span class="mi">99002</span> <span class="k">FORMAT</span><span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NEGATIVE *****&#39;</span><span class="p">)</span>
 <span class="mi">99003</span> <span class="k">FORMAT</span><span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NON-INTEGRAL *****&#39;</span><span class="p">)</span>
@@ -588,7 +572,7 @@ Engineering Division, National Institute of Standards and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-06 08:39  
+             on 2022-06-07 21:20  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

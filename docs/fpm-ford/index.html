@@ -137,6 +137,9 @@
 
 <h2 id="description">Description</h2>
 <p><strong>A WORK IN PROGRESS</strong></p>
+<p>The M_datapac Fortran module contains a variety of
+<a href="https://urbanjost.github.io/M_datapac/man3.html">statistical procedures</a> 
+as well as a number of general utilities useful in statistical analysis.</p>
 <p>The original DATAPAC library was written by James Filliben of the Statistical
 Engineering Division,
 <a href="https://www.nist.gov/">National Institute of Standards and Technology</a>.
@@ -198,189 +201,6 @@ files in the src/lib/ directory.</p>
 <div class="codehilite"><pre><span></span><code>        <span class="k">[dependencies]</span>
         <span class="n">M_datapac</span>        <span class="o">=</span> <span class="p">{</span> <span class="n">git</span> <span class="o">=</span> <span class="s">&quot;https://github.com/urbanjost/M_datapac.git&quot;</span> <span class="p">}</span>
 </code></pre></div>
-
-<h2 id="contents">Contents</h2>
-<p>The following subroutines are available in M_datapac:
-( Note they all contain a man-page template at the top that is a place-holder as the documentation is being re-composed)</p>
-<ul>
-<li><a href="src/source/autoco.ffinc">AUTOCO</a>  - compute the sample autocorrelation coefficient</li>
-<li><a href="src/source/loc.ffinc">LOC</a>        - compute the sample mean, midrange, midmean, and median</li>
-<li><a href="src/source/mean.ffinc">MEAN</a>      - compute the mean of a data vector</li>
-<li><a href="src/source/median.ffinc">MEDIAN</a>  - compute the median of a data vector</li>
-<li><a href="src/source/midm.ffinc">MIDM</a>      - compute the midmean of a data vector</li>
-<li><a href="src/source/midr.ffinc">MIDR</a>      - compute the midrange of a data vector</li>
-<li><a href="src/source/WIP/propor.ffinc">PROPOR</a>  - compute the sample proportion</li>
-<li><a href="src/source/WIP/range.ffinc">RANGE</a>    - compute the sample range</li>
-<li><a href="src/source/WIP/relsd.ffinc">RELSD</a>    - compute the relative standard deviation of a vector of observations</li>
-<li><a href="src/source/WIP/runs.ffinc">RUNS</a>      - perform a runs test</li>
-<li><a href="src/source/WIP/scale.ffinc">SCALE</a>    - compute the sample range, sample standard deviation, sample relative standard deviation, and sample variance</li>
-<li><a href="src/source/WIP/sd.ffinc">SD</a>          - compute the standard deviation of a vector of observations</li>
-<li><a href="src/source/WIP/spcorr.ffinc">SPCORR</a>  - compute the sample Spearman rank correlation coefficient between two vectors of observations</li>
-<li><a href="src/source/WIP/stmom3.ffinc">STMOM3</a>  - compute the third central moment (i.e., the skewness) of a vector of observations</li>
-<li><a href="src/source/WIP/stmom4.ffinc">STMOM4</a>  - compute the fourth central moment (i.e., the kurtosis) of a vector of observations</li>
-<li><a href="src/source/tail.ffinc">TAIL</a>      - performs a symmetric distribution tail length analysis</li>
-<li><a href="src/source/WIP/tol.ffinc">TOL</a>        - compute normal and distribution-free tolerance limits</li>
-<li><a href="src/source/WIP/trim.ffinc">TRIM</a>      - computes the sample trimmed mean of the data in the input vector X.</li>
-<li><a href="src/source/WIP/unimed.ffinc">UNIMED</a>  - generate the /N/ order statistic medians (used in creating probability plots)</li>
-<li><a href="src/source/var.ffinc">VAR</a>        - compute the sample variance of a vector of observations</li>
-<li><a href="src/source/WIP/weib.ffinc">WEIB</a>      - perform a Weibull distribution analysis (Weibull PPCC analysis)</li>
-<li><a href="src/source/WIP/wind.ffinc">WIND</a>      - compute the sample Winsorized mean of a vector of observations</li>
-</ul>
-<h2 id="_1"></h2>
-<h2 id="now-available-in-modern-fortran">now available in modern Fortran</h2>
-<ul>
-<li><a href="src/source/max.ffinc">MAX</a>        - compute the maximum of a data vector (see Fortran intrinsic MAXVAL(3f))</li>
-<li><a href="src/source/min.ffinc">MIN</a>        - compute the minimum of a data vector (see Fortran intrinsic MINVAL(3f))</li>
-<li><a href="src/source/dot.ffinc">DOT</a>        - compute the dot product of two equal-sized vectors (see Fortran intrinsic DOT_PRODUCT(3f))</li>
-<li><a href="src/source/move.ffinc">MOVE</a>      - move selected elements of one vector into another vector</li>
-<li><a href="src/source/WIP/replac.ffinc">REPLAC</a>  - replace all observations in a vector within a given interval with a user-specified constant</li>
-<li><a href="src/source/WIP/retain.ffinc">RETAIN</a>  - retain all observations in a vector within a user-specified interval</li>
-<li><a href="src/source/WIP/subse1.ffinc">SUBSE1</a>  - extract the elements of a vector which fall into a user-specified subset (one subset variable)</li>
-<li><a href="src/source/WIP/subse2.ffinc">SUBSE2</a>  - extract the elements of a vector which fall into a user-specified subset (two subset variables)</li>
-<li><a href="src/source/WIP/subset.ffinc">SUBSET</a>  - extract the elements of a vector which fall into a user-specified subset (one subset variable)</li>
-</ul>
-<h2 id="sort">sort</h2>
-<ul>
-<li><a href="src/source/WIP/rank.ffinc">RANK</a>      - rank a vector of sample observations</li>
-<li><a href="src/source/sortc.ffinc">SORTC</a>    - sort a vector of sample observations and &ldquo;carry&rdquo; a second vector</li>
-<li><a href="src/source/WIP/sortp.ffinc">SORTP</a>    - sorts and ranks a numeric vector X</li>
-<li><a href="src/source/WIP/sort.ffinc">SORT</a>      - sort a vector of sample observations, also return the positions in the original vector</li>
-</ul>
-<h2 id="random-values">random values</h2>
-<ul>
-<li><a href="src/source/WIP/betran.ffinc">BETRAN</a>  - generate beta random numbers</li>
-<li><a href="src/source/WIP/binran.ffinc">BINRAN</a>  - generate binomial random numbers</li>
-<li><a href="src/source/WIP/cauran.ffinc">CAURAN</a>  - generate Cauchy random numbers</li>
-<li><a href="src/source/WIP/chsran.ffinc">CHSRAN</a>  - generate chi-square random numbers</li>
-<li><a href="src/source/WIP/dexran.ffinc">DEXRAN</a>  - generate double exponential random numbers</li>
-<li><a href="src/source/WIP/ev1ran.ffinc">EV1RAN</a>  - generate extreme value type 1 (Gumbel) random numbers</li>
-<li><a href="src/source/WIP/ev2ran.ffinc">EV2RAN</a>  - generate extreme value type 2 (Frechet) random numbers</li>
-<li><a href="src/source/WIP/expran.ffinc">EXPRAN</a>  - generate exponential random numbers</li>
-<li><a href="src/source/WIP/fran.ffinc">FRAN</a>      - generate F random numbers</li>
-<li><a href="src/source/WIP/gamran.ffinc">GAMRAN</a>  - generate gamma random numbers</li>
-<li><a href="src/source/WIP/georan.ffinc">GEORAN</a>  - generate geometric random numbers</li>
-<li><a href="src/source/WIP/hfnran.ffinc">HFNRAN</a>  - generate half-normal random numbers</li>
-<li><a href="src/source/WIP/lgnran.ffinc">LGNRAN</a>  - generate lognormal random numbers</li>
-<li><a href="src/source/WIP/logran.ffinc">LOGRAN</a>  - generate logistic random numbers</li>
-<li><a href="src/source/WIP/nbran.ffinc">NBRAN</a>    - generate negative binomial random numbers</li>
-<li><a href="src/source/WIP/norran.ffinc">NORRAN</a>  - generate normal random numbers</li>
-<li><a href="src/source/WIP/parran.ffinc">PARRAN</a>  - generate Pareto random numbers</li>
-<li><a href="src/source/WIP/poiran.ffinc">POIRAN</a>  - generate Poisson random numbers</li>
-<li><a href="src/source/WIP/ranper.ffinc">RANPER</a>  - generates a random permutation</li>
-<li><a href="src/source/WIP/tran.ffinc">TRAN</a>      - generate /t/ random numbers</li>
-<li><a href="src/source/WIP/uniran.ffinc">UNIRAN</a>  - generate Uniform random numbers</li>
-<li><a href="src/source/WIP/weiran.ffinc">WEIRAN</a>  - generate Weibull random numbers</li>
-</ul>
-<h2 id="probability-density-function">probability density function</h2>
-<ul>
-<li><a href="src/source/caupdf.ffinc">CAUPDF</a>  - compute the Cauchy probability density function</li>
-<li><a href="src/source/lgnpdf.ffinc">LGNPDF</a>  - compute the lognormal probability density function</li>
-<li><a href="src/source/logpdf.ffinc">LOGPDF</a>  - compute the logistic probability density function</li>
-<li><a href="src/source/norpdf.ffinc">NORPDF</a>  - compute the normal probability density function</li>
-<li><a href="src/source/unipdf.ffinc">UNIPDF</a>  - compute the Uniform probability density function</li>
-</ul>
-<h2 id="percent-point-function">percent point function</h2>
-<ul>
-<li><a href="src/source/WIP/binppf.ffinc">BINPPF</a>  - compute the binomial percent point function</li>
-<li><a href="src/source/cauppf.ffinc">CAUPPF</a>  - compute the Cauchy percent point function</li>
-<li><a href="src/source/WIP/chsppf.ffinc">CHSPPF</a>  - compute the chi-square percent point function</li>
-<li><a href="src/source/WIP/lgnppf.ffinc">LGNPPF</a>  - compute the lognormal percent point function</li>
-<li><a href="src/source/WIP/logppf.ffinc">LOGPPF</a>  - compute the logistic percent point function</li>
-<li><a href="src/source/WIP/nbppf.ffinc">NBPPF</a>    - compute the negative binomial percent point function</li>
-<li><a href="src/source/WIP/norppf.ffinc">NORPPF</a>  - compute the normal percent point function</li>
-<li><a href="src/source/WIP/parppf.ffinc">PARPPF</a>  - compute the Pareto percent point function</li>
-<li><a href="src/source/WIP/poippf.ffinc">POIPPF</a>  - compute the Poisson percent point function</li>
-<li><a href="src/source/WIP/sampp.ffinc">SAMPP</a>    - compute the sample 100P percent point (i.e., percentile)</li>
-<li><a href="src/source/WIP/tppf.ffinc">TPPF</a>      - compute the /t/ percent point function</li>
-<li><a href="src/source/WIP/unippf.ffinc">UNIPPF</a>  - compute the Uniform percent point function</li>
-<li><a href="src/source/WIP/weippf.ffinc">WEIPPF</a>  - compute the Weibull percent point function</li>
-</ul>
-<h2 id="sparsity-function">sparsity function</h2>
-<ul>
-<li><a href="src/source/WIP/causf.ffinc">CAUSF</a>    - compute the Cauchy sparsity function</li>
-<li><a href="src/source/WIP/lamsf.ffinc">LAMSF</a>    - compute the Tukey-Lambda sparsity function</li>
-<li><a href="src/source/WIP/logsf.ffinc">LOGSF</a>    - compute the logistic sparsity function</li>
-<li><a href="src/source/WIP/norsf.ffinc">NORSF</a>    - compute the normal sparsity function</li>
-<li><a href="src/source/WIP/unisf.ffinc">UNISF</a>    - compute the Uniform sparsity function</li>
-</ul>
-<h2 id="cumulative-distribution-function">cumulative distribution function</h2>
-<ul>
-<li><a href="src/source/WIP/bincdf.ffinc">BINCDF</a>  - compute the binomial cumulative distribution function</li>
-<li><a href="src/source/caucdf.ffinc">CAUCDF</a>  - compute the Cauchy cumulative distribution function</li>
-<li><a href="src/source/WIP/chscdf.ffinc">CHSCDF</a>  - compute the chi-square cumulative distribution function</li>
-<li><a href="src/source/WIP/lgncdf.ffinc">LGNCDF</a>  - compute the lognormal cumulative distribution function</li>
-<li><a href="src/source/WIP/logcdf.ffinc">LOGCDF</a>  - compute the logistic cumulative distribution function</li>
-<li><a href="src/source/WIP/nbcdf.ffinc">NBCDF</a>    - compute the negative binomial cumulative distribution function</li>
-<li><a href="src/source/WIP/norcdf.ffinc">NORCDF</a>  - compute the normal cumulative distribution function</li>
-<li><a href="src/source/WIP/parcdf.ffinc">PARCDF</a>  - compute the Pareto cumulative distribution function</li>
-<li><a href="src/source/WIP/poicdf.ffinc">POICDF</a>  - compute the Poisson cumulative distribution function</li>
-<li><a href="src/source/WIP/poicdf.ffinc">POICDF</a>  - compute the Poisson cumulative distribution function</li>
-<li><a href="src/source/WIP/tcdf.ffinc">TCDF</a>      - compute the /t/ cumulative distribution function</li>
-<li><a href="src/source/unicdf.ffinc">UNICDF</a>  - trivially compute the Uniform cumulative distribution function</li>
-<li><a href="src/source/WIP/weicdf.ffinc">WEICDF</a>  - compute the Weibull cumulative distribution function</li>
-</ul>
-<h2 id="line-printer-plots">line printer plots</h2>
-<ul>
-<li><a href="src/source/WIP/cauplt.ffinc">CAUPLT</a>  - generate a Cauchy probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/chsplt.ffinc">CHSPLT</a>  - generate a chi-square probability plot (line printer graph)</li>
-<li><a href="src/source/dexplt.ffinc">DEXPLT</a>  - generate a double exponential probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/ev1plt.ffinc">EV1PLT</a>  - generate a extreme value type 1 (Gumbel) probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/ev2plt.ffinc">EV2PLT</a>  - generate a extreme value type 2 (Frechet) probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/expplt.ffinc">EXPPLT</a>  - generate a exponential probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/gamplt.ffinc">GAMPLT</a>  - generate a gamma probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/gamplt.ffinc">GEOPLT</a>  - generate a geometric probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/hfnplt.ffinc">HFNPLT</a>  - generate a half-normal probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/lamplt.ffinc">LAMPLT</a>  - generate a Tukey-Lambda probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/lgnplt.ffinc">LGNPLT</a>  - generate a lognormal probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/logplt.ffinc">LOGPLT</a>  - generate a logistic probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/norplt.ffinc">NORPLT</a>  - generate a normal probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/parplt.ffinc">PARPLT</a>  - generate a Pareto probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/plotco.ffinc">PLOTCO</a>  - generate a line printer autocorrelation plot</li>
-<li><a href="src/source/WIP/plotsp.ffinc">PLOTSP</a>  - generate a line printer spectrum plot</li>
-<li><a href="src/source/WIP/plotx.ffinc">PLOTX</a>    - generate a line printer run sequence plot</li>
-<li><a href="src/source/WIP/plotxt.ffinc">PLOTXT</a>  - generate a line printer run sequence plot for the terminal (71 characters wide)</li>
-<li><a href="src/source/WIP/plotxx.ffinc">PLOTXX</a>  - generate a line printer lag plot</li>
-<li><a href="src/source/WIP/pltxxt.ffinc">PLTXXT</a>  - generate a line printer lag plot for the terminal (71 characters wide)</li>
-<li><a href="src/source/WIP/poiplt.ffinc">POIPLT</a>  - generate a Poisson probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/tplt.ffinc">TPLT</a>      - generate a /t/ probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/uniplt.ffinc">UNIPLT</a>  - generate a Uniform probability plot (line printer graph)</li>
-<li><a href="src/source/WIP/weiplt.ffinc">WEIPLT</a>  - generate a Weibull probability plot (line printer graph)</li>
-</ul>
-<h2 id="line-printer-analysis">line printer analysis</h2>
-<ul>
-<li><a href="src/source/WIP/norout.ffinc">NOROUT</a>  - Performs a normal outlier analysis on the data in the input vector X.</li>
-<li><a href="src/source/WIP/time.ffinc">TIME</a>      - perform a time series analysis (autocorrelation plot, a test for white noise, a &ldquo;pilot&rdquo; spectrum, and 4 other estimated spectra based on differing bandwidth)</li>
-</ul>
-<h2 id="generic-line-printer-plots">generic line printer plots</h2>
-<ul>
-<li><a href="src/source/WIP/plot.ffinc">PLOT</a>      - yields a one-page printer plot of y(i) versus x(i)</li>
-<li><a href="src/source/WIP/plots.ffinc">PLOTS</a>    - generate a line printer plot of Y vs X</li>
-<li><a href="src/source/WIP/pltsct.ffinc">PLTSCT</a>  - generate a line printer plot with special plot characters for the terminal (71 characters wide)</li>
-<li><a href="src/source/WIP/plotst.ffinc">PLOTST</a>  - generate a line printer plot of Y vs X for the terminal (71 characters wide)</li>
-<li><a href="src/source/plott.ffinc">PLOTT</a>    - generate a line printer plot of Y vs X for the terminal (71 characters wide)</li>
-<li><a href="src/source/WIP/plot6.ffinc">PLOT6</a>    - generate a line printer plot</li>
-<li><a href="src/source/WIP/plot7.ffinc">PLOT7</a>    - generate a line printer plot with special plot characters</li>
-<li><a href="src/source/WIP/plot8.ffinc">PLOT8</a>    - generate a line printer plot with special plot characters</li>
-<li><a href="src/source/WIP/plot9.ffinc">PLOT9</a>    - generate a line printer plot with special plot characters</li>
-<li><a href="src/source/WIP/plot10.ffinc">PLOT10</a>  - generate a line printer plot with special plot characters</li>
-<li><a href="src/source/WIP/plotc.ffinc">PLOTC</a>    - generate a line printer plot with special plot characters</li>
-<li><a href="src/source/WIP/plotct.ffinc">PLOTCT</a>  - generate a line printer plot for the terminal (71 characters wide)</li>
-<li><a href="src/source/WIP/plotsc.ffinc">PLOTSC</a>  - generate a line printer plot with special plot characters</li>
-<li><a href="src/source/WIP/plotu.ffinc">PLOTU</a>    - generate a line printer 4-plot</li>
-</ul>
-<hr>
-<!--
-
-## input and output formatting
-  * [SKIPR](src/source/WIP/skipr.ffinc)    - skip over a user-specified number of rows in reading a data file
-  * [WRITE](src/source/WIP/write.ffinc)    - write a vector of observations in a "neat" fashion
-  * [READG](src/source/WIP/readg.ffinc)    - perform a format-free read of data from a file restricted to a user-specified set of columns
-  * [READ](src/source/WIP/read.ffinc)      - perform a format-free read of data from a file
-
-
-  * [POLY](src/source/WIP/poly.ffinc)      - compute a least squares polynomial fit (calls DECOMP, INVXWX,DOT, FCDF)
-
--->
 
 <h2 id="documentation">Documentation   <img alt="docs" src="docs/images/docs.gif"></h2>
 <h3 id="user">User</h3>
@@ -1921,7 +1741,7 @@ files in the src/lib/ directory.</p>
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-06 08:39  
+             on 2022-06-07 21:20  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

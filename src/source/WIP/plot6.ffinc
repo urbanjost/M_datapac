@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plot6.3m_datapac.man
 NAME
-   plot6(3f) - [M_datapac:LINE_PLOT] generate a line printer plot
+   plot6(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer plot
 
 SYNOPSIS
       SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)

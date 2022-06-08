@@ -76,6 +76,15 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 </A>
 <BLOCKQUOTE>
 SUBROUTINE <B>BINRAN</B>(N,P,Npar,Iseed,X)
+<P>
+<PRE>
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(in)  :: P
+       INTEGER,intent(in)        :: Npar
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -83,27 +92,27 @@ SUBROUTINE <B>BINRAN</B>(N,P,Npar,Iseed,X)
 
 </A>
 <BLOCKQUOTE>
-<B>BINRAN</B>(3f) generates a random sample of size n from the binomial
-distribution with &#146;bernoulli probability&#146; parameter =
-p, and integer &#146;number of bernoulli trials&#146; parameter = npar.
+<B>BINRAN</B>(3f) generates a random sample of size N from the binomial
+distribution with &#146;Bernoulli probability&#146; parameter =
+P, and integer &#146;number of bernoulli trials&#146; parameter = NPAR.
 <P>
-the binomial distribution used herein has mean = npar*p and standard
-deviation = <B>sqrt</B>(npar*p*(1-p)).
+The binomial distribution used herein has mean = NPAR*P and standard
+deviation = <B>sqrt</B>(NPAR*P*(1-P)).
 <P>
-this distribution is defined for all discrete integer x between 0
-(inclusively) and npar (inclusively). This distribution has the
+This distribution is defined for all discrete integer X between 0
+(inclusively) and NPAR (inclusively). This distribution has the
 probability function
 <P>
 <PRE>
-       f(x) = c(npar,x) * p**x * (1-p)**(npar-x).
+       f(X) = c(NPAR,X) * P**X * (1-P)**(NPAR-X)
 <P>
 </PRE>
-where <B>c</B>(npar,x) is the combinatorial function equaling the number of
-combinations of npar items taken x at a time.
+Where <B>c</B>(NPAR,X) is the combinatorial function equaling the number of
+combinations of NPAR items taken X at a time.
 <P>
-the binomial distribution is the distribution of the number of
-successes in npar bernoulli (0,1) trials where the probability of
-success in a precision trial = p.
+The binomial distribution is the distribution of the number of
+successes in NPAR Bernoulli (0,1) trials where the probability of
+success in a precision trial = P.
 </BLOCKQUOTE>
 <A name=3>
 
@@ -127,27 +136,21 @@ The desired integer number of random numbers to be generated.
 <TR valign=top><TD width=6% nowrap>
 <B>P</B> </TD><TD valign=bottom>
 The value of the &#146;Bernoulli probability&#146; parameter for the
-<TABLE width=100% cellpadding=3><!-- tsb: The value of the &#146;Bernoulli probability&#146; parameter for the
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD colspan=2>
-<B>binomial distribution.</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-P should be between 0.0 (exclusively)
+binomial distribution. P should be between 0.0 (exclusively)
 and 1.0 (exclusively).
 </TD></TR>
-<TR></TR></TABLE><!-- .TP -->
+<TR valign=top><TD width=6% nowrap>
+<B>ISEED</B> </TD><TD valign=bottom>
+An integer iseed value. Should be set to a non-negative value
+to start a new sequence of values. Will be set to <B>-1</B> on return
+to indicate the next call should continue the current random
+sequence walk.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B>NPAR</B> </TD><TD valign=bottom>
 The integer value of the &#146;number of Bernoulli trials&#146;
-<TABLE width=100% cellpadding=3><!-- tsb: The integer value of the &#146;number of Bernoulli trials&#146;
- -->
-<TR></TR><TR></TR>
-<TR valign=top><TD colspan=2>
-<B>parameter.</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
-NPAR should be a positive integer.
+parameter. NPAR should be a positive integer.
 </TD></TR>
-<TR></TR></TABLE></TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=5>
 
@@ -160,7 +163,7 @@ NPAR should be a positive integer.
 <TR valign=top><TD width=6% nowrap>
 <B>X</B> </TD><TD valign=bottom>
 A vector (of dimension at least N) into which the generated
-random sample of size n from the binomial distribution
+random sample of size N from the binomial distribution
 will be placed; with &#146;Bernoulli probability&#146; parameter = P
 and &#146;number of Bernoulli trials&#146; parameter = NPAR.
 </TD></TR>
@@ -177,11 +180,30 @@ Sample program:
    program demo_binran
    use M_datapac, only : binran
    implicit none
-   ! call binran(x,y)
+   real :: x(40), P
+   integer :: N, Npar, Iseed
+      Iseed=0
+      P=0.88
+      N=size(x)
+      Npar=11111
+      call BINRAN(N,P,Npar,Iseed,X)
+      write(*,*)X
    end program demo_binran
 <P>
 </PRE>
 Results:
+<P>
+<PRE>
+      9746.000       9795.000       9855.000       9805.000       9787.000
+      9746.000       9764.000       9774.000       9767.000       9752.000
+      9770.000       9784.000       9821.000       9805.000       9784.000
+      9734.000       9805.000       9813.000       9792.000       9785.000
+      9784.000       9815.000       9785.000       9748.000       9718.000
+      9728.000       9824.000       9782.000       9776.000       9850.000
+      9770.000       9821.000       9819.000       9724.000       9783.000
+      9789.000       9813.000       9798.000       9747.000       9785.000
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=7>
 
@@ -189,8 +211,9 @@ Results:
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
 <A name=8>
 
@@ -258,7 +281,7 @@ Tocher, The Art Of Simulation, 1963, Pages 39-40.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>binran (3m_datapac)</TD> <TD align=right width=33%><I>June 07, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 0950e4b8-40f4-48aa-bdfb-383089109914 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>binran (3m_datapac)</TD> <TD align=right width=33%><I>June 07, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 57d7fb4c-1bd4-43bd-bc8b-d9c182e2ab86 using man macros.</FONT>
 <br><br><center><img src="images/binran.gif"></center>
 </div>
 </div>

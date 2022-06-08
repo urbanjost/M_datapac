@@ -2,7 +2,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tplt.3m_datapac.man
 NAME
    tplt(3f) - [M_datapac:LINE_PLOT] generates a student's
-   t probability plot (with integer degrees of freedom parameter value
+   T probability plot (with integer degrees of freedom parameter value
    NU).
 
 SYNOPSIS

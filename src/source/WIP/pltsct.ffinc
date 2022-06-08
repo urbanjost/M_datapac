@@ -1,8 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file pltsct.3m_datapac.man
 NAME
-   pltsct(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-   special plot characters for the terminal (71 characters wide)
+   pltsct(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+   plot with special plot characters for the terminal (71 characters wide)
 
 SYNOPSIS
       SUBROUTINE PLTSCT(Y,X,Char,N,D,Dmin,Dmax)

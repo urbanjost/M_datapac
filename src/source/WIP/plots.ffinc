@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plots.3m_datapac.man
 NAME
-   plots(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of Y vs X
+   plots(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+   plot of Y vs X
 
 SYNOPSIS
       SUBROUTINE PLOTS(Y,X,N,D,Dmin,Dmax)

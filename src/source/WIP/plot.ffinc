@@ -1,8 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plot.3m_datapac.man
 NAME
-   plot(3f) - [M_datapac:LINE_PLOT] yields a one-page printer
-   plot of y(i) versus x(i)
+   plot(3f) - [M_datapac:GENERIC_LINE_PLOT] yields a one-page printer
+   plot of Y(I) versus X(I)
 
 SYNOPSIS
     Subroutine plot (X, Y, N)

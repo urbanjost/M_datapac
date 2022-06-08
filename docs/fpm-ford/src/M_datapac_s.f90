@@ -381,15 +381,15 @@ end subroutine autoco
 !!    program demo_betran
 !!    use M_datapac, only : betran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call betran(x,y)
 !!    end program demo_betran
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
@@ -407,12 +407,14 @@ end subroutine autoco
 !!
 !!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Pages 36-37.
 !!
-!!   * Johnson and Kotz, Continuous Univariate Distributions --2, 1970, Pages 37-56.
+!!   * Johnson and Kotz, Continuous Univariate Distributions --2, 1970,
+!!     Pages 37-56.
 !!
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook For
 !!     Students and Practitioners, 1975, Pages 30-35.
 !!
-!!   * National Bureau of Standards Applied Mathematics Series 55, 1964, Page 952.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 952.
 !     VERSION NUMBER--82.3
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -427,18 +429,10 @@ INTEGER ::  i , Iseed , N
 
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-      DIMENSION X(:)
-      DIMENSION u(10)
-!---------------------------------------------------------------------
-!
-!-----DATA STATEMENTS-------------------------------------------------
-!
-      DATA athird/0.33333333_wp/
-      DATA sqrt3/1.73205081_wp/
-!
-!
+DIMENSION X(:)
+DIMENSION u(10)
+DATA athird/0.33333333_wp/
+DATA sqrt3/1.73205081_wp/
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -598,7 +592,7 @@ END SUBROUTINE BETRAN
 !!    program demo_bincdf
 !!    use M_datapac, only : bincdf
 !!    implicit none
-!!    ! call bincdf(x,y)
+!!    !call BINCDF(X,P,N,Cdf)
 !!    end program demo_bincdf
 !!
 !!   Results:
@@ -919,7 +913,6 @@ END SUBROUTINE BINCDF
 !!    program demo_binppf
 !!    use M_datapac, only : binppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call binppf(x,y)
 !!    end program demo_binppf
 !!
@@ -1258,28 +1251,34 @@ END SUBROUTINE BINPPF
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
+!!       SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
+!!
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(in)  :: P
+!!        INTEGER,intent(in)        :: Npar
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X
 !!
 !!##DESCRIPTION
-!!    BINRAN(3f) generates a random sample of size n from the binomial
-!!    distribution with 'bernoulli probability' parameter =
-!!    p, and integer 'number of bernoulli trials' parameter = npar.
+!!    BINRAN(3f) generates a random sample of size N from the binomial
+!!    distribution with 'Bernoulli probability' parameter =
+!!    P, and integer 'number of bernoulli trials' parameter = NPAR.
 !!
-!!    the binomial distribution used herein has mean = npar*p and standard
-!!    deviation = sqrt(npar*p*(1-p)).
+!!    The binomial distribution used herein has mean = NPAR*P and standard
+!!    deviation = sqrt(NPAR*P*(1-P)).
 !!
-!!    this distribution is defined for all discrete integer x between 0
-!!    (inclusively) and npar (inclusively). This distribution has the
+!!    This distribution is defined for all discrete integer X between 0
+!!    (inclusively) and NPAR (inclusively). This distribution has the
 !!    probability function
 !!
-!!        f(x) = c(npar,x) * p**x * (1-p)**(npar-x).
+!!        f(X) = c(NPAR,X) * P**X * (1-P)**(NPAR-X)
 !!
-!!    where c(npar,x) is the combinatorial function equaling the number of
-!!    combinations of npar items taken x at a time.
+!!    Where c(NPAR,X) is the combinatorial function equaling the number of
+!!    combinations of NPAR items taken X at a time.
 !!
-!!    the binomial distribution is the distribution of the number of
-!!    successes in npar bernoulli (0,1) trials where the probability of
-!!    success in a precision trial = p.
+!!    The binomial distribution is the distribution of the number of
+!!    successes in NPAR Bernoulli (0,1) trials where the probability of
+!!    success in a precision trial = P.
 !!
 !!##OPTIONS
 !!##INPUT ARGUMENTS
@@ -1287,16 +1286,21 @@ END SUBROUTINE BINPPF
 !!   N      The desired integer number of random numbers to be generated.
 !!
 !!   P      The value of the 'Bernoulli probability' parameter for the
-!!          binomial distribution.  P should be between 0.0 (exclusively)
+!!          binomial distribution. P should be between 0.0 (exclusively)
 !!          and 1.0 (exclusively).
 !!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!   NPAR   The integer value of the 'number of Bernoulli trials'
-!!          parameter.  NPAR should be a positive integer.
+!!          parameter. NPAR should be a positive integer.
 !!
 !!##OUTPUT ARGUMENTS
 !!
 !!   X     A vector (of dimension at least N) into which the generated
-!!         random sample of size n from the binomial distribution
+!!         random sample of size N from the binomial distribution
 !!         will be placed; with 'Bernoulli probability' parameter = P
 !!         and 'number of Bernoulli trials' parameter = NPAR.
 !!
@@ -1307,19 +1311,38 @@ END SUBROUTINE BINPPF
 !!    program demo_binran
 !!    use M_datapac, only : binran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
-!!    ! call binran(x,y)
+!!    real :: x(40), P
+!!    integer :: N, Npar, Iseed
+!!       Iseed=0
+!!       P=0.88
+!!       N=size(x)
+!!       Npar=11111
+!!       call BINRAN(N,P,Npar,Iseed,X)
+!!       write(*,*)X
 !!    end program demo_binran
 !!
 !!   Results:
 !!
+!!       9746.000       9795.000       9855.000       9805.000       9787.000
+!!       9746.000       9764.000       9774.000       9767.000       9752.000
+!!       9770.000       9784.000       9821.000       9805.000       9784.000
+!!       9734.000       9805.000       9813.000       9792.000       9785.000
+!!       9784.000       9815.000       9785.000       9748.000       9718.000
+!!       9728.000       9824.000       9782.000       9776.000       9850.000
+!!       9770.000       9821.000       9819.000       9724.000       9783.000
+!!       9789.000       9813.000       9798.000       9747.000       9785.000
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
 !!   * Hastings and Peacock, Statistical Distributions,
@@ -1341,103 +1364,93 @@ END SUBROUTINE BINPPF
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
-REAL(kind=wp) :: g(1) , P , u(1) , X
-INTEGER i , ig , Iseed , isum , j , N , Npar
-!
-!     RESTRICTIONS--
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!                 --NPAR SHOULD BE A POSITIVE INTEGER.
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: P
+INTEGER,intent(in)        :: Npar
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
 
-!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
-!              FROM THIS DISCRETE RANDOM NUMBER
-!              GENERATOR MUST NECESSARILY BE A
-!              SEQUENCE OF ***INTEGER*** VALUES,
-!              THE OUTPUT VECTOR X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
+REAL(kind=wp) :: g(1) , u(1)
+INTEGER       :: i , ig , isum , j
 !
-!---------------------------------------------------------------------
-      DIMENSION X(:)
+!   NOTE THAT EVEN THOUGH THE OUTPUT FROM THIS DISCRETE RANDOM NUMBER
+!   GENERATOR MUST NECESSARILY BE A SEQUENCE OF ***INTEGER*** VALUES,
+!   THE OUTPUT VECTOR X IS SINGLE PRECISION IN MODE.  X HAS BEEN SPECIFIED
+!   AS SINGLE PRECISION SO AS TO CONFORM WITH THE DATAPAC CONVENTION THAT
+!   ALL OUTPUT VECTORS FROM ALL THIS CONVENTION IS BASED ON THE BELIEF THAT
+!
+!    1) A MIXTURE OF MODES (FLOATING POINT VERSUS INTEGER) IS INCONSISTENT
+!       AND AN UNNECESSARY COMPLICATION IN A DATA ANALYSIS; AND
+!    2) FLOATING POINT MACHINE ARITHMETIC (AS OPPOSED TO INTEGER
+!       ARITHMETIC) IS THE MORE NATURAL MODE FOR DOING DATA ANALYSIS.
+!
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-         99001    FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINRAN SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99005) N
-         RETURN
-      ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99002)
-         99002 FORMAT (&
-         & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99003) P
-         99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-         RETURN
-      ELSEIF ( Npar<1 ) THEN
-         WRITE (G_IO,99004)
-         99004    FORMAT (' ','***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINRAN SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99005) Npar
-         RETURN
-      ELSEIF ( P<0.1_wp ) THEN
-         !
-         !     CHECK ON THE MAGNITUDE OF P,
-         !     AND BRANCH TO THE FASTER
-         !     GENERATION METHOD ACCORDINGLY.
-         !
-         !
-         !     IF P IS SMALL,
-         !     GENERATE N BINOMIAL NUMBERS
-         !     USING THE FACT THAT THE
-         !     WAITING TIME FOR 1 SUCCESS IN
-         !     BERNOULLI TRIALS HAS A
-         !     GEOMETRIC DISTRIBUTION.
-         !
-         DO i = 1 , N
-            isum = 0
-            j = 1
-            DO
-               CALL GEORAN(1,P,Iseed,g)
-               ig = g(1) + 0.5_wp
-               isum = isum + ig + 1
-               IF ( isum>Npar ) THEN
-                  X(i) = j - 1
-                  EXIT
-               ELSE
-                  j = j + 1
-               ENDIF
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE FIRST INPUT ARGUMENT TO BINRAN(3f) IS NON-POSITIVE *****')
+      WRITE (G_IO,99005) N
+      RETURN
+   ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99002)
+      99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO BINRAN(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      WRITE (G_IO,99003) P
+      99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      RETURN
+   ELSEIF ( Npar<1 ) THEN
+      WRITE (G_IO,99004)
+      99004    FORMAT (' ','***** FATAL ERROR--THE THIRD INPUT ARGUMENT TO BINRAN(3f) IS NON-POSITIVE *****')
+      WRITE (G_IO,99005) Npar
+      RETURN
+   ELSEIF ( P<0.1_wp ) THEN
       !
-      !     IF P IS MODERATE OR LARGE,
-      !     GENERATE N BINOMIAL RANDOM NUMBERS
-      !     USING THE REJECTION METHOD.
+      !     CHECK ON THE MAGNITUDE OF P,
+      !     AND BRANCH TO THE FASTER
+      !     GENERATION METHOD ACCORDINGLY.
+      !
+      !
+      !     IF P IS SMALL,
+      !     GENERATE N BINOMIAL NUMBERS
+      !     USING THE FACT THAT THE
+      !     WAITING TIME FOR 1 SUCCESS IN
+      !     BERNOULLI TRIALS HAS A
+      !     GEOMETRIC DISTRIBUTION.
       !
       DO i = 1 , N
          isum = 0
-         DO j = 1 , Npar
-            CALL UNIRAN(1,Iseed,u)
-            IF ( u(1)<=P ) isum = isum + 1
+         j = 1
+         DO
+            CALL GEORAN(1,P,Iseed,g)
+            ig = g(1) + 0.5_wp
+            isum = isum + ig + 1
+            IF ( isum>Npar ) THEN
+               X(i) = j - 1
+               EXIT
+            ELSE
+               j = j + 1
+            ENDIF
          ENDDO
-         X(i) = isum
       ENDDO
-      RETURN
-99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-!
+      GOTO 99999
+   ENDIF
+   !
+   !     IF P IS MODERATE OR LARGE,
+   !     GENERATE N BINOMIAL RANDOM NUMBERS
+   !     USING THE REJECTION METHOD.
+   !
+   DO i = 1 , N
+      isum = 0
+      DO j = 1 , Npar
+         CALL UNIRAN(1,Iseed,u)
+         IF ( u(1)<=P ) isum = isum + 1
+      ENDDO
+      X(i) = isum
+   ENDDO
+   RETURN
+   99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+
 99999 continue
 END SUBROUTINE BINRAN
 !>
@@ -1580,25 +1593,25 @@ end subroutine caucdf
 !!
 !!##EXAMPLES
 !!
-!!   Sample program:
+!!    Sample program:
 !!
-!!    program demo_caupdf
-!!    !@(#) line plotter graph of probability density function
-!!    use M_datapac, only : caupdf, plott, label
-!!    implicit none
-!!    real,allocatable  :: x(:), y(:)
-!!    integer           :: i
-!!       call label('caupdf')
-!!       x=[(real(i),i=-100,100,1)]
-!!       if(allocated(y))deallocate(y)
-!!       allocate(y(size(x)))
-!!       do i=1,size(x)
-!!          call caupdf(x(i)/10.0,y(i))
-!!       enddo
-!!       call plott(x,y,size(x))
-!!    end program demo_caupdf
+!!     program demo_caupdf
+!!     !@(#) line plotter graph of probability density function
+!!     use M_datapac, only : caupdf, plott, label
+!!     implicit none
+!!     real,allocatable  :: x(:), y(:)
+!!     integer           :: i
+!!        call label('caupdf')
+!!        x=[(real(i),i=-100,100,1)]
+!!        if(allocated(y))deallocate(y)
+!!        allocate(y(size(x)))
+!!        do i=1,size(x)
+!!           call caupdf(x(i)/10.0,y(i))
+!!        enddo
+!!        call plott(x,y,size(x))
+!!     end program demo_caupdf
 !!
-!!   Results:
+!!    Results:
 !!
 !!     The following is a plot of Y(i) (vertically) versus X(i) (horizontally)
 !!                       I-----------I-----------I-----------I-----------I
@@ -1877,7 +1890,6 @@ END SUBROUTINE CAUPLT
 !!    program demo_cauppf
 !!    use M_datapac, only : cauppf, label
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    call label('cauppf')
 !!    ! call cauppf(x,y)
 !!    end program demo_cauppf
@@ -1959,7 +1971,6 @@ END SUBROUTINE CAUPPF
 !!    program demo_cauran
 !!    use M_datapac, only : cauran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call cauran(x,y)
 !!    end program demo_cauran
 !!
@@ -2090,7 +2101,6 @@ END SUBROUTINE CAURAN
 !!    program demo_causf
 !!    use M_datapac, only : causf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call causf(x,y)
 !!    end program demo_causf
 !!
@@ -2155,13 +2165,13 @@ END SUBROUTINE CAUSF
 !!        INTEGER,intent(in) :: Nu
 !!
 !!##DESCRIPTION
-!!    chscdf(3f) computes the cumulative distribution function value for
+!!    CHSCDF(3f) computes the cumulative distribution function value for
 !!    the chi-squared distribution with integer degrees of freedom parameter
-!!    = nu.
+!!    = NU.
 !!
-!!    this distribution is defined for all non-negative x.
+!!    This distribution is defined for all non-negative X.
 !!
-!!    the probability density function is given in the references below.
+!!    The probability density function is given in the references below.
 !!
 !!##INPUT ARGUMENTS
 !!
@@ -2194,13 +2204,13 @@ END SUBROUTINE CAUSF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  * national bureau of standards applied mathematics series 55, 1964,
-!!    page 941, formulae 26.4.4 and 26.4.5.
-!!  * johnson and kotz, continuous univariate distributions--1, 1970,
-!!    page 176, formula 28, and page 180, formula 33.1.
-!!  * owen, handbook of statistical tables, 1962, pages 50-55.
-!!  * pearson and hartley, biometrika tables for statisticians, volume 1,
-!!    1954, pages 122-131.
+!!  * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!    Page 941, Formulae 26.4.4 and 26.4.5.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!    Page 176, Formula 28, and Page 180, Formula 33.1.
+!!  * Owen, Handbook of Statistical Tables, 1962, Pages 50-55.
+!!  * Pearson and Hartley, Biometrika Tables for Statisticians, Volume 1,
+!!    1954, Pages 122-131.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -2438,7 +2448,6 @@ DATA b43/17.0D0/
 !!    program demo_chsplt
 !!    use M_datapac, only : chsplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chsplt(x,y)
 !!    end program demo_chsplt
 !!
@@ -2664,7 +2673,6 @@ END SUBROUTINE CHSPLT
 !!    program demo_chsppf
 !!    use M_datapac, only : chsppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chsppf(x,y)
 !!    end program demo_chsppf
 !!
@@ -2881,7 +2889,6 @@ END SUBROUTINE CHSPPF
 !!    program demo_chsran
 !!    use M_datapac, only : chsran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call chsran(x,y)
 !!    end program demo_chsran
 !!
@@ -3025,7 +3032,6 @@ END SUBROUTINE CHSRAN
 !!    program demo_code
 !!    use M_datapac, only : code
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call code(x,y)
 !!    end program demo_code
 !!
@@ -3186,7 +3192,6 @@ END SUBROUTINE CODE
 !!    program demo_copy
 !!    use M_datapac, only : copy
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call copy(x,y)
 !!    end program demo_copy
 !!
@@ -3292,7 +3297,6 @@ END SUBROUTINE COPY
 !!    program demo_corr
 !!    use M_datapac, only : corr
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call corr(x,y)
 !!    end program demo_corr
 !!
@@ -3463,7 +3467,6 @@ END SUBROUTINE CORR
 !!    program demo_count
 !!    use M_datapac, only : count
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call count(x,y)
 !!    end program demo_count
 !!
@@ -3625,7 +3628,6 @@ END SUBROUTINE COUNT
 !!    program demo_decomp
 !!    use M_datapac, only : decomp
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call decomp(x,y)
 !!    end program demo_decomp
 !!
@@ -3814,7 +3816,6 @@ END SUBROUTINE DECOMP
 !!    program demo_define
 !!    use M_datapac, only : define
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call define(x,y)
 !!    end program demo_define
 !!
@@ -3930,7 +3931,6 @@ END SUBROUTINE DEFINE
 !!    program demo_delete
 !!    use M_datapac, only : delete
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call delete(x,y)
 !!    end program demo_delete
 !!
@@ -4132,7 +4132,6 @@ END SUBROUTINE DELETE
 !!    program demo_demod
 !!    use M_datapac, only : demod
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call demod(x,y)
 !!    end program demo_demod
 !!
@@ -4664,7 +4663,6 @@ end subroutine dexpdf
 !!    program demo_dexplt
 !!    use M_datapac, only : dexplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexplt(x,y)
 !!    end program demo_dexplt
 !!
@@ -4852,7 +4850,6 @@ END SUBROUTINE DEXPLT
 !!    program demo_dexppf
 !!    use M_datapac, only : dexppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexppf(x,y)
 !!    end program demo_dexppf
 !!
@@ -4944,7 +4941,6 @@ END SUBROUTINE DEXPPF
 !!    program demo_dexran
 !!    use M_datapac, only : dexran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexran(x,y)
 !!    end program demo_dexran
 !!
@@ -5047,7 +5043,6 @@ end subroutine dexran
 !!    program demo_dexsf
 !!    use M_datapac, only : dexsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call dexsf(x,y)
 !!    end program demo_dexsf
 !!
@@ -5141,7 +5136,6 @@ END SUBROUTINE DEXSF
 !!    program demo_discr2
 !!    use M_datapac, only : discr2
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call discr2(x,y)
 !!    end program demo_discr2
 !!
@@ -5397,7 +5391,6 @@ END SUBROUTINE DISCR2
 !!    program demo_discr3
 !!    use M_datapac, only : discr3
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call discr3(x,y)
 !!    end program demo_discr3
 !!
@@ -5635,7 +5628,6 @@ END SUBROUTINE DISCR3
 !!    program demo_discre
 !!    use M_datapac, only : discre
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call discre(x,y)
 !!    end program demo_discre
 !!
@@ -5985,7 +5977,7 @@ end subroutine dot
 !!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (exp(-x)) * (exp(-(exp(-x))))
+!!        f(X) = (exp(-X)) * (exp(-(exp(-X))))
 !!
 !!##INPUT ARGUMENTS
 !!
@@ -6082,7 +6074,6 @@ END SUBROUTINE EV1CDF
 !!    program demo_ev1plt
 !!    use M_datapac, only : ev1plt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1plt(x,y)
 !!    end program demo_ev1plt
 !!
@@ -6272,7 +6263,6 @@ END SUBROUTINE EV1PLT
 !!    program demo_ev1ppf
 !!    use M_datapac, only : ev1ppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1ppf(x,y)
 !!    end program demo_ev1ppf
 !!
@@ -6342,7 +6332,6 @@ END SUBROUTINE EV1PPF
 !!    program demo_ev1ran
 !!    use M_datapac, only : ev1ran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev1ran(x,y)
 !!    end program demo_ev1ran
 !!
@@ -6450,7 +6439,6 @@ END SUBROUTINE EV1RAN
 !!    program demo_ev2cdf
 !!    use M_datapac, only : ev2cdf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2cdf(x,y)
 !!    end program demo_ev2cdf
 !!
@@ -6543,7 +6531,6 @@ END SUBROUTINE EV2CDF
 !!    program demo_ev2plt
 !!    use M_datapac, only : ev2plt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2plt(x,y)
 !!    end program demo_ev2plt
 !!
@@ -6759,7 +6746,6 @@ END SUBROUTINE EV2PLT
 !!    program demo_ev2ppf
 !!    use M_datapac, only : ev2ppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2ppf(x,y)
 !!    end program demo_ev2ppf
 !!
@@ -6843,7 +6829,6 @@ END SUBROUTINE EV2PPF
 !!    program demo_ev2ran
 !!    use M_datapac, only : ev2ran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ev2ran(x,y)
 !!    end program demo_ev2ran
 !!
@@ -7164,7 +7149,6 @@ END SUBROUTINE EXPPDF
 !!    program demo_expplt
 !!    use M_datapac, only : expplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expplt(x,y)
 !!    end program demo_expplt
 !!
@@ -7346,7 +7330,6 @@ END SUBROUTINE EXPPLT
 !!    program demo_expppf
 !!    use M_datapac, only : expppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expppf(x,y)
 !!    end program demo_expppf
 !!
@@ -7423,7 +7406,6 @@ END SUBROUTINE EXPPPF
 !!    program demo_expran
 !!    use M_datapac, only : expran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expran(x,y)
 !!    end program demo_expran
 !!
@@ -7542,7 +7524,6 @@ END SUBROUTINE EXPRAN
 !!    program demo_expsf
 !!    use M_datapac, only : expsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call expsf(x,y)
 !!    end program demo_expsf
 !!
@@ -7646,7 +7627,6 @@ END SUBROUTINE EXPSF
 !!    program demo_extrem
 !!    use M_datapac, only : extrem
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call extrem(x,y)
 !!    end program demo_extrem
 !!
@@ -8067,15 +8047,25 @@ CHARACTER(len=4) :: iflag3
 !!       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 !!
 !!##DESCRIPTION
-!!    fcdf(3f) computes the cumulative distribution function value for the f
-!!    distribution with integer degrees of freedom parameters = nu1 and nu2.
+!!    FCDF(3f) computes the cumulative distribution function value for the F
+!!    distribution with integer degrees of freedom parameters = NU1 and NU2.
 !!
-!!    this distribution is defined for all non-negative x. the probability
+!!    This distribution is defined for all non-negative X. The probability
 !!    density function is given in the references below.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X      The value at which the cumulative distribution function is to
+!!           be evaluated. X should be non-negative.
+!!
+!!    NU1    The integer degrees of freedom for the numerator of the F
+!!           ratio. NU1 should be positive.
+!!
+!!    NU2    The integer degrees of freedom for the denominator of the F
+!!           ratio. NU2 should be positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the F distribution
 !!
 !!##EXAMPLES
 !!
@@ -8101,64 +8091,35 @@ CHARACTER(len=4) :: iflag3
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGES 946-947, FORMULAE 26.6.4, 26.6.5, 26.6.8, AND 26.6.15.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGE 83, FORMULA 20, AND PAGE 84, THIRD FORMULA.
-!!   * PAULSON, AN APPROXIMATE NORMALIZATION OF THE ANALYSIS OF VARIANCE
-!!     DISTRIBUTION, ANNALS OF MATHEMATICAL STATISTICS, 1942, NUMBER 13,
-!!     PAGES 233-135.
-!!   * SCHEFFE AND TUKEY, A FORMULA FOR SAMPLE SIZES FOR POPULATION TOLERANCE
-!!     LIMITS, 1944, NUMBER 15, PAGE 217.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
-REAL(kind=wp) :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X ,      &
-     &     zratio
-INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
-     &        m , n , Nu1 , Nu2 , nucut1 , nucut2
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE.
-!                     --NU1    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE NUMERATOR OF THE F RATIO.
-!                                NU1 SHOULD BE POSITIVE.
-!                     --NU2    = THE INTEGER DEGREES OF FREEDOM
-!                                FOR THE DENOMINATOR OF THE F RATIO.
-!                                NU2 SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE F DISTRIBUTION
-!             WITH DEGREES OF FREEDOM
-!             PARAMETERS = NU1 AND NU2.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!                 --NU1 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!                 --NU2 SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF,CHSCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Pages 946-947, Formulae 26.6.4, 26.6.5, 26.6.8, and 26.6.15.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Page 83, Formula 20, and Page 84, Third formula.
+!!   * Paulson, An Approximate Normalization of the Analysis of Variance
+!!     Distribution, Annals of Mathematical Statistics, 1942, Number 13,
+!!     Pages 233-135.
+!!   * Scheffe and Tukey, A Formula for Sample Sizes for Population Tolerance
+!!     Limits, 1944, Number 15, Page 217.
 !     ORIGINAL VERSION--AUGUST    1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , pi , anu1 , anu2 , z , sum , term , ai ,    &
-     &                 coef1 , coef2 , arg
-      DOUBLE PRECISION coef
-      DOUBLE PRECISION theta , sinth , costh , a , b
-      DOUBLE PRECISION DSQRT , DATAN
-      DOUBLE PRECISION dfact1 , dfact2 , dnum , dden
-      DOUBLE PRECISION dpow1 , dpow2
-      DOUBLE PRECISION dnu1 , dnu2
-      DOUBLE PRECISION term1 , term2 , term3
-      DATA pi/3.14159265358979D0/
-      DATA dpow1 , dpow2/0.33333333333333D0 , 0.66666666666667D0/
-      DATA nucut1 , nucut2/100 , 1000/
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
+REAL(kind=wp)    :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X , zratio
+INTEGER          :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , m , n , Nu1 , Nu2 , nucut1 , nucut2
+DOUBLE PRECISION :: dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
+DOUBLE PRECISION :: coef
+DOUBLE PRECISION :: theta , sinth , costh , a , b
+DOUBLE PRECISION :: DSQRT , DATAN
+DOUBLE PRECISION :: dfact1 , dfact2 , dnum , dden
+DOUBLE PRECISION :: dpow1 , dpow2
+DOUBLE PRECISION :: dnu1 , dnu2
+DOUBLE PRECISION :: term1 , term2 , term3
+DATA pi/3.14159265358979D0/
+DATA dpow1 , dpow2/0.33333333333333D0 , 0.66666666666667D0/
+DATA nucut1 , nucut2/100 , 1000/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -8483,7 +8444,6 @@ INTEGER :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , &
 !!    program demo_fourie
 !!    use M_datapac, only : fourie
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call fourie(x,y)
 !!    end program demo_fourie
 !!
@@ -8819,7 +8779,6 @@ END SUBROUTINE FOURIE
 !!    program demo_fran
 !!    use M_datapac, only : fran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call fran(x,y)
 !!    end program demo_fran
 !!
@@ -8948,7 +8907,6 @@ END SUBROUTINE FRAN
 !!    program demo_freq
 !!    use M_datapac, only : freq
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call freq(x,y)
 !!    end program demo_freq
 !!
@@ -9112,23 +9070,45 @@ END SUBROUTINE FREQ
 !!
 !!       SUBROUTINE GAMCDF(X,Gamma,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: Gamma
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    gamcdf(3f) computes the cumulative distribution function value for the
-!!    gamma distribution with precision precision tail length parameter = gamma.
+!!    GAMCDF(3f) computes the cumulative distribution function value for
+!!    the gamma distribution with precision precision tail length parameter
+!!    = GAMMA.
 !!
-!!    the gamma distribution used herein has mean = gamma and standard
-!!    deviation = sqrt(gamma).
+!!    The Gamma distribution used herein has mean = GAMMA and standard
+!!    deviation = sqrt(GAMMA).
 !!
-!!    this distribution is defined for all positive x, and has the
+!!    This distribution is defined for all positive X, and has the
 !!    probability density function
 !!
-!!        f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!        f(X) = (1/constant) * (X**(GAMMA-1)) * exp(-X)
 !!
-!!    where the constant = the gamma function evaluated at the value gamma.
+!!    Where the constant = the Gamma function evaluated at the value GAMMA.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Note the mode of internal operations is DOUBLE PRECISION.
+!!
+!!##ACCURACY
+!!
+!!   (On the UNIVAC 1108, EXEC 8 system at NBS)
+!!
+!!    Compared to the known GAMMA = 1 (exponential) results, agreement
+!!    was had out to 7 significant digits for all tested X.  The tested X
+!!    values covered the entire range of the distribution--from the 0.00001
+!!    percent point up to the 99.99999 percent point of the distribution.
+!!
+!!##INPUT ARGUMENTS
+!!    X      The value at which the cumulative distribution function is
+!!           to be evaluated. X should be positive.
+!!    GAMMA  The value of the tail length parameter. GAMMA should be positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the gamma
+!!           distribution
 !!
 !!##EXAMPLES
 !!
@@ -9143,12 +9123,16 @@ END SUBROUTINE FREQ
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
 !!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
@@ -9158,50 +9142,24 @@ END SUBROUTINE FREQ
 !!     PAGES 166-206.
 !!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GAMCDF(X,Gamma,Cdf)
-REAL(kind=wp) :: Cdf , Gamma , X
-INTEGER :: i , maxit
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE POSITIVE.
-!                     --GAMMA  = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE GAMMA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --X SHOULD BE POSITIVE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
-!               COMPARED TO THE KNOWN GAMMA = 1 (EXPONENTIAL)
-!               RESULTS, AGREEMENT WAS HAD OUT TO 7 SIGNIFICANT
-!               DIGITS FOR ALL TESTED X.
-!               THE TESTED X VALUES COVERED THE ENTIRE
-!               RANGE OF THE DISTRIBUTION--FROM THE 0.00001
-!               PERCENT POINT UP TO THE 99.99999 PERCENT POINT
-!               OF THE DISTRIBUTION.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , dgamma , ai , term , sum , cut1 , cut2 ,    &
-     &                 cutoff , t
-      DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d , g
-      DOUBLE PRECISION DEXP , DLOG
-      DIMENSION d(10)
-      DATA c/.918938533204672741D0/
-      DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE GAMCDF(X,Gamma,Cdf)
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Cdf
+INTEGER :: i , maxit
+DOUBLE PRECISION dx , dgamma , ai , term , sum , cut1 , cut2 , cutoff , t
+DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d , g
+DOUBLE PRECISION DEXP , DLOG
+DIMENSION d(10)
+DATA c/.918938533204672741D0/
+DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
      &     -.277777777777777778D-2 , +.793650793650793651D-3 ,          &
      &     -.595238095238095238D-3 , +.841750841750841751D-3/
-      DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
+DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
      &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
      &     +.179644372368830573D0 , -.139243221690590111D1/
 !
@@ -9332,7 +9290,6 @@ END SUBROUTINE GAMCDF
 !!    program demo_gamplt
 !!    use M_datapac, only : gamplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamplt(x,y)
 !!    end program demo_gamplt
 !!
@@ -9701,7 +9658,6 @@ END SUBROUTINE GAMPLT
 !!    program demo_gamppf
 !!    use M_datapac, only : gamppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamppf(x,y)
 !!    end program demo_gamppf
 !!
@@ -9943,7 +9899,6 @@ END SUBROUTINE GAMPPF
 !!    program demo_gamran
 !!    use M_datapac, only : gamran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call gamran(x,y)
 !!    end program demo_gamran
 !!
@@ -10102,34 +10057,61 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE GAMRAN
 !>
 !!##NAME
-!!    geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric cumulative
-!!    distribution function
+!!    geocdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the geometric
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE GEOCDF(X,P,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    geocdf(3f) computes the cumulative distribution function value at the
-!!    precision precision value x for the geometric distribution with precision
-!!    precision 'bernoulli probability' parameter = p.
+!!    GEOCDF(3f) computes the cumulative distribution function value at the
+!!    precision precision value X for the geometric distribution with precision
+!!    precision 'Bernoulli probability' parameter = P.
 !!
-!!    the geometric distribution used herein herein has mean = (1-p)/p and
-!!    standard deviation = sqrt((1-p)/(p*p))).
+!!    The geometric distribution used herein herein has mean = (1-P)/P and
+!!    standard deviation = sqrt((1-P)/(P*P))).
 !!
-!!    this distribution is defined for all non-negative integer x--x = 0,
-!!    1, 2, ... . this distribution has the probability function
+!!    This distribution is defined for all non-negative integer X where X =
+!!    0, 1, 2, ... . This distribution has the probability function
 !!
-!!        f(x) = p * (1-p)**x.
+!!        f(X) = P * (1-P)**X
 !!
-!!    the geometric distribution is the distribution of the number of
+!!    The geometric distribution is the distribution of the number of
 !!    failures before obtaining 1 success in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a precision
-!!    trial = p.
+!!    Bernoulli (0,1) trials where the probability of success in a precision
+!!    trial = P.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Note that even though the input to this cumulative distribution
+!!    function subroutine for this discrete distribution should (under normal
+!!    circumstances) be a discrete integer value, the input variable X is REAL.
+!!    X has been specified as REAL so as to conform with the datapac convention
+!!    that all input ****data**** (as opposed to sample size, for example)
+!!    variables to all datapac subroutines are.
+!!
+!!    This convention is based on the belief that
+!!
+!!     1. A mixture of modes (floating point versus integer) is inconsistent
+!!        and an unnecessary complication in a data analysis; and
+!!     2. Floating point machine arithmetic (as opposed to integer
+!!        arithmetic) is the more natural mode for doing data analysis.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the cumulative distribution function is
+!!           to be evaluated. X should be non-negative and integral-valued.
+!!    P      The value of the 'Bernoulli probability' parameter for the
+!!           geometric distribution.  P should be between 0.0 (exclusively)
+!!           and 1.0 (exclusively).
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the geometric
+!!           distribution
 !!
 !!##EXAMPLES
 !!
@@ -10144,8 +10126,9 @@ END SUBROUTINE GAMRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
@@ -10159,56 +10142,12 @@ END SUBROUTINE GAMRAN
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE GEOCDF(X,P,Cdf)
-REAL(kind=wp) :: Cdf , del , fintx , P , X
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(in) :: P
+REAL(kind=wp),intent(out) :: Cdf
+REAL(kind=wp) :: del , fintx
 INTEGER intx
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE AND
-!                                INTEGRAL-VALUED.
-!                     --P      = THE  VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE GEOMETRIC
-!                                DISTRIBUTION.
-!                                P SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF
-!             FOR THE GEOMETRIC DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
-!              TO THIS CUMULATIVE
-!              DISTRIBUTION FUNCTION SUBROUTINE
-!              FOR THIS DISCRETE DISTRIBUTION
-!              SHOULD (UNDER NORMAL CIRCUMSTANCES) BE A
-!              DISCRETE INTEGER VALUE,
-!              THE INPUT VARIABLE X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL INPUT ****DATA****
-!              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
-!              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE .
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
-!---------------------------------------------------------------------
+
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
@@ -10230,6 +10169,7 @@ INTEGER intx
          ENDIF
          Cdf = 1.0_wp - (1.0_wp-P)**(X+1.0_wp)
       ENDIF
+
 99001 FORMAT(' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
 99002 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NEGATIVE *****')
 99003 FORMAT(' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE GEOCDF SUBROUTINE IS NON-INTEGRAL *****')
@@ -10287,7 +10227,6 @@ END SUBROUTINE GEOCDF
 !!    program demo_geoplt
 !!    use M_datapac, only : geoplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call geoplt(x,y)
 !!    end program demo_geoplt
 !!
@@ -10504,7 +10443,6 @@ END SUBROUTINE GEOPLT
 !!    program demo_geoppf
 !!    use M_datapac, only : geoppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call geoppf(x,y)
 !!    end program demo_geoppf
 !!
@@ -10652,7 +10590,6 @@ INTEGER iratio
 !!    program demo_georan
 !!    use M_datapac, only : georan
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call georan(x,y)
 !!    end program demo_georan
 !!
@@ -10788,95 +10725,127 @@ END SUBROUTINE GEORAN
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE HFNCDF(X,Cdf)
+!!       REAL(kind=wp),intent(in) :: X
+!!       REAL(kind=wp),intent(out) :: Cdf
 !!
 !!##DESCRIPTION
-!!    hfncdf(3f) computes the cumulative distribution function value for
+!!    HFNCDF(3f) computes the cumulative distribution function value for
 !!    the halfnormal distribution.
 !!
-!!    the halfnormal distribution used herein has mean = sqrt(2/pi) =
+!!    The halfnormal distribution used herein has mean = sqrt(2/pi) =
 !!    0.79788456 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x and has the
+!!    This distribution is defined for all non-negative x and has the
 !!    probability density function
 !!
-!!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!    f(X) = (2/sqrt(2*pi)) * exp(-X*X/2).
 !!
-!!    the halfnormal distribution used herein is the distribution of the
-!!    variate x = abs(z) where the variate z is normally distributed with
+!!    The halfnormal distribution used herein is the distribution of the
+!!    variate X = abs(z) where the variate z is normally distributed with
 !!    mean = 0 and standard deviation = 1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The value at which the cumulative distribution function is
+!!          to be evaluated.  X should be non-negative.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF   The cumulative distribution function value.
+!!          for the halfnormal distribution
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_hfncdf
-!!    use M_datapac, only : hfncdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    !@(#) for the halfnormal distribution
+!!    use M_datapac, only : hfncdf, plott, label
 !!    implicit none
-!!    ! call hfncdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       call label('hfncdf')
+!!       x=[(real(i),i=0,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call hfncdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_hfncdf
-!!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                                  X
+!!      0.9583334E+02 I                                                  X
+!!      0.9166666E+02 I                                                  X
+!!      0.8750000E+02 I                                                  X
+!!      0.8333334E+02 I                                                  X
+!!      0.7916667E+02 I                                                  X
+!!      0.7500000E+02 -                                                  X
+!!      0.7083334E+02 I                                                  X
+!!      0.6666667E+02 I                                                  X
+!!      0.6250000E+02 I                                                  X
+!!      0.5833334E+02 I                                                  X
+!!      0.5416667E+02 I                                                  X
+!!      0.5000000E+02 -                                                  X
+!!      0.4583334E+02 I                                                  X
+!!      0.4166667E+02 I                                                  X
+!!      0.3750000E+02 I                                                  X
+!!      0.3333334E+02 I                                                  X
+!!      0.2916667E+02 I                                                  X
+!!      0.2500000E+02 -                                                 XX
+!!      0.2083334E+02 I                                               XXX
+!!      0.1666667E+02 I                                            XXXX
+!!      0.1250000E+02 I                                     X X XX
+!!      0.8333336E+01 I                           X  X X  X
+!!      0.4166672E+01 I             X   X  X   X
+!!      0.0000000E+00 -  X   X   X
+!!                       I-----------I-----------I-----------I-----------I
+!!               -0.1192E-06  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+!! ================================================================================
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 53, 59, 81, 83.
-!!   * DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
-!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HFNCDF(X,Cdf)
-REAL(kind=wp) :: Cdf , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE HALFNORMAL
-!             DISTRIBUTION WITH MEAN = SQRT(2/PI) = 0.79788456
-!             AND STANDARD DEVIATION = 1.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 53, 59, 81, 83.
+!!   * Daniel, 'Use of Half-Normal Plots in Interpreting Factorial Two-level
+!!     Experiments', Technometrics, 1959, Pages 311-341.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
-!
-!---------------------------------------------------------------------
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+subroutine hfncdf(X,Cdf)
+real(kind=wp),intent(in) :: X
+real(kind=wp),intent(out) :: Cdf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<0.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE HFNC&
-     &DF SUBROUTINE IS NEGATIVE *****')
-         WRITE (G_IO,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         Cdf = 0.0_wp
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         CALL NORCDF(X,Cdf)
-         Cdf = 2.0_wp*Cdf - 1.0_wp
-      ENDIF
-!
-END SUBROUTINE HFNCDF
+   if ( X<0.0_wp ) then
+      write (G_io,99001)
+      99001 format (' ***** NON-FATAL DIAGNOSTIC--The first input argument to HFNCDF(3f) is negative *****')
+      write (G_io,99002) X
+      99002 format (' ***** The value of the argument is ',E15.8,' *****')
+      Cdf = 0.0_wp
+      return
+   else
+      call norcdf(X,Cdf)
+      Cdf = 2.0_wp*Cdf - 1.0_wp
+   endif
+
+end subroutine hfncdf
 !>
 !!##NAME
 !!    hfnplt(3f) - [M_datapac:LINE_PLOT] generate a half-normal probability
@@ -10926,7 +10895,6 @@ END SUBROUTINE HFNCDF
 !!    program demo_hfnplt
 !!    use M_datapac, only : hfnplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfnplt(x,y)
 !!    end program demo_hfnplt
 !!
@@ -11111,7 +11079,6 @@ END SUBROUTINE HFNPLT
 !!    program demo_hfnppf
 !!    use M_datapac, only : hfnppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfnppf(x,y)
 !!    end program demo_hfnppf
 !!
@@ -11203,7 +11170,6 @@ END SUBROUTINE HFNPPF
 !!    program demo_hfnran
 !!    use M_datapac, only : hfnran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hfnran(x,y)
 !!    end program demo_hfnran
 !!
@@ -11344,7 +11310,6 @@ END SUBROUTINE HFNRAN
 !!    program demo_hist
 !!    use M_datapac, only : hist
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call hist(x,y)
 !!    end program demo_hist
 !!
@@ -11768,12 +11733,12 @@ END SUBROUTINE INVXWX
 !!       SUBROUTINE LAMCDF(X,Alamba,Cdf)
 !!
 !!##DESCRIPTION
-!!    lamcdf(3f) computes the cumulative distribution function value for the
-!!    (tukey) lambda distribution with tail length parameter value = alamba.
-!!    in general, the probability density function for this distribution
+!!    LAMCDF(3f) computes the cumulative distribution function value for the
+!!    (Tukey) lambda distribution with tail length parameter value = ALAMBA.
+!!    In general, the probability density function for this distribution
 !!    is not simple.
 !!
-!!    the percent point function for this distribution is
+!!    The percent point function for this distribution is
 !!
 !!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
@@ -11794,19 +11759,23 @@ END SUBROUTINE INVXWX
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
-!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
-!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 42-44, 53-58.
+!!   * Hastings, Mosteller, Tukey, and windsor, 'Low MOments for Small
+!!     Samples:  A Comparative Study of Order Statistics', Annals of
+!!     Mathematical Statistics, 18, 1947, Pages 413-426.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, Pages 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -12115,7 +12084,6 @@ END SUBROUTINE LAMPDF
 !!    program demo_lamplt
 !!    use M_datapac, only : lamplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamplt(x,y)
 !!    end program demo_lamplt
 !!
@@ -12312,7 +12280,6 @@ END SUBROUTINE LAMPLT
 !!    program demo_lamppf
 !!    use M_datapac, only : lamppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamppf(x,y)
 !!    end program demo_lamppf
 !!
@@ -12420,7 +12387,6 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!    program demo_lamran
 !!    use M_datapac, only : lamran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamran(x,y)
 !!    end program demo_lamran
 !!
@@ -12543,7 +12509,6 @@ END SUBROUTINE LAMRAN
 !!    program demo_lamsf
 !!    use M_datapac, only : lamsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lamsf(x,y)
 !!    end program demo_lamsf
 !!
@@ -12714,7 +12679,8 @@ REAL(kind=wp) :: arg , Cdf , X
 END SUBROUTINE LGNCDF
 !>
 !!##NAME
-!!    lgnplt(3f) - [M_datapac:LINE_PLOT] generates a lognormal probability plot
+!!    lgnplt(3f) - [M_datapac:LINE_PLOT] generates a lognormal probability
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -12759,7 +12725,6 @@ END SUBROUTINE LGNCDF
 !!    program demo_lgnplt
 !!    use M_datapac, only : lgnplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgnplt(x,y)
 !!    end program demo_lgnplt
 !!
@@ -12943,7 +12908,6 @@ END SUBROUTINE LGNPLT
 !!    program demo_lgnppf
 !!    use M_datapac, only : lgnppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgnppf(x,y)
 !!    end program demo_lgnppf
 !!
@@ -13035,7 +12999,6 @@ END SUBROUTINE LGNPPF
 !!    program demo_lgnran
 !!    use M_datapac, only : lgnran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call lgnran(x,y)
 !!    end program demo_lgnran
 !!
@@ -13579,7 +13542,6 @@ END SUBROUTINE LOGPDF
 !!    program demo_logplt
 !!    use M_datapac, only : logplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logplt(x,y)
 !!    end program demo_logplt
 !!
@@ -13748,7 +13710,6 @@ END SUBROUTINE LOGPLT
 !!    program demo_logppf
 !!    use M_datapac, only : logppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logppf(x,y)
 !!    end program demo_logppf
 !!
@@ -13830,7 +13791,6 @@ END SUBROUTINE LOGPPF
 !!    program demo_logran
 !!    use M_datapac, only : logran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logran(x,y)
 !!    end program demo_logran
 !!
@@ -13945,7 +13905,6 @@ END SUBROUTINE LOGRAN
 !!    program demo_logsf
 !!    use M_datapac, only : logsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call logsf(x,y)
 !!    end program demo_logsf
 !!
@@ -15307,7 +15266,6 @@ END SUBROUTINE NBCDF
 !!    program demo_nbppf
 !!    use M_datapac, only : nbppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call nbppf(x,y)
 !!    end program demo_nbppf
 !!
@@ -15710,7 +15668,6 @@ END SUBROUTINE NBPPF
 !!    program demo_nbran
 !!    use M_datapac, only : nbran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call nbran(x,y)
 !!    end program demo_nbran
 !!
@@ -16018,7 +15975,6 @@ END SUBROUTINE NORCDF
 !!    program demo_norout
 !!    use M_datapac, only : norout
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norout(x,y)
 !!    end program demo_norout
 !!
@@ -16572,7 +16528,6 @@ END SUBROUTINE NORPDF
 !!    program demo_norplt
 !!    use M_datapac, only : norplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norplt(x,y)
 !!    end program demo_norplt
 !!
@@ -16744,7 +16699,6 @@ END SUBROUTINE NORPLT
 !!    program demo_norppf
 !!    use M_datapac, only : norppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norppf(x,y)
 !!    end program demo_norppf
 !!
@@ -16881,7 +16835,6 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !!    program demo_norran
 !!    use M_datapac, only : norran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norran(x,y)
 !!    end program demo_norran
 !!
@@ -17022,7 +16975,6 @@ END SUBROUTINE NORRAN
 !!    program demo_norsf
 !!    use M_datapac, only : norsf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call norsf(x,y)
 !!    end program demo_norsf
 !!
@@ -17227,7 +17179,6 @@ END SUBROUTINE PARCDF
 !!    program demo_parplt
 !!    use M_datapac, only : parplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parplt(x,y)
 !!    end program demo_parplt
 !!
@@ -17427,7 +17378,6 @@ END SUBROUTINE PARPLT
 !!    program demo_parppf
 !!    use M_datapac, only : parppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parppf(x,y)
 !!    end program demo_parppf
 !!
@@ -17526,7 +17476,6 @@ END SUBROUTINE PARPPF
 !!    program demo_parran
 !!    use M_datapac, only : parran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call parran(x,y)
 !!    end program demo_parran
 !!
@@ -17621,8 +17570,8 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE PARRAN
 !>
 !!##NAME
-!!    plot10(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plot10(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -17745,7 +17694,6 @@ END SUBROUTINE PARRAN
 !!    program demo_plot10
 !!    use M_datapac, only : plot10
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot10(x,y)
 !!    end program demo_plot10
 !!
@@ -18087,7 +18035,7 @@ DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
 END SUBROUTINE PLOT10
 !>
 !!##NAME
-!!    plot6(3f) - [M_datapac:LINE_PLOT] generate a line printer plot
+!!    plot6(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer plot
 !!
 !!##SYNOPSIS
 !!
@@ -18104,9 +18052,21 @@ END SUBROUTINE PLOT10
 !!    data analyst to control fully the plot axis limits, so as, for example,
 !!    to zero-in on an interesting sub-region of a previous plot.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    Y      the vector of (unsorted or sorted) observations to be plotted
+!!           vertically.
+!!    X      the vector of (unsorted or sorted) observations to be plotted
+!!           horizontally.
+!!    N      the integer number of observations in the vector y. there is
+!!           no restriction on the maximum value of n for this subroutine.
+!!    YMIN   the value of desired minimum for the vertical axis.
+!!    YMAX   the value of desired maximum for the vertical axis.
+!!    XMIN   the value of desired minimum for the horizontal axis.
+!!    XMAX   the value of desired maximum for the horizontal axis.
+!!
+!!##OUTPUT
+!!    A one-page printer plot of y(i) versus x(i), with specified axis limits.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -18115,7 +18075,6 @@ END SUBROUTINE PLOT10
 !!    program demo_plot6
 !!    use M_datapac, only : plot6
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot6(x,y)
 !!    end program demo_plot6
 !!
@@ -18140,29 +18099,6 @@ IMPLICIT NONE
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
 INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !
-!
-!     INPUT ARGUMENTS--Y      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED HORIZONTALLY.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR Y.
-!                    --YMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE VERTICAL AXIS.
-!                    --YMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE VERTICAL AXIS.
-!                    --XMIN   = THE  VALUE OF
-!                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
-!                    --XMAX   = THE  VALUE OF
-!                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
-!             WITH SPECIFIED AXIS LIMITS.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (Y)
 !              WHICH ARE SMALLER THAN YMIN OR LARGER THAN YMAX,
 !              OR VALUES IN THE HORIZONTAL AXIS VECTOR (X)
@@ -18407,8 +18343,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT6
 !>
 !!##NAME
-!!    plot7(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plot7(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -18464,7 +18400,6 @@ END SUBROUTINE PLOT6
 !!    program demo_plot7
 !!    use M_datapac, only : plot7
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot7(x,y)
 !!    end program demo_plot7
 !!
@@ -18812,8 +18747,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT7
 !>
 !!##NAME
-!!    plot8(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plot8(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -18876,7 +18811,6 @@ END SUBROUTINE PLOT7
 !!    program demo_plot8
 !!    use M_datapac, only : plot8
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot8(x,y)
 !!    end program demo_plot8
 !!
@@ -19282,7 +19216,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT8
 !>
 !!##NAME
-!!    plot9(3f) - [M_datapac:LINE_PLOT] generate a line printer
+!!    plot9(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
 !!    plot with special plot characters
 !!
 !!##SYNOPSIS
@@ -19348,7 +19282,6 @@ END SUBROUTINE PLOT8
 !!    program demo_plot9
 !!    use M_datapac, only : plot9
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plot9(x,y)
 !!    end program demo_plot9
 !!
@@ -19721,8 +19654,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT9
 !>
 !!##NAME
-!!    plotc(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plotc(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -19770,7 +19703,6 @@ END SUBROUTINE PLOT9
 !!    program demo_plotc
 !!    use M_datapac, only : plotc
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotc(x,y)
 !!    end program demo_plotc
 !!
@@ -20144,7 +20076,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTC
 !>
 !!##NAME
-!!    plotco(3f) - [M_datapac:LINE_PLOT] generate a line printer
+!!    plotco(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
 !!    autocorrelation plot
 !!
 !!##SYNOPSIS
@@ -20171,7 +20103,6 @@ END SUBROUTINE PLOTC
 !!    program demo_plotco
 !!    use M_datapac, only : plotco
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotco(x,y)
 !!    end program demo_plotco
 !!
@@ -20362,8 +20293,8 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
 END SUBROUTINE PLOTCO
 !>
 !!##NAME
-!!    plotct(3f) - [M_datapac:LINE_PLOT] generate a line printer plot for
-!!    the terminal (71 characters wide)
+!!    plotct(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -20414,7 +20345,6 @@ END SUBROUTINE PLOTCO
 !!    program demo_plotct
 !!    use M_datapac, only : plotct
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotct(x,y)
 !!    end program demo_plotct
 !!
@@ -20782,8 +20712,8 @@ CHARACTER(len=4) :: blank , hyphen , alphai
 END SUBROUTINE PLOTCT
 !>
 !!##NAME
-!!    plot(3f) - [M_datapac:LINE_PLOT] yields a one-page printer
-!!    plot of y(i) versus x(i)
+!!    plot(3f) - [M_datapac:GENERIC_LINE_PLOT] yields a one-page printer
+!!    plot of Y(I) versus X(I)
 !!
 !!##SYNOPSIS
 !!
@@ -20824,7 +20754,6 @@ END SUBROUTINE PLOTCT
 !!    implicit none
 !!    integer ::  i
 !!    real, allocatable ::  x(:), y(:)
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!      x=[(real(i),i=1,30)]
 !!      y=0.075*(x**4)-0.525*(x**3)+0.75*(x**2)+2.40
 !!      call plot(x,y,size(x))
@@ -21104,8 +21033,8 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 END SUBROUTINE PLOT
 !>
 !!##NAME
-!!    plotsc(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plotsc(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -21162,7 +21091,6 @@ END SUBROUTINE PLOT
 !!    program demo_plotsc
 !!    use M_datapac, only : plotsc
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotsc(x,y)
 !!    end program demo_plotsc
 !!
@@ -21606,7 +21534,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTSC
 !>
 !!##NAME
-!!    plots(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of Y vs X
+!!    plots(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot of Y vs X
 !!
 !!##SYNOPSIS
 !!
@@ -21634,7 +21563,6 @@ END SUBROUTINE PLOTSC
 !!    program demo_plots
 !!    use M_datapac, only : plots
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plots(x,y)
 !!    end program demo_plots
 !!
@@ -22011,7 +21939,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTS
 !>
 !!##NAME
-!!    plotsp(3f) - [M_datapac:LINE_PLOT] generate a line printer spectrum plot
+!!    plotsp(3f) - [M_datapac:LINE_PLOT] generate a line printer spectrum
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -22042,7 +21971,6 @@ END SUBROUTINE PLOTS
 !!    program demo_plotsp
 !!    use M_datapac, only : plotsp
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotsp(x,y)
 !!    end program demo_plotsp
 !!
@@ -22214,8 +22142,8 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax , dot
 END SUBROUTINE PLOTSP
 !>
 !!##NAME
-!!    plotst(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
-!!    Y vs X for the terminal (71 characters wide)
+!!    plotst(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot of Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -22267,7 +22195,6 @@ END SUBROUTINE PLOTSP
 !!    program demo_plotst
 !!    use M_datapac, only : plotst
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotst(x,y)
 !!    end program demo_plotst
 !!
@@ -22608,8 +22535,8 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 END SUBROUTINE PLOTST
 !>
 !!##NAME
-!!    plott(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
-!!    Y vs X for the terminal (71 characters wide)
+!!    plott(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot of Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -22963,7 +22890,8 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 END SUBROUTINE PLOTT
 !>
 !!##NAME
-!!    plotu(3f) - [M_datapac:LINE_PLOT] generate a line printer 4-plot
+!!    plotu(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    4-plot
 !!
 !!##SYNOPSIS
 !!
@@ -22996,7 +22924,6 @@ END SUBROUTINE PLOTT
 !!    program demo_plotu
 !!    use M_datapac, only : plotu
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotu(x,y)
 !!    end program demo_plotu
 !!
@@ -23530,7 +23457,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTU
 !>
 !!##NAME
-!!    plotx(3f) - [M_datapac:LINE_PLOT] generate a line printer run sequence plot
+!!    plotx(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    run sequence plot
 !!
 !!##SYNOPSIS
 !!
@@ -23550,7 +23478,6 @@ END SUBROUTINE PLOTU
 !!    program demo_plotx
 !!    use M_datapac, only : plotx
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotx(x,y)
 !!    end program demo_plotx
 !!
@@ -23816,7 +23743,6 @@ END SUBROUTINE PLOTX
 !!    program demo_plotxt
 !!    use M_datapac, only : plotxt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotxt(x,y)
 !!    end program demo_plotxt
 !!
@@ -24085,7 +24011,6 @@ END SUBROUTINE PLOTXT
 !!    program demo_plotxx
 !!    use M_datapac, only : plotxx
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call plotxx(x,y)
 !!    end program demo_plotxx
 !!
@@ -24346,8 +24271,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTXX
 !>
 !!##NAME
-!!    pltsct(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters for the terminal (71 characters wide)
+!!    pltsct(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -24406,7 +24331,6 @@ END SUBROUTINE PLOTXX
 !!    program demo_pltsct
 !!    use M_datapac, only : pltsct
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call pltsct(x,y)
 !!    end program demo_pltsct
 !!
@@ -24858,7 +24782,6 @@ END SUBROUTINE PLTSCT
 !!    program demo_pltxxt
 !!    use M_datapac, only : pltxxt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call pltxxt(x,y)
 !!    end program demo_pltxxt
 !!
@@ -25375,7 +25298,6 @@ END SUBROUTINE POICDF
 !!    program demo_poiplt
 !!    use M_datapac, only : poiplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poiplt(x,y)
 !!    end program demo_poiplt
 !!
@@ -25660,7 +25582,6 @@ END SUBROUTINE POIPLT
 !!    program demo_poippf
 !!    use M_datapac, only : poippf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poippf(x,y)
 !!    end program demo_poippf
 !!
@@ -26021,7 +25942,6 @@ END SUBROUTINE POIPPF
 !!    program demo_poiran
 !!    use M_datapac, only : poiran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call poiran(x,y)
 !!    end program demo_poiran
 !!
@@ -26178,7 +26098,6 @@ END SUBROUTINE POIRAN
 !!    program demo_propor
 !!    use M_datapac, only : propor
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call propor(x,y)
 !!    end program demo_propor
 !!
@@ -26327,7 +26246,6 @@ END SUBROUTINE PROPOR
 !!    program demo_range
 !!    use M_datapac, only : range
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call range(x,y)
 !!    end program demo_range
 !!
@@ -26462,7 +26380,6 @@ END SUBROUTINE RANGE
 !!    program demo_rank
 !!    use M_datapac, only : rank
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call rank(x,y)
 !!    end program demo_rank
 !!
@@ -26706,7 +26623,6 @@ END SUBROUTINE RANK
 !!    program demo_ranper
 !!    use M_datapac, only : ranper
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call ranper(x,y)
 !!    end program demo_ranper
 !!
@@ -26840,7 +26756,6 @@ END SUBROUTINE RANPER
 !!    program demo_relsd
 !!    use M_datapac, only : relsd
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call relsd(x,y)
 !!    end program demo_relsd
 !!
@@ -26989,7 +26904,6 @@ END SUBROUTINE RELSD
 !!    program demo_replac
 !!    use M_datapac, only : replac
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call replac(x,y)
 !!    end program demo_replac
 !!
@@ -27172,7 +27086,6 @@ END SUBROUTINE REPLAC
 !!    program demo_retain
 !!    use M_datapac, only : retain
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call retain(x,y)
 !!    end program demo_retain
 !!
@@ -27340,9 +27253,15 @@ END SUBROUTINE RETAIN
 !!
 !!       SUBROUTINE RUNS(X,N)
 !!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
+!!
 !!##DESCRIPTION
 !!
 !!    RUNS(3f) performs a runs analysis of the data in the input vector x.
+!!
+!!    This runs analysis is a useful distribution-free test of the randomness
+!!    of a data set.
 !!
 !!    The analysis consists of first determining the observed number of
 !!    runs from the data, and then computing the expected number of runs,
@@ -27352,17 +27271,16 @@ END SUBROUTINE RETAIN
 !!
 !!    This is done for runs up, runs down, and runs up and down.
 !!
-!!    This runs analysis is a useful distribution-free test of the randomness
-!!    of a data set.
-!!
 !!##INPUT ARGUMENTS
-!!    X  The precision precision vector of (unsorted or sorted) observations.
+!!
+!!    X  The precision vector of (unsorted or sorted) observations.
 !!
 !!    N  The integer number of observations in the vector x.
 !!
 !!       restrictions-- The maximum allowable value of n for this subroutine
 !!       is 15000.
 !!##OUTPUT
+!!
 !!    4 pages of automatic printout consisting of the observed number,
 !!    expected number, standard deviation and resulting standardized
 !!    statistic for runs of various lengths, and the cumulative frequency.
@@ -27374,7 +27292,6 @@ END SUBROUTINE RETAIN
 !!    program demo_runs
 !!    use M_datapac, only : runs
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call runs(x,y)
 !!    end program demo_runs
 !!
@@ -27383,10 +27300,13 @@ END SUBROUTINE RETAIN
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!  * Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, Pages
 !!    58-69; especially pages 60, 63, and 64.
@@ -27398,8 +27318,8 @@ END SUBROUTINE RETAIN
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE RUNS(X,N)
-REAL(kind=wp) :: X(:)
-INTEGER       :: N
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
 REAL(kind=wp) :: ai, an, anrdl, anrdlg, anrtl, anrtlg, anrul, anrulg
 REAL(kind=wp) :: c1, c2, c3, c4, den, enrtl, enrtlg, enrul, enrulg, hold, snrtl, snrtlg
 REAL(kind=wp) :: snrul, snrulg, stat, WS, Y, znrdl, znrdlg, znrtl, znrtlg, znrul, znrulg
@@ -27776,7 +27696,6 @@ END SUBROUTINE RUNS
 !!    program demo_sampp
 !!    use M_datapac, only : sampp
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sampp(x,y)
 !!    end program demo_sampp
 !!
@@ -27960,7 +27879,6 @@ END SUBROUTINE SAMPP
 !!    program demo_scale
 !!    use M_datapac, only : scale
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call scale(x,y)
 !!    end program demo_scale
 !!
@@ -28145,7 +28063,6 @@ END SUBROUTINE SCALE
 !!    program demo_sd
 !!    use M_datapac, only : sd
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sd(x,y)
 !!    end program demo_sd
 !!
@@ -28870,7 +28787,6 @@ END SUBROUTINE SORT
 !!    program demo_sortp
 !!    use M_datapac, only : sortp
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call sortp(x,y)
 !!    end program demo_sortp
 !!
@@ -29170,7 +29086,6 @@ END SUBROUTINE SORTP
 !!    program demo_spcorr
 !!    use M_datapac, only : spcorr
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call spcorr(x,y)
 !!    end program demo_spcorr
 !!
@@ -29339,7 +29254,6 @@ END SUBROUTINE SPCORR
 !!    program demo_stmom3
 !!    use M_datapac, only : stmom3
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call stmom3(x,y)
 !!    end program demo_stmom3
 !!
@@ -29489,7 +29403,6 @@ END SUBROUTINE STMOM3
 !!    program demo_stmom4
 !!    use M_datapac, only : stmom4
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call stmom4(x,y)
 !!    end program demo_stmom4
 !!
@@ -29670,7 +29583,6 @@ END SUBROUTINE STMOM4
 !!    program demo_subse1
 !!    use M_datapac, only : subse1
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call subse1(x,y)
 !!    end program demo_subse1
 !!
@@ -29900,7 +29812,6 @@ END SUBROUTINE SUBSE1
 !!    program demo_subse2
 !!    use M_datapac, only : subse2
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call subse2(x,y)
 !!    end program demo_subse2
 !!
@@ -30112,7 +30023,6 @@ END SUBROUTINE SUBSE2
 !!    program demo_subset
 !!    use M_datapac, only : subset
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call subset(x,y)
 !!    end program demo_subset
 !!
@@ -31258,7 +31168,6 @@ END SUBROUTINE TCDF
 !!    program demo_time
 !!    use M_datapac, only : time
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call time(x,y)
 !!    end program demo_time
 !!
@@ -31665,7 +31574,6 @@ END SUBROUTINE TIME
 !!    program demo_tol
 !!    use M_datapac, only : tol
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tol(x,y)
 !!    end program demo_tol
 !!
@@ -32026,7 +31934,7 @@ END SUBROUTINE TOL
 !>
 !!##NAME
 !!    tplt(3f) - [M_datapac:LINE_PLOT] generates a student's
-!!    t probability plot (with integer degrees of freedom parameter value
+!!    T probability plot (with integer degrees of freedom parameter value
 !!    NU).
 !!
 !!##SYNOPSIS
@@ -32073,7 +31981,6 @@ END SUBROUTINE TOL
 !!    program demo_tplt
 !!    use M_datapac, only : tplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tplt(x,y)
 !!    end program demo_tplt
 !!
@@ -32252,7 +32159,6 @@ END SUBROUTINE TPLT
 !!    program demo_tppf
 !!    use M_datapac, only : tppf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tppf(x,y)
 !!    end program demo_tppf
 !!
@@ -32489,7 +32395,6 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!    program demo_tran
 !!    use M_datapac, only : tran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call tran(x,y)
 !!    end program demo_tran
 !!
@@ -32640,7 +32545,6 @@ END SUBROUTINE TRAN
 !!    program demo_trim
 !!    use M_datapac, only : trim
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call trim(x,y)
 !!    end program demo_trim
 !!
@@ -33020,7 +32924,6 @@ end subroutine unicdf
 !!    program demo_unimed
 !!    use M_datapac, only : unimed
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unimed(x,y)
 !!    end program demo_unimed
 !!
@@ -33252,7 +33155,6 @@ END SUBROUTINE UNIPDF
 !!    program demo_uniplt
 !!    use M_datapac, only : uniplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call uniplt(x,y)
 !!    end program demo_uniplt
 !!
@@ -33419,7 +33321,6 @@ END SUBROUTINE UNIPLT
 !!    program demo_unippf
 !!    use M_datapac, only : unippf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unippf(x,y)
 !!    end program demo_unippf
 !!
@@ -33512,7 +33413,6 @@ END SUBROUTINE UNIPPF
 !!    program demo_uniran
 !!    use M_datapac, only : uniran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call uniran(x,y)
 !!    end program demo_uniran
 !!
@@ -33797,7 +33697,6 @@ END SUBROUTINE UNIRAN
 !!    program demo_unisf
 !!    use M_datapac, only : unisf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call unisf(x,y)
 !!    end program demo_unisf
 !!
@@ -34036,7 +33935,6 @@ END SUBROUTINE VAR
 !!    program demo_weib
 !!    use M_datapac, only : weib
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weib(x,y)
 !!    end program demo_weib
 !!
@@ -34492,7 +34390,6 @@ END SUBROUTINE WEICDF
 !!    program demo_weiplt
 !!    use M_datapac, only : weiplt
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weiplt(x,y)
 !!    end program demo_weiplt
 !!
@@ -34695,7 +34592,6 @@ END SUBROUTINE WEIPLT
 !!    program demo_weippf
 !!    use M_datapac, only : weippf
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weippf(x,y)
 !!    end program demo_weippf
 !!
@@ -34795,7 +34691,6 @@ END SUBROUTINE WEIPPF
 !!    program demo_weiran
 !!    use M_datapac, only : weiran
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call weiran(x,y)
 !!    end program demo_weiran
 !!
@@ -34917,7 +34812,6 @@ END SUBROUTINE WEIRAN
 !!    program demo_wind
 !!    use M_datapac, only : wind
 !!    implicit none
-!!    character(len=*),parameter ::  g='(*(g0,1x))'
 !!    ! call wind(x,y)
 !!    end program demo_wind
 !!

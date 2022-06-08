@@ -331,10 +331,13 @@ end subroutine autoco
 !!
 !!##SYNOPSIS
 !!
-!!     subroutine BETRAN (N,Alpha,Beta,Iseed,X)
+!!       subroutine BETRAN (N,Alpha,Beta,Iseed,X)
 !!
-!!       REAL(kind=wp) :: Alpha, Beta, X(N)
-!!       INTEGER       :: Iseed, N
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(in)  :: Alpha
+!!        REAL(kind=wp),intent(in)  :: Beta
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
 !!
 !!##DESCRIPTION
 !!
@@ -366,6 +369,12 @@ end subroutine autoco
 !!
 !!    BETA   The value of the second shape parameter.
 !!           BETA should be greater than or equal to 1.0.
+!!
+!!   ISEED   An integer iseed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
 !!##OUTPUT
 !!
 !!    X      A random sample of size N from the beta distribution
@@ -423,16 +432,19 @@ end subroutine autoco
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
-REAL(kind=wp) :: a1, a2, Alpha, arg, athird, b1, b2, Beta, funct, sqrt3, term, u, X, xg, xg01, xg02, xg1, xg2, xn(1)
-REAL(kind=wp) :: xn01, xn02
-INTEGER ::  i , Iseed , N
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: Alpha
+REAL(kind=wp),intent(in)  :: Beta
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
 
-!     ***** STILL NEEDS ALGORITHM WORK ******
+REAL(kind=wp) :: a1, a2, arg, b1, b2, funct, term, u(10), xg, xg01, xg02, xg1, xg2
+REAL(kind=wp) :: xn01, xn02, xn(1)
+INTEGER       :: i
+real,parameter :: athird = 0.33333333_wp
+real,parameter :: sqrt3= 1.73205081_wp
 !
-DIMENSION X(:)
-DIMENSION u(10)
-DATA athird/0.33333333_wp/
-DATA sqrt3/1.73205081_wp/
+!     ***** STILL NEEDS ALGORITHM WORK ******
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -457,11 +469,9 @@ DATA sqrt3/1.73205081_wp/
       ELSE
 !
 !     GENERATE N BETA RANDOM NUMBERS
-!     BY USING THE FACT THAT
-!     IF X1 IS A GAMMA VARIATE WITH PARAMETER ALPHA
+!     BY USING THE FACT THAT IF X1 IS A GAMMA VARIATE WITH PARAMETER ALPHA
 !     AND IF X2 IS A GAMMA VARIATE WITH PARAMETER BETA,
-!     THEN THE RATIO X1/(X1+X2) IS A BETA VARIATE
-!     WITH PARAMETERS ALPHA AND BETA.
+!     THEN THE RATIO X1/(X1+X2) IS A BETA VARIATE WITH PARAMETERS ALPHA AND BETA.
 !
 !     TO GENERATE N GAMMA DISTRIBUTION RANDOM NUMBERS,
 !     USE GREENWOOD'S REJECTION ALGORITHM--
@@ -1251,28 +1261,34 @@ END SUBROUTINE BINPPF
 !!
 !!##SYNOPSIS
 !!
-!!     SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
+!!       SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
+!!
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(in)  :: P
+!!        INTEGER,intent(in)        :: Npar
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X
 !!
 !!##DESCRIPTION
-!!    BINRAN(3f) generates a random sample of size n from the binomial
-!!    distribution with 'bernoulli probability' parameter =
-!!    p, and integer 'number of bernoulli trials' parameter = npar.
+!!    BINRAN(3f) generates a random sample of size N from the binomial
+!!    distribution with 'Bernoulli probability' parameter =
+!!    P, and integer 'number of bernoulli trials' parameter = NPAR.
 !!
-!!    the binomial distribution used herein has mean = npar*p and standard
-!!    deviation = sqrt(npar*p*(1-p)).
+!!    The binomial distribution used herein has mean = NPAR*P and standard
+!!    deviation = sqrt(NPAR*P*(1-P)).
 !!
-!!    this distribution is defined for all discrete integer x between 0
-!!    (inclusively) and npar (inclusively). This distribution has the
+!!    This distribution is defined for all discrete integer X between 0
+!!    (inclusively) and NPAR (inclusively). This distribution has the
 !!    probability function
 !!
-!!        f(x) = c(npar,x) * p**x * (1-p)**(npar-x).
+!!        f(X) = c(NPAR,X) * P**X * (1-P)**(NPAR-X)
 !!
-!!    where c(npar,x) is the combinatorial function equaling the number of
-!!    combinations of npar items taken x at a time.
+!!    Where c(NPAR,X) is the combinatorial function equaling the number of
+!!    combinations of NPAR items taken X at a time.
 !!
-!!    the binomial distribution is the distribution of the number of
-!!    successes in npar bernoulli (0,1) trials where the probability of
-!!    success in a precision trial = p.
+!!    The binomial distribution is the distribution of the number of
+!!    successes in NPAR Bernoulli (0,1) trials where the probability of
+!!    success in a precision trial = P.
 !!
 !!##OPTIONS
 !!##INPUT ARGUMENTS
@@ -1280,16 +1296,21 @@ END SUBROUTINE BINPPF
 !!   N      The desired integer number of random numbers to be generated.
 !!
 !!   P      The value of the 'Bernoulli probability' parameter for the
-!!          binomial distribution.  P should be between 0.0 (exclusively)
+!!          binomial distribution. P should be between 0.0 (exclusively)
 !!          and 1.0 (exclusively).
 !!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!   NPAR   The integer value of the 'number of Bernoulli trials'
-!!          parameter.  NPAR should be a positive integer.
+!!          parameter. NPAR should be a positive integer.
 !!
 !!##OUTPUT ARGUMENTS
 !!
 !!   X     A vector (of dimension at least N) into which the generated
-!!         random sample of size n from the binomial distribution
+!!         random sample of size N from the binomial distribution
 !!         will be placed; with 'Bernoulli probability' parameter = P
 !!         and 'number of Bernoulli trials' parameter = NPAR.
 !!
@@ -1300,18 +1321,38 @@ END SUBROUTINE BINPPF
 !!    program demo_binran
 !!    use M_datapac, only : binran
 !!    implicit none
-!!    ! call binran(x,y)
+!!    real :: x(40), P
+!!    integer :: N, Npar, Iseed
+!!       Iseed=0
+!!       P=0.88
+!!       N=size(x)
+!!       Npar=11111
+!!       call BINRAN(N,P,Npar,Iseed,X)
+!!       write(*,*)X
 !!    end program demo_binran
 !!
 !!   Results:
 !!
+!!       9746.000       9795.000       9855.000       9805.000       9787.000
+!!       9746.000       9764.000       9774.000       9767.000       9752.000
+!!       9770.000       9784.000       9821.000       9805.000       9784.000
+!!       9734.000       9805.000       9813.000       9792.000       9785.000
+!!       9784.000       9815.000       9785.000       9748.000       9718.000
+!!       9728.000       9824.000       9782.000       9776.000       9850.000
+!!       9770.000       9821.000       9819.000       9724.000       9783.000
+!!       9789.000       9813.000       9798.000       9747.000       9785.000
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
 !!   * Hastings and Peacock, Statistical Distributions,
@@ -1333,103 +1374,93 @@ END SUBROUTINE BINPPF
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE BINRAN(N,P,Npar,Iseed,X)
-REAL(kind=wp) :: g(1) , P , u(1) , X
-INTEGER i , ig , Iseed , isum , j , N , Npar
-!
-!     RESTRICTIONS--
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!                 --NPAR SHOULD BE A POSITIVE INTEGER.
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: P
+INTEGER,intent(in)        :: Npar
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
 
-!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
-!              FROM THIS DISCRETE RANDOM NUMBER
-!              GENERATOR MUST NECESSARILY BE A
-!              SEQUENCE OF ***INTEGER*** VALUES,
-!              THE OUTPUT VECTOR X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
+REAL(kind=wp) :: g(1) , u(1)
+INTEGER       :: i , ig , isum , j
 !
-!---------------------------------------------------------------------
-      DIMENSION X(:)
+!   NOTE THAT EVEN THOUGH THE OUTPUT FROM THIS DISCRETE RANDOM NUMBER
+!   GENERATOR MUST NECESSARILY BE A SEQUENCE OF ***INTEGER*** VALUES,
+!   THE OUTPUT VECTOR X IS SINGLE PRECISION IN MODE.  X HAS BEEN SPECIFIED
+!   AS SINGLE PRECISION SO AS TO CONFORM WITH THE DATAPAC CONVENTION THAT
+!   ALL OUTPUT VECTORS FROM ALL THIS CONVENTION IS BASED ON THE BELIEF THAT
+!
+!    1) A MIXTURE OF MODES (FLOATING POINT VERSUS INTEGER) IS INCONSISTENT
+!       AND AN UNNECESSARY COMPLICATION IN A DATA ANALYSIS; AND
+!    2) FLOATING POINT MACHINE ARITHMETIC (AS OPPOSED TO INTEGER
+!       ARITHMETIC) IS THE MORE NATURAL MODE FOR DOING DATA ANALYSIS.
+!
 !-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-         99001    FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINRAN SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99005) N
-         RETURN
-      ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99002)
-         99002 FORMAT (&
-         & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99003) P
-         99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-         RETURN
-      ELSEIF ( Npar<1 ) THEN
-         WRITE (G_IO,99004)
-         99004    FORMAT (' ','***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINRAN SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99005) Npar
-         RETURN
-      ELSEIF ( P<0.1_wp ) THEN
-         !
-         !     CHECK ON THE MAGNITUDE OF P,
-         !     AND BRANCH TO THE FASTER
-         !     GENERATION METHOD ACCORDINGLY.
-         !
-         !
-         !     IF P IS SMALL,
-         !     GENERATE N BINOMIAL NUMBERS
-         !     USING THE FACT THAT THE
-         !     WAITING TIME FOR 1 SUCCESS IN
-         !     BERNOULLI TRIALS HAS A
-         !     GEOMETRIC DISTRIBUTION.
-         !
-         DO i = 1 , N
-            isum = 0
-            j = 1
-            DO
-               CALL GEORAN(1,P,Iseed,g)
-               ig = g(1) + 0.5_wp
-               isum = isum + ig + 1
-               IF ( isum>Npar ) THEN
-                  X(i) = j - 1
-                  EXIT
-               ELSE
-                  j = j + 1
-               ENDIF
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE FIRST INPUT ARGUMENT TO BINRAN(3f) IS NON-POSITIVE *****')
+      WRITE (G_IO,99005) N
+      RETURN
+   ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99002)
+      99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO BINRAN(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      WRITE (G_IO,99003) P
+      99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      RETURN
+   ELSEIF ( Npar<1 ) THEN
+      WRITE (G_IO,99004)
+      99004    FORMAT (' ','***** FATAL ERROR--THE THIRD INPUT ARGUMENT TO BINRAN(3f) IS NON-POSITIVE *****')
+      WRITE (G_IO,99005) Npar
+      RETURN
+   ELSEIF ( P<0.1_wp ) THEN
       !
-      !     IF P IS MODERATE OR LARGE,
-      !     GENERATE N BINOMIAL RANDOM NUMBERS
-      !     USING THE REJECTION METHOD.
+      !     CHECK ON THE MAGNITUDE OF P,
+      !     AND BRANCH TO THE FASTER
+      !     GENERATION METHOD ACCORDINGLY.
+      !
+      !
+      !     IF P IS SMALL,
+      !     GENERATE N BINOMIAL NUMBERS
+      !     USING THE FACT THAT THE
+      !     WAITING TIME FOR 1 SUCCESS IN
+      !     BERNOULLI TRIALS HAS A
+      !     GEOMETRIC DISTRIBUTION.
       !
       DO i = 1 , N
          isum = 0
-         DO j = 1 , Npar
-            CALL UNIRAN(1,Iseed,u)
-            IF ( u(1)<=P ) isum = isum + 1
+         j = 1
+         DO
+            CALL GEORAN(1,P,Iseed,g)
+            ig = g(1) + 0.5_wp
+            isum = isum + ig + 1
+            IF ( isum>Npar ) THEN
+               X(i) = j - 1
+               EXIT
+            ELSE
+               j = j + 1
+            ENDIF
          ENDDO
-         X(i) = isum
       ENDDO
-      RETURN
-99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-!
+      GOTO 99999
+   ENDIF
+   !
+   !     IF P IS MODERATE OR LARGE,
+   !     GENERATE N BINOMIAL RANDOM NUMBERS
+   !     USING THE REJECTION METHOD.
+   !
+   DO i = 1 , N
+      isum = 0
+      DO j = 1 , Npar
+         CALL UNIRAN(1,Iseed,u)
+         IF ( u(1)<=P ) isum = isum + 1
+      ENDDO
+      X(i) = isum
+   ENDDO
+   RETURN
+   99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+
 99999 continue
 END SUBROUTINE BINRAN
 !>
@@ -1942,6 +1973,12 @@ END SUBROUTINE CAUPPF
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -2860,6 +2897,12 @@ END SUBROUTINE CHSPPF
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -6304,6 +6347,12 @@ END SUBROUTINE EV1PPF
 !!     X   description of parameter
 !!     Y   description of parameter
 !!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -6800,6 +6849,12 @@ END SUBROUTINE EV2PPF
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -7377,6 +7432,12 @@ END SUBROUTINE EXPPPF
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -9871,6 +9932,12 @@ END SUBROUTINE GAMPPF
 !!     X   description of parameter
 !!     Y   description of parameter
 !!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -10562,6 +10629,12 @@ INTEGER iratio
 !!     X   description of parameter
 !!     Y   description of parameter
 !!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -11141,6 +11214,12 @@ END SUBROUTINE HFNPPF
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -12359,6 +12438,12 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!     X   description of parameter
 !!     Y   description of parameter
 !!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -12658,7 +12743,8 @@ REAL(kind=wp) :: arg , Cdf , X
 END SUBROUTINE LGNCDF
 !>
 !!##NAME
-!!    lgnplt(3f) - [M_datapac:LINE_PLOT] generates a lognormal probability plot
+!!    lgnplt(3f) - [M_datapac:LINE_PLOT] generates a lognormal probability
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -12969,6 +13055,12 @@ END SUBROUTINE LGNPPF
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -13761,6 +13853,12 @@ END SUBROUTINE LOGPPF
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -16806,6 +16904,12 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !!     X   description of parameter
 !!     Y   description of parameter
 !!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -17447,6 +17551,12 @@ END SUBROUTINE PARPPF
 !!     X   description of parameter
 !!     Y   description of parameter
 !!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
+!!
 !!##EXAMPLES
 !!
 !!   Sample program:
@@ -17548,8 +17658,8 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE PARRAN
 !>
 !!##NAME
-!!    plot10(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plot10(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -18013,7 +18123,7 @@ DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
 END SUBROUTINE PLOT10
 !>
 !!##NAME
-!!    plot6(3f) - [M_datapac:LINE_PLOT] generate a line printer plot
+!!    plot6(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer plot
 !!
 !!##SYNOPSIS
 !!
@@ -18321,8 +18431,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT6
 !>
 !!##NAME
-!!    plot7(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plot7(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -18725,8 +18835,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT7
 !>
 !!##NAME
-!!    plot8(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plot8(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -19194,7 +19304,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT8
 !>
 !!##NAME
-!!    plot9(3f) - [M_datapac:LINE_PLOT] generate a line printer
+!!    plot9(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
 !!    plot with special plot characters
 !!
 !!##SYNOPSIS
@@ -19632,8 +19742,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOT9
 !>
 !!##NAME
-!!    plotc(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plotc(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -20054,7 +20164,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTC
 !>
 !!##NAME
-!!    plotco(3f) - [M_datapac:LINE_PLOT] generate a line printer
+!!    plotco(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
 !!    autocorrelation plot
 !!
 !!##SYNOPSIS
@@ -20271,8 +20381,8 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
 END SUBROUTINE PLOTCO
 !>
 !!##NAME
-!!    plotct(3f) - [M_datapac:LINE_PLOT] generate a line printer plot for
-!!    the terminal (71 characters wide)
+!!    plotct(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -20690,8 +20800,8 @@ CHARACTER(len=4) :: blank , hyphen , alphai
 END SUBROUTINE PLOTCT
 !>
 !!##NAME
-!!    plot(3f) - [M_datapac:LINE_PLOT] yields a one-page printer
-!!    plot of y(i) versus x(i)
+!!    plot(3f) - [M_datapac:GENERIC_LINE_PLOT] yields a one-page printer
+!!    plot of Y(I) versus X(I)
 !!
 !!##SYNOPSIS
 !!
@@ -21011,8 +21121,8 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
 END SUBROUTINE PLOT
 !>
 !!##NAME
-!!    plotsc(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters
+!!    plotsc(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters
 !!
 !!##SYNOPSIS
 !!
@@ -21512,7 +21622,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTSC
 !>
 !!##NAME
-!!    plots(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of Y vs X
+!!    plots(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot of Y vs X
 !!
 !!##SYNOPSIS
 !!
@@ -21916,7 +22027,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTS
 !>
 !!##NAME
-!!    plotsp(3f) - [M_datapac:LINE_PLOT] generate a line printer spectrum plot
+!!    plotsp(3f) - [M_datapac:LINE_PLOT] generate a line printer spectrum
+!!    plot
 !!
 !!##SYNOPSIS
 !!
@@ -22118,8 +22230,8 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax , dot
 END SUBROUTINE PLOTSP
 !>
 !!##NAME
-!!    plotst(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
-!!    Y vs X for the terminal (71 characters wide)
+!!    plotst(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot of Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -22511,8 +22623,8 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 END SUBROUTINE PLOTST
 !>
 !!##NAME
-!!    plott(3f) - [M_datapac:LINE_PLOT] generate a line printer plot of
-!!    Y vs X for the terminal (71 characters wide)
+!!    plott(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot of Y vs X for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -22866,7 +22978,8 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 END SUBROUTINE PLOTT
 !>
 !!##NAME
-!!    plotu(3f) - [M_datapac:LINE_PLOT] generate a line printer 4-plot
+!!    plotu(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    4-plot
 !!
 !!##SYNOPSIS
 !!
@@ -23432,7 +23545,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTU
 !>
 !!##NAME
-!!    plotx(3f) - [M_datapac:LINE_PLOT] generate a line printer run sequence plot
+!!    plotx(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    run sequence plot
 !!
 !!##SYNOPSIS
 !!
@@ -24245,8 +24359,8 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 END SUBROUTINE PLOTXX
 !>
 !!##NAME
-!!    pltsct(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-!!    special plot characters for the terminal (71 characters wide)
+!!    pltsct(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+!!    plot with special plot characters for the terminal (71 characters wide)
 !!
 !!##SYNOPSIS
 !!
@@ -25908,6 +26022,12 @@ END SUBROUTINE POIPPF
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -31908,7 +32028,7 @@ END SUBROUTINE TOL
 !>
 !!##NAME
 !!    tplt(3f) - [M_datapac:LINE_PLOT] generates a student's
-!!    t probability plot (with integer degrees of freedom parameter value
+!!    T probability plot (with integer degrees of freedom parameter value
 !!    NU).
 !!
 !!##SYNOPSIS
@@ -32361,6 +32481,12 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -33379,6 +33505,12 @@ END SUBROUTINE UNIPPF
 !!##OPTIONS
 !!     X   description of parameter
 !!     Y   description of parameter
+!!
+!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!          to start a new sequence of values. Will be set to -1 on return
+!!          to indicate the next call should continue the current random
+!!          sequence walk.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -34645,18 +34777,34 @@ END SUBROUTINE WEIPPF
 !!
 !!       SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
 !!
+!!        INTEGER       :: N
+!!        REAL(kind=wp) :: Gamma
+!!        INTEGER       :: Iseed
+!!        REAL(kind=wp) :: X(:)
+!!
 !!##DESCRIPTION
-!!    weiran(3f) generates a random sample of size n from the weibull
-!!    distribution with tail length parameter value = gamma.
+!!    WEIRAN(3f) generates a random sample of size N from the Weibull
+!!    distribution with tail length parameter value = GAMMA.
 !!
-!!    the prototype weibull distribution used herein is defined for all
-!!    positive x, and has the probability density function
+!!    The prototype Weibull distribution used herein is defined for all
+!!    positive X, and has the probability density function
 !!
-!!        f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma)).
+!!        f(X) = GAMMA * (X**(GAMMA-1)) * exp(-(X**GAMMA)).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    N      The desired integer number of random numbers to be generated.
+!!    GAMMA  The value of the tail length parameter. gamma should
+!!           be positive.
+!!    ISEED  An integer iseed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X      A vector (of dimension at least N) into which the generated
+!!           random sample will be placed.
 !!
 !!##EXAMPLES
 !!
@@ -34671,12 +34819,16 @@ END SUBROUTINE WEIPPF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!   * Tocher, the Art of Simulation, 1963, Pages 14-15.
 !!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
@@ -34684,72 +34836,43 @@ END SUBROUTINE WEIPPF
 !!     Pages 250-271.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
 !!     Students and Practitioners, 1975, Page 128.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
-REAL(kind=wp) :: Gamma , X
-INTEGER i , Iseed , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --GAMMA  = THE  VALUE OF THE
-!                                TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE WEIBULL DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --GAMMA SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!-----START POINT-----------------------------------------------------
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE WEIRAN(N,Gamma,Iseed,X)
+INTEGER       :: N
+REAL(kind=wp) :: Gamma
+INTEGER       :: Iseed
+REAL(kind=wp) :: X(:)
+
+INTEGER       :: i
+
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE WEIRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001    FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO WEIRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99003    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO WEIRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99004) Gamma
-99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          RETURN
       ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
          CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N WEIBULL DISTRIBUTION RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
+         !
+         !     GENERATE N WEIBULL DISTRIBUTION RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
          DO i = 1 , N
             X(i) = (-LOG(1.0_wp-X(i)))**(1.0_wp/Gamma)
          ENDDO

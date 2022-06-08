@@ -1,8 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotc.3m_datapac.man
 NAME
-   plotc(3f) - [M_datapac:LINE_PLOT] generate a line printer plot with
-   special plot characters
+   plotc(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
+   plot with special plot characters
 
 SYNOPSIS
       SUBROUTINE PLOTC(Y,X,Char,N)

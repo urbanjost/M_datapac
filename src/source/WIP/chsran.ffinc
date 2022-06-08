@@ -14,6 +14,12 @@ OPTIONS
     X   description of parameter
     Y   description of parameter
 
+  ISEED  An integer iseed value. Should be set to a non-negative value
+         to start a new sequence of values. Will be set to -1 on return
+         to indicate the next call should continue the current random
+         sequence walk.
+
+
 EXAMPLES
   Sample program:
 

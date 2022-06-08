@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file plotco.3m_datapac.man
 NAME
-   plotco(3f) - [M_datapac:LINE_PLOT] generate a line printer
+   plotco(3f) - [M_datapac:GENERIC_LINE_PLOT] generate a line printer
    autocorrelation plot
 
 SYNOPSIS
