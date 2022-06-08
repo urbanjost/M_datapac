@@ -10,7 +10,7 @@
 **A WORK IN PROGRESS**
 
 The M_datapac Fortran module contains a variety of
-[statistical procedures](https://urbanjost.github.io/M_datapac/man3.html) 
+[statistics procedures]([routines](https://urbanjost.github.io/M_datapac/man3.html) 
 as well as a number of general utilities useful in statistical analysis.
 
 The original DATAPAC library was written by James Filliben of the Statistical
