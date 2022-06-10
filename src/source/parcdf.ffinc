@@ -1,0 +1,138 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file parcdf.3m_datapac.man
+NAME
+   parcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Pareto
+   cumulative distribution function
+
+SYNOPSIS
+      SUBROUTINE PARCDF(X,Gamma,Cdf)
+
+       REAL(kind=wp),intent(in)  :: X
+       REAL(kind=wp),intent(in)  :: Gamma
+       REAL(kind=wp),intent(out) :: Cdf
+
+DESCRIPTION
+
+   PARCDF(3f) computes the cumulative distribution function value for
+   the Pareto distribution with precision precision tail length parameter
+   = GAMMA.
+
+   The Pareto distribution used herein is defined for all X greater than
+   or equal to 1, and has the probability density function
+
+       f(X) = GAMMA / (X**(GAMMA+1))
+
+INPUT ARGUMENTS
+
+   X      The value at which the cumulative distribution function is
+          to be evaluated. X should be greater than or equal to 1.
+
+   GAMMA  The value of the tail length parameter. GAMMA should be
+          positive.
+
+OUTPUT ARGUMENTS
+
+   CDF    The cumulative distribution function value for the Pareto
+          distribution
+
+EXAMPLES
+  Sample program:
+
+   program demo_parcdf
+   !@(#) line plotter graph of cumulative distribution function
+   use M_datapac, only : parcdf, plott, label
+   implicit none
+   real,allocatable  :: x(:), y(:)
+   real              :: gamma
+   integer           :: i
+      call label('parcdf')
+      x=[(real(i)/10.0+1.0,i=1,100,1)]
+      if(allocated(y))deallocate(y)
+      allocate(y(size(x)))
+      gamma=0.3
+      do i=1,size(x)
+         call parcdf(X(i),Gamma,y(i))
+      enddo
+      call plott(x,y,size(x))
+   end program demo_parcdf
+
+  Results:
+
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.1100000E+02 -                                                  X
+     0.1058750E+02 I                                                 XX
+     0.1017500E+02 I                                                 X
+     0.9762500E+01 I                                                X
+     0.9350000E+01 I                                               XX
+     0.8937500E+01 I                                               X
+     0.8525000E+01 -                                              X
+     0.8112500E+01 I                                             XX
+     0.7700000E+01 I                                            XX
+     0.7287500E+01 I                                           XX
+     0.6875000E+01 I                                          XX
+     0.6462500E+01 I                                         XX
+     0.6050000E+01 -                                        XX
+     0.5637500E+01 I                                       XX
+     0.5225000E+01 I                                     XXX
+     0.4812500E+01 I                                    XX
+     0.4400000E+01 I                                  XXX
+     0.3987500E+01 I                                XX
+     0.3575000E+01 -                              XX
+     0.3162500E+01 I                           XXX
+     0.2750000E+01 I                        XXX
+     0.2337501E+01 I                    XXXX
+     0.1925000E+01 I               X XXX
+     0.1512500E+01 I         X XX X
+     0.1100000E+01 -  X X  X
+                      I-----------I-----------I-----------I-----------I
+               0.2819E-01  0.1494E+00  0.2706E+00  0.3918E+00  0.5129E+00
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+REFERENCES
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    Pages 233-249.
+  * hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, Page 102.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PARCDF(X,Gamma,Cdf)
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: Cdf
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( X<1.0_wp ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO PARCDF(3f) IS LESS THAN 1.0 *****')
+         WRITE (G_IO,99003) X
+         Cdf = 0.0_wp
+         RETURN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
+         WRITE (G_IO,99002)
+         99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO PARCDF(3f) IS NON-POSITIVE *****')
+         WRITE (G_IO,99003) Gamma
+         Cdf = 0.0_wp
+         RETURN
+      ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+         Cdf = 1.0_wp - (X**(-Gamma))
+      ENDIF
+99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+!
+END SUBROUTINE PARCDF

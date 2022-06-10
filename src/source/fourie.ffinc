@@ -6,9 +6,12 @@ NAME
 SYNOPSIS
       SUBROUTINE FOURIE(X,N)
 
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER                  :: N
+
 DESCRIPTION
-   FOURIE(3f) performs a Fourier analysis of the data in the input
-   vector X. The analysis consists of the following--
+   FOURIE(3f) performs a Fourier analysis of the data in the input vector
+   X. The analysis consists of the following--
 
       1. computing (and printing)
          (for each of the harmonic frequencies
@@ -24,20 +27,74 @@ DESCRIPTION
          (at each fourier frequency) versus
          the fourier frequency.
 
-   in order that the results of the Fourier analysis be valid and properly
+   In order that the results of the Fourier analysis be valid and properly
    interpreted, the input data in X should be equi-spaced in time (or
    whatever variable corresponds to time).
 
-   the horizontal axis of the spectra produced by fourie(3f) is frequency.
-   this frequency is measured in units of cycles per 'data point' or,
+   The horizontal axis of the spectra produced by fourie(3f) is frequency.
+   This frequency is measured in units of cycles per 'data point' or,
    more precisely, in cycles per unit time where 'unit time' is defined
    as the elapsed time between adjacent observations.
 
-   the range of the frequency axis is 0.0 to 0.5.
+   The range of the frequency axis is 0.0 to 0.5.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+   Fourier analysis differs from spectral analysis (as, for example,
+   produced by the datapac TIMESE(3f) subroutine) in that a Fourier
+   analysis does no smoothing on the spectral estimates whereas a spectral
+   analysis does smooth the spectral estimates. The net result is that
+   the spectral estimates obtained from a Fourier analysis are almost
+   always more variable than those obtained in a spectral analysis.
+
+   The practical conclusion is that when the data analyst has a choice
+   of whether to perform a Fourier analysis or a spectral analysis,
+   the spectral analysis should almost always be preferred.
+
+   the maximum number of Fourier frequencies for which the Fourier
+   coefficients is computed (and listed) is N/2 where N is the sample
+   size (length of the data record in the vector X). This rule is
+   overridden (for listing purposes only) in large data sets and is
+   replaced by the rule that the maximum number of lags listed = 800
+   (which corresponds to an 8-page listing of Fourier coefficients.
+   If more pages are desired, change the value of the variable MAXPAG
+   within this subroutine from 8 to whatever is desired.
+
+   If the input observations in X are considered to have been collected
+   1 second apart in time, then the frequency axis of the resulting
+   spectra would be in units of Hertz (= cycles per second).
+
+   The frequency of 0.0 corresponds to a cycle in the data of infinite
+   (= 1/(0.0)) length or period. the frequency of 0.5 corresponds to
+   a cycle in the data of length = 1/(0.5) = 2 data points.
+
+   Any equi-spaced fourier analysis is intrinsically limited to detecting
+   frequencies no larger than 0.5 cycles per data point; this corresponds
+   to the fact that the smallest detectable cycle in the data is 2 data
+   points per cycle.
+
+INPUT ARGUMENTS
+
+   X   The vector of (unsorted) observations.
+
+   N   The integer number of observations in the vector X.
+       The maximum allowable value of N for this subroutine is 15000.
+       The sample size N must be greater than or equal to 3.
+
+OUTPUT
+
+   2 to 10 pages (depending on the input sample size) of automatic
+   printout--
+
+     1. a listing of the amplitude, phase, contribution to the total
+        variance, and relative contribution to the total variance for
+        each of the fourier frequencies (1/n, 2/n, 3/n, ..., 1/2).
+        this listing may take as little as 1 page or as many as n/100
+        pages (the exact number depending on the input sample size n).
+        this listing is terminated after at most 8 computer pages.
+        if more pages are desired, change the value of the variable
+        maxpag within this subroutine from 8 to whatever desired.
+
+     2. a plot of the relative contribution to the total variance versus
+        frequency.
 
 EXAMPLES
   Sample program:
@@ -51,126 +108,38 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  * JENKINS AND WATTS, ESPECIALLY PAGE 290.
+  * Jenkins and Watts, especially Page 290.
+
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE FOURIE(X,N)
-REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
-     &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
-     &     suma , sumb , t
-REAL(kind=wp) :: vbias , WS , X , xbar
-INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
-     &        maxpag , N , nhalf , nnpage
-!
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--2 TO 10 PAGES (DEPENDING ON
-!             THE INPUT SAMPLE SIZE) OF
-!             AUTOMATIC PRINTOUT--
-!             1) A LISTING OF THE AMPLITUDE,
-!                PHASE, CONTRIBUTION TO THE
-!                TOTAL VARIANCE, AND RELATIVE
-!                CONTRIBUTION TO THE TOTAL
-!                VARIANCE FOR EACH OF THE
-!                FOURIER FREQUENCIES
-!                (1/N, 2/N, 3/N, ..., 1/2).
-!                THIS LISTING MAY TAKE AS LITTLE AS 1
-!                PAGE OR AS MANY AS N/100 PAGES
-!                (THE EXACT NUMBER DEPENDING ON
-!                THE INPUT SAMPLE SIZE N).
-!                THIS LISTING IS TERMINATED
-!                AFTER AT MOST 8 COMPUTER PAGES.
-!                IF MORE PAGES ARE DESIRED,
-!                CHANGE THE VALUE OF THE
-!                VARIABLE     MAXPAG
-!                WITHIN THIS SUBROUTINE
-!                FROM 8 TO WHATEVER DESIRED.
-!             2) A PLOT OF THE RELATIVE
-!                CONTRIBUTION TO THE
-!                TOTAL VARIANCE VERSUS FREQUENCY.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-!                 --THE SAMPLE SIZE N MUST BE GREATER
-!                   THAN OR EQUAL TO 3.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTSP AND CHSPPF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--FOURIER ANALYSIS DIFFERS FROM SPECTRAL ANALYSIS
-!              (AS, FOR EXAMPLE, PRODUCED BY THE DATAPAC
-!              TIMESE SUBROUTINE) IN THAT A
-!              FOURIER ANALYSIS DOES NO SMOOTHING ON
-!              THE SPECTRAL ESTIMATES WHEREAS A SPECRRAL
-!              ANALYSIS DOES SMOOTH THE SPECTRAL ESTIMATES.
-!              THE NET RESULT IS THAT THE SPECTRAL
-!              ESTIMATES OBTAINED FROM A FOURIER
-!              ANALYSIS ARE ALMOST ALWAYS MORE
-!              VARIABLE THAN THOSE OBTAINED IN A
-!              SPECTRAL ANALYSIS.
-!              THE PRACTICAL CONCLUSION IS THAT
-!              WHEN THE DATA ANALYST HAS A CHOICE
-!              OF WHETHER TO PERFORM A FOURIER
-!              ANALYSIS OR A SPECTRAL ANALYSIS,
-!              THE SPECTRAL ANALYSIS SHOULD
-!              ALMOST ALWAYS BE PREFERRED.
-!            --THE MAXIMUM NUMBER OF FOURIER FREQUENCIES
-!              FOR WHICH THE FOURIER COEFFICIENTS IS
-!              COMPUTED (AND LISTED) IS N/2 WHERE N IS
-!              THE SAMPLE SIZE (LENGTH OF THE
-!              DATA RECORD IN THE VECTOR X).
-!              THIS RULE IS OVERRIDDEN
-!              (FOR LISTING PURPOSES ONLY)
-!              IN LARGE DATA SETS AND IS REPLACED
-!              BY THE RULE THAT THE MAXIMUM
-!              NUMBER OF LAGS LISTED = 800
-!              (WHICH CORRESPONDS TO AN
-!              8-PAGE LISTING OF FOURIER COEFFICIENTS.
-!              IF MORE PAGES ARE DESIRED,
-!              CHANGE THE VALUE OF THE
-!              VARIABLE     MAXPAG
-!              WITHIN THIS SUBROUTINE
-!              FROM 8 TO WHATEVER DESIRED.
-!            --IF THE INPUT OBSERVATIONS IN X ARE CONSIDERED
-!              TO HAVE BEEN COLLECTED 1 SECOND APART IN TIME,
-!              THEN THE FREQUENCY AXIS OF THE RESULTING
-!              SPECTRA WOULD BE IN UNITS OF HERTZ
-!              (= CYCLES PER SECOND).
-!            --THE FREQUENCY OF 0.0 CORRESPONDS TO A CYCLE
-!              IN THE DATA OF INFINITE (= 1/(0.0))
-!              LENGTH OR PERIOD.
-!              THE FREQUENCY OF 0.5 CORRESPONDS TO A CYCLE
-!              IN THE DATA OF LENGTH = 1/(0.5) = 2 DATA POINTS.
-!            --ANY EQUI-SPACED FOURIER ANALYSIS IS
-!              INTRINSICALLY LIMITED TO DETECTING FREQUENCIES
-!              NO LARGER THAN 0.5 CYCLES PER DATA POINT;
-!              THIS CORRESPONDS TO THE FACT THAT THE
-!              SMALLEST DETECTABLE CYCLE IN THE DATA
-!              IS 2 DATA POINTS PER CYCLE.
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE FOURIE(X,N)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER                  :: N
+REAL(kind=wp)    :: ai, amp, an, angdeg, angrad, conmsq, del, ffreq, hold, percon, period, phase1, phase2, pi, sum, suma, sumb, t
+REAL(kind=wp)    :: A(7500), B(7500)
+REAL(kind=wp)    :: vbias, WS, xbar
+INTEGER          :: i, ievodd, ilower, ipage, iskip, iupper, j, maxpag, nhalf, nnpage
 CHARACTER(len=4) :: alperc
-      DIMENSION X(:)
-      DIMENSION A(7500) , B(7500)
-      COMMON /BLOCK2_${KIND}/ WS(15000)
-      EQUIVALENCE (A(1),WS(1))
-      EQUIVALENCE (B(1),WS(7501))
-      DATA pi/3.14159265358979_wp/
-      DATA alperc/'%'/
+COMMON /BLOCK2_${KIND}/ WS(15000)
+EQUIVALENCE (A(1),WS(1))
+EQUIVALENCE (B(1),WS(7501))
+DATA pi/3.14159265358979_wp/
+DATA alperc/'%'/
 !
       ilower = 3
       iupper = 15000

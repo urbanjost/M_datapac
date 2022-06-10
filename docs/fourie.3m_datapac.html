@@ -60,20 +60,27 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
 </A>
 <BLOCKQUOTE>
 SUBROUTINE <B>FOURIE</B>(X,N)
+<P>
+<PRE>
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER                  :: N
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -81,10 +88,10 @@ SUBROUTINE <B>FOURIE</B>(X,N)
 
 </A>
 <BLOCKQUOTE>
-<B>FOURIE</B>(3f) performs a Fourier analysis of the data in the input
-vector X. The analysis consists of the following--
+<B>FOURIE</B>(3f) performs a Fourier analysis of the data in the input vector
+X. The analysis consists of the following--
 <BLOCKQUOTE>
-<TABLE cellpadding=3><!-- tsb: <B>FOURIE</B>(3f) performs a Fourier analysis of the data in the input
+<TABLE cellpadding=3><!-- tsb: <B>FOURIE</B>(3f) performs a Fourier analysis of the data in the input vector
  -->
 <TR></TR><TR></TR>
 <TR valign=top><TD width=4%>
@@ -110,34 +117,103 @@ the fourier frequency.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P>
-in order that the results of the Fourier analysis be valid and properly
+In order that the results of the Fourier analysis be valid and properly
 interpreted, the input data in X should be equi-spaced in time (or
 whatever variable corresponds to time).
 <P>
-the horizontal axis of the spectra produced by <B>fourie</B>(3f) is frequency.
-this frequency is measured in units of cycles per &#146;data point&#146; or,
+The horizontal axis of the spectra produced by <B>fourie</B>(3f) is frequency.
+This frequency is measured in units of cycles per &#146;data point&#146; or,
 more precisely, in cycles per unit time where &#146;unit time&#146; is defined
 as the elapsed time between adjacent observations.
 <P>
-the range of the frequency axis is 0.0 to 0.5.
+The range of the frequency axis is 0.0 to 0.5.
+<P>
+Fourier analysis differs from spectral analysis (as, for example,
+produced by the datapac <B>TIMESE</B>(3f) subroutine) in that a Fourier
+analysis does no smoothing on the spectral estimates whereas a spectral
+analysis does smooth the spectral estimates. The net result is that
+the spectral estimates obtained from a Fourier analysis are almost
+always more variable than those obtained in a spectral analysis.
+<P>
+The practical conclusion is that when the data analyst has a choice
+of whether to perform a Fourier analysis or a spectral analysis,
+the spectral analysis should almost always be preferred.
+<P>
+the maximum number of Fourier frequencies for which the Fourier
+coefficients is computed (and listed) is N/2 where N is the sample
+size (length of the data record in the vector X). This rule is
+overridden (for listing purposes only) in large data sets and is
+replaced by the rule that the maximum number of lags listed = 800
+(which corresponds to an 8-page listing of Fourier coefficients.
+If more pages are desired, change the value of the variable MAXPAG
+within this subroutine from 8 to whatever is desired.
+<P>
+If the input observations in X are considered to have been collected
+1 second apart in time, then the frequency axis of the resulting
+spectra would be in units of Hertz (= cycles per second).
+<P>
+The frequency of 0.0 corresponds to a cycle in the data of infinite
+(= <B>1/</B>(0.0)) length or period. the frequency of 0.5 corresponds to
+a cycle in the data of length = <B>1/</B>(0.5) = 2 data points.
+<P>
+Any equi-spaced fourier analysis is intrinsically limited to detecting
+frequencies no larger than 0.5 cycles per data point; this corresponds
+to the fact that the smallest detectable cycle in the data is 2 data
+points per cycle.
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
+<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>X</B> </TD><TD valign=bottom>
-description of parameter
+The vector of (unsorted) observations.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+<B>N</B> </TD><TD valign=bottom>
+The integer number of observations in the vector X.
+The maximum allowable value of N for this subroutine is 15000.
+The sample size N must be greater than or equal to 3.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
+
+     <H3>OUTPUT</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
+2 to 10 pages (depending on the input sample size) of automatic
+printout--
+<BLOCKQUOTE>
+<TABLE cellpadding=3><!-- tsb: 2 to 10 pages (depending on the input sample size) of automatic
+ -->
+<TR></TR><TR></TR>
+<TR valign=top><TD width=4%>
+1.
+</TD><TD>
+a listing of the amplitude, phase, contribution to the total
+variance, and relative contribution to the total variance for
+each of the fourier frequencies (1/n, 2/n, 3/n, &#46;&#46;&#46;, 1/2).
+this listing may take as little as 1 page or as many as n/100
+pages (the exact number depending on the input sample size n).
+this listing is terminated after at most 8 computer pages.
+if more pages are desired, change the value of the variable
+maxpag within this subroutine from 8 to whatever desired.
+</TD></TR>
+<TR valign=top><TD width=4%>
+2.
+</TD><TD>
+a plot of the relative contribution to the total variance versus
+frequency.
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+</BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -155,16 +231,17 @@ Sample program:
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=5>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -172,7 +249,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -180,7 +257,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -190,11 +267,11 @@ CC0-1.0
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-JENKINS AND WATTS, ESPECIALLY PAGE 290.
+Jenkins and Watts, especially Page 290.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>fourie (3m_datapac)</TD> <TD align=right width=33%><I>June 10, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 27d75077-e2f7-473f-abaf-2e0e05f0cd95 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>fourie (3m_datapac)</TD> <TD align=right width=33%><I>June 10, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from d6084276-c281-49d9-90f7-d9276f8c994e using man macros.</FONT>
 <br><br><center><img src="images/fourie.gif"></center>
 </div>
 </div>

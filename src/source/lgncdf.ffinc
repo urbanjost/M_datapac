@@ -1,0 +1,122 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file lgncdf.3m_datapac.man
+NAME
+   lgncdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the lognormal
+   cumulative distribution function
+
+SYNOPSIS
+      SUBROUTINE LGNCDF(X,Cdf)
+
+       REAL(kind=wp),intent(in)  :: X
+       REAL(kind=wp),intent(out) :: Cdf
+
+DESCRIPTION
+   LGNCDF(3f) computes the cumulative distribution function value for
+   the lognormal distribution.
+
+   The lognormal distribution used herein has mean = sqrt(e) = 1.64872127
+   and standard deviation = sqrt(e*(e-1)) = 2.16119742. this distribution
+   is defined for all positive X and has the probability density function
+
+       f(X) = (1/(X*sqrt(2*pi))) * exp(-log(X)*log(X)/2)
+
+   The lognormal distribution used herein is the distribution of the
+   variate X = exp(z) where the variate z is normally distributed with
+   mean = 0 and standard deviation = 1.
+
+INPUT ARGUMENTS
+   X      The value at which the cumulative distribution function is
+          to be evaluated. X should be positive.
+OUTPUT ARGUMENTS
+   Cdf    The cumulative distribution function value for the lognormal
+          distribution
+
+EXAMPLES
+  Sample program:
+
+   program demo_lgncdf
+   !@(#) line plotter graph of cumulative distribution function
+   use M_datapac, only : lgncdf, plott, label
+   implicit none
+   real,allocatable  :: x(:), y(:)
+   integer           :: i
+      call label('lgncdf')
+      x=[((real(i)+epsilon(0.0))/10.0,i=0,100,1)]
+      if(allocated(y))deallocate(y)
+      allocate(y(size(x)))
+      do i=1,size(x)
+         call lgncdf(x(i),y(i))
+      enddo
+      call plott(x,y,size(x))
+   end program demo_lgncdf
+
+  Results:
+
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.1000000E+02 -                                                  X
+     0.9583333E+01 I                                                  X
+     0.9166667E+01 I                                                  X
+     0.8750000E+01 I                                                  X
+     0.8333333E+01 I                                                  X
+     0.7916667E+01 I                                                  X
+     0.7500000E+01 -                                                 XX
+     0.7083333E+01 I                                                 X
+     0.6666667E+01 I                                                 X
+     0.6250000E+01 I                                                 X
+     0.5833333E+01 I                                                 X
+     0.5416667E+01 I                                                X
+     0.5000000E+01 -                                                X
+     0.4583333E+01 I                                               XX
+     0.4166667E+01 I                                              XX
+     0.3750000E+01 I                                              X
+     0.3333333E+01 I                                             X
+     0.2916667E+01 I                                           XX
+     0.2500000E+01 -                                         XXX
+     0.2083333E+01 I                                      XXX
+     0.1666667E+01 I                                  XXXX
+     0.1250000E+01 I                            X XX X
+     0.8333340E+00 I                   X  X X X
+     0.4166670E+00 I        X  X  X  X
+     0.1192093E-07 -  XX X
+                      I-----------I-----------I-----------I-----------I
+               0.0000E+00  0.2473E+00  0.4947E+00  0.7420E+00  0.9893E+00
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+REFERENCES
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    Pages 112-136.
+  * Cramer, Mathematical Methods of Statistics, 1946, Pages 219-220.
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LGNCDF(X,Cdf)
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Cdf
+
+REAL(kind=wp)             :: arg
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( X<=0.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO LGNCDF(3f) IS NON-POSITIVE *****')
+      WRITE (G_IO,99002) X
+      99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      Cdf = 0.0_wp
+      RETURN
+   ELSE
+      arg = LOG(X)
+      CALL NORCDF(arg,Cdf)
+   ENDIF
+!
+END SUBROUTINE LGNCDF

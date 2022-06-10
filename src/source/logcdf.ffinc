@@ -1,0 +1,117 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file logcdf.3m_datapac.man
+NAME
+   logcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the logistic
+   cumulative distribution function
+
+SYNOPSIS
+      SUBROUTINE LOGCDF(X,Cdf)
+
+       REAL(kind=wp),intent(in)  :: X
+       REAL(kind=wp),intent(out) :: Cdf
+
+DESCRIPTION
+   LOGCDF(3f) computes the cumulative distribution function value for
+   the logistic distribution with mean = 0 and standard deviation =
+   pi/sqrt(3).
+
+   This distribution is defined for all X and has the probability
+   density function
+
+       f(X) = exp(X)/(1+exp(X))
+
+INPUT ARGUMENTS
+
+   X     The value at which the cumulative distribution function is to
+         be evaluated.
+OUTPUT ARGUMENTS
+
+   CDF   The cumulative distribution function value.
+
+EXAMPLES
+  Sample program:
+
+   program demo_logcdf
+   !@(#) line plotter graph of cumulative distribution function
+   use M_datapac, only : logcdf, plott, label
+   implicit none
+   real,allocatable  :: x(:), y(:)
+   integer           :: i
+      call label('logcdf')
+      x=[(real(i),i=-100,100,1)]
+      if(allocated(y))deallocate(y)
+      allocate(y(size(x)))
+      do i=1,size(x)
+         call logcdf(x(i)/10.0,y(i))
+      enddo
+      call plott(x,y,size(x))
+   end program demo_logcdf
+
+  Results:
+
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.1000000E+03 -                                                  X
+     0.9166666E+02 I                                                  X
+     0.8333334E+02 I                                                  X
+     0.7500000E+02 I                                                  X
+     0.6666667E+02 I                                                  X
+     0.5833334E+02 I                                                  X
+     0.5000000E+02 -                                                  X
+     0.4166667E+02 I                                                 X
+     0.3333334E+02 I                                                XX
+     0.2500000E+02 I                                             XXX
+     0.1666667E+02 I                                        XXXXX
+     0.8333336E+01 I                                XXXXXXXX
+     0.0000000E+00 -                     XX XXXXX XX
+    -0.8333328E+01 I             XXXXXXXX
+    -0.1666666E+02 I        XXXXX
+    -0.2499999E+02 I     XXX
+    -0.3333333E+02 I   XX
+    -0.4166666E+02 I   X
+    -0.5000000E+02 -  X
+    -0.5833333E+02 I  X
+    -0.6666666E+02 I  X
+    -0.7500000E+02 I  X
+    -0.8333333E+02 I  X
+    -0.9166666E+02 I  X
+    -0.1000000E+03 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.4540E-04  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+    Pages 1-21.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --MAY       1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LOGCDF(X,Cdf)
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Cdf
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
+!
+      IF ( X>=0.0_wp ) THEN
+         Cdf = 1.0_wp/(1.0_wp+EXP(-X))
+      ELSE
+         Cdf = EXP(X)/(1.0_wp+EXP(X))
+      ENDIF
+
+END SUBROUTINE LOGCDF

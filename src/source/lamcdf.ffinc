@@ -1,0 +1,195 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file lamcdf.3m_datapac.man
+NAME
+   lamcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the
+   Tukey-Lambda cumulative distribution function
+
+SYNOPSIS
+      SUBROUTINE LAMCDF(X,Alamba,Cdf)
+
+       REAL(kind=wp),intent(in)  :: X
+       REAL(kind=wp),intent(in)  :: Alamba
+       REAL(kind=wp),intent(out) :: Cdf
+
+DESCRIPTION
+   LAMCDF(3f) computes the cumulative distribution function value for the
+   (Tukey) lambda distribution with tail length parameter value = ALAMBA.
+   In general, the probability density function for this distribution
+   is not simple.
+
+   The percent point function for this distribution is
+
+       g(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
+
+INPUT ARGUMENTS
+   X       The  value at which the cumulative distribution function is
+           to be evaluated.
+
+           For ALAMBA non-positive, no restrictions on X.
+           For ALAMBA positive, X should be between (-1/ALAMBA) and
+           (+1/ALAMBA), inclusively.
+
+   ALAMBA  The value of lambda (the tail length parameter).
+
+OUTPUT ARGUMENTS
+   CDF    The cumulative distribution function value for the Tukey
+          lambda distribution.
+
+EXAMPLES
+  Sample program:
+
+
+   program demo_lamcdf
+   !@(#) line plotter graph of cumulative distribution function
+   use M_datapac, only : lamcdf, plott, label
+   implicit none
+   real,allocatable  :: x(:), y(:)
+   real              :: alamba
+   integer           :: i
+      call label('lamcdf')
+      alamba=4.0
+      x=[(real(i)/100.0/alamba,i=-100,100,1)]
+      if(allocated(y))deallocate(y)
+      allocate(y(size(x)))
+      do i=1,size(x)
+         call lamcdf(X(i),Alamba,y(i))
+      enddo
+      call plott(x,y,size(x))
+   end program demo_lamcdf
+
+  Results:
+
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.2500000E+00 -                                                  X
+     0.2291667E+00 I                                                XX
+     0.2083333E+00 I                                               XX
+     0.1875000E+00 I                                              XX
+     0.1666667E+00 I                                             XX
+     0.1458333E+00 I                                           XXX
+     0.1250000E+00 -                                          XX
+     0.1041667E+00 I                                        XX
+     0.8333333E-01 I                                      XX
+     0.6250000E-01 I                                   XXX
+     0.4166666E-01 I                                XXXX
+     0.2083333E-01 I                            XXXX
+     0.0000000E+00 -                        XXXXX
+    -0.2083334E-01 I                     XXXX
+    -0.4166669E-01 I                 XXXX
+    -0.6250000E-01 I               XXX
+    -0.8333334E-01 I             XX
+    -0.1041667E+00 I           XX
+    -0.1250000E+00 -         XX
+    -0.1458333E+00 I       XXX
+    -0.1666667E+00 I      XX
+    -0.1875000E+00 I     XX
+    -0.2083333E+00 I    XX
+    -0.2291667E+00 I   XX
+    -0.2500000E+00 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Hastings, Mosteller, Tukey, and windsor, 'Low MOments for Small
+    Samples:  A Comparative Study of Order Statistics', Annals of
+    Mathematical Statistics, 18, 1947, Pages 413-426.
+  * Filliben, Simple and Robust Linear Estimation of the Location
+    Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+    Princeton University), 1969, Pages 42-44, 53-58.
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --MAY       1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LAMCDF(X,Alamba,Cdf)
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(in)  :: Alamba
+REAL(kind=wp),intent(out) :: Cdf
+REAL(kind=wp) :: pdel , plower , pmax , pmid , pmin , pupper , xcalc , xmax , xmin
+INTEGER       :: icount
+!
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( Alamba>0.0_wp ) THEN
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<xmin .OR. X>xmax ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (&
+         &' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO LAMCDF(3f) IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
+         WRITE (G_IO,99002) X
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+         IF ( X<xmin ) Cdf = 0.0_wp
+         IF ( X>xmax ) Cdf = 1.0_wp
+         RETURN
+      ENDIF
+   ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+   IF ( Alamba>0.0_wp ) THEN
+!
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<=xmin ) Cdf = 0.0_wp
+      IF ( X>=xmax ) Cdf = 1.0_wp
+      IF ( X<=xmin .OR. X>=xmax ) RETURN
+   ENDIF
+!
+   IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
+!
+      IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
+         pmin = 0.0_wp
+         pmid = 0.5_wp
+         pmax = 1.0_wp
+         plower = pmin
+         pupper = pmax
+         icount = 0
+         DO
+            xcalc = (pmid**Alamba-(1.0_wp-pmid)**Alamba)/Alamba
+            IF ( xcalc==X ) THEN
+               Cdf = pmid
+               GOTO 99999
+            ELSE
+               IF ( xcalc>X ) THEN
+                  pupper = pmid
+                  pmid = (pmid+plower)/2.0_wp
+               ELSE
+                  plower = pmid
+                  pmid = (pmid+pupper)/2.0_wp
+               ENDIF
+               pdel = ABS(pmid-plower)
+               icount = icount + 1
+               IF ( pdel<0.000001_wp .OR. icount>30 ) THEN
+                  Cdf = pmid
+                  GOTO 99999
+               ENDIF
+            ENDIF
+         ENDDO
+      ENDIF
+   ENDIF
+   IF ( X>=0.0_wp ) THEN
+      Cdf = 1.0_wp/(1.0_wp+EXP(-X))
+      RETURN
+   ELSE
+      Cdf = EXP(X)/(1.0_wp+EXP(X))
+      RETURN
+   ENDIF
+!
+99999 END SUBROUTINE LAMCDF

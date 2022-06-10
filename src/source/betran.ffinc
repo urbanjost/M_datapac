@@ -9,7 +9,7 @@ SYNOPSIS
        INTEGER,intent(in)        :: N
        REAL(kind=wp),intent(in)  :: Alpha
        REAL(kind=wp),intent(in)  :: Beta
-       INTEGER,intent(inout)     :: Iseed 
+       INTEGER,intent(inout)     :: Iseed
        REAL(kind=wp),intent(out) :: X(:)
 
 DESCRIPTION
@@ -110,12 +110,12 @@ SUBROUTINE BETRAN(N,Alpha,Beta,Iseed,X)
 INTEGER,intent(in)        :: N
 REAL(kind=wp),intent(in)  :: Alpha
 REAL(kind=wp),intent(in)  :: Beta
-INTEGER,intent(inout)     :: Iseed 
+INTEGER,intent(inout)     :: Iseed
 REAL(kind=wp),intent(out) :: X(:)
 
 REAL(kind=wp) :: a1, a2, arg, b1, b2, funct, term, u(10), xg, xg01, xg02, xg1, xg2
 REAL(kind=wp) :: xn01, xn02, xn(1)
-INTEGER       :: i 
+INTEGER       :: i
 real(kind=wp),parameter :: athird = 0.33333333_wp
 real(kind=wp),parameter :: sqrt3= 1.73205081_wp
 !

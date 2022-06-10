@@ -1,34 +1,37 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file tplt.3m_datapac.man
 NAME
-   tplt(3f) - [M_datapac:LINE_PLOT] generates a student's
-   T probability plot (with integer degrees of freedom parameter value
-   NU).
+   tplt(3f) - [M_datapac:LINE_PLOT] generates a Student's T probability
+   plot (with integer degrees of freedom parameter value NU).
 
 SYNOPSIS
       SUBROUTINE TPLT(X,N,Nu)
 
-DESCRIPTION
-   tplt(3f) generates a student's t probability plot (with integer
-   degrees of freedom parameter value = nu).
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER,intent(in) :: N
+       INTEGER,intent(in) :: Nu
 
-   the prototype student's t distribution used herein is defined for all
-   x, and its probability density function is given in the references
+DESCRIPTION
+   TPLT(3f) generates a Student's T probability plot (with integer
+   degrees of freedom parameter value = NU).
+
+   The prototype Student's T distribution used herein is defined for all
+   X, and its probability density function is given in the references
    below.
 
-   as used herein, a probability plot for a distribution is a plot
+   As used herein, a probability plot for a distribution is a plot
    of the ordered observations versus the order statistic medians for
    that distribution.
 
-   the student's t probability plot is useful in graphically testing
+   The Student's T probability plot is useful in graphically testing
    the composite (that is, location and scale parameters need not be
    specified) hypothesis that the underlying distribution from which
-   the data have been randomly drawn is the student's t distribution
-   with degrees of freedom parameter value = nu.
+   the data have been randomly drawn is the Student's T distribution
+   with degrees of freedom parameter value = NU.
 
-   if the hypothesis is true, the probability plot should be near-linear.
+   If the hypothesis is true, the probability plot should be near-linear.
 
-   a measure of such linearity is given by the calculated probability
+   A measure of such linearity is given by the calculated probability
    plot correlation coefficient.
 
 INPUT ARGUMENTS
@@ -82,10 +85,11 @@ $ENDBLOCK
 !     UPDATED         --FEBRUARY  1977.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE TPLT(X,N,Nu)
-REAL(kind=wp) :: X(:)
-INTEGER :: N
-INTEGER :: Nu
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in) :: N
+INTEGER,intent(in) :: Nu
 
 REAL(kind=wp) :: W(7500), Y(7500)
 REAL(kind=wp) :: an, cc, hold, pp0025, pp025, pp975, pp9975, q, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
@@ -128,7 +132,8 @@ EQUIVALENCE (W(1),WS(7501))
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      an = N
+ 50      continue
+         an = N
 !
 !     SORT THE DATA
 !

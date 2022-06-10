@@ -1,5 +1,5 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file decomp.3m_datapac.man
+$BLOCK COMMENT --file PRIVATE/decomp.3m_datapac.man
 NAME
    decomp(3f) - [M_datapac:STATISTICS] decomposes a weighted data matrix
    (utility routine used by other routines)
@@ -7,20 +7,27 @@ NAME
 SYNOPSIS
       SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
 
-DESCRIPTION
-   decomp(3f) decomposes the weighted data matrix q which originally =
-   the n by k data matrix x times the square root of the weights (in w).
+       INTEGER :: N
+       INTEGER :: K
+       REAL(kind=wp) :: Eta
+       REAL(kind=wp) :: Tol 
+       INTEGER :: Irank
+       INTEGER :: Insing
 
-   the original q is decomposed into a new q times the inverse of a
+DESCRIPTION
+   DECOMP(3f) decomposes the weighted data matrix q which originally =
+   the N by K data matrix x times the square root of the weights (in w).
+
+   The original q is decomposed into a new q times the inverse of a
    diagonal matrix d times the diagonal matrix d times an upper triangular
    matrix r.
 
-   the new n by k q has orthogonal columns.
+   The new N by K q has orthogonal columns.
 
-   a second output from decomp(3f) is the rank and status (non-singular
-   or singular) of the data matrix x.
+   A second output from DECOMP(3f) is the rank and status (non-singular
+   or singular) of the data matrix X.
 
-   a third output from decomp(3f) is the numerically optimal pivot points
+   A third output from DECOMP(3f) is the numerically optimal pivot points
    for the decomposition.
 
 OPTIONS
@@ -52,8 +59,15 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
-REAL(kind=wp) :: D, dis, dn, DUM1, DUM2, Eta, hold, Q, R, risj, Tol, tol2, WS
-INTEGER i, Insing, ip, IPIvot, iqarg, iqarg1, iqarg2, Irank, irarg, irarg1, irarg2, is, ism1, isp1, j, K, l, m, N
+INTEGER :: N
+INTEGER :: K
+REAL(kind=wp) :: Eta
+REAL(kind=wp) :: Tol 
+INTEGER :: Irank
+INTEGER :: Insing
+
+REAL(kind=wp) :: D, dis, dn, DUM1, DUM2, hold, Q, R, risj, tol2, WS
+INTEGER i, ip, IPIvot, iqarg, iqarg1, iqarg2, irarg, irarg1, irarg2, is, ism1, isp1, j, l, m
 LOGICAL fsum
 DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
 COMMON /BLOCK2_${KIND}/ WS(15000)

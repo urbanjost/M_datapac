@@ -61,20 +61,27 @@ distribution function
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output Arguments</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
 </A>
 <BLOCKQUOTE>
 SUBROUTINE <B>NORCDF</B>(X,Cdf)
+<P>
+<PRE>
+       REAL(kind=wp),intent(out) :: Cdf
+       REAL(kind=wp),intent(in)  :: X
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -82,34 +89,44 @@ SUBROUTINE <B>NORCDF</B>(X,Cdf)
 
 </A>
 <BLOCKQUOTE>
-<B>norcdf</B>(3f) computes the cumulative distribution function value for the
-normal (gaussian) distribution with mean = 0 and standard deviation = 1.
+<B>NORCDF</B>(3f) computes the cumulative distribution function value for the
+normal (Gaussian) distribution with mean = 0 and standard deviation
+= 1.
 <P>
-this distribution is defined for all x and has the probability
+This distribution is defined for all X and has the probability
 density function
 <P>
 <PRE>
-       f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+       f(X) = (1/sqrt(2*pi))*exp(-X*X/2)
 <P>
 </PRE>
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>X</B> </TD><TD valign=bottom>
-description of parameter
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+The value at which the cumulative distribution function is to
+be evaluated.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
+
+     <H3>OUTPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B>CDF</B> </TD><TD valign=bottom>
+The cumulative distribution function value.
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -119,24 +136,68 @@ Sample program:
 <P>
 <PRE>
    program demo_norcdf
-   use M_datapac, only : norcdf
+   !@(#) line plotter graph of cumulative distribution function
+   use M_datapac, only : norcdf, plott, label
    implicit none
-   ! call norcdf(x,y)
+   real,allocatable  :: x(:), y(:)
+   integer           :: i
+      call label(&#146;norcdf&#146;)
+      x=[(real(i),i=-100,100,1)]
+      if(allocated(y))deallocate(y)
+      allocate(y(size(x)))
+      do i=1,size(x)
+         call norcdf(x(i)/10.0,y(i))
+      enddo
+      call plott(x,y,size(x))
    end program demo_norcdf
 <P>
 </PRE>
 Results:
+<P>
+<PRE>
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.1000000E+03 -                                                  X
+     0.9166666E+02 I                                                  X
+     0.8333334E+02 I                                                  X
+     0.7500000E+02 I                                                  X
+     0.6666667E+02 I                                                  X
+     0.5833334E+02 I                                                  X
+     0.5000000E+02 -                                                  X
+     0.4166667E+02 I                                                  X
+     0.3333334E+02 I                                                  X
+     0.2500000E+02 I                                                 XX
+     0.1666667E+02 I                                             XXXXX
+     0.8333336E+01 I                                   X XX XXXXX
+     0.0000000E+00 -                   XX X X X X X XX
+    -0.8333328E+01 I        XXXXX XX X
+    -0.1666666E+02 I   XXXXX
+    -0.2499999E+02 I  XX
+    -0.3333333E+02 I  X
+    -0.4166666E+02 I  X
+    -0.5000000E+02 -  X
+    -0.5833333E+02 I  X
+    -0.6666666E+02 I  X
+    -0.7500000E+02 I  X
+    -0.8333333E+02 I  X
+    -0.9166666E+02 I  X
+    -0.1000000E+03 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+<P>
+</PRE>
 </BLOCKQUOTE>
-<A name=5>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -144,7 +205,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -152,7 +213,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -162,18 +223,18 @@ CC0-1.0
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-PAGE 932, FORMULA 26.2.17.
+National Bureau of Standards Applied Mathematics Series 55, 1964,
+Page 932, Formula 26.2.17.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS-<B>-1</B>, 1970,
-PAGES 40-111.
+Johnson and Kotz, Continuous Univariate Distributions-<B>-1</B>, 1970,
+Pages 40-111.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>norcdf (3m_datapac)</TD> <TD align=right width=33%><I>June 10, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 2874008f-2530-42e0-be34-87367d1e588e using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>norcdf (3m_datapac)</TD> <TD align=right width=33%><I>June 10, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 10c93357-dfe2-40da-a55d-0f6797d2d3ec using man macros.</FONT>
 <br><br><center><img src="images/norcdf.gif"></center>
 </div>
 </div>

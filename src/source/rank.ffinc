@@ -18,6 +18,49 @@ DESCRIPTION
    RANK(3f) gives the data analyst the ability to (for example) rank
    the data preliminary to certain distribution-free analyses.
 
+NOTES
+  The rank of the first element of the vector X will be placed in the
+  first position of the vector XR, the rank of the second element of the
+  vector X will be placed in the second position of the vector XR, etc.
+
+  The smallest element in the vector X will have a rank of 1 (unless
+  ties exist).  the largest element in the vector X will have a rank of N
+  (unless ties exist).
+
+  Although ranks are usually (unless ties exist) integral values from
+  1 to N, it is to be noted that they are outputted as REAL values in
+  the vector XR.  XR is so as to be consistent with the fact that all
+  vector arguments in all other datapac subroutines are REAL; but more
+  importantly, because ties frequently do exist in data sets and so some
+  of the resulting ranks will be non-integral and so the output vector
+  of ranks must necessarily be REAL and not INTEGER.
+
+  The input vector X remains unaltered.
+
+  Due to conflicting use of labeled common /block2_${kind}/ by this
+  rank subroutine and the SPCORR (Spearman rank correlation coefficient)
+  subroutine, the vector XS of this rank subroutine has been placed in
+  labeled common /block4_${kind}/
+
+  The first and third arguments in the calling sequence may be identical;
+  that is, an 'in place' ranking is permitted. The calling sequence
+  call RANK(X,N,X) is valid, if desired.
+
+  The sorting algorthm used herein is the binary sort. This algorthim
+  is extremely fast as the following time trials indicate.  These time
+  trials were carried out on the UNIVAC 1108 EXEC 8 system at NBS in
+  August of 1974.  by way of comparison, the time trial values for the
+  easy-to-program but extremely inefficient bubble sort algorithm have
+  also been included--
+
+  Number of random        Binary sort       Bubble sort
+   numbers sorted
+    n = 10                 .002 sec          .002 sec
+    n = 100                .011 sec          .045 sec
+    n = 1000               .141 sec         4.332 sec
+    n = 3000               .476 sec        37.683 sec
+    n = 10000             1.887 sec      not computed
+
 INPUT ARGUMENTS
 
    X     The vector of observations to be ranked.
@@ -74,44 +117,6 @@ REAL(kind=wp) :: an , avrank , hold , rprev , xprev , XS
 INTEGER       :: i , ibran , iupper , j , jmin , jp1 , k , nm1
 COMMON /BLOCK4_${KIND}/ XS(7500)
 
-
-
-!     COMMENT--THE RANK OF THE FIRST ELEMENT OF THE VECTOR X WILL BE PLACED IN THE FIRST POSITION OF THE VECTOR XR,
-!              THE RANK OF THE SECOND ELEMENT OF THE VECTOR X WILL BE PLACED IN THE SECOND POSITION OF THE VECTOR XR, ETC.
-!
-!     COMMENT--THE SMALLEST ELEMENT IN THE VECTOR X WILL HAVE A RANK OF 1 (UNLESS TIES EXIST).
-!              THE LARGEST ELEMENT IN THE VECTOR X WILL HAVE A RANK OF N (UNLESS TIES EXIST).
-!
-!     COMMENT--ALTHOUGH RANKS ARE USUALLY (UNLESS TIES EXIST) INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
-!              NOTED THAT THEY ARE OUTPUTTED AS SINGLE PRECISION INTEGERS IN THE VECTOR XR.
-!              XR IS  SO AS TO BE CONSISTENT WITH THE FACT THAT ALL VECTOR ARGUMENTS IN ALL OTHER
-!              DATAPAC SUBROUTINES ARE ; BUT MORE IMPORTANTLY, BECAUSE TIES FREQUENTLY
-!              DO EXIST IN DATA SETS AND SO SOME OF THE RESULTING RANKS WILL BE NON-INTEGRAL
-!              AND SO THE OUTPUT VECTOR OF RANKS MUST NECESSARILY BE  AND NOT INTEGER.
-!
-!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!
-!     COMMENT--DUE TO CONFLICTING USE OF LABELED COMMON /BLOCK2_${KIND}/ BY THIS RANK SUBROUTINE AND THE SPCORR (SPEARMAN RANK
-!              CORRELATION COEFFICIENT) SUBROUTINE, THE VECTOR XS OF THIS RANK SUBROUTINE HAS BEEN PLACED IN
-!              LABELED COMMON /BLOCK4_${KIND}/
-!
-!     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE CALLING SEQUENCE MAY BE IDENTICAL; THAT IS, AN 'IN PLACE' RANKING IS PERMITTED.
-!              THE CALLING SEQUENCE CALL RANK(X,N,X) IS VALID, IF DESIRED.
-!
-!     COMMENT--THE SORTING ALGORTHM USED HEREIN IS THE BINARY SORT. THIS ALGORTHIM IS EXTREMELY FAST AS THE
-!              FOLLOWING TIME TRIALS INDICATE.  THESE TIME TRIALS WERE CARRIED OUT ON THE UNIVAC 1108 EXEC 8 SYSTEM AT NBS
-!              IN AUGUST OF 1974.
-!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES FOR THE EASY-TO-PROGRAM BUT EXTREMELY
-!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE ALSO BEEN INCLUDED--
-!
-!              NUMBER OF RANDOM        BINARY SORT       BUBBLE SORT
-!               NUMBERS SORTED
-!                N = 10                 .002 SEC          .002 SEC
-!                N = 100                .011 SEC          .045 SEC
-!                N = 1000               .141 SEC         4.332 SEC
-!                N = 3000               .476 SEC        37.683 SEC
-!                N = 10000             1.887 SEC      NOT COMPUTED
-!
 !---------------------------------------------------------------------
       an = N
       iupper = 7500

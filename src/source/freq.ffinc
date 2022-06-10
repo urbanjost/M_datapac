@@ -7,13 +7,25 @@ NAME
 SYNOPSIS
       SUBROUTINE FREQ(X,N)
 
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER,intent(in)       :: N 
+
 DESCRIPTION
    freq(3f) computes the sample frequency and sample cumulative frequency
    for the data in the input vector x.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   X    The  vector of (unsorted or sorted) observations.
+
+   N    The integer number of observations in the vector X.
+        The maximum allowable value of N for this subroutine is 15000.
+OUTPUT
+
+   Several (for large data sets) pages of automatic plots (with
+   approximately 55 values per page) consisting of an ordered listing
+   of each distinct value in the data set along with the frequency of
+   occurance of that value and the cumulative frequency.
 
 EXAMPLES
   Sample program:
@@ -27,8 +39,9 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
@@ -37,39 +50,20 @@ REFERENCES
   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
     EDITION 2, 1963, PAGE 8.
 $ENDBLOCK
+!     ORIGINAL VERSION--DECEMBER  1972.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE FREQ(X,N)
-REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,    WS , X , xbar , Y
-INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--SEVERAL (FOR LARGE DATA SETS) PAGES OF AUTOMATIC
-!             PRINTOUT (WITH APPROXIMATELY 55 VALUES PER PAGE)
-!             CONSISTING OF AN ORDERED LISTING OF EACH DISTINCT
-!             VALUE IN THE DATA SET ALONG WITH
-!             THE FREQUENCY OF OCCURANCE OF THAT VALUE
-!             AND THE CUMULATIVE FREQUENCY.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--DECEMBER  1972.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2_${KIND}/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N 
+REAL(kind=wp) :: an, cfreq, dvalue, frq, hold, pcfreq, pfreq, s, sum, WS, xbar, Y
+INTEGER i, icfreq, iflag, ifreq, ip1, iupper, ndv, nm1, numseq
+DIMENSION Y(15000)
+COMMON /BLOCK2_${KIND}/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
 !
@@ -77,17 +71,14 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FREQ   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO FREQ(3f) IS OUTSIDE THE ALLOWABLE (1,',&
+	 & I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE FREQ&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+         99003 FORMAT (' ***** FATAL ERROR-- THE SECOND INPUT ARGUMENT TO FREQ(3f) HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = X(1)
@@ -95,9 +86,8 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
          WRITE (G_IO,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE FREQ   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO FREQ(3f) HAS ALL ELEMENTS = ', &
+	 & E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -117,18 +107,17 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
          s = SQRT(sum/(an-1.0_wp))
 !
          WRITE (G_IO,99005)
-99005    FORMAT ('1')
+         99005    FORMAT ('1')
          WRITE (G_IO,99006)
 !
-99006    FORMAT (' ',18X,                                               &
-     &           'SAMPLE FREQUENCY AND SAMPLE CUMULATIVE FREQUENCY')
+         99006    FORMAT (' ',18X,'SAMPLE FREQUENCY AND SAMPLE CUMULATIVE FREQUENCY')
          WRITE (G_IO,99014)
          WRITE (G_IO,99007) N
-99007    FORMAT (' ',27X,'THE SAMPLE SIZE N = ',I8)
+         99007    FORMAT (' ',27X,'THE SAMPLE SIZE N = ',I8)
          WRITE (G_IO,99008) xbar
-99008    FORMAT (' ',25X,'THE SAMPLE MEAN = ',E15.8)
+         99008    FORMAT (' ',25X,'THE SAMPLE MEAN = ',E15.8)
          WRITE (G_IO,99009) s
-99009    FORMAT (' ',20X,'THE SAMPLE STANDARD DEVIATION = ',E15.8)
+         99009    FORMAT (' ',20X,'THE SAMPLE STANDARD DEVIATION = ',E15.8)
          WRITE (G_IO,99014)
          WRITE (G_IO,99014)
          WRITE (G_IO,99010)

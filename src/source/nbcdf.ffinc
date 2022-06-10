@@ -1,0 +1,341 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file nbcdf.3m_datapac.man
+NAME
+   nbcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the negative
+   binomial cumulative distribution function
+
+SYNOPSIS
+      SUBROUTINE NBCDF(X,P,N,Cdf)
+
+       REAL(kind=wp),intent(in)  :: X
+       REAL(kind=wp),intent(in)  :: P
+       INTEGER                   :: N
+       REAL(kind=wp),intent(out) :: Cdf
+
+DESCRIPTION
+
+   NBCDF(3f) computes the cumulative distribution function value at the
+   precision precision value X for the negative binomial distribution with
+   precision precision 'Bernoulli probability' parameter = P, and integer
+   'number of successes in Bernoulli trials' parameter = N.
+
+   The negative binomial distribution used herein has mean = N*(1-P)/P
+   and standard deviation = sqrt(N*(1-P)/(P*P))). this distribution
+   is defined for all non-negative integer X-- X = 0, 1, 2, ... .
+   This distribution has the probability function
+
+       f(X) = c(N+X-1,N) * P**N * (1-P)**X
+
+   Where c(N+X-1,N) is the combinatorial function equaling the number
+   of combinations of N+X-1 items taken N at a time.
+
+   The negative binomial distribution is the distribution of the number
+   of failures before obtaining N successes in an indefinite sequence of
+   Bernoulli (0,1) trials where the probability of success in a precision
+   trial = P.
+
+NOTE
+
+   Even though the input to this cumulative distribution function
+   subroutine for this discrete distribution should (under normal
+   circumstances) be a discrete integer value, the input variable X is
+   REAL in mode.
+
+   X has been specified as REAL so as to conform with the datapac
+   convention that all input ****data**** (as opposed to sample
+   size, for example) variables to all datapac subroutines are REAL.
+   This convention is based on the belief that
+   
+    1. A mixture of modes (floating point versus integer) is inconsistent
+       and an unnecessary complication in a data analysis; and
+   
+    2. Floating point machine arithmetic (as opposed to integer
+       arithmetic) is the more natural mode for doing data analysis.
+
+INPUT ARGUMENTS
+
+   X     The value at which the cumulative distribution function is to
+         be evaluated. X should be non-negative and integral-valued.
+
+   P     The value of the 'Bernoulli probability' parameter for the
+         negative binomial distribution.
+         P should be between 0.0 (exclusively) and 1.0 (exclusively).
+
+   N     The integer value of the 'number of successes in Bernoulli
+         trials' parameter.  N should be a positive integer.
+
+OUTPUT ARGUMENTS
+
+   CDF   The cumulative distribution function value for the negative
+         binomial distribution
+
+EXAMPLES
+  Sample program:
+
+   program demo_nbcdf
+   !@(#) line plotter graph of cumulative distribution function
+   use M_datapac, only : nbcdf, plott, label
+   implicit none
+   real,allocatable  :: x(:), y(:)
+   real              :: p
+   integer           :: i
+   integer           :: n
+      call label('nbcdf')
+      x=[(real(i),i=0,100,1)]
+      if(allocated(y))deallocate(y)
+      allocate(y(size(x)))
+      p=0.50
+      n=size(x)
+      do i=1,size(x)
+         call NBCDF(X(i),P,N,y(i))
+      enddo
+      call plott(x,y,size(x))
+   end program demo_nbcdf
+
+  Results:
+    
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.1000000E+03 -                                             X X  X
+     0.9583334E+02 I                                  X  X X  X
+     0.9166666E+02 I                         X X X  X
+     0.8750000E+02 I                 XX X X
+     0.8333334E+02 I           XXX X
+     0.7916667E+02 I       XXXX
+     0.7500000E+02 -    XXX
+     0.7083334E+02 I   XX
+     0.6666667E+02 I  XX
+     0.6250000E+02 I  X
+     0.5833334E+02 I  X
+     0.5416667E+02 I  X
+     0.5000000E+02 -  X
+     0.4583334E+02 I  X
+     0.4166667E+02 I  X
+     0.3750000E+02 I  X
+     0.3333334E+02 I  X
+     0.2916667E+02 I  X
+     0.2500000E+02 -  X
+     0.2083334E+02 I  X
+     0.1666667E+02 I  X
+     0.1250000E+02 I  X
+     0.8333336E+01 I  X
+     0.4166672E+01 I  X
+     0.0000000E+00 -  X
+                      I-----------I-----------I-----------I-----------I
+              -0.1776E-14  0.1250E+00  0.2500E+00  0.3750E+00  0.5000E+00
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * National Bureau of Standards Applied Mathematics Series 55, 1964,
+    Page 945, Formulae 26.5.24 and 26.5.28, and Page 929.
+  * Johnson and Kotz, Discrete Distributions, 1969, Pages 122-142,
+    especially Page 127.
+  * Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, Pages 92-95.
+  * Feller, an Introduction to Probability Theory and Its Applications,
+    Volume 1, Edition 2, 1957, Pages 155-157, 210.
+  * Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
+    Edition 2, 1963, Pages 130-131.
+  * Williamson and Bretherton, Tables of the Negative Binomial Probability
+    Distribution, 1963.
+  * Owen, Handbook of Statistical Tables, 1962, Page 304.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE NBCDF(X,P,N,Cdf)
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(in)  :: P
+INTEGER                   :: N 
+REAL(kind=wp),intent(out) :: Cdf
+
+REAL(kind=wp)    :: ak, an, an2, del, fintx 
+INTEGER          :: i, ievodd, iflag1, iflag2, imax, imin, intx, k, n2, nu1, nu2
+DOUBLE PRECISION :: dx2, pi, anu1, anu2, z, sum, term, ai, coef1, coef2, arg
+DOUBLE PRECISION :: coef
+DOUBLE PRECISION :: theta, sinth, costh, a, b
+DOUBLE PRECISION :: DSQRT, DATAN
+DATA pi/3.14159265358979D0/
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      an = N
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO NBCDF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (G_IO,99006) P
+         Cdf = 0.0_wp
+         RETURN
+      ELSEIF ( N<1 ) THEN
+         WRITE (G_IO,99002)
+         99002 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE NBCDF  SUBROUTINE IS NON-POSITIVE *****')
+         WRITE (G_IO,99003) N
+         99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         Cdf = 0.0_wp
+         RETURN
+      ELSEIF ( X<0.0_wp ) THEN
+         WRITE (G_IO,99004)
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO NBCDF(3f) IS NEGATIVE *****')
+         WRITE (G_IO,99006) X
+         IF ( X<0.0_wp ) Cdf = 0.0_wp
+         RETURN
+      ELSE
+         intx = X + 0.0001_wp
+         fintx = intx
+         del = X - fintx
+         IF ( del<0.0_wp ) del = -del
+         IF ( del>0.001_wp ) THEN
+            WRITE (G_IO,99005)
+            99005 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO NBCDF(3f) IS NON-INTEGRAL *****')
+            WRITE (G_IO,99006) X
+         ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+!     EXPRESS THE NEGATIVE BINOMIAL CUMULATIVE DISTRIBUTION
+!     FUNCTION IN TERMS OF THE EQUIVALENT BINOMIAL
+!     CUMULATIVE DISTRIBUTION FUNCTION,
+!     AND THEN OPERATE ON THE LATTER.
+!
+         intx = X + 0.0001_wp
+         k = N - 1
+         n2 = N + intx
+!
+!     EXPRESS THE BINOMIAL CUMULATIVE DISTRIBUTION
+!     FUNCTION IN TERMS OF THE EQUIVALENT F
+!     CUMULATIVE DISTRIBUTION FUNCTION,
+!     AND THEN EVALUATE THE LATTER.
+!
+         ak = k
+         an2 = n2
+         dx2 = (P/(1.0_wp-P))*((an2-ak)/(ak+1.0_wp))
+         nu1 = 2*(k+1)
+         nu2 = 2*(n2-k)
+         anu1 = nu1
+         anu2 = nu2
+         z = anu2/(anu2+anu1*dx2)
+!
+!     DETERMINE IF NU1 AND NU2 ARE EVEN OR ODD
+!
+         iflag1 = nu1 - 2*(nu1/2)
+         iflag2 = nu2 - 2*(nu2/2)
+         IF ( iflag1==0 ) THEN
+!
+!     DO THE NU1 EVEN AND NU2 EVEN OR ODD CASE
+!
+            sum = 0.0D0
+            term = 1.0D0
+            imax = (nu1-2)/2
+            IF ( imax>0 ) THEN
+               DO i = 1 , imax
+                  ai = i
+                  coef1 = 2.0D0*(ai-1.0D0)
+                  coef2 = 2.0D0*ai
+                  term = term*((anu2+coef1)/coef2)*(1.0D0-z)
+                  sum = sum + term
+               ENDDO
+            ENDIF
+!
+            sum = sum + 1.0D0
+            sum = (z**(anu2/2.0D0))*sum
+            Cdf = 1.0D0 - sum
+            RETURN
+         ELSEIF ( iflag2==0 ) THEN
+!
+!     DO THE NU1 ODD AND NU2 EVEN CASE
+!
+            sum = 0.0D0
+            term = 1.0D0
+            imax = (nu2-2)/2
+            IF ( imax>0 ) THEN
+               DO i = 1 , imax
+                  ai = i
+                  coef1 = 2.0D0*(ai-1.0D0)
+                  coef2 = 2.0D0*ai
+                  term = term*((anu1+coef1)/coef2)*z
+                  sum = sum + term
+               ENDDO
+            ENDIF
+!
+            sum = sum + 1.0D0
+            Cdf = ((1.0D0-z)**(anu1/2.0D0))*sum
+            RETURN
+         ELSE
+!
+!     DO THE NU1 ODD AND NU2 ODD CASE
+!
+            sum = 0.0D0
+            term = 1.0D0
+            arg = DSQRT((anu1/anu2)*dx2)
+            theta = DATAN(arg)
+            sinth = arg/DSQRT(1.0D0+arg*arg)
+            costh = 1.0D0/DSQRT(1.0D0+arg*arg)
+            IF ( nu2/=1 ) THEN
+               IF ( nu2/=3 ) THEN
+                  imax = nu2 - 2
+                  DO i = 3 , imax , 2
+                     ai = i
+                     coef1 = ai - 1.0D0
+                     coef2 = ai
+                     term = term*(coef1/coef2)*(costh*costh)
+                     sum = sum + term
+                  ENDDO
+               ENDIF
+!
+               sum = sum + 1.0D0
+               sum = sum*sinth*costh
+            ENDIF
+!
+            a = (2.0D0/pi)*(theta+sum)
+            sum = 0.0D0
+            term = 1.0D0
+            IF ( nu1==1 ) b = 0.0D0
+            IF ( nu1/=1 ) THEN
+               IF ( nu1/=3 ) THEN
+                  imax = nu1 - 3
+                  DO i = 1 , imax , 2
+                     ai = i
+                     coef1 = ai
+                     coef2 = ai + 2.0D0
+                     term = term*((anu2+coef1)/coef2)*(sinth*sinth)
+                     sum = sum + term
+                  ENDDO
+               ENDIF
+!
+               sum = sum + 1.0D0
+               sum = sum*sinth*(costh**N)
+               coef = 1.0D0
+               ievodd = nu2 - 2*(nu2/2)
+               imin = 3
+               IF ( ievodd==0 ) imin = 2
+               IF ( imin<=nu2 ) THEN
+                  DO i = imin , nu2 , 2
+                     ai = i
+                     coef = ((ai-1.0D0)/ai)*coef
+                  ENDDO
+               ENDIF
+!
+               coef = coef*anu2
+               IF ( ievodd/=0 ) coef = coef*(2.0D0/pi)
+!
+               b = coef*sum
+            ENDIF
+!
+            Cdf = a - b
+         ENDIF
+      ENDIF
+99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+!
+END SUBROUTINE NBCDF

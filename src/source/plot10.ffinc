@@ -8,6 +8,17 @@ SYNOPSIS
       SUBROUTINE PLOT10( &
       & Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
 
+       REAL(kind=wp) :: Y(:)
+       REAL(kind=wp) :: X(:)
+       REAL(kind=wp) :: Char(:)
+       INTEGER       :: N
+       REAL(kind=wp) :: Ymin, Ymax
+       REAL(kind=wp) :: Xmin, Xmax
+       REAL(kind=wp) :: D(:)
+       REAL(kind=wp) :: Dmin, Dmax
+       REAL(kind=wp) :: Yaxid, Xaxid
+       REAL(kind=wp) :: Plchid
+
 DESCRIPTION
    PLOT10(3f) yields a one-page printer plot of y(i) versus x(i):
 

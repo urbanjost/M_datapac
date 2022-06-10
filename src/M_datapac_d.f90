@@ -555,10 +555,10 @@ END SUBROUTINE BETRAN
 !!        REAL(kind=wp) :: Cdf
 !!
 !!##DESCRIPTION
-!!    BINCDF(3f) computes the cumulative distribution function value
-!!    at the double precision value X for the binomial distribution with
-!!    double precision 'Bernoulli probability' parameter = P, and integer
-!!    'number of Bernoulli trials' parameter = N.
+!!    BINCDF(3f) computes the cumulative distribution function value at the
+!!    double precision value X for the binomial distribution with double
+!!    precision 'Bernoulli probability' parameter = P, and integer 'number
+!!    of Bernoulli trials' parameter = N.
 !!
 !!    The binomial distribution used herein has mean = N*P and standard
 !!    deviation = sqrt(N*P*(1-P)).
@@ -991,63 +991,56 @@ DOUBLE PRECISION :: dppar
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99019) P
+   IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE FIRST INPUT ARGUMENT TO BINPPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      WRITE (G_IO,99019) P
+      Ppf = 0.0_wp
+      RETURN
+   ELSE
+      IF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
+         WRITE (G_IO,99002)
+         99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO BINPPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         WRITE (G_IO,99019) Ppar
          Ppf = 0.0_wp
          RETURN
       ELSE
-         IF ( Ppar<=0.0_wp .OR. Ppar>=1.0_wp ) THEN
-            WRITE (G_IO,99002)
-99002       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-            WRITE (G_IO,99019) Ppar
+         IF ( N<1 ) THEN
+            WRITE (G_IO,99003)
+            99003 FORMAT (' ***** FATAL ERROR--THE THIRD INPUT ARGUMENT TO BINPPF(3f) IS NON-POSITIVE *****')
+            WRITE (G_IO,99004) N
+            99004 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
             Ppf = 0.0_wp
             RETURN
          ELSE
-            IF ( N<1 ) THEN
-               WRITE (G_IO,99003)
-99003          FORMAT (' ',                                             &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINPPF SUBROU&
-     &TINE IS NON-POSITIVE *****')
-               WRITE (G_IO,99004) N
-99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
-     &                 ' *****')
-               Ppf = 0.0_wp
-               RETURN
-            ELSE
 !
 !-----START POINT-----------------------------------------------------
 !
-               an = N
-               dppar = Ppar
-               Ppf = 0.0_wp
-               ix0 = 0
-               ix1 = 0
-               ix2 = 0
-               p0 = 0.0_wp
-               p1 = 0.0_wp
-               p2 = 0.0_wp
+            an = N
+            dppar = Ppar
+            Ppf = 0.0_wp
+            ix0 = 0
+            ix1 = 0
+            ix2 = 0
+            p0 = 0.0_wp
+            p1 = 0.0_wp
+            p2 = 0.0_wp
 !
 !     TREAT CERTAIN SPECIAL CASES IMMEDIATELY--
 !     1) P = 0.0 OR 1.0
 !     2) P = 0.5 AND PPAR = 0.5
 !     3) PPF = 0 OR N
 !
-               IF ( P/=0.0_wp ) THEN
-                  IF ( P==1.0_wp ) GOTO 20
-                  IF ( P==0.5_wp .AND. Ppar==0.5_wp ) THEN
-                     Ppf = N/2
-                     RETURN
-                  ELSE
-                     pf0 = (1.0D0-dppar)**N
-                     qfn = 1.0D0 - (dppar**N)
-                     IF ( P>pf0 ) THEN
-                        IF ( P>qfn ) GOTO 20
+            IF ( P/=0.0_wp ) THEN
+               IF ( P==1.0_wp ) GOTO 20
+               IF ( P==0.5_wp .AND. Ppar==0.5_wp ) THEN
+                  Ppf = N/2
+                  RETURN
+               ELSE
+                  pf0 = (1.0D0-dppar)**N
+                  qfn = 1.0D0 - (dppar**N)
+                  IF ( P>pf0 ) THEN
+                     IF ( P>qfn ) GOTO 20
 !
 !     DETERMINE AN INITIAL APPROXIMATION TO THE BINOMIAL
 !     PERCENT POINT BY USE OF THE NORMAL APPROXIMATION
@@ -1055,18 +1048,18 @@ DOUBLE PRECISION :: dppar
 !     (SEE JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS,
 !     PAGE 64, FORMULA 36).
 !
-                        amean = an*Ppar
-                        sd = SQRT(an*Ppar*(1.0_wp-Ppar))
-                        CALL NORPPF(P,zppf)
-                        x2 = amean - 0.5_wp + zppf*sd
-                        ix2 = x2
+                     amean = an*Ppar
+                     sd = SQRT(an*Ppar*(1.0_wp-Ppar))
+                     CALL NORPPF(P,zppf)
+                     x2 = amean - 0.5_wp + zppf*sd
+                     ix2 = x2
 !
 !     CHECK AND MODIFY (IF NECESSARY) THIS INITIAL
 !     ESTIMATE OF THE PERCENT POINT
 !     TO ASSURE THAT IT BE IN THE CLOSED INTERVAL 0 TO N.
 !
-                        IF ( ix2<0 ) ix2 = 0
-                        IF ( ix2>N ) ix2 = N
+                     IF ( ix2<0 ) ix2 = 0
+                     IF ( ix2>N ) ix2 = N
 !
 !     DETERMINE UPPER AND LOWER BOUNDS ON THE DESIRED
 !     PERCENT POINT BY ITERATING OUT (BOTH BELOW AND ABOVE)
@@ -1075,86 +1068,82 @@ DOUBLE PRECISION :: dppar
 !     THE RESULTING BOUNDS WILL BE AT MOST
 !     1 STANDARD DEVIATION APART.
 !
-                        ix0 = 0
-                        ix1 = N
-                        isd = sd + 1.0_wp
-                        x2 = ix2
-                        CALL BINCDF(x2,Ppar,N,p2)
+                     ix0 = 0
+                     ix1 = N
+                     isd = sd + 1.0_wp
+                     x2 = ix2
+                     CALL BINCDF(x2,Ppar,N,p2)
 !
-                        IF ( p2<P ) THEN
+                     IF ( p2<P ) THEN
 !
+                        ix0 = ix2
+                        DO i = 1 , 100000
+                           ix2 = ix0 + isd
+                           IF ( ix2>=ix1 ) GOTO 200
+                           x2 = ix2
+                           CALL BINCDF(x2,Ppar,N,p2)
+                           IF ( p2>=P ) GOTO 50
                            ix0 = ix2
-                           DO i = 1 , 100000
-                              ix2 = ix0 + isd
-                              IF ( ix2>=ix1 ) GOTO 200
-                              x2 = ix2
-                              CALL BINCDF(x2,Ppar,N,p2)
-                              IF ( p2>=P ) GOTO 50
-                              ix0 = ix2
-                           ENDDO
-                           WRITE (G_IO,99020)
-                           WRITE (G_IO,99005)
+                        ENDDO
+                        WRITE (G_IO,99020)
+                        WRITE (G_IO,99005)
 !
-99005                      FORMAT (' ',                                 &
-     &                     'NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS'&
-     &                     )
-                        ELSE
+                        99005 FORMAT (' NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS')
+                     ELSE
 !
+                        ix1 = ix2
+                        DO i = 1 , 100000
+                           ix2 = ix1 - isd
+                           IF ( ix2<=ix0 ) GOTO 200
+                           x2 = ix2
+                           CALL BINCDF(x2,Ppar,N,p2)
+                           IF ( p2<P ) GOTO 100
                            ix1 = ix2
-                           DO i = 1 , 100000
-                              ix2 = ix1 - isd
-                              IF ( ix2<=ix0 ) GOTO 200
-                              x2 = ix2
-                              CALL BINCDF(x2,Ppar,N,p2)
-                              IF ( p2<P ) GOTO 100
-                              ix1 = ix2
-                           ENDDO
-                           WRITE (G_IO,99020)
-                           WRITE (G_IO,99006)
-99006                      FORMAT (' ',                                 &
-     &                     'NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS'&
-     &                     )
-                        ENDIF
-                        GOTO 300
+                        ENDDO
+                        WRITE (G_IO,99020)
+                        WRITE (G_IO,99006)
+                        99006 FORMAT (' NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS')
                      ENDIF
+                     GOTO 300
                   ENDIF
                ENDIF
-               Ppf = 0.0_wp
-               RETURN
             ENDIF
- 20         Ppf = N
+            Ppf = 0.0_wp
             RETURN
          ENDIF
- 50      ix1 = ix2
-         GOTO 200
+ 20      Ppf = N
+         RETURN
       ENDIF
+ 50   ix1 = ix2
+      GOTO 200
+   ENDIF
  100  ix0 = ix2
 !
  200  IF ( ix0==ix1 ) THEN
-         IF ( ix0==0 ) THEN
-            ix1 = ix1 + 1
-         ELSEIF ( ix0==N ) THEN
-            ix0 = ix0 - 1
-         ELSE
-            WRITE (G_IO,99020)
-            WRITE (G_IO,99007)
-99007       FORMAT (' ','LOWER AND UPPER BOUND IDENTICAL')
-            GOTO 300
-         ENDIF
+      IF ( ix0==0 ) THEN
+         ix1 = ix1 + 1
+      ELSEIF ( ix0==N ) THEN
+         ix0 = ix0 - 1
+      ELSE
+         WRITE (G_IO,99020)
+         WRITE (G_IO,99007)
+         99007 FORMAT (' ','LOWER AND UPPER BOUND IDENTICAL')
+         GOTO 300
       ENDIF
+   ENDIF
 !
 !     COMPUTE BINOMIAL PROBABILITIES FOR THE
 !     DERIVED LOWER AND UPPER BOUNDS.
 !
-      x0 = ix0
-      x1 = ix1
-      CALL BINCDF(x0,Ppar,N,p0)
-      CALL BINCDF(x1,Ppar,N,p1)
+   x0 = ix0
+   x1 = ix1
+   CALL BINCDF(x0,Ppar,N,p0)
+   CALL BINCDF(x1,Ppar,N,p1)
 !
 !     CHECK THE PROBABILITIES FOR PROPER ORDERING
 !
-      IF ( p0<P .AND. P<=p1 ) THEN
-         DO
+   IF ( p0<P .AND. P<=p1 ) THEN
+      DO
 !
 !     THE STOPPING CRITERION IS THAT THE LOWER BOUND
 !     AND UPPER BOUND ARE EXACTLY 1 UNIT APART.
@@ -1164,95 +1153,88 @@ DOUBLE PRECISION :: dppar
 !     CHECK PROBABILITIES, AND CONTINUE ITERATING
 !     UNTIL IX1 = IX0 + 1.
 !
-            ix0p1 = ix0 + 1
-            IF ( ix1==ix0p1 ) THEN
-               Ppf = ix1
-               IF ( p0==P ) Ppf = ix0
-               RETURN
-            ELSE
-               ix2 = (ix0+ix1)/2
-               IF ( ix2/=ix0 ) THEN
-                  IF ( ix2==ix1 ) THEN
+         ix0p1 = ix0 + 1
+         IF ( ix1==ix0p1 ) THEN
+            Ppf = ix1
+            IF ( p0==P ) Ppf = ix0
+            RETURN
+         ELSE
+            ix2 = (ix0+ix1)/2
+            IF ( ix2/=ix0 ) THEN
+               IF ( ix2==ix1 ) THEN
+                  WRITE (G_IO,99020)
+                  WRITE (G_IO,99021)
+                  EXIT
+               ELSE
+                  x2 = ix2
+                  CALL BINCDF(x2,Ppar,N,p2)
+                  IF ( p0<p2 .AND. p2<p1 ) THEN
+                     IF ( p2<=P ) THEN
+                        ix0 = ix2
+                        p0 = p2
+                     ELSE
+                        ix1 = ix2
+                        p1 = p2
+                     ENDIF
+                     CYCLE
+                  ELSEIF ( p2<=p0 ) THEN
                      WRITE (G_IO,99020)
-                     WRITE (G_IO,99021)
+                     WRITE (G_IO,99008)
+                     99008 FORMAT (' BISECTION VALUE PROBABILITY (P2) ','LESS THAN LOWER BOUND PROBABILITY (P0)')
                      EXIT
-                  ELSE
-                     x2 = ix2
-                     CALL BINCDF(x2,Ppar,N,p2)
-                     IF ( p0<p2 .AND. p2<p1 ) THEN
-                        IF ( p2<=P ) THEN
-                           ix0 = ix2
-                           p0 = p2
-                        ELSE
-                           ix1 = ix2
-                           p1 = p2
-                        ENDIF
-                        CYCLE
-                     ELSEIF ( p2<=p0 ) THEN
-                        WRITE (G_IO,99020)
-                        WRITE (G_IO,99008)
-99008                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
-     &                          'LESS THAN LOWER BOUND PROBABILITY (P0)'&
-     &                          )
-                        EXIT
-                     ELSEIF ( p2>=p1 ) THEN
-                        WRITE (G_IO,99020)
-                        WRITE (G_IO,99009)
-99009                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
-     &                       'GREATER THAN UPPER BOUND PROBABILITY (P1)'&
-     &                       )
-                        EXIT
+                  ELSEIF ( p2>=p1 ) THEN
+                     WRITE (G_IO,99020)
+                     WRITE (G_IO,99009)
+                     99009 FORMAT (' ','BISECTION VALUE PROBABILITY (P2) GREATER THAN UPPER BOUND PROBABILITY (P1)')
+                     EXIT
                      ENDIF
                   ENDIF
                ENDIF
                WRITE (G_IO,99020)
                WRITE (G_IO,99021)
                EXIT
-            ENDIF
-         ENDDO
-      ELSEIF ( p0==P ) THEN
-         Ppf = ix0
-         RETURN
-      ELSEIF ( p1==P ) THEN
-         Ppf = ix1
-         RETURN
-      ELSEIF ( p0>p1 ) THEN
-         WRITE (G_IO,99020)
-         WRITE (G_IO,99010)
-99010    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
-     &           'UPPER BOUND PROBABILITY (P1)')
-      ELSEIF ( p0>P ) THEN
-         WRITE (G_IO,99020)
-         WRITE (G_IO,99011)
-99011    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
-     &           'INPUT PROBABILITY (P)')
-      ELSEIF ( p1<P ) THEN
-         WRITE (G_IO,99020)
-         WRITE (G_IO,99012)
-99012    FORMAT (' ','UPPER BOUND PROBABILITY (P1) LESS    THAN ',      &
-     &           'INPUT PROBABILITY (P)')
-      ELSE
-         WRITE (G_IO,99020)
-         WRITE (G_IO,99013)
-99013    FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
-      ENDIF
+         ENDIF
+      ENDDO
+   ELSEIF ( p0==P ) THEN
+      Ppf = ix0
+      RETURN
+   ELSEIF ( p1==P ) THEN
+      Ppf = ix1
+      RETURN
+   ELSEIF ( p0>p1 ) THEN
+      WRITE (G_IO,99020)
+      WRITE (G_IO,99010)
+      99010 FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN UPPER BOUND PROBABILITY (P1)')
+   ELSEIF ( p0>P ) THEN
+      WRITE (G_IO,99020)
+      WRITE (G_IO,99011)
+      99011 FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN INPUT PROBABILITY (P)')
+   ELSEIF ( p1<P ) THEN
+      WRITE (G_IO,99020)
+      WRITE (G_IO,99012)
+      99012 FORMAT (' ','UPPER BOUND PROBABILITY (P1) LESS THAN INPUT PROBABILITY (P)')
+   ELSE
+      WRITE (G_IO,99020)
+      WRITE (G_IO,99013)
+      99013 FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
+   ENDIF
 !
  300  continue
-      WRITE (G_IO,99014) ix0 , p0
-      99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
-      WRITE (G_IO,99015) ix1 , p1
-      99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
-      WRITE (G_IO,99016) ix2 , p2
-      99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
-      WRITE (G_IO,99017) P
-      99017 FORMAT (' ','P    = ',F14.7)
-      WRITE (G_IO,99018) Ppar , N
-      99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
-      RETURN
-      99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-      99020 FORMAT (' ','***** INTERNAL ERROR IN BINPPF SUBROUTINE *****')
-      99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
-      99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
+   WRITE (G_IO,99014) ix0 , p0
+   99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
+   WRITE (G_IO,99015) ix1 , p1
+   99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
+   WRITE (G_IO,99016) ix2 , p2
+   99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
+   WRITE (G_IO,99017) P
+   99017 FORMAT (' ','P    = ',F14.7)
+   WRITE (G_IO,99018) Ppar , N
+   99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
+   RETURN
+   99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+   99020 FORMAT (' ','***** INTERNAL ERROR IN BINPPF SUBROUTINE *****')
+   99021 FORMAT (' ','BISECTION VALUE (X2) = LOWER BOUND (X0)')
+   99022 FORMAT (' ','BISECTION VALUE (X2) = UPPER BOUND (X1)')
 !
 END SUBROUTINE BINPPF
 !>
@@ -1803,7 +1785,8 @@ DATA tau/10.02040649_wp/
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      an = N
+ 50      continue
+         an = N
 !
 !     SORT THE DATA
 !
@@ -2135,13 +2118,13 @@ END SUBROUTINE CAURAN
 !!
 !!##REFERENCES
 !!
-!!  * filliben, simple and robust linear estimation of the location parameter
-!!    of a symmetric distribution (unpublished ph.d. dissertation, princeton
-!!    university), 1969, pages 21-44, 229-231.
-!!  * filliben, 'the percent point function', (unpublished manuscript),
-!!    1970, pages 28-31.
-!!  * johnson and kotz, continuous univariate distributions--1, 1970,
-!!    pages 154-165.
+!!  * Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!    of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
+!!    University), 1969, Pages 21-44, 229-231.
+!!  * Filliben, 'The Percent Point Function', (Unpublished manuscript),
+!!    1970, Pages 28-31.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!    Pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -2891,8 +2874,8 @@ END SUBROUTINE CHSPPF
 !!       SUBROUTINE CHSRAN(N,Nu,Iseed,X)
 !!
 !!##DESCRIPTION
-!!    chsran(3f) generates a random sample of size n from the chi-squared
-!!    distribution with integer degrees of freedom parameter = nu.
+!!    CHSRAN(3f) generates a random sample of size n from the chi-squared
+!!    distribution with integer degrees of freedom parameter = NU.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -2902,7 +2885,6 @@ END SUBROUTINE CHSPPF
 !!          to start a new sequence of values. Will be set to -1 on return
 !!          to indicate the next call should continue the current random
 !!          sequence walk.
-!!
 !!
 !!##EXAMPLES
 !!
@@ -3623,20 +3605,27 @@ END SUBROUTINE COUNT
 !!
 !!       SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
 !!
-!!##DESCRIPTION
-!!    decomp(3f) decomposes the weighted data matrix q which originally =
-!!    the n by k data matrix x times the square root of the weights (in w).
+!!        INTEGER :: N
+!!        INTEGER :: K
+!!        REAL(kind=wp) :: Eta
+!!        REAL(kind=wp) :: Tol
+!!        INTEGER :: Irank
+!!        INTEGER :: Insing
 !!
-!!    the original q is decomposed into a new q times the inverse of a
+!!##DESCRIPTION
+!!    DECOMP(3f) decomposes the weighted data matrix q which originally =
+!!    the N by K data matrix x times the square root of the weights (in w).
+!!
+!!    The original q is decomposed into a new q times the inverse of a
 !!    diagonal matrix d times the diagonal matrix d times an upper triangular
 !!    matrix r.
 !!
-!!    the new n by k q has orthogonal columns.
+!!    The new N by K q has orthogonal columns.
 !!
-!!    a second output from decomp(3f) is the rank and status (non-singular
-!!    or singular) of the data matrix x.
+!!    A second output from DECOMP(3f) is the rank and status (non-singular
+!!    or singular) of the data matrix X.
 !!
-!!    a third output from decomp(3f) is the numerically optimal pivot points
+!!    A third output from DECOMP(3f) is the numerically optimal pivot points
 !!    for the decomposition.
 !!
 !!##OPTIONS
@@ -3667,8 +3656,15 @@ END SUBROUTINE COUNT
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
-REAL(kind=wp) :: D, dis, dn, DUM1, DUM2, Eta, hold, Q, R, risj, Tol, tol2, WS
-INTEGER i, Insing, ip, IPIvot, iqarg, iqarg1, iqarg2, Irank, irarg, irarg1, irarg2, is, ism1, isp1, j, K, l, m, N
+INTEGER :: N
+INTEGER :: K
+REAL(kind=wp) :: Eta
+REAL(kind=wp) :: Tol
+INTEGER :: Irank
+INTEGER :: Insing
+
+REAL(kind=wp) :: D, dis, dn, DUM1, DUM2, hold, Q, R, risj, tol2, WS
+INTEGER i, ip, IPIvot, iqarg, iqarg1, iqarg2, irarg, irarg1, irarg2, is, ism1, isp1, j, l, m
 LOGICAL fsum
 DIMENSION Q(10000) , R(2500) , D(50) , IPIvot(50)
 COMMON /BLOCK2_real64/ WS(15000)
@@ -4878,8 +4874,9 @@ END SUBROUTINE DEXPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
@@ -8086,6 +8083,11 @@ CHARACTER(len=4) :: iflag3
 !!
 !!       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 !!
+!!        REAL(kind=wp)    :: X
+!!        INTEGER          :: Nu1
+!!        INTEGER          :: Nu2
+!!        REAL(kind=wp)    :: Cdf
+!!
 !!##DESCRIPTION
 !!    FCDF(3f) computes the cumulative distribution function value for the F
 !!    distribution with integer degrees of freedom parameters = NU1 and NU2.
@@ -8147,8 +8149,12 @@ CHARACTER(len=4) :: iflag3
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
-REAL(kind=wp)    :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X , zratio
-INTEGER          :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , m , n , Nu1 , Nu2 , nucut1 , nucut2
+REAL(kind=wp)    :: X
+INTEGER          :: Nu1
+INTEGER          :: Nu2
+REAL(kind=wp)    :: Cdf
+REAL(kind=wp)    :: amean , ccdf , gcdf , sd , t1 , t2 , t3 , u , zratio
+INTEGER          :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , m , n , nucut1 , nucut2
 DOUBLE PRECISION :: dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
 DOUBLE PRECISION :: coef
 DOUBLE PRECISION :: theta , sinth , costh , a , b
@@ -8165,30 +8171,23 @@ DATA nucut1 , nucut2/100 , 1000/
 !
       IF ( Nu1<=0 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FCDF   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO FCDF(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99006) Nu1
          Cdf = 0.0_wp
          RETURN
       ELSE
          IF ( Nu2<=0 ) THEN
             WRITE (G_IO,99002)
-99002       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FCDF   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+            99002 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO FCDF(3f) IS NON-POSITIVE *****')
             WRITE (G_IO,99006) Nu2
             Cdf = 0.0_wp
             RETURN
          ELSE
             IF ( X<0.0 ) THEN
                WRITE (G_IO,99003)
-99003          FORMAT (' ',                                             &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE FCDF&
-     &   SUBROUTINE IS NEGATIVE *****')
+               99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO FCDF(3f) IS NEGATIVE *****')
                WRITE (G_IO,99004) X
-99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, &
-     &                 ' *****')
+               99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
                Cdf = 0.0_wp
                RETURN
             ELSE
@@ -8444,9 +8443,12 @@ DATA nucut1 , nucut2/100 , 1000/
 !!
 !!       SUBROUTINE FOURIE(X,N)
 !!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER                  :: N
+!!
 !!##DESCRIPTION
-!!    FOURIE(3f) performs a Fourier analysis of the data in the input
-!!    vector X. The analysis consists of the following--
+!!    FOURIE(3f) performs a Fourier analysis of the data in the input vector
+!!    X. The analysis consists of the following--
 !!
 !!       1. computing (and printing)
 !!          (for each of the harmonic frequencies
@@ -8462,20 +8464,74 @@ DATA nucut1 , nucut2/100 , 1000/
 !!          (at each fourier frequency) versus
 !!          the fourier frequency.
 !!
-!!    in order that the results of the Fourier analysis be valid and properly
+!!    In order that the results of the Fourier analysis be valid and properly
 !!    interpreted, the input data in X should be equi-spaced in time (or
 !!    whatever variable corresponds to time).
 !!
-!!    the horizontal axis of the spectra produced by fourie(3f) is frequency.
-!!    this frequency is measured in units of cycles per 'data point' or,
+!!    The horizontal axis of the spectra produced by fourie(3f) is frequency.
+!!    This frequency is measured in units of cycles per 'data point' or,
 !!    more precisely, in cycles per unit time where 'unit time' is defined
 !!    as the elapsed time between adjacent observations.
 !!
-!!    the range of the frequency axis is 0.0 to 0.5.
+!!    The range of the frequency axis is 0.0 to 0.5.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Fourier analysis differs from spectral analysis (as, for example,
+!!    produced by the datapac TIMESE(3f) subroutine) in that a Fourier
+!!    analysis does no smoothing on the spectral estimates whereas a spectral
+!!    analysis does smooth the spectral estimates. The net result is that
+!!    the spectral estimates obtained from a Fourier analysis are almost
+!!    always more variable than those obtained in a spectral analysis.
+!!
+!!    The practical conclusion is that when the data analyst has a choice
+!!    of whether to perform a Fourier analysis or a spectral analysis,
+!!    the spectral analysis should almost always be preferred.
+!!
+!!    the maximum number of Fourier frequencies for which the Fourier
+!!    coefficients is computed (and listed) is N/2 where N is the sample
+!!    size (length of the data record in the vector X). This rule is
+!!    overridden (for listing purposes only) in large data sets and is
+!!    replaced by the rule that the maximum number of lags listed = 800
+!!    (which corresponds to an 8-page listing of Fourier coefficients.
+!!    If more pages are desired, change the value of the variable MAXPAG
+!!    within this subroutine from 8 to whatever is desired.
+!!
+!!    If the input observations in X are considered to have been collected
+!!    1 second apart in time, then the frequency axis of the resulting
+!!    spectra would be in units of Hertz (= cycles per second).
+!!
+!!    The frequency of 0.0 corresponds to a cycle in the data of infinite
+!!    (= 1/(0.0)) length or period. the frequency of 0.5 corresponds to
+!!    a cycle in the data of length = 1/(0.5) = 2 data points.
+!!
+!!    Any equi-spaced fourier analysis is intrinsically limited to detecting
+!!    frequencies no larger than 0.5 cycles per data point; this corresponds
+!!    to the fact that the smallest detectable cycle in the data is 2 data
+!!    points per cycle.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X   The vector of (unsorted) observations.
+!!
+!!    N   The integer number of observations in the vector X.
+!!        The maximum allowable value of N for this subroutine is 15000.
+!!        The sample size N must be greater than or equal to 3.
+!!
+!!##OUTPUT
+!!
+!!    2 to 10 pages (depending on the input sample size) of automatic
+!!    printout--
+!!
+!!      1. a listing of the amplitude, phase, contribution to the total
+!!         variance, and relative contribution to the total variance for
+!!         each of the fourier frequencies (1/n, 2/n, 3/n, ..., 1/2).
+!!         this listing may take as little as 1 page or as many as n/100
+!!         pages (the exact number depending on the input sample size n).
+!!         this listing is terminated after at most 8 computer pages.
+!!         if more pages are desired, change the value of the variable
+!!         maxpag within this subroutine from 8 to whatever desired.
+!!
+!!      2. a plot of the relative contribution to the total variance versus
+!!         frequency.
 !!
 !!##EXAMPLES
 !!
@@ -8490,124 +8546,35 @@ DATA nucut1 , nucut2/100 , 1000/
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * JENKINS AND WATTS, ESPECIALLY PAGE 290.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE FOURIE(X,N)
-REAL(kind=wp) :: A , ai , amp , an , angdeg , angrad , B , conmsq , del ,     &
-     &     ffreq , hold , percon , period , phase1 , phase2 , pi , sum ,&
-     &     suma , sumb , t
-REAL(kind=wp) :: vbias , WS , X , xbar
-INTEGER :: i , ievodd , ilower , ipage , iskip , iupper , j ,  &
-     &        maxpag , N , nhalf , nnpage
-!
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--2 TO 10 PAGES (DEPENDING ON
-!             THE INPUT SAMPLE SIZE) OF
-!             AUTOMATIC PRINTOUT--
-!             1) A LISTING OF THE AMPLITUDE,
-!                PHASE, CONTRIBUTION TO THE
-!                TOTAL VARIANCE, AND RELATIVE
-!                CONTRIBUTION TO THE TOTAL
-!                VARIANCE FOR EACH OF THE
-!                FOURIER FREQUENCIES
-!                (1/N, 2/N, 3/N, ..., 1/2).
-!                THIS LISTING MAY TAKE AS LITTLE AS 1
-!                PAGE OR AS MANY AS N/100 PAGES
-!                (THE EXACT NUMBER DEPENDING ON
-!                THE INPUT SAMPLE SIZE N).
-!                THIS LISTING IS TERMINATED
-!                AFTER AT MOST 8 COMPUTER PAGES.
-!                IF MORE PAGES ARE DESIRED,
-!                CHANGE THE VALUE OF THE
-!                VARIABLE     MAXPAG
-!                WITHIN THIS SUBROUTINE
-!                FROM 8 TO WHATEVER DESIRED.
-!             2) A PLOT OF THE RELATIVE
-!                CONTRIBUTION TO THE
-!                TOTAL VARIANCE VERSUS FREQUENCY.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-!                 --THE SAMPLE SIZE N MUST BE GREATER
-!                   THAN OR EQUAL TO 3.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--PLOTSP AND CHSPPF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, SIN, COS, ATAN.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--FOURIER ANALYSIS DIFFERS FROM SPECTRAL ANALYSIS
-!              (AS, FOR EXAMPLE, PRODUCED BY THE DATAPAC
-!              TIMESE SUBROUTINE) IN THAT A
-!              FOURIER ANALYSIS DOES NO SMOOTHING ON
-!              THE SPECTRAL ESTIMATES WHEREAS A SPECRRAL
-!              ANALYSIS DOES SMOOTH THE SPECTRAL ESTIMATES.
-!              THE NET RESULT IS THAT THE SPECTRAL
-!              ESTIMATES OBTAINED FROM A FOURIER
-!              ANALYSIS ARE ALMOST ALWAYS MORE
-!              VARIABLE THAN THOSE OBTAINED IN A
-!              SPECTRAL ANALYSIS.
-!              THE PRACTICAL CONCLUSION IS THAT
-!              WHEN THE DATA ANALYST HAS A CHOICE
-!              OF WHETHER TO PERFORM A FOURIER
-!              ANALYSIS OR A SPECTRAL ANALYSIS,
-!              THE SPECTRAL ANALYSIS SHOULD
-!              ALMOST ALWAYS BE PREFERRED.
-!            --THE MAXIMUM NUMBER OF FOURIER FREQUENCIES
-!              FOR WHICH THE FOURIER COEFFICIENTS IS
-!              COMPUTED (AND LISTED) IS N/2 WHERE N IS
-!              THE SAMPLE SIZE (LENGTH OF THE
-!              DATA RECORD IN THE VECTOR X).
-!              THIS RULE IS OVERRIDDEN
-!              (FOR LISTING PURPOSES ONLY)
-!              IN LARGE DATA SETS AND IS REPLACED
-!              BY THE RULE THAT THE MAXIMUM
-!              NUMBER OF LAGS LISTED = 800
-!              (WHICH CORRESPONDS TO AN
-!              8-PAGE LISTING OF FOURIER COEFFICIENTS.
-!              IF MORE PAGES ARE DESIRED,
-!              CHANGE THE VALUE OF THE
-!              VARIABLE     MAXPAG
-!              WITHIN THIS SUBROUTINE
-!              FROM 8 TO WHATEVER DESIRED.
-!            --IF THE INPUT OBSERVATIONS IN X ARE CONSIDERED
-!              TO HAVE BEEN COLLECTED 1 SECOND APART IN TIME,
-!              THEN THE FREQUENCY AXIS OF THE RESULTING
-!              SPECTRA WOULD BE IN UNITS OF HERTZ
-!              (= CYCLES PER SECOND).
-!            --THE FREQUENCY OF 0.0 CORRESPONDS TO A CYCLE
-!              IN THE DATA OF INFINITE (= 1/(0.0))
-!              LENGTH OR PERIOD.
-!              THE FREQUENCY OF 0.5 CORRESPONDS TO A CYCLE
-!              IN THE DATA OF LENGTH = 1/(0.5) = 2 DATA POINTS.
-!            --ANY EQUI-SPACED FOURIER ANALYSIS IS
-!              INTRINSICALLY LIMITED TO DETECTING FREQUENCIES
-!              NO LARGER THAN 0.5 CYCLES PER DATA POINT;
-!              THIS CORRESPONDS TO THE FACT THAT THE
-!              SMALLEST DETECTABLE CYCLE IN THE DATA
-!              IS 2 DATA POINTS PER CYCLE.
+!!   * Jenkins and Watts, especially Page 290.
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE FOURIE(X,N)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER                  :: N
+REAL(kind=wp)    :: ai, amp, an, angdeg, angrad, conmsq, del, ffreq, hold, percon, period, phase1, phase2, pi, sum, suma, sumb, t
+REAL(kind=wp)    :: A(7500), B(7500)
+REAL(kind=wp)    :: vbias, WS, xbar
+INTEGER          :: i, ievodd, ilower, ipage, iskip, iupper, j, maxpag, nhalf, nnpage
 CHARACTER(len=4) :: alperc
-      DIMENSION X(:)
-      DIMENSION A(7500) , B(7500)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (A(1),WS(1))
-      EQUIVALENCE (B(1),WS(7501))
-      DATA pi/3.14159265358979_wp/
-      DATA alperc/'%'/
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (A(1),WS(1))
+EQUIVALENCE (B(1),WS(7501))
+DATA pi/3.14159265358979_wp/
+DATA alperc/'%'/
 !
       ilower = 3
       iupper = 15000
@@ -8782,6 +8749,12 @@ END SUBROUTINE FOURIE
 !!
 !!       SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(in)        :: Nu1
+!!        INTEGER,intent(in)        :: Nu2
+!!        INTEGER,intent(inout)     :: Istart
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
 !!    FRAN(3f) generates a random sample of size n from the F distribution
 !!    with integer degrees of freedom parameters = NU1 AND NU2.
@@ -8809,7 +8782,7 @@ END SUBROUTINE FOURIE
 !!            successive calls to this subroutine within a run.
 !!
 !!##OUTPUT ARGUMENTS
-!!    x       A vector (of dimension at least N) into which the generated
+!!    X       A vector (of dimension at least N) into which the generated
 !!            random sample will be placed.
 !!
 !!##EXAMPLES
@@ -8825,12 +8798,16 @@ END SUBROUTINE FOURIE
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!   * Mood and Grable, Introduction to the Theory of Statistics, 1963,
 !!     Pages 231-232.
@@ -8842,10 +8819,14 @@ END SUBROUTINE FOURIE
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE FRAN(N,Nu1,Nu2,Istart,X)
-REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , X , y , z
-INTEGER :: i , Istart , j , N , Nu1 , Nu2
+INTEGER,intent(in)        :: N
+INTEGER,intent(in)        :: Nu1
+INTEGER,intent(in)        :: Nu2
+INTEGER,intent(inout)     :: Istart
+REAL(kind=wp),intent(out) :: X(:)
+REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , y , z
+INTEGER       :: i , j
 !
-DIMENSION X(:)
 DIMENSION y(2) , z(2)
 DATA pi/3.14159265358979_wp/
 !
@@ -8932,13 +8913,25 @@ END SUBROUTINE FRAN
 !!
 !!       SUBROUTINE FREQ(X,N)
 !!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
+!!
 !!##DESCRIPTION
 !!    freq(3f) computes the sample frequency and sample cumulative frequency
 !!    for the data in the input vector x.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X    The  vector of (unsorted or sorted) observations.
+!!
+!!    N    The integer number of observations in the vector X.
+!!         The maximum allowable value of N for this subroutine is 15000.
+!!##OUTPUT
+!!
+!!    Several (for large data sets) pages of automatic plots (with
+!!    approximately 55 values per page) consisting of an ordered listing
+!!    of each distinct value in the data set along with the frequency of
+!!    occurance of that value and the cumulative frequency.
 !!
 !!##EXAMPLES
 !!
@@ -8953,8 +8946,9 @@ END SUBROUTINE FRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
@@ -8962,38 +8956,19 @@ END SUBROUTINE FRAN
 !!##REFERENCES
 !!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
 !!     EDITION 2, 1963, PAGE 8.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE FREQ(X,N)
-REAL(kind=wp) :: an , cfreq , dvalue , frq , hold , pcfreq , pfreq , s , sum ,    WS , X , xbar , Y
-INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--SEVERAL (FOR LARGE DATA SETS) PAGES OF AUTOMATIC
-!             PRINTOUT (WITH APPROXIMATELY 55 VALUES PER PAGE)
-!             CONSISTING OF AN ORDERED LISTING OF EACH DISTINCT
-!             VALUE IN THE DATA SET ALONG WITH
-!             THE FREQUENCY OF OCCURANCE OF THAT VALUE
-!             AND THE CUMULATIVE FREQUENCY.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE FREQ(X,N)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp) :: an, cfreq, dvalue, frq, hold, pcfreq, pfreq, s, sum, WS, xbar, Y
+INTEGER i, icfreq, iflag, ifreq, ip1, iupper, ndv, nm1, numseq
+DIMENSION Y(15000)
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
 !
       iupper = 15000
 !
@@ -9001,17 +8976,14 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FREQ   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO FREQ(3f) IS OUTSIDE THE ALLOWABLE (1,',&
+         & I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE FREQ&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+         99003 FORMAT (' ***** FATAL ERROR-- THE SECOND INPUT ARGUMENT TO FREQ(3f) HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = X(1)
@@ -9019,9 +8991,8 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
          WRITE (G_IO,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE FREQ   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO FREQ(3f) HAS ALL ELEMENTS = ', &
+         & E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -9041,18 +9012,17 @@ INTEGER i , icfreq , iflag , ifreq , ip1 , iupper , N ,     ndv , nm1 , numseq
          s = SQRT(sum/(an-1.0_wp))
 !
          WRITE (G_IO,99005)
-99005    FORMAT ('1')
+         99005    FORMAT ('1')
          WRITE (G_IO,99006)
 !
-99006    FORMAT (' ',18X,                                               &
-     &           'SAMPLE FREQUENCY AND SAMPLE CUMULATIVE FREQUENCY')
+         99006    FORMAT (' ',18X,'SAMPLE FREQUENCY AND SAMPLE CUMULATIVE FREQUENCY')
          WRITE (G_IO,99014)
          WRITE (G_IO,99007) N
-99007    FORMAT (' ',27X,'THE SAMPLE SIZE N = ',I8)
+         99007    FORMAT (' ',27X,'THE SAMPLE SIZE N = ',I8)
          WRITE (G_IO,99008) xbar
-99008    FORMAT (' ',25X,'THE SAMPLE MEAN = ',E15.8)
+         99008    FORMAT (' ',25X,'THE SAMPLE MEAN = ',E15.8)
          WRITE (G_IO,99009) s
-99009    FORMAT (' ',20X,'THE SAMPLE STANDARD DEVIATION = ',E15.8)
+         99009    FORMAT (' ',20X,'THE SAMPLE STANDARD DEVIATION = ',E15.8)
          WRITE (G_IO,99014)
          WRITE (G_IO,99014)
          WRITE (G_IO,99010)
@@ -11737,12 +11707,16 @@ INTEGER i, ii, im1, ip1, IPIvot, irarg, irarg1, irarg2, irarg3, j, jj, K, l, N
 END SUBROUTINE INVXWX
 !>
 !!##NAME
-!!    lamcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Tukey-Lambda cumulative
-!!    distribution function
+!!    lamcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the
+!!    Tukey-Lambda cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LAMCDF(X,Alamba,Cdf)
+!!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(in)  :: Alamba
+!!        REAL(kind=wp),intent(out) :: Cdf
 !!
 !!##DESCRIPTION
 !!    LAMCDF(3f) computes the cumulative distribution function value for the
@@ -11752,23 +11726,76 @@ END SUBROUTINE INVXWX
 !!
 !!    The percent point function for this distribution is
 !!
-!!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!        g(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X       The  value at which the cumulative distribution function is
+!!            to be evaluated.
+!!
+!!            For ALAMBA non-positive, no restrictions on X.
+!!            For ALAMBA positive, X should be between (-1/ALAMBA) and
+!!            (+1/ALAMBA), inclusively.
+!!
+!!    ALAMBA  The value of lambda (the tail length parameter).
+!!
+!!##OUTPUT ARGUMENTS
+!!    CDF    The cumulative distribution function value for the Tukey
+!!           lambda distribution.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
+!!
 !!    program demo_lamcdf
-!!    use M_datapac, only : lamcdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : lamcdf, plott, label
 !!    implicit none
-!!    ! call lamcdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    real              :: alamba
+!!    integer           :: i
+!!       call label('lamcdf')
+!!       alamba=4.0
+!!       x=[(real(i)/100.0/alamba,i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call lamcdf(X(i),Alamba,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_lamcdf
 !!
 !!   Results:
+!!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.2500000E+00 -                                                  X
+!!      0.2291667E+00 I                                                XX
+!!      0.2083333E+00 I                                               XX
+!!      0.1875000E+00 I                                              XX
+!!      0.1666667E+00 I                                             XX
+!!      0.1458333E+00 I                                           XXX
+!!      0.1250000E+00 -                                          XX
+!!      0.1041667E+00 I                                        XX
+!!      0.8333333E-01 I                                      XX
+!!      0.6250000E-01 I                                   XXX
+!!      0.4166666E-01 I                                XXXX
+!!      0.2083333E-01 I                            XXXX
+!!      0.0000000E+00 -                        XXXXX
+!!     -0.2083334E-01 I                     XXXX
+!!     -0.4166669E-01 I                 XXXX
+!!     -0.6250000E-01 I               XXX
+!!     -0.8333334E-01 I             XX
+!!     -0.1041667E+00 I           XX
+!!     -0.1250000E+00 -         XX
+!!     -0.1458333E+00 I       XXX
+!!     -0.1666667E+00 I      XX
+!!     -0.1875000E+00 I     XX
+!!     -0.2083333E+00 I    XX
+!!     -0.2291667E+00 I   XX
+!!     -0.2500000E+00 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -11795,95 +11822,81 @@ END SUBROUTINE INVXWX
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LAMCDF(X,Alamba,Cdf)
-REAL(kind=wp) :: Alamba , Cdf , pdel , plower , pmax , pmid , pmin , pupper , X , xcalc , xmax , xmin
-INTEGER :: icount
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE  VALUE OF LAMBDA
-!                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE TUKEY LAMBDA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER = ALAMBA.
-
-!     RESTRICTIONS--FOR ALAMBA NON-POSITIVE, NO RESTRICTIONS ON X.
-!                 --FOR ALAMBA POSITIVE, X SHOULD BE BETWEEN (-1/ALAMBA)
-!                   AND (+1/ALAMBA), INCLUSIVELY.
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(in)  :: Alamba
+REAL(kind=wp),intent(out) :: Cdf
+REAL(kind=wp) :: pdel , plower , pmax , pmid , pmin , pupper , xcalc , xmax , xmin
+INTEGER       :: icount
 !
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( Alamba>0.0_wp ) THEN
-         xmax = 1.0_wp/Alamba
-         xmin = -xmax
-         IF ( X<xmin .OR. X>xmax ) THEN
-            WRITE (G_IO,99001)
-99001       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO THE LAMCD&
-     &F SUBROUTINE IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
-            WRITE (G_IO,99002) X
-99002       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
-     &              ' *****')
-            IF ( X<xmin ) Cdf = 0.0_wp
-            IF ( X>xmax ) Cdf = 1.0_wp
-            RETURN
-         ENDIF
+   IF ( Alamba>0.0_wp ) THEN
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<xmin .OR. X>xmax ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (&
+         &' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO LAMCDF(3f) IS OUTSIDE THE USUAL +-(1/ALAMBA) INTERVAL *****')
+         WRITE (G_IO,99002) X
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+         IF ( X<xmin ) Cdf = 0.0_wp
+         IF ( X>xmax ) Cdf = 1.0_wp
+         RETURN
       ENDIF
+   ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-      IF ( Alamba>0.0_wp ) THEN
+   IF ( Alamba>0.0_wp ) THEN
 !
-         xmax = 1.0_wp/Alamba
-         xmin = -xmax
-         IF ( X<=xmin ) Cdf = 0.0_wp
-         IF ( X>=xmax ) Cdf = 1.0_wp
-         IF ( X<=xmin .OR. X>=xmax ) RETURN
-      ENDIF
+      xmax = 1.0_wp/Alamba
+      xmin = -xmax
+      IF ( X<=xmin ) Cdf = 0.0_wp
+      IF ( X>=xmax ) Cdf = 1.0_wp
+      IF ( X<=xmin .OR. X>=xmax ) RETURN
+   ENDIF
+!
+   IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
 !
       IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
-!
-         IF ( -0.001_wp>=Alamba .OR. Alamba>=0.001_wp ) THEN
-            pmin = 0.0_wp
-            pmid = 0.5_wp
-            pmax = 1.0_wp
-            plower = pmin
-            pupper = pmax
-            icount = 0
-            DO
-               xcalc = (pmid**Alamba-(1.0_wp-pmid)**Alamba)/Alamba
-               IF ( xcalc==X ) THEN
+         pmin = 0.0_wp
+         pmid = 0.5_wp
+         pmax = 1.0_wp
+         plower = pmin
+         pupper = pmax
+         icount = 0
+         DO
+            xcalc = (pmid**Alamba-(1.0_wp-pmid)**Alamba)/Alamba
+            IF ( xcalc==X ) THEN
+               Cdf = pmid
+               GOTO 99999
+            ELSE
+               IF ( xcalc>X ) THEN
+                  pupper = pmid
+                  pmid = (pmid+plower)/2.0_wp
+               ELSE
+                  plower = pmid
+                  pmid = (pmid+pupper)/2.0_wp
+               ENDIF
+               pdel = ABS(pmid-plower)
+               icount = icount + 1
+               IF ( pdel<0.000001_wp .OR. icount>30 ) THEN
                   Cdf = pmid
                   GOTO 99999
-               ELSE
-                  IF ( xcalc>X ) THEN
-                     pupper = pmid
-                     pmid = (pmid+plower)/2.0_wp
-                  ELSE
-                     plower = pmid
-                     pmid = (pmid+pupper)/2.0_wp
-                  ENDIF
-                  pdel = ABS(pmid-plower)
-                  icount = icount + 1
-                  IF ( pdel<0.000001_wp .OR. icount>30 ) THEN
-                     Cdf = pmid
-                     GOTO 99999
-                  ENDIF
                ENDIF
-            ENDDO
-         ENDIF
+            ENDIF
+         ENDDO
       ENDIF
-      IF ( X>=0.0_wp ) THEN
-         Cdf = 1.0_wp/(1.0_wp+EXP(-X))
-         RETURN
-      ELSE
-         Cdf = EXP(X)/(1.0_wp+EXP(X))
-         RETURN
-      ENDIF
+   ENDIF
+   IF ( X>=0.0_wp ) THEN
+      Cdf = 1.0_wp/(1.0_wp+EXP(-X))
+      RETURN
+   ELSE
+      Cdf = EXP(X)/(1.0_wp+EXP(X))
+      RETURN
+   ENDIF
 !
 99999 END SUBROUTINE LAMCDF
 !>
@@ -12602,97 +12615,123 @@ REAL(kind=wp) :: Alamba , P , Sf
 99999 END SUBROUTINE LAMSF
 !>
 !!##NAME
-!!    lgncdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the lognormal cumulative
-!!                 distribution function
+!!    lgncdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the lognormal
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LGNCDF(X,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    lgncdf(3f) computes the cumulative distribution function value for
+!!    LGNCDF(3f) computes the cumulative distribution function value for
 !!    the lognormal distribution.
 !!
-!!    the lognormal distribution used herein has mean = sqrt(e) = 1.64872127
+!!    The lognormal distribution used herein has mean = sqrt(e) = 1.64872127
 !!    and standard deviation = sqrt(e*(e-1)) = 2.16119742. this distribution
-!!    is defined for all positive x and has the probability density function
+!!    is defined for all positive X and has the probability density function
 !!
-!!        f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!        f(X) = (1/(X*sqrt(2*pi))) * exp(-log(X)*log(X)/2)
 !!
-!!    the lognormal distribution used herein is the distribution of the
-!!    variate x = exp(z) where the variate z is normally distributed with
+!!    The lognormal distribution used herein is the distribution of the
+!!    variate X = exp(z) where the variate z is normally distributed with
 !!    mean = 0 and standard deviation = 1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X      The value at which the cumulative distribution function is
+!!           to be evaluated. X should be positive.
+!!##OUTPUT ARGUMENTS
+!!    Cdf    The cumulative distribution function value for the lognormal
+!!           distribution
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_lgncdf
-!!    use M_datapac, only : lgncdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : lgncdf, plott, label
 !!    implicit none
-!!    ! call lgncdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       call label('lgncdf')
+!!       x=[((real(i)+epsilon(0.0))/10.0,i=0,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call lgncdf(x(i),y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_lgncdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+02 -                                                  X
+!!      0.9583333E+01 I                                                  X
+!!      0.9166667E+01 I                                                  X
+!!      0.8750000E+01 I                                                  X
+!!      0.8333333E+01 I                                                  X
+!!      0.7916667E+01 I                                                  X
+!!      0.7500000E+01 -                                                 XX
+!!      0.7083333E+01 I                                                 X
+!!      0.6666667E+01 I                                                 X
+!!      0.6250000E+01 I                                                 X
+!!      0.5833333E+01 I                                                 X
+!!      0.5416667E+01 I                                                X
+!!      0.5000000E+01 -                                                X
+!!      0.4583333E+01 I                                               XX
+!!      0.4166667E+01 I                                              XX
+!!      0.3750000E+01 I                                              X
+!!      0.3333333E+01 I                                             X
+!!      0.2916667E+01 I                                           XX
+!!      0.2500000E+01 -                                         XXX
+!!      0.2083333E+01 I                                      XXX
+!!      0.1666667E+01 I                                  XXXX
+!!      0.1250000E+01 I                            X XX X
+!!      0.8333340E+00 I                   X  X X X
+!!      0.4166670E+00 I        X  X  X  X
+!!      0.1192093E-07 -  XX X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.0000E+00  0.2473E+00  0.4947E+00  0.7420E+00  0.9893E+00
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 112-136.
-!!   * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 112-136.
+!!   * Cramer, Mathematical Methods of Statistics, 1946, Pages 219-220.
+!     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNCDF(X,Cdf)
-REAL(kind=wp) :: arg , Cdf , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE LOGNORMAL
-!             DISTRIBUTION WITH MEAN = SQRT(E) = 1.64872127
-!             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Cdf
+
+REAL(kind=wp)             :: arg
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( X<=0.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE LGNC&
-     &DF SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) X
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         Cdf = 0.0_wp
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         arg = LOG(X)
-         CALL NORCDF(arg,Cdf)
-      ENDIF
+   IF ( X<=0.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO LGNCDF(3f) IS NON-POSITIVE *****')
+      WRITE (G_IO,99002) X
+      99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      Cdf = 0.0_wp
+      RETURN
+   ELSE
+      arg = LOG(X)
+      CALL NORCDF(arg,Cdf)
+   ENDIF
 !
 END SUBROUTINE LGNCDF
 !>
@@ -13337,49 +13376,100 @@ REAL(kind=wp)            :: Y(N)
 END SUBROUTINE LOC
 !>
 !!##NAME
-!!    logcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the logistic cumulative
-!!    distribution function
+!!    logcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the logistic
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LOGCDF(X,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    logcdf(3f) computes the cumulative distribution function value for
+!!    LOGCDF(3f) computes the cumulative distribution function value for
 !!    the logistic distribution with mean = 0 and standard deviation =
 !!    pi/sqrt(3).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = exp(x)/(1+exp(x)).
+!!        f(X) = exp(X)/(1+exp(X))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The value at which the cumulative distribution function is to
+!!          be evaluated.
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF   The cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_logcdf
-!!    use M_datapac, only : logcdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : logcdf, plott, label
 !!    implicit none
-!!    ! call logcdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       call label('logcdf')
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call logcdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_logcdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                                  X
+!!      0.9166666E+02 I                                                  X
+!!      0.8333334E+02 I                                                  X
+!!      0.7500000E+02 I                                                  X
+!!      0.6666667E+02 I                                                  X
+!!      0.5833334E+02 I                                                  X
+!!      0.5000000E+02 -                                                  X
+!!      0.4166667E+02 I                                                 X
+!!      0.3333334E+02 I                                                XX
+!!      0.2500000E+02 I                                             XXX
+!!      0.1666667E+02 I                                        XXXXX
+!!      0.8333336E+01 I                                XXXXXXXX
+!!      0.0000000E+00 -                     XX XXXXX XX
+!!     -0.8333328E+01 I             XXXXXXXX
+!!     -0.1666666E+02 I        XXXXX
+!!     -0.2499999E+02 I     XXX
+!!     -0.3333333E+02 I   XX
+!!     -0.4166666E+02 I   X
+!!     -0.5000000E+02 -  X
+!!     -0.5833333E+02 I  X
+!!     -0.6666666E+02 I  X
+!!     -0.7500000E+02 I  X
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.4540E-04  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 1-21.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -13387,29 +13477,17 @@ END SUBROUTINE LOC
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGCDF(X,Cdf)
-REAL(kind=wp) :: Cdf , X
+REAL(kind=wp),intent(in) :: X
+REAL(kind=wp),intent(out) :: Cdf
 !
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF.
-!
-!---------------------------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
-!
-!-----START POINT-----------------------------------------------------
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
       IF ( X>=0.0_wp ) THEN
          Cdf = 1.0_wp/(1.0_wp+EXP(-X))
       ELSE
          Cdf = EXP(X)/(1.0_wp+EXP(X))
       ENDIF
-!
+
 END SUBROUTINE LOGCDF
 !>
 !!##NAME
@@ -14933,168 +15011,192 @@ INTEGER                   :: i, iend, istart, j, k
 END SUBROUTINE MOVE
 !>
 !!##NAME
-!!    nbcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the negative binomial
-!!    cumulative distribution function
+!!    nbcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the negative
+!!    binomial cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE NBCDF(X,P,N,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(in)  :: P
+!!        INTEGER                   :: N
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
 !!
-!!    nbcdf(3f) computes the cumulative distribution function value at the
-!!    precision precision value x for the negative binomial distribution with
-!!    precision precision 'bernoulli probability' parameter = p, and integer
-!!    'number of successes in bernoulli trials' parameter = n.
+!!    NBCDF(3f) computes the cumulative distribution function value at the
+!!    precision precision value X for the negative binomial distribution with
+!!    precision precision 'Bernoulli probability' parameter = P, and integer
+!!    'number of successes in Bernoulli trials' parameter = N.
 !!
-!!    the negative binomial distribution used herein has mean = n*(1-p)/p
-!!    and standard deviation = sqrt(n*(1-p)/(p*p))). this distribution
-!!    is defined for all non-negative integer x--x = 0, 1, 2, ... .
-!!    this distribution has the probability function
+!!    The negative binomial distribution used herein has mean = N*(1-P)/P
+!!    and standard deviation = sqrt(N*(1-P)/(P*P))). this distribution
+!!    is defined for all non-negative integer X-- X = 0, 1, 2, ... .
+!!    This distribution has the probability function
 !!
-!!        f(x) = c(n+x-1,n) * p**n * (1-p)**x.
+!!        f(X) = c(N+X-1,N) * P**N * (1-P)**X
 !!
-!!    where c(n+x-1,n) is the combinatorial function equaling the number
-!!    of combinations of n+x-1 items taken n at a time.
+!!    Where c(N+X-1,N) is the combinatorial function equaling the number
+!!    of combinations of N+X-1 items taken N at a time.
 !!
-!!    the negative binomial distribution is the distribution of the number
-!!    of failures before obtaining n successes in an indefinite sequence of
-!!    bernoulli (0,1) trials where the probability of success in a precision
-!!    trial = p.
+!!    The negative binomial distribution is the distribution of the number
+!!    of failures before obtaining N successes in an indefinite sequence of
+!!    Bernoulli (0,1) trials where the probability of success in a precision
+!!    trial = P.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##NOTE
+!!
+!!    Even though the input to this cumulative distribution function
+!!    subroutine for this discrete distribution should (under normal
+!!    circumstances) be a discrete integer value, the input variable X is
+!!    REAL in mode.
+!!
+!!    X has been specified as REAL so as to conform with the datapac
+!!    convention that all input ****data**** (as opposed to sample
+!!    size, for example) variables to all datapac subroutines are REAL.
+!!    This convention is based on the belief that
+!!
+!!     1. A mixture of modes (floating point versus integer) is inconsistent
+!!        and an unnecessary complication in a data analysis; and
+!!
+!!     2. Floating point machine arithmetic (as opposed to integer
+!!        arithmetic) is the more natural mode for doing data analysis.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X     The value at which the cumulative distribution function is to
+!!          be evaluated. X should be non-negative and integral-valued.
+!!
+!!    P     The value of the 'Bernoulli probability' parameter for the
+!!          negative binomial distribution.
+!!          P should be between 0.0 (exclusively) and 1.0 (exclusively).
+!!
+!!    N     The integer value of the 'number of successes in Bernoulli
+!!          trials' parameter.  N should be a positive integer.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF   The cumulative distribution function value for the negative
+!!          binomial distribution
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_nbcdf
-!!    use M_datapac, only : nbcdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : nbcdf, plott, label
 !!    implicit none
-!!    ! call nbcdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    real              :: p
+!!    integer           :: i
+!!    integer           :: n
+!!       call label('nbcdf')
+!!       x=[(real(i),i=0,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       p=0.50
+!!       n=size(x)
+!!       do i=1,size(x)
+!!          call NBCDF(X(i),P,N,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_nbcdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                             X X  X
+!!      0.9583334E+02 I                                  X  X X  X
+!!      0.9166666E+02 I                         X X X  X
+!!      0.8750000E+02 I                 XX X X
+!!      0.8333334E+02 I           XXX X
+!!      0.7916667E+02 I       XXXX
+!!      0.7500000E+02 -    XXX
+!!      0.7083334E+02 I   XX
+!!      0.6666667E+02 I  XX
+!!      0.6250000E+02 I  X
+!!      0.5833334E+02 I  X
+!!      0.5416667E+02 I  X
+!!      0.5000000E+02 -  X
+!!      0.4583334E+02 I  X
+!!      0.4166667E+02 I  X
+!!      0.3750000E+02 I  X
+!!      0.3333334E+02 I  X
+!!      0.2916667E+02 I  X
+!!      0.2500000E+02 -  X
+!!      0.2083334E+02 I  X
+!!      0.1666667E+02 I  X
+!!      0.1250000E+02 I  X
+!!      0.8333336E+01 I  X
+!!      0.4166672E+01 I  X
+!!      0.0000000E+00 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!               -0.1776E-14  0.1250E+00  0.2500E+00  0.3750E+00  0.5000E+00
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 945, FORMULAE 26.5.24 AND 26.5.28, AND PAGE 929.
-!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
-!!     ESPECIALLY PAGE 127.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 92-95.
-!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
-!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
-!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGES 130-131.
-!!   * WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
-!!     DISTRIBUTION, 1963.
-!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NBCDF(X,P,N,Cdf)
-REAL(kind=wp) :: ak , an , an2 , Cdf , del , fintx , P , X
-INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
-     &        k , N , n2 , nu1 , nu2
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE AND
-!                                INTEGRAL-VALUED.
-!                     --P      = THE  VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE NEGATIVE BINOMIAL
-!                                DISTRIBUTION.
-!                                P SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!                     --N      = THE INTEGER VALUE
-!                                OF THE 'NUMBER OF SUCCESSES
-!                                IN BERNOULLI TRIALS' PARAMETER.
-!                                N SHOULD BE A POSITIVE INTEGER.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF
-!             FOR THE NEGATIVE BINOMIAL DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
-!             AND 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
-!             PARAMETER = N.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!                 --N SHOULD BE A POSITIVE INTEGER.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     COMMENT--NOTE THAT EVEN THOUGH THE INPUT
-!              TO THIS CUMULATIVE
-!              DISTRIBUTION FUNCTION SUBROUTINE
-!              FOR THIS DISCRETE DISTRIBUTION
-!              SHOULD (UNDER NORMAL CIRCUMSTANCES) BE A
-!              DISCRETE INTEGER VALUE,
-!              THE INPUT VARIABLE X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL INPUT ****DATA****
-!              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
-!              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE .
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 945, Formulae 26.5.24 and 26.5.28, and Page 929.
+!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 122-142,
+!!     especially Page 127.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Pages 92-95.
+!!   * Feller, an Introduction to Probability Theory and Its Applications,
+!!     Volume 1, Edition 2, 1957, Pages 155-157, 210.
+!!   * Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Pages 130-131.
+!!   * Williamson and Bretherton, Tables of the Negative Binomial Probability
+!!     Distribution, 1963.
+!!   * Owen, Handbook of Statistical Tables, 1962, Page 304.
 !     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx2 , pi , anu1 , anu2 , z , sum , term , ai ,   &
-     &                 coef1 , coef2 , arg
-      DOUBLE PRECISION coef
-      DOUBLE PRECISION theta , sinth , costh , a , b
-      DOUBLE PRECISION DSQRT , DATAN
-      DATA pi/3.14159265358979D0/
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE NBCDF(X,P,N,Cdf)
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(in)  :: P
+INTEGER                   :: N
+REAL(kind=wp),intent(out) :: Cdf
+
+REAL(kind=wp)    :: ak, an, an2, del, fintx
+INTEGER          :: i, ievodd, iflag1, iflag2, imax, imin, intx, k, n2, nu1, nu2
+DOUBLE PRECISION :: dx2, pi, anu1, anu2, z, sum, term, ai, coef1, coef2, arg
+DOUBLE PRECISION :: coef
+DOUBLE PRECISION :: theta, sinth, costh, a, b
+DOUBLE PRECISION :: DSQRT, DATAN
+DATA pi/3.14159265358979D0/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       an = N
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NBCDF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO NBCDF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (G_IO,99006) P
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( N<1 ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE NBCDF  SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE NBCDF  SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99003) N
-99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( X<0.0_wp ) THEN
          WRITE (G_IO,99004)
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE NBCD&
-     &F  SUBROUTINE IS NEGATIVE *****')
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO NBCDF(3f) IS NEGATIVE *****')
          WRITE (G_IO,99006) X
          IF ( X<0.0_wp ) Cdf = 0.0_wp
          RETURN
@@ -15105,9 +15207,7 @@ INTEGER :: i , ievodd , iflag1 , iflag2 , imax , imin , intx , &
          IF ( del<0.0_wp ) del = -del
          IF ( del>0.001_wp ) THEN
             WRITE (G_IO,99005)
-99005       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE NBCD&
-     &F  SUBROUTINE IS NON-INTEGRAL *****')
+            99005 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO NBCDF(3f) IS NON-INTEGRAL *****')
             WRITE (G_IO,99006) X
          ENDIF
 !
@@ -15887,78 +15987,115 @@ INTEGER,save :: iseed=1
 !!
 !!       SUBROUTINE NORCDF(X,Cdf)
 !!
-!!##DESCRIPTION
-!!    norcdf(3f) computes the cumulative distribution function value for the
-!!    normal (gaussian) distribution with mean = 0 and standard deviation = 1.
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!        REAL(kind=wp),intent(in)  :: X
 !!
-!!    this distribution is defined for all x and has the probability
+!!##DESCRIPTION
+!!    NORCDF(3f) computes the cumulative distribution function value for the
+!!    normal (Gaussian) distribution with mean = 0 and standard deviation
+!!    = 1.
+!!
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!        f(X) = (1/sqrt(2*pi))*exp(-X*X/2)
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X      The value at which the cumulative distribution function is to
+!!           be evaluated.
+!!##OUTPUT ARGUMENTS
+!!    CDF    The cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_norcdf
-!!    use M_datapac, only : norcdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : norcdf, plott, label
 !!    implicit none
-!!    ! call norcdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: i
+!!       call label('norcdf')
+!!       x=[(real(i),i=-100,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       do i=1,size(x)
+!!          call norcdf(x(i)/10.0,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_norcdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                                  X
+!!      0.9166666E+02 I                                                  X
+!!      0.8333334E+02 I                                                  X
+!!      0.7500000E+02 I                                                  X
+!!      0.6666667E+02 I                                                  X
+!!      0.5833334E+02 I                                                  X
+!!      0.5000000E+02 -                                                  X
+!!      0.4166667E+02 I                                                  X
+!!      0.3333334E+02 I                                                  X
+!!      0.2500000E+02 I                                                 XX
+!!      0.1666667E+02 I                                             XXXXX
+!!      0.8333336E+01 I                                   X XX XXXXX
+!!      0.0000000E+00 -                   XX X X X X X XX
+!!     -0.8333328E+01 I        XXXXX XX X
+!!     -0.1666666E+02 I   XXXXX
+!!     -0.2499999E+02 I  XX
+!!     -0.3333333E+02 I  X
+!!     -0.4166666E+02 I  X
+!!     -0.5000000E+02 -  X
+!!     -0.5833333E+02 I  X
+!!     -0.6666666E+02 I  X
+!!     -0.7500000E+02 I  X
+!!     -0.8333333E+02 I  X
+!!     -0.9166666E+02 I  X
+!!     -0.1000000E+03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 932, FORMULA 26.2.17.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 40-111.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE NORCDF(X,Cdf)
-REAL(kind=wp) :: b1 , b2 , b3 , b4 , b5 , Cdf , p , t , X , z
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--EXP.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 932, Formula 26.2.17.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE NORCDF(X,Cdf)
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(out) :: Cdf
+REAL(kind=wp) :: b1, b2, b3, b4, b5, p, t, z
 !---------------------------------------------------------------------
 !
-      DATA b1 , b2 , b3 , b4 , b5 , p/.319381530_wp , -0.356563782_wp ,       &
-     &     1.781477937_wp , -1.821255978_wp , 1.330274429_wp , .2316419_wp/
+DATA b1, b2, b3, b4, b5, p/.319381530_wp, -0.356563782_wp, 1.781477937_wp, -1.821255978_wp, 1.330274429_wp, .2316419_wp/
 !
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS.
-!     NO INPUT ARGUMENT ERRORS POSSIBLE
-!     FOR THIS DISTRIBUTION.
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS. -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.
 !
 !-----START POINT-----------------------------------------------------
-!
       z = X
       IF ( X<0.0_wp ) z = -z
       t = 1.0_wp/(1.0_wp+p*z)
-      Cdf = 1.0_wp - ((0.39894228040143_wp)*EXP(-0.5_wp*z*z))                    &
-     &      *(b1*t+b2*t**2+b3*t**3+b4*t**4+b5*t**5)
+      Cdf = 1.0_wp - ((0.39894228040143_wp)*EXP(-0.5_wp*z*z)) *(b1*t+b2*t**2+b3*t**3+b4*t**4+b5*t**5)
       IF ( X<0.0_wp ) Cdf = 1.0_wp - Cdf
-!
+
 END SUBROUTINE NORCDF
 !>
 !!##NAME
@@ -17072,93 +17209,128 @@ REAL(kind=wp) :: c , P , pdf , ppf , Sf
 END SUBROUTINE NORSF
 !>
 !!##NAME
-!!    parcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Pareto cumulative
-!!    distribution function
+!!    parcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Pareto
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE PARCDF(X,Gamma,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(in)  :: Gamma
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
 !!
-!!    parcdf(3f) computes the cumulative distribution function value for
-!!    the pareto distribution with precision precision tail length parameter
-!!    = gamma.
+!!    PARCDF(3f) computes the cumulative distribution function value for
+!!    the Pareto distribution with precision precision tail length parameter
+!!    = GAMMA.
 !!
-!!    the pareto distribution used herein is defined for all x greater than
+!!    The Pareto distribution used herein is defined for all X greater than
 !!    or equal to 1, and has the probability density function
 !!
-!!        f(x) = gamma / (x**(gamma+1)).
+!!        f(X) = GAMMA / (X**(GAMMA+1))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the cumulative distribution function is
+!!           to be evaluated. X should be greater than or equal to 1.
+!!
+!!    GAMMA  The value of the tail length parameter. GAMMA should be
+!!           positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the Pareto
+!!           distribution
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_parcdf
-!!    use M_datapac, only : parcdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : parcdf, plott, label
 !!    implicit none
-!!    ! call parcdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    real              :: gamma
+!!    integer           :: i
+!!       call label('parcdf')
+!!       x=[(real(i)/10.0+1.0,i=1,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       gamma=0.3
+!!       do i=1,size(x)
+!!          call parcdf(X(i),Gamma,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_parcdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1100000E+02 -                                                  X
+!!      0.1058750E+02 I                                                 XX
+!!      0.1017500E+02 I                                                 X
+!!      0.9762500E+01 I                                                X
+!!      0.9350000E+01 I                                               XX
+!!      0.8937500E+01 I                                               X
+!!      0.8525000E+01 -                                              X
+!!      0.8112500E+01 I                                             XX
+!!      0.7700000E+01 I                                            XX
+!!      0.7287500E+01 I                                           XX
+!!      0.6875000E+01 I                                          XX
+!!      0.6462500E+01 I                                         XX
+!!      0.6050000E+01 -                                        XX
+!!      0.5637500E+01 I                                       XX
+!!      0.5225000E+01 I                                     XXX
+!!      0.4812500E+01 I                                    XX
+!!      0.4400000E+01 I                                  XXX
+!!      0.3987500E+01 I                                XX
+!!      0.3575000E+01 -                              XX
+!!      0.3162500E+01 I                           XXX
+!!      0.2750000E+01 I                        XXX
+!!      0.2337501E+01 I                    XXXX
+!!      0.1925000E+01 I               X XXX
+!!      0.1512500E+01 I         X XX X
+!!      0.1100000E+01 -  X X  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.2819E-01  0.1494E+00  0.2706E+00  0.3918E+00  0.5129E+00
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 233-249.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 102.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 233-249.
+!!   * hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 102.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARCDF(X,Gamma,Cdf)
-REAL(kind=wp) :: Cdf , Gamma , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE GREATER THAN
-!                                OR EQUAL TO 1.
-!                     --GAMMA  = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE PARETO
-!             DISTRIBUTION WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --X SHOULD BE GREATER THAN
-!                   OR EQUAL TO 1.
-!     MODE OF INTERNAL OPERATIONS--.
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: Cdf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<1.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE PARC&
-     &DF SUBROUTINE IS LESS THAN 1.0 *****')
+         99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO PARCDF(3f) IS LESS THAN 1.0 *****')
          WRITE (G_IO,99003) X
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARCDF SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO PARCDF(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99003) Gamma
          Cdf = 0.0_wp
          RETURN
@@ -17618,6 +17790,17 @@ END SUBROUTINE PARRAN
 !!
 !!       SUBROUTINE PLOT10( &
 !!       & Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax,Yaxid,Xaxid,Plchid)
+!!
+!!        REAL(kind=wp) :: Y(:)
+!!        REAL(kind=wp) :: X(:)
+!!        REAL(kind=wp) :: Char(:)
+!!        INTEGER       :: N
+!!        REAL(kind=wp) :: Ymin, Ymax
+!!        REAL(kind=wp) :: Xmin, Xmax
+!!        REAL(kind=wp) :: D(:)
+!!        REAL(kind=wp) :: Dmin, Dmax
+!!        REAL(kind=wp) :: Yaxid, Xaxid
+!!        REAL(kind=wp) :: Plchid
 !!
 !!##DESCRIPTION
 !!    PLOT10(3f) yields a one-page printer plot of y(i) versus x(i):
@@ -21987,17 +22170,21 @@ END SUBROUTINE PLOTS
 !!
 !!       SUBROUTINE PLOTSP(Y,N,Idf)
 !!
+!!        REAL(kind=wp),intent(in) :: Y(:)
+!!        INTEGER,intent(in)       :: N
+!!        INTEGER,intent(in)       :: Idf
+!!
 !!##DESCRIPTION
-!!    this routine yields a one-page plot of the spectrum, along with upper
+!!    This routine yields a one-page plot of the spectrum, along with upper
 !!    and lower limits of the spectrum.
 !!
-!!    the convention has been followed that if the integer input parameter
+!!    The convention has been followed that if the integer input parameter
 !!    idf has the value 0, then no confidence limits will be computed and
 !!    only the spectrum itself will be plotted out.
 !!
-!!    multiple plot points are not indicated.
+!!    Multiple plot points are not indicated.
 !!
-!!    the first point will be plotted on the left vertical axis the
+!!    The first point will be plotted on the left vertical axis the
 !!    last point will be plotted on the right vertical axis there is no
 !!    restriction on the maximum value of n for this routine.
 !!
@@ -22028,18 +22215,17 @@ END SUBROUTINE PLOTS
 !     UPDATED         --FEBRUARY  1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTSP(Y,N,Idf)
-REAL(kind=wp) :: ai , an , df , hold , pp025 , pp975 , ratiox , ratioy ,      &
-     &     slower , spmax , spmin , supper , xi , Y , ylable , ymax ,   &
-     &     ymin
-INTEGER :: i , Idf , iflag , j , k , mx , my , N
+REAL(kind=wp),intent(in) :: Y(:)
+INTEGER,intent(in)       :: N
+INTEGER,intent(in)       :: Idf
+REAL(kind=wp) :: ai, an, df, hold, pp025, pp975, ratiox, ratioy, slower, spmax, spmin, supper, xi, ylable, ymax, ymin
+INTEGER :: i, iflag, j, k, mx, my
 !
-!     PRINTING--YES
 !---------------------------------------------------------------------
 !
 CHARACTER(len=4) :: IGRaph
 CHARACTER(len=4) :: blank , hyphen , alphai , alphax , dot
 !
-      DIMENSION Y(:)
       DIMENSION ylable(11)
       COMMON /BLOCK1/ IGRaph(55,130)
 !
@@ -22051,17 +22237,13 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax , dot
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTSP SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTSP SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE PLOT&
-     &SP SUBROUTINE HAS THE VALUE 1 *****')
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO PLOTSP(3f) HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = Y(1)
@@ -22069,13 +22251,13 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax , dot
             IF ( Y(i)/=hold ) GOTO 50
          ENDDO
          WRITE (G_IO,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE PLOTSP SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO PLOTSP(3f) HAS ALL ELEMENTS = ', &
+         & E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      an = N
+ 50      continue
+         an = N
 !
 !     DETERMINE THE MINIMUM AND MAXIMUM OF THE SPECTRUM
 !
@@ -22159,26 +22341,24 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax , dot
 !
 !     WRITE OUT THE GRAPH
          WRITE (G_IO,99005)
-99005    FORMAT ('1')
+         99005    FORMAT ('1')
          DO i = 5 , 55
             iflag = i - (i/5)*5
             k = i/5
             IF ( iflag/=0 ) WRITE (G_IO,99006) (IGRaph(i,j),j=1,130)
-99006       FORMAT (' ',130A1)
-            IF ( iflag==0 ) WRITE (G_IO,99007) ylable(k) ,               &
-     &                             (IGRaph(i,j),j=10,130)
-99007       FORMAT (' ',F9.2,130A1)
+            99006 FORMAT (' ',130A1)
+            IF ( iflag==0 ) WRITE (G_IO,99007) ylable(k) ,(IGRaph(i,j),j=10,130)
+            99007 FORMAT (' ',F9.2,130A1)
          ENDDO
          WRITE (G_IO,99008)
-99008    FORMAT (' ',                                                   &
-     &'FREQ   .000      .042      .083      .125      .167      .208    &
-     &  .250      .292      .333      .375      .417      .458      .500&
-     &')
+         99008    FORMAT (&
+         & ' FREQ   .000      .042      .083      .125      .167      .208      .250&
+         &.292      .333      .375      .417      .458      .500')
          WRITE (G_IO,99009)
-99009    FORMAT (' ',                                                   &
-     &'PERIOD INF       24.0      12.0      8.00      6.00      4.80    &
-     &  4.00      3.43      3.00      2.67      2.40      2.18      2.00&
-     &')
+         99009    FORMAT (' ',&
+         &'PERIOD INF       24.0      12.0      8.00      6.00      4.80    &
+         &  4.00      3.43      3.00      2.67      2.40      2.18      2.00&
+         &')
       ENDIF
 END SUBROUTINE PLOTSP
 !>
@@ -25075,145 +25255,168 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 END SUBROUTINE PLTXXT
 !>
 !!##NAME
-!!    poicdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Poisson cumulative
-!!    distribution function
+!!    poicdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the Poisson
+!!    cumulative distribution function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE POICDF(X,Alamba,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(in)  :: Alamba
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
-!!    poicdf(3f) computes the cumulative distribution function value at
-!!    the precision precision value x for the poisson distribution with precision
+!!    POICDF(3f) computes the cumulative distribution function value at
+!!    the precision value X for the Poisson distribution with
 !!    precision tail length parameter = alamba.
 !!
-!!    the poisson distribution used herein has mean = alamba and standard
-!!    deviation = sqrt(alamba).
+!!    The Poisson distribution used herein has mean = ALAMBA and standard
+!!    deviation = sqrt(ALAMBA).
 !!
-!!    this distribution is defined for all discrete non-negative integer
-!!    x--x = 0, 1, 2, ... .
+!!    This distribution is defined for all discrete non-negative integer
+!!    X-- X = 0, 1, 2, ... .
 !!
-!!    this distribution has the probability function
+!!    This distribution has the probability function
 !!
-!!        f(x) = exp(-alamba) * alamba**x / x!.
+!!        f(X) = exp(-ALAMBA) * ALAMBA**X / X!
 !!
-!!    the poisson distribution is the distribution of the number of events
-!!    in the interval (0,alamba) when the waiting time between events is
+!!    The Poisson distribution is the distribution of the number of events
+!!    in the interval (0,ALAMBA) when the waiting time between events is
 !!    exponentially distributed with mean = 1 and standard deviation = 1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X       The value at which the cumulative distribution function is
+!!            to be evaluated. x should be non-negative and integral-valued.
+!!    ALAMBA  The value of the tail length parameter. alamba should be
+!!            positive. The tail length parameter alamba is not restricted
+!!            to only integer values. ALAMBA can be set to any positive
+!!            real value --integer or non-integer.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value. For the Poisson
+!!           distribution
+!!
+!!##NOTE
+!!    Even though the input to this cumulative distribution
+!!    function subroutine for this discrete distribution should (under
+!!    normal circumstances) be a discrete integer value,
+!!    X has been specified as REAL so as to conform with the datapac
+!!    convention that all input ****data**** (as opposed to sample
+!!    size, for example) variables to all datapac subroutines are real.
+!!    this convention is based on the belief that
+!!
+!!     1) a mixture of modes (floating point versus integer) is inconsistent
+!!        and an unnecessary complication in a data analysis; and
+!!     2) floating point machine arithmetic (as opposed to integer
+!!        arithmetic) is the more natural mode for doing data analysis.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_poicdf
-!!    use M_datapac, only : poicdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : poicdf, plott, label
 !!    implicit none
-!!    ! call poicdf(x,y)
+!!    real,allocatable :: x(:), y(:)
+!!    real             :: alamba
+!!    integer          :: i
+!!       call label('poicdf')
+!!       x=[(real(i),i=0,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       alamba=29.5
+!!       do i=1,size(x)
+!!          call poicdf(X(i),Alamba,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_poicdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1000000E+03 -                                                  X
+!!      0.9583334E+02 I                                                  X
+!!      0.9166666E+02 I                                                  X
+!!      0.8750000E+02 I                                                  X
+!!      0.8333334E+02 I                                                  X
+!!      0.7916667E+02 I                                                  X
+!!      0.7500000E+02 -                                                  X
+!!      0.7083334E+02 I                                                  X
+!!      0.6666667E+02 I                                                  X
+!!      0.6250000E+02 I                                                  X
+!!      0.5833334E+02 I                                                  X
+!!      0.5416667E+02 I                                                  X
+!!      0.5000000E+02 -                                                  X
+!!      0.4583334E+02 I                                                  X
+!!      0.4166667E+02 I                                                 XX
+!!      0.3750000E+02 I                                             XXXX
+!!      0.3333334E+02 I                                    X  X X X
+!!      0.2916667E+02 I                       X   X  X  X
+!!      0.2500000E+02 -        X  X X  X   X
+!!      0.2083334E+02 I   XXX X
+!!      0.1666667E+02 I  XX
+!!      0.1250000E+02 I  X
+!!      0.8333336E+01 I  X
+!!      0.4166672E+01 I  X
+!!      0.0000000E+00 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1543E-12  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
-!!     ESPECIALLY PAGE 114, FORMULA 93.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 112.
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 941, FORMULAE 26.4.4 AND 26.4.5, AND PAGE 929.
-!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
-!!     VOLUME 1, EDITION 2, 1957, PAGES 146-154.
-!!   * COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
-!!   * GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
-!!     TERMS OF POISSON DISTRIBUTION, 1962.
-!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
+!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 87-121,
+!!     especially Page 114, Formula 93.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 112.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 941, Formulae 26.4.4 and 26.4.5, and Page 929.
+!!   * Feller, An Introduction to Probability Theory and Its Applications,
+!!     Volume 1, Edition 2, 1957, Pages 146-154.
+!!   * Cox and Miller, The Theory of Stochastic Processes, 1965, Page 7.
+!!   * General Electric Company, Tables of the Individual and Cumulative
+!!     Terms of Poisson Distribution, 1962.
+!!   * Owen, Handbook of Statistical Tables, 1962, Pages 259-261.
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE POICDF(X,Alamba,Cdf)
-REAL(kind=wp) :: Alamba , Cdf , del , fintx , gcdf , spchi , X
-INTEGER :: i , ievodd , imax , imin , intx , nu
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE AND
-!                                INTEGRAL-VALUED.
-!                     --ALAMBA = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF
-!             FOR THE POISSON DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER = ALAMBA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--X SHOULD BE NON-NEGATIVE AND INTEGRAL-VALUED.
-!                 --ALAMBA SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
-!     COMMENT--THE  TAIL LENGTH
-!              PARAMETER ALAMBA IS     NOT     RESTRICTED
-!              TO ONLY INTEGER VALUES.
-!              ALAMBA CAN BE SET TO ANY POSITIVE REAL
-!              VALUE--INTEGER OR NON-INTEGER.
-!            --NOTE THAT EVEN THOUGH THE INPUT
-!              TO THIS CUMULATIVE
-!              DISTRIBUTION FUNCTION SUBROUTINE
-!              FOR THIS DISCRETE DISTRIBUTION
-!              SHOULD (UNDER NORMAL CIRCUMSTANCES) BE A
-!              DISCRETE INTEGER VALUE,
-!              THE INPUT VARIABLE X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL INPUT ****DATA****
-!              (AS OPPOSED TO SAMPLE SIZE, FOR EXAMPLE)
-!              VARIABLES TO ALL
-!              DATAPAC SUBROUTINES ARE .
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , pi , chi , sum , term , ai , dgcdf
-      DOUBLE PRECISION DSQRT , DEXP
-      DATA pi/3.14159265358979D0/
+REAL(kind=wp) :: X
+REAL(kind=wp) :: Alamba
+REAL(kind=wp) :: Cdf
+REAL(kind=wp) :: del, fintx, gcdf, spchi
+INTEGER       :: i, ievodd, imax, imin, intx, nu
+
+DOUBLE PRECISION dx, pi, chi, sum, term, ai, dgcdf
+DOUBLE PRECISION DSQRT, DEXP
+DATA pi/3.14159265358979D0/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( Alamba<=0.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POICDF SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO POICDF(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99005) Alamba
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( X<0.0_wp ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE POIC&
-     &DF SUBROUTINE IS NEGATIVE *****')
+         99002 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO POICDF(3f) IS NEGATIVE *****')
          WRITE (G_IO,99005) X
          Cdf = 0.0_wp
          RETURN
@@ -25224,12 +25427,9 @@ INTEGER :: i , ievodd , imax , imin , intx , nu
          IF ( del<0.0_wp ) del = -del
          IF ( del>0.001_wp ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE POIC&
-     &DF SUBROUTINE IS NON-INTEGRAL *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO POICDF(3f) IS NON-INTEGRAL *****')
             WRITE (G_IO,99005) X
-99004       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,       &
-     &              ' *****')
+            99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
@@ -26299,19 +26499,23 @@ END SUBROUTINE PROPOR
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGE 338.
-!!   * DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
-!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGE 39.
-!!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
-!!     1957, PAGE 21.
+!!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Page 338.
+!!   * David, Order Statistics, 1970, Page 10-11.
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 39.
+!!   * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+!!     1957, Page 21.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
@@ -26420,6 +26624,49 @@ END SUBROUTINE RANGE
 !!    RANK(3f) gives the data analyst the ability to (for example) rank
 !!    the data preliminary to certain distribution-free analyses.
 !!
+!!##NOTES
+!!   The rank of the first element of the vector X will be placed in the
+!!   first position of the vector XR, the rank of the second element of the
+!!   vector X will be placed in the second position of the vector XR, etc.
+!!
+!!   The smallest element in the vector X will have a rank of 1 (unless
+!!   ties exist).  the largest element in the vector X will have a rank of N
+!!   (unless ties exist).
+!!
+!!   Although ranks are usually (unless ties exist) integral values from
+!!   1 to N, it is to be noted that they are outputted as REAL values in
+!!   the vector XR.  XR is so as to be consistent with the fact that all
+!!   vector arguments in all other datapac subroutines are REAL; but more
+!!   importantly, because ties frequently do exist in data sets and so some
+!!   of the resulting ranks will be non-integral and so the output vector
+!!   of ranks must necessarily be REAL and not INTEGER.
+!!
+!!   The input vector X remains unaltered.
+!!
+!!   Due to conflicting use of labeled common /block2_real64/ by this
+!!   rank subroutine and the SPCORR (Spearman rank correlation coefficient)
+!!   subroutine, the vector XS of this rank subroutine has been placed in
+!!   labeled common /block4_real64/
+!!
+!!   The first and third arguments in the calling sequence may be identical;
+!!   that is, an 'in place' ranking is permitted. The calling sequence
+!!   call RANK(X,N,X) is valid, if desired.
+!!
+!!   The sorting algorthm used herein is the binary sort. This algorthim
+!!   is extremely fast as the following time trials indicate.  These time
+!!   trials were carried out on the UNIVAC 1108 EXEC 8 system at NBS in
+!!   August of 1974.  by way of comparison, the time trial values for the
+!!   easy-to-program but extremely inefficient bubble sort algorithm have
+!!   also been included--
+!!
+!!   Number of random        Binary sort       Bubble sort
+!!    numbers sorted
+!!     n = 10                 .002 sec          .002 sec
+!!     n = 100                .011 sec          .045 sec
+!!     n = 1000               .141 sec         4.332 sec
+!!     n = 3000               .476 sec        37.683 sec
+!!     n = 10000             1.887 sec      not computed
+!!
 !!##INPUT ARGUMENTS
 !!
 !!    X     The vector of observations to be ranked.
@@ -26475,44 +26722,6 @@ REAL(kind=wp) :: an , avrank , hold , rprev , xprev , XS
 INTEGER       :: i , ibran , iupper , j , jmin , jp1 , k , nm1
 COMMON /BLOCK4_real64/ XS(7500)
 
-
-
-!     COMMENT--THE RANK OF THE FIRST ELEMENT OF THE VECTOR X WILL BE PLACED IN THE FIRST POSITION OF THE VECTOR XR,
-!              THE RANK OF THE SECOND ELEMENT OF THE VECTOR X WILL BE PLACED IN THE SECOND POSITION OF THE VECTOR XR, ETC.
-!
-!     COMMENT--THE SMALLEST ELEMENT IN THE VECTOR X WILL HAVE A RANK OF 1 (UNLESS TIES EXIST).
-!              THE LARGEST ELEMENT IN THE VECTOR X WILL HAVE A RANK OF N (UNLESS TIES EXIST).
-!
-!     COMMENT--ALTHOUGH RANKS ARE USUALLY (UNLESS TIES EXIST) INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
-!              NOTED THAT THEY ARE OUTPUTTED AS SINGLE PRECISION INTEGERS IN THE VECTOR XR.
-!              XR IS  SO AS TO BE CONSISTENT WITH THE FACT THAT ALL VECTOR ARGUMENTS IN ALL OTHER
-!              DATAPAC SUBROUTINES ARE ; BUT MORE IMPORTANTLY, BECAUSE TIES FREQUENTLY
-!              DO EXIST IN DATA SETS AND SO SOME OF THE RESULTING RANKS WILL BE NON-INTEGRAL
-!              AND SO THE OUTPUT VECTOR OF RANKS MUST NECESSARILY BE  AND NOT INTEGER.
-!
-!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!
-!     COMMENT--DUE TO CONFLICTING USE OF LABELED COMMON /BLOCK2_real64/ BY THIS RANK SUBROUTINE AND THE SPCORR (SPEARMAN RANK
-!              CORRELATION COEFFICIENT) SUBROUTINE, THE VECTOR XS OF THIS RANK SUBROUTINE HAS BEEN PLACED IN
-!              LABELED COMMON /BLOCK4_real64/
-!
-!     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE CALLING SEQUENCE MAY BE IDENTICAL; THAT IS, AN 'IN PLACE' RANKING IS PERMITTED.
-!              THE CALLING SEQUENCE CALL RANK(X,N,X) IS VALID, IF DESIRED.
-!
-!     COMMENT--THE SORTING ALGORTHM USED HEREIN IS THE BINARY SORT. THIS ALGORTHIM IS EXTREMELY FAST AS THE
-!              FOLLOWING TIME TRIALS INDICATE.  THESE TIME TRIALS WERE CARRIED OUT ON THE UNIVAC 1108 EXEC 8 SYSTEM AT NBS
-!              IN AUGUST OF 1974.
-!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES FOR THE EASY-TO-PROGRAM BUT EXTREMELY
-!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE ALSO BEEN INCLUDED--
-!
-!              NUMBER OF RANDOM        BINARY SORT       BUBBLE SORT
-!               NUMBERS SORTED
-!                N = 10                 .002 SEC          .002 SEC
-!                N = 100                .011 SEC          .045 SEC
-!                N = 1000               .141 SEC         4.332 SEC
-!                N = 3000               .476 SEC        37.683 SEC
-!                N = 10000             1.887 SEC      NOT COMPUTED
-!
 !---------------------------------------------------------------------
       an = N
       iupper = 7500
@@ -28580,6 +28789,7 @@ END SUBROUTINE SORTC
 !!##LICENSE
 !!    CC0-1.0
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE SORT(X,N,Y)
 REAL(kind=wp) :: amed, hold, tt, X, Y
 integer i, il, ip1, iu, j, jmi, jmk, k, l, lmi,   m, mid, n, nm1
@@ -30931,114 +31141,157 @@ DATA constn/.3989422804_wp/
 END SUBROUTINE TAIL
 !>
 !!##NAME
-!!    tcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] computes the cumulative distribution
-!!    function value for student's t distribution with integer degrees of
-!!    freedom NU.
+!!    tcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] computes the cumulative
+!!    distribution function value for student's t distribution with integer
+!!    degrees of freedom NU.
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE TCDF(X,Nu,Cdf)
 !!
+!!        REAL(kind=wp) :: X
+!!        INTEGER       :: Nu
+!!        REAL(kind=wp) :: Cdf
+!!
 !!##DESCRIPTION
-!!    tcdf(3f) computes the cumulative distribution function value for
-!!    student's t distribution with integer degrees of freedom parameter
-!!    = nu. This distribution is defined for all x.
+!!    TCDF(3f) computes the cumulative distribution function value for
+!!    Student's T distribution with integer degrees of freedom parameter
+!!    = NU. This distribution is defined for all X.
 !!
-!!    the probability density function is given in the references below.
+!!    The probability density function is given in the references below.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Note the mode of internal operations is double precision.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the cumulative distribution function is to
+!!           be evaluated. X should be non-negative.
+!!
+!!    NU     The integer number of degrees of freedom. NU should be positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the Student's
+!!           T distribution
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_tcdf
-!!    use M_datapac, only : tcdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : tcdf, plott, label
 !!    implicit none
-!!    ! call tcdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    integer           :: nu
+!!    integer           :: i
+!!       call label('tcdf')
+!!       x=[(real(i)/20.0,i=0,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       nu=12
+!!       do i=1,size(x)
+!!          call tcdf(X(i),Nu,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_tcdf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.5000000E+01 -                                                  X
+!!      0.4791667E+01 I                                                  X
+!!      0.4583333E+01 I                                                  X
+!!      0.4375000E+01 I                                                  X
+!!      0.4166667E+01 I                                                  X
+!!      0.3958333E+01 I                                                  X
+!!      0.3750000E+01 -                                                  X
+!!      0.3541667E+01 I                                                  X
+!!      0.3333333E+01 I                                                  X
+!!      0.3125000E+01 I                                                  X
+!!      0.2916667E+01 I                                                 X
+!!      0.2708333E+01 I                                                 X
+!!      0.2500000E+01 -                                                XX
+!!      0.2291667E+01 I                                                X
+!!      0.2083333E+01 I                                               X
+!!      0.1875000E+01 I                                             XX
+!!      0.1666667E+01 I                                            XX
+!!      0.1458333E+01 I                                         XXX
+!!      0.1250000E+01 -                                     XXXX
+!!      0.1041667E+01 I                                 XXXX
+!!      0.8333335E+00 I                            XXXX
+!!      0.6250000E+00 I                      XX XX
+!!      0.4166670E+00 I               X XX X
+!!      0.2083335E+00 I        XX X X
+!!      0.0000000E+00 -  X X X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.5000E+00  0.6250E+00  0.7499E+00  0.8749E+00  0.9998E+00
+!!
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 948, FORMULAE 26.7.3 AND 26.7.4.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 94-129.
-!!   * FEDERIGHI, EXTENDED TABLES OF THE PERCENTAGE POINTS OF STUDENT'S
-!!     T-DISTRIBUTION, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, 1959,
-!!     PAGES 683-688.
-!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 27-30.
-!!   * PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
-!!     1954, PAGES 132-134.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE TCDF(X,Nu,Cdf)
-REAL(kind=wp) :: anu , Cdf , cdfn , sd , X , z
-INTEGER :: i , ievodd , imax , imin , Nu , nucut
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE AT
-!                                WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE NON-NEGATIVE.
-!                     --NU     = THE INTEGER NUMBER OF DEGREES
-!                                OF FREEDOM.
-!                                NU SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE STUDENT'S T DISTRIBUTION
-!             WITH DEGREES OF FREEDOM PARAMETER = NU.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--NU SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORCDF.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DSQRT, DATAN.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+!!
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 948, Formulae 26.7.3 and 26.7.4.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 94-129.
+!!   * Federighi, Extended Tables of the Percentage Points Of Student'S
+!!     T-Distribution, Journal of the American Statistical Association, 1959,
+!!     Pages 683-688.
+!!   * Owen, Handbook of Statistical Tables, 1962, Pages 27-30.
+!!   * Pearson and Hartley, Biometrika Tables for Statisticians, Volume 1,
+!!     1954, Pages 132-134.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
-!
-!---------------------------------------------------------------------
-!
-      DOUBLE PRECISION dx , dnu , pi , c , csq , s , sum , term , ai
-      DOUBLE PRECISION DSQRT , DATAN
-      DOUBLE PRECISION dconst
-      DOUBLE PRECISION term1 , term2 , term3
-      DOUBLE PRECISION dcdfn
-      DOUBLE PRECISION dcdf
-      DOUBLE PRECISION b11
-      DOUBLE PRECISION b21 , b22 , b23 , b24 , b25
-      DOUBLE PRECISION b31 , b32 , b33 , b34 , b35 , b36 , b37
-      DOUBLE PRECISION d1 , d3 , d5 , d7 , d9 , d11
-      DATA nucut/1000/
-      DATA pi/3.14159265358979D0/
-      DATA dconst/0.3989422804D0/
-      DATA b11/0.25D0/
-      DATA b21/0.01041666666667D0/
-      DATA b22 , b23 , b24 , b25/3.0D0 , -7.0D0 , -5.0D0 , -3.0D0/
-      DATA b31/0.00260416666667D0/
-      DATA b32 , b33 , b34 , b35 , b36 , b37/1.0D0 , -11.0D0 , 14.0D0 , &
-     &     6.0D0 , -3.0D0 , -15.0D0/
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE TCDF(X,Nu,Cdf)
+REAL(kind=wp) :: X
+INTEGER       :: Nu
+REAL(kind=wp) :: Cdf
+REAL(kind=wp) :: anu , cdfn , sd , z
+INTEGER :: i , ievodd , imax , imin , nucut
+DOUBLE PRECISION dx , dnu , pi , c , csq , s , sum , term , ai
+DOUBLE PRECISION DSQRT , DATAN
+DOUBLE PRECISION dconst
+DOUBLE PRECISION term1 , term2 , term3
+DOUBLE PRECISION dcdfn
+DOUBLE PRECISION dcdf
+DOUBLE PRECISION b11
+DOUBLE PRECISION b21 , b22 , b23 , b24 , b25
+DOUBLE PRECISION b31 , b32 , b33 , b34 , b35 , b36 , b37
+DOUBLE PRECISION d1 , d3 , d5 , d7 , d9 , d11
+DATA nucut/1000/
+DATA pi/3.14159265358979D0/
+DATA dconst/0.3989422804D0/
+DATA b11/0.25D0/
+DATA b21/0.01041666666667D0/
+DATA b22 , b23 , b24 , b25/3.0D0 , -7.0D0 , -5.0D0 , -3.0D0/
+DATA b31/0.00260416666667D0/
+DATA b32 , b33 , b34 , b35 , b36 , b37/1.0D0 , -11.0D0 , 14.0D0 , &
+&     6.0D0 , -3.0D0 , -15.0D0/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( Nu<=0 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TCDF   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO TCDF(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99002) Nu
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSE
@@ -31049,18 +31302,10 @@ INTEGER :: i , ievodd , imax , imin , Nu , nucut
          anu = Nu
          dnu = Nu
 !
-!     IF NU IS 3 THROUGH 9 AND X IS MORE THAN 3000
-!     STANDARD DEVIATIONS BELOW THE MEAN,
-!     SET CDF = 0.0 AND RETURN.
-!     IF NU IS 10 OR LARGER AND X IS MORE THAN 150
-!     STANDARD DEVIATIONS BELOW THE MEAN,
-!     SET CDF = 0.0 AND RETURN.
-!     IF NU IS 3 THROUGH 9 AND X IS MORE THAN 3000
-!     STANDARD DEVIATIONS ABOVE THE MEAN,
-!     SET CDF = 1.0 AND RETURN.
-!     IF NU IS 10 OR LARGER AND X IS MORE THAN 150
-!     STANDARD DEVIATIONS ABOVE THE MEAN,
-!     SET CDF = 1.0 AND RETURN.
+!     IF NU IS 3 THROUGH 9 AND X IS MORE THAN 3000 STANDARD DEVIATIONS BELOW THE MEAN, SET CDF = 0.0 AND RETURN.
+!     IF NU IS 10 OR LARGER AND X IS MORE THAN 150 STANDARD DEVIATIONS BELOW THE MEAN, SET CDF = 0.0 AND RETURN.
+!     IF NU IS 3 THROUGH 9 AND X IS MORE THAN 3000 STANDARD DEVIATIONS ABOVE THE MEAN, SET CDF = 1.0 AND RETURN.
+!     IF NU IS 10 OR LARGER AND X IS MORE THAN 150 STANDARD DEVIATIONS ABOVE THE MEAN, SET CDF = 1.0 AND RETURN.
 !
          IF ( Nu<=2 ) GOTO 100
          sd = SQRT(anu/(anu-2.0_wp))
@@ -31074,7 +31319,8 @@ INTEGER :: i , ievodd , imax , imin , Nu , nucut
          ENDIF
          Cdf = 0.0_wp
          RETURN
- 50      Cdf = 1.0_wp
+ 50      continue
+         Cdf = 1.0_wp
          RETURN
       ENDIF
 !
@@ -31082,7 +31328,8 @@ INTEGER :: i , ievodd , imax , imin , Nu , nucut
 !     DEGREES OF FREEDOM CASE VERSUS THE
 !     LARGE DEGREES OF FREEDOM CASE
 !
- 100  IF ( Nu<nucut ) THEN
+ 100  continue
+      IF ( Nu<nucut ) THEN
 !
 !     TREAT THE SMALL AND MODERATE DEGREES OF FREEDOM CASE
 !     METHOD UTILIZED--EXACT FINITE SUM
@@ -31135,8 +31382,7 @@ INTEGER :: i , ievodd , imax , imin , Nu , nucut
          d11 = dx**11
          term1 = b11*(d3+d1)/dnu
          term2 = b21*(b22*d7+b23*d5+b24*d3+b25*d1)/(dnu**2)
-         term3 = b31*(b32*d11+b33*d9+b34*d7+b35*d5+b36*d3+b37*d1)       &
-     &           /(dnu**3)
+         term3 = b31*(b32*d11+b33*d9+b34*d7+b35*d5+b36*d3+b37*d1)/(dnu**3)
          dcdf = term1 + term2 + term3
          dcdf = dcdfn - (dconst*(DEXP(-dx*dx/2.0D0)))*dcdf
          Cdf = dcdf
@@ -31953,35 +32199,38 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
 END SUBROUTINE TOL
 !>
 !!##NAME
-!!    tplt(3f) - [M_datapac:LINE_PLOT] generates a student's
-!!    T probability plot (with integer degrees of freedom parameter value
-!!    NU).
+!!    tplt(3f) - [M_datapac:LINE_PLOT] generates a Student's T probability
+!!    plot (with integer degrees of freedom parameter value NU).
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE TPLT(X,N,Nu)
 !!
-!!##DESCRIPTION
-!!    tplt(3f) generates a student's t probability plot (with integer
-!!    degrees of freedom parameter value = nu).
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in) :: N
+!!        INTEGER,intent(in) :: Nu
 !!
-!!    the prototype student's t distribution used herein is defined for all
-!!    x, and its probability density function is given in the references
+!!##DESCRIPTION
+!!    TPLT(3f) generates a Student's T probability plot (with integer
+!!    degrees of freedom parameter value = NU).
+!!
+!!    The prototype Student's T distribution used herein is defined for all
+!!    X, and its probability density function is given in the references
 !!    below.
 !!
-!!    as used herein, a probability plot for a distribution is a plot
+!!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the student's t probability plot is useful in graphically testing
+!!    The Student's T probability plot is useful in graphically testing
 !!    the composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which
-!!    the data have been randomly drawn is the student's t distribution
-!!    with degrees of freedom parameter value = nu.
+!!    the data have been randomly drawn is the Student's T distribution
+!!    with degrees of freedom parameter value = NU.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
-!!    a measure of such linearity is given by the calculated probability
+!!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
 !!##INPUT ARGUMENTS
@@ -32034,10 +32283,11 @@ END SUBROUTINE TOL
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE TPLT(X,N,Nu)
-REAL(kind=wp) :: X(:)
-INTEGER :: N
-INTEGER :: Nu
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in) :: N
+INTEGER,intent(in) :: Nu
 
 REAL(kind=wp) :: W(7500), Y(7500)
 REAL(kind=wp) :: an, cc, hold, pp0025, pp025, pp975, pp9975, q, sum1, sum2, sum3, tau, wbar, WS, ybar, yint, yslope
@@ -32080,7 +32330,8 @@ EQUIVALENCE (W(1),WS(7501))
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      an = N
+ 50      continue
+         an = N
 !
 !     SORT THE DATA
 !
@@ -34288,91 +34539,126 @@ END SUBROUTINE WEIB
 !!
 !!       SUBROUTINE WEICDF(X,Gamma,Cdf)
 !!
+!!        REAL(kind=wp),intent(in)  :: X
+!!        REAL(kind=wp),intent(in)  :: Gamma
+!!        REAL(kind=wp),intent(out) :: Cdf
+!!
 !!##DESCRIPTION
 !!    WEICDF(3f) computes the cumulative distribution function value for
-!!    the weibull distribution with precision precision tail length parameter
-!!    = gamma.
+!!    the Weibull distribution with precision precision tail length parameter
+!!    = GAMMA.
 !!
-!!    The weibull distribution used herein is defined for all positive x,
+!!    The Weibull distribution used herein is defined for all positive X,
 !!    and has the probability density function
 !!
-!!        f(X) = gamma * (X**(gamma-1)) * exp(-(X**gamma)).
+!!        f(X) = GAMMA * (X**(GAMMA-1)) * exp(-(X**GAMMA))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X      The value at which the cumulative distribution function is to
+!!           be evaluated. X should be positive ( >0 )
+!!
+!!    GAMMA  The value of the tail length parameter. GAMMA should be
+!!           positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    CDF    The cumulative distribution function value for the Weibull
+!!           distribution
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_weicdf
-!!    use M_datapac, only : weicdf
+!!    !@(#) line plotter graph of cumulative distribution function
+!!    use M_datapac, only : weicdf, plott, label
 !!    implicit none
-!!    ! call weicdf(x,y)
+!!    real,allocatable  :: x(:), y(:)
+!!    real              :: gamma
+!!    integer           :: i
+!!       call label('weicdf')
+!!       x=[((real(i)+epsilon(0.0))/30.0,i=0,100,1)]
+!!       if(allocated(y))deallocate(y)
+!!       allocate(y(size(x)))
+!!       gamma=12.2
+!!       do i=1,size(x)
+!!          call weicdf(X(i),Gamma,y(i))
+!!       enddo
+!!       call plott(x,y,size(x))
 !!    end program demo_weicdf
 !!
 !!   Results:
+!!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.3333333E+01 -                                                  X
+!!      0.3194444E+01 I                                                  X
+!!      0.3055556E+01 I                                                  X
+!!      0.2916667E+01 I                                                  X
+!!      0.2777778E+01 I                                                  X
+!!      0.2638889E+01 I                                                  X
+!!      0.2500000E+01 -                                                  X
+!!      0.2361111E+01 I                                                  X
+!!      0.2222222E+01 I                                                  X
+!!      0.2083333E+01 I                                                  X
+!!      0.1944444E+01 I                                                  X
+!!      0.1805556E+01 I                                                  X
+!!      0.1666667E+01 -                                                  X
+!!      0.1527778E+01 I                                                  X
+!!      0.1388889E+01 I                                                  X
+!!      0.1250000E+01 I                                                  X
+!!      0.1111111E+01 I                                             X  X X
+!!      0.9722223E+00 I                   X     X      X      X
+!!      0.8333335E+00 -    XX X  X   X
+!!      0.6944444E+00 I  XX
+!!      0.5555556E+00 I  X
+!!      0.4166667E+00 I  X
+!!      0.2777779E+00 I  X
+!!      0.1388891E+00 I  X
+!!      0.3973643E-08 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
 !!    Statistical Engineering Division, National Institute of Standards
 !!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     Pages 250-271.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
 !!     Students and Practitioners, 1975, Page 124.
+!     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEICDF(X,Gamma,Cdf)
-REAL(kind=wp) :: Cdf , Gamma , X
-!
-!     INPUT ARGUMENTS--X      = THE  VALUE
-!                                AT WHICH THE CUMULATIVE DISTRIBUTION
-!                                FUNCTION IS TO BE EVALUATED.
-!                                X SHOULD BE POSITIVE.
-!                     --GAMMA  = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE
-!                                DISTRIBUTION FUNCTION VALUE.
-!     OUTPUT--THE  CUMULATIVE DISTRIBUTION
-!             FUNCTION VALUE CDF FOR THE WEIBULL DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --X SHOULD BE POSITIVE.
-
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
+REAL(kind=wp),intent(in)  :: X
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: Cdf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( X<=0.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE WEIC&
-     &DF SUBROUTINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT TO WEICDF(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99003) X
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEICDF SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO WEICDF(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99003) Gamma
          Cdf = 0.0_wp
          RETURN
       ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
          Cdf = 1.0_wp - (EXP(-(X**Gamma)))
       ENDIF
 99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')

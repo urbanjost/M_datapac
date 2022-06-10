@@ -26,19 +26,23 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-    EDITION 2, 1963, PAGE 338.
-  * DAVID, ORDER STATISTICS, 1970, PAGE 10-11.
-  * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGE 39.
-  * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
-    1957, PAGE 21.
+  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+    Edition 2, 1963, Page 338.
+  * David, Order Statistics, 1970, Page 10-11.
+  * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 39.
+  * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
+    1957, Page 21.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

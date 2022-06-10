@@ -9,7 +9,7 @@ SYNOPSIS
 
        REAL(kind=wp),intent(in) :: X
        REAL(kind=wp),intent(out) :: Cdf
-       INTEGER,intent(in) :: Nu 
+       INTEGER,intent(in) :: Nu
 
 DESCRIPTION
    CHSCDF(3f) computes the cumulative distribution function value for
@@ -57,6 +57,7 @@ REFERENCES
  * Owen, Handbook of Statistical Tables, 1962, Pages 50-55.
  * Pearson and Hartley, Biometrika Tables for Statisticians, Volume 1,
    1954, Pages 122-131.
+
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
@@ -69,7 +70,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 SUBROUTINE CHSCDF(X,Nu,Cdf)
 REAL(kind=wp),intent(in) :: X
 REAL(kind=wp),intent(out) :: Cdf
-INTEGER,intent(in) :: Nu 
+INTEGER,intent(in) :: Nu
 
 REAL(kind=wp) :: amean , anu , cdfn , danu , sd , spchi , u , z
 INTEGER :: i , ibran , ievodd , imax , imin , nucut

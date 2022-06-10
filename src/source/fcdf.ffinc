@@ -7,6 +7,11 @@ NAME
 SYNOPSIS
       SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
 
+       REAL(kind=wp)    :: X
+       INTEGER          :: Nu1 
+       INTEGER          :: Nu2 
+       REAL(kind=wp)    :: Cdf
+
 DESCRIPTION
    FCDF(3f) computes the cumulative distribution function value for the F
    distribution with integer degrees of freedom parameters = NU1 and NU2.
@@ -69,8 +74,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
-REAL(kind=wp)    :: amean , ccdf , Cdf , gcdf , sd , t1 , t2 , t3 , u , X , zratio
-INTEGER          :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , m , n , Nu1 , Nu2 , nucut1 , nucut2
+REAL(kind=wp)    :: X
+INTEGER          :: Nu1 
+INTEGER          :: Nu2 
+REAL(kind=wp)    :: Cdf
+REAL(kind=wp)    :: amean , ccdf , gcdf , sd , t1 , t2 , t3 , u , zratio
+INTEGER          :: i , ibran , ievodd , iflag1 , iflag2 , imax , imin , m , n , nucut1 , nucut2
 DOUBLE PRECISION :: dx , pi , anu1 , anu2 , z , sum , term , ai , coef1 , coef2 , arg
 DOUBLE PRECISION :: coef
 DOUBLE PRECISION :: theta , sinth , costh , a , b
@@ -87,30 +96,23 @@ DATA nucut1 , nucut2/100 , 1000/
 !
       IF ( Nu1<=0 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FCDF   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO FCDF(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99006) Nu1
          Cdf = 0.0_wp
          RETURN
       ELSE
          IF ( Nu2<=0 ) THEN
             WRITE (G_IO,99002)
-99002       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE FCDF   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+            99002 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO FCDF(3f) IS NON-POSITIVE *****')
             WRITE (G_IO,99006) Nu2
             Cdf = 0.0_wp
             RETURN
          ELSE
             IF ( X<0.0 ) THEN
                WRITE (G_IO,99003)
-99003          FORMAT (' ',                                             &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE FCDF&
-     &   SUBROUTINE IS NEGATIVE *****')
+               99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO FCDF(3f) IS NEGATIVE *****')
                WRITE (G_IO,99004) X
-99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, &
-     &                 ' *****')
+               99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
                Cdf = 0.0_wp
                RETURN
             ELSE

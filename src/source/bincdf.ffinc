@@ -13,10 +13,10 @@ SYNOPSIS
        REAL(kind=wp) :: Cdf
 
 DESCRIPTION
-   BINCDF(3f) computes the cumulative distribution function value
-   at the double precision value X for the binomial distribution with
-   double precision 'Bernoulli probability' parameter = P, and integer
-   'number of Bernoulli trials' parameter = N.
+   BINCDF(3f) computes the cumulative distribution function value at the
+   double precision value X for the binomial distribution with double
+   precision 'Bernoulli probability' parameter = P, and integer 'number
+   of Bernoulli trials' parameter = N.
 
    The binomial distribution used herein has mean = N*P and standard
    deviation = sqrt(N*P*(1-P)).
@@ -36,15 +36,15 @@ DESCRIPTION
    in a precision trial = P.
 
 INPUT ARGUMENTS
- 
+
    X      The value at which the cumulative distribution
           function is to be evaluated. X should be integral-valued,
           and between 0.0 (inclusively) and N (inclusively).
-                       
+
    P      The value of the 'Bernoulli probability'
           parameter for the binomial distribution.
           P should be between 0.0 (exclusively) and 1.0 (exclusively).
-                       
+
    N      The integer value of the 'number of Bernoulli trials'
           parameter. N should be a positive integer.
 
