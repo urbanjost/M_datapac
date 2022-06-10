@@ -441,8 +441,8 @@ REAL(kind=wp),intent(out) :: X(:)
 REAL(kind=wp) :: a1, a2, arg, b1, b2, funct, term, u(10), xg, xg01, xg02, xg1, xg2
 REAL(kind=wp) :: xn01, xn02, xn(1)
 INTEGER       :: i
-real,parameter :: athird = 0.33333333_wp
-real,parameter :: sqrt3= 1.73205081_wp
+real(kind=wp),parameter :: athird = 0.33333333_wp
+real(kind=wp),parameter :: sqrt3= 1.73205081_wp
 !
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !
@@ -10907,38 +10907,45 @@ end subroutine hfncdf
 !!
 !!       SUBROUTINE HFNPLT(X,N)
 !!
-!!##DESCRIPTION
-!!    hfnplt(3f) generates a halfnormal probability plot.
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
 !!
-!!    the prototype halfnormal distribution used herein has mean = sqrt(2/pi)
+!!##DESCRIPTION
+!!    HFNPLT(3f) generates a halfnormal probability plot.
+!!
+!!    The prototype halfnormal distribution used herein has mean = sqrt(2/pi)
 !!    = 0.79788456 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x and has the
+!!    This distribution is defined for all non-negative X and has the
 !!    probability density function
 !!
-!!        f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!        f(X) = (2/sqrt(2*pi)) * exp(-X*X/2)
 !!
-!!    the prototype halfnormal distribution used herein is the distribution
-!!    of the variate x = abs(z) where the variate z is normally distributed
+!!    The prototype halfnormal distribution used herein is the distribution
+!!    of the variate X = abs(Z) where the variate Z is normally distributed
 !!    with mean = 0 and standard deviation = 1.
 !!
-!!    as used herein, a probability plot for a distribution is a plot
+!!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the halfnormal probability plot is useful in graphically testing
+!!    The halfnormal probability plot is useful in graphically testing
 !!    the composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which
 !!    the data have been randomly drawn is the halfnormal distribution.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
-!!    a measure of such linearity is given by the calculated probability
+!!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
 !!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X     The vector of (unsorted or sorted) observations.
+!!    N     The integer number of observations in the vector X.
+!!          The maximum allowable value of N for this subroutine is 7500.
+!!##OUTPUT
+!!    A one-page halfnormal probability plot.
 !!
 !!##EXAMPLES
 !!
@@ -10953,23 +10960,27 @@ end subroutine hfncdf
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
-!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
-!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
-!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!   * Daniel, 'Use of Half-Normal Plots in Interpreting Factorial Two-Level
+!!     Experiments', Technometrics, 1959, Pages 311-341.
+!!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * Hahn anD Shapiro, Statistical Methods in Engineering, 1967, Pages
 !!     260-308.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 53, 59, 81, 83.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 53, 59, 81, 83.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -10977,30 +10988,15 @@ end subroutine hfncdf
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE HFNPLT(X,N)
-REAL(kind=wp) :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , W , wbar ,   &
-     &     WS , X , Y , ybar , yint , yslope
-INTEGER i , iupper , N
-!*** End of declarations inserted by SPAG
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE HALFNORMAL PROBABILITY PLOT.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, NORPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--.
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2_real32/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (W(1),WS(7501))
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp)            :: W(7500), Y(7500)
+REAL(kind=wp)            :: an , cc , hold , q , sum1 , sum2 , sum3 , tau , wbar , WS , ybar , yint , yslope
+INTEGER                  :: i , iupper
+
+COMMON /BLOCK2_real32/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (W(1),WS(7501))
 !
       DATA tau/1.41223913_wp/
 !
@@ -11010,17 +11006,14 @@ INTEGER i , iupper , N
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE HFNPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO HFNPLT(3f) IS OUTSIDE THE ALLOWABLE (1,', &
+          & I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE HFNP&
-     &LT SUBROUTINE HAS THE VALUE 1 *****')
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO HFNPLT(3f) HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = X(1)
@@ -11028,13 +11021,13 @@ INTEGER i , iupper , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
          WRITE (G_IO,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE HFNPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO HFNPLT(3f) HAS ALL ELEMENTS = ',&
+         & E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      an = N
+ 50      continue
+         an = N
 !
 !     SORT THE DATA
 !
@@ -11058,14 +11051,10 @@ INTEGER i , iupper , N
 !
          CALL PLOT(Y,W,N)
          WRITE (G_IO,99005) tau , N
+         99005    FORMAT (' ','HALFNORMAL PROBABILITY PLOT (TAU = ',E15.8,')',52X,'THE SAMPLE SIZE N = ',I7)
 !
-99005    FORMAT (' ','HALFNORMAL PROBABILITY PLOT (TAU = ',E15.8,')',   &
-     &           52X,'THE SAMPLE SIZE N = ',I7)
-!
-!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
-!     COMPUTE LOCATION AND SCALE ESTIMATES
-!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
-!     THEN WRITE THEM OUT.
+!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT. COMPUTE LOCATION AND SCALE ESTIMATES
+!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT. THEN WRITE THEM OUT.
 !
          sum1 = 0.0_wp
          sum2 = 0.0_wp
@@ -11087,9 +11076,8 @@ INTEGER i , iupper , N
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
          WRITE (G_IO,99006) cc , yint , yslope
-99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
-     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
-     &           'ESTIMATED SLOPE = ',E15.8)
+         99006 FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
+              & 5X,'ESTIMATED INTERCEPT = ',E15.8,3X,'ESTIMATED SLOPE = ',E15.8)
       ENDIF
 !
 END SUBROUTINE HFNPLT
@@ -11102,27 +11090,36 @@ END SUBROUTINE HFNPLT
 !!
 !!       SUBROUTINE HFNPPF(P,Ppf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Ppf
+!!
 !!##DESCRIPTION
-!!    hfnppf(3f) computes the percent point function value for the halfnormal
+!!    HFNPPF(3f) computes the percent point function value for the halfnormal
 !!    distribution.
 !!
-!!    the halfnormal distribution used herein has mean = sqrt(2/pi) =
+!!    The halfnormal distribution used herein has mean = sqrt(2/pi) =
 !!    0.79788456 and standard deviation = 1. this distribution is defined
-!!    for all non-negative x and has the probability density function
+!!    for all non-negative X and has the probability density function
 !!
-!!    f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!    f(X) = (2/sqrt(2*pi)) * exp(-X*X/2).
 !!
-!!    the halfnormal distribution used herein is the distribution of the
-!!    variate x = abs(z) where the variate z is normally distributed with
+!!    The halfnormal distribution used herein is the distribution of the
+!!    variate X = abs(Z) where the variate Z is normally distributed with
 !!    mean = 0 and standard deviation = 1.
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P     The  value (between 0.0 (inclusively) and 1.0 (exclusively))
+!!          at which the percent point function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF   The  percent point function value for the halfnormal
+!!          distribution
 !!
 !!##EXAMPLES
 !!
@@ -11137,56 +11134,44 @@ END SUBROUTINE HFNPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 53, 59, 81, 83.
-!!   * DANIEL, 'USE OF HALF-NORMAL PLOTS IN INTERPRETING FACTORIAL TWO-LEVEL
-!!     EXPERIMENTS', TECHNOMETRICS, 1959, PAGES 311-341.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE HFNPPF(P,Ppf)
-REAL(kind=wp) :: arg , P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (INCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE HALFNORMAL DISTRIBUTION
-!             WITH MEAN = SQRT(2/PI) = 0.79788456
-!             AND STANDARD DEVIATION = 1.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--NORPPF.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 53, 59, 81, 83.
+!!   * Daniel, 'Use of Half-Normal Plots in Interpreting Factorial Two-Level
+!!     Experiments', Technometrics, 1959, Pages 311-341.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
-!
-!---------------------------------------------------------------------
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE HFNPPF(P,Ppf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Ppf
+REAL(kind=wp) :: arg
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-         WRITE (G_IO,99002) P
-         Ppf = 0.0_wp
-      ELSE
-         arg = (1.0_wp+P)/2.0_wp
-         CALL NORPPF(arg,Ppf)
-         IF ( Ppf<=0.0_wp ) Ppf = 0.0_wp
-      ENDIF
+   IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT(' ***** FATAL ERROR--THE FIRST INPUT ARGUMENT TO HFNPPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
+      Ppf = 0.0_wp
+   ELSE
+      arg = (1.0_wp+P)/2.0_wp
+      CALL NORPPF(arg,Ppf)
+      IF ( Ppf<=0.0_wp ) Ppf = 0.0_wp
+   ENDIF
 
-99001 FORMAT(' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE HFNPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
 !
 END SUBROUTINE HFNPPF
 !>
@@ -11197,29 +11182,36 @@ END SUBROUTINE HFNPPF
 !!
 !!       SUBROUTINE HFNRAN(N,Iseed,X)
 !!
+!!        INTEGER,intent(in)         :: N
+!!        INTEGER,intent(inout)      :: Iseed
+!!        REAL(kind=wp),intent(out)  :: X(:)
+!!
 !!##DESCRIPTION
-!!    hfnran(3f) generates a random sample of size n from the halfnormal
+!!    HFNRAN(3f) generates a random sample of size n from the halfnormal
 !!    distribution.
 !!
-!!    the prototype halfnormal distribution used herein has mean = sqrt(2/pi)
+!!    The prototype halfnormal distribution used herein has mean = sqrt(2/pi)
 !!    = 0.79788456 and standard deviation = 1. this distribution is defined
-!!    for all non-negative x and has the probability density function
+!!    for all non-negative X and has the probability density function
 !!
-!!        f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+!!        f(X) = (2/sqrt(2*pi)) * exp(-X*X/2).
 !!
-!!    the prototype halfnormal distribution used herein is the distribution
-!!    of the variate x = abs(z) where the variate z is normally distributed
+!!    The prototype halfnormal distribution used herein is the distribution
+!!    of the variate X = abs(Z) where the variate Z is normally distributed
 !!    with mean = 0 and standard deviation = 1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    N      = The desired integer number of random numbers to be generated.
 !!
 !!   ISEED  An integer iseed value. Should be set to a non-negative value
 !!          to start a new sequence of values. Will be set to -1 on return
 !!          to indicate the next call should continue the current random
 !!          sequence walk.
 !!
+!!##OUTPUT ARGUMENTS
+!!    X      = A  vector (of dimension at least N) into which the generated
+!!             random sample from the halfnormal distribution will be placed.
 !!
 !!##EXAMPLES
 !!
@@ -11256,87 +11248,58 @@ END SUBROUTINE HFNPPF
 !     UPDATED         --MAY       1982.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
-SUBROUTINE HFNRAN(N,Iseed,X)
-REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
-INTEGER :: i , ip1 , Iseed , N
+subroutine hfnran(N,Iseed,X)
+integer,intent(in)         :: N
+integer,intent(inout)      :: Iseed
+real(kind=wp),intent(out)  :: X(:)
+real(kind=wp)              :: arg1 , arg2 , sqrt1 , u1 , u2 , y(2) , z1 , z2
+integer                    :: i , ip1
 !
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE HALFNORMAL DISTRIBUTION
-!              WITH MEAN = SQRT(2/PI) = 0.79788456
-!              AND STANDARD DEVIATION = 1.
-
-!---------------------------------------------------------------------
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      DIMENSION X(:)
-      DIMENSION y(2)
+   if ( N<1 ) then
+      write (G_io,99001)
+      99001 format (' ***** FATAL ERROR--The first input argument to HFNRAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   else
 !
-!---------------------------------------------------------------------
+!  GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+!  THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
+!  (TO BE USED BELOW IN FORMING THE N-TH NORMAL RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N HAPPENS TO BE ODD).
 !
-!-----DATA STATEMENTS-------------------------------------------------
+      call uniran(N,Iseed,X)
+      call uniran(2,Iseed,y)
 !
-      DATA pi/3.14159265359_wp/
+!  GENERATE N NORMAL RANDOM NUMBERS USING THE BOX-MULLER METHOD.
 !
-!-----START POINT-----------------------------------------------------
+      do i = 1 , N , 2
+         ip1 = i + 1
+         u1 = X(i)
+         if ( i==N ) then
+            u2 = y(2)
+         else
+            u2 = X(ip1)
+         endif
+         arg1 = -2.0_wp*LOG(u1)
+         arg2 = 2.0_wp*G_pi*u2
+         sqrt1 = SQRT(arg1)
+         z1 = sqrt1*COS(arg2)
+         z2 = sqrt1*SIN(arg2)
+         X(i) = z1
+         IF ( i/=N ) X(ip1) = z2
+      enddo
 !
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!  GENERATE N HALFNORMAL RANDOM NUMBERS USING THE DEFINITION THAT A HALFNORMAL VARIATE
+!  EQUALS THE ABSOLUTE VALUE OF A NORMAL VARIATE.
 !
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE HFNRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         RETURN
-      ELSE
+      do i = 1 , N
+         if ( X(i)<0.0_wp ) X(i) = -X(i)
+      enddo
+   endif
 !
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!     THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
-!     (TO BE USED BELOW IN FORMING THE N-TH NORMAL
-!     RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N
-!     HAPPENS TO BE ODD).
-!
-         CALL UNIRAN(N,Iseed,X)
-         CALL UNIRAN(2,Iseed,y)
-!
-!     GENERATE N NORMAL RANDOM NUMBERS
-!     USING THE BOX-MULLER METHOD.
-!
-         DO i = 1 , N , 2
-            ip1 = i + 1
-            u1 = X(i)
-            IF ( i==N ) THEN
-               u2 = y(2)
-            ELSE
-               u2 = X(ip1)
-            ENDIF
-            arg1 = -2.0_wp*LOG(u1)
-            arg2 = 2.0_wp*pi*u2
-            sqrt1 = SQRT(arg1)
-            z1 = sqrt1*COS(arg2)
-            z2 = sqrt1*SIN(arg2)
-            X(i) = z1
-            IF ( i/=N ) X(ip1) = z2
-         ENDDO
-!
-!     GENERATE N HALFNORMAL RANDOM NUMBERS
-!     USING THE DEFINITION THAT
-!     A HALFNORMAL VARIATE
-!     EQUALS THE ABSOLUTE VALUE OF A NORMAL VARIATE.
-!
-         DO i = 1 , N
-            IF ( X(i)<0.0_wp ) X(i) = -X(i)
-         ENDDO
-      ENDIF
-!
-END SUBROUTINE HFNRAN
+end subroutine hfnran
 !>
 !!##NAME
 !!    hist(3f) - [M_datapac:STATISTICS] generates histograms based on two
@@ -11346,20 +11309,29 @@ END SUBROUTINE HFNRAN
 !!
 !!       SUBROUTINE HIST(X,N)
 !!
-!!##DESCRIPTION
-!!    hist(3f) produces 2 histograms (with differing class widths) of the
-!!    data in the input vector x.
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
 !!
-!!    the first histogram has class width = 0.1 sample standard deviations;
+!!##DESCRIPTION
+!!    HIST(3f) produces 2 histograms (with differing class widths) of the
+!!    data in the input vector X.
+!!
+!!    The first histogram has class width = 0.1 sample standard deviations;
 !!    the second histogram has class width = 0.2 sample standard deviations.
 !!
-!!    two histograms of the same data set are printed out so as to give
+!!    Two histograms of the same data set are printed out so as to give
 !!    the data analyst some feel for how dependent the histogram shape is
 !!    as a function of the class width and number of classes.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X     The vector of (unsorted or sorted) observations.
+!!    N     The integer number of observations in the vector X.
+!!
+!!##OUTPUT
+!!    One page of automatic printout consisting of 2 half-page histograms (with
+!!    class widths = 0.1 and 0.2 sAmple standard deviations, respectively)
+!!    of the data in the input vector X.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -11368,79 +11340,63 @@ END SUBROUTINE HFNRAN
 !!    program demo_hist
 !!    use M_datapac, only : hist
 !!    implicit none
-!!    ! call hist(x,y)
+!!    real,allocatable :: x(:)
+!!    integer :: i
+!!    integer :: n
+!!       x=[(real(i),i=1,100)]
+!!       n=size(x)
+!!       call hist(x,n)
 !!    end program demo_hist
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGE 4.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HIST(X,N)
-REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
-     &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
-INTEGER :: i , icoun2 , icount , ievodd , ihist , inc , irev , &
-     &        itlabl , ixlabl , j , jmax , jp1 , jsum , maxfre , mt ,   &
-     &        mx , N , numcla , numhis
-INTEGER :: numout
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--1 PAGE OF AUTOMATIC PRINTOUT
-!             CONSISTING OF 2 HALF-PAGE HISTOGRAMS
-!             (WITH CLASS WIDTHS = 0.1 AND 0.2 SAMPLE
-!             STANDARD DEVIATIONS, RESPECTIVELY)
-!             OF THE DATA IN THE INPUT VECTOR X.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Page 4.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE HIST(X,N)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp) :: acount, ai, amaxfr, an, cwidsd, cwidth, height, hold, prop, s, sum, tinc, tlable, xbar, xmax, xmin, z
+INTEGER       :: i, icoun2, icount, ievodd, ihist, inc, irev, itlabl, ixlabl, j, jmax, jp1, jsum, maxfre, mt, mx, numcla, numhis
+INTEGER       :: numout
 CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 CHARACTER(len=4) :: IGRaph
-!
-      DIMENSION X(:)
-      DIMENSION ixlabl(21)
-      COMMON /BLOCK1/ IGRaph(55,130)
-!CCCC COMMON IGRAPH(22,123)
-      DIMENSION icount(121) , icoun2(121)
-      DIMENSION tlable(13) , itlabl(13)
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+DIMENSION ixlabl(21)
+COMMON /BLOCK1/ IGRaph(55,130)
+DIMENSION icount(121) , icoun2(121)
+DIMENSION tlable(13) , itlabl(13)
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE HIST   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO HIST(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE HIST&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** FATAL ERROR-- THE SECOND INPUT ARGUMENT TO HIST(3f) HAS THE VALUE 1 *****')
             RETURN
          ELSE
             hold = X(1)
@@ -11448,15 +11404,15 @@ CHARACTER(len=4) :: IGRaph
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO T&
-     &HE HIST   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO HIST(3f) HAS ALL ELEMENTS = ',&
+            & E15.8,' *****')
             RETURN
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      numhis = 2
+ 50      continue
+         numhis = 2
          an = N
 !
 !     FIND THE MINIMUM AND THE MAXIMUM
@@ -11598,15 +11554,16 @@ CHARACTER(len=4) :: IGRaph
             ievodd = ihist - 2*(ihist/2)
             IF ( ievodd==0 ) THEN
                WRITE (G_IO,99005)
-99005          FORMAT (' ')
+               99005 FORMAT (' ')
             ELSE
                WRITE (G_IO,99006)
-99006          FORMAT ('1')
+               99006 FORMAT ('1')
             ENDIF
             WRITE (G_IO,99013) (IGRaph(1,j),j=1,123)
+            99013 FORMAT (' ',6X,123A1)
             DO i = 2 , 21
                WRITE (G_IO,99007) ixlabl(i) , (IGRaph(i,j),j=1,123)
-99007          FORMAT (' ',I5,1X,123A1)
+               99007 FORMAT (' ',I5,1X,123A1)
             ENDDO
             WRITE (G_IO,99013) (IGRaph(22,j),j=1,123)
             numcla = (120/inc) + 1
@@ -11624,22 +11581,19 @@ CHARACTER(len=4) :: IGRaph
                itlabl(irev) = 7 - i
             ENDDO
             WRITE (G_IO,99008) (tlable(i),i=1,13)
-99008       FORMAT (' ',1X,12F10.4,F9.4)
+            99008 FORMAT (' ',1X,12F10.4,F9.4)
             WRITE (G_IO,99009) (itlabl(i),i=1,13)
-99009       FORMAT (' ',13(1X,I7,2X))
+            99009 FORMAT (' ',13(1X,I7,2X))
             WRITE (G_IO,99010) numout
-99010       FORMAT (' ',I5,                                             &
-     &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS ABOU&
-     &T THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
+            99010 FORMAT (' ',I0, &
+            & ' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS ABOUT THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
             WRITE (G_IO,99011) numcla , cwidth , cwidsd
-99011       FORMAT (' ','HISTOGRAM      THE NUMBER OF CLASSES IS ',I6,  &
-     &              8X,'THE CLASS WIDTH IS ',E15.8,' = ',F7.1,          &
-     &              ' STANDARD DEVIATIONS')
+            99011 FORMAT (' HISTOGRAM      THE NUMBER OF CLASSES IS ',I0,&
+            & 8X,'THE CLASS WIDTH IS ',E15.8,' = ',F7.1,' STANDARD DEVIATIONS')
             WRITE (G_IO,99012) N
-99012       FORMAT (' ','THE SAMPLE SIZE N = ',I7)
+            99012 FORMAT (' ','THE SAMPLE SIZE N = ',I7)
          ENDDO
       ENDIF
-99013 FORMAT (' ',6X,123A1)
 END SUBROUTINE HIST
 !>
 !!##NAME
@@ -15712,26 +15666,26 @@ END SUBROUTINE NBPPF
 !!       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
 !!
 !!##DESCRIPTION
-!!    nbran(3f) generates a random sample of size n from the negative
-!!    binomial distribution with precision precision 'bernoulli probability'
-!!    parameter = p, and integer 'number of successes in bernoulli trials'
-!!    parameter = npar. the negative binomial distribution used herein has
-!!    mean = npar*(1-p)/p and standard deviation = sqrt(npar*(1-p)/(p*p))).
+!!    NBRAN(3f) generates a random sample of size N from the negative
+!!    binomial distribution with precision 'Bernoulli probability'
+!!    parameter = P, and integer 'number of successes in Bernoulli trials'
+!!    parameter = NPAR. The negative binomial distribution used herein has
+!!    mean = NPAR*(1-P)/P and standard deviation = sqrt(NPAR*(1-P)/(P*P))).
 !!
-!!    this distribution is defined for all non-negative integer x--x = 0,
+!!    This distribution is defined for all non-negative integer X-- X = 0,
 !!    1, 2, ... .
 !!
-!!    this distribution has the probability function
+!!    This distribution has the probability function
 !!
-!!        f(x) = c(npar+x-1,npar) * p**npar * (1-p)**x.
+!!        f(X) = c(NPAR+X-1,NPAR) * P**NPAR * (1-P)**X
 !!
-!!    where c(npar+x-1,npar) is the combinatorial function equaling the
-!!    number of combinations of npar+x-1 items taken npar at a time.
+!!    Where c(NPAR+X-1,NPAR) is the combinatorial function equaling the
+!!    number of combinations of NPAR+X-1 items taken NPAR at a time.
 !!
-!!    the negative binomial distribution is the distribution of the number
-!!    of failures before obtaining npar successes in an indefinite sequence
-!!    of bernoulli (0,1) trials where the probability of success in a precision
-!!    trial = p.
+!!    The negative binomial distribution is the distribution of the number
+!!    of failures before obtaining NPAR successes in an indefinite sequence
+!!    of Bernoulli (0,1) trials where the probability of success in a precision
+!!    trial = P.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -15750,26 +15704,32 @@ END SUBROUTINE NBPPF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 95.
-!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142.
-!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
-!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 929.
-!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGES 130-131.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 95.
+!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 122-142.
+!!   * Feller, an Introduction to Probability Theory and its Applications,
+!!     Volume 1, Edition 2, 1957, Pages 155-157, 210.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 929.
+!!   * Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
+!!     Edition 2, 1963, Pages 130-131.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NBRAN(N,P,Npar,Istart,X)
+
+SUBROUTINE NBRAN(N,P,Npar,Istart,X)
 REAL(kind=wp) :: b(1) , g(1) , P , X
 INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
+INTEGER,save :: iseed=1
 !
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
 !                                OF RANDOM NUMBERS TO BE
@@ -15847,25 +15807,18 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BINRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO BINRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99005) N
          RETURN
       ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE BINRAN SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO BINRAN(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (G_IO,99003) P
-99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
          RETURN
       ELSEIF ( Npar<1 ) THEN
          WRITE (G_IO,99004)
-99004    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99004 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO BINRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99005) Npar
          RETURN
       ELSE
@@ -15910,7 +15863,7 @@ INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
          isum = 0
          j = 1
          DO
-            CALL BINRAN(1,P,1,1,b)
+            CALL BINRAN(1,P,1,iseed,b)
             ib = b(1) + 0.5_wp
             isum = isum + ib
             IF ( isum==Npar ) THEN
@@ -26455,17 +26408,28 @@ END SUBROUTINE RANGE
 !!
 !!       SUBROUTINE RANK(X,N,Xr)
 !!
-!!##DESCRIPTION
-!!    rank(3f) ranks (in ascending order) the n elements of the precision
-!!    precision vector x, and puts the resulting n ranks into the precision
-!!    precision vector xr.
+!!        REAL(kind=wp),intent(in)  :: X(:)
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(out) :: Xr(:)
 !!
-!!    rank(3f) gives the data analyst the ability to (for example) rank
+!!##DESCRIPTION
+!!    RANK(3f) ranks (in ascending order) the N elements of the precision
+!!    precision vector X, and puts the resulting N ranks into the precision
+!!    precision vector XR.
+!!
+!!    RANK(3f) gives the data analyst the ability to (for example) rank
 !!    the data preliminary to certain distribution-free analyses.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The vector of observations to be ranked.
+!!    N     The integer number of observations in the vector X.
+!!          The maximum allowable value of N for this subroutine is 7500.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    XR    The vector into which the ranks of the X values will be placed
+!!          (in ascending order)
 !!
 !!##EXAMPLES
 !!
@@ -26480,92 +26444,67 @@ END SUBROUTINE RANGE
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD
-!!     C. SINGLETON).
-!!   * CACM JANUARY 1970, PAGE 54.
-!!   * CACM OCTOBER 1970, PAGE 624.
-!!   * JACM JANUARY 1961, PAGE 41.
+!!   * CACM March 1969, Page 186 (Binary Sort Algorithm by Richard
+!!     C. Singleton).
+!!   * CACM January 1970, Page 54.
+!!   * CACM October 1970, Page 624.
+!!   * JACM January 1961, Page 41.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --JANUARY   1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --JANUARY   1977.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE RANK(X,N,Xr)
-REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
-INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
+REAL(kind=wp),intent(in)  :: X(:)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(out) :: Xr(:)
+
+REAL(kind=wp) :: an , avrank , hold , rprev , xprev , XS
+INTEGER       :: i , ibran , iupper , j , jmin , jp1 , k , nm1
+COMMON /BLOCK4_real32/ XS(7500)
+
+
+
+!     COMMENT--THE RANK OF THE FIRST ELEMENT OF THE VECTOR X WILL BE PLACED IN THE FIRST POSITION OF THE VECTOR XR,
+!              THE RANK OF THE SECOND ELEMENT OF THE VECTOR X WILL BE PLACED IN THE SECOND POSITION OF THE VECTOR XR, ETC.
 !
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                OBSERVATIONS TO BE RANKED.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--XR     = THE  VECTOR
-!                                INTO WHICH THE RANKS
-!                                FROM X WILL BE PLACED.
-!     OUTPUT--THE  VECTOR XR
-!             CONTAINING THE RANKS
-!             (IN ASCENDING ORDER)
-!             OF THE VALUES
-!             IN THE  VECTOR X.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--THE RANK OF THE FIRST ELEMENT
-!              OF THE VECTOR X
-!              WILL BE PLACED IN THE FIRST POSITION
-!              OF THE VECTOR XR,
-!              THE RANK OF THE SECOND ELEMENT
-!              OF THE VECTOR X
-!              WILL BE PLACED IN THE SECOND POSITION
-!              OF THE VECTOR XR,
-!              ETC.
-!     COMMENT--THE SMALLEST ELEMENT IN THE VECTOR X
-!              WILL HAVE A RANK OF 1 (UNLESS TIES EXIST).
-!              THE LARGEST ELEMENT IN THE VECTOR X
-!              WILL HAVE A RANK OF N (UNLESS TIES EXIST).
-!     COMMENT--ALTHOUGH RANKS ARE USUALLY (UNLESS TIES EXIST)
-!              INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
-!              NOTED THAT THEY ARE OUTPUTED AS SINGLE
-!              PRECISION INTEGERS IN THE
-!              VECTOR XR.
-!              XR IS  SO AS TO BE
-!              CONSISTENT WITH THE FACT THAT ALL
-!              VECTOR ARGUMENTS IN ALL OTHER
-!              DATAPAC SUBROUTINES ARE ;
-!              BUT MORE IMPORTANTLY, BECAUSE TIES FREQUENTLY
-!              DO EXIST IN DATA SETS AND SO SOME OF THE
-!              RESULTING RANKS WILL BE NON-INTEGRAL
-!              AND SO THE OUTPUT VECTOR OF RANKS MUST NECESSARILY
-!              BE  AND NOT INTEGER.
+!     COMMENT--THE SMALLEST ELEMENT IN THE VECTOR X WILL HAVE A RANK OF 1 (UNLESS TIES EXIST).
+!              THE LARGEST ELEMENT IN THE VECTOR X WILL HAVE A RANK OF N (UNLESS TIES EXIST).
+!
+!     COMMENT--ALTHOUGH RANKS ARE USUALLY (UNLESS TIES EXIST) INTEGRAL VALUES FROM 1 TO N, IT IS TO BE
+!              NOTED THAT THEY ARE OUTPUTTED AS SINGLE PRECISION INTEGERS IN THE VECTOR XR.
+!              XR IS  SO AS TO BE CONSISTENT WITH THE FACT THAT ALL VECTOR ARGUMENTS IN ALL OTHER
+!              DATAPAC SUBROUTINES ARE ; BUT MORE IMPORTANTLY, BECAUSE TIES FREQUENTLY
+!              DO EXIST IN DATA SETS AND SO SOME OF THE RESULTING RANKS WILL BE NON-INTEGRAL
+!              AND SO THE OUTPUT VECTOR OF RANKS MUST NECESSARILY BE  AND NOT INTEGER.
+!
 !     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!     COMMENT--DUE TO CONFLICTING USE OF LABELED
-!              COMMON /BLOCK2_real32/ BY THIS RANK
-!              SUBROUTINE AND THE SPCORR (SPEARMAN RANK
-!              CORRELATION COEFFICIENT) SUBROUTINE,
-!              THE VECTOR XS OF THIS RANK
-!              SUBROUTINE HAS BEEN PLACED IN
+!
+!     COMMENT--DUE TO CONFLICTING USE OF LABELED COMMON /BLOCK2_real32/ BY THIS RANK SUBROUTINE AND THE SPCORR (SPEARMAN RANK
+!              CORRELATION COEFFICIENT) SUBROUTINE, THE VECTOR XS OF THIS RANK SUBROUTINE HAS BEEN PLACED IN
 !              LABELED COMMON /BLOCK4_real32/
-!     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE
-!              CALLING SEQUENCE MAY
-!              BE IDENTICAL; THAT IS, AN 'IN PLACE'
-!              RANKING IS PERMITTED.
-!              THE CALLING SEQUENCE
-!              CALL RANK(X,N,X) IS VALID, IF DESIRED.
-!     COMMENT--THE SORTING ALGORTHM USED HEREIN
-!              IS THE BINARY SORT.
-!              THIS ALGORTHIM IS EXTREMELY FAST AS THE
-!              FOLLOWING TIME TRIALS INDICATE.
-!              THESE TIME TRIALS WERE CARRIED OUT ON THE
-!              UNIVAC 1108 EXEC 8 SYSTEM AT NBS
+!
+!     COMMENT--THE FIRST AND THIRD ARGUMENTS IN THE CALLING SEQUENCE MAY BE IDENTICAL; THAT IS, AN 'IN PLACE' RANKING IS PERMITTED.
+!              THE CALLING SEQUENCE CALL RANK(X,N,X) IS VALID, IF DESIRED.
+!
+!     COMMENT--THE SORTING ALGORTHM USED HEREIN IS THE BINARY SORT. THIS ALGORTHIM IS EXTREMELY FAST AS THE
+!              FOLLOWING TIME TRIALS INDICATE.  THESE TIME TRIALS WERE CARRIED OUT ON THE UNIVAC 1108 EXEC 8 SYSTEM AT NBS
 !              IN AUGUST OF 1974.
-!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES
-!              FOR THE EASY-TO-PROGRAM BUT EXTREMELY
-!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE
-!              ALSO BEEN INCLUDED--
+!              BY WAY OF COMPARISON, THE TIME TRIAL VALUES FOR THE EASY-TO-PROGRAM BUT EXTREMELY
+!              INEFFICIENT BUBBLE SORT ALGORITHM HAVE ALSO BEEN INCLUDED--
+!
 !              NUMBER OF RANDOM        BINARY SORT       BUBBLE SORT
 !               NUMBERS SORTED
 !                N = 10                 .002 SEC          .002 SEC
@@ -26573,16 +26512,8 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !                N = 1000               .141 SEC         4.332 SEC
 !                N = 3000               .476 SEC        37.683 SEC
 !                N = 10000             1.887 SEC      NOT COMPUTED
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --JANUARY   1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --JANUARY   1977.
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:) , Xr(:)
-      COMMON /BLOCK4_real32/ XS(7500)
-!
       an = N
       iupper = 7500
 !
@@ -26590,18 +26521,15 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RANK   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001 FORMAT(&
+         & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO RANK(3f) IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RANK&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO RANK(3f) HAS THE VALUE 1 *****')
             Xr(1) = 1.0_wp
             RETURN
          ELSE
@@ -26610,9 +26538,8 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE RANK   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO RANK(3f) HAS ALL ELEMENTS = ', &
+            & E15.8,' *****')
             avrank = (an+1.0_wp)/2.0_wp
             DO i = 1 , N
                Xr(i) = avrank
@@ -26653,7 +26580,7 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
                   ibran = 1
                   WRITE (G_IO,99007) ibran
                   WRITE (G_IO,99005) jmin
-99005             FORMAT (' ','JMIN = ',I8)
+                  99005 FORMAT (' ','JMIN = ',I8)
                   STOP
                ENDIF
             ELSEIF ( i/=1 ) THEN
@@ -26683,16 +26610,15 @@ INTEGER :: i , ibran , iupper , j , jmin , jp1 , k , N , nm1
                ibran = 2
                WRITE (G_IO,99007) ibran
                WRITE (G_IO,99006) X(i) , XS(j)
-99006          FORMAT (' ','X(I) = ',F15.7,'   XS(J) = ',F15.7)
+               99006 FORMAT (' ','X(I) = ',F15.7,'   XS(J) = ',F15.7)
                STOP
             ENDIF
  80         xprev = X(i)
             rprev = Xr(i)
          ENDDO
       ENDIF
-99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE--',           &
-     &        'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
-!
+99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE-- IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
+
 END SUBROUTINE RANK
 !>
 !!##NAME
@@ -28278,11 +28204,11 @@ END SUBROUTINE SD
 !!
 !!     Subroutine sortc(X,Y,N,Xs,Yc)
 !!
-!!       Real, Intent (In)    :: X
-!!       Real, Intent (In)    :: Y
+!!       Real(kind=wp), Intent (In)    :: X
+!!       Real(kind=wp), Intent (In)    :: Y
 !!       Integer, Intent (In) :: N
-!!       Real, Intent (Out)   :: Xs
-!!       Real, Intent (Out)   :: Yc
+!!       Real(kind=wp), Intent (Out)   :: Xs
+!!       Real(kind=wp), Intent (Out)   :: Yc
 !!
 !!##DESCRIPTION
 !!

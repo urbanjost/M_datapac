@@ -6,29 +6,36 @@ NAME
 SYNOPSIS
       SUBROUTINE HFNRAN(N,Iseed,X)
 
+       INTEGER,intent(in)         :: N
+       INTEGER,intent(inout)      :: Iseed
+       REAL(kind=wp),intent(out)  :: X(:)
+
 DESCRIPTION
-   hfnran(3f) generates a random sample of size n from the halfnormal
+   HFNRAN(3f) generates a random sample of size n from the halfnormal
    distribution.
 
-   the prototype halfnormal distribution used herein has mean = sqrt(2/pi)
+   The prototype halfnormal distribution used herein has mean = sqrt(2/pi)
    = 0.79788456 and standard deviation = 1. this distribution is defined
-   for all non-negative x and has the probability density function
+   for all non-negative X and has the probability density function
 
-       f(x) = (2/sqrt(2*pi)) * exp(-x*x/2).
+       f(X) = (2/sqrt(2*pi)) * exp(-X*X/2).
 
-   the prototype halfnormal distribution used herein is the distribution
-   of the variate x = abs(z) where the variate z is normally distributed
+   The prototype halfnormal distribution used herein is the distribution
+   of the variate X = abs(Z) where the variate Z is normally distributed
    with mean = 0 and standard deviation = 1.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   N      = The desired integer number of random numbers to be generated.
 
   ISEED  An integer iseed value. Should be set to a non-negative value
          to start a new sequence of values. Will be set to -1 on return
          to indicate the next call should continue the current random
          sequence walk.
 
+OUTPUT ARGUMENTS
+   X      = A  vector (of dimension at least N) into which the generated
+            random sample from the halfnormal distribution will be placed.
 
 EXAMPLES
   Sample program:
@@ -57,6 +64,7 @@ REFERENCES
   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
   PAGES 53, 59, 81, 83.
+
 $ENDBLOCK
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
@@ -66,84 +74,55 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
-SUBROUTINE HFNRAN(N,Iseed,X)
-REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
-INTEGER :: i , ip1 , Iseed , N
+subroutine hfnran(N,Iseed,X)
+integer,intent(in)         :: N
+integer,intent(inout)      :: Iseed
+real(kind=wp),intent(out)  :: X(:)
+real(kind=wp)              :: arg1 , arg2 , sqrt1 , u1 , u2 , y(2) , z1 , z2
+integer                    :: i , ip1
 !
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE HALFNORMAL DISTRIBUTION
-!              WITH MEAN = SQRT(2/PI) = 0.79788456
-!              AND STANDARD DEVIATION = 1.
-
-!---------------------------------------------------------------------
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      DIMENSION X(:)
-      DIMENSION y(2)
+   if ( N<1 ) then
+      write (G_io,99001)
+      99001 format (' ***** FATAL ERROR--The first input argument to HFNRAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   else
 !
-!---------------------------------------------------------------------
+!  GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+!  THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
+!  (TO BE USED BELOW IN FORMING THE N-TH NORMAL RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N HAPPENS TO BE ODD).
 !
-!-----DATA STATEMENTS-------------------------------------------------
+      call uniran(N,Iseed,X)
+      call uniran(2,Iseed,y)
 !
-      DATA pi/3.14159265359_wp/
+!  GENERATE N NORMAL RANDOM NUMBERS USING THE BOX-MULLER METHOD.
 !
-!-----START POINT-----------------------------------------------------
+      do i = 1 , N , 2
+         ip1 = i + 1
+         u1 = X(i)
+         if ( i==N ) then
+            u2 = y(2)
+         else
+            u2 = X(ip1)
+         endif
+         arg1 = -2.0_wp*LOG(u1)
+         arg2 = 2.0_wp*G_pi*u2
+         sqrt1 = SQRT(arg1)
+         z1 = sqrt1*COS(arg2)
+         z2 = sqrt1*SIN(arg2)
+         X(i) = z1
+         IF ( i/=N ) X(ip1) = z2
+      enddo
 !
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!  GENERATE N HALFNORMAL RANDOM NUMBERS USING THE DEFINITION THAT A HALFNORMAL VARIATE
+!  EQUALS THE ABSOLUTE VALUE OF A NORMAL VARIATE.
 !
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE HFNRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
-         RETURN
-      ELSE
+      do i = 1 , N
+         if ( X(i)<0.0_wp ) X(i) = -X(i)
+      enddo
+   endif
 !
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!     THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
-!     (TO BE USED BELOW IN FORMING THE N-TH NORMAL
-!     RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N
-!     HAPPENS TO BE ODD).
-!
-         CALL UNIRAN(N,Iseed,X)
-         CALL UNIRAN(2,Iseed,y)
-!
-!     GENERATE N NORMAL RANDOM NUMBERS
-!     USING THE BOX-MULLER METHOD.
-!
-         DO i = 1 , N , 2
-            ip1 = i + 1
-            u1 = X(i)
-            IF ( i==N ) THEN
-               u2 = y(2)
-            ELSE
-               u2 = X(ip1)
-            ENDIF
-            arg1 = -2.0_wp*LOG(u1)
-            arg2 = 2.0_wp*pi*u2
-            sqrt1 = SQRT(arg1)
-            z1 = sqrt1*COS(arg2)
-            z2 = sqrt1*SIN(arg2)
-            X(i) = z1
-            IF ( i/=N ) X(ip1) = z2
-         ENDDO
-!
-!     GENERATE N HALFNORMAL RANDOM NUMBERS
-!     USING THE DEFINITION THAT
-!     A HALFNORMAL VARIATE
-!     EQUALS THE ABSOLUTE VALUE OF A NORMAL VARIATE.
-!
-         DO i = 1 , N
-            IF ( X(i)<0.0_wp ) X(i) = -X(i)
-         ENDDO
-      ENDIF
-!
-END SUBROUTINE HFNRAN
+end subroutine hfnran

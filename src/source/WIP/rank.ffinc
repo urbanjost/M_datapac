@@ -70,7 +70,7 @@ REAL(kind=wp),intent(in)  :: X(:)
 INTEGER,intent(in)        :: N
 REAL(kind=wp),intent(out) :: Xr(:)
 
-REAL(kind=wp) :: an , avrank , hold , rprev , X , xprev , Xr , XS
+REAL(kind=wp) :: an , avrank , hold , rprev , xprev , XS
 INTEGER       :: i , ibran , iupper , j , jmin , jp1 , k , nm1
 COMMON /BLOCK4_${KIND}/ XS(7500)
 

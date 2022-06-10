@@ -116,8 +116,8 @@ REAL(kind=wp),intent(out) :: X(:)
 REAL(kind=wp) :: a1, a2, arg, b1, b2, funct, term, u(10), xg, xg01, xg02, xg1, xg2
 REAL(kind=wp) :: xn01, xn02, xn(1)
 INTEGER       :: i 
-real,parameter :: athird = 0.33333333_wp
-real,parameter :: sqrt3= 1.73205081_wp
+real(kind=wp),parameter :: athird = 0.33333333_wp
+real(kind=wp),parameter :: sqrt3= 1.73205081_wp
 !
 !     ***** STILL NEEDS ALGORITHM WORK ******
 !

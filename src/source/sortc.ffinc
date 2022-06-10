@@ -7,11 +7,11 @@ NAME
 SYNOPSIS
     Subroutine sortc(X,Y,N,Xs,Yc)
 
-      Real, Intent (In)    :: X
-      Real, Intent (In)    :: Y
+      Real(kind=wp), Intent (In)    :: X
+      Real(kind=wp), Intent (In)    :: Y
       Integer, Intent (In) :: N
-      Real, Intent (Out)   :: Xs
-      Real, Intent (Out)   :: Yc
+      Real(kind=wp), Intent (Out)   :: Xs
+      Real(kind=wp), Intent (Out)   :: Yc
 
 DESCRIPTION
 

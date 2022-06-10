@@ -7,20 +7,29 @@ NAME
 SYNOPSIS
       SUBROUTINE HIST(X,N)
 
-DESCRIPTION
-   hist(3f) produces 2 histograms (with differing class widths) of the
-   data in the input vector x.
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER,intent(in)       :: N
 
-   the first histogram has class width = 0.1 sample standard deviations;
+DESCRIPTION
+   HIST(3f) produces 2 histograms (with differing class widths) of the
+   data in the input vector X.
+
+   The first histogram has class width = 0.1 sample standard deviations;
    the second histogram has class width = 0.2 sample standard deviations.
 
-   two histograms of the same data set are printed out so as to give
+   Two histograms of the same data set are printed out so as to give
    the data analyst some feel for how dependent the histogram shape is
    as a function of the class width and number of classes.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+   X     The vector of (unsorted or sorted) observations.
+   N     The integer number of observations in the vector X.
+
+OUTPUT
+   One page of automatic printout consisting of 2 half-page histograms (with
+   class widths = 0.1 and 0.2 sAmple standard deviations, respectively)
+   of the data in the input vector X.
+
 
 EXAMPLES
   Sample program:
@@ -28,81 +37,65 @@ EXAMPLES
    program demo_hist
    use M_datapac, only : hist
    implicit none
-   ! call hist(x,y)
+   real,allocatable :: x(:)
+   integer :: i
+   integer :: n
+      x=[(real(i),i=1,100)]
+      n=size(x)
+      call hist(x,n)
    end program demo_hist
 
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-    EDITION 2, 1963, PAGE 4.
+  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+    Edition 2, 1963, Page 4.
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE HIST(X,N)
-REAL(kind=wp) :: acount , ai , amaxfr , an , cwidsd , cwidth , height , hold ,&
-     &     prop , s , sum , tinc , tlable , X , xbar , xmax , xmin , z
-INTEGER :: i , icoun2 , icount , ievodd , ihist , inc , irev , &
-     &        itlabl , ixlabl , j , jmax , jp1 , jsum , maxfre , mt ,   &
-     &        mx , N , numcla , numhis
-INTEGER :: numout
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--1 PAGE OF AUTOMATIC PRINTOUT
-!             CONSISTING OF 2 HALF-PAGE HISTOGRAMS
-!             (WITH CLASS WIDTHS = 0.1 AND 0.2 SAMPLE
-!             STANDARD DEVIATIONS, RESPECTIVELY)
-!             OF THE DATA IN THE INPUT VECTOR X.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1976.
-!
-!---------------------------------------------------------------------
-!
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE HIST(X,N)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp) :: acount, ai, amaxfr, an, cwidsd, cwidth, height, hold, prop, s, sum, tinc, tlable, xbar, xmax, xmin, z
+INTEGER       :: i, icoun2, icount, ievodd, ihist, inc, irev, itlabl, ixlabl, j, jmax, jp1, jsum, maxfre, mt, mx, numcla, numhis
+INTEGER       :: numout
 CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 CHARACTER(len=4) :: IGRaph
-!
-      DIMENSION X(:)
-      DIMENSION ixlabl(21)
-      COMMON /BLOCK1/ IGRaph(55,130)
-!CCCC COMMON IGRAPH(22,123)
-      DIMENSION icount(121) , icoun2(121)
-      DIMENSION tlable(13) , itlabl(13)
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+DIMENSION ixlabl(21)
+COMMON /BLOCK1/ IGRaph(55,130)
+DIMENSION icount(121) , icoun2(121)
+DIMENSION tlable(13) , itlabl(13)
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE HIST   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO HIST(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--         THE SECOND INPUT ARGUMENT TO THE HIST&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** FATAL ERROR-- THE SECOND INPUT ARGUMENT TO HIST(3f) HAS THE VALUE 1 *****')
             RETURN
          ELSE
             hold = X(1)
@@ -110,15 +103,15 @@ CHARACTER(len=4) :: IGRaph
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO T&
-     &HE HIST   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO HIST(3f) HAS ALL ELEMENTS = ',&
+	    & E15.8,' *****')
             RETURN
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      numhis = 2
+ 50      continue
+         numhis = 2
          an = N
 !
 !     FIND THE MINIMUM AND THE MAXIMUM
@@ -260,15 +253,16 @@ CHARACTER(len=4) :: IGRaph
             ievodd = ihist - 2*(ihist/2)
             IF ( ievodd==0 ) THEN
                WRITE (G_IO,99005)
-99005          FORMAT (' ')
+               99005 FORMAT (' ')
             ELSE
                WRITE (G_IO,99006)
-99006          FORMAT ('1')
+               99006 FORMAT ('1')
             ENDIF
             WRITE (G_IO,99013) (IGRaph(1,j),j=1,123)
+            99013 FORMAT (' ',6X,123A1)
             DO i = 2 , 21
                WRITE (G_IO,99007) ixlabl(i) , (IGRaph(i,j),j=1,123)
-99007          FORMAT (' ',I5,1X,123A1)
+               99007 FORMAT (' ',I5,1X,123A1)
             ENDDO
             WRITE (G_IO,99013) (IGRaph(22,j),j=1,123)
             numcla = (120/inc) + 1
@@ -286,20 +280,17 @@ CHARACTER(len=4) :: IGRaph
                itlabl(irev) = 7 - i
             ENDDO
             WRITE (G_IO,99008) (tlable(i),i=1,13)
-99008       FORMAT (' ',1X,12F10.4,F9.4)
+            99008 FORMAT (' ',1X,12F10.4,F9.4)
             WRITE (G_IO,99009) (itlabl(i),i=1,13)
-99009       FORMAT (' ',13(1X,I7,2X))
+            99009 FORMAT (' ',13(1X,I7,2X))
             WRITE (G_IO,99010) numout
-99010       FORMAT (' ',I5,                                             &
-     &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS ABOU&
-     &T THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
+            99010 FORMAT (' ',I0, &
+	    & ' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS ABOUT THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
             WRITE (G_IO,99011) numcla , cwidth , cwidsd
-99011       FORMAT (' ','HISTOGRAM      THE NUMBER OF CLASSES IS ',I6,  &
-     &              8X,'THE CLASS WIDTH IS ',E15.8,' = ',F7.1,          &
-     &              ' STANDARD DEVIATIONS')
+            99011 FORMAT (' HISTOGRAM      THE NUMBER OF CLASSES IS ',I0,&
+	    & 8X,'THE CLASS WIDTH IS ',E15.8,' = ',F7.1,' STANDARD DEVIATIONS')
             WRITE (G_IO,99012) N
-99012       FORMAT (' ','THE SAMPLE SIZE N = ',I7)
+            99012 FORMAT (' ','THE SAMPLE SIZE N = ',I7)
          ENDDO
       ENDIF
-99013 FORMAT (' ',6X,123A1)
 END SUBROUTINE HIST
