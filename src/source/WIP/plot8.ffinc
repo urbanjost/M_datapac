@@ -8,22 +8,22 @@ SYNOPSIS
       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
 
 DESCRIPTION
-   plot8(3f) yields a one-page printer plot of y(i) versus x(i):
+   PLOT8(3f) yields a one-page printer plot of Y(i) versus X(i):
 
-     1. with special plot characters;
-     2. with the vertical (y) axis min and max
-        and the horizontal (x) axis min and max
+     1. With special plot characters;
+     2. With the vertical (Y) axis min and max
+        and the horizontal (X) axis min and max
         values specified by the data analyst; and
-     3. with only those points (x(i),y(i)) plotted
-        for which the corresponding value of d(i)
-        is between the specified values of dmin and dmax.
+     3. With only those points (X(i),Y(i)) plotted
+        for which the corresponding value of D(i)
+        is between the specified values of DMIN and DMAX.
 
-   the 'special plotting character' capability allows the data analyst
-   to incorporate information from a third variable (aside from y and x)
+   The 'special plotting character' capability allows the data analyst
+   to incorporate information from a third variable (aside from Y and X)
    into the plot.
 
-   the plot character used at the i-th plotting position (that is,
-   at the coordinate (x(i),y(i))) will be
+   The plot character used at the i-th plotting position (that is,
+   at the coordinate (X(i),Y(i))) will be
 
      1 if char(i) is between  0.5 and  1.5
      2 if char(i) is between  1.5 and  2.5
@@ -45,11 +45,11 @@ DESCRIPTION
      x if char(i) is any value outside the range
                               0.5 to  36.5.
 
-   the use of the ymin, ymax, xmin, and xmax specifications allows the
+   The use of the YMIN, YMAX, XMIN, and XMAX specifications allows the
    data analyst to control fully the plot axis limits, so as, for example,
    to zero-in on an interesting sub-region of a previous plot.
 
-   the use of the subset definition vector d gives the data analyst
+   The use of the subset definition vector d gives the data analyst
    the capability of plotting subsets of the data, where the subset is
    defined by values in the vector d.
 
@@ -69,21 +69,26 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
-    UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
-    'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
-    AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
+  * Filliben, 'Statistical Analysis of Interlab Fatigue Time Data',
+    Unpublished Manuscript (Available from Author) presented at the
+    'Computer-Assisted Data Analysis' Session at the National Meeting of the
+    American Statistical Association, New York City, December 27-30, 1973.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
+
+SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable ,   &
      &     Ymax , Ymin

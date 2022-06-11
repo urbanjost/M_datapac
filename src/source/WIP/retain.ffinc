@@ -8,16 +8,16 @@ SYNOPSIS
       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 
 DESCRIPTION
-   retain(3f) retains all observations in the REAL vector
-   x which are inside the closed (inclusive) interval defined by xmin
-   and xmax, while deleting all observations outside of this interval.
+   RETAIN(3f) retains all observations in the REAL vector
+   X which are inside the closed (inclusive) interval defined by XMIN
+   and XMAX, while deleting all observations outside of this interval.
 
-   thus all observations in x which are smaller than xmin or larger
-   than xmax are deleted from x. retain(3f) (and the replac and delete
+   Thus all observations in X which are smaller than XMIN or larger
+   than XMAX are deleted from X. RETAIN(3f) (and the REPLAC and DELETE
    subroutines) gives the data analyst the ability to easily 'clean up' a
    data set which has missing and/or outlying observations so that a more
-   appropriate subsequent data analysis may be performed. for example,
-   a trimmed sample can easily be constructed by use of retain(3f).
+   appropriate subsequent data analysis may be performed. For example,
+   a trimmed sample can easily be constructed by use of RETAIN(3f).
 
 OPTIONS
     X   description of parameter
@@ -35,8 +35,9 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
@@ -44,7 +45,8 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
+
+SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !

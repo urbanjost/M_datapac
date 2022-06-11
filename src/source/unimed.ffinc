@@ -1,0 +1,161 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file unimed.3m_datapac.man
+NAME
+   unimed(3f) - [M_datapac:STATISTICS] generates the N order statistic
+   medians from the uniform (rectangular) distribution on the unit
+   interval (0,1).
+
+SYNOPSIS
+      SUBROUTINE UNIMED(N,X)
+
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+
+   UNIMED(3f) generates the N order statistic medians from the uniform
+   (rectangular) distribution on the unit interval (0,1).
+
+   This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+   = 0.28867513. This distribution has the probability density function
+   f(X) = 1.
+
+   UNIMED(3f) is a support subroutine for all of the probability plot
+   subroutines in datapac; it is rarely used by the data analyst directly.
+
+   A probability plot for a general distribution is a plot of the ordered
+   observations versus the order statistic medians for that distribution.
+
+   The i-th order statistic median for a general distribution is obtained
+   by transforming the i-th uniform order statistic median by the percent
+   point function of the desired distribution--hence the importance of
+   being able to generate uniform order statistic medians.
+
+   It is of theoretical interest to note that the i-th uniform order
+   statistic median in a sample of size N is identically the median of
+   the beta distribution with parameters i and N-i+1.
+
+INPUT ARGUMENTS
+
+   N     The desired integer number of uniform order statistic medians
+         to be generated.
+
+OUTPUT ARGUMENTS
+
+   X     A vector (of dimension at least N) into which the generated
+         uniform order statistic medians will be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_unimed
+   use M_datapac, only : unimed, label, plotxt
+   implicit none
+   integer,parameter :: N=100
+   real              :: X(N)
+      call label('unimed')
+      call unimed(N,X)
+      call plotxt(x,n)
+   end program demo_unimed
+
+  Results:
+
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.9930925E+00 -                                                 XX
+     0.9520015E+00 I                                               XXX
+     0.9109104E+00 I                                             XXX
+     0.8698193E+00 I                                           XXX
+     0.8287283E+00 I                                         XXX
+     0.7876373E+00 I                                       XXX
+     0.7465463E+00 -                                     XXX
+     0.7054552E+00 I                                   XXX
+     0.6643642E+00 I                                 XXX
+     0.6232731E+00 I                               XXX
+     0.5821820E+00 I                             XXX
+     0.5410910E+00 I                           XXX
+     0.5000000E+00 -                         XXX
+     0.4589090E+00 I                       XXX
+     0.4178179E+00 I                     XXX
+     0.3767269E+00 I                   XXX
+     0.3356358E+00 I                 XXX
+     0.2945448E+00 I               XXX
+     0.2534538E+00 -             XXX
+     0.2123627E+00 I           XXX
+     0.1712717E+00 I         XXX
+     0.1301807E+00 I       XXX
+     0.8908957E-01 I     XXX
+     0.4799855E-01 I   XXX
+     0.6907523E-02 -  XX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.2575E+02  0.5050E+02  0.7525E+02  0.1000E+03
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Filliben, 'The Probability Plot Correlation Coefficient Test for
+    Normality', Technometrics, 1975, Pages 111-117.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE UNIMED(N,X)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(out) :: X(:)
+REAL(kind=wp)             :: ai, an, gam
+INTEGER                   :: i, imax, irev, nevodd, nhalf
+!---------------------------------------------------------------------
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to UNIMED(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument to UNIMED(3f) has the value 1 *****')
+      ENDIF
+      an = N
+      !
+      !     COMPUTE THE MEDIANS FOR THE FIRST AND LAST ORDER STATISTICS
+      !
+      X(N) = 0.5_wp**(1.0_wp/an)
+      X(1) = 1.0_wp - X(N)
+      !
+      !     DETERMINE IF AN ODD OR EVEN SAMPLE SIZE
+      !
+      nhalf = (N/2) + 1
+      nevodd = 2*(N/2)
+      IF ( N/=nevodd ) X(nhalf) = 0.5_wp
+      IF ( N<=3 ) RETURN
+      !
+      !     COMPUTE THE MEDIANS FOR THE OTHER ORDER STATISTICS
+      !
+      gam = 0.3175_wp
+      imax = N/2
+      DO i = 2 , imax
+         ai = i
+         irev = N - i + 1
+         X(i) = (ai-gam)/(an-2.0_wp*gam+1.0_wp)
+         X(irev) = 1.0_wp - X(i)
+      ENDDO
+   ENDIF
+
+END SUBROUTINE UNIMED

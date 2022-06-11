@@ -7,6 +7,9 @@ NAME
 SYNOPSIS
       SUBROUTINE UNIPPF(P,Ppf)
 
+       REAL(kind=wp),intent(in)  :: P
+       REAL(kind=wp),intent(out) :: Ppf
+
 DESCRIPTION
    UNIPPF(3f) computes the percent point function value for the uniform
    (rectangular) distribution on the unit interval (0,1).
@@ -20,16 +23,22 @@ DESCRIPTION
    the same as the inverse cumulative distribution function of the
    distribution.
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
+
+   P     The value (between 0.0 and 1.0) at which the percent point
+         function is to be evaluated.
+
+OUTPUT ARGUMENTS
+
+   PPF   The percent point function value.
 
 EXAMPLES
   Sample program:
 
    program demo_unippf
-   use M_datapac, only : unippf
+   use M_datapac, only : unippf, label
    implicit none
+      call label('unippf')
    ! call unippf(x,y)
    end program demo_unippf
 
@@ -56,44 +65,26 @@ REFERENCES
     Pages 57-74.
 
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE UNIPPF(P,Ppf)
-REAL(kind=wp) :: P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT
-!             FUNCTION VALUE PPF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNIPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Ppf = P
-      ENDIF
-!
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE UNIPPF(P,Ppf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Ppf
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to UNIPPF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      Ppf = P
+   ENDIF
+ 
 END SUBROUTINE UNIPPF

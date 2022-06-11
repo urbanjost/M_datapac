@@ -7,23 +7,26 @@ SYNOPSIS
       SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
 
 DESCRIPTION
-   plot6(3f) yields a one-page printer plot of y(i) versus x(i):
+   PLOT6(3f) yields a one-page printer plot of Y(i) versus X(i):
 
-     1. with the vertical (y) axis min and max
-        and the horizontal (x) axis min and max
+     1. with the vertical (Y) axis min and max
+        and the horizontal (X) axis min and max
         values specified by the data analyst.
 
-   the use of the ymin, ymax, xmin, and xmax specifications allows the
+   the use of the YMIN, YMAX, XMIN, and XMAX specifications allows the
    data analyst to control fully the plot axis limits, so as, for example,
    to zero-in on an interesting sub-region of a previous plot.
 
 INPUT ARGUMENTS
    Y      the vector of (unsorted or sorted) observations to be plotted
           vertically.
+
    X      the vector of (unsorted or sorted) observations to be plotted
           horizontally.
+
    N      the integer number of observations in the vector y. there is
           no restriction on the maximum value of n for this subroutine.
+
    YMIN   the value of desired minimum for the vertical axis.
    YMAX   the value of desired maximum for the vertical axis.
    XMIN   the value of desired minimum for the horizontal axis.
@@ -31,7 +34,6 @@ INPUT ARGUMENTS
 
 OUTPUT
    A one-page printer plot of y(i) versus x(i), with specified axis limits.
-
 
 EXAMPLES
   Sample program:
@@ -45,12 +47,16 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1975.
@@ -60,6 +66,7 @@ $ENDBLOCK
 !     UPDATED         --JUNE      1977.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
 IMPLICIT NONE
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin

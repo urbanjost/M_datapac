@@ -85,6 +85,7 @@ INTEGER,intent(inout)     :: Istart
 REAL(kind=wp),intent(out) :: X(:)
 REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , y , z
 INTEGER       :: i , j
+INTEGER       :: iseed
 !
 DIMENSION y(2) , z(2)
 DATA pi/3.14159265358979_wp/
@@ -130,11 +131,12 @@ DATA pi/3.14159265358979_wp/
 !
          anu1 = Nu1
          anu2 = Nu2
+	 iseed=1
          DO i = 1 , N
 !
             sum = 0.0_wp
             DO j = 1 , Nu1 , 2
-               CALL UNIRAN(2,1,y)
+               CALL UNIRAN(2,iseed,y)
                arg1 = -2.0_wp*LOG(y(1))
                arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
@@ -146,7 +148,7 @@ DATA pi/3.14159265358979_wp/
 !
             sum = 0.0_wp
             DO j = 1 , Nu2 , 2
-               CALL UNIRAN(2,1,y)
+               CALL UNIRAN(2,iseed,y)
                arg1 = -2.0_wp*LOG(y(1))
                arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))

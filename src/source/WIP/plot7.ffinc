@@ -8,41 +8,41 @@ SYNOPSIS
       SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
 
 DESCRIPTION
-   plot7(3f) yields a one-page printer plot of y(i) versus x(i):
+   PLOT7(3f) yields a one-page printer plot of Y(i) versus X(i):
 
-     1. with special plot characters; and
-     2. with the vertical (y) axis min and max
+     1. With special plot characters; and
+     2. With the vertical (y) axis min and max
         and the horizontal (x) axis min and max
         values specified by the data analyst.
 
-   the 'special plotting character' capability allows the data analyst
-   to incorporate information from a third variable (aside from y and x)
+   The 'special plotting character' capability allows the data analyst
+   to incorporate information from a third variable (aside from Y and X)
    into the plot.
 
-   the plot character used at the i-th plotting position (that is,
-   at the coordinate (x(i),y(i))) will be
+   The plot character used at the i-th plotting position (that is,
+   at the coordinate (X(i),Y(i))) will be
 
-     1 if char(i) is between  0.5 and  1.5
-     2 if char(i) is between  1.5 and  2.5
+     1 if Char(i) is between  0.5 and  1.5
+     2 if Char(i) is between  1.5 and  2.5
        .
        .
        .
-     9 if char(i) is between  8.5 and  9.5
-     0 if char(i) is between  9.5 and 10.5
-     a if char(i) is between 10.5 and 11.5
-     b if char(i) is between 11.5 and 12.5
-     c if char(i) is between 12.5 and 13.5
+     9 if Char(i) is between  8.5 and  9.5
+     0 if Char(i) is between  9.5 and 10.5
+     a if Char(i) is between 10.5 and 11.5
+     b if Char(i) is between 11.5 and 12.5
+     c if Char(i) is between 12.5 and 13.5
        .
        .
        .
-     w if char(i) is between 32.5 and 33.5
-     x if char(i) is between 33.5 and 34.5
-     y if char(i) is between 34.5 and 35.5
-     z if char(i) is between 35.5 and 36.5
-     x if char(i) is any value outside the range
+     w if Char(i) is between 32.5 and 33.5
+     x if Char(i) is between 33.5 and 34.5
+     y if Char(i) is between 34.5 and 35.5
+     z if Char(i) is between 35.5 and 36.5
+     x if Char(i) is any value outside the range
                               0.5 to  36.5.
 
-   the use of the ymin, ymax, xmin, and xmax specifications allows the
+   The use of the YMIN, YMAX, XMIN, and XMAX specifications allows the
    data analyst to control fully the plot axis limits, so as, for example,
    to zero-in on an interesting sub-region of a previous plot.
 
@@ -62,17 +62,22 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
-  * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
-    UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
-    'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
-    AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
+  * Filliben, 'Statistical Analysis of Interlab Fatigue Time Data',
+    Unpublished Manuscript (Available from Author) Presented at the
+    'Computer-Assisted Data Analysis' Session at the National Meeting of the
+    American Statistical Association, New York City, December 27-30, 1973.
+
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

@@ -7,27 +7,27 @@ SYNOPSIS
       SUBROUTINE PARPLT(X,N,Gamma)
 
 DESCRIPTION
-   parplt(3f) generates a pareto probability plot (with tail length
-   parameter value = gamma).
+   PARPLT(3f) generates a Pareto probability plot (with tail length
+   parameter value = GAMMA).
 
-   the prototype pareto distribution used herein is defined for all x
+   The prototype pareto distribution used herein is defined for all X
    equal to or greater than 1, and has the probability density function
 
-       f(x) = gamma / (x**(gamma+1)).
+       f(X) = GAMMA / (X**(GAMMA+1)).
 
-   as used herein, a probability plot for a distribution is a plot
+   As used herein, a probability plot for a distribution is a plot
    of the ordered observations versus the order statistic medians for
    that distribution.
 
-   the pareto probability plot is useful in graphically testing the
+   The Pareto probability plot is useful in graphically testing the
    composite (that is, location and scale parameters need not be
    specified) hypothesis that the underlying distribution from which
    the data have been randomly drawn is the pareto distribution with
    tail length parameter value = gamma.
 
-   if the hypothesis is true, the probability plot should be near-linear.
+   If the hypothesis is true, the probability plot should be near-linear.
 
-   a measure of such linearity is given by the calculated probability
+   A measure of such linearity is given by the calculated probability
    plot correlation coefficient.
 
 OPTIONS
@@ -57,14 +57,14 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
-    EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-    DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+  * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+    Eighteenth Conference on the Design of Experiments in Army Research
+    Development and Testing (Aberdeen, Maryland, October, 1972), Pages
     425-450.
-  * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+  * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
     260-308.
-  * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-    PAGES 233-249.
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    Pages 233-249.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

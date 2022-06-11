@@ -7,7 +7,7 @@ SYNOPSIS
       SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 
 DESCRIPTION
-   range(3f) computes the sample range of the data in the input vector x.
+   RANGE(3f) computes the sample range of the data in the input vector X.
    the sample range = sample max - sample min.
 
 OPTIONS

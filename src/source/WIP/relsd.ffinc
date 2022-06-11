@@ -8,15 +8,15 @@ SYNOPSIS
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
 
 DESCRIPTION
-   relsd(3f) computes the sample relative standard deviation of the data
-   in the input vector x.
+   RELSD(3f) computes the sample relative standard deviation of the data
+   in the input vector X.
 
-   the sample relative standard deviation = (the sample standard
+   The sample relative standard deviation = (the sample standard
    deviation)/(the sample mean).
 
-   the denominator n-1 is used in computing the sample standard deviation.
+   The denominator N-1 is used in computing the sample standard deviation.
 
-   the sample relative standard deviation is alternatively referred to
+   The sample relative standard deviation is alternatively referred to
    as the sample coefficient of variation.
 
 OPTIONS

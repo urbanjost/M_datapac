@@ -7,9 +7,9 @@ NAME
 SYNOPSIS
       subroutine dexran(N,Istart,X)
 
-       integer,intent(in) :: N
-       integer            :: Istart
-       real(kind=wp)      :: X(:)
+       integer,intent(in)    :: N
+       integer,intent(inout) :: Istart
+       real(kind=wp)         :: X(:)
 
 DESCRIPTION
    DEXRAN(3f) generates a random sample of size n from the double
@@ -77,12 +77,12 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine dexran(N,Istart,X)
-integer,intent(in) :: N
-integer,intent(in) :: Istart
-real(kind=wp)      :: X(:)
+integer,intent(in)    :: N
+integer,intent(inout) :: Istart
+real(kind=wp)         :: X(:)
 
-integer            :: i
-real(kind=wp)      :: q
+integer               :: i
+real(kind=wp)         :: q
 !---------------------------------------------------------------------
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !

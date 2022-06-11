@@ -4924,9 +4924,9 @@ END SUBROUTINE DEXPPF
 !!
 !!       subroutine dexran(N,Istart,X)
 !!
-!!        integer,intent(in) :: N
-!!        integer            :: Istart
-!!        real(kind=wp)      :: X(:)
+!!        integer,intent(in)    :: N
+!!        integer,intent(inout) :: Istart
+!!        real(kind=wp)         :: X(:)
 !!
 !!##DESCRIPTION
 !!    DEXRAN(3f) generates a random sample of size n from the double
@@ -4992,12 +4992,12 @@ END SUBROUTINE DEXPPF
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine dexran(N,Istart,X)
-integer,intent(in) :: N
-integer,intent(in) :: Istart
-real(kind=wp)      :: X(:)
+integer,intent(in)    :: N
+integer,intent(inout) :: Istart
+real(kind=wp)         :: X(:)
 
-integer            :: i
-real(kind=wp)      :: q
+integer               :: i
+real(kind=wp)         :: q
 !---------------------------------------------------------------------
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -8826,6 +8826,7 @@ INTEGER,intent(inout)     :: Istart
 REAL(kind=wp),intent(out) :: X(:)
 REAL(kind=wp) :: anu1 , anu2 , arg1 , arg2 , chs1 , chs2 , pi , sum , y , z
 INTEGER       :: i , j
+INTEGER       :: iseed
 !
 DIMENSION y(2) , z(2)
 DATA pi/3.14159265358979_wp/
@@ -8871,11 +8872,12 @@ DATA pi/3.14159265358979_wp/
 !
          anu1 = Nu1
          anu2 = Nu2
+         iseed=1
          DO i = 1 , N
 !
             sum = 0.0_wp
             DO j = 1 , Nu1 , 2
-               CALL UNIRAN(2,1,y)
+               CALL UNIRAN(2,iseed,y)
                arg1 = -2.0_wp*LOG(y(1))
                arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
@@ -8887,7 +8889,7 @@ DATA pi/3.14159265358979_wp/
 !
             sum = 0.0_wp
             DO j = 1 , Nu2 , 2
-               CALL UNIRAN(2,1,y)
+               CALL UNIRAN(2,iseed,y)
                arg1 = -2.0_wp*LOG(y(1))
                arg2 = 2.0_wp*pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
@@ -17126,7 +17128,7 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 
 SUBROUTINE NORRAN(N,Iseed,X)
 INTEGER,intent(in)        :: N
-INTEGER,intent(in)        :: Iseed
+INTEGER,intent(inout)     :: Iseed
 REAL(kind=wp),intent(out) :: X(:)
 REAL(kind=wp) :: arg1, arg2, sqrt1, u1, u2, y(2), z1, z2
 INTEGER       :: i, ip1
@@ -17409,27 +17411,27 @@ END SUBROUTINE PARCDF
 !!       SUBROUTINE PARPLT(X,N,Gamma)
 !!
 !!##DESCRIPTION
-!!    parplt(3f) generates a pareto probability plot (with tail length
-!!    parameter value = gamma).
+!!    PARPLT(3f) generates a Pareto probability plot (with tail length
+!!    parameter value = GAMMA).
 !!
-!!    the prototype pareto distribution used herein is defined for all x
+!!    The prototype pareto distribution used herein is defined for all X
 !!    equal to or greater than 1, and has the probability density function
 !!
-!!        f(x) = gamma / (x**(gamma+1)).
+!!        f(X) = GAMMA / (X**(GAMMA+1)).
 !!
-!!    as used herein, a probability plot for a distribution is a plot
+!!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the pareto probability plot is useful in graphically testing the
+!!    The Pareto probability plot is useful in graphically testing the
 !!    composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which
 !!    the data have been randomly drawn is the pareto distribution with
 !!    tail length parameter value = gamma.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
-!!    a measure of such linearity is given by the calculated probability
+!!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
 !!##OPTIONS
@@ -17460,14 +17462,14 @@ END SUBROUTINE PARCDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
-!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
 !!     260-308.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 233-249.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 233-249.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARPLT(X,N,Gamma)
@@ -17619,15 +17621,15 @@ END SUBROUTINE PARPLT
 !!       SUBROUTINE PARPPF(P,Gamma,Ppf)
 !!
 !!##DESCRIPTION
-!!    parppf(3f) computes the percent point function value for the pareto
-!!    distribution with REAL tail length parameter = gamma.
+!!    PARPPF(3f) computes the percent point function value for the Pareto
+!!    distribution with REAL tail length parameter = GAMMA.
 !!
-!!    the pareto distribution used herein is defined for all x greater than
+!!    The Pareto distribution used herein is defined for all X greater than
 !!    or equal to 1, and has the probability density function
 !!
-!!        f(x) = gamma / (x**(gamma+1)).
+!!        f(X) = GAMMA / (X**(GAMMA+1))
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
@@ -17648,19 +17650,24 @@ END SUBROUTINE PARPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 233-249.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 102.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 233-249.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, Page 102.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PARPPF(P,Gamma,Ppf)
+
+SUBROUTINE PARPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
 !
 !     INPUT ARGUMENTS--P      = THE  VALUE
@@ -17766,7 +17773,8 @@ END SUBROUTINE PARPPF
 !!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
 !!     STUDENTS AND PRACTITIONERS, 1975, PAGE 104.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PARRAN(N,Gamma,Iseed,X)
+
+SUBROUTINE PARRAN(N,Gamma,Iseed,X)
 REAL(kind=wp) :: Gamma , X
 INTEGER :: i , Iseed , N
 !
@@ -17793,10 +17801,6 @@ INTEGER :: i , Iseed , N
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-!---------------------------------------------------------------------
 !
       DIMENSION X(:)
 !
@@ -18323,23 +18327,26 @@ END SUBROUTINE PLOT10
 !!       SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
 !!
 !!##DESCRIPTION
-!!    plot6(3f) yields a one-page printer plot of y(i) versus x(i):
+!!    PLOT6(3f) yields a one-page printer plot of Y(i) versus X(i):
 !!
-!!      1. with the vertical (y) axis min and max
-!!         and the horizontal (x) axis min and max
+!!      1. with the vertical (Y) axis min and max
+!!         and the horizontal (X) axis min and max
 !!         values specified by the data analyst.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    the use of the YMIN, YMAX, XMIN, and XMAX specifications allows the
 !!    data analyst to control fully the plot axis limits, so as, for example,
 !!    to zero-in on an interesting sub-region of a previous plot.
 !!
 !!##INPUT ARGUMENTS
 !!    Y      the vector of (unsorted or sorted) observations to be plotted
 !!           vertically.
+!!
 !!    X      the vector of (unsorted or sorted) observations to be plotted
 !!           horizontally.
+!!
 !!    N      the integer number of observations in the vector y. there is
 !!           no restriction on the maximum value of n for this subroutine.
+!!
 !!    YMIN   the value of desired minimum for the vertical axis.
 !!    YMAX   the value of desired maximum for the vertical axis.
 !!    XMIN   the value of desired minimum for the horizontal axis.
@@ -18347,7 +18354,6 @@ END SUBROUTINE PLOT10
 !!
 !!##OUTPUT
 !!    A one-page printer plot of y(i) versus x(i), with specified axis limits.
-!!
 !!
 !!##EXAMPLES
 !!
@@ -18362,10 +18368,13 @@ END SUBROUTINE PLOT10
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
 !     ORIGINAL VERSION--JUNE      1972.
@@ -18375,6 +18384,7 @@ END SUBROUTINE PLOT10
 !     UPDATED         --FEBRUARY  1977.
 !     UPDATED         --JUNE      1977.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE PLOT6(Y,X,N,Ymin,Ymax,Xmin,Xmax)
 IMPLICIT NONE
 REAL(kind=wp) :: aim1 , cutoff , hold , ratiox , ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable , Ymax , Ymin
@@ -18632,41 +18642,41 @@ END SUBROUTINE PLOT6
 !!       SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
 !!
 !!##DESCRIPTION
-!!    plot7(3f) yields a one-page printer plot of y(i) versus x(i):
+!!    PLOT7(3f) yields a one-page printer plot of Y(i) versus X(i):
 !!
-!!      1. with special plot characters; and
-!!      2. with the vertical (y) axis min and max
+!!      1. With special plot characters; and
+!!      2. With the vertical (y) axis min and max
 !!         and the horizontal (x) axis min and max
 !!         values specified by the data analyst.
 !!
-!!    the 'special plotting character' capability allows the data analyst
-!!    to incorporate information from a third variable (aside from y and x)
+!!    The 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from Y and X)
 !!    into the plot.
 !!
-!!    the plot character used at the i-th plotting position (that is,
-!!    at the coordinate (x(i),y(i))) will be
+!!    The plot character used at the i-th plotting position (that is,
+!!    at the coordinate (X(i),Y(i))) will be
 !!
-!!      1 if char(i) is between  0.5 and  1.5
-!!      2 if char(i) is between  1.5 and  2.5
+!!      1 if Char(i) is between  0.5 and  1.5
+!!      2 if Char(i) is between  1.5 and  2.5
 !!        .
 !!        .
 !!        .
-!!      9 if char(i) is between  8.5 and  9.5
-!!      0 if char(i) is between  9.5 and 10.5
-!!      a if char(i) is between 10.5 and 11.5
-!!      b if char(i) is between 11.5 and 12.5
-!!      c if char(i) is between 12.5 and 13.5
+!!      9 if Char(i) is between  8.5 and  9.5
+!!      0 if Char(i) is between  9.5 and 10.5
+!!      a if Char(i) is between 10.5 and 11.5
+!!      b if Char(i) is between 11.5 and 12.5
+!!      c if Char(i) is between 12.5 and 13.5
 !!        .
 !!        .
 !!        .
-!!      w if char(i) is between 32.5 and 33.5
-!!      x if char(i) is between 33.5 and 34.5
-!!      y if char(i) is between 34.5 and 35.5
-!!      z if char(i) is between 35.5 and 36.5
-!!      x if char(i) is any value outside the range
+!!      w if Char(i) is between 32.5 and 33.5
+!!      x if Char(i) is between 33.5 and 34.5
+!!      y if Char(i) is between 34.5 and 35.5
+!!      z if Char(i) is between 35.5 and 36.5
+!!      x if Char(i) is any value outside the range
 !!                               0.5 to  36.5.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    The use of the YMIN, YMAX, XMIN, and XMAX specifications allows the
 !!    data analyst to control fully the plot axis limits, so as, for example,
 !!    to zero-in on an interesting sub-region of a previous plot.
 !!
@@ -18687,17 +18697,21 @@ END SUBROUTINE PLOT6
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
-!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
-!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
-!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
+!!   * Filliben, 'Statistical Analysis of Interlab Fatigue Time Data',
+!!     Unpublished Manuscript (Available from Author) Presented at the
+!!     'Computer-Assisted Data Analysis' Session at the National Meeting of the
+!!     American Statistical Association, New York City, December 27-30, 1973.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PLOT7(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax)
@@ -19036,22 +19050,22 @@ END SUBROUTINE PLOT7
 !!       SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
 !!
 !!##DESCRIPTION
-!!    plot8(3f) yields a one-page printer plot of y(i) versus x(i):
+!!    PLOT8(3f) yields a one-page printer plot of Y(i) versus X(i):
 !!
-!!      1. with special plot characters;
-!!      2. with the vertical (y) axis min and max
-!!         and the horizontal (x) axis min and max
+!!      1. With special plot characters;
+!!      2. With the vertical (Y) axis min and max
+!!         and the horizontal (X) axis min and max
 !!         values specified by the data analyst; and
-!!      3. with only those points (x(i),y(i)) plotted
-!!         for which the corresponding value of d(i)
-!!         is between the specified values of dmin and dmax.
+!!      3. With only those points (X(i),Y(i)) plotted
+!!         for which the corresponding value of D(i)
+!!         is between the specified values of DMIN and DMAX.
 !!
-!!    the 'special plotting character' capability allows the data analyst
-!!    to incorporate information from a third variable (aside from y and x)
+!!    The 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from Y and X)
 !!    into the plot.
 !!
-!!    the plot character used at the i-th plotting position (that is,
-!!    at the coordinate (x(i),y(i))) will be
+!!    The plot character used at the i-th plotting position (that is,
+!!    at the coordinate (X(i),Y(i))) will be
 !!
 !!      1 if char(i) is between  0.5 and  1.5
 !!      2 if char(i) is between  1.5 and  2.5
@@ -19073,11 +19087,11 @@ END SUBROUTINE PLOT7
 !!      x if char(i) is any value outside the range
 !!                               0.5 to  36.5.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    The use of the YMIN, YMAX, XMIN, and XMAX specifications allows the
 !!    data analyst to control fully the plot axis limits, so as, for example,
 !!    to zero-in on an interesting sub-region of a previous plot.
 !!
-!!    the use of the subset definition vector d gives the data analyst
+!!    The use of the subset definition vector d gives the data analyst
 !!    the capability of plotting subsets of the data, where the subset is
 !!    defined by values in the vector d.
 !!
@@ -19098,19 +19112,24 @@ END SUBROUTINE PLOT7
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
-!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
-!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
-!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
+!!   * Filliben, 'Statistical Analysis of Interlab Fatigue Time Data',
+!!     Unpublished Manuscript (Available from Author) presented at the
+!!     'Computer-Assisted Data Analysis' Session at the National Meeting of the
+!!     American Statistical Association, New York City, December 27-30, 1973.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
+
+SUBROUTINE PLOT8(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,D,Dmin,Dmax)
 REAL(kind=wp) :: aim1 , Char , cutoff , D , Dmax , Dmin , hold , ratiox ,     &
      &     ratioy , X , x25 , x75 , Xmax , xmid , Xmin , Y , ylable ,   &
      &     Ymax , Ymin
@@ -19505,24 +19524,24 @@ END SUBROUTINE PLOT8
 !!       SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,Plchid)
 !!
 !!##DESCRIPTION
-!!    plot9(3f) yields a one-page printer plot of y(i) versus x(i):
+!!    PLOT9(3f) yields a one-page printer plot of y(i) versus x(i):
 !!
-!!      1. with special plot characters;
-!!      2. with the vertical (y) axis min and max
+!!      1. With special plot characters;
+!!      2. With the vertical (y) axis min and max
 !!         and the horizontal (x) axis min and max
 !!         values specified by the data analyst; and
-!!      3. with hollerith labels (at most 6 characters)
+!!      3. With hollerith labels (at most 6 characters)
 !!         for the vertical axis variable,
 !!         the horizontal axis variable, and
 !!         the plotting character variable
 !!         also being provided by the data analyst.
 !!
-!!    the 'special plotting character' capability allows the data analyst
-!!    to incorporate information from a third variable (aside from y and x)
+!!    The 'special plotting character' capability allows the data analyst
+!!    to incorporate information from a third variable (aside from Y and X)
 !!    into the plot.
 !!
-!!    the plot character used at the i-th plotting position (that is,
-!!    at the coordinate (x(i),y(i))) will be
+!!    The plot character used at the i-th plotting position (that is,
+!!    at the coordinate (X(i),Y(i))) will be
 !!
 !!      1 if char(i) is between  0.5 and  1.5
 !!      2 if char(i) is between  1.5 and  2.5
@@ -19544,12 +19563,12 @@ END SUBROUTINE PLOT8
 !!      x if char(i) is any value outside the range
 !!                               0.5 to  36.5.
 !!
-!!    the use of the ymin, ymax, xmin, and xmax specifications allows the
+!!    The use of the YMIN, YMAX, XMIN, and XMAX specifications allows the
 !!    data analyst to control fully the plot axis limits, so as, for example,
 !!    to zero-in on an interesting sub-region of a previous plot.
 !!
-!!    the use of hollerith identifying labels allows the data analyst to
-!!    automatically have the plots labeled. this is particularly useful
+!!    The use of hollerith identifying labels allows the data analyst to
+!!    automatically have the plots labeled. This is particularly useful
 !!    in a large analysis when many plots are being generated.
 !!
 !!##OPTIONS
@@ -19580,12 +19599,13 @@ END SUBROUTINE PLOT8
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * FILLIBEN, 'STATISTICAL ANALYSIS OF INTERLAB FATIGUE TIME DATA',
-!!     UNPUBLISHED MANUSCRIPT (AVAILABLE FROM AUTHOR) PRESENTED AT THE
-!!     'COMPUTER-ASSISTED DATA ANALYSIS' SESSION AT THE NATIONAL MEETING OF THE
-!!     AMERICAN STATISTICAL ASSOCIATION, NEW YORK CITY, DECEMBER 27-30, 1973.
+!!   * Filliben, 'Statistical Analysis of Interlab Fatigue Time Data',
+!!     Unpublished Manuscript (Available from Author) presented at the
+!!     'Computer-Assisted Data Analysis' Session at the National Meeting of the
+!!     American Statistical Association, New York City, December 27-30, 1973.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,Plchid)
+
+SUBROUTINE PLOT9(Y,X,Char,N,Ymin,Ymax,Xmin,Xmax,Yaxid,Xaxid,Plchid)
 REAL(kind=wp) :: aim1 , Char , cutoff , hold , Plchid , ratiox , ratioy , X , &
      &     x25 , x75 , Xaxid , Xmax , xmid , Xmin , Y , Yaxid , ylable ,&
      &     Ymax , Ymin
@@ -26508,7 +26528,7 @@ END SUBROUTINE PROPOR
 !!       SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 !!
 !!##DESCRIPTION
-!!    range(3f) computes the sample range of the data in the input vector x.
+!!    RANGE(3f) computes the sample range of the data in the input vector X.
 !!    the sample range = sample max - sample min.
 !!
 !!##OPTIONS
@@ -26867,8 +26887,8 @@ END SUBROUTINE RANK
 !!       SUBROUTINE RANPER(N,Istart,X)
 !!
 !!##DESCRIPTION
-!!    ranper(3f) generates a random permutation of size n of the values 1.0,
-!!    2.0, 3.0, ..., n-1, n.
+!!    RANPER(3f) generates a random permutation of size N of the values 1.0,
+!!    2.0, 3.0, ..., N-1, N.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26887,16 +26907,25 @@ END SUBROUTINE RANK
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --MAY       1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE RANPER(N,Istart,X)
+
+SUBROUTINE RANPER(N,Istart,X)
 REAL(kind=wp) :: add , an , hold , u , X
 INTEGER :: i , iadd , Istart , j , N
+INTEGER :: iseed
 !
 !     INPUT ARGUMENTS--N      = THE DESIRED INTEGER SIZE
 !                                OF THE RANDOM 1 TO N PERMUTATION.
@@ -26922,17 +26951,9 @@ INTEGER :: i , iadd , Istart , j , N
 !                                RANDOM PERMUTATION WILL BE PLACED.
 !     OUTPUT--A RANDOM PERMUTATION OF SIZE N
 !             OF THE VALUES 1.0, 2.0, 3.0, ..., N-1, N.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     MODE OF INTERNAL OPERATIONS--.
+
 !     COMMENT--ALGORITHM SUGGESTED BY DAN LOZIER,
 !              NATIONAL BUREAU OF STANDARDS (205.01).
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --MAY       1974.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
@@ -26943,44 +26964,38 @@ INTEGER :: i , iadd , Istart , j , N
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE RANPER SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
-      ELSEIF ( N==1 ) THEN
-         WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE RANP&
-     &ER SUBROUTINE HAS THE VALUE 1 *****')
-         X(1) = 1
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         CALL UNIRAN(1,Istart,u)
-!
-         DO i = 1 , N
-            X(i) = i
-         ENDDO
-!
-         DO i = 1 , N
-            CALL UNIRAN(1,1,u)
-            add = an*u(1) + 1.0_wp
-            iadd = add
-            IF ( iadd<1 ) iadd = 1
-            IF ( iadd>N ) iadd = N
-            j = i + iadd
-            IF ( j>N ) j = j - N
-            hold = X(j)
-            X(j) = X(i)
-            X(i) = hold
-         ENDDO
-      ENDIF
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to RANPER(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSEIF ( N==1 ) THEN
+      WRITE (G_IO,99003)
+      99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument to RANPER(3f) has the value 1 *****')
+      X(1) = 1
+      RETURN
+   ELSE
+      CALL UNIRAN(1,Istart,u)
+
+      DO i = 1 , N
+         X(i) = i
+      ENDDO
+      Iseed=1
+      DO i = 1 , N
+         CALL UNIRAN(1,iseed,u)
+         add = an*u(1) + 1.0_wp
+         iadd = add
+         IF ( iadd<1 ) iadd = 1
+         IF ( iadd>N ) iadd = N
+         j = i + iadd
+         IF ( j>N ) j = j - N
+         hold = X(j)
+         X(j) = X(i)
+         X(i) = hold
+      ENDDO
+   ENDIF
+
 END SUBROUTINE RANPER
 !>
 !!##NAME
@@ -26992,15 +27007,15 @@ END SUBROUTINE RANPER
 !!       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
 !!
 !!##DESCRIPTION
-!!    relsd(3f) computes the sample relative standard deviation of the data
-!!    in the input vector x.
+!!    RELSD(3f) computes the sample relative standard deviation of the data
+!!    in the input vector X.
 !!
-!!    the sample relative standard deviation = (the sample standard
+!!    The sample relative standard deviation = (the sample standard
 !!    deviation)/(the sample mean).
 !!
-!!    the denominator n-1 is used in computing the sample standard deviation.
+!!    The denominator N-1 is used in computing the sample standard deviation.
 !!
-!!    the sample relative standard deviation is alternatively referred to
+!!    The sample relative standard deviation is alternatively referred to
 !!    as the sample coefficient of variation.
 !!
 !!##OPTIONS
@@ -27322,16 +27337,16 @@ END SUBROUTINE REPLAC
 !!       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 !!
 !!##DESCRIPTION
-!!    retain(3f) retains all observations in the REAL vector
-!!    x which are inside the closed (inclusive) interval defined by xmin
-!!    and xmax, while deleting all observations outside of this interval.
+!!    RETAIN(3f) retains all observations in the REAL vector
+!!    X which are inside the closed (inclusive) interval defined by XMIN
+!!    and XMAX, while deleting all observations outside of this interval.
 !!
-!!    thus all observations in x which are smaller than xmin or larger
-!!    than xmax are deleted from x. retain(3f) (and the replac and delete
+!!    Thus all observations in X which are smaller than XMIN or larger
+!!    than XMAX are deleted from X. RETAIN(3f) (and the REPLAC and DELETE
 !!    subroutines) gives the data analyst the ability to easily 'clean up' a
 !!    data set which has missing and/or outlying observations so that a more
-!!    appropriate subsequent data analysis may be performed. for example,
-!!    a trimmed sample can easily be constructed by use of retain(3f).
+!!    appropriate subsequent data analysis may be performed. For example,
+!!    a trimmed sample can easily be constructed by use of RETAIN(3f).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -27350,14 +27365,16 @@ END SUBROUTINE REPLAC
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
+
+SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin
 INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
@@ -33176,7 +33193,11 @@ end subroutine unicdf
 !!
 !!       SUBROUTINE UNIMED(N,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
+!!
 !!    UNIMED(3f) generates the N order statistic medians from the uniform
 !!    (rectangular) distribution on the unit interval (0,1).
 !!
@@ -33196,24 +33217,64 @@ end subroutine unicdf
 !!    being able to generate uniform order statistic medians.
 !!
 !!    It is of theoretical interest to note that the i-th uniform order
-!!    statistic median in a sample of size n is identically the median of
-!!    the beta distribution with parameters i and n-i+1.
+!!    statistic median in a sample of size N is identically the median of
+!!    the beta distribution with parameters i and N-i+1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    N     The desired integer number of uniform order statistic medians
+!!          to be generated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X     A vector (of dimension at least N) into which the generated
+!!          uniform order statistic medians will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_unimed
-!!    use M_datapac, only : unimed
+!!    use M_datapac, only : unimed, label, plotxt
 !!    implicit none
-!!    ! call unimed(x,y)
+!!    integer,parameter :: N=100
+!!    real              :: X(N)
+!!       call label('unimed')
+!!       call unimed(N,X)
+!!       call plotxt(x,n)
 !!    end program demo_unimed
 !!
 !!   Results:
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.9930925E+00 -                                                 XX
+!!      0.9520015E+00 I                                               XXX
+!!      0.9109104E+00 I                                             XXX
+!!      0.8698193E+00 I                                           XXX
+!!      0.8287283E+00 I                                         XXX
+!!      0.7876373E+00 I                                       XXX
+!!      0.7465463E+00 -                                     XXX
+!!      0.7054552E+00 I                                   XXX
+!!      0.6643642E+00 I                                 XXX
+!!      0.6232731E+00 I                               XXX
+!!      0.5821820E+00 I                             XXX
+!!      0.5410910E+00 I                           XXX
+!!      0.5000000E+00 -                         XXX
+!!      0.4589090E+00 I                       XXX
+!!      0.4178179E+00 I                     XXX
+!!      0.3767269E+00 I                   XXX
+!!      0.3356358E+00 I                 XXX
+!!      0.2945448E+00 I               XXX
+!!      0.2534538E+00 -             XXX
+!!      0.2123627E+00 I           XXX
+!!      0.1712717E+00 I         XXX
+!!      0.1301807E+00 I       XXX
+!!      0.8908957E-01 I     XXX
+!!      0.4799855E-01 I   XXX
+!!      0.6907523E-02 -  XX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.2575E+02  0.5050E+02  0.7525E+02  0.1000E+03
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -33233,72 +33294,53 @@ end subroutine unicdf
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE UNIMED(N,X)
-REAL(kind=wp) :: ai , an , gam , X(:)
-INTEGER i , imax , irev , N , nevodd , nhalf
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF UNIFORM ORDER STATISTIC MEDIANS
-!                                TO BE GENERATED.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                UNIFORM ORDER STATISTIC MEDIANS
-!                                WILL BE PLACED.
-!     OUTPUT--THE N ORDER STATISTIC MEDIANS
-!             FROM THE RECTANGULAR DISTRIBUTION ON (0,1).
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(out) :: X(:)
+REAL(kind=wp)             :: ai, an, gam
+INTEGER                   :: i, imax, irev, nevodd, nhalf
 !---------------------------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNIMED SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
-      ELSE
-         IF ( N==1 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE UNIM&
-     &ED SUBROUTINE HAS THE VALUE 1 *****')
-         ENDIF
-!
-!-----START POINT-----------------------------------------------------
-!
-         an = N
-!
-!     COMPUTE THE MEDIANS FOR THE FIRST AND LAST ORDER STATISTICS
-!
-         X(N) = 0.5_wp**(1.0_wp/an)
-         X(1) = 1.0_wp - X(N)
-!
-!     DETERMINE IF AN ODD OR EVEN SAMPLE SIZE
-!
-         nhalf = (N/2) + 1
-         nevodd = 2*(N/2)
-         IF ( N/=nevodd ) X(nhalf) = 0.5_wp
-         IF ( N<=3 ) RETURN
-!
-!     COMPUTE THE MEDIANS FOR THE OTHER ORDER STATISTICS
-!
-         gam = 0.3175_wp
-         imax = N/2
-         DO i = 2 , imax
-            ai = i
-            irev = N - i + 1
-            X(i) = (ai-gam)/(an-2.0_wp*gam+1.0_wp)
-            X(irev) = 1.0_wp - X(i)
-         ENDDO
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to UNIMED(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument to UNIMED(3f) has the value 1 *****')
       ENDIF
-!
+      an = N
+      !
+      !     COMPUTE THE MEDIANS FOR THE FIRST AND LAST ORDER STATISTICS
+      !
+      X(N) = 0.5_wp**(1.0_wp/an)
+      X(1) = 1.0_wp - X(N)
+      !
+      !     DETERMINE IF AN ODD OR EVEN SAMPLE SIZE
+      !
+      nhalf = (N/2) + 1
+      nevodd = 2*(N/2)
+      IF ( N/=nevodd ) X(nhalf) = 0.5_wp
+      IF ( N<=3 ) RETURN
+      !
+      !     COMPUTE THE MEDIANS FOR THE OTHER ORDER STATISTICS
+      !
+      gam = 0.3175_wp
+      imax = N/2
+      DO i = 2 , imax
+         ai = i
+         irev = N - i + 1
+         X(i) = (ai-gam)/(an-2.0_wp*gam+1.0_wp)
+         X(irev) = 1.0_wp - X(i)
+      ENDDO
+   ENDIF
+
 END SUBROUTINE UNIMED
 !>
 !!##NAME
@@ -33405,6 +33447,9 @@ END SUBROUTINE UNIPDF
 !!
 !!       SUBROUTINE UNIPLT(X,N)
 !!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
+!!
 !!##DESCRIPTION
 !!    UNIPLT(3f) generates a uniform probability plot.
 !!
@@ -33414,7 +33459,7 @@ END SUBROUTINE UNIPDF
 !!
 !!    This distribution has the probability density function
 !!
-!!        f(x) = 1.
+!!        f(X) = 1
 !!
 !!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
@@ -33430,17 +33475,24 @@ END SUBROUTINE UNIPDF
 !!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The  vector of (unsorted or sorted) observations.
+!!
+!!    N     The integer number of observations in the vector X.
+!!          The maximum allowable value of N for this subroutine is 7500.
+!!
+!!##OUTPUT
+!!    A one-page uniform probability plot.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_uniplt
-!!    use M_datapac, only : uniplt
+!!    use M_datapac, only : uniplt, label
 !!    implicit none
+!!    call label('uniplt')
 !!    ! call uniplt(x,y)
 !!    end program demo_uniplt
 !!
@@ -33471,29 +33523,18 @@ END SUBROUTINE UNIPDF
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE UNIPLT(X,N)
-REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  &
-     &     X , Y , ybar , yint , yslope
-INTEGER :: i , iupper , N
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE UNIFORM PROBABILITY PLOT.
 
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
+SUBROUTINE UNIPLT(X,N)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp) :: an, cc, hold, sum1, sum2, sum3, tau, W, wbar, WS, Y, ybar, yint, yslope
+INTEGER       :: i, iupper
+DIMENSION Y(7500) , W(7500)
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (W(1),WS(7501))
 !
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (W(1),WS(7501))
-!
-      DATA tau/1.04736842_wp/
+DATA tau/1.04736842_wp/
 !
       iupper = 7500
 !
@@ -33501,17 +33542,14 @@ INTEGER :: i , iupper , N
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE UNIPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--The second input argument to UNIPLT(3f) is outside the allowable (1,',&
+         & I0,') interval *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE UNIP&
-     &LT SUBROUTINE HAS THE VALUE 1 *****')
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to UNIPLT(3f) has the value 1 *****')
          RETURN
       ELSE
          hold = X(1)
@@ -33519,37 +33557,35 @@ INTEGER :: i , iupper , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
          WRITE (G_IO,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE UNIPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to UNIPLT(3f) has all elements = ', &
+         & E15.8,' *****')
 !
 !-----START POINT-----------------------------------------------------
 !
  50      an = N
 !
-!     SORT THE DATA
+         !     SORT THE DATA
 !
          CALL SORT(X,N,Y)
-!
-!     GENERATE UNIFORM ORDER STATISTIC MEDIANS
-!
+         !
+         !     GENERATE UNIFORM ORDER STATISTIC MEDIANS
+         !
          CALL UNIMED(N,W)
-!
-!     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
-!     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
-!     AND THE SAMPLE SIZE.
-!
+         !
+         !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
+         !     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
+         !     AND THE SAMPLE SIZE.
+         !
          CALL PLOT(Y,W,N)
          WRITE (G_IO,99005) tau , N
-!
-99005    FORMAT (' ','UNIFORM PROBABILITY PLOT (TAU = ',E15.8,')',55X,  &
-     &           'THE SAMPLE SIZE N = ',I0)
-!
-!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
-!     COMPUTE LOCATION AND SCALE ESTIMATES
-!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
-!     THEN WRITE THEM OUT.
-!
+
+         99005 FORMAT (' ','Uniform probability plot (TAU = ',E15.8,')',55X,'The sample size N = ',I0)
+         !
+         !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
+         !     COMPUTE LOCATION AND SCALE ESTIMATES
+         !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
+         !     THEN WRITE THEM OUT.
+         !
          sum1 = 0.0_wp
          DO i = 1 , N
             sum1 = sum1 + Y(i)
@@ -33568,11 +33604,10 @@ INTEGER :: i , iupper , N
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
          WRITE (G_IO,99006) cc , yint , yslope
-99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
-     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
-     &           'ESTIMATED SLOPE = ',E15.8)
+         99006 FORMAT (' ','Probability plot correlation coefficient = ',F8.5,&
+         & 5X,'Estimated intercept = ',E15.8,3X,'Estimated slope = ',E15.8)
       ENDIF
-!
+
 END SUBROUTINE UNIPLT
 !>
 !!##NAME
@@ -33582,6 +33617,9 @@ END SUBROUTINE UNIPLT
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE UNIPPF(P,Ppf)
+!!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Ppf
 !!
 !!##DESCRIPTION
 !!    UNIPPF(3f) computes the percent point function value for the uniform
@@ -33596,17 +33634,23 @@ END SUBROUTINE UNIPLT
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P     The value (between 0.0 and 1.0) at which the percent point
+!!          function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF   The percent point function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_unippf
-!!    use M_datapac, only : unippf
+!!    use M_datapac, only : unippf, label
 !!    implicit none
+!!       call label('unippf')
 !!    ! call unippf(x,y)
 !!    end program demo_unippf
 !!
@@ -33631,45 +33675,27 @@ END SUBROUTINE UNIPLT
 !!     1970, Pages 28-31.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!     Pages 57-74.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE UNIPPF(P,Ppf)
-REAL(kind=wp) :: P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT
-!             FUNCTION VALUE PPF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
-!---------------------------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNIPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Ppf = P
-      ENDIF
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE UNIPPF(P,Ppf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Ppf
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to UNIPPF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      Ppf = P
+   ENDIF
+
 END SUBROUTINE UNIPPF
 !>
 !!##NAME
@@ -33679,58 +33705,145 @@ END SUBROUTINE UNIPPF
 !!
 !!       SUBROUTINE UNIRAN(N,Iseed,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
-!!    uniran(3f) generates a random sample of size n from the uniform
+!!    UNIRAN(3f) generates a random sample of size N from the uniform
 !!    (rectangular) distribution on the unit interval (0,1).
 !!
-!!    this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+!!    This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
 !!    = 0.28867513. This distribution has the probability density function
 !!
-!!        f(x) = 1
+!!        f(X) = 1
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    N      The desired integer number of random numbers to be generated.
 !!
+!!    ISEED  An integer iseed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X      A vector (of dimension at least N) into which the generated
+!!           random sample of size N from the rectangular distribution on
+!!           (0,1) will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_uniran
-!!    use M_datapac, only : uniran
+!!    use M_datapac, only : uniran, plotxt, sort, last
 !!    implicit none
-!!    ! call uniran(x,y)
+!!    integer,parameter :: n=400
+!!    real :: x(n)
+!!    integer :: iseed
+!!       call label('uniran')
+!!       iseed=1234
+!!       call UNIRAN(n,Iseed,X)
+!!       call plotxt(x,n) ! plot random values
+!!       call sort(x,n,x) ! sort values
+!!       call plotxt(x,n) ! should display the f(x)=1 nature
+!!                        ! of the distribution
 !!    end program demo_uniran
 !!
 !!   Results:
 !!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.9982013E+00 -   X    X           X                X  X    X X
+!!      0.9566447E+00 I          X    XX       X XX XXXX X       XX
+!!      0.9150882E+00 I     X  XXXX  X  XXXX X  X X X  X   XX X         X
+!!      0.8735316E+00 I   XX      XXX XX    XXXXXX X    X   X  X   X
+!!      0.8319750E+00 I       XXX  X   X  X  X X      XX     X  X     X
+!!      0.7904184E+00 I   XXX       XX    X   X            X X    X   XXX
+!!      0.7488618E+00 -   X XX X X X  X     X     X   X      X X   XXX  X
+!!      0.7073053E+00 I  X      X  X  X  X   X  X  X  X   X X          X
+!!      0.6657487E+00 I      X     XXX   X  XX  XXX X   X   X  X X    X  X
+!!      0.6241921E+00 I  X  X    X   X    XX  X             X   X     X
+!!      0.5826355E+00 I      X        X  X          XX X X       X X X
+!!      0.5410789E+00 I      XX   X     XX X      X     XXX XX X       X
+!!      0.4995224E+00 -   X    X        XX         X  XXX     XX
+!!      0.4579658E+00 I  XXX   X  XXX     X X  X XX XX X  X           X  X
+!!      0.4164092E+00 I     XX X  X      X X       X       X      X  X X
+!!      0.3748527E+00 I         XX XX  XX   X X   XX XX XX X           X
+!!      0.3332961E+00 I   X  XXX          X X  X         X X  XXXX  X  X
+!!      0.2917395E+00 I          X  X    X   X X    X XX         XX XX  X
+!!      0.2501829E+00 -    XX       XXX X     X       X   X   XX XXXX   X
+!!      0.2086263E+00 I  X  X X  X         X     X     XX    X       X  XX
+!!      0.1670697E+00 I    X  X X      XX X   XX     XX XXX   X   X XXX  X
+!!      0.1255132E+00 I           X XXX X  X               X    X XX X
+!!      0.8395660E-01 I   X X X   X    XX    X X X X     X X         X XX
+!!      0.4240000E-01 I    X    XX    X      X  X X X          X    X X  X
+!!      0.8433913E-03 -         X                       X X     X  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.9982013E+00 -                                                 XX
+!!      0.9566447E+00 I                                               XXX
+!!      0.9150882E+00 I                                            XXXX
+!!      0.8735316E+00 I                                          XXX
+!!      0.8319750E+00 I                                        XXX
+!!      0.7904184E+00 I                                      XXX
+!!      0.7488618E+00 -                                    XXX
+!!      0.7073053E+00 I                                  XXX
+!!      0.6657487E+00 I                               XXX
+!!      0.6241921E+00 I                              XX
+!!      0.5826355E+00 I                            XXX
+!!      0.5410789E+00 I                          XXX
+!!      0.4995224E+00 -                         XX
+!!      0.4579658E+00 I                      XXXX
+!!      0.4164092E+00 I                     XX
+!!      0.3748527E+00 I                   XXX
+!!      0.3332961E+00 I                XXX
+!!      0.2917395E+00 I               XX
+!!      0.2501829E+00 -            XXXX
+!!      0.2086263E+00 I           XX
+!!      0.1670697E+00 I        XXXX
+!!      0.1255132E+00 I      XXX
+!!      0.8395660E-01 I    XXX
+!!      0.4240000E-01 I   XX
+!!      0.8433913E-03 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!
 !!##WRITTEN BY
 !!      * James Blue
-!!                  scientific computing division
-!!                  center for applied mathematics
-!!                  national bureau of standards
-!!                  washington, d. c. 20234
+!!
+!!             Scientific Computing Division
+!!             Center for Applied Mathematics
+!!             National Bureau of Standards
+!!             Washington, D. C. 20234
+!!
 !!      * David Kahaner
-!!                  scientific computing division
-!!                  center for applied mathematics
-!!                  national bureau of standards
+!!
+!!             Scientific Computing Division
+!!             Center for Applied Mathematics
+!!             National Bureau of Standards
+!!
 !!      * George Marsaglia
-!!                  computer science department
-!!                  washington state university
+!!
+!!             Computer Science Department
+!!             Washington State University
+!!
 !!      * James J. Filliben
-!!                  statistical engineering division
-!!                  center for applied mathematics
-!!                  national bureau of standards
+!!
+!!             Statistical Engineering Division
+!!             Center for Applied Mathematics
+!!             National Bureau of Standards
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!
@@ -33742,30 +33855,28 @@ END SUBROUTINE UNIPPF
 !!     Generator", Unpublished Notes, Wash S. U.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!     Pages 57-74.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --AUGUST    1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --NOVEMBER  1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --MARCH     1984.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE UNIRAN(N,Iseed,X)
-REAL(kind=wp) :: ak , am1 , X(:)
-INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: ak , am1
+INTEGER i, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig
 INTEGER m(17)
 
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --ISEED  = AN INTEGER ISEED VALUE
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE RECTANGULAR DISTRIBUTION ON (0,1).
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
+
 !     MODE OF INTERNAL OPERATIONS--.
 !
-!     ALGORITHM--FIBONACCI GENERATOR
-!                AS DEFINED BY GEORGE MARSAGLIA.
+!     ALGORITHM--FIBONACCI GENERATOR AS DEFINED BY GEORGE MARSAGLIA.
 !
 !     NOTE--THIS GENERATOR IS TRANSPORTABLE.
 !           IT IS NOT MACHINE-INDEPENDENT
@@ -33836,30 +33947,18 @@ INTEGER m(17)
 !           NEED TO USE PRIMES, NOR TO USE EXCEPTIONALLY
 !           LARGE NUMBERS, ETC.
 !
-!
-!     LANGUAGE--ANSI FORTRAN (1977)
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --AUGUST    1974.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --NOVEMBER  1981.
-!     UPDATED         --MAY       1982.
-!     UPDATED         --MARCH     1984.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
 !-----SAVE STATEMENTS-------------------------------------------------
 !
-      SAVE i , j , m , m1 , m2
+SAVE i , j , m , m1 , m2
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA m(1) , m(2) , m(3) , m(4) , m(5) , m(6) , m(7) , m(8) ,      &
-     &     m(9) , m(10) , m(11) , m(12) , m(13) , m(14) , m(15) ,       &
-     &     m(16) , m(17)/30788 , 23052 , 2053 , 19346 , 10646 , 19427 , &
-     &     23975 , 19049 , 10949 , 19693 , 29746 , 26748 , 2796 ,       &
-     &     23890 , 29168 , 31924 , 16499/
-      DATA m1 , m2 , i , j/32767 , 256 , 5 , 17/
+DATA m(1) , m(2) , m(3) , m(4) , m(5) , m(6) , m(7) , m(8) ,      &
+ &     m(9) , m(10) , m(11) , m(12) , m(13) , m(14) , m(15) ,       &
+ &     m(16) , m(17)/30788 , 23052 , 2053 , 19346 , 10646 , 19427 , &
+ &     23975 , 19049 , 10949 , 19693 , 29746 , 26748 , 2796 ,       &
+ &     23890 , 29168 , 31924 , 16499/
+DATA m1 , m2 , i , j/32767 , 256 , 5 , 17/
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -33884,12 +33983,10 @@ INTEGER m(17)
 !
          IF ( Iseed>0 ) THEN
 !
-!CCCC MDIG=16
             mdig = 32
 !
             m1 = 2**(mdig-2) + (2**(mdig-2)-1)
             m2 = 2**(mdig/2)
-!CCCC ISEED3=MIN0(IABS(ISEED),M1)
             iseed3 = IABS(Iseed)
             IF ( m1<IABS(Iseed) ) iseed3 = m1
             IF ( MOD(iseed3,2)==0 ) iseed3 = iseed3 - 1
@@ -33942,13 +34039,13 @@ INTEGER m(17)
          Iseed = (-1)
       ELSE
          WRITE (G_IO,99001)
-99001    FORMAT (' ')
+         99001 FORMAT (' ')
          WRITE (G_IO,99002)
-99002    FORMAT (' ','***** ERROR IN UNIRAN--')
+         99002 FORMAT (' ','***** Error in UNIRAN--')
          WRITE (G_IO,99003)
-99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS NON-POSITIVE.')
+         99003 FORMAT (' ','      The input number of observations is non-positive.')
          WRITE (G_IO,99004) N
-99004    FORMAT (' ','      N = ',I0)
+         99004 FORMAT (' ','      N = ',I0)
       ENDIF
 !
 !               *****************
@@ -33965,6 +34062,9 @@ END SUBROUTINE UNIRAN
 !!
 !!       SUBROUTINE UNISF(P,Sf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Sf
+!!
 !!##DESCRIPTION
 !!    UNISF(3f) computes the sparsity function value for the uniform
 !!    (rectangular) distribution on the unit interval (0,1).
@@ -33978,25 +34078,32 @@ END SUBROUTINE UNIRAN
 !!    of the percent point function, and also is the reciprocal of the
 !!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P    The value (between 0.0 and 1.0) at which the sparsity function
+!!         is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    SF   The sparsity function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_unisf
-!!    use M_datapac, only : unisf
+!!    use M_datapac, only : unisf, label
 !!    implicit none
+!!       call label('unisf')
 !!    ! call unisf(x,y)
 !!    end program demo_unisf
 !!
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
@@ -34012,45 +34119,27 @@ END SUBROUTINE UNIRAN
 !!     1970, Pages 28-31.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
 !!     Pages 57-74.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE UNISF(P,Sf)
-REAL(kind=wp) :: P , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE  SPARSITY
-!                                FUNCTION VALUE.
-!     OUTPUT--THE
-!             SPARSITY FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE UNISF(P,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Sf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNISF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Sf = 1.0_wp
-      ENDIF
-!
+   IF ( P<0.0_wp .OR. P>1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to UNISF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      Sf = 1.0_wp
+   ENDIF
+
 END SUBROUTINE UNISF
 !>
 !!##NAME
@@ -34198,22 +34287,22 @@ END SUBROUTINE VAR
 !!       SUBROUTINE WEIB(X,N)
 !!
 !!##DESCRIPTION
-!!    weib(3f) performs a weibull distribution analysis on the data in the
-!!    input vector x.
+!!    WEIB(3f) performs a Weibull distribution analysis on the data in the
+!!    input vector X.
 !!
-!!    this analysis consists of determining that particular weibull
+!!    This analysis consists of determining that particular Weibull
 !!    distribution which best fits the data set.
 !!
-!!    the goodness of fit criterion is the maximum probability plot
+!!    The goodness of fit criterion is the maximum probability plot
 !!    correlation coefficient criterion.
 !!
-!!    after the best-fit distribution is determined, estimates are computed
+!!    After the best-fit distribution is determined, estimates are computed
 !!    and printed out for the location and scale parameters.
 !!
-!!    two probability plots are also printed out-- the best-fit weibull
+!!    Two probability plots are also printed out-- the best-fit Weibull
 !!    probability plot and an extreme value type 1 probability plot (this
-!!    is due to the fact that as the weibull parameter gamma approaches
-!!    infinity, the weibull distribution approaches the extreme value type
+!!    is due to the fact that as the Weibull parameter gamma approaches
+!!    infinity, the Weibull distribution approaches the extreme value type
 !!    1 distribution).
 !!
 !!##OPTIONS
@@ -34250,7 +34339,12 @@ END SUBROUTINE VAR
 !!   * Filliben, 'The Percent Point Function', UNpublished Manuscript.
 !!   * Johnson and Kotz (1970), Continuous Univariate Distributions-1,
 !!     Pages 250-271.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --AUGUST    1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --MAY       1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE WEIB(X,N)
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
      &     sum2 , sum3 , sy , t , w , wbar , WS , X , xmax , xmin , Y
@@ -34265,14 +34359,6 @@ INTEGER i , idis , idismx , iupper , N , numdis , numdm1
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, WEIPLT,
-!                                         EV1PLT, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --AUGUST    1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --MAY       1976.
 !
 !---------------------------------------------------------------------
 !
@@ -34292,21 +34378,21 @@ CHARACTER(len=4) :: alphay
 CHARACTER(len=4) :: alphag
 CHARACTER(len=4) :: equal
 !
-      DIMENSION w(3000)
-      DIMENSION X(:)
-      DIMENSION Y(7500) , Z(7500)
-      DIMENSION gamtab(50) , corr(50)
-      DIMENSION yi(50) , ys(50) , t(50)
-      DIMENSION iflag1(50) , iflag2(50) , iflag3(50)
-      DIMENSION aindex(50)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (Z(1),WS(7501))
-      DATA blank , alpham , alphaa , alphax/' ' , 'M' , 'A' , 'X'/
-      DATA alphai , alphan , alphaf , alphat , alphay/'I' , 'N' , 'F' , &
+DIMENSION w(3000)
+DIMENSION X(:)
+DIMENSION Y(7500) , Z(7500)
+DIMENSION gamtab(50) , corr(50)
+DIMENSION yi(50) , ys(50) , t(50)
+DIMENSION iflag1(50) , iflag2(50) , iflag3(50)
+DIMENSION aindex(50)
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (Z(1),WS(7501))
+DATA blank , alpham , alphaa , alphax/' ' , 'M' , 'A' , 'X'/
+DATA alphai , alphan , alphaf , alphat , alphay/'I' , 'N' , 'F' , &
      &     'T' , 'Y'/
-      DATA alphag , equal/'G' , '='/
-      DATA gamtab(1) , gamtab(2) , gamtab(3) , gamtab(4) , gamtab(5) ,  &
+DATA alphag , equal/'G' , '='/
+DATA gamtab(1) , gamtab(2) , gamtab(3) , gamtab(4) , gamtab(5) ,  &
      &     gamtab(6) , gamtab(7) , gamtab(8) , gamtab(9) , gamtab(10) , &
      &     gamtab(11) , gamtab(12) , gamtab(13) , gamtab(14) ,          &
      &     gamtab(15) , gamtab(16) , gamtab(17) , gamtab(18) ,          &
@@ -34314,19 +34400,19 @@ CHARACTER(len=4) :: equal
      &     gamtab(23), gamtab(24), gamtab(25)/1.0_wp, 2.0_wp, 3.0_wp, 4.0_wp, 5.0_wp,&
      &     6.0_wp, 7.0_wp, 8.0_wp, 9.0_wp, 10.0_wp, 11.0_wp, 12.0_wp, 13.0_wp, 14.0_wp, 15.0_wp, 16.0_wp,&
      &     17.0_wp, 18.0_wp, 19.0_wp, 20.0_wp, 21.0_wp, 22.0_wp, 23.0_wp, 24.0_wp, 25.0_wp/
-      DATA gamtab(26) , gamtab(27) , gamtab(28) , gamtab(29) ,          &
+DATA gamtab(26) , gamtab(27) , gamtab(28) , gamtab(29) ,          &
      &     gamtab(30) , gamtab(31) , gamtab(32) , gamtab(33) ,          &
      &     gamtab(34) , gamtab(35) , gamtab(36) , gamtab(37) ,          &
      &     gamtab(38) , gamtab(39) , gamtab(40) , gamtab(41) ,          &
      &     gamtab(42)/30.0_wp, 35.0_wp, 40.0_wp, 45.0_wp, 50.0_wp, 60.0_wp, 70.0_wp, 80.0_wp,   &
      &     90.0_wp, 100.0_wp, 150.0_wp, 200.0_wp, 250.0_wp, 350.0_wp, 500.0_wp, 750.0_wp, 1000.0_wp/
-      DATA t(1) , t(2) , t(3) , t(4) , t(5) , t(6) , t(7) , t(8) ,      &
+DATA t(1) , t(2) , t(3) , t(4) , t(5) , t(6) , t(7) , t(8) ,      &
      &     t(9) , t(10) , t(11) , t(12) , t(13) , t(14) , t(15) ,       &
      &     t(16) , t(17) , t(18) , t(19) , t(20)/1.63474 , 1.36116 ,    &
      &     1.34278_wp , 1.35854_wp , 1.37836_wp , 1.39657_wp , 1.41225_wp , 1.42557_wp ,  &
      &     1.43690_wp , 1.44660_wp , 1.45496_wp , 1.46223_wp , 1.46860_wp , 1.47422_wp ,  &
      &     1.47921_wp , 1.48368_wp , 1.48769_wp , 1.49132_wp , 1.49461_wp , 1.49761_wp/
-      DATA t(21) , t(22) , t(23) , t(24) , t(25) , t(26) , t(27) ,      &
+DATA t(21) , t(22) , t(23) , t(24) , t(25) , t(26) , t(27) ,      &
      &     t(28) , t(29) , t(30) , t(31) , t(32) , t(33) , t(34) ,      &
      &     t(35) , t(36) , t(37) , t(38) , t(39) , t(40) , t(41) ,      &
      &     t(42) , t(43)/1.50036_wp , 1.50288_wp , 1.50521_wp , 1.50736_wp ,        &
@@ -34334,7 +34420,7 @@ CHARACTER(len=4) :: equal
      &     1.53888_wp , 1.54206_wp , 1.54447_wp , 1.54636_wp , 1.54788_wp , 1.55248_wp ,  &
      &     1.55480_wp , 1.55620_wp , 1.55781_wp , 1.55902_wp , 1.55997_wp , 1.56044_wp ,  &
      &     1.62391_wp/
-      DATA aindex(1) , aindex(2) , aindex(3) , aindex(4) , aindex(5) ,  &
+DATA aindex(1) , aindex(2) , aindex(3) , aindex(4) , aindex(5) ,  &
      &     aindex(6) , aindex(7) , aindex(8) , aindex(9) , aindex(10) , &
      &     aindex(11) , aindex(12) , aindex(13) , aindex(14) ,          &
      &     aindex(15) , aindex(16) , aindex(17) , aindex(18) ,          &
@@ -34342,7 +34428,7 @@ CHARACTER(len=4) :: equal
      &     aindex(23), aindex(24), aindex(25)/1.0_wp, 2.0_wp, 3.0_wp, 4.0_wp, 5.0_wp,&
      &     6.0_wp, 7.0_wp, 8.0_wp, 9.0_wp, 10.0_wp, 11.0_wp, 12.0_wp, 13.0_wp, 14.0_wp, 15.0_wp, 16.0_wp,&
      &     17.0_wp, 18.0_wp, 19.0_wp, 20.0_wp, 21.0_wp, 22.0_wp, 23.0_wp, 24.0_wp, 25.0_wp/
-      DATA aindex(26) , aindex(27) , aindex(28) , aindex(29) ,          &
+DATA aindex(26) , aindex(27) , aindex(28) , aindex(29) ,          &
      &     aindex(30) , aindex(31) , aindex(32) , aindex(33) ,          &
      &     aindex(34) , aindex(35) , aindex(36) , aindex(37) ,          &
      &     aindex(38) , aindex(39) , aindex(40) , aindex(41) ,          &
@@ -34683,11 +34769,11 @@ END SUBROUTINE WEICDF
 !!       SUBROUTINE WEIPLT(X,N,Gamma)
 !!
 !!##DESCRIPTION
-!!    weiplt(3f) generates a weibull probability plot (with tail length
-!!    parameter value = gamma).
+!!    WEIPLT(3f) generates a weibull probability plot (with tail length
+!!    parameter value = GAMMA).
 !!
-!!    the prototype weibull distribution used herein is defined for all
-!!    positive x, and has the probability density function
+!!    The prototype weibull distribution used herein is defined for all
+!!    positive X, and has the probability density function
 !!
 !!        f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma))
 !!
@@ -34695,15 +34781,15 @@ END SUBROUTINE WEICDF
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the weibull probability plot is useful in graphically testing
+!!    The Weibull probability plot is useful in graphically testing
 !!    the composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which the
-!!    data have been randomly drawn is the weibull distribution with tail
-!!    length parameter value = gamma.
+!!    data have been randomly drawn is the Weibull distribution with tail
+!!    length parameter value = GAMMA.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
-!!    a measure of such linearity is given by the calculated probability
+!!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
 !!##OPTIONS
@@ -34723,12 +34809,16 @@ END SUBROUTINE WEICDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army Research
@@ -34738,6 +34828,12 @@ END SUBROUTINE WEICDF
 !!     260-308.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     Pages 250-271.
+!     MODE OF INTERNAL OPERATIONS--.
+!     ORIGINAL VERSION--DECEMBER  1972.
+!     UPDATED         --MARCH     1975.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE WEIPLT(X,N,Gamma)
@@ -34755,18 +34851,9 @@ INTEGER i , iupper , N
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE WEIBULL PROBABILITY PLOT.
-!     PRINTING--YES.
+
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!                 --GAMMA SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--DECEMBER  1972.
-!     UPDATED         --MARCH     1975.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
 !
 !---------------------------------------------------------------------
 !
@@ -34897,14 +34984,14 @@ END SUBROUTINE WEIPLT
 !!       SUBROUTINE WEIPPF(P,Gamma,Ppf)
 !!
 !!##DESCRIPTION
-!!    weippf(3f) computes the percent point function value for the weibull
-!!    distribution with REAL tail length parameter = gamma.
+!!    WEIPPf(3f) computes the percent point function value for the Weibull
+!!    distribution with REAL tail length parameter = GAMMA.
 !!
-!!    the weibull distribution used herein is defined for all positive x,
-!!    and has the probability density function f(x) = gamma * (x**(gamma-1))
-!!    * exp(-(x**gamma)).
+!!    The Weibull distribution used herein is defined for all positive X,
+!!    and has the probability density function f(X) = GAMMA * (X**(GAMMA-1))
+!!    * exp(-(X**GAMMA)).
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
@@ -34925,12 +35012,16 @@ END SUBROUTINE WEIPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     Pages 250-271.
@@ -35136,8 +35227,9 @@ END SUBROUTINE WEIRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
@@ -35155,6 +35247,7 @@ END SUBROUTINE WEIRAN
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE WIND(X,N,P1,P2,Iwrite,Xwind)
 REAL(kind=wp) :: ak , an , anp1 , anp2 , hold , P1 , P2 , perp1 , perp2 , perp3 , psum , sum , WS , X , Xwind , Y
 INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2

@@ -1,5 +1,5 @@
      program demo_uniran
-     use M_datapac, only : uniran, plotxt, sort, label
+     use M_datapac, only : uniran, plotxt, sort, last
      implicit none
      integer,parameter :: n=400
      real :: x(n)

@@ -154,7 +154,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 SUBROUTINE NORRAN(N,Iseed,X)
 INTEGER,intent(in)        :: N
-INTEGER,intent(in)        :: Iseed
+INTEGER,intent(inout)     :: Iseed
 REAL(kind=wp),intent(out) :: X(:)
 REAL(kind=wp) :: arg1, arg2, sqrt1, u1, u2, y(2), z1, z2
 INTEGER       :: i, ip1 

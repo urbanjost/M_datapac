@@ -8,22 +8,22 @@ SYNOPSIS
       SUBROUTINE WEIB(X,N)
 
 DESCRIPTION
-   weib(3f) performs a weibull distribution analysis on the data in the
-   input vector x.
+   WEIB(3f) performs a Weibull distribution analysis on the data in the
+   input vector X.
 
-   this analysis consists of determining that particular weibull
+   This analysis consists of determining that particular Weibull
    distribution which best fits the data set.
 
-   the goodness of fit criterion is the maximum probability plot
+   The goodness of fit criterion is the maximum probability plot
    correlation coefficient criterion.
 
-   after the best-fit distribution is determined, estimates are computed
+   After the best-fit distribution is determined, estimates are computed
    and printed out for the location and scale parameters.
 
-   two probability plots are also printed out-- the best-fit weibull
+   Two probability plots are also printed out-- the best-fit Weibull
    probability plot and an extreme value type 1 probability plot (this
-   is due to the fact that as the weibull parameter gamma approaches
-   infinity, the weibull distribution approaches the extreme value type
+   is due to the fact that as the Weibull parameter gamma approaches
+   infinity, the Weibull distribution approaches the extreme value type
    1 distribution).
 
 OPTIONS
@@ -61,8 +61,13 @@ REFERENCE
     Pages 250-271.
 
 $ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --AUGUST    1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --MAY       1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE WEIB(X,N)
 REAL(kind=wp) :: a , aindex , an , cc , corr , corrmx , gamtab , hold , sum1 ,&
      &     sum2 , sum3 , sy , t , w , wbar , WS , X , xmax , xmin , Y
@@ -77,14 +82,6 @@ INTEGER i , idis , idismx , iupper , N , numdis , numdm1
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, WEIPLT,
-!                                         EV1PLT, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT AND LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --AUGUST    1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --MAY       1976.
 !
 !---------------------------------------------------------------------
 !
@@ -104,21 +101,21 @@ CHARACTER(len=4) :: alphay
 CHARACTER(len=4) :: alphag
 CHARACTER(len=4) :: equal
 !
-      DIMENSION w(3000)
-      DIMENSION X(:)
-      DIMENSION Y(7500) , Z(7500)
-      DIMENSION gamtab(50) , corr(50)
-      DIMENSION yi(50) , ys(50) , t(50)
-      DIMENSION iflag1(50) , iflag2(50) , iflag3(50)
-      DIMENSION aindex(50)
-      COMMON /BLOCK2_${KIND}/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (Z(1),WS(7501))
-      DATA blank , alpham , alphaa , alphax/' ' , 'M' , 'A' , 'X'/
-      DATA alphai , alphan , alphaf , alphat , alphay/'I' , 'N' , 'F' , &
+DIMENSION w(3000)
+DIMENSION X(:)
+DIMENSION Y(7500) , Z(7500)
+DIMENSION gamtab(50) , corr(50)
+DIMENSION yi(50) , ys(50) , t(50)
+DIMENSION iflag1(50) , iflag2(50) , iflag3(50)
+DIMENSION aindex(50)
+COMMON /BLOCK2_${KIND}/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (Z(1),WS(7501))
+DATA blank , alpham , alphaa , alphax/' ' , 'M' , 'A' , 'X'/
+DATA alphai , alphan , alphaf , alphat , alphay/'I' , 'N' , 'F' , &
      &     'T' , 'Y'/
-      DATA alphag , equal/'G' , '='/
-      DATA gamtab(1) , gamtab(2) , gamtab(3) , gamtab(4) , gamtab(5) ,  &
+DATA alphag , equal/'G' , '='/
+DATA gamtab(1) , gamtab(2) , gamtab(3) , gamtab(4) , gamtab(5) ,  &
      &     gamtab(6) , gamtab(7) , gamtab(8) , gamtab(9) , gamtab(10) , &
      &     gamtab(11) , gamtab(12) , gamtab(13) , gamtab(14) ,          &
      &     gamtab(15) , gamtab(16) , gamtab(17) , gamtab(18) ,          &
@@ -126,19 +123,19 @@ CHARACTER(len=4) :: equal
      &     gamtab(23), gamtab(24), gamtab(25)/1.0_wp, 2.0_wp, 3.0_wp, 4.0_wp, 5.0_wp,&
      &     6.0_wp, 7.0_wp, 8.0_wp, 9.0_wp, 10.0_wp, 11.0_wp, 12.0_wp, 13.0_wp, 14.0_wp, 15.0_wp, 16.0_wp,&
      &     17.0_wp, 18.0_wp, 19.0_wp, 20.0_wp, 21.0_wp, 22.0_wp, 23.0_wp, 24.0_wp, 25.0_wp/
-      DATA gamtab(26) , gamtab(27) , gamtab(28) , gamtab(29) ,          &
+DATA gamtab(26) , gamtab(27) , gamtab(28) , gamtab(29) ,          &
      &     gamtab(30) , gamtab(31) , gamtab(32) , gamtab(33) ,          &
      &     gamtab(34) , gamtab(35) , gamtab(36) , gamtab(37) ,          &
      &     gamtab(38) , gamtab(39) , gamtab(40) , gamtab(41) ,          &
      &     gamtab(42)/30.0_wp, 35.0_wp, 40.0_wp, 45.0_wp, 50.0_wp, 60.0_wp, 70.0_wp, 80.0_wp,   &
      &     90.0_wp, 100.0_wp, 150.0_wp, 200.0_wp, 250.0_wp, 350.0_wp, 500.0_wp, 750.0_wp, 1000.0_wp/
-      DATA t(1) , t(2) , t(3) , t(4) , t(5) , t(6) , t(7) , t(8) ,      &
+DATA t(1) , t(2) , t(3) , t(4) , t(5) , t(6) , t(7) , t(8) ,      &
      &     t(9) , t(10) , t(11) , t(12) , t(13) , t(14) , t(15) ,       &
      &     t(16) , t(17) , t(18) , t(19) , t(20)/1.63474 , 1.36116 ,    &
      &     1.34278_wp , 1.35854_wp , 1.37836_wp , 1.39657_wp , 1.41225_wp , 1.42557_wp ,  &
      &     1.43690_wp , 1.44660_wp , 1.45496_wp , 1.46223_wp , 1.46860_wp , 1.47422_wp ,  &
      &     1.47921_wp , 1.48368_wp , 1.48769_wp , 1.49132_wp , 1.49461_wp , 1.49761_wp/
-      DATA t(21) , t(22) , t(23) , t(24) , t(25) , t(26) , t(27) ,      &
+DATA t(21) , t(22) , t(23) , t(24) , t(25) , t(26) , t(27) ,      &
      &     t(28) , t(29) , t(30) , t(31) , t(32) , t(33) , t(34) ,      &
      &     t(35) , t(36) , t(37) , t(38) , t(39) , t(40) , t(41) ,      &
      &     t(42) , t(43)/1.50036_wp , 1.50288_wp , 1.50521_wp , 1.50736_wp ,        &
@@ -146,7 +143,7 @@ CHARACTER(len=4) :: equal
      &     1.53888_wp , 1.54206_wp , 1.54447_wp , 1.54636_wp , 1.54788_wp , 1.55248_wp ,  &
      &     1.55480_wp , 1.55620_wp , 1.55781_wp , 1.55902_wp , 1.55997_wp , 1.56044_wp ,  &
      &     1.62391_wp/
-      DATA aindex(1) , aindex(2) , aindex(3) , aindex(4) , aindex(5) ,  &
+DATA aindex(1) , aindex(2) , aindex(3) , aindex(4) , aindex(5) ,  &
      &     aindex(6) , aindex(7) , aindex(8) , aindex(9) , aindex(10) , &
      &     aindex(11) , aindex(12) , aindex(13) , aindex(14) ,          &
      &     aindex(15) , aindex(16) , aindex(17) , aindex(18) ,          &
@@ -154,7 +151,7 @@ CHARACTER(len=4) :: equal
      &     aindex(23), aindex(24), aindex(25)/1.0_wp, 2.0_wp, 3.0_wp, 4.0_wp, 5.0_wp,&
      &     6.0_wp, 7.0_wp, 8.0_wp, 9.0_wp, 10.0_wp, 11.0_wp, 12.0_wp, 13.0_wp, 14.0_wp, 15.0_wp, 16.0_wp,&
      &     17.0_wp, 18.0_wp, 19.0_wp, 20.0_wp, 21.0_wp, 22.0_wp, 23.0_wp, 24.0_wp, 25.0_wp/
-      DATA aindex(26) , aindex(27) , aindex(28) , aindex(29) ,          &
+DATA aindex(26) , aindex(27) , aindex(28) , aindex(29) ,          &
      &     aindex(30) , aindex(31) , aindex(32) , aindex(33) ,          &
      &     aindex(34) , aindex(35) , aindex(36) , aindex(37) ,          &
      &     aindex(38) , aindex(39) , aindex(40) , aindex(41) ,          &

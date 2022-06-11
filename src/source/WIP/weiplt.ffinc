@@ -8,11 +8,11 @@ SYNOPSIS
       SUBROUTINE WEIPLT(X,N,Gamma)
 
 DESCRIPTION
-   weiplt(3f) generates a weibull probability plot (with tail length
-   parameter value = gamma).
+   WEIPLT(3f) generates a weibull probability plot (with tail length
+   parameter value = GAMMA).
 
-   the prototype weibull distribution used herein is defined for all
-   positive x, and has the probability density function
+   The prototype weibull distribution used herein is defined for all
+   positive X, and has the probability density function
 
        f(x) = gamma * (x**(gamma-1)) * exp(-(x**gamma))
 
@@ -20,15 +20,15 @@ DESCRIPTION
    of the ordered observations versus the order statistic medians for
    that distribution.
 
-   the weibull probability plot is useful in graphically testing
+   The Weibull probability plot is useful in graphically testing
    the composite (that is, location and scale parameters need not be
    specified) hypothesis that the underlying distribution from which the
-   data have been randomly drawn is the weibull distribution with tail
-   length parameter value = gamma.
+   data have been randomly drawn is the Weibull distribution with tail
+   length parameter value = GAMMA.
 
-   if the hypothesis is true, the probability plot should be near-linear.
+   If the hypothesis is true, the probability plot should be near-linear.
 
-   a measure of such linearity is given by the calculated probability
+   A measure of such linearity is given by the calculated probability
    plot correlation coefficient.
 
 OPTIONS
@@ -47,12 +47,16 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
     Eighteenth Conference on the Design of Experiments in Army Research
@@ -63,6 +67,12 @@ REFERENCES
   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
     Pages 250-271.
 $ENDBLOCK
+!     MODE OF INTERNAL OPERATIONS--.
+!     ORIGINAL VERSION--DECEMBER  1972.
+!     UPDATED         --MARCH     1975.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -81,19 +91,10 @@ INTEGER i , iupper , N
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
 !     OUTPUT--A ONE-PAGE WEIBULL PROBABILITY PLOT.
-!     PRINTING--YES.
+
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
-!                 --GAMMA SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--DECEMBER  1972.
-!     UPDATED         --MARCH     1975.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
-!
+!  
 !---------------------------------------------------------------------
 !
       DIMENSION X(:)

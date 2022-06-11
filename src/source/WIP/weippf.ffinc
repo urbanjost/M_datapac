@@ -8,14 +8,14 @@ SYNOPSIS
       SUBROUTINE WEIPPF(P,Gamma,Ppf)
 
 DESCRIPTION
-   weippf(3f) computes the percent point function value for the weibull
-   distribution with REAL tail length parameter = gamma.
+   WEIPPf(3f) computes the percent point function value for the Weibull
+   distribution with REAL tail length parameter = GAMMA.
 
-   the weibull distribution used herein is defined for all positive x,
-   and has the probability density function f(x) = gamma * (x**(gamma-1))
-   * exp(-(x**gamma)).
+   The Weibull distribution used herein is defined for all positive X,
+   and has the probability density function f(X) = GAMMA * (X**(GAMMA-1))
+   * exp(-(X**GAMMA)).
 
-   note that the percent point function of a distribution is identically
+   Note that the percent point function of a distribution is identically
    the same as the inverse cumulative distribution function of the
    distribution.
 
@@ -35,17 +35,22 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
 MAINTAINER
    John Urban, 2022.05.31
+
 LICENSE
    CC0-1.0
+
 REFERENCES
   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
     Pages 250-271.
   * Hastings and Peacock, Statistical Distributions--A Handbook for
     Students and Practitioners, 1975, Page 124.
+
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022

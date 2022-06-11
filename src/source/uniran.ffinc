@@ -6,57 +6,144 @@ NAME
 SYNOPSIS
       SUBROUTINE UNIRAN(N,Iseed,X)
 
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X(:)
+
 DESCRIPTION
-   uniran(3f) generates a random sample of size n from the uniform
+   UNIRAN(3f) generates a random sample of size N from the uniform
    (rectangular) distribution on the unit interval (0,1).
 
-   this distribution has mean = 0.5 and standard deviation = sqrt(1/12)
+   This distribution has mean = 0.5 and standard deviation = sqrt(1/12)
    = 0.28867513. This distribution has the probability density function
 
-       f(x) = 1
+       f(X) = 1
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+INPUT ARGUMENTS
 
-  ISEED  An integer iseed value. Should be set to a non-negative value
-         to start a new sequence of values. Will be set to -1 on return
-         to indicate the next call should continue the current random
-         sequence walk.
+   N      The desired integer number of random numbers to be generated.
 
+   ISEED  An integer iseed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+OUTPUT ARGUMENTS
+
+   X      A vector (of dimension at least N) into which the generated
+	  random sample of size N from the rectangular distribution on
+	  (0,1) will be placed.
 
 EXAMPLES
   Sample program:
 
    program demo_uniran
-   use M_datapac, only : uniran
+   use M_datapac, only : uniran, plotxt, sort, label
    implicit none
-   ! call uniran(x,y)
+   integer,parameter :: n=400
+   real :: x(n)
+   integer :: iseed
+      call label('uniran')
+      iseed=1234
+      call UNIRAN(n,Iseed,X)
+      call plotxt(x,n) ! plot random values
+      call sort(x,n,x) ! sort values
+      call plotxt(x,n) ! should display the f(x)=1 nature
+                       ! of the distribution
    end program demo_uniran
 
   Results:
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.9982013E+00 -   X    X           X                X  X    X X
+     0.9566447E+00 I          X    XX       X XX XXXX X       XX
+     0.9150882E+00 I     X  XXXX  X  XXXX X  X X X  X   XX X         X
+     0.8735316E+00 I   XX      XXX XX    XXXXXX X    X   X  X   X
+     0.8319750E+00 I       XXX  X   X  X  X X      XX     X  X     X
+     0.7904184E+00 I   XXX       XX    X   X            X X    X   XXX
+     0.7488618E+00 -   X XX X X X  X     X     X   X      X X   XXX  X
+     0.7073053E+00 I  X      X  X  X  X   X  X  X  X   X X          X
+     0.6657487E+00 I      X     XXX   X  XX  XXX X   X   X  X X    X  X
+     0.6241921E+00 I  X  X    X   X    XX  X             X   X     X
+     0.5826355E+00 I      X        X  X          XX X X       X X X
+     0.5410789E+00 I      XX   X     XX X      X     XXX XX X       X
+     0.4995224E+00 -   X    X        XX         X  XXX     XX
+     0.4579658E+00 I  XXX   X  XXX     X X  X XX XX X  X           X  X
+     0.4164092E+00 I     XX X  X      X X       X       X      X  X X
+     0.3748527E+00 I         XX XX  XX   X X   XX XX XX X           X
+     0.3332961E+00 I   X  XXX          X X  X         X X  XXXX  X  X
+     0.2917395E+00 I          X  X    X   X X    X XX         XX XX  X
+     0.2501829E+00 -    XX       XXX X     X       X   X   XX XXXX   X
+     0.2086263E+00 I  X  X X  X         X     X     XX    X       X  XX
+     0.1670697E+00 I    X  X X      XX X   XX     XX XXX   X   X XXX  X
+     0.1255132E+00 I           X XXX X  X               X    X XX X
+     0.8395660E-01 I   X X X   X    XX    X X X X     X X         X XX
+     0.4240000E-01 I    X    XX    X      X  X X X          X    X X  X
+     0.8433913E-03 -         X                       X X     X  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.9982013E+00 -                                                 XX
+     0.9566447E+00 I                                               XXX
+     0.9150882E+00 I                                            XXXX
+     0.8735316E+00 I                                          XXX
+     0.8319750E+00 I                                        XXX
+     0.7904184E+00 I                                      XXX
+     0.7488618E+00 -                                    XXX
+     0.7073053E+00 I                                  XXX
+     0.6657487E+00 I                               XXX
+     0.6241921E+00 I                              XX
+     0.5826355E+00 I                            XXX
+     0.5410789E+00 I                          XXX
+     0.4995224E+00 -                         XX
+     0.4579658E+00 I                      XXXX
+     0.4164092E+00 I                     XX
+     0.3748527E+00 I                   XXX
+     0.3332961E+00 I                XXX
+     0.2917395E+00 I               XX
+     0.2501829E+00 -            XXXX
+     0.2086263E+00 I           XX
+     0.1670697E+00 I        XXXX
+     0.1255132E+00 I      XXX
+     0.8395660E-01 I    XXX
+     0.4240000E-01 I   XX
+     0.8433913E-03 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 
 WRITTEN BY
      * James Blue
-                 scientific computing division
-                 center for applied mathematics
-                 national bureau of standards
-                 washington, d. c. 20234
+
+            Scientific Computing Division
+            Center for Applied Mathematics
+            National Bureau of Standards
+            Washington, D. C. 20234
+
      * David Kahaner
-                 scientific computing division
-                 center for applied mathematics
-                 national bureau of standards
+
+            Scientific Computing Division
+            Center for Applied Mathematics
+            National Bureau of Standards
+
      * George Marsaglia
-                 computer science department
-                 washington state university
+
+            Computer Science Department
+            Washington State University
+
      * James J. Filliben
-                 statistical engineering division
-                 center for applied mathematics
-                 national bureau of standards
+
+            Statistical Engineering Division
+            Center for Applied Mathematics
+            National Bureau of Standards
+
 MAINTAINER
    John Urban, 2022.05.31
 
@@ -70,31 +157,29 @@ REFERENCES
     Pages 57-74.
 
 $ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --AUGUST    1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --NOVEMBER  1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --MARCH     1984.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE UNIRAN(N,Iseed,X)
-REAL(kind=wp) :: ak , am1 , X(:)
-INTEGER i, Iseed, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig, N
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: ak , am1
+INTEGER i, iseed3, j, j0, j1, k, k0, k1, l, m1, m2, mdig
 INTEGER m(17)
 
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --ISEED  = AN INTEGER ISEED VALUE
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE RECTANGULAR DISTRIBUTION ON (0,1).
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
+
 !     MODE OF INTERNAL OPERATIONS--.
 !
-!     ALGORITHM--FIBONACCI GENERATOR
-!                AS DEFINED BY GEORGE MARSAGLIA.
+!     ALGORITHM--FIBONACCI GENERATOR AS DEFINED BY GEORGE MARSAGLIA.
 !
 !     NOTE--THIS GENERATOR IS TRANSPORTABLE.
 !           IT IS NOT MACHINE-INDEPENDENT
@@ -165,30 +250,18 @@ INTEGER m(17)
 !           NEED TO USE PRIMES, NOR TO USE EXCEPTIONALLY
 !           LARGE NUMBERS, ETC.
 !
-!
-!     LANGUAGE--ANSI FORTRAN (1977)
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --AUGUST    1974.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --NOVEMBER  1981.
-!     UPDATED         --MAY       1982.
-!     UPDATED         --MARCH     1984.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
 !-----SAVE STATEMENTS-------------------------------------------------
 !
-      SAVE i , j , m , m1 , m2
+SAVE i , j , m , m1 , m2
 !
 !-----DATA STATEMENTS-------------------------------------------------
 !
-      DATA m(1) , m(2) , m(3) , m(4) , m(5) , m(6) , m(7) , m(8) ,      &
-     &     m(9) , m(10) , m(11) , m(12) , m(13) , m(14) , m(15) ,       &
-     &     m(16) , m(17)/30788 , 23052 , 2053 , 19346 , 10646 , 19427 , &
-     &     23975 , 19049 , 10949 , 19693 , 29746 , 26748 , 2796 ,       &
-     &     23890 , 29168 , 31924 , 16499/
-      DATA m1 , m2 , i , j/32767 , 256 , 5 , 17/
+DATA m(1) , m(2) , m(3) , m(4) , m(5) , m(6) , m(7) , m(8) ,      &
+ &     m(9) , m(10) , m(11) , m(12) , m(13) , m(14) , m(15) ,       &
+ &     m(16) , m(17)/30788 , 23052 , 2053 , 19346 , 10646 , 19427 , &
+ &     23975 , 19049 , 10949 , 19693 , 29746 , 26748 , 2796 ,       &
+ &     23890 , 29168 , 31924 , 16499/
+DATA m1 , m2 , i , j/32767 , 256 , 5 , 17/
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -213,12 +286,10 @@ INTEGER m(17)
 !
          IF ( Iseed>0 ) THEN
 !
-!CCCC MDIG=16
             mdig = 32
 !
             m1 = 2**(mdig-2) + (2**(mdig-2)-1)
             m2 = 2**(mdig/2)
-!CCCC ISEED3=MIN0(IABS(ISEED),M1)
             iseed3 = IABS(Iseed)
             IF ( m1<IABS(Iseed) ) iseed3 = m1
             IF ( MOD(iseed3,2)==0 ) iseed3 = iseed3 - 1
@@ -271,13 +342,13 @@ INTEGER m(17)
          Iseed = (-1)
       ELSE
          WRITE (G_IO,99001)
-99001    FORMAT (' ')
+         99001 FORMAT (' ')
          WRITE (G_IO,99002)
-99002    FORMAT (' ','***** ERROR IN UNIRAN--')
+         99002 FORMAT (' ','***** Error in UNIRAN--')
          WRITE (G_IO,99003)
-99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS NON-POSITIVE.')
+         99003 FORMAT (' ','      The input number of observations is non-positive.')
          WRITE (G_IO,99004) N
-99004    FORMAT (' ','      N = ',I0)
+         99004 FORMAT (' ','      N = ',I0)
       ENDIF
 !
 !               *****************
