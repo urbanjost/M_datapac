@@ -1,0 +1,85 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file logsf.3m_datapac.man
+NAME
+   logsf(3f) - [M_datapac:SPARSITY] compute the logistic sparsity function
+
+SYNOPSIS
+      SUBROUTINE LOGSF(P,Sf)
+
+       REAL(kind=wp),intent(in)  :: P
+       REAL(kind=wp),intent(out) :: Sf
+
+DESCRIPTION
+   LOGSF(3f) computes the sparsity function value for the logistic
+   distribution with mean = 0 and standard deviation = pi/sqrt(3).
+
+   This distribution is defined for all X and has the probability
+   density function
+
+       f(X) = exp(X)/(1+exp(X))
+
+   Note that the sparsity function of a distribution is the derivative
+   of the percent point function, and also is the reciprocal of the
+   probability density function (but in units of P rather than X).
+
+INPUT ARGUMENTS
+   P      The value at which the sparsity function is to be evaluated.
+          P should be between 0.0 and 1.0, exclusively.
+OUTPUT ARGUMENTS
+   SF     The sparsity function value.
+
+EXAMPLES
+  Sample program:
+
+   program demo_logsf
+   use M_datapac, only : logsf
+   implicit none
+   ! call logsf(x,y)
+   end program demo_logsf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Filliben, Simple and Robust Linear Estimation of the Location
+    Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+    Princeton University), 1969, Pages 21-44, 229-231.
+  * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+    1970, Pages 28-31.
+  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+    Pages 1-21.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LOGSF(P,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Sf
+!---------------------------------------------------------------------
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to LOGSF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      Sf = 1.0_wp/(P-P*P)
+   ENDIF
+ 
+END SUBROUTINE LOGSF

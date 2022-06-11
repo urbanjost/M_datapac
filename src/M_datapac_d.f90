@@ -7537,22 +7537,31 @@ END SUBROUTINE EXPRAN
 !!
 !!       SUBROUTINE EXPSF(P,Sf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Sf
+!!
 !!##DESCRIPTION
-!!    expsf(3f) computes the sparsity function value for the exponential
+!!    EXPSF(3f) computes the sparsity function value for the exponential
 !!    distribution with mean = 1 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x, and has the
+!!    This distribution is defined for all non-negative X, and has the
 !!    probability density function
 !!
-!!        f(x) = exp(-x).
+!!        f(X) = exp(-X)
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
-!!    probability density function (but in units of p rather than x).
+!!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    P   The value at which the sparsity function is to be evaluated.
+!!        P should be between 0.0 (inclusively) and 1.0 (exclusively).
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    SF  The sparsity function value.
 !!
 !!##EXAMPLES
 !!
@@ -7567,60 +7576,45 @@ END SUBROUTINE EXPRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 207-232.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE EXPSF(P,Sf)
-REAL(kind=wp) :: P , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EXPSF(P,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Sf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Sf = 1.0_wp/(1.0_wp-P)
-      ENDIF
+   IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to EXPSF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      Sf = 1.0_wp/(1.0_wp-P)
+   ENDIF
 !
 END SUBROUTINE EXPSF
 !>
@@ -12510,30 +12504,48 @@ INTEGER :: i , Iseed , N
 END SUBROUTINE LAMRAN
 !>
 !!##NAME
-!!    lamsf(3f) - [M_datapac:SPARSITY] compute the Tukey-Lambda sparsity function
+!!    lamsf(3f) - [M_datapac:SPARSITY] compute the Tukey-Lambda sparsity
+!!    function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LAMSF(P,Alamba,Sf)
 !!
-!!##DESCRIPTION
-!!    lamsf(3f) computes the sparsity function value for the (tukey) lambda
-!!    distribution with tail length parameter value = alamba.
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(in)  :: Alamba
+!!        REAL(kind=wp),intent(out) :: Sf
 !!
-!!    in general, the probability density function for this distribution
+!!##DESCRIPTION
+!!    LAMSF(3f) computes the sparsity function value for the (Tukey) lambda
+!!    distribution with tail length parameter value = ALAMBA.
+!!
+!!    In general, the probability density function for this distribution
 !!    is not simple.
 !!
-!!    the percent point function for this distribution is
+!!    The percent point function for this distribution is
 !!
-!!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!        g(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
-!!    probability density function (but in units of p rather than x).
+!!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P       The value (between 0.0 and 1.0) at which the sparsity function
+!!            is to be evaluated.
+!!
+!!    ALAMBA  The value of Lambda (the Tail Length parameter).
+!!
+!!            If ALAMBA is positive, then P should be between 0.0 and 1.0,
+!!            inclusively.
+!!
+!!            If ALAMBA is non-positive, then P should be between 0.0 and
+!!            1.0, exclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    SF      The sparsity function value for the Tukey Lambda distribution
 !!
 !!##EXAMPLES
 !!
@@ -12551,69 +12563,51 @@ END SUBROUTINE LAMRAN
 !!    The original DATAPAC library was written by James Filliben of the
 !!    Statistical Engineering Division, National Institute of Standards
 !!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231, PAGES 53-58.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
-!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
-!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LAMSF(P,Alamba,Sf)
-REAL(kind=wp) :: Alamba , P , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE  VALUE OF LAMBDA
-!                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF FOR THE TUKEY LAMBDA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER = ALAMBA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--IF ALAMBA IS POSITIVE,
-!                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!                   IF ALAMBA IS NON-POSITIVE,
-!                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, Pages 21-44, 229-231, Pages 53-58.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   * Hastings, Mosteller, Tukey, and Windsor, 'Low Moments for Small
+!!     Samples:  A Comparative Study of Order Statistics', Annals of
+!!     Mathematical Statistics, 18, 1947, Pages 413-426.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LAMSF(P,Alamba,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(in)  :: Alamba
+REAL(kind=wp),intent(out) :: Sf
 !---------------------------------------------------------------------
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( Alamba>0.0_wp .OR. P>0.0_wp ) THEN
-         IF ( Alamba>0.0_wp .OR. P<1.0_wp ) THEN
-            IF ( Alamba<=0.0_wp .OR. P>=0.0_wp ) THEN
-               IF ( Alamba<=0.0_wp .OR. P<=1.0_wp ) THEN
-!
+   IF ( Alamba>0.0_wp .OR. P>0.0_wp ) THEN
+      IF ( Alamba>0.0_wp .OR. P<1.0_wp ) THEN
+         IF ( Alamba<=0.0_wp .OR. P>=0.0_wp ) THEN
+            IF ( Alamba<=0.0_wp .OR. P<=1.0_wp ) THEN
 !-----START POINT-----------------------------------------------------
-!
-                  Sf = P**(Alamba-1.0_wp) + (1.0-P)**(Alamba-1.0_wp)
-                  GOTO 99999
-               ENDIF
+               Sf = P**(Alamba-1.0_wp) + (1.0-P)**(Alamba-1.0_wp)
+               GOTO 99999
             ENDIF
          ENDIF
       ENDIF
-      WRITE (G_IO,99001)
-99001 FORMAT (' ',                                                      &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LAMSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-      WRITE (G_IO,99002) P
-99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-      RETURN
-!
+   ENDIF
+   WRITE (G_IO,99001)
+   99001 FORMAT (' ***** FATAL ERROR--The first input argument to LAMSF(3f) is outside the allowable (0,1) interval *****')
+   WRITE (G_IO,99002) P
+   99002 FORMAT (' ***** the value of the argument is ',E15.8,' *****')
+   RETURN
+
 99999 END SUBROUTINE LAMSF
 !>
 !!##NAME
@@ -13612,32 +13606,41 @@ END SUBROUTINE LOGPDF
 !!
 !!       SUBROUTINE LOGPLT(X,N)
 !!
+!!        INTEGER,intent(in) :: N
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!
 !!##DESCRIPTION
-!!    logplt(3f) generates a logistic probability plot.
+!!    LOGPLT(3f) generates a logistic probability plot.
 !!
-!!    the prototype logistic distribution used herein has mean = 0 and
+!!    The prototype logistic distribution used herein has mean = 0 and
 !!    standard deviation = pi/sqrt(3). This distribution is defined for
-!!    all x and has the probability density function
+!!    all X and has the probability density function
 !!
-!!        f(x) = exp(x) / (1+exp(x)).
+!!        f(X) = exp(X) / (1+exp(X))
 !!
-!!    as used herein, a probability plot for a distribution is a plot
+!!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the logistic probability plot is useful in graphically testing
+!!    The logistic probability plot is useful in graphically testing
 !!    the composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which
 !!    the data have been randomly drawn is the logistic distribution.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
-!!    a measure of such linearity is given by the calculated probability
+!!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The vector of (unsorted or sorted) observations.
+!!
+!!    N     The integer number of observations in the vector X.
+!!          The maximum allowable value of N for this subroutine is 7500.
+!!##OUTPUT
+!!
+!!    A one-page logistic probability plot.
 !!
 !!##EXAMPLES
 !!
@@ -13652,21 +13655,25 @@ END SUBROUTINE LOGPDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
-!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and testing (Aberdeen, Maryland, October, 1972), Pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
 !!     260-308.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 1-21.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13674,22 +13681,11 @@ END SUBROUTINE LOGPDF
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGPLT(X,N)
-REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
-INTEGER :: i , iupper , N
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE LOGISTIC PROBABILITY PLOT.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!
-!---------------------------------------------------------------------
-!
-DIMENSION X(:)
-DIMENSION Y(7500) , W(7500)
+INTEGER,intent(in) :: N
+REAL(kind=wp),intent(in) :: X(:)
+REAL(kind=wp) :: an, cc, hold, sum1, sum2, sum3, tau, W, wbar, WS, Y, ybar, yint, yslope
+INTEGER :: i, iupper
+DIMENSION Y(7500), W(7500)
 COMMON /BLOCK2_real64/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 EQUIVALENCE (W(1),WS(7501))
@@ -13991,22 +13987,27 @@ END SUBROUTINE LOGRAN
 !!
 !!       SUBROUTINE LOGSF(P,Sf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Sf
+!!
 !!##DESCRIPTION
-!!    logsf(3f) computes the sparsity function value for the logistic
+!!    LOGSF(3f) computes the sparsity function value for the logistic
 !!    distribution with mean = 0 and standard deviation = pi/sqrt(3).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = exp(x)/(1+exp(x)).
+!!        f(X) = exp(X)/(1+exp(X))
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
-!!    probability density function (but in units of p rather than x).
+!!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    P      The value at which the sparsity function is to be evaluated.
+!!           P should be between 0.0 and 1.0, exclusively.
+!!##OUTPUT ARGUMENTS
+!!    SF     The sparsity function value.
 !!
 !!##EXAMPLES
 !!
@@ -14032,52 +14033,34 @@ END SUBROUTINE LOGRAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 1-21.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LOGSF(P,Sf)
-REAL(kind=wp) :: P , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     Pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LOGSF(P,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Sf
 !---------------------------------------------------------------------
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Sf = 1.0_wp/(P-P*P)
-      ENDIF
-!
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to LOGSF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      Sf = 1.0_wp/(P-P*P)
+   ENDIF
+
 END SUBROUTINE LOGSF
 !>
 !!##NAME
@@ -17182,22 +17165,30 @@ END SUBROUTINE NORRAN
 !!
 !!       SUBROUTINE NORSF(P,Sf)
 !!
-!!##DESCRIPTION
-!!    norsf(3f) computes the sparsity function value for the normal
-!!    (gaussian) distribution with mean = 0 and standard deviation = 1.
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Sf
 !!
-!!    this distribution is defined for all x and has the probability
+!!##DESCRIPTION
+!!    NORSF(3f) computes the sparsity function value for the normal
+!!    (Gaussian) distribution with mean = 0 and standard deviation = 1.
+!!
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!        f(X) = (1/sqrt(2*pi))*exp(-x*x/2)
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
-!!    probability density function (but in units of p rather than x).
+!!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P   The value at which the sparsity function is to be evaluated.
+!!        P should be between 0.0 and 1.0, exclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    SF  The sparsity function value.
 !!
 !!##EXAMPLES
 !!
@@ -17212,58 +17203,50 @@ END SUBROUTINE NORRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 40-111.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, Pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NORSF(P,Sf)
-REAL(kind=wp) :: c , P , pdf , ppf , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 
+SUBROUTINE NORSF(P,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Sf
+
+REAL(kind=wp) :: c, pdf, ppf
 !---------------------------------------------------------------------
-!
       DATA c/0.3989422804_wp/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO NORSF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         CALL NORPPF(P,ppf)
-         pdf = c*EXP(-(ppf*ppf)/2.0_wp)
-         Sf = 1.0_wp/pdf
-      ENDIF
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE first input argument to NORSF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      CALL NORPPF(P,ppf)
+      pdf = c*EXP(-(ppf*ppf)/2.0_wp)
+      Sf = 1.0_wp/pdf
+   ENDIF
 !
 END SUBROUTINE NORSF
 !>
@@ -33738,7 +33721,7 @@ END SUBROUTINE UNIPPF
 !!   Sample program:
 !!
 !!    program demo_uniran
-!!    use M_datapac, only : uniran, plotxt, sort, last
+!!    use M_datapac, only : uniran, plotxt, sort, label
 !!    implicit none
 !!    integer,parameter :: n=400
 !!    real :: x(n)

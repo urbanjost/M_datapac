@@ -1,0 +1,93 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file norsf.3m_datapac.man
+NAME
+   norsf(3f) - [M_datapac:SPARSITY] compute the normal sparsity function
+
+SYNOPSIS
+      SUBROUTINE NORSF(P,Sf)
+
+       REAL(kind=wp),intent(in)  :: P 
+       REAL(kind=wp),intent(out) :: Sf
+
+DESCRIPTION
+   NORSF(3f) computes the sparsity function value for the normal
+   (Gaussian) distribution with mean = 0 and standard deviation = 1.
+
+   This distribution is defined for all X and has the probability
+   density function
+
+       f(X) = (1/sqrt(2*pi))*exp(-x*x/2)
+
+   Note that the sparsity function of a distribution is the derivative
+   of the percent point function, and also is the reciprocal of the
+   probability density function (but in units of P rather than X).
+
+INPUT ARGUMENTS
+
+   P   The value at which the sparsity function is to be evaluated.
+       P should be between 0.0 and 1.0, exclusively.
+
+OUTPUT ARGUMENTS
+
+   SF  The sparsity function value.
+
+EXAMPLES
+  Sample program:
+
+   program demo_norsf
+   use M_datapac, only : norsf
+   implicit none
+   ! call norsf(x,y)
+   end program demo_norsf
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Filliben, Simple and Robust Linear Estimation of the Location
+    Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+    Princeton University), 1969, Pages 21-44, 229-231.
+  * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+    1970, Pages 28-31.
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    Pages 40-111.
+$ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE NORSF(P,Sf)
+REAL(kind=wp),intent(in)  :: P 
+REAL(kind=wp),intent(out) :: Sf
+
+REAL(kind=wp) :: c, pdf, ppf
+!---------------------------------------------------------------------
+      DATA c/0.3989422804_wp/
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE first input argument to NORSF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      CALL NORPPF(P,ppf)
+      pdf = c*EXP(-(ppf*ppf)/2.0_wp)
+      Sf = 1.0_wp/pdf
+   ENDIF
+!
+END SUBROUTINE NORSF
