@@ -3,7 +3,29 @@
    (LICENSE: CC0-1.0)
 ## Synopsis
 ```text
-       use M_datapac
+   use M_datapac, only : 
+    & autoco,  betran,  bincdf,  binppf,  binran,  caucdf,  caupdf,  cauplt,  &
+    & cauppf,  cauran,  causf,   chscdf,  chsplt,  chsppf,  chsran,  code,    &
+    & copy,    corr,    count,   decomp,  define,  delete,  demod,   dexcdf,  &
+    & dexpdf,  dexplt,  dexppf,  dexran,  dexsf,   discr2,  discr3,  discre,  &
+    & dot,     ev1cdf,  ev1plt,  ev1ppf,  ev1ran,  ev2cdf,  ev2plt,  ev2ppf,  &
+    & ev2ran,  expcdf,  exppdf,  expplt,  expppf,  expran,  expsf,   extrem,  &
+    & fcdf,    fourie,  fran,    freq,    gamcdf,  gamplt,  gamppf,  gamran,  &
+    & geocdf,  geoplt,  geoppf,  georan,  hfncdf,  hfnplt,  hfnppf,  hfnran,  &
+    & hist,    invxwx,  label,   lamcdf,  lampdf,  lamplt,  lamppf,  lamran,  &
+    & lamsf,   lgncdf,  lgnplt,  lgnppf,  lgnran,  loc,     logcdf,  logpdf,  &
+    & logplt,  logppf,  logran,  logsf,   max,     mean,    median,  midm,    &
+    & midr,    min,     move,    nbcdf,   nbppf,   nbran,   norcdf,  norout,  &
+    & norpdf,  norplt,  norppf,  norran,  norsf,   parcdf,  parplt,  parppf,  &
+    & parran,  plot,    plot10,  plot6,   plot7,   plot8,   plot9,   plotc,   &
+    & plotco,  plotct,  plots,   plotsc,  plotsp,  plotst,  plott,   plotu,   &
+    & plotx,   plotxt,  plotxx,  pltsct,  pltxxt,  poicdf,  poiplt,  poippf,  &
+    & poiran,  propor,  range,   rank,    ranper,  relsd,   replac,  retain,  &
+    & runs,    sampp,   scale,   sd,      sort,    sortc,   sortp,   spcorr,  &
+    & stmom3,  stmom4,  subse1,  subse2,  subset,  tail,    tcdf,    time,    &
+    & tol,     tplt,    tppf,    tran,    trim,    unicdf,  unimed,  unipdf,  &
+    & uniplt,  unippf,  uniran,  unisf,   var,     weib,    weicdf,  weiplt,  &
+    & weippf,  weiran,  wind
 ```
 ## Description
 
