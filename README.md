@@ -1,5 +1,5 @@
 ## Name
-   M_datapac(3f) - an fpm module build from the NIST DATAPAC package
+   M_datapac(3f) - an fpm module derived from the NIST DATAPAC package
    (LICENSE: CC0-1.0)
 ## Synopsis
 ```text
