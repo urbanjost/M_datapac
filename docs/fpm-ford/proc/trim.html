@@ -195,7 +195,7 @@
       
       <a class="list-group-item" href="../proc/trim.html#variable-hold~80">hold</a>
       
-      <a class="list-group-item" href="../proc/trim.html#variable-i~110">i</a>
+      <a class="list-group-item" href="../proc/trim.html#variable-i~109">i</a>
       
       <a class="list-group-item" href="../proc/trim.html#variable-istart~4">istart</a>
       
@@ -342,7 +342,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~117"></span>real(kind=wp)</td>
+  <td><span class="anchor" id="variable-x~116"></span>real(kind=wp)</td>
   <td></td>
   <td></td>
   
@@ -357,7 +357,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-n~101"></span>integer</td>
+  <td><span class="anchor" id="variable-n~100"></span>integer</td>
   <td></td>
   <td></td>
   
@@ -472,7 +472,7 @@ and Technology.
       
       <a class="list-group-item" href="../proc/trim.html#variable-hold~80">hold</a>
       
-      <a class="list-group-item" href="../proc/trim.html#variable-i~110">i</a>
+      <a class="list-group-item" href="../proc/trim.html#variable-i~109">i</a>
       
       <a class="list-group-item" href="../proc/trim.html#variable-istart~4">istart</a>
       
@@ -677,7 +677,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-i~110"></span>integer,</td>
+  <td><span class="anchor" id="variable-i~109"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -938,9 +938,9 @@ and Technology.
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span> <span class="n">iupper</span>
 <span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
      <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TRIM   SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
+<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span> <span class="n">N</span>
-<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
          <span class="k">RETURN</span>
 <span class="k">      ELSE</span>
 <span class="k">         IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
@@ -1035,16 +1035,16 @@ and Technology.
       <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span>
 <span class="mi">99012</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
       <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span> <span class="n">N</span> <span class="p">,</span> <span class="n">Xtrim</span>
-<span class="mi">99013</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE SAMPLE TRIMMED MEAN OF THE &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="s1">&#39; OBSERVATIONS&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+<span class="mi">99013</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE SAMPLE TRIMMED MEAN OF THE &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; OBSERVATIONS&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
      <span class="p">&amp;</span>        <span class="s1">&#39; IS &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
       <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99014</span><span class="p">)</span> <span class="n">perp1</span> <span class="p">,</span> <span class="n">np1</span>
-<span class="mi">99014</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">8</span><span class="n">X</span><span class="p">,</span><span class="n">F10</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39; PERCENT (= &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="s1">&#39; OBSERVATIONS) &#39;</span><span class="p">,</span>         <span class="p">&amp;</span>
+<span class="mi">99014</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">8</span><span class="n">X</span><span class="p">,</span><span class="n">F10</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39; PERCENT (= &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; OBSERVATIONS) &#39;</span><span class="p">,</span>         <span class="p">&amp;</span>
      <span class="p">&amp;</span>        <span class="s1">&#39;OF THE DATA WERE TRIMMED     FROM BELOW&#39;</span><span class="p">)</span>
       <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99015</span><span class="p">)</span> <span class="n">perp2</span> <span class="p">,</span> <span class="n">np2</span>
-<span class="mi">99015</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">8</span><span class="n">X</span><span class="p">,</span><span class="n">F10</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39; PERCENT (= &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="s1">&#39; OBSERVATIONS) &#39;</span><span class="p">,</span>         <span class="p">&amp;</span>
+<span class="mi">99015</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">8</span><span class="n">X</span><span class="p">,</span><span class="n">F10</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39; PERCENT (= &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; OBSERVATIONS) &#39;</span><span class="p">,</span>         <span class="p">&amp;</span>
      <span class="p">&amp;</span>        <span class="s1">&#39;OF THE DATA WERE TRIMMED     FROM ABOVE&#39;</span><span class="p">)</span>
       <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99016</span><span class="p">)</span> <span class="n">perp3</span> <span class="p">,</span> <span class="n">k</span>
-<span class="mi">99016</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">8</span><span class="n">X</span><span class="p">,</span><span class="n">F10</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39; PERCENT (= &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="s1">&#39; OBSERVATIONS) &#39;</span><span class="p">,</span>         <span class="p">&amp;</span>
+<span class="mi">99016</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">8</span><span class="n">X</span><span class="p">,</span><span class="n">F10</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39; PERCENT (= &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; OBSERVATIONS) &#39;</span><span class="p">,</span>         <span class="p">&amp;</span>
      <span class="p">&amp;</span>        <span class="s1">&#39; OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING&#39;</span><span class="p">)</span>
 <span class="mi">99017</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
 <span class="c">!</span>
@@ -1070,7 +1070,7 @@ and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-07 21:20  
+             on 2022-06-11 06:31  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

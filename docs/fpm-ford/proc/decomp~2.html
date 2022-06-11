@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.4% of total for procedures.">105 statements</a>
+    title=" 0.4% of total for procedures.">111 statements</a>
      </li> 
      
      
@@ -296,22 +296,29 @@ public subroutine DECOMP(N, K, Eta, Tol, Irank, Insing)
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>   SUBROUTINE DECOMP(N,K,Eta,Tol,Irank,Insing)
+
+    INTEGER :: N
+    INTEGER :: K
+    REAL(kind=wp) :: Eta
+    REAL(kind=wp) :: Tol
+    INTEGER :: Irank
+    INTEGER :: Insing
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">decomp</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">decomposes</span> <span class="nv">the</span> <span class="nv">weighted</span> <span class="nv">data</span> <span class="nv">matrix</span> <span class="nv">q</span> <span class="nv">which</span> <span class="nv">originally</span> <span class="o">=</span>
-<span class="nv">the</span> <span class="nv">n</span> <span class="nv">by</span> <span class="nv">k</span> <span class="nv">data</span> <span class="nv">matrix</span> <span class="nv">x</span> <span class="nv">times</span> <span class="nv">the</span> <span class="nv">square</span> <span class="nv">root</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">weights</span> <span class="ss">(</span><span class="nv">in</span> <span class="nv">w</span><span class="ss">)</span>.
+<div class="codehilite"><pre><span></span><code><span class="nv">DECOMP</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">decomposes</span> <span class="nv">the</span> <span class="nv">weighted</span> <span class="nv">data</span> <span class="nv">matrix</span> <span class="nv">q</span> <span class="nv">which</span> <span class="nv">originally</span> <span class="o">=</span>
+<span class="nv">the</span> <span class="nv">N</span> <span class="nv">by</span> <span class="nv">K</span> <span class="nv">data</span> <span class="nv">matrix</span> <span class="nv">x</span> <span class="nv">times</span> <span class="nv">the</span> <span class="nv">square</span> <span class="nv">root</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">weights</span> <span class="ss">(</span><span class="nv">in</span> <span class="nv">w</span><span class="ss">)</span>.
 
-<span class="nv">the</span> <span class="nv">original</span> <span class="nv">q</span> <span class="nv">is</span> <span class="nv">decomposed</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">new</span> <span class="nv">q</span> <span class="nv">times</span> <span class="nv">the</span> <span class="nv">inverse</span> <span class="nv">of</span> <span class="nv">a</span>
+<span class="nv">The</span> <span class="nv">original</span> <span class="nv">q</span> <span class="nv">is</span> <span class="nv">decomposed</span> <span class="nv">into</span> <span class="nv">a</span> <span class="nv">new</span> <span class="nv">q</span> <span class="nv">times</span> <span class="nv">the</span> <span class="nv">inverse</span> <span class="nv">of</span> <span class="nv">a</span>
 <span class="nv">diagonal</span> <span class="nv">matrix</span> <span class="nv">d</span> <span class="nv">times</span> <span class="nv">the</span> <span class="nv">diagonal</span> <span class="nv">matrix</span> <span class="nv">d</span> <span class="nv">times</span> <span class="nv">an</span> <span class="nv">upper</span> <span class="nv">triangular</span>
 <span class="nv">matrix</span> <span class="nv">r</span>.
 
-<span class="nv">the</span> <span class="nv">new</span> <span class="nv">n</span> <span class="nv">by</span> <span class="nv">k</span> <span class="nv">q</span> <span class="nv">has</span> <span class="nv">orthogonal</span> <span class="nv">columns</span>.
+<span class="nv">The</span> <span class="nv">new</span> <span class="nv">N</span> <span class="nv">by</span> <span class="nv">K</span> <span class="nv">q</span> <span class="nv">has</span> <span class="nv">orthogonal</span> <span class="nv">columns</span>.
 
-<span class="nv">a</span> <span class="nv">second</span> <span class="nv">output</span> <span class="nv">from</span> <span class="nv">decomp</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">rank</span> <span class="nv">and</span> <span class="nv">status</span> <span class="ss">(</span><span class="nv">non</span><span class="o">-</span><span class="nv">singular</span>
-<span class="nv">or</span> <span class="nv">singular</span><span class="ss">)</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">data</span> <span class="nv">matrix</span> <span class="nv">x</span>.
+<span class="nv">A</span> <span class="nv">second</span> <span class="nv">output</span> <span class="nv">from</span> <span class="nv">DECOMP</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">rank</span> <span class="nv">and</span> <span class="nv">status</span> <span class="ss">(</span><span class="nv">non</span><span class="o">-</span><span class="nv">singular</span>
+<span class="nv">or</span> <span class="nv">singular</span><span class="ss">)</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">data</span> <span class="nv">matrix</span> <span class="nv">X</span>.
 
-<span class="nv">a</span> <span class="nv">third</span> <span class="nv">output</span> <span class="nv">from</span> <span class="nv">decomp</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">numerically</span> <span class="nv">optimal</span> <span class="nv">pivot</span> <span class="nv">points</span>
+<span class="nv">A</span> <span class="nv">third</span> <span class="nv">output</span> <span class="nv">from</span> <span class="nv">DECOMP</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">numerically</span> <span class="nv">optimal</span> <span class="nv">pivot</span> <span class="nv">points</span>
 <span class="k">for</span> <span class="nv">the</span> <span class="nv">decomposition</span>.
 </code></pre></div>
 
@@ -1103,8 +1110,15 @@ Engineering Division, National Institute of Standards and Technology.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">DECOMP</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">Eta</span><span class="p">,</span><span class="n">Tol</span><span class="p">,</span><span class="n">Irank</span><span class="p">,</span><span class="n">Insing</span><span class="p">)</span>
-<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">D</span><span class="p">,</span> <span class="n">dis</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">DUM1</span><span class="p">,</span> <span class="n">DUM2</span><span class="p">,</span> <span class="n">Eta</span><span class="p">,</span> <span class="n">hold</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">risj</span><span class="p">,</span> <span class="n">Tol</span><span class="p">,</span> <span class="n">tol2</span><span class="p">,</span> <span class="n">WS</span>
-<span class="kt">INTEGER </span><span class="n">i</span><span class="p">,</span> <span class="n">Insing</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">IPIvot</span><span class="p">,</span> <span class="n">iqarg</span><span class="p">,</span> <span class="n">iqarg1</span><span class="p">,</span> <span class="n">iqarg2</span><span class="p">,</span> <span class="n">Irank</span><span class="p">,</span> <span class="n">irarg</span><span class="p">,</span> <span class="n">irarg1</span><span class="p">,</span> <span class="n">irarg2</span><span class="p">,</span> <span class="k">is</span><span class="p">,</span> <span class="n">ism1</span><span class="p">,</span> <span class="n">isp1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">N</span>
+<span class="kt">INTEGER</span> <span class="kd">::</span> <span class="n">N</span>
+<span class="kt">INTEGER</span> <span class="kd">::</span> <span class="n">K</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Eta</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Tol</span>
+<span class="kt">INTEGER</span> <span class="kd">::</span> <span class="n">Irank</span>
+<span class="kt">INTEGER</span> <span class="kd">::</span> <span class="n">Insing</span>
+
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">D</span><span class="p">,</span> <span class="n">dis</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">DUM1</span><span class="p">,</span> <span class="n">DUM2</span><span class="p">,</span> <span class="n">hold</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">risj</span><span class="p">,</span> <span class="n">tol2</span><span class="p">,</span> <span class="n">WS</span>
+<span class="kt">INTEGER </span><span class="n">i</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">IPIvot</span><span class="p">,</span> <span class="n">iqarg</span><span class="p">,</span> <span class="n">iqarg1</span><span class="p">,</span> <span class="n">iqarg2</span><span class="p">,</span> <span class="n">irarg</span><span class="p">,</span> <span class="n">irarg1</span><span class="p">,</span> <span class="n">irarg2</span><span class="p">,</span> <span class="k">is</span><span class="p">,</span> <span class="n">ism1</span><span class="p">,</span> <span class="n">isp1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span>
 <span class="kt">LOGICAL </span><span class="n">fsum</span>
 <span class="k">DIMENSION </span><span class="n">Q</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span> <span class="p">,</span> <span class="n">R</span><span class="p">(</span><span class="mi">2500</span><span class="p">)</span> <span class="p">,</span> <span class="n">D</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="p">,</span> <span class="n">IPIvot</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 <span class="k">COMMON</span> <span class="o">/</span><span class="n">BLOCK2_real32</span><span class="o">/</span> <span class="n">WS</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
@@ -1264,7 +1278,7 @@ Engineering Division, National Institute of Standards and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-07 21:20  
+             on 2022-06-11 06:31  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

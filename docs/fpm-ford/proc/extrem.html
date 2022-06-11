@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 1.9% of total for procedures.">541 statements</a>
+    title=" 1.9% of total for procedures.">546 statements</a>
      </li> 
      
      
@@ -600,6 +600,11 @@ function
 
 <h2 id="synopsis_1">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>   SUBROUTINE FCDF(X,Nu1,Nu2,Cdf)
+
+    REAL(kind=wp)    :: X
+    INTEGER          :: Nu1
+    INTEGER          :: Nu2
+    REAL(kind=wp)    :: Cdf
 </code></pre></div>
 
 <h2 id="description_1">DESCRIPTION</h2>
@@ -667,11 +672,14 @@ and Technology.
 
 <h2 id="synopsis_2">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>   SUBROUTINE FOURIE(X,N)
+
+    REAL(kind=wp),intent(in) :: X(:)
+    INTEGER                  :: N
 </code></pre></div>
 
 <h2 id="description_2">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">FOURIE</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="n">performs</span> <span class="n">a</span> <span class="n">Fourier</span> <span class="n">analysis</span> <span class="n">of</span> <span class="n">the</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">input</span>
-<span class="n">vector</span> <span class="n">X</span><span class="o">.</span> <span class="n">The</span> <span class="n">analysis</span> <span class="n">consists</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span><span class="o">--</span>
+<div class="codehilite"><pre><span></span><code><span class="n">FOURIE</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="n">performs</span> <span class="n">a</span> <span class="n">Fourier</span> <span class="n">analysis</span> <span class="n">of</span> <span class="n">the</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">input</span> <span class="n">vector</span>
+<span class="n">X</span><span class="o">.</span> <span class="n">The</span> <span class="n">analysis</span> <span class="n">consists</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span><span class="o">--</span>
 
    <span class="mf">1.</span> <span class="n">computing</span> <span class="p">(</span><span class="ow">and</span> <span class="n">printing</span><span class="p">)</span>
       <span class="p">(</span><span class="k">for</span> <span class="n">each</span> <span class="n">of</span> <span class="n">the</span> <span class="n">harmonic</span> <span class="n">frequencies</span>
@@ -687,21 +695,74 @@ and Technology.
       <span class="p">(</span><span class="n">at</span> <span class="n">each</span> <span class="n">fourier</span> <span class="n">frequency</span><span class="p">)</span> <span class="n">versus</span>
       <span class="n">the</span> <span class="n">fourier</span> <span class="n">frequency</span><span class="o">.</span>
 
-<span class="ow">in</span> <span class="n">order</span> <span class="n">that</span> <span class="n">the</span> <span class="n">results</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Fourier</span> <span class="n">analysis</span> <span class="n">be</span> <span class="n">valid</span> <span class="ow">and</span> <span class="n">properly</span>
+<span class="n">In</span> <span class="n">order</span> <span class="n">that</span> <span class="n">the</span> <span class="n">results</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Fourier</span> <span class="n">analysis</span> <span class="n">be</span> <span class="n">valid</span> <span class="ow">and</span> <span class="n">properly</span>
 <span class="n">interpreted</span><span class="p">,</span> <span class="n">the</span> <span class="n">input</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">X</span> <span class="n">should</span> <span class="n">be</span> <span class="n">equi</span><span class="o">-</span><span class="n">spaced</span> <span class="ow">in</span> <span class="n">time</span> <span class="p">(</span><span class="ow">or</span>
 <span class="n">whatever</span> <span class="n">variable</span> <span class="n">corresponds</span> <span class="n">to</span> <span class="n">time</span><span class="p">)</span><span class="o">.</span>
 
-<span class="n">the</span> <span class="n">horizontal</span> <span class="n">axis</span> <span class="n">of</span> <span class="n">the</span> <span class="n">spectra</span> <span class="n">produced</span> <span class="n">by</span> <span class="n">fourie</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="k">is</span> <span class="n">frequency</span><span class="o">.</span>
-<span class="n">this</span> <span class="n">frequency</span> <span class="k">is</span> <span class="n">measured</span> <span class="ow">in</span> <span class="n">units</span> <span class="n">of</span> <span class="n">cycles</span> <span class="n">per</span> <span class="s1">&#39;data point&#39;</span> <span class="ow">or</span><span class="p">,</span>
+<span class="n">The</span> <span class="n">horizontal</span> <span class="n">axis</span> <span class="n">of</span> <span class="n">the</span> <span class="n">spectra</span> <span class="n">produced</span> <span class="n">by</span> <span class="n">fourie</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="k">is</span> <span class="n">frequency</span><span class="o">.</span>
+<span class="n">This</span> <span class="n">frequency</span> <span class="k">is</span> <span class="n">measured</span> <span class="ow">in</span> <span class="n">units</span> <span class="n">of</span> <span class="n">cycles</span> <span class="n">per</span> <span class="s1">&#39;data point&#39;</span> <span class="ow">or</span><span class="p">,</span>
 <span class="n">more</span> <span class="n">precisely</span><span class="p">,</span> <span class="ow">in</span> <span class="n">cycles</span> <span class="n">per</span> <span class="n">unit</span> <span class="n">time</span> <span class="n">where</span> <span class="s1">&#39;unit time&#39;</span> <span class="k">is</span> <span class="n">defined</span>
 <span class="k">as</span> <span class="n">the</span> <span class="n">elapsed</span> <span class="n">time</span> <span class="n">between</span> <span class="n">adjacent</span> <span class="n">observations</span><span class="o">.</span>
 
-<span class="n">the</span> <span class="nb">range</span> <span class="n">of</span> <span class="n">the</span> <span class="n">frequency</span> <span class="n">axis</span> <span class="k">is</span> <span class="mf">0.0</span> <span class="n">to</span> <span class="mf">0.5</span><span class="o">.</span>
+<span class="n">The</span> <span class="nb">range</span> <span class="n">of</span> <span class="n">the</span> <span class="n">frequency</span> <span class="n">axis</span> <span class="k">is</span> <span class="mf">0.0</span> <span class="n">to</span> <span class="mf">0.5</span><span class="o">.</span>
+
+<span class="n">Fourier</span> <span class="n">analysis</span> <span class="n">differs</span> <span class="n">from</span> <span class="n">spectral</span> <span class="n">analysis</span> <span class="p">(</span><span class="k">as</span><span class="p">,</span> <span class="k">for</span> <span class="n">example</span><span class="p">,</span>
+<span class="n">produced</span> <span class="n">by</span> <span class="n">the</span> <span class="n">datapac</span> <span class="n">TIMESE</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="n">subroutine</span><span class="p">)</span> <span class="ow">in</span> <span class="n">that</span> <span class="n">a</span> <span class="n">Fourier</span>
+<span class="n">analysis</span> <span class="n">does</span> <span class="n">no</span> <span class="n">smoothing</span> <span class="n">on</span> <span class="n">the</span> <span class="n">spectral</span> <span class="n">estimates</span> <span class="n">whereas</span> <span class="n">a</span> <span class="n">spectral</span>
+<span class="n">analysis</span> <span class="n">does</span> <span class="n">smooth</span> <span class="n">the</span> <span class="n">spectral</span> <span class="n">estimates</span><span class="o">.</span> <span class="n">The</span> <span class="n">net</span> <span class="n">result</span> <span class="k">is</span> <span class="n">that</span>
+<span class="n">the</span> <span class="n">spectral</span> <span class="n">estimates</span> <span class="n">obtained</span> <span class="n">from</span> <span class="n">a</span> <span class="n">Fourier</span> <span class="n">analysis</span> <span class="n">are</span> <span class="n">almost</span>
+<span class="n">always</span> <span class="n">more</span> <span class="n">variable</span> <span class="n">than</span> <span class="n">those</span> <span class="n">obtained</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">spectral</span> <span class="n">analysis</span><span class="o">.</span>
+
+<span class="n">The</span> <span class="n">practical</span> <span class="n">conclusion</span> <span class="k">is</span> <span class="n">that</span> <span class="n">when</span> <span class="n">the</span> <span class="n">data</span> <span class="n">analyst</span> <span class="n">has</span> <span class="n">a</span> <span class="n">choice</span>
+<span class="n">of</span> <span class="n">whether</span> <span class="n">to</span> <span class="n">perform</span> <span class="n">a</span> <span class="n">Fourier</span> <span class="n">analysis</span> <span class="ow">or</span> <span class="n">a</span> <span class="n">spectral</span> <span class="n">analysis</span><span class="p">,</span>
+<span class="n">the</span> <span class="n">spectral</span> <span class="n">analysis</span> <span class="n">should</span> <span class="n">almost</span> <span class="n">always</span> <span class="n">be</span> <span class="n">preferred</span><span class="o">.</span>
+
+<span class="n">the</span> <span class="n">maximum</span> <span class="n">number</span> <span class="n">of</span> <span class="n">Fourier</span> <span class="n">frequencies</span> <span class="k">for</span> <span class="n">which</span> <span class="n">the</span> <span class="n">Fourier</span>
+<span class="n">coefficients</span> <span class="k">is</span> <span class="n">computed</span> <span class="p">(</span><span class="ow">and</span> <span class="n">listed</span><span class="p">)</span> <span class="k">is</span> <span class="n">N</span><span class="o">/</span><span class="mi">2</span> <span class="n">where</span> <span class="n">N</span> <span class="k">is</span> <span class="n">the</span> <span class="n">sample</span>
+<span class="n">size</span> <span class="p">(</span><span class="n">length</span> <span class="n">of</span> <span class="n">the</span> <span class="n">data</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">vector</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span> <span class="n">This</span> <span class="n">rule</span> <span class="k">is</span>
+<span class="n">overridden</span> <span class="p">(</span><span class="k">for</span> <span class="n">listing</span> <span class="n">purposes</span> <span class="n">only</span><span class="p">)</span> <span class="ow">in</span> <span class="n">large</span> <span class="n">data</span> <span class="n">sets</span> <span class="ow">and</span> <span class="k">is</span>
+<span class="n">replaced</span> <span class="n">by</span> <span class="n">the</span> <span class="n">rule</span> <span class="n">that</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">number</span> <span class="n">of</span> <span class="n">lags</span> <span class="n">listed</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="p">(</span><span class="n">which</span> <span class="n">corresponds</span> <span class="n">to</span> <span class="n">an</span> <span class="mi">8</span><span class="o">-</span><span class="n">page</span> <span class="n">listing</span> <span class="n">of</span> <span class="n">Fourier</span> <span class="n">coefficients</span><span class="o">.</span>
+<span class="n">If</span> <span class="n">more</span> <span class="n">pages</span> <span class="n">are</span> <span class="n">desired</span><span class="p">,</span> <span class="n">change</span> <span class="n">the</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">variable</span> <span class="n">MAXPAG</span>
+<span class="n">within</span> <span class="n">this</span> <span class="n">subroutine</span> <span class="n">from</span> <span class="mi">8</span> <span class="n">to</span> <span class="n">whatever</span> <span class="k">is</span> <span class="n">desired</span><span class="o">.</span>
+
+<span class="n">If</span> <span class="n">the</span> <span class="n">input</span> <span class="n">observations</span> <span class="ow">in</span> <span class="n">X</span> <span class="n">are</span> <span class="n">considered</span> <span class="n">to</span> <span class="n">have</span> <span class="n">been</span> <span class="n">collected</span>
+<span class="mi">1</span> <span class="n">second</span> <span class="n">apart</span> <span class="ow">in</span> <span class="n">time</span><span class="p">,</span> <span class="n">then</span> <span class="n">the</span> <span class="n">frequency</span> <span class="n">axis</span> <span class="n">of</span> <span class="n">the</span> <span class="n">resulting</span>
+<span class="n">spectra</span> <span class="n">would</span> <span class="n">be</span> <span class="ow">in</span> <span class="n">units</span> <span class="n">of</span> <span class="n">Hertz</span> <span class="p">(</span><span class="o">=</span> <span class="n">cycles</span> <span class="n">per</span> <span class="n">second</span><span class="p">)</span><span class="o">.</span>
+
+<span class="n">The</span> <span class="n">frequency</span> <span class="n">of</span> <span class="mf">0.0</span> <span class="n">corresponds</span> <span class="n">to</span> <span class="n">a</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">data</span> <span class="n">of</span> <span class="n">infinite</span>
+<span class="p">(</span><span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span> <span class="n">length</span> <span class="ow">or</span> <span class="n">period</span><span class="o">.</span> <span class="n">the</span> <span class="n">frequency</span> <span class="n">of</span> <span class="mf">0.5</span> <span class="n">corresponds</span> <span class="n">to</span>
+<span class="n">a</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">data</span> <span class="n">of</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span> <span class="n">data</span> <span class="n">points</span><span class="o">.</span>
+
+<span class="n">Any</span> <span class="n">equi</span><span class="o">-</span><span class="n">spaced</span> <span class="n">fourier</span> <span class="n">analysis</span> <span class="k">is</span> <span class="n">intrinsically</span> <span class="n">limited</span> <span class="n">to</span> <span class="n">detecting</span>
+<span class="n">frequencies</span> <span class="n">no</span> <span class="n">larger</span> <span class="n">than</span> <span class="mf">0.5</span> <span class="n">cycles</span> <span class="n">per</span> <span class="n">data</span> <span class="n">point</span><span class="p">;</span> <span class="n">this</span> <span class="n">corresponds</span>
+<span class="n">to</span> <span class="n">the</span> <span class="n">fact</span> <span class="n">that</span> <span class="n">the</span> <span class="n">smallest</span> <span class="n">detectable</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">data</span> <span class="k">is</span> <span class="mi">2</span> <span class="n">data</span>
+<span class="n">points</span> <span class="n">per</span> <span class="n">cycle</span><span class="o">.</span>
 </code></pre></div>
 
-<h2 id="options_1">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> X   description of parameter
- Y   description of parameter
+<h2 id="input-arguments_1">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">X</span>   <span class="nv">The</span> <span class="nv">vector</span> <span class="nv">of</span> <span class="ss">(</span><span class="nv">unsorted</span><span class="ss">)</span> <span class="nv">observations</span>.
+
+<span class="nv">N</span>   <span class="nv">The</span> <span class="nv">integer</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">observations</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">X</span>.
+    <span class="nv">The</span> <span class="nv">maximum</span> <span class="nv">allowable</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">N</span> <span class="k">for</span> <span class="nv">this</span> <span class="nv">subroutine</span> <span class="nv">is</span> <span class="mi">15000</span>.
+    <span class="nv">The</span> <span class="nv">sample</span> <span class="nv">size</span> <span class="nv">N</span> <span class="nv">must</span> <span class="nv">be</span> <span class="nv">greater</span> <span class="nv">than</span> <span class="nv">or</span> <span class="nv">equal</span> <span class="nv">to</span> <span class="mi">3</span>.
+</code></pre></div>
+
+<h2 id="output">OUTPUT</h2>
+<div class="codehilite"><pre><span></span><code><span class="mf">2</span> <span class="kr">to</span> <span class="mf">10</span> <span class="n">pages</span> <span class="p">(</span><span class="n">depending</span> <span class="kr">on</span> <span class="n">the</span> <span class="kr">input</span> <span class="n">sample</span> <span class="n">size</span><span class="p">)</span> <span class="n">of</span> <span class="n">automatic</span>
+<span class="kr">print</span><span class="n">out</span><span class="o">--</span>
+
+  <span class="mf">1.</span> <span class="n">a</span> <span class="kr">list</span><span class="n">ing</span> <span class="n">of</span> <span class="n">the</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="kr">cont</span><span class="n">ribution</span> <span class="kr">to</span> <span class="n">the</span> <span class="kr">to</span><span class="n">tal</span>
+     <span class="n">variance</span><span class="p">,</span> <span class="ow">and</span> <span class="n">relative</span> <span class="kr">cont</span><span class="n">ribution</span> <span class="kr">to</span> <span class="n">the</span> <span class="kr">to</span><span class="n">tal</span> <span class="n">variance</span> <span class="kr">for</span>
+     <span class="n">each</span> <span class="n">of</span> <span class="n">the</span> <span class="n">fourier</span> <span class="nb">fre</span><span class="n">quencies</span> <span class="p">(</span><span class="mf">1</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="mf">2</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="mf">3</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="mf">...</span><span class="p">,</span> <span class="mf">1</span><span class="o">/</span><span class="mf">2</span><span class="p">)</span><span class="mf">.</span>
+     <span class="n">this</span> <span class="kr">list</span><span class="n">ing</span> <span class="n">may</span> <span class="n">take</span> <span class="n">as</span> <span class="n">little</span> <span class="n">as</span> <span class="mf">1</span> <span class="n">page</span> <span class="ow">or</span> <span class="n">as</span> <span class="n">many</span> <span class="n">as</span> <span class="n">n</span><span class="o">/</span><span class="mf">100</span>
+     <span class="n">pages</span> <span class="p">(</span><span class="n">the</span> <span class="n">exact</span> <span class="n">number</span> <span class="n">depending</span> <span class="kr">on</span> <span class="n">the</span> <span class="kr">input</span> <span class="n">sample</span> <span class="n">size</span> <span class="n">n</span><span class="p">)</span><span class="mf">.</span>
+     <span class="n">this</span> <span class="kr">list</span><span class="n">ing</span> <span class="n">is</span> <span class="n">terminated</span> <span class="n">after</span> <span class="n">at</span> <span class="n">most</span> <span class="mf">8</span> <span class="n">computer</span> <span class="n">pages</span><span class="mf">.</span>
+     <span class="kr">if</span> <span class="n">more</span> <span class="n">pages</span> <span class="n">are</span> <span class="n">desired</span><span class="p">,</span> <span class="n">change</span> <span class="n">the</span> <span class="nb">val</span><span class="n">ue</span> <span class="n">of</span> <span class="n">the</span> <span class="n">variable</span>
+     <span class="n">maxpag</span> <span class="n">within</span> <span class="n">this</span> <span class="n">subroutine</span> <span class="n">from</span> <span class="mf">8</span> <span class="kr">to</span> <span class="n">whatever</span> <span class="n">desired</span><span class="mf">.</span>
+
+  <span class="mf">2.</span> <span class="n">a</span> <span class="n">plot</span> <span class="n">of</span> <span class="n">the</span> <span class="n">relative</span> <span class="kr">cont</span><span class="n">ribution</span> <span class="kr">to</span> <span class="n">the</span> <span class="kr">to</span><span class="n">tal</span> <span class="n">variance</span> <span class="n">versus</span>
+     <span class="nb">fre</span><span class="n">quency</span><span class="mf">.</span>
 </code></pre></div>
 
 <h2 id="examples_2">EXAMPLES</h2>
@@ -715,8 +776,9 @@ and Technology.
 
 <p>Results:</p>
 <h2 id="author_2">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </code></pre></div>
 
 <h2 id="maintainer_2">MAINTAINER</h2>
@@ -729,7 +791,7 @@ Engineering Division, National Institute of Standards and Technology.
 
 <h2 id="references_2">REFERENCES</h2>
 <ul>
-<li>JENKINS AND WATTS, ESPECIALLY PAGE 290.</li>
+<li>Jenkins and Watts, especially Page 290.</li>
 </ul>
     
 
@@ -1262,7 +1324,7 @@ Engineering Division, National Institute of Standards and Technology.
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>A</strong></td><td></td><td></td><td></td>
+  <td><strong>A</strong>(7500)</td><td></td><td></td><td></td>
   
 </tr>
 
@@ -1276,7 +1338,7 @@ Engineering Division, National Institute of Standards and Technology.
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>B</strong></td><td></td><td></td><td></td>
+  <td><strong>B</strong>(7500)</td><td></td><td></td><td></td>
   
 </tr>
 
@@ -1401,7 +1463,7 @@ Engineering Division, National Institute of Standards and Technology.
   <td><span class="anchor" id="variable-x~30"></span>real(kind=wp),</td>
   
   <td>public,</td>
-  <td>dimension(:), dimension(:)</td><td>::</td>
+  <td>dimension(:)</td><td>::</td>
   <td><strong>X</strong></td><td></td><td></td><td></td>
   
 </tr>
@@ -1416,7 +1478,7 @@ Engineering Division, National Institute of Standards and Technology.
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>X</strong></td><td></td><td></td><td></td>
+  <td><strong>X</strong>(:)</td><td></td><td></td><td></td>
   
 </tr>
 
@@ -1456,8 +1518,8 @@ Engineering Division, National Institute of Standards and Technology.
   
   <td><span class="anchor" id="variable-a~3"></span>real(kind=wp),</td>
   
-  <td>public,</td>
-  <td>dimension(7500)</td><td>::</td>
+  <td>public</td>
+  <td></td><td>::</td>
   <td><strong>a</strong></td><td></td><td></td><td></td>
   
 </tr>
@@ -1820,8 +1882,8 @@ Engineering Division, National Institute of Standards and Technology.
   
   <td><span class="anchor" id="variable-b~3"></span>double precision,</td>
   
-  <td>public,</td>
-  <td>dimension(7500)</td><td>::</td>
+  <td>public</td>
+  <td></td><td>::</td>
   <td><strong>b</strong></td><td></td><td></td><td></td>
   
 </tr>
@@ -3415,9 +3477,9 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span> <span class="n">iupper</span>
 <span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
      <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EXTREM SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
+<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span> <span class="n">N</span>
-<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
          <span class="k">RETURN</span>
 <span class="k">      ELSE</span>
 <span class="k">         IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
@@ -3520,7 +3582,7 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="mi">99005</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">40</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;EXTREME VALUE ANALYSIS&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99029</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span> <span class="n">N</span>
-<span class="mi">99006</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">37</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I7</span><span class="p">)</span>
+<span class="mi">99006</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">37</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span> <span class="n">ybar</span>
 <span class="mi">99007</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">34</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE SAMPLE MEAN = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99008</span><span class="p">)</span> <span class="n">sy</span>
@@ -3715,7 +3777,7 @@ Engineering Division, National Institute of Standards and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-07 21:20  
+             on 2022-06-11 06:31  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

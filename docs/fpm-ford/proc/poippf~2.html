@@ -175,7 +175,7 @@
       
       <a class="list-group-item" href="../proc/poippf~2.html#variable-dlamba~2">dlamba</a>
       
-      <a class="list-group-item" href="../proc/poippf~2.html#variable-i~206">i</a>
+      <a class="list-group-item" href="../proc/poippf~2.html#variable-i~205">i</a>
       
       <a class="list-group-item" href="../proc/poippf~2.html#variable-isd~6">isd</a>
       
@@ -263,8 +263,8 @@ point function
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">poippf</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">computes</span> <span class="nv">the</span> <span class="nv">percent</span> <span class="nv">point</span> <span class="nv">function</span> <span class="nv">value</span> <span class="nv">at</span> <span class="nv">the</span> <span class="nv">precision</span>
-<span class="nv">precision</span> <span class="nv">value</span> <span class="nv">p</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">poisson</span> <span class="nv">distribution</span> <span class="nv">with</span> <span class="nv">precision</span> <span class="nv">precision</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">POIPPF</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">computes</span> <span class="nv">the</span> <span class="nv">percent</span> <span class="nv">point</span> <span class="nv">function</span> <span class="nv">value</span> <span class="nv">at</span> <span class="nv">the</span> <span class="nv">precision</span>
+<span class="nv">precision</span> <span class="nv">value</span> <span class="nv">P</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">Poisson</span> <span class="nv">distribution</span> <span class="nv">with</span> <span class="nv">REAL</span>
 <span class="nv">tail</span> <span class="nv">length</span> <span class="nv">parameter</span> <span class="o">=</span> <span class="nv">alamba</span>.
 
 <span class="nv">the</span> <span class="nv">poisson</span> <span class="nv">distribution</span> <span class="nv">used</span> <span class="nv">herein</span> <span class="nv">has</span> <span class="nv">mean</span> <span class="o">=</span> <span class="nv">alamba</span> <span class="nv">and</span> <span class="nv">standard</span>
@@ -314,17 +314,17 @@ Engineering Division, National Institute of Standards and Technology.
 
 <h2 id="references">REFERENCES</h2>
 <ul>
-<li>JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
-     ESPECIALLY PAGE 102, FORMULA 36.1.  &ndash;HASTINGS AND PEACOCK, STATISTICAL
-     DISTRIBUTIONS&ndash;A HANDBOOK FOR STUDENTS AND PRACTITIONERS, 1975,
-     PAGES 108-113.</li>
-<li>NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-     PAGE 929.  &ndash;FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS
-     APPLICATIONS, VOLUME 1, EDITION 2, 1957, PAGES 146-154.</li>
-<li>COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.</li>
-<li>GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
-     TERMS OF POISSON DISTRIBUTION, 1962.</li>
-<li>OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.</li>
+<li>Johnson and Kotz, Discrete Distributions, 1969, Pages 87-121,
+     especially Page 102, Formula 36.1.  &ndash;Hastings and Peacock, Statistical
+     Distributions&ndash;A Handbook for Students and Practitioners, 1975,
+     Pages 108-113.</li>
+<li>National Bureau of Standards Applied Mathematics Series 55, 1964,
+     Page 929.  &ndash;Feller, An Introduction to Probability Theory and Its
+     Applications, Volume 1, Edition 2, 1957, Pages 146-154.</li>
+<li>Cox and Miller, The Theory of Stochastic Processes, 1965, Page 7.</li>
+<li>General Electric Company, Tables of the Individual and Cumulative
+     Terms of Poisson Distribution, 1962.</li>
+<li>Owen, Handbook of Statistical Tables, 1962, Pages 259-261.</li>
 </ul>
     
 
@@ -411,7 +411,7 @@ Engineering Division, National Institute of Standards and Technology.
       
       <a class="list-group-item" href="../proc/poippf~2.html#variable-dlamba~2">dlamba</a>
       
-      <a class="list-group-item" href="../proc/poippf~2.html#variable-i~206">i</a>
+      <a class="list-group-item" href="../proc/poippf~2.html#variable-i~205">i</a>
       
       <a class="list-group-item" href="../proc/poippf~2.html#variable-isd~6">isd</a>
       
@@ -525,7 +525,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-i~206"></span>integer,</td>
+  <td><span class="anchor" id="variable-i~205"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -753,9 +753,8 @@ Engineering Division, National Institute of Standards and Technology.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span>      <span class="k">SUBROUTINE </span><span class="n">POIPPF</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">Alamba</span><span class="p">,</span><span class="n">Ppf</span><span class="p">)</span>
-<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Alamba</span> <span class="p">,</span> <span class="n">amean</span> <span class="p">,</span> <span class="n">P</span> <span class="p">,</span> <span class="n">p0</span> <span class="p">,</span> <span class="n">p1</span> <span class="p">,</span> <span class="n">p2</span> <span class="p">,</span> <span class="n">pf0</span> <span class="p">,</span> <span class="n">Ppf</span> <span class="p">,</span> <span class="n">sd</span> <span class="p">,</span> <span class="n">x0</span> <span class="p">,</span>    <span class="p">&amp;</span>
-     <span class="p">&amp;</span>     <span class="n">x1</span> <span class="p">,</span> <span class="n">x2</span> <span class="p">,</span> <span class="n">zppf</span>
-<span class="kt">INTEGER</span> <span class="kd">::</span> <span class="n">i</span> <span class="p">,</span> <span class="n">isd</span> <span class="p">,</span> <span class="n">ix0</span> <span class="p">,</span> <span class="n">ix0p1</span> <span class="p">,</span> <span class="n">ix1</span> <span class="p">,</span> <span class="n">ix2</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Alamba</span><span class="p">,</span> <span class="n">amean</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">pf0</span><span class="p">,</span> <span class="n">Ppf</span><span class="p">,</span> <span class="n">sd</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">zppf</span>
+<span class="kt">INTEGER</span> <span class="kd">::</span> <span class="n">i</span><span class="p">,</span> <span class="n">isd</span><span class="p">,</span> <span class="n">ix0</span><span class="p">,</span> <span class="n">ix0p1</span><span class="p">,</span> <span class="n">ix1</span><span class="p">,</span> <span class="n">ix2</span>
 <span class="c">!</span>
 <span class="c">!     INPUT ARGUMENTS--P      = THE  VALUE</span>
 <span class="c">!                                (BETWEEN 0.0 (INCLUSIVELY)</span>
@@ -813,18 +812,14 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="c">!</span>
       <span class="k">IF</span> <span class="p">(</span> <span class="n">P</span><span class="o">&lt;</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">OR</span><span class="p">.</span> <span class="n">P</span><span class="o">&gt;=</span><span class="mf">1.0_wp</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span>
-<span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE POIPPF SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****&#39;</span><span class="p">)</span>
+         <span class="mi">99001</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO POIPPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99017</span><span class="p">)</span> <span class="n">P</span>
          <span class="n">Ppf</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
          <span class="k">RETURN</span>
 <span class="k">      ELSE</span>
 <span class="k">         IF</span> <span class="p">(</span> <span class="n">Alamba</span><span class="o">&lt;=</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">            WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span>
-<span class="mi">99002</span>       <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIPPF SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS NON-POSITIVE *****&#39;</span><span class="p">)</span>
+<span class="mi">99002</span>       <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO POIPPF(3f) IS NON-POSITIVE *****&#39;</span><span class="p">)</span>
             <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99017</span><span class="p">)</span> <span class="n">Alamba</span>
             <span class="n">Ppf</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
             <span class="k">RETURN</span>
@@ -879,11 +874,11 @@ Engineering Division, National Institute of Standards and Technology.
                   <span class="n">isd</span> <span class="o">=</span> <span class="n">sd</span> <span class="o">+</span> <span class="mf">1.0_wp</span>
                   <span class="n">x2</span> <span class="o">=</span> <span class="n">ix2</span>
                   <span class="k">CALL </span><span class="n">POICDF</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span><span class="n">Alamba</span><span class="p">,</span><span class="n">p2</span><span class="p">)</span>
-<span class="c">!</span>
+
                   <span class="k">IF</span> <span class="p">(</span> <span class="n">p2</span><span class="o">&lt;</span><span class="n">P</span> <span class="p">)</span> <span class="k">THEN</span>
-<span class="c">!</span>
-                     <span class="n">ix0</span> <span class="o">=</span> <span class="n">ix2</span>
-                     <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">100000</span>
+
+<span class="k">                     </span><span class="n">ix0</span> <span class="o">=</span> <span class="n">ix2</span>
+                     <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100000</span>
                         <span class="n">ix2</span> <span class="o">=</span> <span class="n">ix0</span> <span class="o">+</span> <span class="n">isd</span>
                         <span class="k">IF</span> <span class="p">(</span> <span class="n">ix2</span><span class="o">&gt;=</span><span class="n">ix1</span> <span class="p">)</span> <span class="k">GOTO </span><span class="mi">200</span>
                         <span class="n">x2</span> <span class="o">=</span> <span class="n">ix2</span>
@@ -893,14 +888,10 @@ Engineering Division, National Institute of Standards and Technology.
                      <span class="k">ENDDO</span>
 <span class="k">                     WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
                      <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span>
-<span class="c">!</span>
-<span class="mi">99003</span>                <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                       <span class="p">&amp;</span>
-     <span class="p">&amp;</span>                     <span class="s1">&#39;NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS&#39;</span><span class="p">&amp;</span>
-     <span class="p">&amp;</span>                     <span class="p">)</span>
+                     <span class="mi">99003</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS&#39;</span><span class="p">)</span>
                   <span class="k">ELSE</span>
-<span class="c">!</span>
-                     <span class="n">ix1</span> <span class="o">=</span> <span class="n">ix2</span>
-                     <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">100000</span>
+<span class="k">                     </span><span class="n">ix1</span> <span class="o">=</span> <span class="n">ix2</span>
+                     <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100000</span>
                         <span class="n">ix2</span> <span class="o">=</span> <span class="n">ix1</span> <span class="o">-</span> <span class="n">isd</span>
                         <span class="k">IF</span> <span class="p">(</span> <span class="n">ix2</span><span class="o">&lt;=</span><span class="n">ix0</span> <span class="p">)</span> <span class="k">GOTO </span><span class="mi">200</span>
                         <span class="n">x2</span> <span class="o">=</span> <span class="n">ix2</span>
@@ -910,9 +901,7 @@ Engineering Division, National Institute of Standards and Technology.
                      <span class="k">ENDDO</span>
 <span class="k">                     WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
                      <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span>
-<span class="mi">99004</span>                <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                       <span class="p">&amp;</span>
-     <span class="p">&amp;</span>                     <span class="s1">&#39;NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS&#39;</span><span class="p">&amp;</span>
-     <span class="p">&amp;</span>                     <span class="p">)</span>
+                     <span class="mi">99004</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS&#39;</span><span class="p">)</span>
                   <span class="k">ENDIF</span>
 <span class="k">                  GOTO </span><span class="mi">400</span>
                <span class="k">ENDIF</span>
@@ -931,10 +920,9 @@ Engineering Division, National Institute of Standards and Technology.
             <span class="k">GOTO </span><span class="mi">300</span>
             <span class="n">ix0</span> <span class="o">=</span> <span class="n">ix0</span> <span class="o">-</span> <span class="mi">1</span>
          <span class="k">ELSE</span>
-<span class="c">!CCCC IF(IX0.EQ.N)GOTO290</span>
-            <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
+<span class="k">            WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
             <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span>
-<span class="mi">99005</span>       <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LOWER AND UPPER BOUND IDENTICAL&#39;</span><span class="p">)</span>
+            <span class="mi">99005</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LOWER AND UPPER BOUND IDENTICAL&#39;</span><span class="p">)</span>
             <span class="k">GOTO </span><span class="mi">400</span>
          <span class="k">ENDIF</span>
 <span class="k">      ENDIF</span>
@@ -987,16 +975,12 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="k">                     </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">p2</span><span class="o">&lt;=</span><span class="n">p0</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">                        WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
                         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span>
-<span class="mi">99006</span>                   <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;BISECTION VALUE PROBABILITY (P2) &#39;</span><span class="p">,&amp;</span>
-     <span class="p">&amp;</span>                          <span class="s1">&#39;LESS THAN LOWER BOUND PROBABILITY (P0)&#39;</span><span class="p">&amp;</span>
-     <span class="p">&amp;</span>                          <span class="p">)</span>
+                        <span class="mi">99006</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; BISECTION VALUE PROBABILITY (P2) LESS THAN LOWER BOUND PROBABILITY (P0)&#39;</span><span class="p">)</span>
                         <span class="k">EXIT</span>
 <span class="k">                     </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">p2</span><span class="o">&gt;=</span><span class="n">p1</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">                        WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
                         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span>
-<span class="mi">99007</span>                   <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;BISECTION VALUE PROBABILITY (P2) &#39;</span><span class="p">,&amp;</span>
-     <span class="p">&amp;</span>                       <span class="s1">&#39;GREATER THAN UPPER BOUND PROBABILITY (P1)&#39;</span><span class="p">&amp;</span>
-     <span class="p">&amp;</span>                       <span class="p">)</span>
+                        <span class="mi">99007</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; BISECTION VALUE PROBABILITY (P2) GREATER THAN UPPER BOUND PROBABILITY (P1)&#39;</span><span class="p">)</span>
                         <span class="k">EXIT</span>
 <span class="k">                     ENDIF</span>
 <span class="k">                  ENDIF</span>
@@ -1015,34 +999,31 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="k">      </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">p0</span><span class="o">&gt;</span><span class="n">p1</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99008</span><span class="p">)</span>
-<span class="mi">99008</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LOWER BOUND PROBABILITY (P0) GREATER THAN &#39;</span><span class="p">,</span>      <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="s1">&#39;UPPER BOUND PROBABILITY (P1)&#39;</span><span class="p">)</span>
+         <span class="mi">99008</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LOWER BOUND PROBABILITY (P0) GREATER THAN UPPER BOUND PROBABILITY (P1)&#39;</span><span class="p">)</span>
       <span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">p0</span><span class="o">&gt;</span><span class="n">P</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99009</span><span class="p">)</span>
-<span class="mi">99009</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LOWER BOUND PROBABILITY (P0) GREATER THAN &#39;</span><span class="p">,</span>      <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="s1">&#39;INPUT PROBABILITY (P)&#39;</span><span class="p">)</span>
+         <span class="mi">99009</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LOWER BOUND PROBABILITY (P0) GREATER THAN INPUT PROBABILITY (P)&#39;</span><span class="p">)</span>
       <span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">p1</span><span class="o">&lt;</span><span class="n">P</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99010</span><span class="p">)</span>
-<span class="mi">99010</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;UPPER BOUND PROBABILITY (P1) LESS    THAN &#39;</span><span class="p">,</span>      <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="s1">&#39;INPUT PROBABILITY (P)&#39;</span><span class="p">)</span>
+         <span class="mi">99010</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;UPPER BOUND PROBABILITY (P1) LESS THAN INPUT PROBABILITY (P)&#39;</span><span class="p">)</span>
       <span class="k">ELSE</span>
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span>
-<span class="mi">99011</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;IMPOSSIBLE BRANCH CONDITION ENCOUNTERED&#39;</span><span class="p">)</span>
+         <span class="mi">99011</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;IMPOSSIBLE BRANCH CONDITION ENCOUNTERED&#39;</span><span class="p">)</span>
       <span class="k">ENDIF</span>
 <span class="c">!</span>
- <span class="mi">400</span>  <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span> <span class="n">ix0</span> <span class="p">,</span> <span class="n">p0</span>
-<span class="mi">99012</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;IX0    = &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="mi">10</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;P0 = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
-      <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span> <span class="n">ix1</span> <span class="p">,</span> <span class="n">p1</span>
-<span class="mi">99013</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;IX1    = &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="mi">10</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;P1 = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
-      <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99014</span><span class="p">)</span> <span class="n">ix2</span> <span class="p">,</span> <span class="n">p2</span>
-<span class="mi">99014</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;IX2    = &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="mi">10</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;P2 = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
+ <span class="mi">400</span>  <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span> <span class="n">ix0</span><span class="p">,</span> <span class="n">p0</span>
+      <span class="mi">99012</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;IX0    = &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="mi">10</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;P0 = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
+      <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span> <span class="n">ix1</span><span class="p">,</span> <span class="n">p1</span>
+      <span class="mi">99013</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;IX1    = &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="mi">10</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;P1 = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
+      <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99014</span><span class="p">)</span> <span class="n">ix2</span><span class="p">,</span> <span class="n">p2</span>
+      <span class="mi">99014</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;IX2    = &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="mi">10</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;P2 = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
       <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99015</span><span class="p">)</span> <span class="n">P</span>
-<span class="mi">99015</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;P      = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
+      <span class="mi">99015</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;P      = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
       <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99016</span><span class="p">)</span> <span class="n">Alamba</span>
-<span class="mi">99016</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;ALAMBA = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
+      <span class="mi">99016</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;ALAMBA = &#39;</span><span class="p">,</span><span class="n">F14</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
       <span class="k">RETURN</span>
 <span class="mi">99017</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
 <span class="mi">99018</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** INTERNAL ERROR IN POIPPF SUBROUTINE *****&#39;</span><span class="p">)</span>
@@ -1071,7 +1052,7 @@ Engineering Division, National Institute of Standards and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-07 21:20  
+             on 2022-06-11 06:31  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

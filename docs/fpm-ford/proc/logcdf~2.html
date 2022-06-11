@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.0% of total for procedures.">8 statements</a>
+    title=" 0.0% of total for procedures.">9 statements</a>
      </li> 
      
      
@@ -210,43 +210,92 @@ public subroutine LOGCDF(X, Cdf)
 
     
     <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>logcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the logistic cumulative
-distribution function
+<div class="codehilite"><pre><span></span><code>logcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the logistic
+cumulative distribution function
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>   SUBROUTINE LOGCDF(X,Cdf)
+
+    REAL(kind=wp),intent(in)  :: X
+    REAL(kind=wp),intent(out) :: Cdf
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">logcdf</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">computes</span> <span class="nv">the</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span> <span class="nv">value</span> <span class="k">for</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">LOGCDF</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">computes</span> <span class="nv">the</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span> <span class="nv">value</span> <span class="k">for</span>
 <span class="nv">the</span> <span class="nv">logistic</span> <span class="nv">distribution</span> <span class="nv">with</span> <span class="nv">mean</span> <span class="o">=</span> <span class="mi">0</span> <span class="nv">and</span> <span class="nv">standard</span> <span class="nv">deviation</span> <span class="o">=</span>
 <span class="nv">pi</span><span class="o">/</span><span class="nv">sqrt</span><span class="ss">(</span><span class="mi">3</span><span class="ss">)</span>.
 
-<span class="nv">this</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">defined</span> <span class="k">for</span> <span class="nv">all</span> <span class="nv">x</span> <span class="nv">and</span> <span class="nv">has</span> <span class="nv">the</span> <span class="nv">probability</span>
+<span class="nv">This</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">defined</span> <span class="k">for</span> <span class="nv">all</span> <span class="nv">X</span> <span class="nv">and</span> <span class="nv">has</span> <span class="nv">the</span> <span class="nv">probability</span>
 <span class="nv">density</span> <span class="nv">function</span>
 
-    <span class="nv">f</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">exp</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span><span class="o">/</span><span class="ss">(</span><span class="mi">1</span><span class="o">+</span><span class="nv">exp</span><span class="ss">(</span><span class="nv">x</span><span class="ss">))</span>.
+    <span class="nv">f</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">exp</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span><span class="o">/</span><span class="ss">(</span><span class="mi">1</span><span class="o">+</span><span class="nv">exp</span><span class="ss">(</span><span class="nv">X</span><span class="ss">))</span>
 </code></pre></div>
 
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> X   description of parameter
- Y   description of parameter
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code>X     The value at which the cumulative distribution function is to
+      be evaluated.
+</code></pre></div>
+
+<h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code>CDF   The cumulative distribution function value.
 </code></pre></div>
 
 <h2 id="examples">EXAMPLES</h2>
 <p>Sample program:</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_logcdf</span>
-<span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">logcdf</span>
+<span class="o">!</span>@<span class="ss">(</span>#<span class="ss">)</span> <span class="nv">line</span> <span class="nv">plotter</span> <span class="nv">graph</span> <span class="nv">of</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span>
+<span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">logcdf</span>, <span class="nv">plott</span>, <span class="nv">label</span>
 <span class="nv">implicit</span> <span class="nv">none</span>
-<span class="o">!</span> <span class="k">call</span> <span class="nl">logcdf</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span><span class="ss">)</span>
+<span class="nv">real</span>,<span class="nv">allocatable</span>  :: <span class="nv">x</span><span class="ss">(</span>:<span class="ss">)</span>, <span class="nv">y</span><span class="ss">(</span>:<span class="ss">)</span>
+<span class="nv">integer</span>           :: <span class="nv">i</span>
+   <span class="k">call</span> <span class="nl">label</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">logcdf</span><span class="s1">&#39;</span><span class="ss">)</span>
+   <span class="nv">x</span><span class="o">=</span>[<span class="ss">(</span><span class="nv">real</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">i</span><span class="o">=-</span><span class="mi">100</span>,<span class="mi">100</span>,<span class="mi">1</span><span class="ss">)</span>]
+   <span class="k">if</span><span class="ss">(</span><span class="nv">allocated</span><span class="ss">(</span><span class="nv">y</span><span class="ss">))</span><span class="nv">deallocate</span><span class="ss">(</span><span class="nv">y</span><span class="ss">)</span>
+   <span class="nv">allocate</span><span class="ss">(</span><span class="nv">y</span><span class="ss">(</span><span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)))</span>
+   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span>
+      <span class="k">call</span> <span class="nl">logcdf</span><span class="ss">(</span><span class="nv">x</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span><span class="o">/</span><span class="mi">10</span>.<span class="mi">0</span>,<span class="nv">y</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>
+   <span class="nv">enddo</span>
+   <span class="k">call</span> <span class="nl">plott</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">))</span>
 <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_logcdf</span>
 </code></pre></div>
 
 <p>Results:</p>
+<div class="codehilite"><pre><span></span><code> The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                   I-----------I-----------I-----------I-----------I
+  0.1000000E+03 -                                                  X
+  0.9166666E+02 I                                                  X
+  0.8333334E+02 I                                                  X
+  0.7500000E+02 I                                                  X
+  0.6666667E+02 I                                                  X
+  0.5833334E+02 I                                                  X
+  0.5000000E+02 -                                                  X
+  0.4166667E+02 I                                                 X
+  0.3333334E+02 I                                                XX
+  0.2500000E+02 I                                             XXX
+  0.1666667E+02 I                                        XXXXX
+  0.8333336E+01 I                                XXXXXXXX
+  0.0000000E+00 -                     XX XXXXX XX
+ -0.8333328E+01 I             XXXXXXXX
+ -0.1666666E+02 I        XXXXX
+ -0.2499999E+02 I     XXX
+ -0.3333333E+02 I   XX
+ -0.4166666E+02 I   X
+ -0.5000000E+02 -  X
+ -0.5833333E+02 I  X
+ -0.6666666E+02 I  X
+ -0.7500000E+02 I  X
+ -0.8333333E+02 I  X
+ -0.9166666E+02 I  X
+ -0.1000000E+03 -  X
+                   I-----------I-----------I-----------I-----------I
+            0.4540E-04  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+</code></pre></div>
+
 <h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </code></pre></div>
 
 <h2 id="maintainer">MAINTAINER</h2>
@@ -259,8 +308,8 @@ Engineering Division, National Institute of Standards and Technology.
 
 <h2 id="references">REFERENCES</h2>
 <ul>
-<li>JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS&ndash;2, 1970,
-     PAGES 1-21.</li>
+<li>Johnson and Kotz, Continuous Univariate Distributions&ndash;2, 1970,
+     Pages 1-21.</li>
 </ul>
     
 
@@ -282,8 +331,8 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~189"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-x~188"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -297,8 +346,8 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-cdf~32"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-cdf~32"></span>real(kind=wp),</td>
+  <td>intent(out)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -374,29 +423,17 @@ Engineering Division, National Institute of Standards and Technology.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">LOGCDF</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Cdf</span><span class="p">)</span>
-<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Cdf</span> <span class="p">,</span> <span class="n">X</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">X</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Cdf</span>
 <span class="c">!</span>
-<span class="c">!     INPUT ARGUMENTS--X      = THE  VALUE AT</span>
-<span class="c">!                                WHICH THE CUMULATIVE DISTRIBUTION</span>
-<span class="c">!                                FUNCTION IS TO BE EVALUATED.</span>
-<span class="c">!     OUTPUT ARGUMENTS--CDF    = THE  CUMULATIVE</span>
-<span class="c">!                                DISTRIBUTION FUNCTION VALUE.</span>
-<span class="c">!     OUTPUT--THE  CUMULATIVE DISTRIBUTION</span>
-<span class="c">!             FUNCTION VALUE CDF.</span>
-<span class="c">!</span>
-<span class="c">!---------------------------------------------------------------------</span>
-<span class="c">!</span>
-<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS.</span>
-<span class="c">!     NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.</span>
-<span class="c">!</span>
-<span class="c">!-----START POINT-----------------------------------------------------</span>
+<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS -- NO INPUT ARGUMENT ERRORS POSSIBLE FOR THIS DISTRIBUTION.</span>
 <span class="c">!</span>
       <span class="k">IF</span> <span class="p">(</span> <span class="n">X</span><span class="o">&gt;=</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">         </span><span class="n">Cdf</span> <span class="o">=</span> <span class="mf">1.0_wp</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="o">+</span><span class="nb">EXP</span><span class="p">(</span><span class="o">-</span><span class="n">X</span><span class="p">))</span>
       <span class="k">ELSE</span>
 <span class="k">         </span><span class="n">Cdf</span> <span class="o">=</span> <span class="nb">EXP</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="o">+</span><span class="nb">EXP</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
       <span class="k">ENDIF</span>
-<span class="c">!</span>
+
 <span class="k">END SUBROUTINE </span><span class="n">LOGCDF</span>
 </pre></div>
 
@@ -419,7 +456,7 @@ Engineering Division, National Institute of Standards and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-07 21:20  
+             on 2022-06-11 06:31  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

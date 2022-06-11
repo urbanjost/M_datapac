@@ -171,7 +171,7 @@
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/dexran~2.html#variable-i~244">i</a>
+      <a class="list-group-item" href="../proc/dexran~2.html#variable-i~243">i</a>
       
       <a class="list-group-item" href="../proc/dexran~2.html#variable-q~28">q</a>
       
@@ -231,9 +231,9 @@ public subroutine dexran(N, Istart, X)
 <h2 id="synopsis">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>   subroutine dexran(N,Istart,X)
 
-    integer,intent(in) :: N
-    integer            :: Istart
-    real(kind=wp)      :: X(:)
+    integer,intent(in)    :: N
+    integer,intent(inout) :: Istart
+    real(kind=wp)         :: X(:)
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
@@ -260,7 +260,7 @@ public subroutine dexran(N, Istart, X)
 </code></pre></div>
 
 <h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">X</span>     <span class="nv">A</span> <span class="nv">precision</span> <span class="nv">precision</span> <span class="nv">vector</span> <span class="ss">(</span><span class="nv">of</span> <span class="nv">dimension</span> <span class="nv">at</span> <span class="nv">least</span> <span class="nv">N</span><span class="ss">)</span> <span class="nv">into</span> <span class="nv">which</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">X</span>     <span class="nv">A</span> <span class="nv">REAL</span> <span class="nv">vector</span> <span class="ss">(</span><span class="nv">of</span> <span class="nv">dimension</span> <span class="nv">at</span> <span class="nv">least</span> <span class="nv">N</span><span class="ss">)</span> <span class="nv">into</span> <span class="nv">which</span>
       <span class="nv">the</span> <span class="nv">generated</span> <span class="k">random</span> <span class="nv">sample</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">placed</span>.
 </code></pre></div>
 
@@ -320,7 +320,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-n~223"></span>integer,</td>
+  <td><span class="anchor" id="variable-n~222"></span>integer,</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -336,7 +336,7 @@ and Technology.
 <tr>
   
   <td><span class="anchor" id="variable-istart~8"></span>integer,</td>
-  <td>intent(in)</td>
+  <td>intent(inout)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -350,7 +350,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~269"></span>real(kind=wp)</td>
+  <td><span class="anchor" id="variable-x~268"></span>real(kind=wp)</td>
   <td></td>
   <td></td>
   
@@ -381,7 +381,7 @@ and Technology.
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/dexran~2.html#variable-i~244">i</a>
+      <a class="list-group-item" href="../proc/dexran~2.html#variable-i~243">i</a>
       
       <a class="list-group-item" href="../proc/dexran~2.html#variable-q~28">q</a>
       
@@ -441,7 +441,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-i~244"></span>integer,</td>
+  <td><span class="anchor" id="variable-i~243"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -487,12 +487,12 @@ and Technology.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">dexran</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">Istart</span><span class="p">,</span><span class="n">X</span><span class="p">)</span>
-<span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">N</span>
-<span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Istart</span>
-<span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>      <span class="kd">::</span> <span class="n">X</span><span class="p">(:)</span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">N</span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Istart</span>
+<span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>         <span class="kd">::</span> <span class="n">X</span><span class="p">(:)</span>
 
-<span class="kt">integer</span>            <span class="kd">::</span> <span class="n">i</span>
-<span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>      <span class="kd">::</span> <span class="n">q</span>
+<span class="kt">integer</span>               <span class="kd">::</span> <span class="n">i</span>
+<span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span>         <span class="kd">::</span> <span class="n">q</span>
 <span class="c">!---------------------------------------------------------------------</span>
 <span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
 <span class="c">!</span>
@@ -539,7 +539,7 @@ and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-07 21:20  
+             on 2022-06-11 06:31  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

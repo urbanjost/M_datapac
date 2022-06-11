@@ -307,7 +307,7 @@
       
       <a class="list-group-item" href="../proc/tail.html#variable-hyphen~22">hyphen</a>
       
-      <a class="list-group-item" href="../proc/tail.html#variable-i~104">i</a>
+      <a class="list-group-item" href="../proc/tail.html#variable-i~103">i</a>
       
       <a class="list-group-item" href="../proc/tail.html#variable-icount~9">icount</a>
       
@@ -349,7 +349,7 @@
       
       <a class="list-group-item" href="../proc/tail.html#variable-p1~6">p1</a>
       
-      <a class="list-group-item" href="../proc/tail.html#variable-pi~12">pi</a>
+      <a class="list-group-item" href="../proc/tail.html#variable-pi~10">pi</a>
       
       <a class="list-group-item" href="../proc/tail.html#variable-picons">picons</a>
       
@@ -582,7 +582,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~111"></span>real(kind=wp)</td>
+  <td><span class="anchor" id="variable-x~110"></span>real(kind=wp)</td>
   <td></td>
   <td></td>
   
@@ -597,7 +597,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-n~96"></span>integer</td>
+  <td><span class="anchor" id="variable-n~95"></span>integer</td>
   <td></td>
   <td></td>
   
@@ -764,7 +764,7 @@ and Technology.
       
       <a class="list-group-item" href="../proc/tail.html#variable-hyphen~22">hyphen</a>
       
-      <a class="list-group-item" href="../proc/tail.html#variable-i~104">i</a>
+      <a class="list-group-item" href="../proc/tail.html#variable-i~103">i</a>
       
       <a class="list-group-item" href="../proc/tail.html#variable-icount~9">icount</a>
       
@@ -806,7 +806,7 @@ and Technology.
       
       <a class="list-group-item" href="../proc/tail.html#variable-p1~6">p1</a>
       
-      <a class="list-group-item" href="../proc/tail.html#variable-pi~12">pi</a>
+      <a class="list-group-item" href="../proc/tail.html#variable-pi~10">pi</a>
       
       <a class="list-group-item" href="../proc/tail.html#variable-picons">picons</a>
       
@@ -1837,7 +1837,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-i~104"></span>integer,</td>
+  <td><span class="anchor" id="variable-i~103"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -2131,7 +2131,7 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-pi~12"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-pi~10"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -2659,9 +2659,9 @@ and Technology.
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span> <span class="n">iupper</span>
 <span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
      <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TAIL   SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
+<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span> <span class="n">N</span>
-<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
          <span class="k">RETURN</span>
 <span class="k">      ELSE</span>
 <span class="k">         IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
@@ -3004,7 +3004,7 @@ and Technology.
 <span class="mi">99005</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">48</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;TAIL LENGTH ANALYSIS&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99045</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span> <span class="n">N</span>
-<span class="mi">99006</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">46</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;(THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+<span class="mi">99006</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">46</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;(THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span> <span class="n">xbar</span>
 <span class="mi">99007</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">40</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;(THE SAMPLE MEAN = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99008</span><span class="p">)</span> <span class="n">s</span>
@@ -3127,7 +3127,7 @@ and Technology.
 <span class="mi">99031</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">13</span><span class="n">F10</span><span class="p">.</span><span class="mi">4</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99045</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99032</span><span class="p">)</span> <span class="n">icount</span>
-<span class="mi">99032</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">10</span><span class="n">X</span><span class="p">,</span><span class="n">I5</span><span class="p">,</span>                                            <span class="p">&amp;</span>
+<span class="mi">99032</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">10</span><span class="n">X</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span>                                            <span class="p">&amp;</span>
      <span class="p">&amp;</span><span class="s1">&#39; OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&amp;</span>
 <span class="s1">     &amp; THE SAMPLE MEAN AND SO WERE NOT PLOTTED&#39;</span><span class="p">)</span>
 <span class="c">!</span>
@@ -3137,7 +3137,7 @@ and Technology.
          <span class="k">CALL </span><span class="n">PLOT</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99033</span><span class="p">)</span> <span class="n">N</span>
 <span class="mi">99033</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">35</span><span class="n">X</span><span class="p">,</span>                                               <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="s1">&#39;UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">,</span>  <span class="p">&amp;</span>
+     <span class="p">&amp;</span>           <span class="s1">&#39;UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span>  <span class="p">&amp;</span>
      <span class="p">&amp;</span>           <span class="s1">&#39;)&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99043</span><span class="p">)</span> <span class="n">corr</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
          <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">nhalf</span>
@@ -3148,7 +3148,7 @@ and Technology.
 <span class="k">         CALL </span><span class="n">PLOT</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">YM</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99034</span><span class="p">)</span> <span class="n">N</span>
 <span class="mi">99034</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">35</span><span class="n">X</span><span class="p">,</span>                                               <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="s1">&#39;NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">,</span>   <span class="p">&amp;</span>
+     <span class="p">&amp;</span>           <span class="s1">&#39;NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span>   <span class="p">&amp;</span>
      <span class="p">&amp;</span>           <span class="s1">&#39;)&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99043</span><span class="p">)</span> <span class="n">corr</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
          <span class="n">alamba</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5_wp</span>
@@ -3161,7 +3161,7 @@ and Technology.
 <span class="k">         CALL </span><span class="n">PLOT</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">YM</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99035</span><span class="p">)</span> <span class="n">alamba</span> <span class="p">,</span> <span class="n">N</span>
 <span class="mi">99035</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">35</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;LAMBDA = &#39;</span><span class="p">,</span><span class="n">F4</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span>                              <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="s1">&#39; PROBABILITY PLOT  (THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+     <span class="p">&amp;</span>           <span class="s1">&#39; PROBABILITY PLOT  (THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99043</span><span class="p">)</span> <span class="n">corr</span><span class="p">(</span><span class="mi">28</span><span class="p">)</span>
          <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">,</span> <span class="n">nhalf</span>
             <span class="n">irev</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
@@ -3172,7 +3172,7 @@ and Technology.
 <span class="k">         CALL </span><span class="n">PLOT</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">YM</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99036</span><span class="p">)</span> <span class="n">N</span>
 <span class="mi">99036</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">35</span><span class="n">X</span><span class="p">,</span>                                               <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="s1">&#39;CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I5</span><span class="p">,</span>   <span class="p">&amp;</span>
+     <span class="p">&amp;</span>           <span class="s1">&#39;CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span>   <span class="p">&amp;</span>
      <span class="p">&amp;</span>           <span class="s1">&#39;)&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99043</span><span class="p">)</span> <span class="n">corr</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span>
 <span class="c">!</span>
@@ -3183,25 +3183,25 @@ and Technology.
             <span class="k">IF</span> <span class="p">(</span> <span class="n">idis</span><span class="o">==</span><span class="mi">20</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">               WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99037</span><span class="p">)</span> <span class="n">N</span> <span class="p">,</span> <span class="n">corr</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag1</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span>        <span class="p">&amp;</span>
      <span class="p">&amp;</span>                           <span class="n">iflag2</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag3</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span>
-<span class="mi">99037</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span>           <span class="p">&amp;</span>
+<span class="mi">99037</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span>           <span class="p">&amp;</span>
      <span class="p">&amp;</span><span class="s1">&#39; ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE NORMAL DISTRIB&amp;</span>
 <span class="s1">     &amp;UTION IS &#39;</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="n">X</span><span class="p">,</span><span class="mi">3</span><span class="n">A1</span><span class="p">)</span>
             <span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">idis</span><span class="o">==</span><span class="mi">22</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">               WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99038</span><span class="p">)</span> <span class="n">N</span> <span class="p">,</span> <span class="n">corr</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag1</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span>        <span class="p">&amp;</span>
      <span class="p">&amp;</span>                           <span class="n">iflag2</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag3</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span>
-<span class="mi">99038</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span>           <span class="p">&amp;</span>
+<span class="mi">99038</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span>           <span class="p">&amp;</span>
      <span class="p">&amp;</span><span class="s1">&#39; ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LOGISTIC DIST.&amp;</span>
 <span class="s1">     &amp;      IS &#39;</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="n">X</span><span class="p">,</span><span class="mi">3</span><span class="n">A1</span><span class="p">)</span>
             <span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">idis</span><span class="o">==</span><span class="mi">23</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">               WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99039</span><span class="p">)</span> <span class="n">N</span> <span class="p">,</span> <span class="n">corr</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag1</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span>        <span class="p">&amp;</span>
      <span class="p">&amp;</span>                           <span class="n">iflag2</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag3</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span>
-<span class="mi">99039</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span>           <span class="p">&amp;</span>
+<span class="mi">99039</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span>           <span class="p">&amp;</span>
      <span class="p">&amp;</span><span class="s1">&#39; ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE DOUBLE EXP. DI&amp;</span>
 <span class="s1">     &amp;ST.   IS &#39;</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="n">X</span><span class="p">,</span><span class="mi">3</span><span class="n">A1</span><span class="p">)</span>
             <span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">idis</span><span class="o">==</span><span class="mi">33</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">               WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99040</span><span class="p">)</span> <span class="n">N</span> <span class="p">,</span> <span class="n">corr</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag1</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span>        <span class="p">&amp;</span>
      <span class="p">&amp;</span>                           <span class="n">iflag2</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag3</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span>
-<span class="mi">99040</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span>           <span class="p">&amp;</span>
+<span class="mi">99040</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span>           <span class="p">&amp;</span>
      <span class="p">&amp;</span><span class="s1">&#39; ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE CAUCHY DISTRIB&amp;</span>
 <span class="s1">     &amp;UTION IS &#39;</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="n">X</span><span class="p">,</span><span class="mi">3</span><span class="n">A1</span><span class="p">)</span>
             <span class="k">ELSE</span>
@@ -3212,7 +3212,7 @@ and Technology.
                <span class="n">alamba</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="o">*</span><span class="nb">FLOAT</span><span class="p">(</span><span class="n">idis2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">2.1</span>
                <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99041</span><span class="p">)</span> <span class="n">N</span> <span class="p">,</span> <span class="n">alamba</span> <span class="p">,</span> <span class="n">corr</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag1</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">&amp;</span>
      <span class="p">&amp;</span>                           <span class="p">,</span> <span class="n">iflag2</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span> <span class="p">,</span> <span class="n">iflag3</span><span class="p">(</span><span class="n">idis</span><span class="p">)</span>
-<span class="mi">99041</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I6</span><span class="p">,</span>           <span class="p">&amp;</span>
+<span class="mi">99041</span>          <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;THE CORRELATION BETWEEN THE &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span>           <span class="p">&amp;</span>
      <span class="p">&amp;</span>    <span class="s1">&#39; ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LAMBDA = &#39;</span><span class="p">&amp;</span>
      <span class="p">&amp;</span>    <span class="p">,</span><span class="n">F4</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39; DIST. IS &#39;</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="n">X</span><span class="p">,</span><span class="mi">3</span><span class="n">A1</span><span class="p">)</span>
             <span class="k">ENDIF</span>
@@ -3246,7 +3246,7 @@ and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-07 21:20  
+             on 2022-06-11 06:31  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>
