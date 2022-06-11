@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
    REPLAC(3f) replaces (with the value xnew) all observations in the
-   precision precision vector X which are inside the closed (inclusive)
+   REAL vector X which are inside the closed (inclusive)
    interval defined by XMIN and XMAX.
 
    All observations outside of this interval are left unchanged.
@@ -123,7 +123,7 @@ INTEGER :: i , k , N , ndel
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE REPLAC SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -176,11 +176,11 @@ INTEGER :: i , k , N , ndel
          WRITE (G_IO,99011) Xnew
 99011    FORMAT (' ',7X,'THE REPLACEMENT VALUE IS ',E15.8)
          WRITE (G_IO,99012) N
-99012    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS    IS ',I6)
+99012    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS    IS ',I0)
          WRITE (G_IO,99013) k
-99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS REPLACED  IS ',I6)
+99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS REPLACED  IS ',I0)
          WRITE (G_IO,99014) ndel
-99014    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS UNCHANGED IS ',I6)
+99014    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS UNCHANGED IS ',I0)
       ENDIF
 !
 END SUBROUTINE REPLAC

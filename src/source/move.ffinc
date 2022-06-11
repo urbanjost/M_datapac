@@ -17,8 +17,8 @@ SYNOPSIS
 
 DESCRIPTION
 
-   MOVE(3f) moves (copies) M elements of the precision precision vector
-   X (starting with position Ix1) into the precision precision vector Y
+   MOVE(3f) moves (copies) M elements of the REAL vector
+   X (starting with position Ix1) into the REAL vector Y
    (starting with position Iy1).
 
    This allows the data analyst to take any subvector in X and place it
@@ -90,8 +90,8 @@ INTEGER,intent(in)        :: Ix1
 INTEGER,intent(in)        :: Iy1
 REAL(kind=wp)             :: Y(:)
 
-REAL(kind=wp)             :: hold 
-INTEGER                   :: i, iend, istart, j, k 
+REAL(kind=wp)             :: hold
+INTEGER                   :: i, iend, istart, j, k
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -123,7 +123,7 @@ INTEGER                   :: i, iend, istart, j, k
             ENDDO
             WRITE (G_IO,99005) hold
             99005 FORMAT (&
-	    & ' ***** NON-FATAL DIAGNOSTIC--the first input argument (a vector) to MOVE(3f) has all elements =',E15.8,' *****')
+            & ' ***** NON-FATAL DIAGNOSTIC--the first input argument (a vector) to MOVE(3f) has all elements =',E15.8,' *****')
          ENDIF
 !
 !-----START POINT-----------------------------------------------------

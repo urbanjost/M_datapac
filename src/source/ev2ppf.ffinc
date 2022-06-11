@@ -13,7 +13,7 @@ SYNOPSIS
 
 DESCRIPTION
    EV2PPF(3f) computes the percent point function value for the extreme
-   value type 2 distribution with precision precision tail length parameter
+   value type 2 distribution with REAL tail length parameter
    = GAMMA.
 
    The extreme value type 2 distribution used herein is defined for all

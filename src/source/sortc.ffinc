@@ -153,7 +153,7 @@ INTEGER i, il(36), ip1, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
       WRITE (G_IO,99001)
       99001 FORMAT (' ','***** FATAL ERROR--The second input argument to SORTC(3f)  is non-positive *****')
       WRITE (G_IO,99002) N
-      99002 FORMAT (' ','***** The value of the argument is ',I8,' *****')
+      99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
       RETURN
    ELSE
       IF ( N==1 ) THEN

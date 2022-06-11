@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
 
 DESCRIPTION
-   discre(3f) 'discretizes' the data of the precision precision vector x.
+   discre(3f) 'discretizes' the data of the REAL vector x.
    the first class interval is from xmin to xmin + xdel; the second
    class interval is from xmin+ xdel to xmin + 2*xdel; etc.
 
@@ -138,7 +138,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DISCRE SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -247,7 +247,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 99009    FORMAT (' ','OUTPUT FROM THE DISCRE SUBROUTINE--')
          WRITE (G_IO,99020)
          WRITE (G_IO,99010) N
-99010    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
+99010    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I0)
          WRITE (G_IO,99011) Xmin
 99011    FORMAT (' ',7X,'SPECIFIED LOWER BOUND OF INTERVAL = ',F15.7)
          WRITE (G_IO,99012) Xdel
@@ -255,7 +255,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
          WRITE (G_IO,99013) Xmax
 99013    FORMAT (' ',7X,'SPECIFIED UPPER BOUND OF INTERVAL = ',F15.7)
          WRITE (G_IO,99014) numcla
-99014    FORMAT (' ',7X,'COMPUTED  NUMBER OF LEVELS        = ',I8)
+99014    FORMAT (' ',7X,'COMPUTED  NUMBER OF LEVELS        = ',I0)
          WRITE (G_IO,99020)
          WRITE (G_IO,99015)
 99015    FORMAT (' ',                                                   &
@@ -276,7 +276,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 99018       FORMAT (' ',4X,I6,2X,3F14.7,I8)
          ENDDO
          IF ( icounu>=1 ) WRITE (G_IO,99019) pointu , clasmu , icounu
-99019    FORMAT (' ',4X,'   ABOVE',2F14.7,'     +INFINITY',I8)
+99019    FORMAT (' ',4X,'   ABOVE',2F14.7,'     +INFINITY',I0)
       ENDIF
 99020 FORMAT (' ')
 !

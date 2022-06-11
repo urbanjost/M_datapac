@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 
 DESCRIPTION
-   retain(3f) retains all observations in the precision precision vector
+   retain(3f) retains all observations in the REAL vector
    x which are inside the closed (inclusive) interval defined by xmin
    and xmax, while deleting all observations outside of this interval.
 
@@ -119,7 +119,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RETAIN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -179,14 +179,11 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
          WRITE (G_IO,99010)
 99010    FORMAT (' ',7X,'HAVE BEEN DELETED.')
          WRITE (G_IO,99011) nold
-99011    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99011    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I0)
          WRITE (G_IO,99012) Newn
-99012    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99012    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', I0)
          WRITE (G_IO,99013) ndel
-99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
-     &           I6)
+99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I0)
       ENDIF
 !
 END SUBROUTINE RETAIN

@@ -99,7 +99,7 @@ INTEGER :: i , Iseed , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE PARRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99003)

@@ -277,7 +277,7 @@ INTEGER m(17)
          WRITE (G_IO,99003)
 99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS NON-POSITIVE.')
          WRITE (G_IO,99004) N
-99004    FORMAT (' ','      N = ',I8)
+99004    FORMAT (' ','      N = ',I0)
       ENDIF
 !
 !               *****************

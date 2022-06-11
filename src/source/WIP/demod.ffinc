@@ -158,9 +158,9 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
          WRITE (G_IO,99001) ilower , iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DEMOD  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (',I6,',',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (',I0,',',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( F<=fmin .OR. F>=0.5_wp ) THEN
@@ -174,7 +174,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
             WRITE (G_IO,99005) fmin , N
 99005       FORMAT (' ','                   THE ABOVE LOWER LIMIT (',   &
      &              F10.8,                                              &
-     &              ') = 2/(N-2) WHERE N = THE INPUT SAMPLE SIZE = ',I8)
+     &              ') = 2/(N-2) WHERE N = THE INPUT SAMPLE SIZE = ',I0)
             RETURN
          ELSE
             hold = X(1)

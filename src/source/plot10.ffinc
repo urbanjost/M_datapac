@@ -226,7 +226,7 @@ DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
          WRITE (G_IO,99017)
          WRITE (G_IO,99019) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99016)
          RETURN
       ELSE
@@ -353,7 +353,7 @@ DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
       WRITE (G_IO,99009)
 99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99010) n2
-99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99010 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99016)
       RETURN
 !
@@ -465,7 +465,7 @@ DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
       WRITE (G_IO,99014) Yaxid , Xaxid , Plchid
 99014 FORMAT (' ',9X,A4,A4,' (VERTICAL AXIS) VERSUS ',A4,A4,' (HORIZONTAL AXIS) ',20X,'THE PLOTTING CHARACTER IS ',A4,A4)
       WRITE (G_IO,99015) N
-99015 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I8)
+99015 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I0)
 !
 99016 FORMAT (' ','**********************************************************************')
 99017 FORMAT (' ','                   FATAL ERROR                    ')

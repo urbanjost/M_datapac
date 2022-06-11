@@ -84,7 +84,7 @@ REAL(kind=wp) :: X(:)
        WRITE (G_IO,99001)
        99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1RAN SUBROUTINE IS NON-POSITIVE *****')
        WRITE (G_IO,99002) N
-       99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+       99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
     ELSE
        !
        !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;

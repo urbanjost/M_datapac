@@ -21,11 +21,11 @@ DESCRIPTION
        f(x) = 0.5*exp(-abs(x))
 
 INPUT ARGUMENTS
-   X     The precision precision value at which the cumulative distribution
+   X     The REAL value at which the cumulative distribution
          function is to be evaluated.
 
 OUTPUT ARGUMENTS
-   CDF   The precision precision cumulative distribution function value.
+   CDF   The REAL cumulative distribution function value.
 
 EXAMPLES
   Sample program:

@@ -123,7 +123,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TOL    SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -202,7 +202,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
          WRITE (G_IO,99016)
          WRITE (G_IO,99005) N
 !
-99005    FORMAT (' ','             NORMAL TOLERANCE LIMITS FOR THE ',I6,&
+99005    FORMAT (' ','             NORMAL TOLERANCE LIMITS FOR THE ',I0,&
      &           ' OBSERVATIONS')
          WRITE (G_IO,99017)
          WRITE (G_IO,99006)
@@ -341,7 +341,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
          WRITE (G_IO,99010) N
 99010    FORMAT (' ',                                                   &
      &         '            DISTRIBUTION-FREE TOLERANCE LIMITS FOR THE '&
-     &         ,I6,' OBSERVATIONS')
+     &         ,I0,' OBSERVATIONS')
          WRITE (G_IO,99017)
          WRITE (G_IO,99011)
 99011    FORMAT (' ',                                                   &

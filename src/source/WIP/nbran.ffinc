@@ -218,6 +218,6 @@ INTEGER,save :: iseed=1
          ENDDO
       ENDDO
       RETURN
-99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 99999 END SUBROUTINE NBRAN

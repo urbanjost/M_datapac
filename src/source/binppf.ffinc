@@ -14,7 +14,7 @@ SYNOPSIS
 
 DESCRIPTION
    BINPPF(3f) computes the percent point function value at the precision
-   precision value P for the binomial distribution with precision precision
+   precision value P for the binomial distribution with REAL
    'Bernoulli probability' parameter = PPAR, and integer 'number of
    Bernoulli trials' parameter = N.
 
@@ -357,15 +357,15 @@ DOUBLE PRECISION :: dppar
 !
  300  continue
    WRITE (G_IO,99014) ix0 , p0
-   99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
+   99014 FORMAT (' ','IX0  = ',I0,10X,'P0 = ',F14.7)
    WRITE (G_IO,99015) ix1 , p1
-   99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
+   99015 FORMAT (' ','IX1  = ',I0,10X,'P1 = ',F14.7)
    WRITE (G_IO,99016) ix2 , p2
-   99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
+   99016 FORMAT (' ','IX2  = ',I0,10X,'P2 = ',F14.7)
    WRITE (G_IO,99017) P
    99017 FORMAT (' ','P    = ',F14.7)
    WRITE (G_IO,99018) Ppar , N
-   99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
+   99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I0)
    RETURN
    99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
    99020 FORMAT (' ','***** INTERNAL ERROR IN BINPPF SUBROUTINE *****')

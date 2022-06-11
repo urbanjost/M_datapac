@@ -109,7 +109,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99010)
          RETURN
       ELSE

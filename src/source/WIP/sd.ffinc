@@ -94,7 +94,7 @@ INTEGER :: i , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SD     SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -135,6 +135,6 @@ INTEGER :: i , Iwrite , N
       WRITE (G_IO,99005)
 99005 FORMAT (' ')
       WRITE (G_IO,99006) N , Xsd
-99006 FORMAT (' ','THE SAMPLE STANDARD DEVIATION OF THE ',I6,           &
+99006 FORMAT (' ','THE SAMPLE STANDARD DEVIATION OF THE ',I0,           &
      &        ' OBSERVATIONS IS ',E15.8)
 END SUBROUTINE SD

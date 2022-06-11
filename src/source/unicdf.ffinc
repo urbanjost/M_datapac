@@ -28,7 +28,7 @@ INPUT ARGUMENTS
 
 OUTPUT ARGUMENTS
 
-  CDF   the precision precision cumulative distribution function value.
+  CDF   the REAL cumulative distribution function value.
 
 EXAMPLES
  Sample program:

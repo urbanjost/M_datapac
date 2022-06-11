@@ -100,9 +100,9 @@ DATA tau/10.02040649_wp/
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
          99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO CAUPLT(3f) IS OUTSIDE THE ALLOWABLE (1,' &
-         & ,I6,') INTERVAL *****')
+         & ,I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -143,7 +143,7 @@ DATA tau/10.02040649_wp/
 !
          CALL PLOT(Y,W,N)
          WRITE (G_IO,99005) tau , N
-         99005    FORMAT (' ','CAUCHY PROBABILITY PLOT (TAU = ',E15.8,')',56X, 'THE SAMPLE SIZE N = ',I7)
+         99005    FORMAT (' ','CAUCHY PROBABILITY PLOT (TAU = ',E15.8,')',56X, 'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES

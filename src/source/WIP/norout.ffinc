@@ -113,9 +113,9 @@ character(len=4) :: iline2
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NOROUT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -285,7 +285,7 @@ character(len=4) :: iline2
 99005    FORMAT (' ',48X,'NORMAL OUTLIER ANALYSIS')
          WRITE (G_IO,99042)
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I5,')')
+99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99042)
          WRITE (G_IO,99007)
 99007    FORMAT (' ',39X,                                               &

@@ -328,7 +328,7 @@ DATA nucut1 , nucut2/100 , 1000/
 99005             FORMAT (' ',                                          &
      &                    '*****INTERNAL ERROR IN   FCDF SUBROUTINE--', &
      &                  'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = '&
-     &                  ,I8)
+     &                  ,I0)
                   RETURN
                ENDIF
             ENDIF
@@ -357,6 +357,6 @@ DATA nucut1 , nucut2/100 , 1000/
       CALL NORCDF(u,gcdf)
       Cdf = gcdf
       RETURN
-99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 99999 END SUBROUTINE FCDF

@@ -100,10 +100,10 @@ DATA tau/1.63473745_wp/
          WRITE (G_IO,99001) iupper
          99001    FORMAT (' ', &
          & '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LOGPLT SUBROUTINE IS OUTSIDE THE ALLOWABLE (1,', &
-         & I6, &
+         & I0, &
          & ') INTERVAL *****')
          WRITE (G_IO,99002) N
-         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -144,7 +144,7 @@ DATA tau/1.63473745_wp/
          !
          CALL PLOT(Y,W,N)
          WRITE (G_IO,99005) tau , N
-         99005    FORMAT (' ','LOGISTIC PROBABILITY PLOT (TAU = ',E15.8,')',54X, 'THE SAMPLE SIZE N = ',I7)
+         99005    FORMAT (' ','LOGISTIC PROBABILITY PLOT (TAU = ',E15.8,')',54X, 'THE SAMPLE SIZE N = ',I0)
          !
          !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
          !     COMPUTE LOCATION AND SCALE ESTIMATES

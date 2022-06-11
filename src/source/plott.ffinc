@@ -38,7 +38,7 @@ INPUT ARGUMENTS
   Y   The vector of (unsorted or sorted) observations to be plotted
       vertically.
 
-  X   The precision precision vector of (unsorted or sorted) observations
+  X   The REAL vector of (unsorted or sorted) observations
       to be plotted horizontally.
 
   N   The integer number of observations in the vector Y.
@@ -66,7 +66,7 @@ EXAMPLES
      end program demo_plott
 
   Results:
-    
+
     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
                       I-----------I-----------I-----------I-----------I
      0.4000000E+01 -               X X X                              X
@@ -81,15 +81,15 @@ EXAMPLES
      0.2500205E+01 I                           X
      0.2333561E+01 I       X
      0.2166917E+01 I                            X
-     0.2000273E+01 -   
-     0.1833629E+01 I   
+     0.2000273E+01 -
+     0.1833629E+01 I
      0.1666985E+01 I     X                        X                X
-     0.1500341E+01 I   
+     0.1500341E+01 I
      0.1333698E+01 I                                X
-     0.1167054E+01 I   
+     0.1167054E+01 I
      0.1000410E+01 -    X
      0.8337659E+00 I                                 X           X
-     0.6671220E+00 I   
+     0.6671220E+00 I
      0.5004781E+00 I  X                                X
      0.3338342E+00 I                                           X
      0.1671903E+00 I                                     X    X

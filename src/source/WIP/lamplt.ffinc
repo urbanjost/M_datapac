@@ -112,9 +112,9 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LAMPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -175,7 +175,7 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99005) Alamba , tau , N
 !
 99005    FORMAT (' ','LAMBDA PROBABILITY PLOT WITH LAMBDA = ',E17.10,1X,&
-     &           '(TAU = ',E15.8,')',24X,'THE SAMPLE SIZE N = ',I7)
+     &           '(TAU = ',E15.8,')',24X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES

@@ -159,10 +159,10 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
          WRITE (G_IO,99001) ilower
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TIME   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (',I6,',INFINITY) ',                &
+     &TINE IS OUTSIDE THE ALLOWABLE (',I0,',INFINITY) ',                &
      &'INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          hold = X(1)
@@ -224,9 +224,9 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
      & 'AUTOCORRELATION PLOT--PLOT OF SAMPLE AUTOCORRELATION VERSUS LAG'&
      & )
       WRITE (G_IO,99005) N , kmax
-99005 FORMAT (' ',10X,'THE NUMBER OF OBSERVATIONS = ',I6,10X,           &
+99005 FORMAT (' ',10X,'THE NUMBER OF OBSERVATIONS = ',I0,10X,           &
      &        'THE NUMBER OF COMPUTED (AND PLOTTED) AUTOCORRELATIONS = '&
-     &        ,I6)
+     &        ,I0)
 !
 !     DO A WHITE NOISE ANALYSIS
 !
@@ -261,15 +261,15 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
          WRITE (G_IO,99017)
       ENDDO
       WRITE (G_IO,99009) N
-99009 FORMAT (' ','THE SAMPLE SIZE = ',I6)
+      99009 FORMAT (' ','THE SAMPLE SIZE = ',I0)
       WRITE (G_IO,99010) xbar
-99010 FORMAT (' ','THE SAMPLE MEAN = ',E15.8)
+      99010 FORMAT (' ','THE SAMPLE MEAN = ',E15.8)
       WRITE (G_IO,99011) var
-99011 FORMAT (' ','THE SAMPLE VARIANCE = ',E15.8)
+      99011 FORMAT (' ','THE SAMPLE VARIANCE = ',E15.8)
       WRITE (G_IO,99012) sd
-99012 FORMAT (' ','THE SAMPLE STANDARD DEVIATION = ',E15.8)
+      99012 FORMAT (' ','THE SAMPLE STANDARD DEVIATION = ',E15.8)
       WRITE (G_IO,99013) varb
-99013 FORMAT (' ','THE BIASED SAMPLE VARIANCE = ',E15.8)
+      99013 FORMAT (' ','THE BIASED SAMPLE VARIANCE = ',E15.8)
 !
 !     COMPUTE THE PILOT SPECTRUM FOR THE REDUCED (2**J) SAMPLE
 !     REFERENCE--JENKINS AND WATTS, PAGE 288
@@ -317,7 +317,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       CALL PLOTSP(s,120,0)
       WRITE (G_IO,99017)
       WRITE (G_IO,99014)
-99014 FORMAT (' ',50X,'PILOT SPECTRUM')
+      99014 FORMAT (' ',50X,'PILOT SPECTRUM')
 !
 !     DEFINE 4 LAG WINDOW TRUNCATION POINTS
 !     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 260
@@ -368,7 +368,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
                   WRITE (G_IO,99015) N
 99015             FORMAT (' ',                                          &
      &                   'DUE TO THE SMALL NUMBER OF OBSERVATIONS (N = '&
-     &                   ,I6,                                           &
+     &                   ,I0,                                           &
      &     '), THERE ARE NOT ENOUGH LAGS TO PRODUCE A RELIABLE SPECTRUM'&
      &     )
                   RETURN
@@ -418,8 +418,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
          dfroun = idf
          WRITE (G_IO,99017)
          WRITE (G_IO,99016) l(i) , bw , dfroun
-99016    FORMAT (' ','NUMBER OF LAGS = ',I5,10X,'BANDWIDTH =',F10.3,10X,&
-     &           'DEGREES OF FREEDOM = ',F10.3)
+         99016 FORMAT (' NUMBER OF LAGS = ',I5,10X,'BANDWIDTH =',F10.3,10X,'DEGREES OF FREEDOM = ',F10.3)
       ENDDO
 99017 FORMAT (' ')
 !

@@ -217,11 +217,11 @@ contains
 !!    AUTOCO(3f) computes the sample autocorrelation coefficient of the
 !!    data in the input vector X. The sample autocorrelation coefficient
 !!    equals the correlation between X(I) and X(I+1) over the entire sample.
-!!    The autocorrelation coefficient coefficient will be a precision precision
+!!    The autocorrelation coefficient coefficient will be a REAL
 !!    value between -1.0 and 1.0 (inclusively).
 !!
 !!##INPUT ARGUMENTS
-!!    X        The precision precision vector of (unsorted) observations.
+!!    X        The REAL vector of (unsorted) observations.
 !!    N        The integer number of observations in the vector x.
 !!    IWRITE   An integer flag code which (if set to 0) will suppress
 !!             the printing of the sample autocorrelation coefficient
@@ -231,8 +231,8 @@ contains
 !!
 !!##OUTPUT ARGUMENTS
 !!
-!!    XAUTOC   The precision precision value of the computed sample autocorrelation coefficient.
-!!             This precision precision value will be between -1.0 and 1.0 (inclusively).
+!!    XAUTOC   The REAL value of the computed sample autocorrelation coefficient.
+!!             This REAL value will be between -1.0 and 1.0 (inclusively).
 !!
 !!##EXAMPLES
 !!
@@ -273,7 +273,7 @@ integer i , ip1 , iwrite , n , nm1
          write (G_IO,99001)
          99001    format (' ', '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE AUTOCO SUBROUTINE IS NON-POSITIVE *****')
          write (G_IO,99002) n
-         99002    format (' ','***** THE VALUE OF THE ARGUMENT IS ',i8,' *****')
+         99002    format (' ','***** THE VALUE OF THE ARGUMENT IS ',i0,' *****')
          return
       else
          if ( n==1 ) then
@@ -323,7 +323,7 @@ integer i , ip1 , iwrite , n , nm1
       write (G_IO,99005)
       99005 format (' ')
       write (G_IO,99006) n , xautoc
-      99006 format (' ', 'THE LINEAR AUTOCORRELATION COEFFICIENT OF THE SET OF ',i6,' OBSERVATIONS IS ',f14.6)
+      99006 format (' ', 'THE LINEAR AUTOCORRELATION COEFFICIENT OF THE SET OF ',i0,' OBSERVATIONS IS ',f14.6)
 end subroutine autoco
 !>
 !!##NAME
@@ -454,7 +454,7 @@ real(kind=wp),parameter :: sqrt3= 1.73205081_wp
          WRITE (G_IO,99001)
          99001    FORMAT (' ','***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE BETRAN SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( Alpha<1.0_wp ) THEN
          WRITE (G_IO,99003)
@@ -694,14 +694,14 @@ DOUBLE PRECISION :: DSQRT , DATAN
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINCDF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99003) N
-99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( X<0.0_wp .OR. X>an ) THEN
          WRITE (G_IO,99004) N
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE BINC&
-     &DF SUBROUTINE IS OUTSIDE THE USUAL (0,N) = (0,',I7,',INTERVAL *')
+     &DF SUBROUTINE IS OUTSIDE THE USUAL (0,N) = (0,',I0,',INTERVAL *')
          WRITE (G_IO,99006) X
          IF ( X<0.0_wp ) Cdf = 0.0_wp
          IF ( X>an ) Cdf = 1.0_wp
@@ -879,7 +879,7 @@ END SUBROUTINE BINCDF
 !!
 !!##DESCRIPTION
 !!    BINPPF(3f) computes the percent point function value at the precision
-!!    precision value P for the binomial distribution with precision precision
+!!    precision value P for the binomial distribution with REAL
 !!    'Bernoulli probability' parameter = PPAR, and integer 'number of
 !!    Bernoulli trials' parameter = N.
 !!
@@ -1221,15 +1221,15 @@ DOUBLE PRECISION :: dppar
 !
  300  continue
    WRITE (G_IO,99014) ix0 , p0
-   99014 FORMAT (' ','IX0  = ',I8,10X,'P0 = ',F14.7)
+   99014 FORMAT (' ','IX0  = ',I0,10X,'P0 = ',F14.7)
    WRITE (G_IO,99015) ix1 , p1
-   99015 FORMAT (' ','IX1  = ',I8,10X,'P1 = ',F14.7)
+   99015 FORMAT (' ','IX1  = ',I0,10X,'P1 = ',F14.7)
    WRITE (G_IO,99016) ix2 , p2
-   99016 FORMAT (' ','IX2  = ',I8,10X,'P2 = ',F14.7)
+   99016 FORMAT (' ','IX2  = ',I0,10X,'P2 = ',F14.7)
    WRITE (G_IO,99017) P
    99017 FORMAT (' ','P    = ',F14.7)
    WRITE (G_IO,99018) Ppar , N
-   99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
+   99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I0)
    RETURN
    99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
    99020 FORMAT (' ','***** INTERNAL ERROR IN BINPPF SUBROUTINE *****')
@@ -1766,9 +1766,9 @@ DATA tau/10.02040649_wp/
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
          99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO CAUPLT(3f) IS OUTSIDE THE ALLOWABLE (1,' &
-         & ,I6,') INTERVAL *****')
+         & ,I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -1809,7 +1809,7 @@ DATA tau/10.02040649_wp/
 !
          CALL PLOT(Y,W,N)
          WRITE (G_IO,99005) tau , N
-         99005    FORMAT (' ','CAUCHY PROBABILITY PLOT (TAU = ',E15.8,')',56X, 'THE SAMPLE SIZE N = ',I7)
+         99005    FORMAT (' ','CAUCHY PROBABILITY PLOT (TAU = ',E15.8,')',56X, 'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -2042,7 +2042,7 @@ INTEGER :: i , Iseed , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAURAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
 !
@@ -2254,7 +2254,7 @@ DATA b43/17.0D0/
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSCDF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) Nu
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSE
@@ -2388,7 +2388,7 @@ DATA b43/17.0D0/
      &                      '*****INTERNAL ERROR IN CHSCDF SUBROUTINE--'&
      &                      ,                                           &
      &                  'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = '&
-     &                  ,I8)
+     &                  ,I0)
                         RETURN
                      ENDIF
                   ENDIF
@@ -2517,7 +2517,7 @@ INTEGER i , iupper , N , Nu
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99007) N
          RETURN
       ELSEIF ( N==1 ) THEN
@@ -2583,7 +2583,7 @@ INTEGER i , iupper , N , Nu
 !
 99005    FORMAT (' ',                                                   &
      &         'CHI-SQUARED PROBABILITY PLOT WITH DEGREES OF FREEDOM = '&
-     &         ,I8,1X,'(TAU = ',E15.8,')',11X,'THE SAMPLE SIZE N = ',I7)
+     &         ,I0,1X,'(TAU = ',E15.8,')',11X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -2614,7 +2614,7 @@ INTEGER i , iupper , N , Nu
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
-99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 END SUBROUTINE CHSPLT
 !>
@@ -2741,7 +2741,7 @@ DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSPPF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99004) Nu
-99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          Ppf = 0.0_wp
          RETURN
       ELSE
@@ -2830,11 +2830,11 @@ DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
       WRITE (G_IO,99005) maxit
 !
 99005 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE CHSPPF ',   &
-     &        'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I7)
+     &        'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I0)
       WRITE (G_IO,99006) P
 99006 FORMAT (' ','     THE INPUT VALUE OF P     IS ',E15.8)
       WRITE (G_IO,99007) Nu
-99007 FORMAT (' ','     THE INPUT VALUE OF NU    IS ',I8)
+99007 FORMAT (' ','     THE INPUT VALUE OF NU    IS ',I0)
       WRITE (G_IO,99008)
 99008 FORMAT (' ','     THE OUTPUT VALUE OF PPF HAS BEEN SET TO 0.0')
       Ppf = 0.0_wp
@@ -3001,7 +3001,7 @@ INTEGER i , Iseed , j , N , Nu
             X(i) = sum
          ENDDO
       ENDIF
-99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 END SUBROUTINE CHSRAN
 !>
@@ -3094,9 +3094,9 @@ INTEGER i , iupper , j , N , numdis
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CODE   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -3147,7 +3147,7 @@ INTEGER i , iupper , j , N , numdis
             WRITE (G_IO,99005)
 99005       FORMAT (' ','*****INTERNAL ERROR IN CODE SUBROUTINE')
             WRITE (G_IO,99006) i , X(i)
-99006       FORMAT (' ','NO CODE FOUND FOR ELEMENT NUMBER ',I5,' = ',   &
+99006       FORMAT (' ','NO CODE FOUND FOR ELEMENT NUMBER ',I0,' = ',   &
      &              F15.7)
             RETURN
  120        Y(i) = j
@@ -3159,7 +3159,7 @@ INTEGER i , iupper , j , N , numdis
          WRITE (G_IO,99007)
 99007    FORMAT (' ','OUTPUT FROM THE CODE SUBROUTINE')
          WRITE (G_IO,99008) numdis
-99008    FORMAT (' ','NUMBER OF DISTINCT CODE VALUES = ',I8)
+99008    FORMAT (' ','NUMBER OF DISTINCT CODE VALUES = ',I0)
          WRITE (G_IO,99011)
          WRITE (G_IO,99009)
 99009    FORMAT (' ',8X,'VALUE     CODED VALUE')
@@ -3182,8 +3182,8 @@ END SUBROUTINE CODE
 !!       SUBROUTINE COPY(X,N,Y)
 !!
 !!##DESCRIPTION
-!!    copy(3f) copies the contents of the precision precision vector x into
-!!    the precision precision vector y.
+!!    copy(3f) copies the contents of the REAL vector x into
+!!    the REAL vector y.
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3248,7 +3248,7 @@ INTEGER i , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE COPY   SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -3287,7 +3287,7 @@ END SUBROUTINE COPY
 !!##DESCRIPTION
 !!    corr(3f) computes the sample correlation coefficient between the 2
 !!    sets of data in the input vectors x and y. The sample correlation
-!!    coefficient will be a precision precision value between -1.0 and 1.0
+!!    coefficient will be a REAL value between -1.0 and 1.0
 !!    (inclusively).
 !!
 !!##OPTIONS
@@ -3389,7 +3389,7 @@ INTEGER i , iflag , Iwrite , N
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE CORR   SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -3444,7 +3444,7 @@ INTEGER i , iflag , Iwrite , N
          IF ( Iwrite/=0 ) WRITE (G_IO,99006) N , C
 99006    FORMAT (' ',                                                   &
      &     'THE LINEAR        CORRELATION COEFFICIENT OF THE 2 SETS OF '&
-     &     ,I6,' OBSERVATIONS IS ',F14.5)
+     &     ,I0,' OBSERVATIONS IS ',F14.5)
       ENDIF
 END SUBROUTINE CORR
 !>
@@ -3545,7 +3545,7 @@ INTEGER i , isum , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE COUNT  SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -3591,7 +3591,7 @@ INTEGER i , isum , Iwrite , N
          WRITE (G_IO,99007)
 99007    FORMAT (' ')
          WRITE (G_IO,99008) N , Xmin , Xmax , Xcount
-99008    FORMAT (' ','THE NUMBER (OUT OF THE ',I6,                      &
+99008    FORMAT (' ','THE NUMBER (OUT OF THE ',I0,                      &
      &           ' OBSERVATIONS) IN THE INTERVAL ',E15.7,' TO ',E15.7,  &
      &           ' IS ',E15.7)
       ENDIF
@@ -3813,7 +3813,7 @@ END SUBROUTINE DECOMP
 !!       SUBROUTINE DEFINE(X,N,Xnew)
 !!
 !!##DESCRIPTION
-!!    define(3f) sets all of the elements in the precision precision vector
+!!    define(3f) sets all of the elements in the REAL vector
 !!    x equal to xnew.
 !!
 !!    define(3f) is useful in defining a vector of constants.
@@ -3886,7 +3886,7 @@ REAL(kind=wp) :: X , Xnew
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DEFINE SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -3909,7 +3909,7 @@ REAL(kind=wp) :: X , Xnew
          WRITE (G_IO,99005)
 99005    FORMAT (' ','OUTPUT FROM THE DEFINE SUBROUTINE--')
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS  IS ',I6)
+99006    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS  IS ',I0)
          WRITE (G_IO,99007) Xnew
 99007    FORMAT (' ',7X,'THE DEFINING CONSTANT IS ',E15.8)
       ENDIF
@@ -3926,7 +3926,7 @@ END SUBROUTINE DEFINE
 !!
 !!##DESCRIPTION
 !!
-!!    delete(3f) deletes all observations in the precision precision vector
+!!    delete(3f) deletes all observations in the REAL vector
 !!    x which are inside the closed (inclusive) interval defined by xmin
 !!    and xmax, while retaining all observations outside of this interval.
 !!
@@ -4037,7 +4037,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DELETE SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -4097,13 +4097,13 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 99010    FORMAT (' ',7X,'HAVE BEEN RETAINED.')
          WRITE (G_IO,99011) nold
 99011    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+     &           I0)
          WRITE (G_IO,99012) Newn
 99012    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+     &           I0)
          WRITE (G_IO,99013) ndel
 99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
-     &           I6)
+     &           I0)
       ENDIF
 !
 END SUBROUTINE DELETE
@@ -4266,9 +4266,9 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
          WRITE (G_IO,99001) ilower , iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DEMOD  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (',I6,',',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (',I0,',',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( F<=fmin .OR. F>=0.5_wp ) THEN
@@ -4282,7 +4282,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
             WRITE (G_IO,99005) fmin , N
 99005       FORMAT (' ','                   THE ABOVE LOWER LIMIT (',   &
      &              F10.8,                                              &
-     &              ') = 2/(N-2) WHERE N = THE INPUT SAMPLE SIZE = ',I8)
+     &              ') = 2/(N-2) WHERE N = THE INPUT SAMPLE SIZE = ',I0)
             RETURN
          ELSE
             hold = X(1)
@@ -4463,11 +4463,11 @@ END SUBROUTINE DEMOD
 !!        f(x) = 0.5*exp(-abs(x))
 !!
 !!##INPUT ARGUMENTS
-!!    X     The precision precision value at which the cumulative distribution
+!!    X     The REAL value at which the cumulative distribution
 !!          function is to be evaluated.
 !!
 !!##OUTPUT ARGUMENTS
-!!    CDF   The precision precision cumulative distribution function value.
+!!    CDF   The REAL cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
@@ -4747,9 +4747,9 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DEXPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -4795,7 +4795,7 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','DOUBLE EXPONENTIAL PROBABILITY PLOT (TAU = ',     &
-     &           E15.8,')',44X,'THE SAMPLE SIZE N = ',I7)
+     &           E15.8,')',44X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -4950,7 +4950,7 @@ END SUBROUTINE DEXPPF
 !!             upon successive calls to this subroutine within a run.
 !!##OUTPUT ARGUMENTS
 !!
-!!    X     A precision precision vector (of dimension at least N) into which
+!!    X     A REAL vector (of dimension at least N) into which
 !!          the generated random sample will be placed.
 !!
 !!##EXAMPLES
@@ -5119,7 +5119,7 @@ END SUBROUTINE DEXSF
 !!       SUBROUTINE DISCR2(X,N,Numcla,Y)
 !!
 !!##DESCRIPTION
-!!    discr2(3f) 'discretizes' the data of the precision precision vector x
+!!    discr2(3f) 'discretizes' the data of the REAL vector x
 !!    into numcla classes.
 !!
 !!    all values in the vector x within a given class will be mapped into
@@ -5255,7 +5255,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
          WRITE (G_IO,99003) iupncl
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE DISCR2 SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99015) Numcla
          DO i = 1 , N
             Y(i) = 0.0_wp
@@ -5331,9 +5331,9 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 99006    FORMAT (' ','OUTPUT FROM THE DISCR2 SUBROUTINE--')
          WRITE (G_IO,99016)
          WRITE (G_IO,99007) N
-99007    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
+99007    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I0)
          WRITE (G_IO,99008) Numcla
-99008    FORMAT (' ',7X,'SPECIFIED NUMBER OF LEVELS        = ',I8)
+99008    FORMAT (' ',7X,'SPECIFIED NUMBER OF LEVELS        = ',I0)
          WRITE (G_IO,99009) xmin
 99009    FORMAT (' ',7X,'COMPUTED  LOWER BOUND OF INTERVAL = ',F15.7)
          WRITE (G_IO,99010) xdel
@@ -5357,7 +5357,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 99014       FORMAT (' ',4X,I6,2X,3F14.7,I8)
          ENDDO
       ENDIF
-99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 99016 FORMAT (' ')
 !
 END SUBROUTINE DISCR2
@@ -5371,7 +5371,7 @@ END SUBROUTINE DISCR2
 !!       SUBROUTINE DISCR3(X,N,Numcla,Y)
 !!
 !!##DESCRIPTION
-!!    discr3(3f) 'discretizes' the data on the precision precision vector x
+!!    discr3(3f) 'discretizes' the data on the REAL vector x
 !!    into numcla classes.
 !!
 !!    all values in the vector x within a given class will be mapped into
@@ -5507,7 +5507,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
          WRITE (G_IO,99003) iupncl
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE DISCR3 SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99015) Numcla
          DO i = 1 , N
             Y(i) = 0.0_wp
@@ -5576,9 +5576,9 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 99006    FORMAT (' ','OUTPUT FROM THE DISCR3 SUBROUTINE--')
          WRITE (G_IO,99016)
          WRITE (G_IO,99007) N
-99007    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
+99007    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I0)
          WRITE (G_IO,99008) Numcla
-99008    FORMAT (' ',7X,'SPECIFIED NUMBER OF LEVELS        = ',I8)
+99008    FORMAT (' ',7X,'SPECIFIED NUMBER OF LEVELS        = ',I0)
          WRITE (G_IO,99009) xmin
 99009    FORMAT (' ',7X,'COMPUTED  LOWER BOUND OF INTERVAL = ',F15.7)
          WRITE (G_IO,99010) xdel
@@ -5600,7 +5600,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 99014       FORMAT (' ',4X,I6,2X,2F14.7,I8)
          ENDDO
       ENDIF
-99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 99016 FORMAT (' ')
 !
 END SUBROUTINE DISCR3
@@ -5614,7 +5614,7 @@ END SUBROUTINE DISCR3
 !!       SUBROUTINE DISCRE(X,N,Xmin,Xdel,Xmax,Y)
 !!
 !!##DESCRIPTION
-!!    discre(3f) 'discretizes' the data of the precision precision vector x.
+!!    discre(3f) 'discretizes' the data of the REAL vector x.
 !!    the first class interval is from xmin to xmin + xdel; the second
 !!    class interval is from xmin+ xdel to xmin + 2*xdel; etc.
 !!
@@ -5743,7 +5743,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DISCRE SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -5852,7 +5852,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 99009    FORMAT (' ','OUTPUT FROM THE DISCRE SUBROUTINE--')
          WRITE (G_IO,99020)
          WRITE (G_IO,99010) N
-99010    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
+99010    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I0)
          WRITE (G_IO,99011) Xmin
 99011    FORMAT (' ',7X,'SPECIFIED LOWER BOUND OF INTERVAL = ',F15.7)
          WRITE (G_IO,99012) Xdel
@@ -5860,7 +5860,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
          WRITE (G_IO,99013) Xmax
 99013    FORMAT (' ',7X,'SPECIFIED UPPER BOUND OF INTERVAL = ',F15.7)
          WRITE (G_IO,99014) numcla
-99014    FORMAT (' ',7X,'COMPUTED  NUMBER OF LEVELS        = ',I8)
+99014    FORMAT (' ',7X,'COMPUTED  NUMBER OF LEVELS        = ',I0)
          WRITE (G_IO,99020)
          WRITE (G_IO,99015)
 99015    FORMAT (' ',                                                   &
@@ -5881,7 +5881,7 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 99018       FORMAT (' ',4X,I6,2X,3F14.7,I8)
          ENDDO
          IF ( icounu>=1 ) WRITE (G_IO,99019) pointu , clasmu , icounu
-99019    FORMAT (' ',4X,'   ABOVE',2F14.7,'     +INFINITY',I8)
+99019    FORMAT (' ',4X,'   ABOVE',2F14.7,'     +INFINITY',I0)
       ENDIF
 99020 FORMAT (' ')
 !
@@ -6158,9 +6158,9 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV1PLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -6205,7 +6205,7 @@ INTEGER :: i , iupper , N
 !
 99005    FORMAT (' ',                                                   &
      &'EXTREME VALUE TYPE 1 (EXPONENTIAL TYPE) PROBABILITY PLOT (TAU = '&
-     &,E15.8,')',23X,'THE SAMPLE SIZE N = ',I7)
+     &,E15.8,')',23X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -6405,7 +6405,7 @@ REAL(kind=wp) :: X(:)
        WRITE (G_IO,99001)
        99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1RAN SUBROUTINE IS NON-POSITIVE *****')
        WRITE (G_IO,99002) N
-       99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+       99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
     ELSE
        !
        !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
@@ -6436,7 +6436,7 @@ END SUBROUTINE EV1RAN
 !!
 !!##DESCRIPTION
 !!    EV2CDF(3f) computes the cumulative distribution function value for
-!!    the extreme value type 2 distribution with precision precision tail
+!!    the extreme value type 2 distribution with REAL tail
 !!    length parameter = GAMMA.
 !!
 !!    The extreme value type 2 distribution used herein is defined for all
@@ -6622,9 +6622,9 @@ INTEGER i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2PLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -6691,7 +6691,7 @@ INTEGER i , iupper , N
 !
 99007    FORMAT (' ',                                                   &
      & 'EXTREME VALUE TYPE 2 (CAUCHY TYPE) PROB. PLOT WITH EXP. PAR. = '&
-     & ,E17.10,1X,'(TAU = ',E15.8,')',1X,'SAMPLE SIZE N = ',I7)
+     & ,E17.10,1X,'(TAU = ',E15.8,')',1X,'SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -6739,7 +6739,7 @@ END SUBROUTINE EV2PLT
 !!
 !!##DESCRIPTION
 !!    EV2PPF(3f) computes the percent point function value for the extreme
-!!    value type 2 distribution with precision precision tail length parameter
+!!    value type 2 distribution with REAL tail length parameter
 !!    = GAMMA.
 !!
 !!    The extreme value type 2 distribution used herein is defined for all
@@ -6917,7 +6917,7 @@ INTEGER i , Iseed , N
          WRITE (G_IO,99001)
          99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV2RAN SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99003)
@@ -7240,9 +7240,9 @@ INTEGER i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EXPPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -7286,7 +7286,7 @@ INTEGER i , iupper , N
          WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','EXPONENTIAL PROBABILITY PLOT (TAU = ',E15.8,')',  &
-     &           51X,'THE SAMPLE SIZE N = ',I7)
+     &           51X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -7512,7 +7512,7 @@ REAL(kind=wp) :: X
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
 !
@@ -7795,9 +7795,9 @@ CHARACTER(len=4) :: iflag3
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EXTREM SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -7900,7 +7900,7 @@ CHARACTER(len=4) :: iflag3
 99005    FORMAT (' ',40X,'EXTREME VALUE ANALYSIS')
          WRITE (G_IO,99029)
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',37X,'THE SAMPLE SIZE N = ',I7)
+99006    FORMAT (' ',37X,'THE SAMPLE SIZE N = ',I0)
          WRITE (G_IO,99007) ybar
 99007    FORMAT (' ',34X,'THE SAMPLE MEAN = ',F14.7)
          WRITE (G_IO,99008) sy
@@ -8403,7 +8403,7 @@ DATA nucut1 , nucut2/100 , 1000/
 99005             FORMAT (' ',                                          &
      &                    '*****INTERNAL ERROR IN   FCDF SUBROUTINE--', &
      &                  'IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = '&
-     &                  ,I8)
+     &                  ,I0)
                   RETURN
                ENDIF
             ENDIF
@@ -8432,7 +8432,7 @@ DATA nucut1 , nucut2/100 , 1000/
       CALL NORCDF(u,gcdf)
       Cdf = gcdf
       RETURN
-99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 99999 END SUBROUTINE FCDF
 !>
@@ -8586,9 +8586,9 @@ DATA alperc/'%'/
          WRITE (G_IO,99001) ilower , iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FOURIE SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (',I6,',',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (',I0,',',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          hold = X(1)
@@ -8655,7 +8655,7 @@ DATA alperc/'%'/
       WRITE (G_IO,99014)
       WRITE (G_IO,99014)
       WRITE (G_IO,99005) N
-99005 FORMAT (' ',40X,'THE SAMPLE SIZE N                      = ',I8)
+99005 FORMAT (' ',40X,'THE SAMPLE SIZE N                      = ',I0)
       WRITE (G_IO,99006) xbar
 99006 FORMAT (' ',40X,'THE SAMPLE MEAN                        = ',F20.8)
       WRITE (G_IO,99007) vbias
@@ -8717,7 +8717,7 @@ DATA alperc/'%'/
             percon = 100.0_wp*(conmsq/vbias)
             WRITE (G_IO,99011) i , ffreq , period , A(i) , B(i) , amp ,  &
      &                        phase1 , phase2 , conmsq , percon , alperc
-99011       FORMAT (' ',I6,2X,F8.6,1X,F8.2,6(1X,E14.7),2X,F6.2,A1)
+99011       FORMAT (' ',I0,2X,F8.6,1X,F8.2,6(1X,E14.7),2X,F6.2,A1)
             A(i) = percon
             IF ( i>=nhalf ) GOTO 200
             iskip = i - 10*(i/10)
@@ -8901,7 +8901,7 @@ DATA pi/3.14159265358979_wp/
 !
          ENDDO
       ENDIF
-99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99004 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 END SUBROUTINE FRAN
 !>
@@ -8979,7 +8979,7 @@ EQUIVALENCE (Y(1),WS(1))
          99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO FREQ(3f) IS OUTSIDE THE ALLOWABLE (1,',&
          & I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -9018,7 +9018,7 @@ EQUIVALENCE (Y(1),WS(1))
          99006    FORMAT (' ',18X,'SAMPLE FREQUENCY AND SAMPLE CUMULATIVE FREQUENCY')
          WRITE (G_IO,99014)
          WRITE (G_IO,99007) N
-         99007    FORMAT (' ',27X,'THE SAMPLE SIZE N = ',I8)
+         99007    FORMAT (' ',27X,'THE SAMPLE SIZE N = ',I0)
          WRITE (G_IO,99008) xbar
          99008    FORMAT (' ',25X,'THE SAMPLE MEAN = ',E15.8)
          WRITE (G_IO,99009) s
@@ -9086,7 +9086,7 @@ END SUBROUTINE FREQ
 !!
 !!##DESCRIPTION
 !!    GAMCDF(3f) computes the cumulative distribution function value for
-!!    the gamma distribution with precision precision tail length parameter
+!!    the gamma distribution with REAL tail length parameter
 !!    = GAMMA.
 !!
 !!    The Gamma distribution used herein has mean = GAMMA and standard
@@ -9236,7 +9236,7 @@ DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
          WRITE (G_IO,99003) maxit
 !
 99003    FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMCDF ',&
-     &           'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I7)
+     &           'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I0)
          WRITE (G_IO,99004) X
 99004    FORMAT (' ','     THE INPUT VALUE OF X     IS ',E15.8)
          WRITE (G_IO,99005) Gamma
@@ -9382,9 +9382,9 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -9550,7 +9550,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !
 99007    FORMAT (' ','GAMMA PROBABILITY PLOT WITH SHAPE PARAMETER = ',  &
      &           E17.10,1X,'(TAU = ',E15.8,')',16X,'SAMPLE SIZE N = ',  &
-     &           I7)
+     &           I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -9643,7 +9643,7 @@ END SUBROUTINE GAMPLT
 !!
 !!##DESCRIPTION
 !!    gamppf(3f) computes the percent point function value for the gamma
-!!    distribution with precision precision tail length parameter = gamma.
+!!    distribution with REAL tail length parameter = gamma.
 !!
 !!    the gamma distribution used herein has mean = gamma and standard
 !!    deviation = sqrt(gamma). this distribution is defined for all positive
@@ -9842,7 +9842,7 @@ INTEGER :: icount , iloop , j , maxit
       WRITE (G_IO,99003) maxit
 !
 99003 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMPPF ',   &
-     &        'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I7)
+     &        'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I0)
       WRITE (G_IO,99004) P
 99004 FORMAT (' ','     THE INPUT VALUE OF P     IS ',E15.8)
       WRITE (G_IO,99005) Gamma
@@ -10007,7 +10007,7 @@ INTEGER :: i , Iseed , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GAMRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99003)
@@ -10086,7 +10086,7 @@ END SUBROUTINE GAMRAN
 !!
 !!##DESCRIPTION
 !!    GEOCDF(3f) computes the cumulative distribution function value at the
-!!    precision precision value X for the geometric distribution with precision
+!!    REAL value X for the geometric distribution with precision
 !!    precision 'Bernoulli probability' parameter = P.
 !!
 !!    The geometric distribution used herein herein has mean = (1-P)/P and
@@ -10313,9 +10313,9 @@ INTEGER i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEOPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -10382,7 +10382,7 @@ INTEGER i , iupper , N
 !
 99007    FORMAT (' ','GEOMETRIC PROBABILITY PLOT WITH PROBABILITY ',    &
      &           'PARAMETER = ',E17.10,1X,'(TAU = ',E15.8,')',11X,      &
-     &           'THE SAMPLE ','SIZE N = ',I7)
+     &           'THE SAMPLE ','SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -10426,7 +10426,7 @@ END SUBROUTINE GEOPLT
 !!
 !!##DESCRIPTION
 !!    geoppf(3f) computes the percent point function value for the geometric
-!!    distribution with precision precision 'bernoulli probability' parameter
+!!    distribution with REAL 'bernoulli probability' parameter
 !!    = ppar.
 !!
 !!    the geometric distribution used herein has mean = (1-ppar)/ppar and
@@ -10579,7 +10579,7 @@ INTEGER iratio
 !!
 !!##DESCRIPTION
 !!    GEORAN(3f) generates a random sample of size N from the geometric
-!!    distribution with precision precision 'Bernoulli probability' parameter
+!!    distribution with REAL 'Bernoulli probability' parameter
 !!    = P.
 !!
 !!    The geometric distribution used herein has mean = (1-P)/P and standard
@@ -10703,7 +10703,7 @@ INTEGER :: i , iratio , Iseed , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GEORAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (G_IO,99003)
@@ -11021,7 +11021,7 @@ EQUIVALENCE (W(1),WS(7501))
 !
          CALL PLOT(Y,W,N)
          WRITE (G_IO,99005) tau , N
-         99005    FORMAT (' ','HALFNORMAL PROBABILITY PLOT (TAU = ',E15.8,')',52X,'THE SAMPLE SIZE N = ',I7)
+         99005    FORMAT (' ','HALFNORMAL PROBABILITY PLOT (TAU = ',E15.8,')',52X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT. COMPUTE LOCATION AND SCALE ESTIMATES
 !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT. THEN WRITE THEM OUT.
@@ -11361,7 +11361,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99001)
          99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO HIST(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -11561,7 +11561,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             99011 FORMAT (' HISTOGRAM      THE NUMBER OF CLASSES IS ',I0,&
             & 8X,'THE CLASS WIDTH IS ',E15.8,' = ',F7.1,' STANDARD DEVIATIONS')
             WRITE (G_IO,99012) N
-            99012 FORMAT (' ','THE SAMPLE SIZE N = ',I7)
+            99012 FORMAT (' ','THE SAMPLE SIZE N = ',I0)
          ENDDO
       ENDIF
 END SUBROUTINE HIST
@@ -11923,7 +11923,7 @@ INTEGER       :: icount
 !!       g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 !!
 !!##INPUT ARGUMENTS
-!!    X       The precision precision value at which the probability density
+!!    X       The REAL value at which the probability density
 !!            function is to be evaluated.
 !!
 !!            For ALAMBA non-positive, no restrictions on X.
@@ -11931,7 +11931,7 @@ INTEGER       :: icount
 !!            For ALAMBA positive, X should be between (-1/ALAMBA)
 !!            and (+1/ALAMBA), inclusively.
 !!
-!!    ALAMBA  The precision precision value of lambda (the tail length
+!!    ALAMBA  The REAL value of lambda (the tail length
 !!            parameter).
 !!
 !!##OUTPUT ARGUMENTS
@@ -12176,9 +12176,9 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LAMPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -12239,7 +12239,7 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99005) Alamba , tau , N
 !
 99005    FORMAT (' ','LAMBDA PROBABILITY PLOT WITH LAMBDA = ',E17.10,1X,&
-     &           '(TAU = ',E15.8,')',24X,'THE SAMPLE SIZE N = ',I7)
+     &           '(TAU = ',E15.8,')',24X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -12485,7 +12485,7 @@ INTEGER :: i , Iseed , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LAMRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
 !
@@ -12846,9 +12846,9 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LGNPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -12894,7 +12894,7 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','LOGNORMAL PROBABILITY PLOT (TAU = ',E15.8,')',53X,&
-     &           'THE SAMPLE SIZE N = ',I7)
+     &           'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -13132,7 +13132,7 @@ INTEGER i , ip1 , Iseed , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LGNRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
 !
@@ -13290,7 +13290,7 @@ REAL(kind=wp)            :: Y(N)
       xmed = 0.0_wp
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-         99001 FORMAT(' ***** FATAL ERROR--The second input argument to LOC(3f) is outside the allowable (1,',I6,') interval *****')
+         99001 FORMAT(' ***** FATAL ERROR--The second input argument to LOC(3f) is outside the allowable (1,',I0,') interval *****')
          WRITE (G_IO,99002) N
          99002 FORMAT (' ','***** the value of the argument is ',I0,' *****')
          RETURN
@@ -13362,7 +13362,7 @@ REAL(kind=wp)            :: Y(N)
          WRITE (G_IO,99005)
          99005 FORMAT (/,/,/,/,/,' ',30X,'Estimates of the LOCATION Parameter')
          WRITE (G_IO,99006) N
-         99006 FORMAT (/,' ',34X,'(The sample size N = ',I5,')')
+         99006 FORMAT (/,' ',34X,'(The sample size N = ',I0,')')
          WRITE (G_IO,99007) xmid
          99007 FORMAT (/,/,' The sample midrange is                ',E15.8)
          WRITE (G_IO,99008) xmean
@@ -13702,10 +13702,10 @@ DATA tau/1.63473745_wp/
          WRITE (G_IO,99001) iupper
          99001    FORMAT (' ', &
          & '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LOGPLT SUBROUTINE IS OUTSIDE THE ALLOWABLE (1,', &
-         & I6, &
+         & I0, &
          & ') INTERVAL *****')
          WRITE (G_IO,99002) N
-         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -13746,7 +13746,7 @@ DATA tau/1.63473745_wp/
          !
          CALL PLOT(Y,W,N)
          WRITE (G_IO,99005) tau , N
-         99005    FORMAT (' ','LOGISTIC PROBABILITY PLOT (TAU = ',E15.8,')',54X, 'THE SAMPLE SIZE N = ',I7)
+         99005    FORMAT (' ','LOGISTIC PROBABILITY PLOT (TAU = ',E15.8,')',54X, 'THE SAMPLE SIZE N = ',I0)
          !
          !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
          !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -13964,7 +13964,7 @@ REAL(kind=wp) :: X
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          !
@@ -14417,7 +14417,7 @@ EQUIVALENCE (Y(1),WS(1))
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
          99001 FORMAT (&
-          & ' ***** FATAL ERROR--The second input argument to MEDIAN(3f) is outside the allowable (1,',I6,') interval *****')
+          & ' ***** FATAL ERROR--The second input argument to MEDIAN(3f) is outside the allowable (1,',I0,') interval *****')
          WRITE (G_IO,99002) N
          99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
@@ -14569,7 +14569,7 @@ DATA p1, p2, perp1, perp2, perp3/0.25_wp, 0.25_wp, 25.0_wp, 25.0_wp, 50.0_wp/
       WRITE (G_IO,99001) iupper
       99001 FORMAT(' ***** FATAL ERROR--the second input argument to MIDM(3f) is outside the allowable (1,',I0,') interval *****')
       WRITE (G_IO,99002) N
-      99002 FORMAT (' ','***** the value of the argument is ',I8,' *****')
+      99002 FORMAT (' ','***** the value of the argument is ',I0,' *****')
       RETURN
    ELSE
       IF ( N==1 ) THEN
@@ -14834,7 +14834,7 @@ integer       :: i , Iwrite , N
          write (g_io,99001)
          99001 format (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO MIN(3f) IS NON-POSITIVE *****')
          write (g_io,99002) N
-         99002 format (' ***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 format (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          return
       else
          if ( N==1 ) then
@@ -14890,8 +14890,8 @@ end subroutine min
 !!
 !!##DESCRIPTION
 !!
-!!    MOVE(3f) moves (copies) M elements of the precision precision vector
-!!    X (starting with position Ix1) into the precision precision vector Y
+!!    MOVE(3f) moves (copies) M elements of the REAL vector
+!!    X (starting with position Ix1) into the REAL vector Y
 !!    (starting with position Iy1).
 !!
 !!    This allows the data analyst to take any subvector in X and place it
@@ -15026,8 +15026,8 @@ END SUBROUTINE MOVE
 !!##DESCRIPTION
 !!
 !!    NBCDF(3f) computes the cumulative distribution function value at the
-!!    precision precision value X for the negative binomial distribution with
-!!    precision precision 'Bernoulli probability' parameter = P, and integer
+!!    REAL value X for the negative binomial distribution with
+!!    REAL 'Bernoulli probability' parameter = P, and integer
 !!    'number of successes in Bernoulli trials' parameter = N.
 !!
 !!    The negative binomial distribution used herein has mean = N*(1-P)/P
@@ -15191,7 +15191,7 @@ DATA pi/3.14159265358979D0/
          WRITE (G_IO,99002)
          99002 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE NBCDF  SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99003) N
-         99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( X<0.0_wp ) THEN
@@ -15514,7 +15514,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE NBPPF  SUBROU&
      &TINE IS NON-POSITIVE *****')
                WRITE (G_IO,99004) N
-99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
+99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,    &
      &                 ' *****')
                Ppf = 0.0_wp
                RETURN
@@ -15749,7 +15749,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
       WRITE (G_IO,99017) P
 99017 FORMAT (' ','P    = ',F14.7)
       WRITE (G_IO,99018) Ppar , N
-99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
+99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I0)
       RETURN
 99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 99020 FORMAT (' ','***** INTERNAL ERROR IN NBPPF  SUBROUTINE *****')
@@ -15975,7 +15975,7 @@ INTEGER,save :: iseed=1
          ENDDO
       ENDDO
       RETURN
-99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 99999 END SUBROUTINE NBRAN
 !>
@@ -16211,9 +16211,9 @@ character(len=4) :: iline2
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NOROUT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -16383,7 +16383,7 @@ character(len=4) :: iline2
 99005    FORMAT (' ',48X,'NORMAL OUTLIER ANALYSIS')
          WRITE (G_IO,99042)
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I5,')')
+99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99042)
          WRITE (G_IO,99007)
 99007    FORMAT (' ',39X,                                               &
@@ -16756,9 +16756,9 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NORPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -16802,7 +16802,7 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','NORMAL PROBABILITY PLOT (TAU = ',E15.8,')',56X,   &
-     &           'THE SAMPLE SIZE N = ',I7)
+     &           'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -17080,7 +17080,7 @@ INTEGER :: i , ip1 , Iseed , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NORRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
 !
@@ -17223,7 +17223,7 @@ END SUBROUTINE NORSF
 !!##DESCRIPTION
 !!
 !!    PARCDF(3f) computes the cumulative distribution function value for
-!!    the Pareto distribution with precision precision tail length parameter
+!!    the Pareto distribution with REAL tail length parameter
 !!    = GAMMA.
 !!
 !!    The Pareto distribution used herein is defined for all X greater than
@@ -17450,9 +17450,9 @@ INTEGER       :: i, iupper, N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -17520,7 +17520,7 @@ INTEGER       :: i, iupper, N
 99007    FORMAT (' ',                                                   &
      &           'PARETO PROBABILITY PLOT WITH EXPONENT PARAMETER = ',  &
      &           E17.10,1X,'(TAU = ',E15.8,')',11X,                     &
-     &           'THE SAMPLE SIZE N = ',I7)
+     &           'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -17563,7 +17563,7 @@ END SUBROUTINE PARPLT
 !!
 !!##DESCRIPTION
 !!    parppf(3f) computes the percent point function value for the pareto
-!!    distribution with precision precision tail length parameter = gamma.
+!!    distribution with REAL tail length parameter = gamma.
 !!
 !!    the pareto distribution used herein is defined for all x greater than
 !!    or equal to 1, and has the probability density function
@@ -17755,7 +17755,7 @@ INTEGER :: i , Iseed , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE PARRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99003)
@@ -18007,7 +18007,7 @@ DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
          WRITE (G_IO,99017)
          WRITE (G_IO,99019) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99016)
          RETURN
       ELSE
@@ -18134,7 +18134,7 @@ DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
       WRITE (G_IO,99009)
 99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99010) n2
-99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99010 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99016)
       RETURN
 !
@@ -18246,7 +18246,7 @@ DATA iplotc(1) , iplotc(2) , iplotc(3) , iplotc(4) , iplotc(5) ,  &
       WRITE (G_IO,99014) Yaxid , Xaxid , Plchid
 99014 FORMAT (' ',9X,A4,A4,' (VERTICAL AXIS) VERSUS ',A4,A4,' (HORIZONTAL AXIS) ',20X,'THE PLOTTING CHARACTER IS ',A4,A4)
       WRITE (G_IO,99015) N
-99015 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I8)
+99015 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I0)
 !
 99016 FORMAT (' ','**********************************************************************')
 99017 FORMAT (' ','                   FATAL ERROR                    ')
@@ -18377,7 +18377,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99012)
          WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99011)
          RETURN
       ELSE
@@ -18452,7 +18452,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99007) n2
-99007 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99007 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99011)
       RETURN
 !
@@ -18755,7 +18755,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99013)
          WRITE (G_IO,99014) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99012)
          RETURN
       ELSE
@@ -18851,7 +18851,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 99007 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99008) n2
-99008 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99008 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99012)
       RETURN
 !
@@ -19185,7 +19185,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99015)
          WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99014)
          RETURN
       ELSE
@@ -19315,7 +19315,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99010) n2
-99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99010 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99014)
       RETURN
 !
@@ -19656,7 +19656,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99015)
          WRITE (G_IO,99016) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99014)
          RETURN
       ELSE
@@ -19752,7 +19752,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 99007 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99008) n2
-99008 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99008 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99014)
       RETURN
 !
@@ -19864,7 +19864,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
      &        ' (HORIZONTAL AXIS)',20X,'THE PLOTTING CHARACTER IS ',A4, &
      &        A4)
       WRITE (G_IO,99013) N
-99013 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I8)
+99013 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I0)
 !
 99014 FORMAT (' ','**************************************************', &
      &        '********************')
@@ -20046,7 +20046,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99013)
          WRITE (G_IO,99014) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99012)
          RETURN
       ELSE
@@ -20142,7 +20142,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 99007 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99008) n2
-99008 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99008 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99012)
       RETURN
 !
@@ -20361,7 +20361,7 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
          WRITE (G_IO,99001)
          99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -20490,7 +20490,7 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
             WRITE (G_IO,99005)
 99005       FORMAT ('1')
             IF ( iz==1 ) WRITE (G_IO,99006) N
-99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS ',I5)
+99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS ',I0)
             IF ( iz>=2 ) WRITE (G_IO,99007)
 99007       FORMAT (' THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIOUS PAGE')
             WRITE (G_IO,99008)
@@ -20695,7 +20695,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai
          WRITE (G_IO,99013)
          WRITE (G_IO,99014) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99012)
          RETURN
       ELSE
@@ -20791,7 +20791,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai
 99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99007) n2
-99007 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99007 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99012)
       RETURN
 !
@@ -20963,9 +20963,9 @@ END SUBROUTINE PLOTCT
 !!    10.0**10) and they will subsequently be ignored in the plot subroutine.
 !!
 !!##OPTIONS
-!!     Y     The precision precision vector of (unsorted or sorted) observations
+!!     Y     The REAL vector of (unsorted or sorted) observations
 !!           to be plotted vertically.
-!!     X     The precision precision vector of (unsorted or sorted) observations
+!!     X     The REAL vector of (unsorted or sorted) observations
 !!           to be plotted horizontally.
 !!     N     The integer number of observations in the vector Y.
 !!
@@ -21041,7 +21041,7 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
          WRITE (G_IO,99012)
          WRITE (G_IO,99013) alph31 , alph32 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99011)
          RETURN
       ELSE
@@ -21115,7 +21115,7 @@ DATA alpham , alphaa , alphad , alphan , equal/'M' , 'A' , 'D' , 'N' , '='/
       WRITE (G_IO,99006)
 99006 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99007) n2
-99007 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99007 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99011)
       RETURN
 !
@@ -21449,7 +21449,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99015)
          WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99014)
          RETURN
       ELSE
@@ -21579,7 +21579,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99010) n2
-99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99010 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99014)
       RETURN
 !
@@ -21887,7 +21887,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99016)
          WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99015)
          RETURN
       ELSE
@@ -21998,7 +21998,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 99010 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99011) n2
-99011 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99011 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99015)
       RETURN
 !
@@ -22499,7 +22499,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          WRITE (G_IO,99016)
          WRITE (G_IO,99017) alph31 , alph32 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99015)
          RETURN
       ELSE
@@ -22610,7 +22610,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
 99009 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99010) n2
-99010 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99010 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99015)
       RETURN
 !
@@ -22794,7 +22794,7 @@ END SUBROUTINE PLOTST
 !!   Y   The vector of (unsorted or sorted) observations to be plotted
 !!       vertically.
 !!
-!!   X   The precision precision vector of (unsorted or sorted) observations
+!!   X   The REAL vector of (unsorted or sorted) observations
 !!       to be plotted horizontally.
 !!
 !!   N   The integer number of observations in the vector Y.
@@ -23247,10 +23247,9 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
       IF ( N<ilower .OR. N>iupper ) THEN
          WRITE (G_IO,99002) ilower , iupper
 99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTU  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (',I1,',',I6,') INTERVAL *****')
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO PLOTU(3f)  IS OUTSIDE THE ALLOWABLE (',I0,',',I0,') INTERVAL *****')
          WRITE (G_IO,99003) N
-99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          hold = X(1)
@@ -23646,21 +23645,21 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99008)
 99008    FORMAT (' ',20X,' -6        -3         0         3         6')
          WRITE (G_IO,99009) numcla , N , numdis
-99009    FORMAT (' ',20X,'NUMBER OF CLASSES = ',I3,42X,'SAMPLE SIZE =', &
-     &           I9,' DISTINCT POINTS =',I6)
+99009    FORMAT (' ',20X,'NUMBER OF CLASSES = ',I0,42X,'SAMPLE SIZE =', &
+     &           I0,' DISTINCT POINTS =',I0)
          WRITE (G_IO,99010) cwidth , cwidsd , zmin , nummin , promin
 99010    FORMAT (' ',20X,'CLASS WIDTH = ',E14.7,' = ',F3.1,             &
      &           ' STANDARD DEVIATIONS',11X,'MINIMUM =',F13.6,          &
-     &           ' COUNT =',I5,' (',F7.2,'%)')
+     &           ' COUNT =',I0,' (',F7.2,'%)')
          WRITE (G_IO,99011) numout , zmed
-99011    FORMAT (' ',16X,I5,' OBSERVATIONS WERE IN EXCESS OF 6 STANDARD'&
+99011    FORMAT (' ',16X,I0,' OBSERVATIONS WERE IN EXCESS OF 6 STANDARD'&
      &           ,' DEVIATIONS',11X,'MEDIAN =',F14.6)
          WRITE (G_IO,99012) zmean
 99012    FORMAT (' ',20X,                                               &
      &      'ABOUT THE SAMPLE MEAN AND SO WERE NOT PRINTED IN HISTOGRAM'&
      &      ,7X,'MEAN =',F16.6)
          WRITE (G_IO,99013) zmax , nummax , promax
-99013    FORMAT (' ',85X,'MAXIMUM =',F13.6,' COUNT =',I5,' (',F7.2,'%)')
+99013    FORMAT (' ',85X,'MAXIMUM =',F13.6,' COUNT =',I0,' (',F7.2,'%)')
          WRITE (G_IO,99014) zsd , zrange
 99014    FORMAT (' ',85X,'ST. DEV. =',F12.6,' RANGE =',F16.6)
          WRITE (G_IO,99015) zdevb , zrdevb
@@ -23779,7 +23778,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99012)
          WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99011)
          RETURN
       ELSE
@@ -24050,7 +24049,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99010)
          RETURN
       ELSE
@@ -24327,7 +24326,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99012)
          WRITE (G_IO,99013) alph21 , alph22 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99011)
          RETURN
       ELSE
@@ -24684,7 +24683,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai
          WRITE (G_IO,99015)
          WRITE (G_IO,99017) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99014)
          RETURN
       ELSE
@@ -24814,7 +24813,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai
 99008 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99009) n2
-99009 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99009 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99014)
       RETURN
 !
@@ -25103,7 +25102,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99010)
          RETURN
       ELSE
@@ -25491,7 +25490,7 @@ END SUBROUTINE POICDF
 !!       SUBROUTINE POIPLT(X,N,Alamba)
 !!
 !!##DESCRIPTION
-!!    poiplt(3f) generates a poisson probability plot (with precision precision
+!!    poiplt(3f) generates a poisson probability plot (with REAL
 !!    tail length parameter = alamba).
 !!
 !!    the prototype poisson distribution used herein has mean = alamba and
@@ -25616,9 +25615,9 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -25749,7 +25748,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
          WRITE (G_IO,99007) Alamba , N
 !
 99007    FORMAT (' ','POISSON PROBABILITY PLOT WITH PARAMETER = ',9X,   &
-     &           E17.10,1X,8X,11X,'THE SAMPLE SIZE N = ',I7)
+     &           E17.10,1X,8X,11X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -25792,8 +25791,8 @@ END SUBROUTINE POIPLT
 !!       SUBROUTINE POIPPF(P,Alamba,Ppf)
 !!
 !!##DESCRIPTION
-!!    poippf(3f) computes the percent point function value at the precision
-!!    precision value p for the poisson distribution with precision precision
+!!    POIPPF(3f) computes the percent point function value at the precision
+!!    precision value P for the Poisson distribution with REAL
 !!    tail length parameter = alamba.
 !!
 !!    the poisson distribution used herein has mean = alamba and standard
@@ -25831,27 +25830,29 @@ END SUBROUTINE POIPLT
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the Statistical
 !!    Engineering Division, National Institute of Standards and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121,
-!!     ESPECIALLY PAGE 102, FORMULA 36.1.  --HASTINGS AND PEACOCK, STATISTICAL
-!!     DISTRIBUTIONS--A HANDBOOK FOR STUDENTS AND PRACTITIONERS, 1975,
-!!     PAGES 108-113.
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 929.  --FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS
-!!     APPLICATIONS, VOLUME 1, EDITION 2, 1957, PAGES 146-154.
-!!   * COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
-!!   * GENERAL ELECTRIC COMPANY, TABLES OF THE INDIVIDUAL AND CUMULATIVE
-!!     TERMS OF POISSON DISTRIBUTION, 1962.
-!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 259-261.
+!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 87-121,
+!!     especially Page 102, Formula 36.1.  --Hastings and Peacock, Statistical
+!!     Distributions--A Handbook for Students and Practitioners, 1975,
+!!     Pages 108-113.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     Page 929.  --Feller, An Introduction to Probability Theory and Its
+!!     Applications, Volume 1, Edition 2, 1957, Pages 146-154.
+!!   * Cox and Miller, The Theory of Stochastic Processes, 1965, Page 7.
+!!   * General Electric Company, Tables of the Individual and Cumulative
+!!     Terms of Poisson Distribution, 1962.
+!!   * Owen, Handbook of Statistical Tables, 1962, Pages 259-261.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
-REAL(kind=wp) :: Alamba , amean , P , p0 , p1 , p2 , pf0 , Ppf , sd , x0 ,    &
-     &     x1 , x2 , zppf
-INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
+REAL(kind=wp) :: Alamba, amean, P, p0, p1, p2, pf0, Ppf, sd, x0, x1, x2, zppf
+INTEGER :: i, isd, ix0, ix0p1, ix1, ix2
 !
 !     INPUT ARGUMENTS--P      = THE  VALUE
 !                                (BETWEEN 0.0 (INCLUSIVELY)
@@ -25909,18 +25910,14 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
 !
       IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE POIPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO POIPPF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
          WRITE (G_IO,99017) P
          Ppf = 0.0_wp
          RETURN
       ELSE
          IF ( Alamba<=0.0_wp ) THEN
             WRITE (G_IO,99002)
-99002       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIPPF SUBROU&
-     &TINE IS NON-POSITIVE *****')
+99002       FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO POIPPF(3f) IS NON-POSITIVE *****')
             WRITE (G_IO,99017) Alamba
             Ppf = 0.0_wp
             RETURN
@@ -25975,11 +25972,11 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
                   isd = sd + 1.0_wp
                   x2 = ix2
                   CALL POICDF(x2,Alamba,p2)
-!
+
                   IF ( p2<P ) THEN
-!
+
                      ix0 = ix2
-                     DO i = 1 , 100000
+                     DO i = 1, 100000
                         ix2 = ix0 + isd
                         IF ( ix2>=ix1 ) GOTO 200
                         x2 = ix2
@@ -25989,14 +25986,10 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
                      ENDDO
                      WRITE (G_IO,99018)
                      WRITE (G_IO,99003)
-!
-99003                FORMAT (' ',                                       &
-     &                     'NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS'&
-     &                     )
+                     99003 FORMAT (' NO UPPER BOUND FOUND AFTER 10**7 ITERATIONS')
                   ELSE
-!
                      ix1 = ix2
-                     DO i = 1 , 100000
+                     DO i = 1, 100000
                         ix2 = ix1 - isd
                         IF ( ix2<=ix0 ) GOTO 200
                         x2 = ix2
@@ -26006,9 +25999,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
                      ENDDO
                      WRITE (G_IO,99018)
                      WRITE (G_IO,99004)
-99004                FORMAT (' ',                                       &
-     &                     'NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS'&
-     &                     )
+                     99004 FORMAT (' NO LOWER BOUND FOUND AFTER 10**7 ITERATIONS')
                   ENDIF
                   GOTO 400
                ENDIF
@@ -26027,10 +26018,9 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
             GOTO 300
             ix0 = ix0 - 1
          ELSE
-!CCCC IF(IX0.EQ.N)GOTO290
             WRITE (G_IO,99018)
             WRITE (G_IO,99005)
-99005       FORMAT (' ','LOWER AND UPPER BOUND IDENTICAL')
+            99005 FORMAT (' ','LOWER AND UPPER BOUND IDENTICAL')
             GOTO 400
          ENDIF
       ENDIF
@@ -26083,16 +26073,12 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
                      ELSEIF ( p2<=p0 ) THEN
                         WRITE (G_IO,99018)
                         WRITE (G_IO,99006)
-99006                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
-     &                          'LESS THAN LOWER BOUND PROBABILITY (P0)'&
-     &                          )
+                        99006 FORMAT (' BISECTION VALUE PROBABILITY (P2) LESS THAN LOWER BOUND PROBABILITY (P0)')
                         EXIT
                      ELSEIF ( p2>=p1 ) THEN
                         WRITE (G_IO,99018)
                         WRITE (G_IO,99007)
-99007                   FORMAT (' ','BISECTION VALUE PROBABILITY (P2) ',&
-     &                       'GREATER THAN UPPER BOUND PROBABILITY (P1)'&
-     &                       )
+                        99007 FORMAT (' BISECTION VALUE PROBABILITY (P2) GREATER THAN UPPER BOUND PROBABILITY (P1)')
                         EXIT
                      ENDIF
                   ENDIF
@@ -26111,34 +26097,31 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2
       ELSEIF ( p0>p1 ) THEN
          WRITE (G_IO,99018)
          WRITE (G_IO,99008)
-99008    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
-     &           'UPPER BOUND PROBABILITY (P1)')
+         99008 FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN UPPER BOUND PROBABILITY (P1)')
       ELSEIF ( p0>P ) THEN
          WRITE (G_IO,99018)
          WRITE (G_IO,99009)
-99009    FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN ',      &
-     &           'INPUT PROBABILITY (P)')
+         99009 FORMAT (' ','LOWER BOUND PROBABILITY (P0) GREATER THAN INPUT PROBABILITY (P)')
       ELSEIF ( p1<P ) THEN
          WRITE (G_IO,99018)
          WRITE (G_IO,99010)
-99010    FORMAT (' ','UPPER BOUND PROBABILITY (P1) LESS    THAN ',      &
-     &           'INPUT PROBABILITY (P)')
+         99010 FORMAT (' ','UPPER BOUND PROBABILITY (P1) LESS THAN INPUT PROBABILITY (P)')
       ELSE
          WRITE (G_IO,99018)
          WRITE (G_IO,99011)
-99011    FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
+         99011 FORMAT (' ','IMPOSSIBLE BRANCH CONDITION ENCOUNTERED')
       ENDIF
 !
- 400  WRITE (G_IO,99012) ix0 , p0
-99012 FORMAT (' ','IX0    = ',I8,10X,'P0 = ',F14.7)
-      WRITE (G_IO,99013) ix1 , p1
-99013 FORMAT (' ','IX1    = ',I8,10X,'P1 = ',F14.7)
-      WRITE (G_IO,99014) ix2 , p2
-99014 FORMAT (' ','IX2    = ',I8,10X,'P2 = ',F14.7)
+ 400  WRITE (G_IO,99012) ix0, p0
+      99012 FORMAT (' ','IX0    = ',I8,10X,'P0 = ',F14.7)
+      WRITE (G_IO,99013) ix1, p1
+      99013 FORMAT (' ','IX1    = ',I8,10X,'P1 = ',F14.7)
+      WRITE (G_IO,99014) ix2, p2
+      99014 FORMAT (' ','IX2    = ',I8,10X,'P2 = ',F14.7)
       WRITE (G_IO,99015) P
-99015 FORMAT (' ','P      = ',F14.7)
+      99015 FORMAT (' ','P      = ',F14.7)
       WRITE (G_IO,99016) Alamba
-99016 FORMAT (' ','ALAMBA = ',F14.7)
+      99016 FORMAT (' ','ALAMBA = ',F14.7)
       RETURN
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 99018 FORMAT (' ','***** INTERNAL ERROR IN POIPPF SUBROUTINE *****')
@@ -26156,7 +26139,7 @@ END SUBROUTINE POIPPF
 !!
 !!##DESCRIPTION
 !!    poiran(3f) generates a random sample of size n from the poisson
-!!    distribution with precision precision tail length parameter = alamba.
+!!    distribution with REAL tail length parameter = alamba.
 !!
 !!    the poisson distribution used herein has mean = alamba and standard
 !!    deviation = sqrt(alamba).
@@ -26283,7 +26266,7 @@ INTEGER :: i , Iseed , j , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE POIRAN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( Alamba<=0.0_wp ) THEN
          WRITE (G_IO,99003)
@@ -26332,7 +26315,7 @@ END SUBROUTINE POIRAN
 !!
 !!    the sample proportion = (the number of observations in the sample
 !!    between xmin and xmax, inclusively) / n. The sample proportion will
-!!    be a precision precision value between 0.0 and 1.0 (inclusively).
+!!    be a REAL value between 0.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -26418,7 +26401,7 @@ INTEGER :: i , isum , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PROPOR SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -26465,7 +26448,7 @@ INTEGER :: i , isum , Iwrite , N
          WRITE (G_IO,99007)
 99007    FORMAT (' ')
          WRITE (G_IO,99008) N , Xmin , Xmax , Xprop
-99008    FORMAT (' ','THE PROPORTION OF THE ',I6,                       &
+99008    FORMAT (' ','THE PROPORTION OF THE ',I0,                       &
      &           ' OBSERVATIONS IN THE INTERVAL ',E15.7,' TO ',E15.7,   &
      &           ' IS ',E15.7)
       ENDIF
@@ -26563,7 +26546,7 @@ INTEGER :: i , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RANGE  SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
 !
@@ -26601,7 +26584,7 @@ INTEGER :: i , Iwrite , N
       WRITE (G_IO,99005)
 99005 FORMAT (' ')
       WRITE (G_IO,99006) N , Xrange
-99006 FORMAT (' ','THE SAMPLE RANGE OF THE ',I6,' OBSERVATIONS IS ',    &
+99006 FORMAT (' ','THE SAMPLE RANGE OF THE ',I0,' OBSERVATIONS IS ',    &
      &        E15.8)
 END SUBROUTINE RANGE
 !>
@@ -26733,7 +26716,7 @@ COMMON /BLOCK4_real32/ XS(7500)
          99001 FORMAT(&
          & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO RANK(3f) IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -26789,7 +26772,7 @@ COMMON /BLOCK4_real32/ XS(7500)
                   ibran = 1
                   WRITE (G_IO,99007) ibran
                   WRITE (G_IO,99005) jmin
-                  99005 FORMAT (' ','JMIN = ',I8)
+                  99005 FORMAT (' ','JMIN = ',I0)
                   STOP
                ENDIF
             ELSEIF ( i/=1 ) THEN
@@ -26826,7 +26809,7 @@ COMMON /BLOCK4_real32/ XS(7500)
             rprev = Xr(i)
          ENDDO
       ENDIF
-99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE-- IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
+99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE-- IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I0)
 
 END SUBROUTINE RANK
 !>
@@ -26920,7 +26903,7 @@ INTEGER :: i , iadd , Istart , j , N
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE RANPER SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -27052,7 +27035,7 @@ INTEGER :: i , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RELSD  SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -27095,7 +27078,7 @@ INTEGER :: i , Iwrite , N
 99005 FORMAT (' ')
       WRITE (G_IO,99006) N , Xrelsd
 99006 FORMAT (' THE RELATIVE STANDARD DEVIATION (= STANDARD ',          &
-     &        'DEVIATION/MEAN) FOR THE ',I6,' OBSERVATIONS IS ',E12.8,  &
+     &        'DEVIATION/MEAN) FOR THE ',I0,' OBSERVATIONS IS ',E12.8,  &
      &        ' PERCENT')
 END SUBROUTINE RELSD
 !>
@@ -27109,7 +27092,7 @@ END SUBROUTINE RELSD
 !!
 !!##DESCRIPTION
 !!    REPLAC(3f) replaces (with the value xnew) all observations in the
-!!    precision precision vector X which are inside the closed (inclusive)
+!!    REAL vector X which are inside the closed (inclusive)
 !!    interval defined by XMIN and XMAX.
 !!
 !!    All observations outside of this interval are left unchanged.
@@ -27222,7 +27205,7 @@ INTEGER :: i , k , N , ndel
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE REPLAC SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -27275,11 +27258,11 @@ INTEGER :: i , k , N , ndel
          WRITE (G_IO,99011) Xnew
 99011    FORMAT (' ',7X,'THE REPLACEMENT VALUE IS ',E15.8)
          WRITE (G_IO,99012) N
-99012    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS    IS ',I6)
+99012    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS    IS ',I0)
          WRITE (G_IO,99013) k
-99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS REPLACED  IS ',I6)
+99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS REPLACED  IS ',I0)
          WRITE (G_IO,99014) ndel
-99014    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS UNCHANGED IS ',I6)
+99014    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS UNCHANGED IS ',I0)
       ENDIF
 !
 END SUBROUTINE REPLAC
@@ -27293,7 +27276,7 @@ END SUBROUTINE REPLAC
 !!       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 !!
 !!##DESCRIPTION
-!!    retain(3f) retains all observations in the precision precision vector
+!!    retain(3f) retains all observations in the REAL vector
 !!    x which are inside the closed (inclusive) interval defined by xmin
 !!    and xmax, while deleting all observations outside of this interval.
 !!
@@ -27403,7 +27386,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RETAIN SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -27463,14 +27446,11 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
          WRITE (G_IO,99010)
 99010    FORMAT (' ',7X,'HAVE BEEN DELETED.')
          WRITE (G_IO,99011) nold
-99011    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99011    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I0)
          WRITE (G_IO,99012) Newn
-99012    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', &
-     &           I6)
+99012    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', I0)
          WRITE (G_IO,99013) ndel
-99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', &
-     &           I6)
+99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I0)
       ENDIF
 !
 END SUBROUTINE RETAIN
@@ -27605,9 +27585,9 @@ EQUIVALENCE (Y(1),WS(1))
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO RUNS(3f) IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO RUNS(3f) IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -27878,20 +27858,20 @@ EQUIVALENCE (Y(1),WS(1))
          ENDDO
          WRITE (G_IO,99024)
          WRITE (G_IO,99014) maxlnu
-99014    FORMAT (' ','LENGTH OF THE LONGEST RUN UP         = ',I5)
+99014    FORMAT (' ','LENGTH OF THE LONGEST RUN UP         = ',I0)
          WRITE (G_IO,99015) maxlnd
-99015    FORMAT (' ','LENGTH OF THE LONGEST RUN DOWN       = ',I5)
+99015    FORMAT (' ','LENGTH OF THE LONGEST RUN DOWN       = ',I0)
          WRITE (G_IO,99016) maxlnt
-99016    FORMAT (' ','LENGTH OF THE LONGEST RUN UP OR DOWN = ',I5)
+99016    FORMAT (' ','LENGTH OF THE LONGEST RUN UP OR DOWN = ',I0)
          WRITE (G_IO,99025)
          WRITE (G_IO,99017) npos
-99017    FORMAT (' ','NUMBER OF POSITIVE DIFFERENCES = ',I5)
+99017    FORMAT (' ','NUMBER OF POSITIVE DIFFERENCES = ',I0)
          WRITE (G_IO,99018) nneg
-99018    FORMAT (' ','NUMBER OF NEGATIVE DIFFERENCES = ',I5)
+99018    FORMAT (' ','NUMBER OF NEGATIVE DIFFERENCES = ',I0)
          WRITE (G_IO,99019) nzer
-99019    FORMAT (' ','NUMBER OF ZERO     DIFFERENCES = ',I5)
+99019    FORMAT (' ','NUMBER OF ZERO     DIFFERENCES = ',I0)
 99020    FORMAT (' ',2(I4,2X,F7.1,2X,F8.4,2X,F8.4,2X,F8.2,8X))
-99021    FORMAT (' ',I6,2X,I6,2X,I6)
+99021    FORMAT (' ',I0,2X,I0,2X,I0)
       ENDIF
 99022 FORMAT (' ', 'I = LENGTH OF RUN         VALUE OF STAT        EXP(STAT)            SD(STAT)    (STAT-EXP(STAT))/SD(STAT)')
 99023 FORMAT (' ',4X,I4,13X,6X,F7.1,13X,F8.4,12X,F8.4,11X,F8.2)
@@ -28017,9 +27997,9 @@ EQUIVALENCE (Y(1),WS(1))
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SAMPP  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -28064,10 +28044,10 @@ EQUIVALENCE (Y(1),WS(1))
          hunp = 100.0*P
          IF ( Iwrite==0 ) RETURN
          WRITE (G_IO,99007) hunp , N , Pp
-99007    FORMAT (' ','THE EMPIRICAL ',F9.5,' PERCENT POINT OF THE ',I6, &
+99007    FORMAT (' ','THE EMPIRICAL ',F9.5,' PERCENT POINT OF THE ',I0, &
      &           ' OBSERVATIONS IS ',F16.7)
       ENDIF
-99008 FORMAT (' ','*****THE VALUE OF THE SECOND INPUT ARGUMENT = ',I8,  &
+99008 FORMAT (' ','*****THE VALUE OF THE SECOND INPUT ARGUMENT = ',I0,  &
      &        '  THE VALUE OF THE THIRD INPUT ARGUMENT = ',E20.10,      &
      &        '*****')
 !
@@ -28178,7 +28158,7 @@ INTEGER i , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SCALE  SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -28249,7 +28229,7 @@ INTEGER i , N
 99005    FORMAT (' ',30X,'ESTIMATES OF THE SCALE PARAMETER')
          WRITE (G_IO,99011)
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',34X,'(THE SAMPLE SIZE N = ',I5,')')
+99006    FORMAT (' ',34X,'(THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99011)
          WRITE (G_IO,99011)
          WRITE (G_IO,99007) xrange
@@ -28360,7 +28340,7 @@ INTEGER :: i , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SD     SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -28401,7 +28381,7 @@ INTEGER :: i , Iwrite , N
       WRITE (G_IO,99005)
 99005 FORMAT (' ')
       WRITE (G_IO,99006) N , Xsd
-99006 FORMAT (' ','THE SAMPLE STANDARD DEVIATION OF THE ',I6,           &
+99006 FORMAT (' ','THE SAMPLE STANDARD DEVIATION OF THE ',I0,           &
      &        ' OBSERVATIONS IS ',E15.8)
 END SUBROUTINE SD
 !>
@@ -28558,7 +28538,7 @@ INTEGER i, il(36), ip1, iu(36), j, jmi, jmk, k, l, lmi, m, mid, N, nm1
       WRITE (G_IO,99001)
       99001 FORMAT (' ','***** FATAL ERROR--The second input argument to SORTC(3f)  is non-positive *****')
       WRITE (G_IO,99002) N
-      99002 FORMAT (' ','***** The value of the argument is ',I8,' *****')
+      99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
       RETURN
    ELSE
       IF ( N==1 ) THEN
@@ -28723,12 +28703,12 @@ END SUBROUTINE SORTC
 !!##DESCRIPTION
 !!
 !!    This subroutine sorts (in ascending order) the N elements of the
-!!    precision precision vector X using the binary sort algorithm and puts
-!!    the resulting N sorted values into the precision precision vector Y.
+!!    REAL vector X using the binary sort algorithm and puts
+!!    the resulting N sorted values into the REAL vector Y.
 !!
 !!##OPTIONS
 !!##INPUT
-!!     X  The precision precision vector of
+!!     X  The REAL vector of
 !!        observations to be sorted.
 !!        The input vector X remains unaltered.
 !!
@@ -28737,7 +28717,7 @@ END SUBROUTINE SORTC
 !!
 !!##OUTPUT
 !!
-!!     Y  The precision precision vector
+!!     Y  The REAL vector
 !!        into which the sorted data values
 !!        from X will be placed in
 !!        ascending order.
@@ -28860,7 +28840,7 @@ DIMENSION iu(36), il(36)
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORT   SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -28998,7 +28978,7 @@ END SUBROUTINE SORT
 !!   SORTP(3f) sorts (in ascending order) the N elements of the precision
 !!   precision vector X, puts the resulting N sorted values into the precision
 !!   precision vector Y; and puts the position (in the original vector X)
-!!   of each of the sorted values into the precision precision vector XPOS.
+!!   of each of the sorted values into the REAL vector XPOS.
 !!
 !!   This subroutine gives the data analyst not only the ability to determine
 !!   what the MIN and MAX (for example) of the data set are, but also where
@@ -29145,7 +29125,7 @@ INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , 
          WRITE (G_IO,99001)
 99001    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTP  SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -29302,7 +29282,7 @@ END SUBROUTINE SORTP
 !!    spcorr(3f) computes the spearman rank correlation coefficient between
 !!    the 2 sets of data in the input vectors x and y.
 !!
-!!    the spearman rank correlation coefficient will be a precision precision
+!!    the spearman rank correlation coefficient will be a REAL
 !!    value between -1.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
@@ -29333,10 +29313,17 @@ END SUBROUTINE SORTP
 !!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES 193-195.
 !!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2, 1957, PAGES 294-295.
 !!   * MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY OF STATISTICS, EDITION 2, 1963, PAGE 424.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --OCTOBER   1974.
+!     UPDATED         --JANUARY   1975.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
-REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
-INTEGER :: i , iflag , iupper , Iwrite , N
+
+SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
+REAL(kind=wp) :: an, hold, Spc, sum, WS, X, XR, Y, YR
+INTEGER       :: i, iflag, iupper, Iwrite, N
 !
 !     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
@@ -29368,22 +29355,11 @@ INTEGER :: i , iflag , iupper , Iwrite , N
 !                                THIS  VALUE
 !                                WILL BE BETWEEN -1.0 AND 1.0
 !                                (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED  VALUE OF THE
+!     OUTPUT--THE COMPUTED VALUE OF THE
 !             SPEARMAN RANK CORRELATION COEFFICIENT BETWEEN THE 2 SETS
 !             OF DATA IN THE INPUT VECTORS X AND Y.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--RANK AND SORT.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --OCTOBER   1974.
-!     UPDATED         --JANUARY   1975.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
+
+!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N FOR THIS SUBROUTINE IS 7500.
 !
 !---------------------------------------------------------------------
 !
@@ -29402,19 +29378,14 @@ INTEGER :: i , iflag , iupper , Iwrite , N
       iflag = 0
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (                                                       &
-     &         ' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE SP'&
-     &         ,                                                        &
-     & 'CORR SUBROUTINE IS OUTSIDE THE ALLOWABLE (1,,I6,16H) INTERVAL *'&
-     & ,'****')
+         99001 FORMAT (' ***** FATAL ERROR--THE THIRD INPUT ARGUMENT TO SPCORR(3f) IS OUTSIDE THE ALLOWABLE (1,',&
+         & I0,' INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO THE SPCO&
-     &RR SUBROUTINE HAS THE VALUE 1 *****')
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO SPCORR(3f) HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = X(1)
@@ -29422,18 +29393,16 @@ INTEGER :: i , iflag , iupper , Iwrite , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
          WRITE (G_IO,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE SPCORR SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO SPCORR(3f) HAS ALL ELEMENTS =',&
+         & E15.8,' *****')
          iflag = 1
  50      hold = Y(1)
          DO i = 2 , N
             IF ( Y(i)/=hold ) GOTO 100
          ENDDO
          WRITE (G_IO,99005) hold
-99005    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT (A VECTOR) &
-     &TO THE SPCORR SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+         99005 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT (A VECTOR) TO SPCORR(3f) HAS ALL ELEMENTS =',&
+         & E15.8,' *****')
          iflag = 1
  100     IF ( iflag==1 ) RETURN
 !
@@ -29448,9 +29417,8 @@ INTEGER :: i , iflag , iupper , Iwrite , N
          Spc = 1.0_wp - (6.0_wp*sum/((an-1.0_wp)*an*(an+1.0_wp)))
 !
          IF ( Iwrite/=0 ) WRITE (G_IO,99006) N , Spc
-99006    FORMAT (' ',                                                   &
-     &     'THE SPEARMAN RANK CORRELATION COEFFICIENT OF THE 2 SETS OF '&
-     &     ,I6,' OBSERVATIONS IS ',F14.5)
+         99006 FORMAT (' THE SPEARMAN RANK CORRELATION COEFFICIENT OF THE 2 SETS OF '&
+         & ,I0,' OBSERVATIONS IS ',F14.5)
       ENDIF
 END SUBROUTINE SPCORR
 !>
@@ -29553,7 +29521,7 @@ INTEGER :: i , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE STMOM3 SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -29599,7 +29567,7 @@ INTEGER :: i , Iwrite , N
       WRITE (G_IO,99006) N , Xsmom3
 99006 FORMAT (' ',                                                      &
      &        'THE SAMPLE STANDARDIZED THIRD  CENTRAL MOMENT FOR THE ', &
-     &        I6,' OBSERVATIONS IS ',E15.8)
+     &        I0,' OBSERVATIONS IS ',E15.8)
 END SUBROUTINE STMOM3
 !>
 !!##NAME
@@ -29703,7 +29671,7 @@ INTEGER :: i , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE STMOM4 SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -29749,7 +29717,7 @@ INTEGER :: i , Iwrite , N
       WRITE (G_IO,99006) N , Xsmom4
 99006 FORMAT (' ',                                                      &
      &        'THE SAMPLE STANDARDIZED FOURTH CENTRAL MOMENT FOR THE ', &
-     &        I6,' OBSERVATIONS IS ',E15.8)
+     &        I0,' OBSERVATIONS IS ',E15.8)
 END SUBROUTINE STMOM4
 !>
 !!##NAME
@@ -29895,7 +29863,7 @@ INTEGER i , k , N , ndel , Ny
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSE1 SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -29954,11 +29922,11 @@ INTEGER i , k , N , ndel , Ny
          WRITE (G_IO,99014)
 99014    FORMAT (' ',7X,'HAVE BEEN CARRIED OVER INTO Y.')
          WRITE (G_IO,99015) N
-99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
+99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I0)
          WRITE (G_IO,99016) Ny
-99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', I6)
+99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', I0)
          WRITE (G_IO,99017) ndel
-99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
+99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I0)
       ENDIF
 !
 END SUBROUTINE SUBSE1
@@ -30118,7 +30086,7 @@ INTEGER       :: i, k, N, ndel, Ny
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSE2 SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -30184,11 +30152,11 @@ INTEGER       :: i, k, N, ndel, Ny
          WRITE (G_IO,99015)
 99015    FORMAT (' ',7X,'HAVE BEEN CARRIED OVER INTO Y.')
          WRITE (G_IO,99016) N
-99016    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
+99016    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I0)
          WRITE (G_IO,99017) Ny
-99017    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', I6)
+99017    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS ', I0)
          WRITE (G_IO,99018) ndel
-99018    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
+99018    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I0)
       ENDIF
 !
 END SUBROUTINE SUBSE2
@@ -30349,7 +30317,7 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSET SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -30417,11 +30385,11 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
          WRITE (G_IO,99014)
 99014    FORMAT (' ',7X,'HAVE BEEN DELETED IN X.')
          WRITE (G_IO,99015) nold
-99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I6)
+99015    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I0)
          WRITE (G_IO,99016) Newn
-99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', I6)
+99016    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', I0)
          WRITE (G_IO,99017) ndel
-99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I6)
+99017    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I0)
       ENDIF
 !
 END SUBROUTINE SUBSET
@@ -30573,9 +30541,9 @@ DATA constn/.3989422804_wp/
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TAIL   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -30918,7 +30886,7 @@ DATA constn/.3989422804_wp/
 99005    FORMAT (' ',48X,'TAIL LENGTH ANALYSIS')
          WRITE (G_IO,99045)
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I5,')')
+99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99007) xbar
 99007    FORMAT (' ',40X,'(THE SAMPLE MEAN = ',E15.8,')')
          WRITE (G_IO,99008) s
@@ -31041,7 +31009,7 @@ DATA constn/.3989422804_wp/
 99031    FORMAT (' ',13F10.4)
          WRITE (G_IO,99045)
          WRITE (G_IO,99032) icount
-99032    FORMAT (' ',10X,I5,                                            &
+99032    FORMAT (' ',10X,I0,                                            &
      &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
      & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
 !
@@ -31051,7 +31019,7 @@ DATA constn/.3989422804_wp/
          CALL PLOT(Y,Z,N)
          WRITE (G_IO,99033) N
 99033    FORMAT (' ',35X,                                               &
-     &           'UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,  &
+     &           'UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,  &
      &           ')')
          WRITE (G_IO,99043) corr(11)
          DO i = 1 , nhalf
@@ -31062,7 +31030,7 @@ DATA constn/.3989422804_wp/
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99034) N
 99034    FORMAT (' ',35X,                                               &
-     &           'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,   &
+     &           'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
      &           ')')
          WRITE (G_IO,99043) corr(20)
          alamba = -0.5_wp
@@ -31075,7 +31043,7 @@ DATA constn/.3989422804_wp/
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99035) alamba , N
 99035    FORMAT (' ',35X,'LAMBDA = ',F4.1,                              &
-     &           ' PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,')')
+     &           ' PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99043) corr(28)
          DO i = 1 , nhalf
             irev = N - i + 1
@@ -31086,7 +31054,7 @@ DATA constn/.3989422804_wp/
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99036) N
 99036    FORMAT (' ',35X,                                               &
-     &           'CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,   &
+     &           'CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
      &           ')')
          WRITE (G_IO,99043) corr(33)
 !
@@ -31097,25 +31065,25 @@ DATA constn/.3989422804_wp/
             IF ( idis==20 ) THEN
                WRITE (G_IO,99037) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
-99037          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99037          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE NORMAL DISTRIB&
      &UTION IS ',F8.5,1X,3A1)
             ELSEIF ( idis==22 ) THEN
                WRITE (G_IO,99038) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
-99038          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99038          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LOGISTIC DIST.&
      &      IS ',F8.5,1X,3A1)
             ELSEIF ( idis==23 ) THEN
                WRITE (G_IO,99039) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
-99039          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99039          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE DOUBLE EXP. DI&
      &ST.   IS ',F8.5,1X,3A1)
             ELSEIF ( idis==33 ) THEN
                WRITE (G_IO,99040) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
-99040          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99040          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE CAUCHY DISTRIB&
      &UTION IS ',F8.5,1X,3A1)
             ELSE
@@ -31126,7 +31094,7 @@ DATA constn/.3989422804_wp/
                alamba = -(0.1)*FLOAT(idis2) + 2.1
                WRITE (G_IO,99041) N , alamba , corr(idis) , iflag1(idis) &
      &                           , iflag2(idis) , iflag3(idis)
-99041          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99041          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &    ' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LAMBDA = '&
      &    ,F4.1,' DIST. IS ',F8.5,1X,3A1)
             ENDIF
@@ -31548,10 +31516,10 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
          WRITE (G_IO,99001) ilower
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TIME   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (',I6,',INFINITY) ',                &
+     &TINE IS OUTSIDE THE ALLOWABLE (',I0,',INFINITY) ',                &
      &'INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          hold = X(1)
@@ -31613,9 +31581,9 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
      & 'AUTOCORRELATION PLOT--PLOT OF SAMPLE AUTOCORRELATION VERSUS LAG'&
      & )
       WRITE (G_IO,99005) N , kmax
-99005 FORMAT (' ',10X,'THE NUMBER OF OBSERVATIONS = ',I6,10X,           &
+99005 FORMAT (' ',10X,'THE NUMBER OF OBSERVATIONS = ',I0,10X,           &
      &        'THE NUMBER OF COMPUTED (AND PLOTTED) AUTOCORRELATIONS = '&
-     &        ,I6)
+     &        ,I0)
 !
 !     DO A WHITE NOISE ANALYSIS
 !
@@ -31650,15 +31618,15 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
          WRITE (G_IO,99017)
       ENDDO
       WRITE (G_IO,99009) N
-99009 FORMAT (' ','THE SAMPLE SIZE = ',I6)
+      99009 FORMAT (' ','THE SAMPLE SIZE = ',I0)
       WRITE (G_IO,99010) xbar
-99010 FORMAT (' ','THE SAMPLE MEAN = ',E15.8)
+      99010 FORMAT (' ','THE SAMPLE MEAN = ',E15.8)
       WRITE (G_IO,99011) var
-99011 FORMAT (' ','THE SAMPLE VARIANCE = ',E15.8)
+      99011 FORMAT (' ','THE SAMPLE VARIANCE = ',E15.8)
       WRITE (G_IO,99012) sd
-99012 FORMAT (' ','THE SAMPLE STANDARD DEVIATION = ',E15.8)
+      99012 FORMAT (' ','THE SAMPLE STANDARD DEVIATION = ',E15.8)
       WRITE (G_IO,99013) varb
-99013 FORMAT (' ','THE BIASED SAMPLE VARIANCE = ',E15.8)
+      99013 FORMAT (' ','THE BIASED SAMPLE VARIANCE = ',E15.8)
 !
 !     COMPUTE THE PILOT SPECTRUM FOR THE REDUCED (2**J) SAMPLE
 !     REFERENCE--JENKINS AND WATTS, PAGE 288
@@ -31706,7 +31674,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       CALL PLOTSP(s,120,0)
       WRITE (G_IO,99017)
       WRITE (G_IO,99014)
-99014 FORMAT (' ',50X,'PILOT SPECTRUM')
+      99014 FORMAT (' ',50X,'PILOT SPECTRUM')
 !
 !     DEFINE 4 LAG WINDOW TRUNCATION POINTS
 !     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 260
@@ -31757,7 +31725,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
                   WRITE (G_IO,99015) N
 99015             FORMAT (' ',                                          &
      &                   'DUE TO THE SMALL NUMBER OF OBSERVATIONS (N = '&
-     &                   ,I6,                                           &
+     &                   ,I0,                                           &
      &     '), THERE ARE NOT ENOUGH LAGS TO PRODUCE A RELIABLE SPECTRUM'&
      &     )
                   RETURN
@@ -31807,8 +31775,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
          dfroun = idf
          WRITE (G_IO,99017)
          WRITE (G_IO,99016) l(i) , bw , dfroun
-99016    FORMAT (' ','NUMBER OF LAGS = ',I5,10X,'BANDWIDTH =',F10.3,10X,&
-     &           'DEGREES OF FREEDOM = ',F10.3)
+         99016 FORMAT (' NUMBER OF LAGS = ',I5,10X,'BANDWIDTH =',F10.3,10X,'DEGREES OF FREEDOM = ',F10.3)
       ENDDO
 99017 FORMAT (' ')
 !
@@ -31937,7 +31904,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TOL    SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -32016,7 +31983,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
          WRITE (G_IO,99016)
          WRITE (G_IO,99005) N
 !
-99005    FORMAT (' ','             NORMAL TOLERANCE LIMITS FOR THE ',I6,&
+99005    FORMAT (' ','             NORMAL TOLERANCE LIMITS FOR THE ',I0,&
      &           ' OBSERVATIONS')
          WRITE (G_IO,99017)
          WRITE (G_IO,99006)
@@ -32155,7 +32122,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
          WRITE (G_IO,99010) N
 99010    FORMAT (' ',                                                   &
      &         '            DISTRIBUTION-FREE TOLERANCE LIMITS FOR THE '&
-     &         ,I6,' OBSERVATIONS')
+     &         ,I0,' OBSERVATIONS')
          WRITE (G_IO,99017)
          WRITE (G_IO,99011)
 99011    FORMAT (' ',                                                   &
@@ -32304,7 +32271,7 @@ EQUIVALENCE (W(1),WS(7501))
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
          99001 FORMAT ( &
-         & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO TPLT(3f) IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO TPLT(3f) IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99007) N
          RETURN
       ELSEIF ( N==1 ) THEN
@@ -32365,7 +32332,7 @@ EQUIVALENCE (W(1),WS(7501))
          WRITE (G_IO,99005) Nu , tau , N
 !
          99005 FORMAT (' STUDENT''S T PROBABILITY PLOT WITH DEGREES OF FREEDOM = '&
-          & ,I8,1X,'(TAU = ',E15.8,')',11X,'THE SAMPLE SIZE N = ',I7)
+          & ,I0,1X,'(TAU = ',E15.8,')',11X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -32396,7 +32363,7 @@ EQUIVALENCE (W(1),WS(7501))
            & 5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
            & 'ESTIMATED SLOPE = ',E15.8)
       ENDIF
-      99007 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+      99007 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 END SUBROUTINE TPLT
 !>
@@ -32792,7 +32759,7 @@ INTEGER i , Iseed , j , N , Nu
 !
          ENDDO
       ENDIF
-99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 END SUBROUTINE TRAN
 !>
@@ -32922,9 +32889,9 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TRIM   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -33019,16 +32986,16 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
       WRITE (G_IO,99012)
 99012 FORMAT (' ')
       WRITE (G_IO,99013) N , Xtrim
-99013 FORMAT (' ','THE SAMPLE TRIMMED MEAN OF THE ',I6,' OBSERVATIONS', &
+99013 FORMAT (' ','THE SAMPLE TRIMMED MEAN OF THE ',I0,' OBSERVATIONS', &
      &        ' IS ',E15.8)
       WRITE (G_IO,99014) perp1 , np1
-99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
+99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) ',         &
      &        'OF THE DATA WERE TRIMMED     FROM BELOW')
       WRITE (G_IO,99015) perp2 , np2
-99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
+99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) ',         &
      &        'OF THE DATA WERE TRIMMED     FROM ABOVE')
       WRITE (G_IO,99016) perp3 , k
-99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
+99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) ',         &
      &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
@@ -33063,7 +33030,7 @@ END SUBROUTINE TRIM
 !!
 !!##OUTPUT ARGUMENTS
 !!
-!!   CDF   the precision precision cumulative distribution function value.
+!!   CDF   the REAL cumulative distribution function value.
 !!
 !!##EXAMPLES
 !!
@@ -33252,7 +33219,7 @@ INTEGER i , imax , irev , N , nevodd , nhalf
      &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE UNIMED SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -33316,13 +33283,13 @@ END SUBROUTINE UNIMED
 !!
 !!##INPUT ARGUMENTS
 !!
-!!    X     The precision precision value at which the probability density
+!!    X     The REAL value at which the probability density
 !!          function is to be evaluated. X should be between 0 and 1,
 !!          inclusively.
 !!
 !!##OUTPUT ARGUMENTS
 !!
-!!    PDF   The precision precision probability density function value.
+!!    PDF   The REAL probability density function value.
 !!
 !!##EXAMPLES
 !!
@@ -33494,9 +33461,9 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE UNIPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -33534,7 +33501,7 @@ INTEGER :: i , iupper , N
          WRITE (G_IO,99005) tau , N
 !
 99005    FORMAT (' ','UNIFORM PROBABILITY PLOT (TAU = ',E15.8,')',55X,  &
-     &           'THE SAMPLE SIZE N = ',I7)
+     &           'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -33939,7 +33906,7 @@ INTEGER m(17)
          WRITE (G_IO,99003)
 99003    FORMAT (' ','      THE INPUT NUMBER OF OBSERVATIONS IS NON-POSITIVE.')
          WRITE (G_IO,99004) N
-99004    FORMAT (' ','      N = ',I8)
+99004    FORMAT (' ','      N = ',I0)
       ENDIF
 !
 !               *****************
@@ -34352,9 +34319,9 @@ CHARACTER(len=4) :: equal
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIB   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -34459,7 +34426,7 @@ CHARACTER(len=4) :: equal
 99006    FORMAT (' ',40X,'WEIBULL ANALYSIS')
          WRITE (G_IO,99020)
          WRITE (G_IO,99007) N
-99007    FORMAT (' ',37X,'THE SAMPLE SIZE N = ',I7)
+99007    FORMAT (' ',37X,'THE SAMPLE SIZE N = ',I0)
          WRITE (G_IO,99008) ybar
 99008    FORMAT (' ',34X,'THE SAMPLE MEAN = ',F14.7)
          WRITE (G_IO,99009) sy
@@ -34545,7 +34512,7 @@ END SUBROUTINE WEIB
 !!
 !!##DESCRIPTION
 !!    WEICDF(3f) computes the cumulative distribution function value for
-!!    the Weibull distribution with precision precision tail length parameter
+!!    the Weibull distribution with REAL tail length parameter
 !!    = GAMMA.
 !!
 !!    The Weibull distribution used herein is defined for all positive X,
@@ -34775,9 +34742,9 @@ INTEGER i , iupper , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -34845,7 +34812,7 @@ INTEGER i , iupper , N
 99007    FORMAT (' ',                                                   &
      &           'WEIBULL PROBABILITY PLOT WITH EXPONENT PARAMETER = ', &
      &           E17.10,1X,'(TAU = ',E15.8,')',11X,                     &
-     &           'THE SAMPLE SIZE N = ',I7)
+     &           'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -34889,7 +34856,7 @@ END SUBROUTINE WEIPLT
 !!
 !!##DESCRIPTION
 !!    weippf(3f) computes the percent point function value for the weibull
-!!    distribution with precision precision tail length parameter = gamma.
+!!    distribution with REAL tail length parameter = gamma.
 !!
 !!    the weibull distribution used herein is defined for all positive x,
 !!    and has the probability density function f(x) = gamma * (x**(gamma-1))
@@ -35068,7 +35035,7 @@ INTEGER       :: i
          WRITE (G_IO,99001)
          99001    FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO WEIRAN(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99003)
@@ -35102,10 +35069,10 @@ END SUBROUTINE WEIRAN
 !!
 !!##DESCRIPTION
 !!
-!!    wind(3f) computes the sample windsorized mean of the data in the
-!!    input vector x.
+!!    WIND(3f) computes the sample windsorized mean of the data in the
+!!    input vector X.
 !!
-!!    the windsorizing is such that the lower 100*p1 % of the data is
+!!    The windsorizing is such that the lower 100*p1 % of the data is
 !!    replaced by the smallest non-windsorized value, and the upper 100*p2 %
 !!    of the data is windsorized. replaced by the largest non-windsorized
 !!    value.
@@ -35216,18 +35183,15 @@ INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
       an = N
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WIND   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001    FORMAT (' ',&
+         & '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO WIND(3f) IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE WIND&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO WIND(3f) HAS THE VALUE 1 *****')
             Xwind = X(1)
          ELSE
             hold = X(1)
@@ -35235,17 +35199,15 @@ INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE WIND   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO WIND(3f) HAS ALL ELEMENTS = ',&
+            & E15.8,' *****')
             Xwind = X(1)
          ENDIF
          GOTO 100
  50      IF ( P1<0.0_wp .OR. P1>=1.0_wp ) THEN
             WRITE (G_IO,99005)
-99005       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WIND   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
+            99005 FORMAT (&
+            & ' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO WIND(3f) IS OUTSIDE THE ALLOWABLE (0.0,1.0) INTERVAL *****')
             WRITE (G_IO,99017) P1
             Xwind = 0.0_wp
             RETURN
@@ -35317,16 +35279,16 @@ INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
       perp2 = 100.0_wp*P2
       perp3 = 100.0_wp - perp1 - perp2
       WRITE (G_IO,99012)
-99012 FORMAT (' ')
+      99012 FORMAT (' ')
       WRITE (G_IO,99013) N , Xwind
-99013 FORMAT (' ','THE SAMPLE WINDSORIZED MEAN OF THE ',I6, ' OBSERVATIONS IS ',E15.8)
+      99013 FORMAT (' ','THE SAMPLE WINDSORIZED MEAN OF THE ',I0, ' OBSERVATIONS IS ',E15.8)
       WRITE (G_IO,99014) perp1 , np1
-99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED BELOW')
+      99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED BELOW')
       WRITE (G_IO,99015) perp2 , np2
-99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED ABOVE')
+      99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED ABOVE')
       WRITE (G_IO,99016) perp3 , k
-99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS)  OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
-99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS)  OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
+      99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
 END SUBROUTINE WIND
 end module M_datapac_s

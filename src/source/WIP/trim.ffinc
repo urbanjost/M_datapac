@@ -126,9 +126,9 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TRIM   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -223,16 +223,16 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
       WRITE (G_IO,99012)
 99012 FORMAT (' ')
       WRITE (G_IO,99013) N , Xtrim
-99013 FORMAT (' ','THE SAMPLE TRIMMED MEAN OF THE ',I6,' OBSERVATIONS', &
+99013 FORMAT (' ','THE SAMPLE TRIMMED MEAN OF THE ',I0,' OBSERVATIONS', &
      &        ' IS ',E15.8)
       WRITE (G_IO,99014) perp1 , np1
-99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
+99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) ',         &
      &        'OF THE DATA WERE TRIMMED     FROM BELOW')
       WRITE (G_IO,99015) perp2 , np2
-99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
+99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) ',         &
      &        'OF THE DATA WERE TRIMMED     FROM ABOVE')
       WRITE (G_IO,99016) perp3 , k
-99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) ',         &
+99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) ',         &
      &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
 99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !

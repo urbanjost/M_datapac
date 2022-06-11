@@ -12,7 +12,7 @@ DESCRIPTION
 
    the sample proportion = (the number of observations in the sample
    between xmin and xmax, inclusively) / n. The sample proportion will
-   be a precision precision value between 0.0 and 1.0 (inclusively).
+   be a REAL value between 0.0 and 1.0 (inclusively).
 
 OPTIONS
     X   description of parameter
@@ -99,7 +99,7 @@ INTEGER :: i , isum , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PROPOR SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -146,7 +146,7 @@ INTEGER :: i , isum , Iwrite , N
          WRITE (G_IO,99007)
 99007    FORMAT (' ')
          WRITE (G_IO,99008) N , Xmin , Xmax , Xprop
-99008    FORMAT (' ','THE PROPORTION OF THE ',I6,                       &
+99008    FORMAT (' ','THE PROPORTION OF THE ',I0,                       &
      &           ' OBSERVATIONS IN THE INTERVAL ',E15.7,' TO ',E15.7,   &
      &           ' IS ',E15.7)
       ENDIF

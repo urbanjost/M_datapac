@@ -14,12 +14,12 @@ SYNOPSIS
 DESCRIPTION
 
    This subroutine sorts (in ascending order) the N elements of the
-   precision precision vector X using the binary sort algorithm and puts
-   the resulting N sorted values into the precision precision vector Y.
+   REAL vector X using the binary sort algorithm and puts
+   the resulting N sorted values into the REAL vector Y.
 
 OPTIONS
 INPUT
-    X  The precision precision vector of
+    X  The REAL vector of
        observations to be sorted.
        The input vector X remains unaltered.
 
@@ -28,7 +28,7 @@ INPUT
 
 OUTPUT
 
-    Y  The precision precision vector
+    Y  The REAL vector
        into which the sorted data values
        from X will be placed in
        ascending order.
@@ -152,7 +152,7 @@ DIMENSION iu(36), il(36)
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORT   SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN

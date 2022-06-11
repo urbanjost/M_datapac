@@ -23,13 +23,13 @@ DESCRIPTION
 
 INPUT ARGUMENTS
 
-   X     The precision precision value at which the probability density
+   X     The REAL value at which the probability density
          function is to be evaluated. X should be between 0 and 1,
          inclusively.
 
 OUTPUT ARGUMENTS
 
-   PDF   The precision precision probability density function value.
+   PDF   The REAL probability density function value.
 
 EXAMPLES
   Sample program:

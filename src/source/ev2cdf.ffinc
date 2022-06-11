@@ -8,12 +8,12 @@ SYNOPSIS
       SUBROUTINE EV2CDF(X,Gamma,Cdf)
 
        REAL(kind=wp),intent(in) :: X
-       REAL(kind=wp),intent(in) :: Gamma 
+       REAL(kind=wp),intent(in) :: Gamma
        REAL(kind=wp),intent(out) :: Cdf
 
 DESCRIPTION
    EV2CDF(3f) computes the cumulative distribution function value for
-   the extreme value type 2 distribution with precision precision tail
+   the extreme value type 2 distribution with REAL tail
    length parameter = GAMMA.
 
    The extreme value type 2 distribution used herein is defined for all
@@ -63,7 +63,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 SUBROUTINE EV2CDF(X,Gamma,Cdf)
 REAL(kind=wp),intent(in) :: X
-REAL(kind=wp),intent(in) :: Gamma 
+REAL(kind=wp),intent(in) :: Gamma
 REAL(kind=wp),intent(out) :: Cdf
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -87,5 +87,5 @@ REAL(kind=wp),intent(out) :: Cdf
       ENDIF
 
 99003 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
- 
+
 END SUBROUTINE EV2CDF

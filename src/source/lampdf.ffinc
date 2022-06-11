@@ -22,7 +22,7 @@ DESCRIPTION
       g(p) = ((p**alamba)-((1-p)**alamba))/alamba
 
 INPUT ARGUMENTS
-   X       The precision precision value at which the probability density
+   X       The REAL value at which the probability density
            function is to be evaluated.
 
            For ALAMBA non-positive, no restrictions on X.
@@ -30,7 +30,7 @@ INPUT ARGUMENTS
            For ALAMBA positive, X should be between (-1/ALAMBA)
            and (+1/ALAMBA), inclusively.
 
-   ALAMBA  The precision precision value of lambda (the tail length
+   ALAMBA  The REAL value of lambda (the tail length
            parameter).
 
 OUTPUT ARGUMENTS

@@ -151,9 +151,9 @@ DATA alperc/'%'/
          WRITE (G_IO,99001) ilower , iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE FOURIE SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (',I6,',',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (',I0,',',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          hold = X(1)
@@ -220,7 +220,7 @@ DATA alperc/'%'/
       WRITE (G_IO,99014)
       WRITE (G_IO,99014)
       WRITE (G_IO,99005) N
-99005 FORMAT (' ',40X,'THE SAMPLE SIZE N                      = ',I8)
+99005 FORMAT (' ',40X,'THE SAMPLE SIZE N                      = ',I0)
       WRITE (G_IO,99006) xbar
 99006 FORMAT (' ',40X,'THE SAMPLE MEAN                        = ',F20.8)
       WRITE (G_IO,99007) vbias
@@ -282,7 +282,7 @@ DATA alperc/'%'/
             percon = 100.0_wp*(conmsq/vbias)
             WRITE (G_IO,99011) i , ffreq , period , A(i) , B(i) , amp ,  &
      &                        phase1 , phase2 , conmsq , percon , alperc
-99011       FORMAT (' ',I6,2X,F8.6,1X,F8.2,6(1X,E14.7),2X,F6.2,A1)
+99011       FORMAT (' ',I0,2X,F8.6,1X,F8.2,6(1X,E14.7),2X,F6.2,A1)
             A(i) = percon
             IF ( i>=nhalf ) GOTO 200
             iskip = i - 10*(i/10)

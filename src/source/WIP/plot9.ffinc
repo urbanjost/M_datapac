@@ -217,7 +217,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99015)
          WRITE (G_IO,99016) alph41 , alph42 , sbnam1 , sbnam2
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I8,')')
+99002    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99014)
          RETURN
       ELSE
@@ -313,7 +313,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
 99007 FORMAT (' ','ARE SUCH THAT TOO MANY POINTS HAVE BEEN',            &
      &        ' EXCLUDED FROM THE PLOT.')
       WRITE (G_IO,99008) n2
-99008 FORMAT (' ','ONLY ',I3,' POINTS ARE LEFT TO BE PLOTTED.')
+99008 FORMAT (' ','ONLY ',I0,' POINTS ARE LEFT TO BE PLOTTED.')
       WRITE (G_IO,99014)
       RETURN
 !
@@ -425,7 +425,7 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
      &        ' (HORIZONTAL AXIS)',20X,'THE PLOTTING CHARACTER IS ',A4, &
      &        A4)
       WRITE (G_IO,99013) N
-99013 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I8)
+99013 FORMAT (' ',83X,'THE NUMBER OF OBSERVATIONS PLOTTED IS ',I0)
 !
 99014 FORMAT (' ','**************************************************', &
      &        '********************')

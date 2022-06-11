@@ -129,9 +129,9 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -297,7 +297,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !
 99007    FORMAT (' ','GAMMA PROBABILITY PLOT WITH SHAPE PARAMETER = ',  &
      &           E17.10,1X,'(TAU = ',E15.8,')',16X,'SAMPLE SIZE N = ',  &
-     &           I7)
+     &           I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES

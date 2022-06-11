@@ -13,7 +13,7 @@ SYNOPSIS
 
 DESCRIPTION
    GAMCDF(3f) computes the cumulative distribution function value for
-   the gamma distribution with precision precision tail length parameter
+   the gamma distribution with REAL tail length parameter
    = GAMMA.
 
    The Gamma distribution used herein has mean = GAMMA and standard
@@ -28,7 +28,7 @@ DESCRIPTION
 
    Note the mode of internal operations is DOUBLE PRECISION.
 
-ACCURACY 
+ACCURACY
 
   (On the UNIVAC 1108, EXEC 8 system at NBS)
 
@@ -164,7 +164,7 @@ DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
          WRITE (G_IO,99003) maxit
 !
 99003    FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMCDF ',&
-     &           'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I7)
+     &           'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I0)
          WRITE (G_IO,99004) X
 99004    FORMAT (' ','     THE INPUT VALUE OF X     IS ',E15.8)
          WRITE (G_IO,99005) Gamma

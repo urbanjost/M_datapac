@@ -128,7 +128,7 @@ COMMON /BLOCK4_${KIND}/ XS(7500)
          99001 FORMAT(&
 	 & ' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO RANK(3f) IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -184,7 +184,7 @@ COMMON /BLOCK4_${KIND}/ XS(7500)
                   ibran = 1
                   WRITE (G_IO,99007) ibran
                   WRITE (G_IO,99005) jmin
-                  99005 FORMAT (' ','JMIN = ',I8)
+                  99005 FORMAT (' ','JMIN = ',I0)
                   STOP
                ENDIF
             ELSEIF ( i/=1 ) THEN
@@ -221,6 +221,6 @@ COMMON /BLOCK4_${KIND}/ XS(7500)
             rprev = Xr(i)
          ENDDO
       ENDIF
-99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE-- IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I8)
+99007 FORMAT (' ','*****INTERNAL ERROR IN RANK SUBROUTINE-- IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = ',I0)
  
 END SUBROUTINE RANK

@@ -16,11 +16,11 @@ DESCRIPTION
    AUTOCO(3f) computes the sample autocorrelation coefficient of the
    data in the input vector X. The sample autocorrelation coefficient
    equals the correlation between X(I) and X(I+1) over the entire sample.
-   The autocorrelation coefficient coefficient will be a precision precision
+   The autocorrelation coefficient coefficient will be a REAL
    value between -1.0 and 1.0 (inclusively).
 
 INPUT ARGUMENTS
-   X        The precision precision vector of (unsorted) observations.
+   X        The REAL vector of (unsorted) observations.
    N        The integer number of observations in the vector x.
    IWRITE   An integer flag code which (if set to 0) will suppress
             the printing of the sample autocorrelation coefficient
@@ -30,8 +30,8 @@ INPUT ARGUMENTS
 
 OUTPUT ARGUMENTS
 
-   XAUTOC   The precision precision value of the computed sample autocorrelation coefficient.
-            This precision precision value will be between -1.0 and 1.0 (inclusively).
+   XAUTOC   The REAL value of the computed sample autocorrelation coefficient.
+            This REAL value will be between -1.0 and 1.0 (inclusively).
 
 EXAMPLES
   Sample program:
@@ -73,7 +73,7 @@ integer i , ip1 , iwrite , n , nm1
          write (G_IO,99001)
          99001    format (' ', '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE AUTOCO SUBROUTINE IS NON-POSITIVE *****')
          write (G_IO,99002) n
-         99002    format (' ','***** THE VALUE OF THE ARGUMENT IS ',i8,' *****')
+         99002    format (' ','***** THE VALUE OF THE ARGUMENT IS ',i0,' *****')
          return
       else
          if ( n==1 ) then
@@ -123,5 +123,5 @@ integer i , ip1 , iwrite , n , nm1
       write (G_IO,99005)
       99005 format (' ')
       write (G_IO,99006) n , xautoc
-      99006 format (' ', 'THE LINEAR AUTOCORRELATION COEFFICIENT OF THE SET OF ',i6,' OBSERVATIONS IS ',f14.6)
+      99006 format (' ', 'THE LINEAR AUTOCORRELATION COEFFICIENT OF THE SET OF ',i0,' OBSERVATIONS IS ',f14.6)
 end subroutine autoco

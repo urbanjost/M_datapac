@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
    weippf(3f) computes the percent point function value for the weibull
-   distribution with precision precision tail length parameter = gamma.
+   distribution with REAL tail length parameter = gamma.
 
    the weibull distribution used herein is defined for all positive x,
    and has the probability density function f(x) = gamma * (x**(gamma-1))

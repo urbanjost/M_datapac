@@ -62,7 +62,7 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
          WRITE (G_IO,99001)
          99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTCO SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -191,7 +191,7 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
             WRITE (G_IO,99005)
 99005       FORMAT ('1')
             IF ( iz==1 ) WRITE (G_IO,99006) N
-99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS ',I5)
+99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS ',I0)
             IF ( iz>=2 ) WRITE (G_IO,99007)
 99007       FORMAT (' THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIOUS PAGE')
             WRITE (G_IO,99008)

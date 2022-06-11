@@ -9,7 +9,7 @@ SYNOPSIS
 
 DESCRIPTION
    geoppf(3f) computes the percent point function value for the geometric
-   distribution with precision precision 'bernoulli probability' parameter
+   distribution with REAL 'bernoulli probability' parameter
    = ppar.
 
    the geometric distribution used herein has mean = (1-ppar)/ppar and

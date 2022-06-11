@@ -118,9 +118,9 @@ EQUIVALENCE (Y(1),WS(1))
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SAMPP  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -165,10 +165,10 @@ EQUIVALENCE (Y(1),WS(1))
          hunp = 100.0*P
          IF ( Iwrite==0 ) RETURN
          WRITE (G_IO,99007) hunp , N , Pp
-99007    FORMAT (' ','THE EMPIRICAL ',F9.5,' PERCENT POINT OF THE ',I6, &
+99007    FORMAT (' ','THE EMPIRICAL ',F9.5,' PERCENT POINT OF THE ',I0, &
      &           ' OBSERVATIONS IS ',F16.7)
       ENDIF
-99008 FORMAT (' ','*****THE VALUE OF THE SECOND INPUT ARGUMENT = ',I8,  &
+99008 FORMAT (' ','*****THE VALUE OF THE SECOND INPUT ARGUMENT = ',I0,  &
      &        '  THE VALUE OF THE THIRD INPUT ARGUMENT = ',E20.10,      &
      &        '*****')
 !

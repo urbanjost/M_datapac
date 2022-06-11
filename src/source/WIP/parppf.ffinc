@@ -8,7 +8,7 @@ SYNOPSIS
 
 DESCRIPTION
    parppf(3f) computes the percent point function value for the pareto
-   distribution with precision precision tail length parameter = gamma.
+   distribution with REAL tail length parameter = gamma.
 
    the pareto distribution used herein is defined for all x greater than
    or equal to 1, and has the probability density function

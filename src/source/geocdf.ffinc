@@ -8,12 +8,12 @@ SYNOPSIS
       SUBROUTINE GEOCDF(X,P,Cdf)
 
        REAL(kind=wp),intent(in)  :: X
-       REAL(kind=wp),intent(in)  :: P 
-       REAL(kind=wp),intent(out) :: Cdf 
+       REAL(kind=wp),intent(in)  :: P
+       REAL(kind=wp),intent(out) :: Cdf
 
 DESCRIPTION
    GEOCDF(3f) computes the cumulative distribution function value at the
-   precision precision value X for the geometric distribution with precision
+   REAL value X for the geometric distribution with precision
    precision 'Bernoulli probability' parameter = P.
 
    The geometric distribution used herein herein has mean = (1-P)/P and
@@ -87,9 +87,9 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 SUBROUTINE GEOCDF(X,P,Cdf)
 REAL(kind=wp),intent(in) :: X
-REAL(kind=wp),intent(in) :: P 
-REAL(kind=wp),intent(out) :: Cdf 
-REAL(kind=wp) :: del , fintx 
+REAL(kind=wp),intent(in) :: P
+REAL(kind=wp),intent(out) :: Cdf
+REAL(kind=wp) :: del , fintx
 INTEGER intx
 
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS

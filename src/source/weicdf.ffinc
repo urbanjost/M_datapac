@@ -13,7 +13,7 @@ SYNOPSIS
 
 DESCRIPTION
    WEICDF(3f) computes the cumulative distribution function value for
-   the Weibull distribution with precision precision tail length parameter
+   the Weibull distribution with REAL tail length parameter
    = GAMMA.
 
    The Weibull distribution used herein is defined for all positive X,

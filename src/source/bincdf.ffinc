@@ -153,14 +153,14 @@ DOUBLE PRECISION :: DSQRT , DATAN
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE BINCDF SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99003) N
-99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          Cdf = 0.0_wp
          RETURN
       ELSEIF ( X<0.0_wp .OR. X>an ) THEN
          WRITE (G_IO,99004) N
 99004    FORMAT (' ',                                                   &
      &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT TO THE BINC&
-     &DF SUBROUTINE IS OUTSIDE THE USUAL (0,N) = (0,',I7,',INTERVAL *')
+     &DF SUBROUTINE IS OUTSIDE THE USUAL (0,N) = (0,',I0,',INTERVAL *')
          WRITE (G_IO,99006) X
          IF ( X<0.0_wp ) Cdf = 0.0_wp
          IF ( X>an ) Cdf = 1.0_wp

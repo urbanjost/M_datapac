@@ -165,7 +165,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE NBPPF  SUBROU&
      &TINE IS NON-POSITIVE *****')
                WRITE (G_IO,99004) N
-99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,    &
+99004          FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,    &
      &                 ' *****')
                Ppf = 0.0_wp
                RETURN
@@ -400,7 +400,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
       WRITE (G_IO,99017) P
 99017 FORMAT (' ','P    = ',F14.7)
       WRITE (G_IO,99018) Ppar , N
-99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I8)
+99018 FORMAT (' ','PPAR = ',F14.7,10X,'N  = ',I0)
       RETURN
 99019 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 99020 FORMAT (' ','***** INTERNAL ERROR IN NBPPF  SUBROUTINE *****')

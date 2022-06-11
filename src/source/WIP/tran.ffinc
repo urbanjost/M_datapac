@@ -151,6 +151,6 @@ INTEGER i , Iseed , j , N , Nu
 !
          ENDDO
       ENDIF
-99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 END SUBROUTINE TRAN

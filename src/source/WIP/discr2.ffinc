@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE DISCR2(X,N,Numcla,Y)
 
 DESCRIPTION
-   discr2(3f) 'discretizes' the data of the precision precision vector x
+   discr2(3f) 'discretizes' the data of the REAL vector x
    into numcla classes.
 
    all values in the vector x within a given class will be mapped into
@@ -145,7 +145,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
          WRITE (G_IO,99003) iupncl
 99003    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE DISCR2 SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99015) Numcla
          DO i = 1 , N
             Y(i) = 0.0_wp
@@ -221,9 +221,9 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 99006    FORMAT (' ','OUTPUT FROM THE DISCR2 SUBROUTINE--')
          WRITE (G_IO,99016)
          WRITE (G_IO,99007) N
-99007    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I8)
+99007    FORMAT (' ',7X,'NUMBER OF OBSERVATIONS            = ',I0)
          WRITE (G_IO,99008) Numcla
-99008    FORMAT (' ',7X,'SPECIFIED NUMBER OF LEVELS        = ',I8)
+99008    FORMAT (' ',7X,'SPECIFIED NUMBER OF LEVELS        = ',I0)
          WRITE (G_IO,99009) xmin
 99009    FORMAT (' ',7X,'COMPUTED  LOWER BOUND OF INTERVAL = ',F15.7)
          WRITE (G_IO,99010) xdel
@@ -247,7 +247,7 @@ INTEGER i , icount , ip , iupncl , N , Numcla
 99014       FORMAT (' ',4X,I6,2X,3F14.7,I8)
          ENDDO
       ENDIF
-99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99015 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 99016 FORMAT (' ')
 !
 END SUBROUTINE DISCR2

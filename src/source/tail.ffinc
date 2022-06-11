@@ -148,9 +148,9 @@ DATA constn/.3989422804_wp/
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TAIL   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -493,7 +493,7 @@ DATA constn/.3989422804_wp/
 99005    FORMAT (' ',48X,'TAIL LENGTH ANALYSIS')
          WRITE (G_IO,99045)
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I5,')')
+99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99007) xbar
 99007    FORMAT (' ',40X,'(THE SAMPLE MEAN = ',E15.8,')')
          WRITE (G_IO,99008) s
@@ -616,7 +616,7 @@ DATA constn/.3989422804_wp/
 99031    FORMAT (' ',13F10.4)
          WRITE (G_IO,99045)
          WRITE (G_IO,99032) icount
-99032    FORMAT (' ',10X,I5,                                            &
+99032    FORMAT (' ',10X,I0,                                            &
      &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
      & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
 !
@@ -626,7 +626,7 @@ DATA constn/.3989422804_wp/
          CALL PLOT(Y,Z,N)
          WRITE (G_IO,99033) N
 99033    FORMAT (' ',35X,                                               &
-     &           'UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,  &
+     &           'UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,  &
      &           ')')
          WRITE (G_IO,99043) corr(11)
          DO i = 1 , nhalf
@@ -637,7 +637,7 @@ DATA constn/.3989422804_wp/
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99034) N
 99034    FORMAT (' ',35X,                                               &
-     &           'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,   &
+     &           'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
      &           ')')
          WRITE (G_IO,99043) corr(20)
          alamba = -0.5_wp
@@ -650,7 +650,7 @@ DATA constn/.3989422804_wp/
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99035) alamba , N
 99035    FORMAT (' ',35X,'LAMBDA = ',F4.1,                              &
-     &           ' PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,')')
+     &           ' PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99043) corr(28)
          DO i = 1 , nhalf
             irev = N - i + 1
@@ -661,7 +661,7 @@ DATA constn/.3989422804_wp/
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99036) N
 99036    FORMAT (' ',35X,                                               &
-     &           'CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I5,   &
+     &           'CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
      &           ')')
          WRITE (G_IO,99043) corr(33)
 !
@@ -672,25 +672,25 @@ DATA constn/.3989422804_wp/
             IF ( idis==20 ) THEN
                WRITE (G_IO,99037) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
-99037          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99037          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE NORMAL DISTRIB&
      &UTION IS ',F8.5,1X,3A1)
             ELSEIF ( idis==22 ) THEN
                WRITE (G_IO,99038) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
-99038          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99038          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LOGISTIC DIST.&
      &      IS ',F8.5,1X,3A1)
             ELSEIF ( idis==23 ) THEN
                WRITE (G_IO,99039) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
-99039          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99039          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE DOUBLE EXP. DI&
      &ST.   IS ',F8.5,1X,3A1)
             ELSEIF ( idis==33 ) THEN
                WRITE (G_IO,99040) N , corr(idis) , iflag1(idis) ,        &
      &                           iflag2(idis) , iflag3(idis)
-99040          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99040          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE CAUCHY DISTRIB&
      &UTION IS ',F8.5,1X,3A1)
             ELSE
@@ -701,7 +701,7 @@ DATA constn/.3989422804_wp/
                alamba = -(0.1)*FLOAT(idis2) + 2.1
                WRITE (G_IO,99041) N , alamba , corr(idis) , iflag1(idis) &
      &                           , iflag2(idis) , iflag3(idis)
-99041          FORMAT (' ','THE CORRELATION BETWEEN THE ',I6,           &
+99041          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
      &    ' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LAMBDA = '&
      &    ,F4.1,' DIST. IS ',F8.5,1X,3A1)
             ENDIF

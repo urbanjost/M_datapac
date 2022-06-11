@@ -113,7 +113,7 @@ DATA p1, p2, perp1, perp2, perp3/0.25_wp, 0.25_wp, 25.0_wp, 25.0_wp, 50.0_wp/
       WRITE (G_IO,99001) iupper
       99001 FORMAT(' ***** FATAL ERROR--the second input argument to MIDM(3f) is outside the allowable (1,',I0,') interval *****')
       WRITE (G_IO,99002) N
-      99002 FORMAT (' ','***** the value of the argument is ',I8,' *****')
+      99002 FORMAT (' ','***** the value of the argument is ',I0,' *****')
       RETURN
    ELSE
       IF ( N==1 ) THEN

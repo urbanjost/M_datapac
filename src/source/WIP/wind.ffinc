@@ -9,10 +9,10 @@ SYNOPSIS
 
 DESCRIPTION
 
-   wind(3f) computes the sample windsorized mean of the data in the
-   input vector x.
+   WIND(3f) computes the sample windsorized mean of the data in the
+   input vector X.
 
-   the windsorizing is such that the lower 100*p1 % of the data is
+   The windsorizing is such that the lower 100*p1 % of the data is
    replaced by the smallest non-windsorized value, and the upper 100*p2 %
    of the data is windsorized. replaced by the largest non-windsorized
    value.
@@ -125,18 +125,15 @@ INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
       an = N
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WIND   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+         99001    FORMAT (' ',&
+         & '***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO WIND(3f) IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE WIND&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO WIND(3f) HAS THE VALUE 1 *****')
             Xwind = X(1)
          ELSE
             hold = X(1)
@@ -144,17 +141,15 @@ INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE WIND   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO WIND(3f) HAS ALL ELEMENTS = ',&
+	    & E15.8,' *****')
             Xwind = X(1)
          ENDIF
          GOTO 100
  50      IF ( P1<0.0_wp .OR. P1>=1.0_wp ) THEN
             WRITE (G_IO,99005)
-99005       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE WIND   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
+            99005 FORMAT (&
+	    & ' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO WIND(3f) IS OUTSIDE THE ALLOWABLE (0.0,1.0) INTERVAL *****')
             WRITE (G_IO,99017) P1
             Xwind = 0.0_wp
             RETURN
@@ -226,15 +221,15 @@ INTEGER i , istart , istop , iupper , Iwrite , k , N , np1 , np2
       perp2 = 100.0_wp*P2
       perp3 = 100.0_wp - perp1 - perp2
       WRITE (G_IO,99012)
-99012 FORMAT (' ')
+      99012 FORMAT (' ')
       WRITE (G_IO,99013) N , Xwind
-99013 FORMAT (' ','THE SAMPLE WINDSORIZED MEAN OF THE ',I6, ' OBSERVATIONS IS ',E15.8)
+      99013 FORMAT (' ','THE SAMPLE WINDSORIZED MEAN OF THE ',I0, ' OBSERVATIONS IS ',E15.8)
       WRITE (G_IO,99014) perp1 , np1
-99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED BELOW')
+      99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED BELOW')
       WRITE (G_IO,99015) perp2 , np2
-99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED ABOVE')
+      99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) OF THE DATA WERE WINDSORIZED ABOVE')
       WRITE (G_IO,99016) perp3 , k
-99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I6,' OBSERVATIONS)  OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
-99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS)  OF THE DATA WERE UNWINDSORIZED IN THE MIDDLE')
+      99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
 !
 END SUBROUTINE WIND

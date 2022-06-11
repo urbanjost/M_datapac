@@ -8,7 +8,7 @@ SYNOPSIS
 
 DESCRIPTION
    gamppf(3f) computes the percent point function value for the gamma
-   distribution with precision precision tail length parameter = gamma.
+   distribution with REAL tail length parameter = gamma.
 
    the gamma distribution used herein has mean = gamma and standard
    deviation = sqrt(gamma). this distribution is defined for all positive
@@ -208,7 +208,7 @@ INTEGER :: icount , iloop , j , maxit
       WRITE (G_IO,99003) maxit
 !
 99003 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMPPF ',   &
-     &        'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I7)
+     &        'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I0)
       WRITE (G_IO,99004) P
 99004 FORMAT (' ','     THE INPUT VALUE OF P     IS ',E15.8)
       WRITE (G_IO,99005) Gamma

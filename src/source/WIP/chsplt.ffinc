@@ -113,7 +113,7 @@ INTEGER i , iupper , N , Nu
          WRITE (G_IO,99001) iupper
 99001    FORMAT (' ',                                                   &
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I6,') INTERVAL *****')
+     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
          WRITE (G_IO,99007) N
          RETURN
       ELSEIF ( N==1 ) THEN
@@ -179,7 +179,7 @@ INTEGER i , iupper , N , Nu
 !
 99005    FORMAT (' ',                                                   &
      &         'CHI-SQUARED PROBABILITY PLOT WITH DEGREES OF FREEDOM = '&
-     &         ,I8,1X,'(TAU = ',E15.8,')',11X,'THE SAMPLE SIZE N = ',I7)
+     &         ,I0,1X,'(TAU = ',E15.8,')',11X,'THE SAMPLE SIZE N = ',I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -210,6 +210,6 @@ INTEGER i , iupper , N , Nu
      &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
      &           'ESTIMATED SLOPE = ',E15.8)
       ENDIF
-99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
 !
 END SUBROUTINE CHSPLT

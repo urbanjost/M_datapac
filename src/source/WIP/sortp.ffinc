@@ -17,7 +17,7 @@ DESCRIPTION
   SORTP(3f) sorts (in ascending order) the N elements of the precision
   precision vector X, puts the resulting N sorted values into the precision
   precision vector Y; and puts the position (in the original vector X)
-  of each of the sorted values into the precision precision vector XPOS.
+  of each of the sorted values into the REAL vector XPOS.
 
   This subroutine gives the data analyst not only the ability to determine
   what the MIN and MAX (for example) of the data set are, but also where
@@ -165,7 +165,7 @@ INTEGER :: i , il , ip1 , itt , iu , j , jmi , jmk , k , l ,lmi , m , mid , N , 
          WRITE (G_IO,99001)
 99001    FORMAT (' ','***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SORTP  SUBROUTINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN

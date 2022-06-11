@@ -8,7 +8,7 @@ SYNOPSIS
       SUBROUTINE DEFINE(X,N,Xnew)
 
 DESCRIPTION
-   define(3f) sets all of the elements in the precision precision vector
+   define(3f) sets all of the elements in the REAL vector
    x equal to xnew.
 
    define(3f) is useful in defining a vector of constants.
@@ -82,7 +82,7 @@ REAL(kind=wp) :: X , Xnew
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DEFINE SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -105,7 +105,7 @@ REAL(kind=wp) :: X , Xnew
          WRITE (G_IO,99005)
 99005    FORMAT (' ','OUTPUT FROM THE DEFINE SUBROUTINE--')
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS  IS ',I6)
+99006    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS  IS ',I0)
          WRITE (G_IO,99007) Xnew
 99007    FORMAT (' ',7X,'THE DEFINING CONSTANT IS ',E15.8)
       ENDIF

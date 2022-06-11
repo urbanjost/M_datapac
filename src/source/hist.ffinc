@@ -90,7 +90,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99001)
          99001 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO HIST(3f) IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -290,7 +290,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             99011 FORMAT (' HISTOGRAM      THE NUMBER OF CLASSES IS ',I0,&
 	    & 8X,'THE CLASS WIDTH IS ',E15.8,' = ',F7.1,' STANDARD DEVIATIONS')
             WRITE (G_IO,99012) N
-            99012 FORMAT (' ','THE SAMPLE SIZE N = ',I7)
+            99012 FORMAT (' ','THE SAMPLE SIZE N = ',I0)
          ENDDO
       ENDIF
 END SUBROUTINE HIST

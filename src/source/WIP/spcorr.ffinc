@@ -11,7 +11,7 @@ DESCRIPTION
    spcorr(3f) computes the spearman rank correlation coefficient between
    the 2 sets of data in the input vectors x and y.
 
-   the spearman rank correlation coefficient will be a precision precision
+   the spearman rank correlation coefficient will be a REAL
    value between -1.0 and 1.0 (inclusively).
 
 OPTIONS
@@ -42,11 +42,18 @@ REFERENCES
   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2, 1957, PAGES 294-295.
   * MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY OF STATISTICS, EDITION 2, 1963, PAGE 424.
 $ENDBLOCK
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --OCTOBER   1974.
+!     UPDATED         --JANUARY   1975.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
-REAL(kind=wp) :: an , hold , Spc , sum , WS , X , XR , Y , YR
-INTEGER :: i , iflag , iupper , Iwrite , N
+
+SUBROUTINE SPCORR(X,Y,N,Iwrite,Spc)
+REAL(kind=wp) :: an, hold, Spc, sum, WS, X, XR, Y, YR
+INTEGER       :: i, iflag, iupper, Iwrite, N
 !
 !     INPUT ARGUMENTS--X      = THE  VECTOR OF
 !                                (UNSORTED OR SORTED) OBSERVATIONS
@@ -78,22 +85,11 @@ INTEGER :: i , iflag , iupper , Iwrite , N
 !                                THIS  VALUE
 !                                WILL BE BETWEEN -1.0 AND 1.0
 !                                (INCLUSIVELY).
-!     OUTPUT--THE COMPUTED  VALUE OF THE
+!     OUTPUT--THE COMPUTED VALUE OF THE
 !             SPEARMAN RANK CORRELATION COEFFICIENT BETWEEN THE 2 SETS
 !             OF DATA IN THE INPUT VECTORS X AND Y.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--RANK AND SORT.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --OCTOBER   1974.
-!     UPDATED         --JANUARY   1975.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!     UPDATED         --FEBRUARY  1976.
+
+!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N FOR THIS SUBROUTINE IS 7500.
 !
 !---------------------------------------------------------------------
 !
@@ -112,19 +108,14 @@ INTEGER :: i , iflag , iupper , Iwrite , N
       iflag = 0
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (                                                       &
-     &         ' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE SP'&
-     &         ,                                                        &
-     & 'CORR SUBROUTINE IS OUTSIDE THE ALLOWABLE (1,,I6,16H) INTERVAL *'&
-     & ,'****')
+         99001 FORMAT (' ***** FATAL ERROR--THE THIRD INPUT ARGUMENT TO SPCORR(3f) IS OUTSIDE THE ALLOWABLE (1,',&
+	 & I0,' INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO THE SPCO&
-     &RR SUBROUTINE HAS THE VALUE 1 *****')
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO SPCORR(3f) HAS THE VALUE 1 *****')
          RETURN
       ELSE
          hold = X(1)
@@ -132,18 +123,16 @@ INTEGER :: i , iflag , iupper , Iwrite , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
          WRITE (G_IO,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE SPCORR SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO SPCORR(3f) HAS ALL ELEMENTS =',&
+	 & E15.8,' *****')
          iflag = 1
  50      hold = Y(1)
          DO i = 2 , N
             IF ( Y(i)/=hold ) GOTO 100
          ENDDO
          WRITE (G_IO,99005) hold
-99005    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT (A VECTOR) &
-     &TO THE SPCORR SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+         99005 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT (A VECTOR) TO SPCORR(3f) HAS ALL ELEMENTS =',&
+	 & E15.8,' *****')
          iflag = 1
  100     IF ( iflag==1 ) RETURN
 !
@@ -158,8 +147,7 @@ INTEGER :: i , iflag , iupper , Iwrite , N
          Spc = 1.0_wp - (6.0_wp*sum/((an-1.0_wp)*an*(an+1.0_wp)))
 !
          IF ( Iwrite/=0 ) WRITE (G_IO,99006) N , Spc
-99006    FORMAT (' ',                                                   &
-     &     'THE SPEARMAN RANK CORRELATION COEFFICIENT OF THE 2 SETS OF '&
-     &     ,I6,' OBSERVATIONS IS ',F14.5)
+         99006 FORMAT (' THE SPEARMAN RANK CORRELATION COEFFICIENT OF THE 2 SETS OF '&
+         & ,I0,' OBSERVATIONS IS ',F14.5)
       ENDIF
 END SUBROUTINE SPCORR

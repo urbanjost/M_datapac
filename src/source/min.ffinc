@@ -67,7 +67,7 @@ integer       :: i , Iwrite , N
          write (g_io,99001)
          99001 format (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO MIN(3f) IS NON-POSITIVE *****')
          write (g_io,99002) N
-         99002 format (' ***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+         99002 format (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          return
       else
          if ( N==1 ) then

@@ -10,7 +10,7 @@ SYNOPSIS
 DESCRIPTION
    corr(3f) computes the sample correlation coefficient between the 2
    sets of data in the input vectors x and y. The sample correlation
-   coefficient will be a precision precision value between -1.0 and 1.0
+   coefficient will be a REAL value between -1.0 and 1.0
    (inclusively).
 
 OPTIONS
@@ -114,7 +114,7 @@ INTEGER i , iflag , Iwrite , N
      &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE CORR   SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
@@ -169,6 +169,6 @@ INTEGER i , iflag , Iwrite , N
          IF ( Iwrite/=0 ) WRITE (G_IO,99006) N , C
 99006    FORMAT (' ',                                                   &
      &     'THE LINEAR        CORRELATION COEFFICIENT OF THE 2 SETS OF '&
-     &     ,I6,' OBSERVATIONS IS ',F14.5)
+     &     ,I0,' OBSERVATIONS IS ',F14.5)
       ENDIF
 END SUBROUTINE CORR

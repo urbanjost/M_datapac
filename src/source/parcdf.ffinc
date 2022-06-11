@@ -14,7 +14,7 @@ SYNOPSIS
 DESCRIPTION
 
    PARCDF(3f) computes the cumulative distribution function value for
-   the Pareto distribution with precision precision tail length parameter
+   the Pareto distribution with REAL tail length parameter
    = GAMMA.
 
    The Pareto distribution used herein is defined for all X greater than

@@ -100,7 +100,7 @@ INTEGER :: i , Iwrite , N
      &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE STMOM3 SUBROU&
      &TINE IS NON-POSITIVE *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
@@ -146,5 +146,5 @@ INTEGER :: i , Iwrite , N
       WRITE (G_IO,99006) N , Xsmom3
 99006 FORMAT (' ',                                                      &
      &        'THE SAMPLE STANDARDIZED THIRD  CENTRAL MOMENT FOR THE ', &
-     &        I6,' OBSERVATIONS IS ',E15.8)
+     &        I0,' OBSERVATIONS IS ',E15.8)
 END SUBROUTINE STMOM3

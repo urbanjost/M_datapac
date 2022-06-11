@@ -137,10 +137,9 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
       IF ( N<ilower .OR. N>iupper ) THEN
          WRITE (G_IO,99002) ilower , iupper
 99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PLOTU  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (',I1,',',I6,') INTERVAL *****')
+     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO PLOTU(3f)  IS OUTSIDE THE ALLOWABLE (',I0,',',I0,') INTERVAL *****')
          WRITE (G_IO,99003) N
-99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I8,' *****')
+99003    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
          RETURN
       ELSE
          hold = X(1)
@@ -536,21 +535,21 @@ CHARACTER(len=4) :: alpham , alphaa , alphad , alphan , equal
          WRITE (G_IO,99008)
 99008    FORMAT (' ',20X,' -6        -3         0         3         6')
          WRITE (G_IO,99009) numcla , N , numdis
-99009    FORMAT (' ',20X,'NUMBER OF CLASSES = ',I3,42X,'SAMPLE SIZE =', &
-     &           I9,' DISTINCT POINTS =',I6)
+99009    FORMAT (' ',20X,'NUMBER OF CLASSES = ',I0,42X,'SAMPLE SIZE =', &
+     &           I0,' DISTINCT POINTS =',I0)
          WRITE (G_IO,99010) cwidth , cwidsd , zmin , nummin , promin
 99010    FORMAT (' ',20X,'CLASS WIDTH = ',E14.7,' = ',F3.1,             &
      &           ' STANDARD DEVIATIONS',11X,'MINIMUM =',F13.6,          &
-     &           ' COUNT =',I5,' (',F7.2,'%)')
+     &           ' COUNT =',I0,' (',F7.2,'%)')
          WRITE (G_IO,99011) numout , zmed
-99011    FORMAT (' ',16X,I5,' OBSERVATIONS WERE IN EXCESS OF 6 STANDARD'&
+99011    FORMAT (' ',16X,I0,' OBSERVATIONS WERE IN EXCESS OF 6 STANDARD'&
      &           ,' DEVIATIONS',11X,'MEDIAN =',F14.6)
          WRITE (G_IO,99012) zmean
 99012    FORMAT (' ',20X,                                               &
      &      'ABOUT THE SAMPLE MEAN AND SO WERE NOT PRINTED IN HISTOGRAM'&
      &      ,7X,'MEAN =',F16.6)
          WRITE (G_IO,99013) zmax , nummax , promax
-99013    FORMAT (' ',85X,'MAXIMUM =',F13.6,' COUNT =',I5,' (',F7.2,'%)')
+99013    FORMAT (' ',85X,'MAXIMUM =',F13.6,' COUNT =',I0,' (',F7.2,'%)')
          WRITE (G_IO,99014) zsd , zrange
 99014    FORMAT (' ',85X,'ST. DEV. =',F12.6,' RANGE =',F16.6)
          WRITE (G_IO,99015) zdevb , zrdevb
