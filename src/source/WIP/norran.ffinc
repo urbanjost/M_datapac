@@ -41,12 +41,13 @@ EXAMPLES
   Sample program:
 
    program demo_norran
-   use M_datapac, only : norran, label, plotxt, sort, norplt
+   use M_datapac, only : norran, label, plotxt, sort, norplt, plott
    implicit none
    integer,parameter :: N=300
    real              :: x(N), y(N)
    real              :: mu, sigma
    integer           :: Iseed
+   integer           :: i
       Iseed=1234
       sigma=1.00000
       mu=0.0
@@ -55,12 +56,12 @@ EXAMPLES
       x = sigma*x
       x = x + mu
       call plotxt(x,n)
-      call sort(x,n,y) 
-      call plotxt(y,n)
+      call sort(x,n,y) ! sort and replot to better discern distribution
+      call plott([(real(i),i=1,n)],y,n)
    end program demo_norran
 
   Results:
-    
+
     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
                       I-----------I-----------I-----------I-----------I
      0.3016713E+01 -                                               X
@@ -91,37 +92,35 @@ EXAMPLES
                       I-----------I-----------I-----------I-----------I
                0.1000E+01  0.7575E+02  0.1505E+03  0.2252E+03  0.3000E+03
     
-    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
                       I-----------I-----------I-----------I-----------I
-     0.3016713E+01 -                                                  X
-     0.2787551E+01 I   
-     0.2558388E+01 I   
-     0.2329226E+01 I                                                  X
-     0.2100063E+01 I   
-     0.1870901E+01 I                                                XXX
-     0.1641738E+01 -                                                X
-     0.1412575E+01 I                                              XXX
-     0.1183413E+01 I                                            XXX
-     0.9542503E+00 I                                          XXX
-     0.7250879E+00 I                                        XXX
-     0.4959254E+00 I                                   XXXXX
-     0.2667627E+00 -                               XXXXX
-     0.3760028E-01 I                         XXXXXXX
-    -0.1915622E+00 I                     XXXXX
-    -0.4207249E+00 I                XXXXXX
-    -0.6498873E+00 I            XXXXX
-    -0.8790498E+00 I         XXXX
-    -0.1108212E+01 -       XX
-    -0.1337375E+01 I     XXX
-    -0.1566537E+01 I    XX
-    -0.1795700E+01 I   XX
-    -0.2024862E+01 I   X
-    -0.2254025E+01 I  X
-    -0.2483188E+01 -  X
+     0.3000000E+03 -                                        XX  X     X
+     0.2875417E+03 I                                    XXXXX
+     0.2750833E+03 I                                  XXX
+     0.2626250E+03 I                                XXX
+     0.2501667E+03 I                              XXX
+     0.2377083E+03 I                             XX
+     0.2252500E+03 -                           XXX
+     0.2127917E+03 I                           X
+     0.2003333E+03 I                          XX
+     0.1878750E+03 I                         XX
+     0.1754167E+03 I                        XX
+     0.1629583E+03 I                        X
+     0.1505000E+03 -                       XX
+     0.1380417E+03 I                      XX
+     0.1255833E+03 I                     XX
+     0.1131250E+03 I                    XX
+     0.1006667E+03 I                    X
+     0.8820834E+02 I                   XX
+     0.7575000E+02 -                  X
+     0.6329167E+02 I                 XX
+     0.5083334E+02 I               XX
+     0.3837500E+02 I              XX
+     0.2591669E+02 I           XXX
+     0.1345834E+02 I       XXXXX
+     0.1000000E+01 -  X X XX
                       I-----------I-----------I-----------I-----------I
-               0.1000E+01  0.7575E+02  0.1505E+03  0.2252E+03  0.3000E+03
-================================================================================
-```
+              -0.2483E+01 -0.1108E+01  0.2668E+00  0.1642E+01  0.3017E+01
 
 AUTHOR
    The original DATAPAC library was written by James Filliben of the

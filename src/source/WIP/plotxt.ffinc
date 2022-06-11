@@ -167,7 +167,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
       99006 FORMAT (' ')
       WRITE (G_IO,99007)
 
-      99007 FORMAT (' THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY)')
+      99007 FORMAT (' The following is a plot of X(I) (vertically) versus I (horizontally)')
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
@@ -245,7 +245,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 
 99010 FORMAT (' ','**********************************************************************')
 99011 FORMAT (' ','                   FATAL ERROR                    ')
-99012 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
+99012 FORMAT (' ','The ',A4,A4,' input argument to the ',A4,A4,' subroutine')
 99013 FORMAT (' ',18X,54A1)
 99014 FORMAT (' ',15X,A1)
 
