@@ -7,13 +7,41 @@ NAME
 SYNOPSIS
       SUBROUTINE PLOTXT(X,N)
 
-DESCRIPTION
-   plotxt(3f) yields a narrow-width (71-character) plot of x(i) versus i.
-   its narrow width makes it appropriate for use on a terminal.
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER,intent(in)       :: N
 
-OPTIONS
-    X   description of parameter
-    Y   description of parameter
+DESCRIPTION
+   PLOTXT(3f) yields a narrow-width (71-character) plot of x(i) versus i.
+   Its narrow width makes it appropriate for use on a terminal.
+
+   Values in the vertical axis vector (X) which are equal to or in excess
+   of 10.0**10 will not be plotted.
+
+   This convention greatly simplifies the problem of plotting when some
+   elements in the vector X are 'missing data', or when we purposely
+   want to ignore certain elements in the vector X for plotting purposes
+   (that is, we do not want certain elements in X to be plotted). To
+   cause specific elements in X to be ignored, we replace the elements
+   beforehand (by, for example, use of the REPLAC(3f) subroutine) by
+   some large value (like, say, 10.0**10) and they will subsequently be
+   ignored in the PLOTXT(3f) subroutine.
+
+   Note that the storage requirements for this (and the other) terminal
+   plot subroutiness are very small. This is due to the 'one line at a
+   time' algorithm employed for the plot.
+
+INPUT ARGUMENTS
+
+   X    The vector of (unsorted or sorted) observations to be plotted
+        vertically.
+
+   N    The integer number of observations in the vector X.
+
+OUTPUT
+
+   A narrow-width (71-character) terminal plot of X(I) versus I.
+   The body of the plot (not counting axis values
+   and margins) is 25 rows (lines) and 49 columns.
 
 EXAMPLES
   Sample program:
@@ -27,78 +55,43 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
    CC0-1.0
 $ENDBLOCK
-$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE PLOTXT(X,N)
-REAL(kind=wp) :: ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
-     &     anumcm , anumlm , anumr , anumrm , cutoff , delai , delx ,   &
-     &     hold , X , xlable , xlower , xmax , xmin
-REAL(kind=wp) :: xupper , xwidth
-INTEGER :: i , icol , icolmx , irow , ixdel , N , numcol ,     &
-     &        numlab , numr25 , numr50 , numr75 , numrow
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--A NARROW-WIDTH (71-CHARACTER) TERMINAL PLOT
-!             OF X(I) VERSUS I.
-!             THE BODY OF THE PLOT (NOT COUNTING AXIS VALUES
-!             AND MARGINS) IS 25 ROWS (LINES) AND 49 COLUMNS.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
-!              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
-!              PLOTTED.
-!              THIS CONVENTION GREATLY SIMPLIFIES THE PROBLEM
-!              OF PLOTTING WHEN SOME ELEMENTS IN THE VECTOR X
-!              ARE 'MISSING DATA', OR WHEN WE PURPOSELY
-!              WANT TO IGNORE CERTAIN ELEMENTS IN THE VECTOR X
-!              FOR PLOTTING PURPOSES (THAT IS, WE DO NOT
-!              WANT CERTAIN ELEMENTS IN X TO BE PLOTTED).
-!              TO CAUSE SPECIFIC ELEMENTS IN X TO BE
-!              IGNORED, WE REPLACE THE ELEMENTS BEFOREHAND
-!              (BY, FOR EXAMPLE, USE OF THE   REPLAC   SUBROUTINE)
-!              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
-!              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTX
-!              SUBROUTINE.
-!            --NOTE THAT THE STORAGE REQUIREMENTS FOR THIS
-!              (AND THE OTHER) TERMINAL PLOT SUBROUTINESS ARE .
-!              VERY SMALL.
-!              THIS IS DUE TO THE 'ONE LINE AT A TIME' ALGORITHM
-!              EMPLOYED FOR THE PLOT.
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
-!
-!---------------------------------------------------------------------
-!
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PLOTXT(X,N)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp) :: ai, ailabl, aim1, aimax, aimin, airow, aiwidt, anumcm, anumlm, anumr, anumrm, cutoff, delai, delx, hold
+REAL(kind=wp) :: xlable, xlower, xmax, xmin
+REAL(kind=wp) :: xupper, xwidth
+INTEGER :: i, icol, icolmx, irow, ixdel, numcol, numlab, numr25, numr50, numr75, numrow
+
 CHARACTER(len=4) :: iline
 CHARACTER(len=4) :: iaxisc
 CHARACTER(len=4) :: sbnam1 , sbnam2
 CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22
 CHARACTER(len=4) :: blank , hyphen , alphai , alphax
-!
-      DIMENSION X(:)
-      DIMENSION iline(72) , ailabl(10)
-!
-      DATA sbnam1 , sbnam2/'PLOT' , 'XT  '/
-      DATA alph11 , alph12/'FIRS' , 'T   '/
-      DATA alph21 , alph22/'SECO' , 'ND  '/
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+
+DIMENSION iline(72) , ailabl(10)
+
+DATA sbnam1 , sbnam2/'PLOT' , 'XT  '/
+DATA alph11 , alph12/'FIRS' , 'T   '/
+DATA alph21 , alph22/'SECO' , 'ND  '/
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
@@ -109,7 +102,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
+         99001 FORMAT (' IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99010)
          RETURN
       ELSE
@@ -118,7 +111,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
             WRITE (G_IO,99011)
             WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
             WRITE (G_IO,99002) N
-99002       FORMAT (' ','HAS THE VALUE 1')
+            99002 FORMAT (' HAS THE VALUE 1')
             WRITE (G_IO,99010)
             RETURN
          ELSE
@@ -131,7 +124,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
             WRITE (G_IO,99011)
             WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
             WRITE (G_IO,99003) hold
-99003       FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
+            99003 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
             WRITE (G_IO,99010)
             RETURN
          ENDIF
@@ -143,9 +136,9 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
          WRITE (G_IO,99004)
-99004    FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
+         99004 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
          WRITE (G_IO,99005) cutoff
-99005    FORMAT (' ','VALUE OF ',E15.8)
+         99005 FORMAT (' ','VALUE OF ',E15.8)
          WRITE (G_IO,99010)
          RETURN
       ENDIF
@@ -166,16 +159,15 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
       ixdel = (numcol-1)/4
       numlab = 5
       anumlm = numlab - 1
-!
-!     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
-!     FOR A MARGIN WITHIN THE PLOT.
-!
+      !
+      !     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
+      !     FOR A MARGIN WITHIN THE PLOT.
+      !
       WRITE (G_IO,99006)
-99006 FORMAT (' ')
+      99006 FORMAT (' ')
       WRITE (G_IO,99007)
-!
-99007 FORMAT (' ','THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) ',      &
-     &        'VERSUS I (HORIZONTALLY')
+
+      99007 FORMAT (' THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY)')
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
@@ -184,9 +176,9 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
       ENDDO
       WRITE (G_IO,99013) (iline(i),i=1,numcol)
       WRITE (G_IO,99014) blank
-!
-!     DETERMINE THE MIN AND MAX VALUES OF X, AND OF I.
-!
+      !
+      !     DETERMINE THE MIN AND MAX VALUES OF X, AND OF I.
+      !
       xmin = X(1)
       xmax = X(1)
       aimin = 1
@@ -201,9 +193,9 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
       delai = aimax - aimin
       xwidth = delx/anumrm
       aiwidt = delai/anumcm
-!
-!     DETERMINE AND WRITE OUT THE PLOT POSITIONS ONE LINE AT A TIME.
-!
+      !
+      !     DETERMINE AND WRITE OUT THE PLOT POSITIONS ONE LINE AT A TIME.
+      !
       DO irow = 1 , numrow
          DO icol = 1 , numcol
             iline(icol) = blank
@@ -228,15 +220,14 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          ENDDO
          iaxisc = alphai
          IF ( irow==1 .OR. irow==numrow ) iaxisc = hyphen
-         IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 )        &
-     &        iaxisc = hyphen
+         IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 ) iaxisc = hyphen
          WRITE (G_IO,99008) xlable , iaxisc , (iline(icol),icol=1,icolmx)
-99008    FORMAT (' ',E14.7,1X,A1,2X,50A1)
+         99008 FORMAT (' ',E14.7,1X,A1,2X,50A1)
       ENDDO
-!
-!     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
-!
+      !
+      !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
+      !     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
+      !
       WRITE (G_IO,99014) blank
       DO icol = 1 , numcol
          iline(icol) = hyphen
@@ -250,14 +241,12 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          ailabl(i) = aimin + (aim1/anumlm)*delai
       ENDDO
       WRITE (G_IO,99009) (ailabl(i),i=1,numlab)
-99009 FORMAT (' ',9X,5E12.4)
-!
-99010 FORMAT (' ','**************************************************', &
-     &        '********************')
+      99009 FORMAT (' ',9X,5E12.4)
+
+99010 FORMAT (' ','**********************************************************************')
 99011 FORMAT (' ','                   FATAL ERROR                    ')
-99012 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
-     &        ' SUBROUTINE')
+99012 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
 99013 FORMAT (' ',18X,54A1)
 99014 FORMAT (' ',15X,A1)
-!
+
 END SUBROUTINE PLOTXT

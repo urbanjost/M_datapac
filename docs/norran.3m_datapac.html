@@ -60,20 +60,28 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output Arguments</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
 </A>
 <BLOCKQUOTE>
 SUBROUTINE <B>NORRAN</B>(N,Iseed,X)
+<P>
+<PRE>
+       INTEGER,integer(in)        :: N
+       INTEGER,integer(inout)     :: Iseed
+       REAL(kind=wp),integer(out) :: X(:)
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -82,43 +90,56 @@ SUBROUTINE <B>NORRAN</B>(N,Iseed,X)
 </A>
 <BLOCKQUOTE>
 <P>
-<B>norran</B>(3f) generates a random sample of size n from the the normal
-(gaussian) distribution with mean = 0 and standard deviation = 1.
+<B>NORRAN</B>(3f) generates a random sample of size N from the normal
+(Gaussian) distribution with mean = 0 and standard deviation = 1.
 <P>
-this distribution is defined for all x and has the probability
+Internally, it uses the Box-Muller algorithm.
+<P>
+This distribution is defined for all X and has the probability
 density function
 <P>
 <PRE>
-       f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+       f(X) = (1/sqrt(2*pi))*exp(-X*X/2)
 <P>
 </PRE>
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
+<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>X</B> </TD><TD valign=bottom>
-description of parameter
-</TD></TR>
-<TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+<B>N</B> </TD><TD valign=bottom>
+The desired integer number of random numbers to be generated.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>ISEED</B> </TD><TD valign=bottom>
-An integer iseed value. Should be set to a non-negative value
+An integer seed value. Should be set to a non-negative value
 to start a new sequence of values. Will be set to <B>-1</B> on return
 to indicate the next call should continue the current random
 sequence walk.
 </TD></TR>
-<TR></TR></TABLE><P>
-<A name=4>
+<TR></TR></TABLE><A name=4>
+
+     <H3>OUTPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B>X</B> </TD><TD valign=bottom>
+A vector (of dimension at least N) into which the generated
+random sample of size N from the normal distribution with mean =
+0 and standard deviation = 1 will be placed.
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -128,24 +149,102 @@ Sample program:
 <P>
 <PRE>
    program demo_norran
-   use M_datapac, only : norran
+   use M_datapac, only : norran, label, plotxt, sort, norplt
    implicit none
-   ! call norran(x,y)
+   integer,parameter :: N=300
+   real              :: x(N), y(N)
+   real              :: mu, sigma
+   integer           :: Iseed
+      Iseed=1234
+      sigma=1.00000
+      mu=0.0
+      call label(&#146;norran&#146;)
+      call norran(N,Iseed,x)
+      x = sigma*x
+      x = x + mu
+      call plotxt(x,n)
+      call sort(x,n,y)
+      call plotxt(y,n)
    end program demo_norran
 <P>
 </PRE>
 Results:
+<P>
+<PRE>
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.3016713E+01 -                                               X
+     0.2787551E+01 I
+     0.2558388E+01 I
+     0.2329226E+01 I     X
+     0.2100063E+01 I
+     0.1870901E+01 I     X   X XX      X XX      XX X
+     0.1641738E+01 -         X    X         X
+     0.1412575E+01 I    X        X X X  XX       X  X X         X
+     0.1183413E+01 I                     X X        XX    X XXX   XX
+     0.9542503E+00 I    X   XX          X             X    X  XX X X
+     0.7250879E+00 I   X  XX X      X  X        XXX      XX     X X X
+     0.4959254E+00 I     XX X  XXX   XXXXX   X  XX    X    X XX  XX  X
+     0.2667627E+00 -    X XX  XXX X   XXX X X XX   X XXXX X  X     XX
+     0.3760028E-01 I   X X    X   XX XXX  X   XXX X  X XXXX XX XX X  XX
+    -0.1915622E+00 I  XX  X   X  X   X   X X X  X XXXX XX  XX X  X   X
+    -0.4207249E+00 I  XX  XX   XX XXXX X   XX XX   X XXXX X X XXX XXX
+    -0.6498873E+00 I        X XXX  XX  XX    XXXXXX    X XX    X     XX
+    -0.8790498E+00 I   XX  X X   X  X X    XXX      X   X  XX       XX
+    -0.1108212E+01 -        X     XXX     XXX  X         X        X
+    -0.1337375E+01 I  X X    X                 X       X X   X XX X X
+    -0.1566537E+01 I    X X          X       X               XX
+    -0.1795700E+01 I  X    X   X   XX        X                        X
+    -0.2024862E+01 I        X  X      X
+    -0.2254025E+01 I                                     X         XX
+    -0.2483188E+01 -            X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.7575E+02  0.1505E+03  0.2252E+03  0.3000E+03
+<P>
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.3016713E+01 -                                                  X
+     0.2787551E+01 I
+     0.2558388E+01 I
+     0.2329226E+01 I                                                  X
+     0.2100063E+01 I
+     0.1870901E+01 I                                                XXX
+     0.1641738E+01 -                                                X
+     0.1412575E+01 I                                              XXX
+     0.1183413E+01 I                                            XXX
+     0.9542503E+00 I                                          XXX
+     0.7250879E+00 I                                        XXX
+     0.4959254E+00 I                                   XXXXX
+     0.2667627E+00 -                               XXXXX
+     0.3760028E-01 I                         XXXXXXX
+    -0.1915622E+00 I                     XXXXX
+    -0.4207249E+00 I                XXXXXX
+    -0.6498873E+00 I            XXXXX
+    -0.8790498E+00 I         XXXX
+    -0.1108212E+01 -       XX
+    -0.1337375E+01 I     XXX
+    -0.1566537E+01 I    XX
+    -0.1795700E+01 I   XX
+    -0.2024862E+01 I   X
+    -0.2254025E+01 I  X
+    -0.2483188E+01 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.7575E+02  0.1505E+03  0.2252E+03  0.3000E+03
+</PRE>
+================================================================================
+&#145;&#145;&#145;
 </BLOCKQUOTE>
-<A name=5>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -153,7 +252,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -161,7 +260,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -171,28 +270,28 @@ CC0-1.0
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-BOX AND MULLER, &#146;A NOTE ON THE GENERATION OF RANDOM NORMAL DEVIATES&#146;,
-JOURNAL OF THE ASSOCIATION FOR COMPUTING MACHINERY, 1958, PAGES 610-611.
+Box and Muller, &#146;A Note on the Generation of Random Normal Deviates&#146;,
+Journal of the Association for Computing Machinery, 1958, Pages 610-611.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-TOCHER, THE ART OF SIMULATION, 1963, PAGES 33-34.
+Tocher, The Art of Simulation, 1963, Pages 33-34.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 39.
+Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 39.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS-<B>-1</B>, 1970,
-PAGES 40-111.
+Johnson and Kotz, Continuous Univariate Distributions-<B>-1</B>, 1970,
+Pages 40-111.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>norran (3m_datapac)</TD> <TD align=right width=33%><I>June 10, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 8ab13d73-82af-497a-aee3-52157abc4ad2 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>norran (3m_datapac)</TD> <TD align=right width=33%><I>June 11, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 0e114b6a-9445-4558-b8f5-3511af9c87ac using man macros.</FONT>
 <br><br><center><img src="images/norran.gif"></center>
 </div>
 </div>

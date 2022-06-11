@@ -16980,75 +16980,142 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !!
 !!       SUBROUTINE NORRAN(N,Iseed,X)
 !!
+!!        INTEGER,integer(in)        :: N
+!!        INTEGER,integer(inout)     :: Iseed
+!!        REAL(kind=wp),integer(out) :: X(:)
+!!
 !!##DESCRIPTION
 !!
-!!    norran(3f) generates a random sample of size n from the the normal
-!!    (gaussian) distribution with mean = 0 and standard deviation = 1.
+!!    NORRAN(3f) generates a random sample of size N from the normal
+!!    (Gaussian) distribution with mean = 0 and standard deviation = 1.
 !!
-!!    this distribution is defined for all x and has the probability
+!!    Internally, it uses the Box-Muller algorithm.
+!!
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!        f(X) = (1/sqrt(2*pi))*exp(-X*X/2)
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!    N     The desired integer number of random numbers to be generated.
+!!
+!!   ISEED  An integer seed value. Should be set to a non-negative value
 !!          to start a new sequence of values. Will be set to -1 on return
 !!          to indicate the next call should continue the current random
 !!          sequence walk.
 !!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X    A vector (of dimension at least N) into which the generated
+!!         random sample of size N from the normal distribution with mean =
+!!         0 and standard deviation = 1 will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_norran
-!!    use M_datapac, only : norran
+!!    use M_datapac, only : norran, label, plotxt, sort, norplt
 !!    implicit none
-!!    ! call norran(x,y)
+!!    integer,parameter :: N=300
+!!    real              :: x(N), y(N)
+!!    real              :: mu, sigma
+!!    integer           :: Iseed
+!!       Iseed=1234
+!!       sigma=1.00000
+!!       mu=0.0
+!!       call label('norran')
+!!       call norran(N,Iseed,x)
+!!       x = sigma*x
+!!       x = x + mu
+!!       call plotxt(x,n)
+!!       call sort(x,n,y)
+!!       call plotxt(y,n)
 !!    end program demo_norran
 !!
 !!   Results:
 !!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.3016713E+01 -                                               X
+!!      0.2787551E+01 I
+!!      0.2558388E+01 I
+!!      0.2329226E+01 I     X
+!!      0.2100063E+01 I
+!!      0.1870901E+01 I     X   X XX      X XX      XX X
+!!      0.1641738E+01 -         X    X         X
+!!      0.1412575E+01 I    X        X X X  XX       X  X X         X
+!!      0.1183413E+01 I                     X X        XX    X XXX   XX
+!!      0.9542503E+00 I    X   XX          X             X    X  XX X X
+!!      0.7250879E+00 I   X  XX X      X  X        XXX      XX     X X X
+!!      0.4959254E+00 I     XX X  XXX   XXXXX   X  XX    X    X XX  XX  X
+!!      0.2667627E+00 -    X XX  XXX X   XXX X X XX   X XXXX X  X     XX
+!!      0.3760028E-01 I   X X    X   XX XXX  X   XXX X  X XXXX XX XX X  XX
+!!     -0.1915622E+00 I  XX  X   X  X   X   X X X  X XXXX XX  XX X  X   X
+!!     -0.4207249E+00 I  XX  XX   XX XXXX X   XX XX   X XXXX X X XXX XXX
+!!     -0.6498873E+00 I        X XXX  XX  XX    XXXXXX    X XX    X     XX
+!!     -0.8790498E+00 I   XX  X X   X  X X    XXX      X   X  XX       XX
+!!     -0.1108212E+01 -        X     XXX     XXX  X         X        X
+!!     -0.1337375E+01 I  X X    X                 X       X X   X XX X X
+!!     -0.1566537E+01 I    X X          X       X               XX
+!!     -0.1795700E+01 I  X    X   X   XX        X                        X
+!!     -0.2024862E+01 I        X  X      X
+!!     -0.2254025E+01 I                                     X         XX
+!!     -0.2483188E+01 -            X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.7575E+02  0.1505E+03  0.2252E+03  0.3000E+03
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.3016713E+01 -                                                  X
+!!      0.2787551E+01 I
+!!      0.2558388E+01 I
+!!      0.2329226E+01 I                                                  X
+!!      0.2100063E+01 I
+!!      0.1870901E+01 I                                                XXX
+!!      0.1641738E+01 -                                                X
+!!      0.1412575E+01 I                                              XXX
+!!      0.1183413E+01 I                                            XXX
+!!      0.9542503E+00 I                                          XXX
+!!      0.7250879E+00 I                                        XXX
+!!      0.4959254E+00 I                                   XXXXX
+!!      0.2667627E+00 -                               XXXXX
+!!      0.3760028E-01 I                         XXXXXXX
+!!     -0.1915622E+00 I                     XXXXX
+!!     -0.4207249E+00 I                XXXXXX
+!!     -0.6498873E+00 I            XXXXX
+!!     -0.8790498E+00 I         XXXX
+!!     -0.1108212E+01 -       XX
+!!     -0.1337375E+01 I     XXX
+!!     -0.1566537E+01 I    XX
+!!     -0.1795700E+01 I   XX
+!!     -0.2024862E+01 I   X
+!!     -0.2254025E+01 I  X
+!!     -0.2483188E+01 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.7575E+02  0.1505E+03  0.2252E+03  0.3000E+03
+!! ================================================================================
+!! ```
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * BOX AND MULLER, 'A NOTE ON THE GENERATION OF RANDOM NORMAL DEVIATES',
-!!     JOURNAL OF THE ASSOCIATION FOR COMPUTING MACHINERY, 1958, PAGES 610-611.
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 33-34.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 39.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 40-111.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NORRAN(N,Iseed,X)
-REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
-INTEGER :: i , ip1 , Iseed , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE NORMAL DISTRIBUTION
-!             WITH MEAN = 0 AND STANDARD DEVIATION = 1.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--.
-!     LANGUAGE--ANSI FORTRAN (1977)
-!     METHOD--BOX-MULLER ALGORITHM.
+!!   * Box and Muller, 'A Note on the Generation of Random Normal Deviates',
+!!     Journal of the Association for Computing Machinery, 1958, Pages 610-611.
+!!   * Tocher, The Art of Simulation, 1963, Pages 33-34.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 39.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     Pages 40-111.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -17056,64 +17123,55 @@ INTEGER :: i , ip1 , Iseed , N
 !     UPDATED         --JULY      1976.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION y(2)
-!
-!---------------------------------------------------------------------
-!
-!-----DATA STATEMENTS-------------------------------------------------
-!
-      DATA pi/3.14159265359_wp/
-!
-!-----START POINT-----------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE NORRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
-      ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!     THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
-!     (TO BE USED BELOW IN FORMING THE N-TH NORMAL
-!     RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N
-!     HAPPENS TO BE ODD).
-!
-         CALL UNIRAN(N,Iseed,X)
-         CALL UNIRAN(2,Iseed,y)
-!
-!     GENERATE N NORMAL RANDOM NUMBERS
-!     USING THE BOX-MULLER METHOD.
-!
-         DO i = 1 , N , 2
-            ip1 = i + 1
-            u1 = X(i)
-            IF ( i==N ) THEN
-               u2 = y(2)
-            ELSE
-               u2 = X(ip1)
-            ENDIF
-            arg1 = -2.0_wp*LOG(u1)
-            arg2 = 2.0_wp*pi*u2
-            sqrt1 = SQRT(arg1)
-            z1 = sqrt1*COS(arg2)
-            z2 = sqrt1*SIN(arg2)
-            X(i) = z1
-            IF ( i/=N ) X(ip1) = z2
-         ENDDO
-      ENDIF
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE NORRAN(N,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(in)        :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+REAL(kind=wp) :: arg1, arg2, sqrt1, u1, u2, y(2), z1, z2
+INTEGER       :: i, ip1
+   !
+   !  CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE FIRST INPUT ARGUMENT TO THE NORRAN SUBROUTINE IS NON-POSITIVE *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+      RETURN
+   ELSE
+      !
+      !  GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+      !  THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
+      !  (TO BE USED BELOW IN FORMING THE N-TH NORMAL
+      !  RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N
+      !  HAPPENS TO BE ODD).
+      !
+      CALL UNIRAN(N,Iseed,X)
+      CALL UNIRAN(2,Iseed,y)
+      !
+      !  GENERATE N NORMAL RANDOM NUMBERS
+      !  USING THE BOX-MULLER METHOD.
+      !
+      DO i = 1 , N , 2
+         ip1 = i + 1
+         u1 = X(i)
+         IF ( i==N ) THEN
+            u2 = y(2)
+         ELSE
+            u2 = X(ip1)
+         ENDIF
+         arg1 = -2.0_wp*LOG(u1)
+         arg2 = 2.0_wp*G_pi*u2
+         sqrt1 = SQRT(arg1)
+         z1 = sqrt1*COS(arg2)
+         z2 = sqrt1*SIN(arg2)
+         X(i) = z1
+         IF ( i/=N ) X(ip1) = z2
+      ENDDO
+   ENDIF
+
 END SUBROUTINE NORRAN
 !>
 !!##NAME
@@ -23948,13 +24006,41 @@ END SUBROUTINE PLOTX
 !!
 !!       SUBROUTINE PLOTXT(X,N)
 !!
-!!##DESCRIPTION
-!!    plotxt(3f) yields a narrow-width (71-character) plot of x(i) versus i.
-!!    its narrow width makes it appropriate for use on a terminal.
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##DESCRIPTION
+!!    PLOTXT(3f) yields a narrow-width (71-character) plot of x(i) versus i.
+!!    Its narrow width makes it appropriate for use on a terminal.
+!!
+!!    Values in the vertical axis vector (X) which are equal to or in excess
+!!    of 10.0**10 will not be plotted.
+!!
+!!    This convention greatly simplifies the problem of plotting when some
+!!    elements in the vector X are 'missing data', or when we purposely
+!!    want to ignore certain elements in the vector X for plotting purposes
+!!    (that is, we do not want certain elements in X to be plotted). To
+!!    cause specific elements in X to be ignored, we replace the elements
+!!    beforehand (by, for example, use of the REPLAC(3f) subroutine) by
+!!    some large value (like, say, 10.0**10) and they will subsequently be
+!!    ignored in the PLOTXT(3f) subroutine.
+!!
+!!    Note that the storage requirements for this (and the other) terminal
+!!    plot subroutiness are very small. This is due to the 'one line at a
+!!    time' algorithm employed for the plot.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X    The vector of (unsorted or sorted) observations to be plotted
+!!         vertically.
+!!
+!!    N    The integer number of observations in the vector X.
+!!
+!!##OUTPUT
+!!
+!!    A narrow-width (71-character) terminal plot of X(I) versus I.
+!!    The body of the plot (not counting axis values
+!!    and margins) is 25 rows (lines) and 49 columns.
 !!
 !!##EXAMPLES
 !!
@@ -23969,76 +24055,41 @@ END SUBROUTINE PLOTX
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE PLOTXT(X,N)
-REAL(kind=wp) :: ai , ailabl , aim1 , aimax , aimin , airow , aiwidt ,        &
-     &     anumcm , anumlm , anumr , anumrm , cutoff , delai , delx ,   &
-     &     hold , X , xlable , xlower , xmax , xmin
-REAL(kind=wp) :: xupper , xwidth
-INTEGER :: i , icol , icolmx , irow , ixdel , N , numcol ,     &
-     &        numlab , numr25 , numr50 , numr75 , numrow
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                               (UNSORTED OR SORTED) OBSERVATIONS
-!                               TO BE PLOTTED VERTICALLY.
-!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                               IN THE VECTOR X.
-!     OUTPUT--A NARROW-WIDTH (71-CHARACTER) TERMINAL PLOT
-!             OF X(I) VERSUS I.
-!             THE BODY OF THE PLOT (NOT COUNTING AXIS VALUES
-!             AND MARGINS) IS 25 ROWS (LINES) AND 49 COLUMNS.
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
-!              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
-!              PLOTTED.
-!              THIS CONVENTION GREATLY SIMPLIFIES THE PROBLEM
-!              OF PLOTTING WHEN SOME ELEMENTS IN THE VECTOR X
-!              ARE 'MISSING DATA', OR WHEN WE PURPOSELY
-!              WANT TO IGNORE CERTAIN ELEMENTS IN THE VECTOR X
-!              FOR PLOTTING PURPOSES (THAT IS, WE DO NOT
-!              WANT CERTAIN ELEMENTS IN X TO BE PLOTTED).
-!              TO CAUSE SPECIFIC ELEMENTS IN X TO BE
-!              IGNORED, WE REPLACE THE ELEMENTS BEFOREHAND
-!              (BY, FOR EXAMPLE, USE OF THE   REPLAC   SUBROUTINE)
-!              BY SOME LARGE VALUE (LIKE, SAY, 10.0**10) AND
-!              THEY WILL SUBSEQUENTLY BE IGNORED IN THE PLOTX
-!              SUBROUTINE.
-!            --NOTE THAT THE STORAGE REQUIREMENTS FOR THIS
-!              (AND THE OTHER) TERMINAL PLOT SUBROUTINESS ARE .
-!              VERY SMALL.
-!              THIS IS DUE TO THE 'ONE LINE AT A TIME' ALGORITHM
-!              EMPLOYED FOR THE PLOT.
 !     ORIGINAL VERSION--FEBRUARY  1974.
 !     UPDATED         --APRIL     1974.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --OCTOBER   1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
-!
-!---------------------------------------------------------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PLOTXT(X,N)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp) :: ai, ailabl, aim1, aimax, aimin, airow, aiwidt, anumcm, anumlm, anumr, anumrm, cutoff, delai, delx, hold
+REAL(kind=wp) :: xlable, xlower, xmax, xmin
+REAL(kind=wp) :: xupper, xwidth
+INTEGER :: i, icol, icolmx, irow, ixdel, numcol, numlab, numr25, numr50, numr75, numrow
+
 CHARACTER(len=4) :: iline
 CHARACTER(len=4) :: iaxisc
 CHARACTER(len=4) :: sbnam1 , sbnam2
 CHARACTER(len=4) :: alph11 , alph12 , alph21 , alph22
 CHARACTER(len=4) :: blank , hyphen , alphai , alphax
-!
-      DIMENSION X(:)
-      DIMENSION iline(72) , ailabl(10)
-!
-      DATA sbnam1 , sbnam2/'PLOT' , 'XT  '/
-      DATA alph11 , alph12/'FIRS' , 'T   '/
-      DATA alph21 , alph22/'SECO' , 'ND  '/
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+
+DIMENSION iline(72) , ailabl(10)
+
+DATA sbnam1 , sbnam2/'PLOT' , 'XT  '/
+DATA alph11 , alph12/'FIRS' , 'T   '/
+DATA alph21 , alph22/'SECO' , 'ND  '/
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
       cutoff = (10.0_wp**10) - 1000.0_wp
 !
@@ -24049,7 +24100,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-99001    FORMAT (' ','IS NON-NEGATIVE (WITH VALUE = ',I0,')')
+         99001 FORMAT (' IS NON-NEGATIVE (WITH VALUE = ',I0,')')
          WRITE (G_IO,99010)
          RETURN
       ELSE
@@ -24058,7 +24109,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
             WRITE (G_IO,99011)
             WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
             WRITE (G_IO,99002) N
-99002       FORMAT (' ','HAS THE VALUE 1')
+            99002 FORMAT (' HAS THE VALUE 1')
             WRITE (G_IO,99010)
             RETURN
          ELSE
@@ -24071,7 +24122,7 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
             WRITE (G_IO,99011)
             WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
             WRITE (G_IO,99003) hold
-99003       FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
+            99003 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
             WRITE (G_IO,99010)
             RETURN
          ENDIF
@@ -24083,9 +24134,9 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
          WRITE (G_IO,99004)
-99004    FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
+         99004 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
          WRITE (G_IO,99005) cutoff
-99005    FORMAT (' ','VALUE OF ',E15.8)
+         99005 FORMAT (' ','VALUE OF ',E15.8)
          WRITE (G_IO,99010)
          RETURN
       ENDIF
@@ -24106,16 +24157,15 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
       ixdel = (numcol-1)/4
       numlab = 5
       anumlm = numlab - 1
-!
-!     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
-!     FOR A MARGIN WITHIN THE PLOT.
-!
+      !
+      !     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE
+      !     FOR A MARGIN WITHIN THE PLOT.
+      !
       WRITE (G_IO,99006)
-99006 FORMAT (' ')
+      99006 FORMAT (' ')
       WRITE (G_IO,99007)
-!
-99007 FORMAT (' ','THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) ',      &
-     &        'VERSUS I (HORIZONTALLY')
+
+      99007 FORMAT (' THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY)')
       DO icol = 1 , numcol
          iline(icol) = hyphen
       ENDDO
@@ -24124,9 +24174,9 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
       ENDDO
       WRITE (G_IO,99013) (iline(i),i=1,numcol)
       WRITE (G_IO,99014) blank
-!
-!     DETERMINE THE MIN AND MAX VALUES OF X, AND OF I.
-!
+      !
+      !     DETERMINE THE MIN AND MAX VALUES OF X, AND OF I.
+      !
       xmin = X(1)
       xmax = X(1)
       aimin = 1
@@ -24141,9 +24191,9 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
       delai = aimax - aimin
       xwidth = delx/anumrm
       aiwidt = delai/anumcm
-!
-!     DETERMINE AND WRITE OUT THE PLOT POSITIONS ONE LINE AT A TIME.
-!
+      !
+      !     DETERMINE AND WRITE OUT THE PLOT POSITIONS ONE LINE AT A TIME.
+      !
       DO irow = 1 , numrow
          DO icol = 1 , numcol
             iline(icol) = blank
@@ -24168,15 +24218,14 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          ENDDO
          iaxisc = alphai
          IF ( irow==1 .OR. irow==numrow ) iaxisc = hyphen
-         IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 )        &
-     &        iaxisc = hyphen
+         IF ( irow==numr25 .OR. irow==numr50 .OR. irow==numr75 ) iaxisc = hyphen
          WRITE (G_IO,99008) xlable , iaxisc , (iline(icol),icol=1,icolmx)
-99008    FORMAT (' ',E14.7,1X,A1,2X,50A1)
+         99008 FORMAT (' ',E14.7,1X,A1,2X,50A1)
       ENDDO
-!
-!     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
-!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
-!
+      !
+      !     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE
+      !     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.
+      !
       WRITE (G_IO,99014) blank
       DO icol = 1 , numcol
          iline(icol) = hyphen
@@ -24190,16 +24239,14 @@ CHARACTER(len=4) :: blank , hyphen , alphai , alphax
          ailabl(i) = aimin + (aim1/anumlm)*delai
       ENDDO
       WRITE (G_IO,99009) (ailabl(i),i=1,numlab)
-99009 FORMAT (' ',9X,5E12.4)
-!
-99010 FORMAT (' ','**************************************************', &
-     &        '********************')
+      99009 FORMAT (' ',9X,5E12.4)
+
+99010 FORMAT (' ','**********************************************************************')
 99011 FORMAT (' ','                   FATAL ERROR                    ')
-99012 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,         &
-     &        ' SUBROUTINE')
+99012 FORMAT (' ','THE ',A4,A4,' INPUT ARGUMENT TO THE ',A4,A4,' SUBROUTINE')
 99013 FORMAT (' ',18X,54A1)
 99014 FORMAT (' ',15X,A1)
-!
+
 END SUBROUTINE PLOTXT
 !>
 !!##NAME
@@ -28708,19 +28755,15 @@ END SUBROUTINE SORTC
 !!
 !!##OPTIONS
 !!##INPUT
-!!     X  The REAL vector of
-!!        observations to be sorted.
+!!     X  The REAL vector of observations to be sorted.
 !!        The input vector X remains unaltered.
 !!
-!!     N  The integer number of observations
-!!        in the vector X.
+!!     N  The integer number of observations in the vector X.
 !!
 !!##OUTPUT
 !!
-!!     Y  The REAL vector
-!!        into which the sorted data values
-!!        from X will be placed in
-!!        ascending order.
+!!     Y  The REAL vector into which the sorted data values from X will be
+!!        placed in ascending order.
 !!
 !!##EXAMPLES
 !!

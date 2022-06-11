@@ -19,19 +19,15 @@ DESCRIPTION
 
 OPTIONS
 INPUT
-    X  The REAL vector of
-       observations to be sorted.
+    X  The REAL vector of observations to be sorted.
        The input vector X remains unaltered.
 
-    N  The integer number of observations
-       in the vector X.
+    N  The integer number of observations in the vector X.
 
 OUTPUT
 
-    Y  The REAL vector
-       into which the sorted data values
-       from X will be placed in
-       ascending order.
+    Y  The REAL vector into which the sorted data values from X will be
+       placed in ascending order.
 
 EXAMPLES
   Sample program:
