@@ -58,12 +58,12 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  * Tocher, the Art of Simulation, 1963, Pages 14-15.
-  * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+  * Tocher, the Art of Simulation, 1963, pages 14-15.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-    Pages 250-271.
+    pages 250-271.
   * Hastings and Peacock, Statistical Distributions--A Handbook for
-    Students and Practitioners, 1975, Page 128.
+    Students and Practitioners, 1975, page 128.
 
 $ENDBLOCK
 !     VERSION NUMBER--82.6

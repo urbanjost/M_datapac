@@ -63,7 +63,7 @@ INTEGER :: i , iflag , im1 , ip2 , j , k , mx , my , N
 !                               AUTOCORRELATION.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF X(I) VERSUS X(I-1).
+!     OUTPUT--A ONE-page PRINTER PLOT OF X(I) VERSUS X(I-1).
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.

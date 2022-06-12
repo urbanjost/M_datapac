@@ -72,7 +72,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 !                               DEMODULATION FREQUENCY.
 !                               F IS IN UNITS OF CYCLES PER DATA POINT.
 !                               F IS BETWEEN 0.0 AND 0.5 (EXCLUSIVELY).
-!     OUTPUT--2 PAGES OF AUTOMATIC PRINTOUT--
+!     OUTPUT--2 pages OF AUTOMATIC PRINTOUT--
 !             1) AN AMPLITUDE PLOT;
 !             2) A PHASE PLOT; AND
 !             3) AN UPDATED DEMODULATION FREQUENCY ESTIMATE.

@@ -135,11 +135,11 @@ LICENSE
 
 REFERENCES
   * Box and Muller, 'A Note on the Generation of Random Normal Deviates',
-    Journal of the Association for Computing Machinery, 1958, Pages 610-611.
-  * Tocher, The Art of Simulation, 1963, Pages 33-34.
-  * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 39.
+    Journal of the Association for Computing Machinery, 1958, pages 610-611.
+  * Tocher, The Art of Simulation, 1963, pages 33-34.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 39.
   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-    Pages 40-111.
+    pages 40-111.
 
 $ENDBLOCK
 !     VERSION NUMBER--82.6

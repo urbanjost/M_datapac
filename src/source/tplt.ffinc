@@ -66,19 +66,19 @@ LICENSE
 REFERENCES
   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
     Eighteenth Conference on the Design of Experiments in Army Research
-    Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+    Development and Testing (Aberdeen, Maryland, October, 1972), pages
     425-450.
-  * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+  * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
     260-308.
   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-    Page 949, FormulA 26.7.5.
+    page 949, FormulA 26.7.5.
   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-    Page 102, Formula 11.
+    page 102, Formula 11.
   * Federighi, 'Extended Tables of the Percentage Points of Student's
     T Distribution, Journal of the American Statistical Association,
-    1969, Pages 683-688.
+    1969, pages 683-688.
   * Hastings and Peacock, Statistical Distributions--A Handbook for
-    Students and Practitioners, 1975, Pages 120-123.
+    Students and Practitioners, 1975, pages 120-123.
 $ENDBLOCK
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.

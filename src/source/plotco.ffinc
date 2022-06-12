@@ -99,11 +99,11 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
          IF ( N<=24 ) iaxdel = 5
          IF ( 25<=N .AND. N<=40 ) iaxdel = 15
 !
-!     DETERMINE THE NUMBER OF PAGES THE PLOT WILL TAKE UP
+!     DETERMINE THE NUMBER OF pages THE PLOT WILL TAKE UP
 !
          numpag = ((N-1)/120) + 1
 !
-!     OPERATE  ON EACH PAGE
+!     OPERATE  ON EACH page
 !
          DO iz = 1 , numpag
 !
@@ -191,9 +191,9 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
             WRITE (G_IO,99005)
 99005       FORMAT ('1')
             IF ( iz==1 ) WRITE (G_IO,99006) N
-99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS ',I0)
+99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL pages) IS ',I0)
             IF ( iz>=2 ) WRITE (G_IO,99007)
-99007       FORMAT (' THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIOUS PAGE')
+99007       FORMAT (' THE PLOT ON THIS page IS A CONTINUATION OF THE PLOT ON THE PREVIOUS page')
             WRITE (G_IO,99008)
 99008       FORMAT (' ')
             IF ( N<=24 ) WRITE (G_IO,99011) (ix(i),i=1,25)

@@ -1,0 +1,223 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file georan.3m_datapac.man
+NAME
+   georan(3f) - [M_datapac:RANDOM] generate geometric random numbers
+
+SYNOPSIS
+
+      SUBROUTINE GEORAN(N,P,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(in)  :: P
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   GEORAN(3f) generates a random sample of size N from the geometric
+   distribution with REAL 'Bernoulli probability' parameter
+   = P.
+
+   The geometric distribution used herein has mean = (1-P)/P and standard
+   deviation = sqrt((1-P)/(P*P))). This distribution is defined for
+   all non-negative integer X-- X = 0, 1, 2, ... .
+
+   This distribution has the probability function
+
+   f(X) = P * (1-P)**X.
+
+   The geometric distribution is the distribution of the number of
+   failures before obtaining 1 success in an indefinite sequence of
+   Bernoulli (0,1) trials where the probability of success in a precision
+   trial = P.
+
+INPUT ARGUMENTS
+   N   The desired integer number of random numbers to be generated.
+
+   ISEED  An integer iseed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+   P   The value of the 'Bernoulli probability' parameter for the
+       geometric distribution. P should be between 0.0 (exclusively)
+       and 1.0 (exclusively).
+
+OUTPUT ARGUMENTS
+   X   A vector (of dimension at least N) into which the generated random
+       sample of size N from the geometric distribution will be placed.
+
+
+EXAMPLES
+  Sample program:
+
+
+   program demo_georan
+   use m_datapac, only : georan, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=4000
+   real :: x(n)
+   integer :: iseed
+   real :: P
+      call label('georan')
+      P=0.2
+      iseed=12345
+      call georan(N,P,Iseed,X)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_georan
+
+  Results:
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.4500000E+02 -   X
+     0.4312500E+02 I   
+     0.4125000E+02 I   
+     0.3937500E+02 I   
+     0.3750000E+02 I                   X
+     0.3562500E+02 I   
+     0.3375000E+02 -                          X
+     0.3187500E+02 I                                    X
+     0.3000000E+02 I   
+     0.2812500E+02 I                  X                      X
+     0.2625000E+02 I           X        X          X      X   XX
+     0.2437500E+02 I   X            X XX X        X X           X
+     0.2250000E+02 -            X X                 X         X      X
+     0.2062500E+02 I    X X             X    XX X XX   X   X  X    X
+     0.1875000E+02 I      X  XX     X XXX   X XX  X XX  XX   XX X    XX
+     0.1687500E+02 I  X X XX X XXXX X  X  XXX  XX XXXXX  XX XX  X XXXX
+     0.1500000E+02 I  XX X  XXXXXXX  X  X  X  X  XX XXXX X X  X   X  XX
+     0.1312500E+02 I  XXXX XXXXXX XXXXXXXXX XXXXXXX X X XXXXXXXX XXXX X
+     0.1125000E+02 -   XXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXX XX XXX XXX XX
+     0.9375000E+01 I  XXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.7500000E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.5625000E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.3750000E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.1875000E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.0000000E+00 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.4500000E+02 -                                                  X
+     0.4312500E+02 I   
+     0.4125000E+02 I   
+     0.3937500E+02 I   
+     0.3750000E+02 I                                                  X
+     0.3562500E+02 I   
+     0.3375000E+02 -                                                  X
+     0.3187500E+02 I                                                  X
+     0.3000000E+02 I   
+     0.2812500E+02 I                                                  X
+     0.2625000E+02 I                                                  X
+     0.2437500E+02 I                                                  X
+     0.2250000E+02 -                                                  X
+     0.2062500E+02 I                                                 XX
+     0.1875000E+02 I                                                 X
+     0.1687500E+02 I                                                 X
+     0.1500000E+02 I                                                XX
+     0.1312500E+02 I                                               XX
+     0.1125000E+02 -                                              XX
+     0.9375000E+01 I                                            XXX
+     0.7500000E+01 I                                       XXXXXX
+     0.5625000E+01 I                                  XXXXXX
+     0.3750000E+01 I                         XXXXXXXXXX
+     0.1875000E+01 I            XXXXXXXXXXXXXX
+     0.0000000E+00 -  XXXXXXXXXXX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Tocher, The Art of Simulation, 1963, pages 14-15.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+  * Feller, An Introduction to Probability Theory and its Applications,
+    Volume 1, Edition 2, 1957, pages 155-157, 210.
+  * National Bureau of Standards Applied Mathematics Series 55, 1964,
+    page 929.
+$ENDBLOCK
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+!
+!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT FROM THIS DISCRETE RANDOM NUMBER
+!              GENERATOR MUST NECESSARILY BE A SEQUENCE OF ***INTEGER*** VALUES,
+!              THE OUTPUT VECTOR X IS SINGLE PRECISION IN MODE.
+!              X HAS BEEN SPECIFIED AS SINGLE PRECISION SO AS TO CONFORM WITH THE DATAPAC
+!              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL DATAPAC SUBROUTINES ARE .
+!              THIS CONVENTION IS BASED ON THE BELIEF THAT
+!
+!               1. A MIXTURE OF MODES (FLOATING POINT
+!                  VERSUS INTEGER) IS INCONSISTENT AND
+!                  AN UNNECESSARY COMPLICATION
+!                  IN A DATA ANALYSIS; AND
+!
+!               2. FLOATING POINT MACHINE ARITHMETIC
+!                  (AS OPPOSED TO INTEGER ARITHMETIC)
+!                  IS THE MORE NATURAL MODE FOR DOING
+!                  DATA ANALYSIS.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE GEORAN(N,P,Iseed,X)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: P
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: aden, anum, aratio, arg1, arg2, ratio
+INTEGER :: i, iratio
+
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to GEORAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99003)
+      99003 FORMAT (' ***** FATAL ERROR--The second input argument to GEORAN(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99004) P
+      99004 FORMAT (' ***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      !
+      !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+      !
+      CALL UNIRAN(N,Iseed,X)
+      !
+      !     GENERATE N GEOMETRIC RANDOM NUMBERS
+      !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+      !
+      DO i = 1 , N
+         IF ( X(i)/=0.0_wp ) THEN
+            arg1 = 1.0_wp - X(i)
+            arg2 = 1.0_wp - P
+            anum = LOG(arg1)
+            aden = LOG(arg2)
+            ratio = anum/aden
+            iratio = ratio
+            X(i) = iratio
+            aratio = iratio
+            IF ( aratio==ratio ) X(i) = iratio - 1
+         ENDIF
+      ENDDO
+   ENDIF
+
+END SUBROUTINE GEORAN

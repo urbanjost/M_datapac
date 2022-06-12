@@ -85,7 +85,7 @@ INTEGER i , iupper , N , Nu
 !                     --NU     = THE INTEGER NUMBER OF DEGREES
 !                                OF FREEDOM.
 !                                NU SHOULD BE POSITIVE.
-!     OUTPUT--A ONE-PAGE CHI-SQUARED PROBABILITY PLOT.
+!     OUTPUT--A ONE-page CHI-SQUARED PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.

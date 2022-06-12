@@ -54,7 +54,7 @@ INTEGER i , iflag , ip2 , j , k , mx , my , N
 !                               TO BE PLOTTED VERTICALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF X(I) VERSUS I.
+!     OUTPUT--A ONE-page PRINTER PLOT OF X(I) VERSUS I.
 !     PRINTING--YES.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE

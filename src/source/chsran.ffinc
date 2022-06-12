@@ -1,0 +1,195 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file chsran.3m_datapac.man
+NAME
+   chsran(3f) - [M_datapac:RANDOM] generate chi-square random numbers
+
+SYNOPSIS
+      SUBROUTINE CHSRAN(N,Nu,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(in)        :: Nu
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   CHSRAN(3f) generates a random sample of size n from the chi-squared
+   distribution with integer degrees of freedom parameter = NU.
+
+INPUT ARGUMENTS
+
+   N      The desired integer number of random numbers to be generated.
+
+   NU     The integer degrees of freedom (parameter) for the chi-squared
+          distribution. NU should be a positive integer variable.
+
+   ISEED  An integer seed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+OUTPUT ARGUMENTS
+
+--X      A vector (of dimension at least N) into which the generated
+         random sample of size N from the chi-squared distribution will
+         be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_chsran
+   use m_datapac, only : chsran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=4000
+   integer           :: iseed
+   integer           :: Nu
+   real              :: x(n)
+      call label('chsran')
+      Nu=8
+      iseed=12345
+      call chsran(N,Nu,Iseed,X)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_chsran
+
+  Results:
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.3098298E+02 -                                                  X
+     0.2972390E+02 I   
+     0.2846483E+02 I   
+     0.2720575E+02 I         X
+     0.2594668E+02 I        X                 X
+     0.2468760E+02 I   
+     0.2342853E+02 -      X  X                                     X
+     0.2216945E+02 I   X             X  X          X              X  X
+     0.2091037E+02 I     X     X  X   X X     XX   X  X  XX       X
+     0.1965130E+02 I    XXX XX X  XX  X XXX  X     XX  X   XX    X
+     0.1839222E+02 I    XXX  X X  XXXXXXX XXX XXX XXXX XX X   X   X XXX
+     0.1713315E+02 I   XX X XXX XX XXXX XXXXX XXXX XXX  XXXXX  XXX XX
+     0.1587407E+02 -  XXXXXX XXXXXX XX XXXX XX XXX  X  XX XXXX XX XXXX
+     0.1461500E+02 I   XXXXXXXXX XX XXXXXXXXX XX XXX XXXXXX X XXXXXXXX
+     0.1335592E+02 I  X XXXXX XXXXXXX XXX XXX XX XXXXXXX XXXXXXXX XXXX
+     0.1209685E+02 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.1083777E+02 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.9578695E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.8319620E+01 -   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.7060543E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.5801468E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.4542393E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.3283318E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.2024242E+01 I  XXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.7651675E+00 -   X X X        X      XX  X   XXX X XX    X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.3098298E+02 -                                                  X
+     0.2972390E+02 I   
+     0.2846483E+02 I   
+     0.2720575E+02 I                                                  X
+     0.2594668E+02 I                                                  X
+     0.2468760E+02 I   
+     0.2342853E+02 -                                                  X
+     0.2216945E+02 I                                                  X
+     0.2091037E+02 I                                                  X
+     0.1965130E+02 I                                                 XX
+     0.1839222E+02 I                                                 X
+     0.1713315E+02 I                                                XX
+     0.1587407E+02 -                                               XX
+     0.1461500E+02 I                                              XX
+     0.1335592E+02 I                                            XXX
+     0.1209685E+02 I                                         XXXX
+     0.1083777E+02 I                                      XXXX
+     0.9578695E+01 I                                 XXXXXX
+     0.8319620E+01 -                            XXXXXX
+     0.7060543E+01 I                     XXXXXXXX
+     0.5801468E+01 I               XXXXXXX
+     0.4542393E+01 I         XXXXXXX
+     0.3283318E+01 I    XXXXXX
+     0.2024242E+01 I  XXX
+     0.7651675E+00 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+ * Tocher, The Art of Simulation, 1963, pages 34-35.
+ * Mood and Grable, Introduction to the Theory of Statistics, 1963,
+   pages 226-227.
+ * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+   page 171.
+ * Hastings and Peacock, Statistical Distributions--A Handbook for Students
+   and Practitioners, 1975, page 48.
+
+$ENDBLOCK
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--FEBRUARY  1975.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CHSRAN(N,Nu,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(in)        :: Nu
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: arg1 , arg2 , sum , y , z
+INTEGER i , j 
+!
+DIMENSION y(2) , z(2)
+!
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to CHSRAN(3f) is non-positive *****')
+         WRITE (G_IO,99003) N
+         RETURN
+      ELSEIF ( Nu<=0 ) THEN
+         WRITE (G_IO,99002)
+         99002 FORMAT (' ***** FATAL ERROR--The second input argument to CHSRAN(3f) is non-positive *****')
+         WRITE (G_IO,99003) Nu
+         RETURN
+      ELSE
+!
+!     GENERATE N CHI-SQUARED RANDOM NUMBERS USING THE DEFINITION THAT
+!     A CHI-SQUARED VARIATE WITH NU DEGREES OF FREEDOM EQUALS THE SUM OF NU SQUARED NORMAL VARIATES.
+!     FIRST GENERATE 2 UNIFORM (0,1) RANDOM NUMBERS, THEN GENERATE 2 NORMAL RANDOM NUMBERS,
+!     THEN FORM THE SUM OF SQUARED NORMAL RANDOM NUMBERS.
+!
+         DO i = 1 , N
+            sum = 0.0_wp
+            DO j = 1 , Nu , 2
+               CALL UNIRAN(2,Iseed,y)
+               arg1 = -2.0_wp*LOG(y(1))
+               arg2 = 2.0_wp*G_pi*y(2)
+               z(1) = (SQRT(arg1))*(COS(arg2))
+               z(2) = (SQRT(arg1))*(SIN(arg2))
+               sum = sum + z(1)*z(1)
+               IF ( j/=Nu ) sum = sum + z(2)*z(2)
+            ENDDO
+            X(i) = sum
+         ENDDO
+      ENDIF
+99003 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+!
+END SUBROUTINE CHSRAN

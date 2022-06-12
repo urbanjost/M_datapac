@@ -42,7 +42,7 @@ ACCURACY
    digits for all tested P in the range P = .001 to P = .999.  for P =
    .95 And smaller, The agreement was even better--7 significant digits.
    (Note that the tabulated values given in the Wilk, Gnanadesikan,
-   and Huyett reference below, Page 20, are in error for at least the
+   and Huyett reference below, page 20, are in error for at least the
    GAMMA = 1 case-- The worst detected error was agreement to only 3
    significant digits (in their 8 significant digit table) for P = .999.)
 
@@ -72,9 +72,9 @@ REFERENCES
  * Wilk, gnanadesikan, and huyett, 'probability plots for the gamma
    Distribution', technometrics, 1962, pages 1-15, especially pages 3-5.
  * National bureau of standards applied mathematics series 55, 1964,
-   Page 257, formula 6.1.41, and pages 940-943.
+   page 257, formula 6.1.41, and pages 940-943.
  * Johnson and kotz, continuous univariate distributions--1, 1970,
-   Pages 166-206.
+   pages 166-206.
  * Hastings and peacock, statistical distributions--a handbook for
    Students and practitioners, 1975, pages 46-51.
 
@@ -196,7 +196,7 @@ DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
 !     PERCENT POINT X VALUE AS DEFINED IN EITHER OF THE 2
 !     ITERATION LOOPS IN THE ABOVE CODE.
 !
-!     COMPUTE T-SUB-Q AS DEFINED ON PAGE 4 OF THE WILK, GNANADESIKAN,
+!     COMPUTE T-SUB-Q AS DEFINED ON page 4 OF THE WILK, GNANADESIKAN,
 !     AND HUYETT REFERENCE
 !
  500  sum = 1.0D0/dgamma

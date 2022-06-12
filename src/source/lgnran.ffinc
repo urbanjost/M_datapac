@@ -1,0 +1,211 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file lgnran.3m_datapac.man
+NAME
+   lgnran(3f) - [M_datapac:RANDOM] generate lognormal random numbers
+
+SYNOPSIS
+      
+      SUBROUTINE LGNRAN(N,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(inout)     :: Iseed 
+       REAL(kind=wp),intent(out) :: X(:) 
+
+DESCRIPTION
+   LGNRAN(3f) generates a random sample of size N from the lognormal
+   distribution.
+
+   The prototype lognormal distribution used herein has mean = sqrt(e)
+   = 1.64872127 and standard deviation = sqrt(e*(e-1)) = 2.16119742.
+   this distribution is defined for all positive X and has the probability
+   density function
+
+       f(X) = (1/(X*sqrt(2*pi))) * exp(-log(X)*log(X)/2)
+
+   The prototype lognormal distribution used herein is the distribution
+   of the variate X = exp(z) where the variate z is normally distributed
+   with mean = 0 and standard deviation = 1.
+
+INPUT ARGUMENTS
+
+   N     The desired integer number of random numbers to be generated.
+
+  ISEED  An integer seed value. Should be set to a non-negative value
+         to start a new sequence of values. Will be set to -1 on return
+         to indicate the next call should continue the current random
+         sequence walk.
+
+OUTPUT ARGUMENTS
+
+   X    A vector (of dimension at least N) into which the generated
+        random sample of size N from the lognormal distribution will
+        be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_lgnran
+   use m_datapac, only : lgnran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=500
+   real :: x(n)
+   integer :: iseed
+      call label('lgnran')
+      iseed=12345
+      call lgnran(N,Iseed,X)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_lgnran
+
+  Results:
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.2626150E+02 -                                                X
+     0.2516970E+02 I   
+     0.2407790E+02 I   
+     0.2298611E+02 I   
+     0.2189431E+02 I   
+     0.2080252E+02 I   
+     0.1971072E+02 -   
+     0.1861893E+02 I   
+     0.1752713E+02 I   X
+     0.1643533E+02 I                                               X
+     0.1534354E+02 I   
+     0.1425174E+02 I   
+     0.1315995E+02 -                                        X
+     0.1206815E+02 I   
+     0.1097635E+02 I                                    X
+     0.9884558E+01 I                   X                              X
+     0.8792763E+01 I                                         XXX
+     0.7700968E+01 I          X
+     0.6609171E+01 -                X                X      X X       X
+     0.5517376E+01 I              XX   X X X        XX X        X
+     0.4425579E+01 I          XX X     X X XXXX  XX X   X        XX  X
+     0.3333784E+01 I   X  XXX   X  XX   XX   XXX X XXXX  X X    X  X
+     0.2241987E+01 I  X XXXXXX XX  XXXX XXXXXXXXXX X XXXXXX XXX XXXXXXX
+     0.1150192E+01 I  XXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.5839747E-01 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1258E+03  0.2505E+03  0.3752E+03  0.5000E+03
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.2626150E+02 -                                                  X
+     0.2516970E+02 I   
+     0.2407790E+02 I   
+     0.2298611E+02 I   
+     0.2189431E+02 I   
+     0.2080252E+02 I   
+     0.1971072E+02 -   
+     0.1861893E+02 I   
+     0.1752713E+02 I                                                  X
+     0.1643533E+02 I                                                  X
+     0.1534354E+02 I   
+     0.1425174E+02 I   
+     0.1315995E+02 -                                                  X
+     0.1206815E+02 I   
+     0.1097635E+02 I                                                  X
+     0.9884558E+01 I                                                 XX
+     0.8792763E+01 I                                                 X
+     0.7700968E+01 I                                                 X
+     0.6609171E+01 -                                                XX
+     0.5517376E+01 I                                                X
+     0.4425579E+01 I                                              XX
+     0.3333784E+01 I                                           XXX
+     0.2241987E+01 I                                    XXXXXXXX
+     0.1150192E+01 I                 XXXXXXXXXXXXXXXXXXXX
+     0.5839747E-01 -  XXXXXXXXXXXXXXXX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1258E+03  0.2505E+03  0.3752E+03  0.5000E+03
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Tocher, The Art of Simulation, 1963, pages 14-15.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+  * Cramer, Mathematical Methods of Statistics, 1946, pages 219-220.
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    pages 112-136.
+  * Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, page 88.
+
+$ENDBLOCK
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --JULY      1976.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LGNRAN(N,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed 
+REAL(kind=wp),intent(out) :: X(:) 
+
+REAL(kind=wp) :: arg1, arg2, sqrt1, u1, u2, y(2), z1, z2
+INTEGER i, ip1
+ 
+!---------------------------------------------------------------------
+      !
+      !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+      !
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to LGNRAN(3f) is non-positive *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+         RETURN
+      ELSE
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !     THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
+         !     (TO BE USED BELOW IN FORMING THE N-TH NORMAL
+         !     RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N
+         !     HAPPENS TO BE ODD).
+         !
+         CALL UNIRAN(N,Iseed,X)
+         CALL UNIRAN(2,Iseed,y)
+         !
+         !     GENERATE N NORMAL RANDOM NUMBERS
+         !     USING THE BOX-MULLER METHOD.
+         !
+         DO i = 1 , N , 2
+            ip1 = i + 1
+            u1 = X(i)
+            IF ( i==N ) THEN
+               u2 = y(2)
+            ELSE
+               u2 = X(ip1)
+            ENDIF
+            arg1 = -2.0_wp*LOG(u1)
+            arg2 = 2.0_wp*G_pi*u2
+            sqrt1 = SQRT(arg1)
+            z1 = sqrt1*COS(arg2)
+            z2 = sqrt1*SIN(arg2)
+            X(i) = z1
+            IF ( i/=N ) X(ip1) = z2
+         ENDDO
+         !
+         !     GENERATE N LOGNORMAL RANDOM NUMBERS
+         !     USING THE DEFINITION THAT
+         !     A LOGNORMAL VARIATE
+         !     EQUALS AN EXPONETIATED NORMAL VARIATE.
+         !
+         DO i = 1 , N
+            X(i) = EXP(X(i))
+         ENDDO
+      ENDIF
+ 
+END SUBROUTINE LGNRAN

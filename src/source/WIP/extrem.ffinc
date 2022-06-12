@@ -53,10 +53,10 @@ LICENSE
 REFERENCES
   * FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS
     OF THE EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY
-    RESEARCH AND TESTING, PAGES 425-450.
+    RESEARCH AND TESTING, pages 425-450.
   * FILLIBEN, 'THE PERCENT POINT FUNCTION', UNPUBLISHED MANUSCRIPT.
   * JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE DISTRIBUTIONS-1,
-    1970, PAGES 272-295.
+    1970, pages 272-295.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -70,7 +70,7 @@ INTEGER       :: i, idis, idismx, iupper, j, jskip, k, N, numam, numdis, numdm1
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--6 PAGES OF AUTOMATIC PRINTOUT.
+!     OUTPUT--6 pages OF AUTOMATIC PRINTOUT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -328,7 +328,7 @@ CHARACTER(len=4) :: iflag3
          WRITE (G_IO,99017)
 99017    FORMAT (' ',                                                   &
      &'THE ABOVE IS A PLOT OF THE 46 PROBABILITY PLOT CORRELATION COEFFI&
-     &CIENTS (FROM THE PREVIOUS PAGE)')
+     &CIENTS (FROM THE PREVIOUS page)')
          WRITE (G_IO,99018)
 99018    FORMAT (' ',16X,'VERSUS THE 46 EXTREME VALUE DISTRIBUTIONS')
 !
@@ -397,7 +397,7 @@ CHARACTER(len=4) :: iflag3
             IF ( arg>0.0_wp ) h(i,2) = yint + yslope*(-LOG(arg))
          ENDDO
 !
-!     WRITE OUT THE PAGE WITH THE RETURN PERIODS AND THE PREDICTED EXTREMES
+!     WRITE OUT THE page WITH THE RETURN PERIODS AND THE PREDICTED EXTREMES
 !     FOR THE 2 DISTRIBUTIONS--OPTIMAL EXTREME VALUE TYPE 2, AND EXTREME
 !     VALUE TYPE 1.
 !

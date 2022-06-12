@@ -1,0 +1,246 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file gamran.3m_datapac.man
+NAME
+   gamran(3f) - [M_datapac:RANDOM] generate gamma random numbers
+
+SYNOPSIS
+      SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(in)  :: Gamma
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   GAMRAN(3f) generates a random sample of size N from the gamma
+   distribution with tail length parameter value = GAMMA.
+
+   The prototype gamma distribution used herein has mean = GAMMA and
+   standard deviation = sqrt(GAMMA). This distribution is defined for
+   all positive X, and has the probability density function
+
+       f(X) = (1/constant) * (X**(GAMMA-1)) * exp(-X)
+
+   where the constant is equal to the Gamma function evaluated at the
+   value GAMMA.
+
+ALGORITHM
+
+   Generate N Gamma Distribution random numbers using Greenwood's
+   Rejection Algorithm--
+
+    1. Generate a normal random number;
+
+    2. Transform the normal variate to an approximate gamma variate
+       using the Wilson-Hilferty approximation (see the Johnson and Kotz
+       reference, page 176);
+
+    3. Form the rejection function value, based
+       on the probability density function value
+       of the actual distribution of the pseudo-gamma
+       variate, and the probability density function value
+       of a true gamma variate.
+
+    4. Generate a uniform random number;
+
+    5. If the uniform random number is less than the rejection function
+       value, then accept the pseudo-random number as a gamma variate;
+       if the uniform random number is larger than the rejection function
+       value, then reject the pseudo-random number as a gamma variate.
+
+INPUT ARGUMENTS
+
+   N      The desired integer number of random numbers to be generated.
+
+   GAMMA  The value of the tail length parameter. GAMMA should be
+          positive. GAMMA should be larger than 1/3 (algorithmic
+          restriction).
+
+  ISEED   An integer seed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+OUTPUT ARGUMENTS
+
+   X      A vector (of dimension at least N) into which the generated
+          random sample from the gamma distribution will be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_gamran
+   use m_datapac, only : gamran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=4000
+   real :: x(n)
+   integer :: iseed
+   real :: gamma
+      call label('gamran')
+      gamma=3.4
+      iseed=12345
+      call gamran(n,gamma,iseed,x)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_gamran
+
+  Results:
+
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY)
+                      I-----------I-----------I-----------I-----------I
+     0.1547529E+02 -               X            X
+     0.1483860E+02 I
+     0.1420192E+02 I
+     0.1356523E+02 I                               X
+     0.1292854E+02 I                                   X
+     0.1229185E+02 I                                         X   X
+     0.1165516E+02 -                                      X
+     0.1101848E+02 I          X                        X       X
+     0.1038179E+02 I     XX  X      X   X        X       X   X   X
+     0.9745100E+01 I    X X  X     XX      X X   XX  X     XX       X X
+     0.9108413E+01 I          X X X      XX     X    XXX          XX
+     0.8471725E+01 I  X X XX  XX    X  XXXXX XXX X   XX  X X X  X  XX X
+     0.7835037E+01 -  X  XXX XX X  XXX  X XX XXXXXXX  XX XXXX XX X  XX
+     0.7198349E+01 I   X XXXXX  XXXXX  XXXX  X X XXX XXXXX XXX XXX X X
+     0.6561661E+01 I  XXXXXXXXXX XXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXX
+     0.5924973E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.5288285E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.4651597E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.4014910E+01 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.3378222E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.2741534E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.2104846E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.1468158E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.8314705E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.1947823E+00 -   X X   X X  XX X X    X X XX XXXX X X       X  XX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY)
+                      I-----------I-----------I-----------I-----------I
+     0.1547529E+02 -                                                  X
+     0.1483860E+02 I
+     0.1420192E+02 I
+     0.1356523E+02 I                                                  X
+     0.1292854E+02 I                                                  X
+     0.1229185E+02 I                                                  X
+     0.1165516E+02 -                                                  X
+     0.1101848E+02 I                                                  X
+     0.1038179E+02 I                                                  X
+     0.9745100E+01 I                                                  X
+     0.9108413E+01 I                                                 XX
+     0.8471725E+01 I                                                 X
+     0.7835037E+01 -                                                XX
+     0.7198349E+01 I                                                X
+     0.6561661E+01 I                                              XXX
+     0.5924973E+01 I                                            XXX
+     0.5288285E+01 I                                         XXXX
+     0.4651597E+01 I                                     XXXXX
+     0.4014910E+01 -                                XXXXXX
+     0.3378222E+01 I                         XXXXXXXX
+     0.2741534E+01 I                  XXXXXXXX
+     0.2104846E+01 I           XXXXXXXX
+     0.1468158E+01 I     XXXXXXX
+     0.8314705E+00 I  XXXX
+     0.1947823E+00 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+================================================================================
+```
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Greenwood, 'A Fast generator for Gamma-Distributed Random Variables',
+    Compstat 1974, Proceedings in Computational Statistics, Vienna,
+    September, 1974, pages 19-27.
+  * Tocher, The Art of Simulation, 1963, pages 24-27.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, pages 36-37.
+  * Wilk, Gnanadesikan, and Huyett, 'Probability Plots for the Gamma
+    Distribution', Technometrics, 1962, pages 1-15.
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    pages 166-206.
+  * Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, pages 68-73.
+  * National Bureau of Standards Applied Mathematics Series 55, 1964,
+    page 952.
+$ENDBLOCK
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --JUNE      1978.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MARCH     1982.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: a1, arg, athird, b1, funct, sqrt3, term, u(1), xg, xg0, xn(1), xn0
+INTEGER :: i
+!---------------------------------------------------------------------
+DATA athird/0.3333333_wp/
+DATA sqrt3/1.73205081_wp/
+!-----START POINT-----------------------------------------------------
+!     ******STILL NEEDS ALGORITHM WORK ******
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+         99001    FORMAT (' ***** FATAL ERROR--The first input argument to GAMRAN(3f) is non-positive *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+         RETURN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** FATAL ERROR--The second input argument to GAMRAN(3f) is non-positive *****')
+         WRITE (G_IO,99006) Gamma
+         RETURN
+      ELSEIF ( Gamma<=0.33333333_wp ) THEN
+         WRITE (G_IO,99004)
+         99004 FORMAT (' ***** FATAL ERROR--The second input argument to GAMRAN(3f) is smaller than or equal to 0.33333333 *****')
+         WRITE (G_IO,99005)
+         99005 FORMAT ('                    (algorithmic restriction)')
+         WRITE (G_IO,99006) Gamma
+         RETURN
+      ELSE
+         a1 = 1.0_wp/(9.0_wp*Gamma)
+         b1 = SQRT(a1)
+         xn0 = -sqrt3 + b1
+         xg0 = Gamma*(1.0_wp-a1+b1*xn0)**3
+         DO i = 1 , N
+            DO
+               CALL NORRAN(1,Iseed,xn)
+               xg = Gamma*(1.0_wp-a1+b1*xn(1))**3
+               IF ( xg>=0.0_wp ) THEN
+                  term = (xg/xg0)**(Gamma-athird)
+                  arg = 0.5_wp*xn(1)*xn(1) - xg - 0.5_wp*xn0*xn0 + xg0
+                  funct = term*EXP(arg)
+                  CALL UNIRAN(1,Iseed,u(1:1))
+                  IF ( u(1)<=funct ) THEN
+                     X(i) = xg
+                     EXIT
+                  ENDIF
+               ENDIF
+            ENDDO
+         ENDDO
+      ENDIF
+99006 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+!
+END SUBROUTINE GAMRAN

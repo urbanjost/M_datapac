@@ -57,14 +57,14 @@ LICENSE
 
 REFERENCES
   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-    Pages 946-947, Formulae 26.6.4, 26.6.5, 26.6.8, and 26.6.15.
+    pages 946-947, Formulae 26.6.4, 26.6.5, 26.6.8, and 26.6.15.
   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-    Page 83, Formula 20, and Page 84, Third formula.
+    page 83, Formula 20, and page 84, Third formula.
   * Paulson, An Approximate Normalization of the Analysis of Variance
     Distribution, Annals of Mathematical Statistics, 1942, Number 13,
-    Pages 233-135.
+    pages 233-135.
   * Scheffe and Tukey, A Formula for Sample Sizes for Population Tolerance
-    Limits, 1944, Number 15, Page 217.
+    Limits, 1944, Number 15, page 217.
 $ENDBLOCK
 !     ORIGINAL VERSION--AUGUST    1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -177,7 +177,7 @@ DATA nucut1 , nucut2/100 , 1000/
 !     ARE BOTH SMALL OR MODERATE
 !     (THAT IS, BOTH ARE SMALLER THAN 1000).
 !     METHOD UTILIZED--EXACT FINITE SUM
-!     (SEE AMS 55, PAGE 946, FORMULAE 26.6.4, 26.6.5,
+!     (SEE AMS 55, page 946, FORMULAE 26.6.4, 26.6.5,
 !     AND 26.6.8).
 !
             z = anu2/(anu2+anu1*dx)
@@ -296,7 +296,7 @@ DATA nucut1 , nucut2/100 , 1000/
 !     (THAT IS, WHEN NU1 IS SMALLER THAN 100,
 !     AND NU2 IS EQUAL TO OR LARGER THAN 1000).
 !     METHOD UTILIZED--SHEFFE-TUKEY APPROXIMATION
-!     (SEE JOHNSON AND KOTZ, VOLUME 2, PAGE 84, THIRD FORMULA).
+!     (SEE JOHNSON AND KOTZ, VOLUME 2, page 84, THIRD FORMULA).
 !
                term1 = dnu1
                term2 = (dnu1/dnu2)*(0.5D0*dnu1-1.0D0)
@@ -313,7 +313,7 @@ DATA nucut1 , nucut2/100 , 1000/
 !     (THAT IS, WHEN NU2 IS SMALLER THAN 100,
 !     AND NU1 IS EQUAL TO OR LARGER THAN 1000).
 !     METHOD UTILIZED--SHEFFE-TUKEY APPROXIMATION
-!     (SEE JOHNSON AND KOTZ, VOLUME 2, PAGE 84, THIRD FORMULA).
+!     (SEE JOHNSON AND KOTZ, VOLUME 2, page 84, THIRD FORMULA).
 !
                   term1 = dnu2
                   term2 = (dnu2/dnu1)*(0.5D0*dnu2-1.0D0)
@@ -347,7 +347,7 @@ DATA nucut1 , nucut2/100 , 1000/
 !     BUT SMALLER THAN 1000,
 !     AND NU1 IS EQUAL TO OR LARGER THAN 1000).
 !     METHOD UTILIZED--PAULSON APPROXIMATION
-!     (SEE AMS 55, PAGE 947, FORMULA 26.6.15).
+!     (SEE AMS 55, page 947, FORMULA 26.6.15).
 !
       dfact1 = 1.0D0/(4.5D0*dnu1)
       dfact2 = 1.0D0/(4.5D0*dnu2)

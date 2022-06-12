@@ -1,0 +1,173 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file ev1ran.3m_datapac.man
+NAME
+   ev1ran(3f) - [M_datapac:RANDOM] generate extreme value type 1
+   (Gumbel) random numbers
+
+SYNOPSIS
+      SUBROUTINE EV1RAN(N,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   EV1RAN(3f) generates a random sample of size N from the extreme value
+   type 1 distribution.
+
+   The prototype extreme value type 1 distribution used herein has mean
+   = Euler's number = 0.57721566 and standard deviation = pi/sqrt(6)
+   = 1.28254983. This distribution is defined for all X and has the
+   probability density function
+
+       f(X) = (exp(-X)) * (exp(-(exp(-X))))
+
+INPUT ARGUMENTS
+
+   N      The desired integer number of random numbers to be generated.
+
+   ISEED  An integer seed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+OUTPUT ARGUMENTS
+
+   X     A vector (of dimension at least N) into which the generated
+         random sample of size N from the extreme value type 1
+         distribution will be placed.
+
+
+EXAMPLES
+  Sample program:
+
+   program demo_ev1ran
+   use m_datapac, only : ev1ran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=4000
+   real :: x(n)
+   integer :: iseed
+      call label('ev1ran')
+      iseed=12345
+      call ev1ran(n,iseed,x)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_ev1ran
+
+  Results:
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1011052E+02 -   X
+     0.9597239E+01 I   
+     0.9083955E+01 I   
+     0.8570670E+01 I   
+     0.8057385E+01 I                   X
+     0.7544101E+01 I                          X
+     0.7030817E+01 -                                    X
+     0.6517532E+01 I                  X                      X
+     0.6004248E+01 I           X        X          X      X   XX
+     0.5490964E+01 I   X            X XX X        X X         X X
+     0.4977679E+01 I    X X     X X           X   XXX  X   X       X X
+     0.4464395E+01 I    X           X XXX    X XX X X    X   XX X    X
+     0.3951111E+01 -  X X XX XXXXXX X   X XXX XXX XXXXX XXX XXX X XXXXX
+     0.3437826E+01 I  XXXXXXXXXXXXXX XXXXXXXX XX XX XXXX X X XX  XXXXXX
+     0.2924542E+01 I  XXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.2411257E+01 I  XXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXX
+     0.1897973E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXX
+     0.1384688E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.8714046E+00 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.3581200E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.1551647E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.6684484E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.1181733E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.1695018E+01 I  X   XXX XX  XXXXXXXXXXXXXXXXXXXXXXX    X X XXXXX
+    -0.2208302E+01 -                       X                  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1011052E+02 -                                                  X
+     0.9597239E+01 I   
+     0.9083955E+01 I   
+     0.8570670E+01 I   
+     0.8057385E+01 I                                                  X
+     0.7544101E+01 I                                                  X
+     0.7030817E+01 -                                                  X
+     0.6517532E+01 I                                                  X
+     0.6004248E+01 I                                                  X
+     0.5490964E+01 I                                                  X
+     0.4977679E+01 I                                                  X
+     0.4464395E+01 I                                                 XX
+     0.3951111E+01 -                                                 X
+     0.3437826E+01 I                                                XX
+     0.2924542E+01 I                                               XX
+     0.2411257E+01 I                                             XXX
+     0.1897973E+01 I                                         XXXXX
+     0.1384688E+01 I                                    XXXXXX
+     0.8714046E+00 -                             XXXXXXXX
+     0.3581200E+00 I                     XXXXXXXXX
+    -0.1551647E+00 I             XXXXXXXXX
+    -0.6684484E+00 I      XXXXXXXX
+    -0.1181733E+01 I   XXXX
+    -0.1695018E+01 I  XX
+    -0.2208302E+01 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Tocher, The Art of Simulation, 1963, pages 14-15.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    pages 272-295.
+$ENDBLOCK
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EV1RAN(N,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+INTEGER :: i
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+    IF ( N<1 ) THEN
+       WRITE (G_IO,99001)
+       99001 FORMAT (' ***** FATAL ERROR--The first input argument to EV1RAN(3f) is non-positive *****')
+       WRITE (G_IO,99002) N
+       99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+    ELSE
+       !
+       !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+       !
+       CALL UNIRAN(N,Iseed,X)
+       !
+       !     GENERATE N EXTREME VALUE TYPE 1 RANDOM NUMBERS
+       !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+       !
+       DO i = 1 , N
+          X(i) = -LOG(LOG(1.0_wp/X(i)))
+       ENDDO
+    ENDIF
+ 
+END SUBROUTINE EV1RAN

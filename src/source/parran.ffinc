@@ -1,0 +1,186 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file parran.3m_datapac.man
+NAME
+   parran(3f) - [M_datapac:RANDOM] generate Pareto random numbers
+
+SYNOPSIS
+      SUBROUTINE PARRAN(N,Gamma,Iseed,X)
+
+       INTEGER       :: N
+       REAL(kind=wp) :: Gamma
+       INTEGER       :: Iseed 
+       REAL(kind=wp) :: X(:)
+
+DESCRIPTION
+   PARRAN(3f) generates a random sample of size N from the Pareto
+   distribution with tail length parameter value = GAMMA.
+
+   The prototype Pareto distribution used herein is defined for all X
+   greater than or equal to 1, and has the probability density function
+
+       f(X) = GAMMA / (X**(GAMMA+1))
+
+INPUT ARGUMENTS
+
+   N      The desired integer number of random numbers to be generated.
+
+   GAMMA  The  value of the tail length parameter. GAMMA should be
+          positive.
+
+   ISEED  An integer seed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+OUTPUT ARGUMENTS
+
+   X      A vector (of dimension at least N) into which the generated
+          random sample from the Pareto distribution will be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_parran
+   use m_datapac, only : parran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=4000
+   real :: x(n)
+   integer :: iseed
+   real :: gamma
+      call label('parran')
+      gamma=3.4
+      iseed=12345
+      call parran(n,gamma,iseed,x)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_parran
+
+  Results:
+
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1956372E+02 -   X
+     0.1879024E+02 I   
+     0.1801675E+02 I   
+     0.1724326E+02 I   
+     0.1646978E+02 I   
+     0.1569629E+02 I   
+     0.1492280E+02 -   
+     0.1414931E+02 I   
+     0.1337583E+02 I   
+     0.1260234E+02 I   
+     0.1182885E+02 I   
+     0.1105537E+02 I                   X
+     0.1028188E+02 -   
+     0.9508391E+01 I   
+     0.8734904E+01 I                          X
+     0.7961417E+01 I                                    X
+     0.7187930E+01 I   
+     0.6414443E+01 I                  X X                 X  XX
+     0.5640956E+01 -           X                  XX          XX
+     0.4867469E+01 I   X        X X X XX X          X         X X
+     0.4093982E+01 I    X X             X    XX X XX   X   X  X    X X
+     0.3320494E+01 I  X X XX XXXXXX X XXX XXX XXX XXXXX XXX XXX X XXXXX
+     0.2547007E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.1773520E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.1000033E+01 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1956372E+02 -                                                  X
+     0.1879024E+02 I   
+     0.1801675E+02 I   
+     0.1724326E+02 I   
+     0.1646978E+02 I   
+     0.1569629E+02 I   
+     0.1492280E+02 -   
+     0.1414931E+02 I   
+     0.1337583E+02 I   
+     0.1260234E+02 I   
+     0.1182885E+02 I   
+     0.1105537E+02 I                                                  X
+     0.1028188E+02 -   
+     0.9508391E+01 I   
+     0.8734904E+01 I                                                  X
+     0.7961417E+01 I                                                  X
+     0.7187930E+01 I   
+     0.6414443E+01 I                                                  X
+     0.5640956E+01 -                                                  X
+     0.4867469E+01 I                                                  X
+     0.4093982E+01 I                                                 XX
+     0.3320494E+01 I                                                 X
+     0.2547007E+01 I                                              XXXX
+     0.1773520E+01 I                                  XXXXXXXXXXXXX
+     0.1000033E+01 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Tocher, The Art of Simulation, 1963, pages 14-15.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    pages 233-249.
+  * Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, page 104.
+
+$ENDBLOCK
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PARRAN(N,Gamma,Iseed,X)
+INTEGER       :: N
+REAL(kind=wp) :: Gamma
+INTEGER       :: Iseed 
+REAL(kind=wp) :: X(:)
+
+INTEGER       :: i
+      !---------------------------------------------------------------------
+      !
+      !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+      !
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to PARRAN(3f) is non-positive *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+         RETURN
+      ELSEIF ( Gamma<=0.0_wp ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** FATAL ERROR--The second input argument to PARRAN(3f) subroutine is non-positive *****')
+         WRITE (G_IO,99004) Gamma
+         99004 FORMAT (' ***** The value of the argument is ',E15.8,' *****')
+         RETURN
+      ELSE
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
+         CALL UNIRAN(N,Iseed,X)
+         !
+         !     GENERATE N PARETO DISTRIBUTION RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
+         DO i = 1 , N
+            X(i) = (1.0_wp-X(i))**(-1.0_wp/Gamma)
+         ENDDO
+      ENDIF
+ 
+END SUBROUTINE PARRAN

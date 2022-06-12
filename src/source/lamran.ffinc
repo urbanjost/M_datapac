@@ -1,0 +1,187 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file lamran.3m_datapac.man
+NAME
+   lamran(3f) - [M_datapac:RANDOM] generate Tukey-Lambda random numbers
+
+SYNOPSIS
+      SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(in)  :: Alamba
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   LAMRAN(3f) generates a random sample of size N from the (Tukey)
+   lambda distribution with tail length parameter value = ALAMBA.
+
+   In general, the probability density function for this distribution
+   is not simple. the percent point function for this distribution is
+
+       g(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
+
+INPUT ARGUMENTS
+
+   N       The desired integer number of random numbers to be generated.
+ 
+   ALAMBA  The value of LAMBDA (the tail length parameter).
+
+   ISEED   An integer seed value. Should be set to a non-negative value
+           to start a new sequence of values. Will be set to -1 on return
+           to indicate the next call should continue the current random
+           sequence walk.
+ 
+OUTPUT ARGUMENTS
+
+   X       A vector (of dimension at least N) into which the generated
+           random sample of size N from the (Tukey) lambda distribution
+           will be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_lamran
+   use m_datapac, only : lamran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=400
+   real :: x(n)
+   integer :: iseed
+   real :: gamma
+      call label('lamran')
+      gamma=3.4
+      iseed=12345
+      call lamran(n,gamma,iseed,x)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_lamran
+
+  Results:
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.2940770E+00 -              XX       X X                     X
+     0.2701390E+00 I   XXX    X        X              X     X X    X
+     0.2462010E+00 I    X          XX X X  X            X
+     0.2222630E+00 I          X        XX X  X X  X    X X X X
+     0.1983251E+00 I     XX     XX  XX         X                    X
+     0.1743871E+00 I      XX X  XX    X  X      X X X X   X  XX XXXX
+     0.1504491E+00 -       X    X   XX   X  X        X       XX  X X
+     0.1265111E+00 I  X   X XXX    X  X    X   XX     XX  XX   X X
+     0.1025732E+00 I    X        XX  XXX     XX XXXX  XX X  X      XXXX
+     0.7863519E-01 I   X XX XXXXX       X   X     X  X  XXX     X X XX
+     0.5469720E-01 I    X      XXX     X X     XX   X X  XX    X XX X
+     0.3075922E-01 I  X  XXX X    XXXX  XXX  XX   XXX    X  XX  XX X
+     0.6821245E-02 -   XXXX X XX   X  X X X      XX  XX   XX  XX    X X
+    -0.1711673E-01 I     X   X X XX  X   XX XX X     XX X         X  XX
+    -0.4105473E-01 I        XX    X X   XXXXXX XXXX XX  X  X   X XXX
+    -0.6499270E-01 I          X XX X  X    X XX XXXX   X    XX  X
+    -0.8893067E-01 I  X   X  X          XX  X    X XX  X X XX   X   X X
+    -0.1128686E+00 I   X     X X X     X       X             X X   XX
+    -0.1368066E+00 -   XX  X          X     X X X  XXX    X  X   X
+    -0.1607446E+00 I       X    XX         X     X     X  X X  XX X  X
+    -0.1846826E+00 I  X  X     XX XXX X X X   X         X   X X   X   X
+    -0.2086205E+00 I  X  XX X X        X   X        X  XX   XXX
+    -0.2325585E+00 I    X  X         X     X  X    X
+    -0.2564965E+00 I                XX          X               X    X
+    -0.2804345E+00 -   X      X X           X                 X X    X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.2940770E+00 -                                                  X
+     0.2701390E+00 I                                                XX
+     0.2462010E+00 I                                               XX
+     0.2222630E+00 I                                              XX
+     0.1983251E+00 I                                             XX
+     0.1743871E+00 I                                          XXX
+     0.1504491E+00 -                                        XXX
+     0.1265111E+00 I                                      XXX
+     0.1025732E+00 I                                   XXXX
+     0.7863519E-01 I                                XXXX
+     0.5469720E-01 I                              XXX
+     0.3075922E-01 I                          XXXX
+     0.6821245E-02 -                       XXXX
+    -0.1711673E-01 I                    XXXX
+    -0.4105473E-01 I                 XXXX
+    -0.6499270E-01 I               XXX
+    -0.8893067E-01 I             XXX
+    -0.1128686E+00 I            XX
+    -0.1368066E+00 -          XXX
+    -0.1607446E+00 I        XXX
+    -0.1846826E+00 I      XXX
+    -0.2086205E+00 I    XXX
+    -0.2325585E+00 I    X
+    -0.2564965E+00 I   X
+    -0.2804345E+00 -  XX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Tocher, The Art of Simulation, 1963, pages 14-15.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+  * Filliben, Simple and Robust Linear Estimation of the Location
+    Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+    Princeton University), 1969, pages 21-44, 53-58.
+  * Filliben, 'The Percent Point Function', (unpublished manuscript),
+    1970, pages 28-31.
+
+$ENDBLOCK
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: Alamba
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: alamb2 , q
+INTEGER       :: i 
+
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      alamb2 = Alamba
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to LAMRAN(3f) is non-positive *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+         RETURN
+      ELSE
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
+         CALL UNIRAN(N,Iseed,X)
+         !
+         !     GENERATE N LAMBDA DISTRIBUTION RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
+         DO i = 1 , N
+            q = X(i)
+            IF ( -0.001_wp<alamb2 .AND. alamb2<0.001_wp ) X(i) = LOG(q/(1.0-q))
+            IF ( -0.001_wp>=alamb2 .OR. alamb2>=0.001_wp ) X(i) = (q**alamb2-(1.0_wp-q)**alamb2)/alamb2
+         ENDDO
+      ENDIF
+ 
+END SUBROUTINE LAMRAN

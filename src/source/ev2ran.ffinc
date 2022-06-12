@@ -1,0 +1,188 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file ev2ran.3m_datapac.man
+NAME
+   ev2ran(3f) - [M_datapac:RANDOM] generate extreme value type 2
+   (Frechet) random numbers
+
+SYNOPSIS
+      SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(in)  :: Gamma
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   EV2RAN(3f) generates a random sample of size N from the extreme value
+   type 2 distribution with tail length parameter value = GAMMA.
+
+   The prototype extreme value type 2 distribution used herein is defined
+   for all non-negative X, and has the probability density function
+
+       f(X) = GAMMA * (X**(-GAMMA-1)) * exp(-(X**(-GAMMA)))
+
+INPUT ARGUMENTS
+
+   N      The desired integer number of random numbers to be generated.
+
+   ISEED  An integer seed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+   GAMMA  The value of the tail length parameter. GAMMA should be
+          positive.
+
+OUTPUT ARGUMENTS
+
+   X      A vector (of dimension at least N) into which the generated
+          random sample of size N from the extreme value type 2
+          distribution will be placed.
+
+
+EXAMPLES
+  Sample program:
+
+   program demo_ev2ran
+   use m_datapac, only : ev2ran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=8000
+   real :: x(n)
+   integer :: iseed
+   real :: gamma
+      call label('ev2ran')
+      gamma=3.4
+      iseed=12345
+      call ev2ran(N,Gamma,Iseed,X)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_ev2ran
+
+  Results:
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1956361E+02 -   X
+     0.1876934E+02 I   
+     0.1797507E+02 I   
+     0.1718080E+02 I   
+     0.1638653E+02 I   
+     0.1559226E+02 I                                   X
+     0.1479799E+02 -   
+     0.1400372E+02 I   
+     0.1320944E+02 I   
+     0.1241517E+02 I   
+     0.1162090E+02 I          X
+     0.1082663E+02 I                                               X
+     0.1003236E+02 -   
+     0.9238092E+01 I              X               X
+     0.8443822E+01 I   
+     0.7649551E+01 I                   X                             X
+     0.6855281E+01 I          X          X             X
+     0.6061010E+01 I       X   X    X   X X                    X    X
+     0.5266740E+01 -   X     XXX    XX    X      X   X X       X  X  X
+     0.4472469E+01 I   XX  XX     X XX X XXX XX  X  XX X     X X X X X
+     0.3678199E+01 I   XX X  XXX XXXXX XX XX XX XX XXXX  XXXXXXX XXXXXX
+     0.2883928E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.2089659E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.1295387E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.5011185E+00 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.2001E+04  0.4000E+04  0.6000E+04  0.8000E+04
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1956361E+02 -                                                  X
+     0.1876934E+02 I   
+     0.1797507E+02 I   
+     0.1718080E+02 I   
+     0.1638653E+02 I   
+     0.1559226E+02 I                                                  X
+     0.1479799E+02 -   
+     0.1400372E+02 I   
+     0.1320944E+02 I   
+     0.1241517E+02 I   
+     0.1162090E+02 I                                                  X
+     0.1082663E+02 I                                                  X
+     0.1003236E+02 -   
+     0.9238092E+01 I                                                  X
+     0.8443822E+01 I   
+     0.7649551E+01 I                                                  X
+     0.6855281E+01 I                                                  X
+     0.6061010E+01 I                                                  X
+     0.5266740E+01 -                                                  X
+     0.4472469E+01 I                                                  X
+     0.3678199E+01 I                                                 XX
+     0.2883928E+01 I                                                XX
+     0.2089659E+01 I                                           XXXXXX
+     0.1295387E+01 I             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.5011185E+00 -  XXXXXXXXXXXX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.2001E+04  0.4000E+04  0.6000E+04  0.8000E+04
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+ * Tocher, The Art of Simulation, 1963, pages 14-15.
+ * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+ * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+   pages 272-295.
+
+$ENDBLOCK
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: X(:)
+
+INTEGER :: i 
+ 
+
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first  input argument to EV2RAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSEIF ( Gamma<=0.0_wp ) THEN
+      WRITE (G_IO,99003)
+      99003 FORMAT (' ***** FATAL ERROR--the second input argument to EV2RAN(3f) is non-positive *****')
+      WRITE (G_IO,99004) Gamma
+      99004 FORMAT (' ***** THE value of the argument is ',E15.8, ' *****')
+      RETURN
+   ELSE
+      !
+      !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+      !
+      CALL UNIRAN(N,Iseed,X)
+      !
+      !     GENERATE N EXTREME VALUE TYPE 2 DISTRIBUTION RANDOM NUMBERS
+      !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+      !
+      DO i = 1 , N
+         X(i) = (-LOG(X(i)))**(-1.0_wp/Gamma)
+      ENDDO
+   ENDIF
+ 
+END SUBROUTINE EV2RAN

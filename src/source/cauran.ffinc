@@ -1,0 +1,182 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file cauran.3m_datapac.man
+NAME
+   cauran(3f) - [M_datapac:RANDOM] generate Cauchy random numbers
+
+SYNOPSIS
+      SUBROUTINE CAURAN(N,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(inout)     :: Iseed 
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   CAURAN(3f) generates a random sample of size N from the Cauchy
+   distribution with median = 0 and 75% point = 1.
+
+   This distribution is defined for all X and has the probability
+   density function
+
+       f(X) = (1/pi)*(1/(1+X*X))
+
+INPUT ARGUMENTS
+
+   N     The desired integer number of random numbers to be generated.
+
+  ISEED  An integer seed value. Should be set to a non-negative value
+         to start a new sequence of values. Will be set to -1 on return
+         to indicate the next call should continue the current random
+         sequence walk.
+
+OUTPUT ARGUMENTS
+
+   X     A vector (of dimension at least N) into which the generated
+	 random sample of size N function value for the Cauchy
+	 distribution will be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_cauran
+   use m_datapac, only : cauran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=100
+   real              :: x(n)
+   integer           :: iseed
+      call label('cauran')
+      iseed=12345
+      call cauran(n,iseed,x)
+      write(*,*)x
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_cauran
+
+  Results:
+
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.8386762E+02 -                                                 X
+     0.7943768E+02 I   
+     0.7500773E+02 I   
+     0.7057778E+02 I   
+     0.6614783E+02 I   
+     0.6171789E+02 I   
+     0.5728794E+02 -   
+     0.5285799E+02 I   
+     0.4842804E+02 I   
+     0.4399810E+02 I   
+     0.3956815E+02 I   
+     0.3513820E+02 I   
+     0.3070825E+02 -   
+     0.2627831E+02 I   
+     0.2184836E+02 I   
+     0.1741841E+02 I   
+     0.1298846E+02 I     X    X
+     0.8558517E+01 I            X  X                   X
+     0.4128571E+01 -                X X X  X        X   X      XX XX
+    -0.3013763E+00 I  XXX XXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.4731323E+01 I  XX       X  X  X   X   XX      X     X
+    -0.9161270E+01 I   
+    -0.1359122E+02 I       X
+    -0.1802116E+02 I   
+    -0.2245111E+02 -     X                            X      X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.2575E+02  0.5050E+02  0.7525E+02  0.1000E+03
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.8386762E+02 -                                                  X
+     0.7943768E+02 I   
+     0.7500773E+02 I   
+     0.7057778E+02 I   
+     0.6614783E+02 I   
+     0.6171789E+02 I   
+     0.5728794E+02 -   
+     0.5285799E+02 I   
+     0.4842804E+02 I   
+     0.4399810E+02 I   
+     0.3956815E+02 I   
+     0.3513820E+02 I   
+     0.3070825E+02 -   
+     0.2627831E+02 I   
+     0.2184836E+02 I   
+     0.1741841E+02 I   
+     0.1298846E+02 I                                                 XX
+     0.8558517E+01 I                                                XX
+     0.4128571E+01 -                                           XXXXX
+    -0.3013763E+00 I         XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.4731323E+01 I    XXXXXX
+    -0.9161270E+01 I   
+    -0.1359122E+02 I   X
+    -0.1802116E+02 I   
+    -0.2245111E+02 -  XX
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.2575E+02  0.5050E+02  0.7525E+02  0.1000E+03
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+ * Tocher, The Art of Simulation, 1963, page 15.
+ * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+ * Filliben, Simple and Robust Linear Estimation of the Location Parameter
+   of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
+   University), 1969, page 231.
+ * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+   1970, pages 28-31.
+ * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+   pages 154-165.
+
+$ENDBLOCK
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CAURAN(N,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed 
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: arg , pi
+INTEGER       :: i 
+
+DATA pi/3.14159265359_wp/
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to CAURAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      !
+      !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+      !
+      CALL UNIRAN(N,Iseed,X)
+      !
+      !     GENERATE N CAUCHY RANDOM NUMBERS
+      !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+      !
+      DO i = 1 , N
+         arg = pi*X(i)
+         X(i) = -COS(arg)/SIN(arg)
+      ENDDO
+   ENDIF
+ 
+END SUBROUTINE CAURAN

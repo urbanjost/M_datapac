@@ -102,7 +102,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-         99001 FORMAT (' IS NON-NEGATIVE (WITH VALUE = ',I0,')')
+         99001 FORMAT (' is non-negative (with value = ',I0,')')
          WRITE (G_IO,99010)
          RETURN
       ELSE
@@ -111,7 +111,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             WRITE (G_IO,99011)
             WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
             WRITE (G_IO,99002) N
-            99002 FORMAT (' HAS THE VALUE 1')
+            99002 FORMAT (' has the value 1')
             WRITE (G_IO,99010)
             RETURN
          ELSE
@@ -124,7 +124,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             WRITE (G_IO,99011)
             WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
             WRITE (G_IO,99003) hold
-            99003 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
+            99003 FORMAT (' ','has all elements = ',E15.8)
             WRITE (G_IO,99010)
             RETURN
          ENDIF
@@ -136,9 +136,9 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
          WRITE (G_IO,99004)
-         99004 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
+         99004 FORMAT (' ','has all elements in excess of the cutoff')
          WRITE (G_IO,99005) cutoff
-         99005 FORMAT (' ','VALUE OF ',E15.8)
+         99005 FORMAT (' ','value of ',E15.8)
          WRITE (G_IO,99010)
          RETURN
       ENDIF

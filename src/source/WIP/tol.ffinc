@@ -37,9 +37,9 @@ MAINTAINER
 LICENSE
    CC0-1.0
 REFERENCES
-  * GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
-  * WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
-  * MOOD AND GRABLE, PAGES 416-417
+  * GARDINER AND HULL, TECHNOMETRICS, 1966, pages 115-122
+  * WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, page 92
+  * MOOD AND GRABLE, pages 416-417
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -57,9 +57,9 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--2 PAGES OF AUTOMATIC PRINTOUT--
-!             1 PAGE GIVING NORMAL TOLERANCE LIMITS; AND
-!             1 PAGE GIVING DISTRIBUTION-FREE TOLERANCE LIMITS.
+!     OUTPUT--2 pages OF AUTOMATIC PRINTOUT--
+!             1 page GIVING NORMAL TOLERANCE LIMITS; AND
+!             1 page GIVING DISTRIBUTION-FREE TOLERANCE LIMITS.
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
@@ -206,7 +206,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
      &           ' OBSERVATIONS')
          WRITE (G_IO,99017)
          WRITE (G_IO,99006)
-99006    FORMAT (' ','             REFERENCE--CRC HANDBOOK, PAGES 32-35'&
+99006    FORMAT (' ','             REFERENCE--CRC HANDBOOK, pages 32-35'&
      &           )
          WRITE (G_IO,99007)
 99007    FORMAT (' ',                                                   &
@@ -345,10 +345,10 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
          WRITE (G_IO,99017)
          WRITE (G_IO,99011)
 99011    FORMAT (' ',                                                   &
-     &           '            REFERENCE--WILKS, ANNALS, 1941, PAGE 92')
+     &           '            REFERENCE--WILKS, ANNALS, 1941, page 92')
          WRITE (G_IO,99012)
 99012    FORMAT (' ',                                                   &
-     &           '            REFERENCE--MOOD AND GRABLE, PAGES 416-417'&
+     &           '            REFERENCE--MOOD AND GRABLE, pages 416-417'&
      &           )
          WRITE (G_IO,99017)
          WRITE (G_IO,99017)

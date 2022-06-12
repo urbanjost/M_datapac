@@ -59,7 +59,7 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  * Jenkins and Watts, especially Page 290.
+  * Jenkins and Watts, especially page 290.
 
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
@@ -78,12 +78,12 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--7 TO 11 PAGES (DEPENDING ON
+!     OUTPUT--7 TO 11 pages (DEPENDING ON
 !             THE INPUT SAMPLE SIZE) OF
 !             AUTOMATIC PRINTOUT--
 !             1) A PLOT OF AUTOCORRELATION VERSUS LAG NUMBER;
 !                THIS PLOT MAY TAKE AS LITTLE AS 1
-!                OR AS MANY AS 5 PAGES
+!                OR AS MANY AS 5 pages
 !                (THE EXACT NUMBER DEPENDING ON
 !                THE INPUT SAMPLE SIZE N);
 !             2) A TEST FOR WHITE NOISE (ASSUMING NORMALITY);
@@ -116,7 +116,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
 !              NUMBER OF LAGS = 500
 !              (WHICH CORRESPONDS TO AN
 !              AUTOCORRELATION PLOT COVERING
-!              5 COMPUTER PAGES).
+!              5 COMPUTER pages).
 !              IF MORE LAGS ARE DESIRED,
 !              CHANGE THE VALUE OF THE
 !              VARIABLE     MAXLAG
@@ -200,7 +200,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       sd = SQRT(var)
 !
 !     COMPUTE THE SAMPLE AUTOCORRELATIONS
-!     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 259 (7.1.6)
+!     REFERENCE--JENKINS AND WATTS, pages 290 AND 259 (7.1.6)
 !
       kmax = N/4
       IF ( N<=32 ) kmax = N/2
@@ -272,7 +272,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       99013 FORMAT (' ','THE BIASED SAMPLE VARIANCE = ',E15.8)
 !
 !     COMPUTE THE PILOT SPECTRUM FOR THE REDUCED (2**J) SAMPLE
-!     REFERENCE--JENKINS AND WATTS, PAGE 288
+!     REFERENCE--JENKINS AND WATTS, page 288
 !
       DO i = 1 , 20
          ndiv = N/(2**i)
@@ -320,7 +320,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       99014 FORMAT (' ',50X,'PILOT SPECTRUM')
 !
 !     DEFINE 4 LAG WINDOW TRUNCATION POINTS
-!     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 260
+!     REFERENCE--JENKINS AND WATTS, pages 290 AND 260
 !
       p(1) = 0.2_wp
       p(2) = 0.1_wp
@@ -378,18 +378,18 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       ENDIF
 !
 !     COMPUTE THE 4 SPECTRUM ESTIMATES
-!     REFERENCE--JENKINS AND WATTS, PAGES 260 AND 244
+!     REFERENCE--JENKINS AND WATTS, pages 260 AND 244
 !
 !     COMPUTE BANDWIDTHS
-!     REFERENCE--JENKINS AND WATTS, PAGES 257 AND 252
+!     REFERENCE--JENKINS AND WATTS, pages 257 AND 252
 !
 !     COMPUTE DEGREES OF FREEDOM FOR THE SPECTAL DENSITY ESTIMATE AT INDIVIDUAL
 !     FREQUENCIES
-!     REFERENCE--JENKINS AND WATTS, PAGES 254 AND 252
+!     REFERENCE--JENKINS AND WATTS, pages 254 AND 252
 !
 !     COMPUTE 95 PERCENT CONFIDENCE INTERVAL LENGTHS FOR THE LOG SPECTRAL
 !     DENSITY ESTIMATES
-!     REFERENCE--JENKINS AND WATTS, PAGES 255 AND 252
+!     REFERENCE--JENKINS AND WATTS, pages 255 AND 252
 !
 !     WRITE OUT THE 4 SPECTRUM PLOTS
 !

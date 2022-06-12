@@ -55,10 +55,10 @@ LICENSE
 REFERENCE
   * Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
     of the Eighteenth Conference on the Design of Experiments in Army
-    Research and Testing, Pages 425-450.
+    Research and Testing, pages 425-450.
   * Filliben, 'The Percent Point Function', UNpublished Manuscript.
   * Johnson and Kotz (1970), Continuous Univariate Distributions-1,
-    Pages 250-271.
+    pages 250-271.
 
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
@@ -78,7 +78,7 @@ INTEGER i , idis , idismx , iupper , N , numdis , numdm1
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--4 PAGES OF AUTOMATIC PRINTOUT.
+!     OUTPUT--4 pages OF AUTOMATIC PRINTOUT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -329,7 +329,7 @@ DATA aindex(26) , aindex(27) , aindex(28) , aindex(29) ,          &
          WRITE (G_IO,99018)
 99018    FORMAT (' ',                                                   &
      &'THE ABOVE IS A PLOT OF THE 46 PROBABILITY PLOT CORRELATION COEFFI&
-     &CIENTS (FROM THE PREVIOUS PAGE)')
+     &CIENTS (FROM THE PREVIOUS page)')
          WRITE (G_IO,99019)
 99019    FORMAT (' ',16X,'VERSUS THE 46 WEIBULL DISTRIBUTIONS')
 !

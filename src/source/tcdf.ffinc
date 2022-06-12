@@ -101,15 +101,15 @@ LICENSE
 REFERENCES
 
   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-    Page 948, Formulae 26.7.3 and 26.7.4.
+    page 948, Formulae 26.7.3 and 26.7.4.
   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-    Pages 94-129.
+    pages 94-129.
   * Federighi, Extended Tables of the Percentage Points Of Student'S
     T-Distribution, Journal of the American Statistical Association, 1959,
-    Pages 683-688.
-  * Owen, Handbook of Statistical Tables, 1962, Pages 27-30.
+    pages 683-688.
+  * Owen, Handbook of Statistical Tables, 1962, pages 27-30.
   * Pearson and Hartley, Biometrika Tables for Statisticians, Volume 1,
-    1954, Pages 132-134.
+    1954, pages 132-134.
 
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
@@ -194,7 +194,7 @@ DATA b32 , b33 , b34 , b35 , b36 , b37/1.0D0 , -11.0D0 , 14.0D0 , &
 !
 !     TREAT THE SMALL AND MODERATE DEGREES OF FREEDOM CASE
 !     METHOD UTILIZED--EXACT FINITE SUM
-!     (SEE AMS 55, PAGE 948, FORMULAE 26.7.3 AND 26.7.4).
+!     (SEE AMS 55, page 948, FORMULAE 26.7.3 AND 26.7.4).
 !
          c = DSQRT(dnu/(dx*dx+dnu))
          csq = dnu/(dx*dx+dnu)
@@ -230,8 +230,8 @@ DATA b32 , b33 , b34 , b35 , b36 , b37/1.0D0 , -11.0D0 , 14.0D0 , &
 !
 !     TREAT THE LARGE DEGREES OF FREEDOM CASE.
 !     METHOD UTILIZED--TRUNCATED ASYMPTOTIC EXPANSION
-!     (SEE JOHNSON AND KOTZ, VOLUME 2, PAGE 102, FORMULA 10;
-!     SEE FEDERIGHI, PAGE 687).
+!     (SEE JOHNSON AND KOTZ, VOLUME 2, page 102, FORMULA 10;
+!     SEE FEDERIGHI, page 687).
 !
          CALL NORCDF(X,cdfn)
          dcdfn = cdfn

@@ -54,17 +54,17 @@ LICENSE
    CC0-1.0
 
 REFERENCES
-  * Johnson and Kotz, Discrete Distributions, 1969, Pages 87-121,
-    especially Page 102, Formula 36.1.  --Hastings and Peacock, Statistical
+  * Johnson and Kotz, Discrete Distributions, 1969, pages 87-121,
+    especially page 102, Formula 36.1.  --Hastings and Peacock, Statistical
     Distributions--A Handbook for Students and Practitioners, 1975,
-    Pages 108-113.
+    pages 108-113.
   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-    Page 929.  --Feller, An Introduction to Probability Theory and Its
-    Applications, Volume 1, Edition 2, 1957, Pages 146-154.
-  * Cox and Miller, The Theory of Stochastic Processes, 1965, Page 7.
+    page 929.  --Feller, An Introduction to Probability Theory and Its
+    Applications, Volume 1, Edition 2, 1957, pages 146-154.
+  * Cox and Miller, The Theory of Stochastic Processes, 1965, page 7.
   * General Electric Company, Tables of the Individual and Cumulative
     Terms of Poisson Distribution, 1962.
-  * Owen, Handbook of Statistical Tables, 1962, Pages 259-261.
+  * Owen, Handbook of Statistical Tables, 1962, pages 259-261.
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -164,7 +164,7 @@ INTEGER :: i, isd, ix0, ix0p1, ix1, ix2
 !     PERCENT POINT BY USE OF THE NORMAL APPROXIMATION
 !     TO THE POISSON.
 !     (SEE JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS,
-!     PAGE 102, FORMULA 36.1).
+!     page 102, FORMULA 36.1).
 !
                   amean = Alamba
                   sd = SQRT(Alamba)

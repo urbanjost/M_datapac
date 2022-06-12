@@ -51,12 +51,12 @@ LICENSE
    CC0-1.0
 REFERENCES
  * National Bureau of Standards Applied Mathematics Series 55, 1964,
-   Page 941, Formulae 26.4.4 and 26.4.5.
+   page 941, Formulae 26.4.4 and 26.4.5.
  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-   Page 176, Formula 28, and Page 180, Formula 33.1.
- * Owen, Handbook of Statistical Tables, 1962, Pages 50-55.
+   page 176, Formula 28, and page 180, Formula 33.1.
+ * Owen, Handbook of Statistical Tables, 1962, pages 50-55.
  * Pearson and Hartley, Biometrika Tables for Statisticians, Volume 1,
-   1954, Pages 122-131.
+   1954, pages 122-131.
 
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
@@ -160,7 +160,7 @@ DATA b43/17.0D0/
 !     TREAT THE SMALL AND MODERATE DEGREES OF FREEDOM CASE
 !     (THAT IS, WHEN NU IS SMALLER THAN 1000).
 !     METHOD UTILIZED--EXACT FINITE SUM
-!     (SEE AMS 55, PAGE 941, FORMULAE 26.4.4 AND 26.4.5).
+!     (SEE AMS 55, page 941, FORMULAE 26.4.4 AND 26.4.5).
 !
                         chi = DSQRT(dx)
                         ievodd = Nu - 2*(Nu/2)
@@ -201,7 +201,7 @@ DATA b43/17.0D0/
 !     (THAT IS, WHEN NU IS EQUAL TO OR GREATER THAN 1000)
 !     AND X IS LESS THAN OR EQUAL TO NU.
 !     METHOD UTILIZED--WILSON-HILFERTY APPROXIMATION
-!     (SEE JOHNSON AND KOTZ, VOLUME 1, PAGE 176, FORMULA 28).
+!     (SEE JOHNSON AND KOTZ, VOLUME 1, page 176, FORMULA 28).
 !
                         dfact = 4.5D0*dnu
                         u = (((dx/dnu)**dpower)-1.0D0+(1.0D0/dfact))    &
@@ -215,7 +215,7 @@ DATA b43/17.0D0/
 !     (THAT IS, WHEN NU IS EQUAL TO OR GREATER THAN 1000)
 !     AND X IS LARGER THAN NU.
 !     METHOD UTILIZED--HILL'S ASYMPTOTIC EXPANSION
-!     (SEE JOHNSON AND KOTZ, VOLUME 1, PAGE 180, FORMULA 33.1).
+!     (SEE JOHNSON AND KOTZ, VOLUME 1, page 180, FORMULA 33.1).
 !
                         dw = DSQRT(dx-dnu-dnu*DLOG(dx/dnu))
                         danu = DSQRT(2.0D0/dnu)

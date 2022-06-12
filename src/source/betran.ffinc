@@ -82,20 +82,20 @@ REFERENCES
 
   * Greenwood, 'A Fast Generator for Beta-distributed Random Variables',
     Compstat 1974, Proceedings in Computational Statistics, Vienna,
-    September, 1974, Pages 19-27.
+    September, 1974, pages 19-27.
 
-  * Tocher, The Art of Simulation, 1963, Pages 24-27.
+  * Tocher, The Art of Simulation, 1963, pages 24-27.
 
-  * Hammersley and Handscomb, Monte Carlo Methods, 1964, Pages 36-37.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, pages 36-37.
 
   * Johnson and Kotz, Continuous Univariate Distributions --2, 1970,
-    Pages 37-56.
+    pages 37-56.
 
   * Hastings and Peacock, Statistical Distributions--A Handbook For
-    Students and Practitioners, 1975, Pages 30-35.
+    Students and Practitioners, 1975, pages 30-35.
 
   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-    Page 952.
+    page 952.
 
 $ENDBLOCK
 !     VERSION NUMBER--82.3
@@ -154,7 +154,7 @@ real(kind=wp),parameter :: sqrt3= 1.73205081_wp
 !     2) TRANSFORM THE NORMAL VARIATE TO AN APPROXIMATE
 !        GAMMA VARIATE USING THE WILSON-HILFERTY
 !        APPROXIMATION (SEE THE JOHNSON AND KOTZ
-!        REFERENCE, PAGE 176);
+!        REFERENCE, page 176);
 !     3) FORM THE REJECTION FUNCTION VALUE, BASED
 !        ON THE PROBABILITY DENSITY FUNCTION VALUE
 !        OF THE ACTUAL DISTRIBUTION OF THE PSEUDO-GAMMA

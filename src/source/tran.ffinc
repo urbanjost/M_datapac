@@ -1,0 +1,203 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file tran.3m_datapac.man
+NAME
+   tran(3f) - [M_datapac:RANDOM] a random sample of size n from the
+   Student's t distribution with integer degrees of freedom parameter NU.
+
+SYNOPSIS
+      SUBROUTINE TRAN(N,Nu,Iseed,X)
+
+       INTEGER,intent(in)        :: N 
+       INTEGER,intent(in)        :: Nu
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+
+   This subroutine generates a random sample of size N from the Student's
+   T distribution with integer degrees of freedom parameter = NU.
+ 
+INPUT ARGUMENTS
+
+   N     The desired integer number of random numbers to be generated.
+
+   NU    The integer degrees of freedom (parameter) for the T
+         distribution. NU should be a positive integer variable.
+
+  ISEED  An integer seed value. Should be set to a non-negative value
+         to start a new sequence of values. Will be set to -1 on return
+         to indicate the next call should continue the current random
+
+OUTPUT ARGUMENTS
+
+   X     A vector (of dimension at least N) into which the generated
+         random sample of size N from the Student's T distribution
+         will be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_tran
+   use m_datapac, only : tran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=400
+   real :: x(n)
+   integer :: iseed
+   integer :: nu
+      call label('tran')
+      nu=3
+      iseed=12345
+      call tran(N,Nu,Iseed,X)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_tran
+
+  Results:
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1029407E+02 -                                          X
+     0.9486016E+01 I   
+     0.8677961E+01 I   
+     0.7869905E+01 I   
+     0.7061851E+01 I                          X
+     0.6253795E+01 I                               X
+     0.5445739E+01 -   
+     0.4637684E+01 I   
+     0.3829628E+01 I          X        X         X      X
+     0.3021573E+01 I      X X  X XX       X X     X                 X
+     0.2213517E+01 I  X    XX       XX  X    X X      X X   X
+     0.1405462E+01 I   X   XXXX XXXXXXXXXXXX XX    XXX  XXX  XXXXXX
+     0.5974064E+00 -  XX XXXXXXXXXXXXXXXXXXXXXXXX XXX XXXXXXXXXXXX XXX
+    -0.2106485E+00 I   XXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXX
+    -0.1018704E+01 I  XX XX XX X XXX XX XXXXXXXXXXXX  XX  XXXX XX XXX X
+    -0.1826759E+01 I    XXXXXX XX  XX  XX  X   XX  X     X X    XX   XX
+    -0.2634815E+01 I     X           XX        X         X   X    XX
+    -0.3442871E+01 I          X                   X
+    -0.4250926E+01 -                        X          X          X  X
+    -0.5058982E+01 I                                X              X
+    -0.5867038E+01 I                     X
+    -0.6675092E+01 I   
+    -0.7483148E+01 I   
+    -0.8291203E+01 I   
+    -0.9099259E+01 -                          X                      X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1029407E+02 -                                                  X
+     0.9486016E+01 I   
+     0.8677961E+01 I   
+     0.7869905E+01 I   
+     0.7061851E+01 I                                                  X
+     0.6253795E+01 I                                                  X
+     0.5445739E+01 -   
+     0.4637684E+01 I   
+     0.3829628E+01 I                                                 XX
+     0.3021573E+01 I                                                XX
+     0.2213517E+01 I                                              XXX
+     0.1405462E+01 I                                         XXXXXX
+     0.5974064E+00 -                              XXXXXXXXXXXX
+    -0.2106485E+00 I                XXXXXXXXXXXXXXX
+    -0.1018704E+01 I        XXXXXXXXX
+    -0.1826759E+01 I    XXXXX
+    -0.2634815E+01 I   XX
+    -0.3442871E+01 I   X
+    -0.4250926E+01 -   X
+    -0.5058982E+01 I  X
+    -0.5867038E+01 I  X
+    -0.6675092E+01 I   
+    -0.7483148E+01 I   
+    -0.8291203E+01 I   
+    -0.9099259E+01 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Mood and Grable, Introduction to the Theory of Statistics, 1963,
+    page 233.
+  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+    page 94.
+  * Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, page 121.
+
+$ENDBLOCK
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE TRAN(N,Nu,Iseed,X)
+INTEGER,intent(in)        :: N 
+INTEGER,intent(in)        :: Nu
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: anu, arg1, arg2, sum, y(2), z(2), znorm
+INTEGER i, j 
+
+!---------------------------------------------------------------------
+      !
+      !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+      !
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to TRAN(3f) is non-positive *****')
+         WRITE (G_IO,99003) N
+         RETURN
+      ELSEIF ( Nu<=0 ) THEN
+         WRITE (G_IO,99002)
+         99002 FORMAT (' ***** FATAL ERROR--The second input argument to TRAN(3f) is non-positive *****')
+         WRITE (G_IO,99003) Nu
+         RETURN
+      ELSE
+         !
+         !     GENERATE N STUDENT'S T RANDOM NUMBERS USING THE DEFINITION THAT
+         !     A STUDENT'S T VARIATE WITH NU DEGREES OF FREEDOM
+         !     EQUALS A NORMAL VARIATE DIVIDED BY A STANDARDIZED CHI VARIATE
+         !     (WHERE THE LATTER EQUALS SQRT(CHI-SQUARED/NU).
+         !     FIRST GENERATE A NORMAL RANDOM NUMBER,
+         !     THEN GENERATE A STANDARDIZED CHI RANDOM NUMBER,
+         !     THEN FORM THE RATIO OF THE FIRST DIVIDED BY THE SECOND.
+         !
+         anu = Nu
+         DO i = 1 , N
+ 
+            CALL UNIRAN(2,Iseed,y)
+            arg1 = -2.0_wp*LOG(y(1))
+            arg2 = 2.0_wp*G_pi*y(2)
+            znorm = (SQRT(arg1))*(COS(arg2))
+ 
+            sum = 0.0_wp
+            DO j = 1 , Nu , 2
+               CALL UNIRAN(2,Iseed,y)
+               arg1 = -2.0_wp*LOG(y(1))
+               arg2 = 2.0_wp*G_pi*y(2)
+               z(1) = (SQRT(arg1))*(COS(arg2))
+               z(2) = (SQRT(arg1))*(SIN(arg2))
+               sum = sum + z(1)*z(1)
+               IF ( j/=Nu ) sum = sum + z(2)*z(2)
+            ENDDO
+ 
+            X(i) = znorm/SQRT(sum/anu)
+ 
+         ENDDO
+      ENDIF
+99003 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+ 
+END SUBROUTINE TRAN

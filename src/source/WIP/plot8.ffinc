@@ -126,7 +126,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
+!     OUTPUT--A ONE-page PRINTER PLOT OF Y(I) VERSUS X(I),
 !             WITH SPECIAL PLOT CHARACTERS,
 !             WITH SPECIFIED AXIS LIMITS,
 !             AND ONLY FOR A SPECIFIED SUBSET OF THE DATA.

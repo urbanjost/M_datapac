@@ -1,0 +1,175 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file logran.3m_datapac.man
+NAME
+   logran(3f) - [M_datapac:RANDOM] generate logistic random numbers
+
+SYNOPSIS
+      SUBROUTINE LOGRAN(N,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   LOGRAN(3f) generates a random sample of size N from the logistic
+   distribution with mean = 0 and standard deviation = pi/sqrt(3).
+
+   This distribution is defined for all X and has the probability
+   density function
+
+       f(X) = exp(X)/(1+exp(X))
+
+INPUT ARGUMENTS
+
+   N      The desired integer number of random numbers to be generated.
+
+  ISEED   An integer seed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+OUTPUT ARGUMENTS
+
+   X      A vector (of dimension at least N) into which the generated
+          random sample of size N from the logistic distribution will
+          be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_logran
+   use m_datapac, only : logran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=4000
+   integer           :: iseed
+   real              :: x(n)
+      call label('logran')
+      iseed=12345
+      call logran(N,Iseed,X)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_logran
+
+  Results:
+
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1011046E+02 -   X
+     0.9310020E+01 I   
+     0.8509579E+01 I                   X
+     0.7709137E+01 I                          X
+     0.6908696E+01 I                                    X
+     0.6108254E+01 I           X      X X          X      X  XXX
+     0.5307813E+01 -   X        X X X XX X        X X         X X    X
+     0.4507371E+01 I    X X  X      X XXX    XXXX XXX  X X X XX X  X X
+     0.3706930E+01 I  XXXXXXXXXXXXX XX XX XXX XXXXXXXXXXXXXXXXX X XXXXX
+     0.2906488E+01 I  XXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.2106047E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.1305605E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.5051632E+00 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.2952785E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.1095719E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.1896161E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -0.2696603E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXX XXXX XXXXXXXXXXXXXXXXXX
+    -0.3497045E+01 I  XX XXXX XXXXX XXXXXXXX  XX XXXX XXXX XXXXXXXXXXXX
+    -0.4297486E+01 -  XXX XXXXXXX XX X XXX  XXX XXXX XXXXX   X X XXXX
+    -0.5097927E+01 I       XX X     X X XXX XX X    XXXX       X   XXX
+    -0.5898369E+01 I        X          X   X  XX XXX  X          X
+    -0.6698811E+01 I               X
+    -0.7499252E+01 I                       X
+    -0.8299694E+01 I   
+    -0.9100137E+01 -                                          X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1011046E+02 -                                                  X
+     0.9310020E+01 I   
+     0.8509579E+01 I                                                  X
+     0.7709137E+01 I                                                  X
+     0.6908696E+01 I                                                  X
+     0.6108254E+01 I                                                  X
+     0.5307813E+01 -                                                  X
+     0.4507371E+01 I                                                 XX
+     0.3706930E+01 I                                                XX
+     0.2906488E+01 I                                              XXX
+     0.2106047E+01 I                                          XXXXX
+     0.1305605E+01 I                                   XXXXXXXX
+     0.5051632E+00 -                           XXXXXXXXX
+    -0.2952785E+00 I                  XXXXXXXXXX
+    -0.1095719E+01 I           XXXXXXXX
+    -0.1896161E+01 I      XXXXXX
+    -0.2696603E+01 I    XXX
+    -0.3497045E+01 I   XX
+    -0.4297486E+01 -  XX
+    -0.5097927E+01 I  X
+    -0.5898369E+01 I  X
+    -0.6698811E+01 I  X
+    -0.7499252E+01 I  X
+    -0.8299694E+01 I   
+    -0.9100137E+01 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+REFERENCES
+  * Tocher, The Art of Simulation, 1963, pages 14-15.
+  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+  * Filliben, Simple and Robust Linear Estimation of the Location
+    Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+    Princeton University), 1969, page 230.
+  * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+    1970, pages 28-31.
+  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+    pages 1-21.
+$ENDBLOCK
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LOGRAN(N,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+INTEGER :: i 
+!---------------------------------------------------------------------
+      !
+      !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+      !
+      IF ( N<1 ) THEN
+         WRITE (G_IO,99001)
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to LOGRAN(3f) is non-positive *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+         RETURN
+      ELSE
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
+         CALL UNIRAN(N,Iseed,X)
+         !
+         !     GENERATE N LOGISTIC RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
+         DO i = 1 , N
+            X(i) = LOG(X(i)/(1.0_wp-X(i)))
+         ENDDO
+      ENDIF
+ 
+END SUBROUTINE LOGRAN

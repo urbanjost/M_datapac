@@ -1,0 +1,268 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file nbran.3m_datapac.man
+NAME
+   nbran(3f) - [M_datapac:RANDOM] generate negative binomial random numbers
+
+SYNOPSIS
+      SUBROUTINE NBRAN(N,P,Npar,Istart,X)
+
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(in)  :: P
+       INTEGER,intent(in)        :: Npar
+       INTEGER,intent(inout)     :: Istart
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   NBRAN(3f) generates a random sample of size N from the negative
+   binomial distribution with precision 'Bernoulli probability'
+   parameter = P, and integer 'number of successes in Bernoulli trials'
+   parameter = NPAR. The negative binomial distribution used herein has
+   mean = NPAR*(1-P)/P and standard deviation = sqrt(NPAR*(1-P)/(P*P))).
+
+   This distribution is defined for all non-negative integer X-- X = 0,
+   1, 2, ... .
+
+   This distribution has the probability function
+
+       f(X) = c(NPAR+X-1,NPAR) * P**NPAR * (1-P)**X
+
+   Where c(NPAR+X-1,NPAR) is the combinatorial function equaling the
+   number of combinations of NPAR+X-1 items taken NPAR at a time.
+
+   The negative binomial distribution is the distribution of the number
+   of failures before obtaining NPAR successes in an indefinite sequence
+   of Bernoulli (0,1) trials where the probability of success in a precision
+   trial = P.
+
+INPUT ARGUMENTS
+
+   N       The desired integer number of random numbers to be generated.
+
+   P       The value of the 'Bernoulli probability' parameter for the
+           negative binomial distribution. P Should be between
+           0.0 (exclusively) and 1.0 (exclusively).
+
+   NPAR    The integer value of the 'number of successes in Bernoulli
+           trials' parameter. NPAR should be a positive integer.
+
+   ISTART  An integer flag code which (if set to 0) will start the
+           generator over and hence produce the same random sample
+           over and over again upon successive calls to this subroutine
+           within a run; or (if set to some integer value not equal to 0,
+           like, say, 1) will allow the generator to continue from where
+           it stopped and hence produce different random samples upon
+           successive calls to this subroutine within a run.
+
+OUTPUT ARGUMENTS
+
+   X       A vector (of dimension at least N) into which the generated
+           random sample of size N from the negative binomial distribution
+  	   will be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_nbran
+   use m_datapac, only : nbran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=400
+   real              :: p
+   integer           :: Npar
+   integer           :: Istart
+   real              :: x(n)
+      call label('nbran')
+      p=0.4
+      Npar=3
+      istart=12345
+      call nbran(N,P,Npar,Istart,X)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_nbran
+
+  Results:
+
+ The following is a plot of X(I) (vertically) versus I (horizontally)
+                   I-----------I-----------I-----------I-----------I
+  0.2700000E+02 -                                               X
+  0.2600000E+02 I   
+  0.2500000E+02 I   
+  0.2400000E+02 I                          X
+  0.2300000E+02 I   
+  0.2200000E+02 I   
+  0.2100000E+02 -   
+  0.2000000E+02 I                     X
+  0.1900000E+02 I   
+  0.1800000E+02 I         X                          X X X
+  0.1700000E+02 I                X
+  0.1600000E+02 I             X                            X
+  0.1500000E+02 -            X      X X           X          X
+  0.1400000E+02 I           X  X         X        X  X       X
+  0.1300000E+02 I                X    X X    X  X  XX      X  X XXXX
+  0.1200000E+02 I   X     X    X    X          X              X
+  0.1100000E+02 I   XX   X X    X   XX   X      XXX   XXXXX XX   XX
+  0.1000000E+02 I    X XX   XXXX   X    XXX   X  XX    X  X     X
+  0.9000000E+01 -     XX    XXXX XX   X  XX XX X   X X    X  X XX  X
+  0.8000000E+01 I  XXXX XX  XXX  XX XXXXXXX X XX    X XXX   XXXX X X
+  0.7000000E+01 I     XX XXXXXX XXXXX X    XXXX  X XXX  X XXX XXXXX
+  0.6000000E+01 I  X XXX X X XXXXXX X  X  XXX X XXXX X XXXXX XXXX X
+  0.5000000E+01 I  XXXXXXXXXX XXXXXX XX XX XXX XXXX X XXXXXXXXXXX  X
+  0.4000000E+01 I  XX X X XXXX  XXXX XXXX XX X  XXXX XX XX   XX   X
+  0.3000000E+01 -     X XXX    XX  X XXX  XX XXX    X XX XX     XX X
+                   I-----------I-----------I-----------I-----------I
+            0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+ 
+ The following is a plot of X(I) (vertically) versus I (horizontally)
+                   I-----------I-----------I-----------I-----------I
+  0.2700000E+02 -                                                  X
+  0.2600000E+02 I   
+  0.2500000E+02 I   
+  0.2400000E+02 I                                                  X
+  0.2300000E+02 I   
+  0.2200000E+02 I   
+  0.2100000E+02 -   
+  0.2000000E+02 I                                                  X
+  0.1900000E+02 I   
+  0.1800000E+02 I                                                 XX
+  0.1700000E+02 I                                                 X
+  0.1600000E+02 I                                                 X
+  0.1500000E+02 -                                                XX
+  0.1400000E+02 I                                               XX
+  0.1300000E+02 I                                              XX
+  0.1200000E+02 I                                             XX
+  0.1100000E+02 I                                          XXXX
+  0.1000000E+02 I                                       XXXX
+  0.9000000E+01 -                                    XXXX
+  0.8000000E+01 I                              XXXXXXX
+  0.7000000E+01 I                        XXXXXXX
+  0.6000000E+01 I                  XXXXXXX
+  0.5000000E+01 I           XXXXXXXX
+  0.4000000E+01 I      XXXXXX
+  0.3000000E+01 -  XXXX
+                   I-----------I-----------I-----------I-----------I
+            0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, page 95.
+  * Johnson and Kotz, Discrete Distributions, 1969, pages 122-142.
+  * Feller, an Introduction to Probability Theory and its Applications,
+    Volume 1, Edition 2, 1957, pages 155-157, 210.
+  * National Bureau of Standards Applied Mathematics Series 55, 1964,
+    page 929.
+  * Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
+    Edition 2, 1963, pages 130-131.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE NBRAN(N,P,Npar,Istart,X)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: P
+INTEGER,intent(in)        :: Npar
+INTEGER,intent(inout)     :: Istart
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: b(1), g(1)  
+INTEGER :: i, ib, ig, isum, j
+INTEGER,save :: iseed=1
+
+!   NOTE THAT EVEN THOUGH THE OUTPUT FROM THIS DISCRETE RANDOM NUMBER GENERATOR MUST NECESSARILY BE A
+!   SEQUENCE OF ***INTEGER*** VALUES, THE OUTPUT VECTOR X IS SINGLE PRECISION IN MODE.
+!   X HAS BEEN SPECIFIED AS SINGLE PRECISION SO AS TO CONFORM WITH THE DATAPAC
+!   CONVENTION THAT ALL OUTPUT VECTORS FROM ALL DATAPAC SUBROUTINES ARE . THIS CONVENTION IS BASED ON THE BELIEF THAT
+!
+!     1. A MIXTURE OF MODES (FLOATING POINT VERSUS INTEGER) IS INCONSISTENT AND
+!     AN UNNECESSARY COMPLICATION IN A DATA ANALYSIS; AND
+!
+!     2. FLOATING POINT MACHINE ARITHMETIC (AS OPPOSED TO INTEGER ARITHMETIC)
+!     IS THE MORE NATURAL MODE FOR DOING DATA ANALYSIS.
+!
+!---------------------------------------------------------------------
+   !
+   !  CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to BINRAN(3f) is non-positive *****')
+      WRITE (G_IO,99005) N
+      RETURN
+   ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99002)
+      99002 FORMAT (' ***** FATAL ERROR--The second input argument to BINRAN(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99003) P
+      99003 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSEIF ( Npar<1 ) THEN
+      WRITE (G_IO,99004)
+      99004 FORMAT (' ***** FATAL ERROR--The third input argument to BINRAN(3f) is non-positive *****')
+      WRITE (G_IO,99005) Npar
+      RETURN
+   ELSE
+      CALL UNIRAN(1,Istart,g(1:1))
+      !
+      !  CHECK ON THE MAGNITUDE OF P,
+      !  AND BRANCH TO THE FASTER
+      !  GENERATION METHOD ACCORDINGLY.
+      !
+      IF ( P<0.1_wp ) THEN
+         !
+         !  IF P IS SMALL,
+         !  GENERATE N NEGATIVE BINOMIAL NUMBERS
+         !  BY USING THE FACT THAT THE SUM
+         !  OF GEOMETRIC VARIATES IS A
+         !  NEGATIVE BINOMIAL VARIATE.
+         !
+
+         DO i = 1 , N
+            isum = 0
+            DO j = 1 , Npar
+               CALL GEORAN(1,P,iseed,g)
+               ig = g(1) + 0.5_wp
+               isum = isum + ig
+            ENDDO
+            X(i) = isum
+         ENDDO
+         GOTO 99999
+      ENDIF
+   ENDIF
+   !
+   !  IF P IS MODERATE OR LARGE,
+   !  GENERATE N NEGATIVE BINOMIAL NUMBERS
+   !  USING THE FACT THAT THE
+   !  WAITING TIME FOR NPAR SUCCESSES IN
+   !  BERNOULLI TRIALS HAS A
+   !  NEGATIVE BINOMIAL DISTRIBUTION.
+   !
+   DO i = 1 , N
+      isum = 0
+      j = 1
+      DO
+         CALL BINRAN(1,P,1,iseed,b)
+         ib = b(1) + 0.5_wp
+         isum = isum + ib
+         IF ( isum==Npar ) THEN
+            X(i) = j
+            EXIT
+         ELSE
+            j = j + 1
+         ENDIF
+      ENDDO
+   ENDDO
+   RETURN
+99005 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+!
+99999 END SUBROUTINE NBRAN

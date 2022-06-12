@@ -71,22 +71,22 @@ LICENSE
    CC0-1.0
 REFERENCES
   * Johnson and Kotz, Discrete
-    Distributions, 1969, Pages 50-86,
-    especially Page 64, Formula 36.
+    Distributions, 1969, pages 50-86,
+    especially page 64, Formula 36.
   * Hastings and Peacock, Statistical
     Distributions--A Handbook for
     Students and Practitioners, 1975,
-    Pages 36-41.
+    pages 36-41.
   * National Bureau of Standards Applied Mathematics
-    Series 55, 1964, Page 929.
+    Series 55, 1964, page 929.
   * Feller, An Introduction to Probability
     Theory and Its Applications, Volume 1,
-    Edition 2, 1957, Pages 135-142.
+    Edition 2, 1957, pages 135-142.
   * Kendall and Stuart, The Advanced Theory of
-    Statistics, Volume 1, Edition 2, 1963, Pages 120-125.
+    Statistics, Volume 1, Edition 2, 1963, pages 120-125.
   * Mood and Grable, Introduction to the Theory
-    of Statistics, Edition 2, 1963, Pages 64-69.
-  * Owen, Handbook of Statistical Tables, 1962, PAGES 264-272.
+    of Statistics, Edition 2, 1963, pages 64-69.
+  * Owen, Handbook of Statistical Tables, 1962, pages 264-272.
 $ENDBLOCK
 !     ORIGINAL VERSION--NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -182,7 +182,7 @@ DOUBLE PRECISION :: dppar
 !     PERCENT POINT BY USE OF THE NORMAL APPROXIMATION
 !     TO THE BINOMIAL.
 !     (SEE JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS,
-!     PAGE 64, FORMULA 36).
+!     page 64, FORMULA 36).
 !
                      amean = an*Ppar
                      sd = SQRT(an*Ppar*(1.0_wp-Ppar))

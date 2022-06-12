@@ -54,27 +54,36 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 </A>
 <BLOCKQUOTE>
 <B>tran</B>(3f) - [M_datapac:RANDOM] a random sample of size n from the
-student&#146;s t distribution with integer degrees of freedom parameter NU.
+Student&#146;s t distribution with integer degrees of freedom parameter NU.
 <P>
 </BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output Arguments</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
 </A>
 <BLOCKQUOTE>
 SUBROUTINE <B>TRAN</B>(N,Nu,Iseed,X)
+<P>
+<PRE>
+       INTEGER,intent(in)        :: N
+       INTEGER,intent(in)        :: Nu
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X(:)
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -83,35 +92,50 @@ SUBROUTINE <B>TRAN</B>(N,Nu,Iseed,X)
 </A>
 <BLOCKQUOTE>
 <P>
-This subroutine generates a random sample of size N from the student&#146;s
+This subroutine generates a random sample of size N from the Student&#146;s
 T distribution with integer degrees of freedom parameter = NU.
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
+<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>X</B> </TD><TD valign=bottom>
-description of parameter
+<B>N</B> </TD><TD valign=bottom>
+The desired integer number of random numbers to be generated.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+<B>NU</B> </TD><TD valign=bottom>
+The integer degrees of freedom (parameter) for the T
+distribution. NU should be a positive integer variable.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
 <B>ISEED</B> </TD><TD valign=bottom>
-An integer iseed value. Should be set to a non-negative value
+An integer seed value. Should be set to a non-negative value
 to start a new sequence of values. Will be set to <B>-1</B> on return
 to indicate the next call should continue the current random
-sequence walk.
 </TD></TR>
-<TR></TR></TABLE><P>
-<A name=4>
+<TR></TR></TABLE><A name=4>
+
+     <H3>OUTPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B>X</B> </TD><TD valign=bottom>
+A vector (of dimension at least N) into which the generated
+random sample of size N from the Student&#146;s T distribution
+will be placed.
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -121,15 +145,88 @@ Sample program:
 <P>
 <PRE>
    program demo_tran
-   use M_datapac, only : tran
+   use m_datapac, only : tran, plott, label, plotxt, sort
    implicit none
-   ! call tran(x,y)
+   integer,parameter :: n=400
+   real :: x(n)
+   integer :: iseed
+   integer :: nu
+      call label(&#146;tran&#146;)
+      nu=3
+      iseed=12345
+      call tran(N,Nu,Iseed,X)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
    end program demo_tran
 <P>
 </PRE>
 Results:
+<P>
+<PRE>
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1029407E+02 -                                          X
+     0.9486016E+01 I
+     0.8677961E+01 I
+     0.7869905E+01 I
+     0.7061851E+01 I                          X
+     0.6253795E+01 I                               X
+     0.5445739E+01 -
+     0.4637684E+01 I
+     0.3829628E+01 I          X        X         X      X
+     0.3021573E+01 I      X X  X XX       X X     X                 X
+     0.2213517E+01 I  X    XX       XX  X    X X      X X   X
+     0.1405462E+01 I   X   XXXX XXXXXXXXXXXX XX    XXX  XXX  XXXXXX
+     0.5974064E+00 -  XX XXXXXXXXXXXXXXXXXXXXXXXX XXX XXXXXXXXXXXX XXX
+    -0.2106485E+00 I   XXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXX
+    -0.1018704E+01 I  XX XX XX X XXX XX XXXXXXXXXXXX  XX  XXXX XX XXX X
+    -0.1826759E+01 I    XXXXXX XX  XX  XX  X   XX  X     X X    XX   XX
+    -0.2634815E+01 I     X           XX        X         X   X    XX
+    -0.3442871E+01 I          X                   X
+    -0.4250926E+01 -                        X          X          X  X
+    -0.5058982E+01 I                                X              X
+    -0.5867038E+01 I                     X
+    -0.6675092E+01 I
+    -0.7483148E+01 I
+    -0.8291203E+01 I
+    -0.9099259E+01 -                          X                      X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+<P>
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.1029407E+02 -                                                  X
+     0.9486016E+01 I
+     0.8677961E+01 I
+     0.7869905E+01 I
+     0.7061851E+01 I                                                  X
+     0.6253795E+01 I                                                  X
+     0.5445739E+01 -
+     0.4637684E+01 I
+     0.3829628E+01 I                                                 XX
+     0.3021573E+01 I                                                XX
+     0.2213517E+01 I                                              XXX
+     0.1405462E+01 I                                         XXXXXX
+     0.5974064E+00 -                              XXXXXXXXXXXX
+    -0.2106485E+00 I                XXXXXXXXXXXXXXX
+    -0.1018704E+01 I        XXXXXXXXX
+    -0.1826759E+01 I    XXXXX
+    -0.2634815E+01 I   XX
+    -0.3442871E+01 I   X
+    -0.4250926E+01 -   X
+    -0.5058982E+01 I  X
+    -0.5867038E+01 I  X
+    -0.6675092E+01 I
+    -0.7483148E+01 I
+    -0.8291203E+01 I
+    -0.9099259E+01 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+<P>
+</PRE>
 </BLOCKQUOTE>
-<A name=5>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
@@ -139,7 +236,7 @@ The original DATAPAC library was written by James Filliben of the
 Statistical Engineering Division, National Institute of Standards
 and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -147,7 +244,7 @@ and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -155,7 +252,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -166,23 +263,23 @@ CC0-1.0
 o
 </TD><TD>
 Mood and Grable, Introduction to the Theory of Statistics, 1963,
-Page 233.
+page 233.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
 Johnson and Kotz, Continuous Univariate Distributions-<B>-2</B>, 1970,
-Page 94.
+page 94.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
 Hastings and Peacock, Statistical Distributions-<B>-A</B> Handbook for
-Students and Practitioners, 1975, Page 121.
+Students and Practitioners, 1975, page 121.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>tran (3m_datapac)</TD> <TD align=right width=33%><I>June 11, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 0ab794fe-9b3c-4065-848f-d21e0c5312ca using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>tran (3m_datapac)</TD> <TD align=right width=33%><I>June 11, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from a44b0622-fbf6-418c-a064-0eb42920f30f using man macros.</FONT>
 <br><br><center><img src="images/tran.gif"></center>
 </div>
 </div>

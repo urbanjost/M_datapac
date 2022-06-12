@@ -87,10 +87,10 @@ LICENSE
 REFERENCE
   * Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
     of the Eighteenth Conference on the Design of Experiments in Army
-    Research and Testing, Pages 425-450.
+    Research and Testing, pages 425-450.
   * Filliben, 'The Percent Point Function', Unpublished Manuscript.
   * Johnson and Kotz (1970), Continuous Univariate Distributions-1,
-    Pages 250-271.
+    pages 250-271.
 
 $ENDBLOCK
 !     ORIGINAL VERSION--JUNE      1972.
@@ -122,6 +122,8 @@ CHARACTER(len=4) :: blank
 CHARACTER(len=4) :: hyphen
 CHARACTER(len=4) :: alphai
 CHARACTER(len=4) :: alphax
+character(len=256) :: message
+integer :: ios
 !
 DIMENSION Y(3000) , Z(3000) , YM(3000)
 DIMENSION P(3000) , PTEnth(3000)
@@ -146,18 +148,15 @@ DATA constn/.3989422804_wp/
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TAIL   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--The second input argument to TAIL(3f) is outside the allowable (1,',I0,&
+	 & ') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TAIL&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to TAIL(3f) has the value 1 *****')
             RETURN
          ELSE
             hold = X(1)
@@ -165,9 +164,8 @@ DATA constn/.3989422804_wp/
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE TAIL   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to TAIL(3f) has all elements = ', &
+	    & E15.8,' *****')
             RETURN
          ENDIF
 !
@@ -207,15 +205,14 @@ DATA constn/.3989422804_wp/
 !
 !     COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION OF B1 AND B2
 !     UNDER THE NORMALITY ASSUMPTION
-!     REFERENCE--CRAMER, PAGE 386
+!     REFERENCE--CRAMER, page 386
 !
          eb1 = 0.0_wp
          sdb1 = 6.0_wp*(an-2.0_wp)/((an+1.0_wp)*(an+3.0_wp))
          sdb1 = SQRT(sdb1)
          zb1 = (b1-eb1)/sdb1
          eb2 = 3.0_wp - 6.0_wp/(an+1.0_wp)
-         sdb2 = 24.0_wp*an*(an-2.0_wp)*(an-3.0_wp)                               &
-     &          /((an+1.0_wp)*(an+1.0_wp)*(an+3.0_wp)*(an+5.0_wp))
+         sdb2 = 24.0_wp*an*(an-2.0_wp)*(an-3.0_wp) / ((an+1.0_wp)*(an+1.0_wp)*(an+3.0_wp)*(an+5.0_wp))
          zb2 = (b2-eb2)/sdb2
 !
 !     COMPUTE GEARY'S STATISTIC
@@ -229,13 +226,11 @@ DATA constn/.3989422804_wp/
 !
 !     COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION
 !     OF GEARY'S STATISTIC UNDER THE NORMALITY ASSUMPTION
-!     REFERENCE--BIOMETRIKA, 1936, PAGE 296
+!     REFERENCE--BIOMETRIKA, 1936, page 296
 !
          aa = SQRT(2.0_wp/picons)
          bb = SQRT(2.0_wp/(an-1.0))
-         IF ( N>=100 ) cc = SQRT(an/2.0_wp)                                &
-     &                      *(1.0_wp-(1.0_wp/(8.0_wp*an/2.0_wp))+(1.0_wp/(128.0_wp*an*an/ &
-     &                      4.0_wp)))
+         IF ( N>=100 ) cc = SQRT(an/2.0_wp) * (1.0_wp-(1.0_wp/(8.0_wp*an/2.0_wp))+(1.0_wp/(128.0_wp*an*an/ 4.0_wp)))
          IF ( N<100 ) THEN
             coef = 1.0
             imax = N - 1
@@ -274,7 +269,7 @@ DATA constn/.3989422804_wp/
 !
 !     COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION OF THE RANGE/S
 !     UNDER THE NORMALITY ASSUMPTION
-!     REFERENCE--BIOMETRIKA, 1954, PAGE 483
+!     REFERENCE--BIOMETRIKA, 1954, page 483
 !
          g = .33000598_wp + ((an-2.0_wp)**.16_wp)/41.785_wp
          pn = (an-g)/(an-2.0_wp*g+1.0_wp)
@@ -325,16 +320,14 @@ DATA constn/.3989422804_wp/
 !
 !     COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION OF THE WILK-SHAPIRO
 !     STATISTIC UNDER THE NORMALITY ASSUMPTION
-!     REFERENCE--JJF APPROXIMATION TO MOMENTS ON PAGE 601 OF BIOMETRIKA (1965)
+!     REFERENCE--JJF APPROXIMATION TO MOMENTS ON page 601 OF BIOMETRIKA (1965)
 !
          IF ( N==3 ) ewilks = .9135_wp
          IF ( N==4 ) ewilks = .9012_wp
-         IF ( N>=5 ) ewilks = .9026_wp + (an-5.0_wp)                          &
-     &                        /(44.608_wp+13.593_wp*SQRT(an)+10.267_wp*an)
+         IF ( N>=5 ) ewilks = .9026_wp + (an-5.0_wp)/(44.608_wp+13.593_wp*SQRT(an)+10.267_wp*an)
          IF ( N==3 ) sdwilk = .0755_wp
          IF ( N==4 ) sdwilk = .0719_wp
-         IF ( N>=5 ) sdwilk = .0670_wp + (an-5.0_wp)                          &
-     &                        /(-42.368_wp-5.026_wp*SQRT(an)-14.925_wp*an)
+         IF ( N>=5 ) sdwilk = .0670_wp + (an-5.0_wp)/(-42.368_wp-5.026_wp*SQRT(an)-14.925_wp*an)
          zwilks = (wilksh-ewilks)/sdwilk
 !
 !     COMPUTE THE CORRELATION COEFFICIENT BETWEEN THE ORDERED OBSERVATIONS
@@ -478,90 +471,75 @@ DATA constn/.3989422804_wp/
 !
          IF ( N==2 ) ecc = 1.0_wp
          IF ( N==3 ) ecc = .95492958_wp
-         IF ( N>=4 ) ecc = .94947355_wp + (an-4.0_wp)                         &
-     &                     /(196.815_wp-2.9418_wp*SQRT(an)+19.7916_wp*an)
+         IF ( N>=4 ) ecc = .94947355_wp + (an-4.0_wp)/(196.815_wp-2.9418_wp*SQRT(an)+19.7916_wp*an)
          IF ( N==2 ) sdcc = 99999999.9999_wp
          IF ( N==3 ) sdcc = .04007697_wp
          IF ( N>=4 ) sdcc = .039492_wp + (an-4.0_wp)/(-127.0_wp-25.3_wp*an)
          zcc = (cc-ecc)/sdcc
 !
-!     WRITE OUT THE NORMAL TAIL LENGTH STATISTICS PAGE
+!     WRITE OUT THE NORMAL TAIL LENGTH STATISTICS page
 !
          WRITE (G_IO,99044)
          WRITE (G_IO,99005)
 !
-99005    FORMAT (' ',48X,'TAIL LENGTH ANALYSIS')
+         99005 FORMAT (' ',48X,'TAIL LENGTH ANALYSIS')
          WRITE (G_IO,99045)
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
+         99006 FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99007) xbar
-99007    FORMAT (' ',40X,'(THE SAMPLE MEAN = ',E15.8,')')
+         99007 FORMAT (' ',40X,'(THE SAMPLE MEAN = ',E15.8,')')
          WRITE (G_IO,99008) s
-99008    FORMAT (' ',35X,'(THE SAMPLE STANDARD DEVIATION = ',E15.8,')')
+         99008 FORMAT (' ',35X,'(THE SAMPLE STANDARD DEVIATION = ',E15.8,')')
          WRITE (G_IO,99045)
          WRITE (G_IO,99009)
-99009    FORMAT (' ',35X,                                               &
-     & 'REFERENCE--SHAPIRO, WILK, AND CHEN, JASA, 1968, PAGES 1343-1372'&
-     & )
+         99009 FORMAT (' ',35X,'REFERENCE--SHAPIRO, WILK, AND CHEN, JASA, 1968, pages 1343-1372')
          WRITE (G_IO,99010)
-99010    FORMAT (' ',35X,'REFERENCE--CRAMER, PAGES 386-387')
+         99010 FORMAT (' ',35X,'REFERENCE--CRAMER, pages 386-387')
          WRITE (G_IO,99011)
-99011    FORMAT (' ',35X,                                               &
-     &           'REFERENCE--GEARY, BIOMETRIKA, 1947, PAGES 209-242')
+         99011 FORMAT (' ',35X,'REFERENCE--GEARY, BIOMETRIKA, 1947, pages 209-242')
          WRITE (G_IO,99012)
-99012    FORMAT (' ',35X,                                               &
-     &'REFERENCE--BIOMETRIKA TABLES, VOLUME 1, PAGES 67-69, 59-60, 207-2&
-     &08, AND 200')
+         99012 FORMAT (' ',35X,'REFERENCE--BIOMETRIKA TABLES, VOLUME 1, pages 67-69, 59-60, 207-208, AND 200')
          WRITE (G_IO,99013)
-99013    FORMAT (' ',35X,                                               &
-     &    'REFERENCE--SHAPIRO AND WILK, BIOMETRIKA, 1965, PAGES 591-611'&
-     &    )
+         99013 FORMAT (' ',35X,'REFERENCE--SHAPIRO AND WILK, BIOMETRIKA, 1965, pages 591-611')
          DO i = 1 , 6
             WRITE (G_IO,99045)
          ENDDO
          WRITE (G_IO,99014)
-99014    FORMAT (' ',49X,'TAIL LENGTH STATISTICS')
+         99014 FORMAT (' ',49X,'TAIL LENGTH STATISTICS')
          WRITE (G_IO,99015)
-99015    FORMAT (' ',5X,                                                &
-     &'THE EXPECTED VALUE AND STANDARD DEVIATION OF STATISTICS ON THIS P&
-     &AGE ARE BASED ON THE NORMALITY ASSUMPTION')
+         99015 FORMAT (' ',5X,&
+	 & 'THE EXPECTED VALUE AND STANDARD DEVIATION OF STATISTICS ON THIS page ARE BASED ON THE NORMALITY ASSUMPTION')
          WRITE (G_IO,99045)
          WRITE (G_IO,99045)
          WRITE (G_IO,99016)
-99016    FORMAT (' ',                                                   &
-     &'          FORM OF STATISTIC               VALUE OF STAT    EXP(ST&
-     &AT)    SD(STAT)    (STAT-EXP(STAT))/SD(STAT)    TABLE REFERENCE')
-         WRITE (G_IO,99045)
+         99016 FORMAT ('           ',&
+	 & 'FORM OF STATISTIC               VALUE OF STAT    EXP(STAT)    SD(STAT)    (STAT-EXP(STAT))/SD(STAT)    TABLE REFERENCE') 
+	 WRITE (G_IO,99045)
          WRITE (G_IO,99017) b1 , eb1 , sdb1 , zb1
-99017    FORMAT (' ','STANDARDIZED THIRD CENTRAL MOMENT        ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
+         99017 FORMAT (' ','STANDARDIZED THIRD CENTRAL MOMENT        ',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
          WRITE (G_IO,99018)
-99018    FORMAT (' ',111X,'VOL. 1, PAGE 207')
+         99018 FORMAT (' ',111X,'VOL. 1, page 207')
          WRITE (G_IO,99019) b2 , eb2 , sdb2 , zb2
-99019    FORMAT (' ','STANDARDIZED FOURTH CENTRAL MOMENT       ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
+         99019 FORMAT (' ','STANDARDIZED FOURTH CENTRAL MOMENT       ',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
          WRITE (G_IO,99020)
-99020    FORMAT (' ',111X,'VOL. 1, PAGE 208')
+         99020 FORMAT (' ',111X,'VOL. 1, page 208')
          WRITE (G_IO,99021) geary , egeary , sdgear , zgeary
-99021    FORMAT (' ','GEARY STATISTIC (MEAN DEVIATION/S)       ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
+         99021 FORMAT (' ','GEARY STATISTIC (MEAN DEVIATION/S)       ',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
          WRITE (G_IO,99022)
-99022    FORMAT (' ',111X,'VOL. 1, PAGE 207')
+         99022 FORMAT (' ',111X,'VOL. 1, page 207')
          WRITE (G_IO,99023) rs , ers , sdrs , zrs
-99023    FORMAT (' ','RANGE/S                                  ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
+         99023 FORMAT (' ','RANGE/S                                  ',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
          WRITE (G_IO,99024)
-99024    FORMAT (' ',111X,'VOL. 1, PAGE 200')
+         99024 FORMAT (' ',111X,'VOL. 1, page 200')
          WRITE (G_IO,99025) wilksh , ewilks , sdwilk , zwilks
-99025    FORMAT (' ','WILK-SHAPIRO STATISTIC (BLUE FOR SCALE/S)',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA (1965)')
+         99025 FORMAT (' ','WILK-SHAPIRO STATISTIC (BLUE FOR SCALE/S)',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA (1965)')
          WRITE (G_IO,99026)
-99026    FORMAT (' ',111X,'PAGE 605')
+         99026 FORMAT (' ',111X,'page 605')
          WRITE (G_IO,99027) cc , ecc , sdcc , zcc
-99027    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'UNPUBLISHED JJF')
+         99027 FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT ',F10.5, &
+         & 6X,F10.5,2X,F10.5,9X,F10.5,13X,'UNPUBLISHED JJF')
          WRITE (G_IO,99028)
-99028    FORMAT (' ',111X,'MANUSCRIPT')
+         99028    FORMAT (' ',111X,'MANUSCRIPT')
 !
 !     COMPUTE THE LINE PLOT WHICH SHOWS THE DISTRIBUTION OF THE OBSERVED
 !     VALUES IN TERMS OF MULTIPLES OF SAMPLE STANDARD DEVIATIONS AWAY FROM
@@ -600,34 +578,32 @@ DATA constn/.3989422804_wp/
             WRITE (G_IO,99045)
          ENDDO
          WRITE (G_IO,99029)
-99029    FORMAT (' ',                                                   &
-     &'LINE PLOT SHOWING THE DISTRIBUTION OF THE OBSERVATIONS ABOUT THE &
-     &SAMPLE MEAN IN TERMS OF MULTIPLES OF THE SAMPLE STANDARD DEVIATION&
-     &')
+         99029    FORMAT (&
+         & ' LINE PLOT SHOWING THE DISTRIBUTION OF THE OBSERVATIONS ABOUT THE SAMPLE MEAN ',&
+	 & 'IN TERMS OF MULTIPLES OF THE SAMPLE STANDARD DEVIATION')
          WRITE (G_IO,99045)
          WRITE (G_IO,99045)
          WRITE (G_IO,99042) (iline1(i),i=1,130)
          WRITE (G_IO,99042) (iline2(i),i=1,130)
          WRITE (G_IO,99030)
-99030    FORMAT (' ',                                                   &
-     &'     -6        -5        -4        -3        -2        -1        &
-     & 0         1         2         3         4         5         6')
-         WRITE (G_IO,99031) (xline(i),i=1,13)
-99031    FORMAT (' ',13F10.4)
+         99030 FORMAT (' ', &
+         &'     -6        -5        -4        -3        -2        -1        &
+         & 0         1         2         3         4         5         6')
+         WRITE (G_IO,99031,iostat=ios,iomsg=message) (xline(i),i=1,13)
+         99031 FORMAT (' ',13F10.4)
+	 if(ios.ne.0)write(G_IO,'(A)')message(:len_trim(message))
          WRITE (G_IO,99045)
          WRITE (G_IO,99032) icount
-99032    FORMAT (' ',10X,I0,                                            &
-     &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
-     & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
+         99032 FORMAT (' ',10X,I0, &
+         &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
+         & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
 !
 !     GENERATE UNIFORM, NORMAL, LAMBDA = -0.5, AND CAUCHY PROBABILITY PLOTS
 !
          nhalf = (N/2) + 1
          CALL PLOT(Y,Z,N)
          WRITE (G_IO,99033) N
-99033    FORMAT (' ',35X,                                               &
-     &           'UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,  &
-     &           ')')
+         99033 FORMAT (' ',35X,'UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99043) corr(11)
          DO i = 1 , nhalf
             irev = N - i + 1
@@ -636,9 +612,9 @@ DATA constn/.3989422804_wp/
          ENDDO
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99034) N
-99034    FORMAT (' ',35X,                                               &
-     &           'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
-     &           ')')
+         99034 FORMAT (' ',35X,&
+         & 'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
+         & ')')
          WRITE (G_IO,99043) corr(20)
          alamba = -0.5_wp
          DO i = 1 , nhalf
@@ -649,8 +625,7 @@ DATA constn/.3989422804_wp/
          ENDDO
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99035) alamba , N
-99035    FORMAT (' ',35X,'LAMBDA = ',F4.1,                              &
-     &           ' PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
+         99035 FORMAT (' ',35X,'LAMBDA = ',F4.1,' PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99043) corr(28)
          DO i = 1 , nhalf
             irev = N - i + 1
@@ -660,50 +635,39 @@ DATA constn/.3989422804_wp/
          ENDDO
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99036) N
-99036    FORMAT (' ',35X,                                               &
-     &           'CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
-     &           ')')
+         99036 FORMAT (' ',35X,'CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99043) corr(33)
 !
-!      WRITE OUT THE PROBABILITY PLOT CORRELATION COEFFICIENT PAGE
+!      WRITE OUT THE PROBABILITY PLOT CORRELATION COEFFICIENT page
 !
          WRITE (G_IO,99044)
          DO idis = 1 , numdis
             IF ( idis==20 ) THEN
-               WRITE (G_IO,99037) N , corr(idis) , iflag1(idis) ,        &
-     &                           iflag2(idis) , iflag3(idis)
-99037          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE NORMAL DISTRIB&
-     &UTION IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99037) N , corr(idis) , iflag1(idis) , iflag2(idis) , iflag3(idis)
+               99037 FORMAT (' ','THE CORRELATION BETWEEN THE ',I0, &
+               &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE NORMAL DISTRIBUTION IS ',F8.5,1X,3A1)
             ELSEIF ( idis==22 ) THEN
-               WRITE (G_IO,99038) N , corr(idis) , iflag1(idis) ,        &
-     &                           iflag2(idis) , iflag3(idis)
-99038          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LOGISTIC DIST.&
-     &      IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99038) N , corr(idis) , iflag1(idis) , iflag2(idis) , iflag3(idis)
+               99038 FORMAT (' ','THE CORRELATION BETWEEN THE ',I0, &
+               &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LOGISTIC DIST.      IS ',F8.5,1X,3A1)
             ELSEIF ( idis==23 ) THEN
-               WRITE (G_IO,99039) N , corr(idis) , iflag1(idis) ,        &
-     &                           iflag2(idis) , iflag3(idis)
-99039          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE DOUBLE EXP. DI&
-     &ST.   IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99039) N , corr(idis) , iflag1(idis) , iflag2(idis) , iflag3(idis)
+               99039 FORMAT (' THE CORRELATION BETWEEN THE ',I0, &
+	       & ' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE DOUBLE EXP. DIST.   IS ',F8.5,1X,3A1)
             ELSEIF ( idis==33 ) THEN
-               WRITE (G_IO,99040) N , corr(idis) , iflag1(idis) ,        &
-     &                           iflag2(idis) , iflag3(idis)
-99040          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE CAUCHY DISTRIB&
-     &UTION IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99040) N , corr(idis) , iflag1(idis) , iflag2(idis) , iflag3(idis)
+               99040 FORMAT (' ','THE CORRELATION BETWEEN THE ',I0, &
+               &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE CAUCHY DISTRIBUTION IS ',F8.5,1X,3A1)
             ELSE
                IF ( idis<20 ) idis2 = idis
                IF ( idis==21 ) idis2 = idis - 1
                IF ( 23<idis .AND. idis<33 ) idis2 = idis - 2
                IF ( 33<idis ) idis2 = idis - 3
                alamba = -(0.1)*FLOAT(idis2) + 2.1
-               WRITE (G_IO,99041) N , alamba , corr(idis) , iflag1(idis) &
-     &                           , iflag2(idis) , iflag3(idis)
-99041          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &    ' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LAMBDA = '&
-     &    ,F4.1,' DIST. IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99041) N, alamba, corr(idis), iflag1(idis), iflag2(idis), iflag3(idis)
+               99041 FORMAT (' ','THE CORRELATION BETWEEN THE ',I0, &
+               & ' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LAMBDA = '&
+               & ,F4.1,' DIST. IS ',F8.5,1X,3A1)
             ENDIF
          ENDDO
       ENDIF

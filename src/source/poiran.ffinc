@@ -1,0 +1,223 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file poiran.3m_datapac.man
+NAME
+   poiran(3f) - [M_datapac:RANDOM] generate Poisson random numbers
+
+SYNOPSIS
+      SUBROUTINE POIRAN(N,Alamba,Iseed,X)
+
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(in)  :: Alamba
+       INTEGER,intent(inout)     :: Iseed
+       REAL(kind=wp),intent(out) :: X(:)
+
+DESCRIPTION
+   POIRAN(3f) generates a random sample of size N from the Poisson
+   distribution with REAL tail length parameter = ALAMBA.
+
+   The Poisson distribution used herein has mean = ALAMBA and standard
+   deviation = sqrt(ALAMBA).
+
+   This distribution is defined for all discrete non-negative integer
+   X where X = 0, 1, 2, ... .
+
+   This distribution has the probability function
+
+       f(X) = exp(-ALAMBA) * ALAMBA**X / X!
+
+   The Poisson distribution is the distribution of the number of events
+   in the interval (0,ALAMBA) when the waiting time between events is
+   exponentially distributed with mean = 1 and standard deviation = 1.
+
+   Note that even though the output from this discrete random number
+   generator must necessarily be a sequence of ***integer*** values,
+   the output vector X is REAL in mode.
+
+   X has been specified as REAL so as to conform with the DATAPAC
+   convention that all output vectors from all DATAPAC subroutines
+   are REAL.  this convention is based on the belief that
+
+   1. A mixture of modes (floating point versus integer) is inconsistent
+      and an unnecessary complication in a data analysis; and
+
+   2. Floating point machine arithmetic (as opposed to integer arithmetic)
+      is the more natural mode for doing data analysis.
+
+INPUT ARGUMENTS
+
+   N      The desired integer number of random numbers to be generated.
+
+   ISEED  An integer seed value. Should be set to a non-negative value
+          to start a new sequence of values. Will be set to -1 on return
+          to indicate the next call should continue the current random
+          sequence walk.
+
+   ALAMBA The value of the tail length parameter. Note the tail length
+          parameter ALAMBA is not restricted to only integer values. ALAMBA
+          can be set to any positive real value--integer or non-integer.
+
+OUTPUT ARGUMENTS
+
+   X      A vector (of dimension at least N) into which the generated
+          random sample of size N from the poisson distribution will
+          be placed.
+
+EXAMPLES
+  Sample program:
+
+   program demo_poiran
+   use m_datapac, only : poiran, plott, label, plotxt, sort
+   implicit none
+   integer,parameter :: n=500 
+   real :: x(n)
+   integer :: iseed
+   real :: alamba
+      call label('poiran')
+      alamba=2.0
+      iseed=12345
+      call poiran(N,Alamba,Iseed,X)
+      call plotxt(x,n)
+      call sort(x,n,x) ! sort to show distribution
+      call plotxt(x,n)
+   end program demo_poiran
+
+  Results:
+
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.7000000E+01 -                                 X
+     0.6708333E+01 I   
+     0.6416667E+01 I   
+     0.6125000E+01 I        X         XX       X      X   X          X
+     0.5833333E+01 I   
+     0.5541667E+01 I   
+     0.5250000E+01 -   
+     0.4958333E+01 I         XX   XXXX   X  X X  X   X     XX    X
+     0.4666667E+01 I   
+     0.4375000E+01 I   
+     0.4083333E+01 I  XXXX   XXX X XXXXXXX  XX XXXX  XXXXXX  X X XX XX
+     0.3791667E+01 I   
+     0.3500000E+01 -   
+     0.3208333E+01 I   
+     0.2916667E+01 I  XXX XXXXXX X   XX XX  XXX  XXXXXXXXXXX X XXXXXXX
+     0.2625000E+01 I   
+     0.2333333E+01 I   
+     0.2041667E+01 I  XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXX XXXXXXXXXXXXXX
+     0.1750000E+01 -   
+     0.1458333E+01 I   
+     0.1166667E+01 I   
+     0.8750000E+00 I   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     0.5833335E+00 I   
+     0.2916670E+00 I   
+     0.0000000E+00 -  XXXXXXXXXXXXXXX  XX XX XXXXXXXXXXXXX  XX XXXXXX X
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1258E+03  0.2505E+03  0.3752E+03  0.5000E+03
+    
+    THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+                      I-----------I-----------I-----------I-----------I
+     0.7000000E+01 -                                                  X
+     0.6708333E+01 I   
+     0.6416667E+01 I   
+     0.6125000E+01 I                                                 XX
+     0.5833333E+01 I   
+     0.5541667E+01 I   
+     0.5250000E+01 -   
+     0.4958333E+01 I                                                XX
+     0.4666667E+01 I   
+     0.4375000E+01 I   
+     0.4083333E+01 I                                            XXXX
+     0.3791667E+01 I   
+     0.3500000E+01 -   
+     0.3208333E+01 I   
+     0.2916667E+01 I                                    XXXXXXXXX
+     0.2625000E+01 I   
+     0.2333333E+01 I   
+     0.2041667E+01 I                        XXXXXXXXXXXXX
+     0.1750000E+01 -   
+     0.1458333E+01 I   
+     0.1166667E+01 I   
+     0.8750000E+00 I         XXXXXXXXXXXXXXXX
+     0.5833335E+00 I   
+     0.2916670E+00 I   
+     0.0000000E+00 -  XXXXXXXX
+                    
+                      I-----------I-----------I-----------I-----------I
+               0.1000E+01  0.1258E+03  0.2505E+03  0.3752E+03  0.5000E+03
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Cox and Miller, The Theory of Stochastic Processes, 1965, page 7.
+  * Tocher, The Art of Simulation, 1963, pages 36-37.
+  * Johnson and Kotz, Discrete Distributions, 1969, pages 87-121.
+  * Hastings and Peacock, Statistical Distributions--A Handbook for
+    Students and Practitioners, 1975, pages 108-113.
+  * Feller, An Introduction to Probability Theory and Its Applications,
+    Volume 1, Edition 2, 1957, pages 146-154.
+  * National Bureau of Standards Applied Mathematics Series 55, 1964,
+    page 929.
+$ENDBLOCK
+!     VERSION NUMBER--82.6
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --DECEMBER  1981.
+!     UPDATED         --MAY       1982.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE POIRAN(N,Alamba,Iseed,X)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: Alamba
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+INTEGER :: i , j
+REAL(kind=wp) :: e , sum , u(1)
+!---------------------------------------------------------------------
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to POIRAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSEIF ( Alamba<=0.0_wp ) THEN
+      WRITE (G_IO,99003)
+      99003 FORMAT (' ***** FATAL ERROR--The second input argument to POIRAN(3f) is non-positive *****')
+      WRITE (G_IO,99004) Alamba
+      99004 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      !
+      !     GENERATE N POISSON RANDOM NUMBERS USING THE FACT THAT THE DISTRIBUTION
+      !     OF EXPONENTIAL WAITING TIMES IS POISSON.
+      !
+      DO i = 1 , N
+         sum = 0.0_wp
+         j = 1
+         DO
+            CALL UNIRAN(1,Iseed,u)
+            e = -LOG(1.0_wp-u(1))
+            sum = sum + e
+            IF ( sum>Alamba ) THEN
+               X(i) = j - 1
+               EXIT
+            ELSE
+               j = j + 1
+            ENDIF
+         ENDDO
+      ENDDO
+   ENDIF
+
+END SUBROUTINE POIRAN
