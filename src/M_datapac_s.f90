@@ -12738,79 +12738,127 @@ END SUBROUTINE LAMPLT
 !!
 !!       SUBROUTINE LAMPPF(P,Alamba,Ppf)
 !!
-!!##DESCRIPTION
-!!    lamppf(3f) computes the percent point function value for the (tukey)
-!!    lambda distribution with tail length parameter value = alamba.
+!!        REAL(kind=wp),intent(in) :: Alamba
+!!        REAL(kind=wp),intent(in) :: P
+!!        REAL(kind=wp),intent(out) :: Ppf
 !!
-!!    in general, the probability density function for this distribution
+!!##DESCRIPTION
+!!    LAMPPF(3f) computes the percent point function value for the (Tukey)
+!!    lambda distribution with tail length parameter value = ALAMBA.
+!!
+!!    In general, the probability density function for this distribution
 !!    is not simple.
 !!
-!!    the percent point function for this distribution is
+!!    The percent point function for this distribution is
 !!
-!!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!        g(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P        The value (between 0.0 and 1.0) at which the percent point
+!!             function is to be evaluated.
+!!
+!!             If ALAMBA is positive, then P should be between 0.0 and 1.0,
+!!             inclusively.
+!!
+!!             If ALAMBA is non-positive, then P should be between 0.0 and
+!!             1.0, exclusively.
+!!
+!!    ALAMBA   The value of lambda (the tail length parameter).
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF      The percent point function value ppf for the Tukey lambda
+!!             distribution
+!!
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_lamppf
-!!    use M_datapac, only : lamppf
+!!    !@(#) line plotter graph of function
+!!    use M_datapac, only : lamppf, plott, label
 !!    implicit none
-!!    ! call lamppf(x,y)
+!!    integer,parameter :: n=200
+!!    real              :: x(n), y(n)
+!!    real              :: alamba
+!!    integer           :: i
+!!       alamba=3.3333
+!!       call label('lamppf')
+!!       x=[(real(i)/real(n+1),i=1,n)]
+!!       do i=1,n
+!!          call lamppf(x(i),alamba,y(i))
+!!       enddo
+!!       call plott(x,y,n)
 !!    end program demo_lamppf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.9950249E+00 -                                                XXX
+!!      0.9537728E+00 I                                              XXX
+!!      0.9125207E+00 I                                           XXX
+!!      0.8712686E+00 I                                        XXXX
+!!      0.8300166E+00 I                                      XXX
+!!      0.7887645E+00 I                                    XXX
+!!      0.7475125E+00 -                                  XXX
+!!      0.7062603E+00 I                                XXX
+!!      0.6650083E+00 I                               XX
+!!      0.6237562E+00 I                              XX
+!!      0.5825042E+00 I                            XX
+!!      0.5412520E+00 I                           XX
+!!      0.5000000E+00 -                         XXX
+!!      0.4587479E+00 I                        XX
+!!      0.4174958E+00 I                       XX
+!!      0.3762438E+00 I                     XX
+!!      0.3349917E+00 I                    XX
+!!      0.2937396E+00 I                  XXX
+!!      0.2524875E+00 -                XXX
+!!      0.2112355E+00 I              XXX
+!!      0.1699834E+00 I            XXX
+!!      0.1287313E+00 I         XXXX
+!!      0.8747923E-01 I       XXX
+!!      0.4622716E-01 I    XXX
+!!      0.4975124E-02 -  XXX
+!!                       I-----------I-----------I-----------I-----------I
+!!               -0.2951E+00 -0.1475E+00  0.0000E+00  0.1475E+00  0.2951E+00
+!!
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, pages 21-44, 229-231, pages 53-58.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, pages 21-44, 229-231, pages 53-58.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
 !!     1970, pages 28-31.
-!!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
-!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
-!!     MATHEMATICAL STATISTICS, 18, 1947, pages 413-426.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LAMPPF(P,Alamba,Ppf)
-REAL(kind=wp) :: Alamba , P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE  VALUE OF LAMBDA
-!                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT
-!             FUNCTION VALUE PPF FOR THE TUKEY LAMBDA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER = ALAMBA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--IF ALAMBA IS POSITIVE,
-!                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!                   IF ALAMBA IS NON-POSITIVE,
-!                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Hastings, Mosteller, Tukey, and Windsor, 'Low Moments for Small
+!!     Samples:  A Comparative Study of Order Statistics', Annals of
+!!     Mathematical Statistics, 18, 1947, pages 413-426.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LAMPPF(P,Alamba,Ppf)
+REAL(kind=wp),intent(in) :: Alamba
+REAL(kind=wp),intent(in) :: P
+REAL(kind=wp),intent(out) :: Ppf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -12819,14 +12867,10 @@ REAL(kind=wp) :: Alamba , P , Ppf
          IF ( Alamba>0.0_wp .OR. P<1.0_wp ) THEN
             IF ( Alamba<=0.0_wp .OR. P>=0.0_wp ) THEN
                IF ( Alamba<=0.0_wp .OR. P<=1.0_wp ) THEN
-!
-!-----START POINT-----------------------------------------------------
-!
                   IF ( -0.001_wp<Alamba .AND. Alamba<0.001_wp ) THEN
                      Ppf = LOG(P/(1.0_wp-P))
                      RETURN
                   ELSE
-!
                      Ppf = (P**Alamba-(1.0_wp-P)**Alamba)/Alamba
                      GOTO 99999
                   ENDIF
@@ -12835,11 +12879,9 @@ REAL(kind=wp) :: Alamba , P , Ppf
          ENDIF
       ENDIF
       WRITE (G_IO,99001)
-99001 FORMAT (' ',                                                      &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LAMPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to LAMPPF(3f) is outside the allowable (0,1) interval *****')
       WRITE (G_IO,99002) P
-99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      99002 FORMAT (' ***** The value of the argument is ',E15.8,' *****')
       RETURN
 !
 99999 END SUBROUTINE LAMPPF
@@ -35753,33 +35795,85 @@ END SUBROUTINE WEIPLT
 !!
 !!       SUBROUTINE WEIPPF(P,Gamma,Ppf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(in)  :: Gamma
+!!        REAL(kind=wp),intent(out) :: Ppf
+!!
 !!##DESCRIPTION
 !!    WEIPPf(3f) computes the percent point function value for the Weibull
 !!    distribution with REAL tail length parameter = GAMMA.
 !!
 !!    The Weibull distribution used herein is defined for all positive X,
-!!    and has the probability density function f(X) = GAMMA * (X**(GAMMA-1))
-!!    * exp(-(X**GAMMA)).
+!!    and has the probability density function
+!!
+!!        f(X) = GAMMA * (X**(GAMMA-1)) * exp(-(X**GAMMA))
 !!
 !!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P      The value (between 0.0 (inclusively) and 1.0 (exclusively))
+!!           at which the percent point function is to be evaluated.
+!!
+!!    GAMMA  The value of the tail length parameter. GAMMA should be positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!    PPF    The percent point function value for the Weibull distribution
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_weippf
-!!    use M_datapac, only : weippf
+!!    !@(#) line plotter graph of function
+!!    use M_datapac, only : weippf, plott, label
 !!    implicit none
-!!    ! call weippf(x,y)
+!!    integer,parameter :: n=200
+!!    real              :: x(n), y(n)
+!!    real              :: gamma
+!!    integer           :: i
+!!       gamma=2.0
+!!       call label('weippf')
+!!       x=[(real(i)/real(n+1),i=1,n)]
+!!       do i=1,n
+!!          call weippf(x(i),gamma,y(i))
+!!       enddo
+!!       call plott(x,y,n)
 !!    end program demo_weippf
 !!
 !!   Results:
+!!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.9950249E+00 -                                          XX X X  X
+!!      0.9537728E+00 I                                    XXXXXX
+!!      0.9125207E+00 I                                 XXXX
+!!      0.8712686E+00 I                              XXX
+!!      0.8300166E+00 I                            XXX
+!!      0.7887645E+00 I                           XX
+!!      0.7475125E+00 -                         XX
+!!      0.7062603E+00 I                        XX
+!!      0.6650083E+00 I                      XX
+!!      0.6237562E+00 I                     XX
+!!      0.5825042E+00 I                    XX
+!!      0.5412520E+00 I                   XX
+!!      0.5000000E+00 -                  XX
+!!      0.4587479E+00 I                 XX
+!!      0.4174958E+00 I                XX
+!!      0.3762438E+00 I               XX
+!!      0.3349917E+00 I              XX
+!!      0.2937396E+00 I             XX
+!!      0.2524875E+00 -            XX
+!!      0.2112355E+00 I          XX
+!!      0.1699834E+00 I         XX
+!!      0.1287313E+00 I        XX
+!!      0.8747923E-01 I      XXX
+!!      0.4622716E-01 I    XXX
+!!      0.4975124E-02 -  XXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.7062E-01  0.6287E+00  0.1187E+01  0.1745E+01  0.2303E+01
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -35797,58 +35891,33 @@ END SUBROUTINE WEIPLT
 !!     pages 250-271.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
 !!     Students and Practitioners, 1975, page 124.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE WEIPPF(P,Gamma,Ppf)
-REAL(kind=wp) :: Gamma , P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (INCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE WEIBULL DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE WEIPPF(P,Gamma,Ppf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: Ppf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE WEIPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99003) P
-         Ppf = 0.0_wp
-         RETURN
-      ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE WEIPPF SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99003) Gamma
-         Ppf = 0.0_wp
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Ppf = (-LOG(1.0_wp-P))**(1.0_wp/Gamma)
-      ENDIF
-99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+   IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument TO WEIPPF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99003) P
+      Ppf = 0.0_wp
+      RETURN
+   ELSEIF ( Gamma<=0.0_wp ) THEN
+      WRITE (G_IO,99002)
+      99002 FORMAT (' ***** FATAL ERROR--The second input argument to WEIPPF(3f) is non-positive *****')
+      WRITE (G_IO,99003) Gamma
+      Ppf = 0.0_wp
+      RETURN
+   ELSE
+      Ppf = (-LOG(1.0_wp-P))**(1.0_wp/Gamma)
+   ENDIF
+99003 FORMAT (' ***** The value of the argument is ',E15.8,' *****')
 !
 END SUBROUTINE WEIPPF
 !>
