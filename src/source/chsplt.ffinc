@@ -1,0 +1,207 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file chsplt.3m_datapac.man
+NAME
+   chsplt(3f) - [M_datapac:LINE_PLOT] generate a Chi-square probability
+   plot
+
+SYNOPSIS
+      SUBROUTINE CHSPLT(X,N,Nu)
+
+       REAL(kind=wp),intent(in) :: X(:)
+       INTEGER,intent(in) :: N
+       INTEGER,intent(in) :: Nu
+
+DESCRIPTION
+   Chsplt(3f) generates a Chi-squared probability plot (with integer
+   degrees of freedom parameter value = NU).
+
+   The prototype Chi-squared distribution used herein is defIned for all
+   non-negative X, and its probability density function is given in the
+   references below.
+
+   As used herein, a probability plot for a distribution is a plot
+   of the ordered observations versus the order statistic medians for
+   that distribution.
+
+   The Chi-squared probability plot is useful in graphically testing
+   the composite (that is, location and scale parameters need not be
+   specified) hypothesis that the underlying distribution from which
+   the data have been randomly drawn is the Chi-squared distribution
+   with degrees of freedom parameter value = NU.
+
+   If the hypothesis is true, the probability plot should be near-linear.
+
+   a measure of such linearity is given by the calculated probability
+   plot correlation coefficient.
+
+INPUT ARGUMENTS
+   X      The vector of (unsorted or sorted) observations.
+
+   N      The integer number of observations in the vector X.
+          NU should be positive. The maximum allowable value of N for
+          this subroutine is 7500.
+
+   NU     The integer number of degrees of freedom. NU should be positive.
+
+OUTPUT
+
+  A  one-page Chi-squared probability plot.
+
+EXAMPLES
+  Sample program:
+
+   program demo_chsplt
+   use M_datapac, only : chsplt
+   implicit none
+   ! call chsplt(x,y)
+   end program demo_chsplt
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+REFERENCES
+ * Wilk, Gnanadesikan, and Huyett, 'Probability Plots for the Gamma
+   Distribution', Technometrics, 1962, pages 1-15.
+ * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+   Eighteenth Conference on the Design of Experiments in Army Research
+   Development and Testing (Aberdeen, Maryland, October, 1972), pages
+   425-450.
+ * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
+   260-308.
+ * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+   pages 166-206.
+ * Hastings and Peacock, Statistical Distributions--A Handbook for Students
+   and Practitioners, 1975, pages 46-51.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+!     UPDATED         --FEBRUARY  1977.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CHSPLT(X,N,Nu)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in) :: N
+INTEGER,intent(in) :: Nu
+REAL(kind=wp) :: an, cc, hold, pp0025, pp025, pp975, pp9975, q, sum1,  sum2, sum3, tau, W, wbar, WS, ybar, yint, yslope, Y
+INTEGER       :: i, iupper
+!
+
+!---------------------------------------------------------------------
+DIMENSION Y(7500) , W(7500)
+COMMON /BLOCK2_${KIND}/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (W(1),WS(7501))
+ 
+   iupper = 7500
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 .OR. N>iupper ) THEN
+      WRITE (G_IO,99001) iupper
+      99001 FORMAT(' ***** FATAL ERROR--The second input argument to CHSPLT(3f) is outside the allowable (1,',&
+      & i0,') interval *****')
+      WRITE (G_IO,99007) N
+      RETURN
+   ELSEIF ( N==1 ) THEN
+      WRITE (G_IO,99002)
+      99002 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to CHSPLT(3f) has the value 1 *****')
+      RETURN
+   ELSE
+      IF ( Nu<=0 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** FATAL ERROR--The third  input argument to CHSPLT(3f) is non-positive *****')
+         WRITE (G_IO,99007) Nu
+         RETURN
+      ELSE
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to CHSPLT(3f) has all elements = ',&
+	 & E15.8,' *****')
+         RETURN
+      ENDIF
+!
+!-----START POINT-----------------------------------------------------
+ 
+ 50      an = N
+      !
+      !     SORT THE DATA
+      !
+      CALL SORT(X,N,Y)
+      !
+      !     GENERATE UNIFORM ORDER STATISTIC MEDIANS
+      !
+      CALL UNIMED(N,W)
+      !
+      !     COMPUTE CHI-SQUARED DISTRIBUTION ORDER STATISTIC MEDIANS
+      !
+      DO i = 1 , N
+         CALL CHSPPF(W(i),Nu,W(i))
+      ENDDO
+      !
+      !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
+      !     COMPUTE THE TAIL LENGTH MEASURE OF THE DISTRIBUTION.
+      !     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
+      !     AND THE SAMPLE SIZE.
+      !
+      CALL PLOT(Y,W,N)
+      q = .9975_wp
+      CALL CHSPPF(q,Nu,pp9975)
+      q = .0025_wp
+      CALL CHSPPF(q,Nu,pp0025)
+      q = .975_wp
+      CALL CHSPPF(q,Nu,pp975)
+      q = .025_wp
+      CALL CHSPPF(q,Nu,pp025)
+      tau = (pp9975-pp0025)/(pp975-pp025)
+      WRITE (G_IO,99005) Nu , tau , N
+
+      99005    FORMAT (' ',                                                   &
+      &         'Chi-squared probability plot with degrees of freedom = '&
+      &         ,I0,1X,'(TAU = ',E15.8,')',11X,'The sample size N = ',I0)
+      !
+      !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
+      !     COMPUTE LOCATION AND SCALE ESTIMATES
+      !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
+      !     THEN WRITE THEM OUT.
+      !
+      sum1 = 0.0_wp
+      sum2 = 0.0_wp
+      DO i = 1 , N
+         sum1 = sum1 + Y(i)
+         sum2 = sum2 + W(i)
+      ENDDO
+      ybar = sum1/an
+      wbar = sum2/an
+      sum1 = 0.0_wp
+      sum2 = 0.0_wp
+      sum3 = 0.0_wp
+      DO i = 1 , N
+         sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
+         sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
+         sum3 = sum3 + (W(i)-wbar)*(W(i)-wbar)
+      ENDDO
+      cc = sum2/SQRT(sum3*sum1)
+      yslope = sum2/sum3
+      yint = ybar - yslope*wbar
+      WRITE (G_IO,99006) cc , yint , yslope
+      99006    FORMAT (' ','Probability plot correlation coefficient = ',F8.5,&
+       &           5X,'Estimated intercept = ',E15.8,3X,                  &
+       &           'Estimated slope = ',E15.8)
+   ENDIF
+99007 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+ 
+END SUBROUTINE CHSPLT

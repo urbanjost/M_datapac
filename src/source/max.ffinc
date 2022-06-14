@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file max.3m_datapac.man
 NAME
-   max(3f) - [M_datapac:STATISTICS] MAX compute the maximum of a data vector
+   max(3f) - [M_datapac:VECTOR_OPERATION] MAX compute the maximum of a
+   data vector
 
 SYNOPSIS
       SUBROUTINE MAX(X,N,Iwrite,Xmax)
@@ -33,21 +34,21 @@ EXAMPLES
   Sample program:
 
    program demo_max
-   !use M_datapac, only : max, label
-   use M_datapac, only : intel_max=>max, label !  ifort (IFORT) 2021.3.0 20210609 bug
+   use M_datapac, only : max, label
+   !use M_datapac, only : intel_max=>max, label !  ifort (IFORT) 2021.3.0 20210609 bug
 
    implicit none
    real :: xmax
       call label('max')
-      call intel_max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
-      !call max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
+      !call intel_max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
+      call max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
       write(*,*)xmax
    end program demo_max
 
   Results:
-
-    THE MAXIMUM OF THE SET OF      5 OBSERVATIONS IS  0.40000000E+03
-      400.0000
+    
+    THE MAXIMUM OF THE SET OF 5 OBSERVATIONS IS  0.40000000E+03
+      400.000000    
 
 AUTHOR
    The original DATAPAC library was written by James Filliben of the
@@ -75,14 +76,14 @@ INTEGER i , Iwrite , N
 !
 IF ( N<1 ) THEN
    WRITE (G_IO,99001)
-   99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MAX    SUBROUTINE IS NON-POSITIVE *****')
+   99001    FORMAT (' ***** FATAL ERROR--The second input argument to MAX(3f) is non-positive *****')
    WRITE (G_IO,99002) N
-   99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+   99002    FORMAT (' ','***** The value of the argument is ',I0,' *****')
    RETURN
 ELSE
    IF ( N==1 ) THEN
       WRITE (G_IO,99003)
-      99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MAX SUBROUTINE HAS THE VALUE 1 *****')
+      99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to MAX(3f) has the value 1 *****')
       Xmax = X(1)
    ELSE
       hold = X(1)
@@ -90,9 +91,7 @@ ELSE
          IF ( X(i)/=hold ) GOTO 50
       ENDDO
       WRITE (G_IO,99004) hold
-      99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO THE MAX SUBROUTINE HAS ALL ELEMENTS = ', &
-      & g0, &
-      & ' *****')
+      99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--the first input argument (a vector) to MAX(3f) has all elements = ',g0,' *****')
       Xmax = X(1)
    ENDIF
 
@@ -109,5 +108,5 @@ ENDIF
    WRITE (G_IO,99005)
    99005 FORMAT (' ')
    WRITE (G_IO,99006) N , Xmax
-   99006 FORMAT (' ','THE MAXIMUM OF THE SET OF ',I0,' OBSERVATIONS IS ', e15.8)
+   99006 FORMAT (' ','The maximum of the set of ',I0,' observations is ', e15.8)
 end subroutine max

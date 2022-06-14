@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.1% of total for procedures.">19 statements</a>
+    title=" 0.1% of total for procedures.">21 statements</a>
      </li> 
      
      
@@ -210,11 +210,16 @@ public subroutine PARPPF(P, Gamma, Ppf)
 
     
     <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>parppf(3f) - [M_datapac:PERCENT_POINT] compute the Pareto percent point function
+<div class="codehilite"><pre><span></span><code>parppf(3f) - [M_datapac:PERCENT_POINT] compute the Pareto percent
+point function
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>   SUBROUTINE PARPPF(P,Gamma,Ppf)
+
+    REAL(kind=wp),intent(in)  :: P
+    REAL(kind=wp),intent(in)  :: Gamma
+    REAL(kind=wp),intent(out) :: Ppf
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
@@ -231,9 +236,16 @@ public subroutine PARPPF(P, Gamma, Ppf)
 <span class="nv">distribution</span>.
 </code></pre></div>
 
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> X   description of parameter
- Y   description of parameter
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code>P      The value (between 0.0 (inclusively) and 1.0 (exclusively))
+       at which the percent point function is to be evaluated.
+
+GAMMA  The value of the tail length parameter. GAMMA should be
+       positive.
+</code></pre></div>
+
+<h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">PPF</span>    <span class="nv">The</span> <span class="nv">percent</span> <span class="nv">point</span> <span class="nv">function</span> <span class="nv">value</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">Pareto</span> <span class="nv">distribution</span>
 </code></pre></div>
 
 <h2 id="examples">EXAMPLES</h2>
@@ -263,9 +275,9 @@ and Technology.
 <h2 id="references">REFERENCES</h2>
 <ul>
 <li>Johnson and Kotz, Continuous Univariate Distributions&ndash;1, 1970,
-     Pages 233-249.</li>
+     pages 233-249.</li>
 <li>Hastings and Peacock, Statistical Distributions&ndash;A Handbook for
-     Students and Practitioners, 1975, Page 102.</li>
+     Students and Practitioners, 1975, page 102.</li>
 </ul>
     
 
@@ -287,8 +299,8 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-p~65"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-p~65"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -302,8 +314,8 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-gamma~27"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-gamma~27"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -317,8 +329,8 @@ and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-ppf~36"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-ppf~36"></span>real(kind=wp),</td>
+  <td>intent(out)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -394,56 +406,30 @@ and Technology.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">PARPPF</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="nb">Gamma</span><span class="p">,</span><span class="n">Ppf</span><span class="p">)</span>
-<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="nb">Gamma</span> <span class="p">,</span> <span class="n">P</span> <span class="p">,</span> <span class="n">Ppf</span>
-<span class="c">!</span>
-<span class="c">!     INPUT ARGUMENTS--P      = THE  VALUE</span>
-<span class="c">!                                (BETWEEN 0.0 (INCLUSIVELY)</span>
-<span class="c">!                                AND 1.0 (EXCLUSIVELY))</span>
-<span class="c">!                                AT WHICH THE PERCENT POINT</span>
-<span class="c">!                                FUNCTION IS TO BE EVALUATED.</span>
-<span class="c">!                     --GAMMA  = THE  VALUE</span>
-<span class="c">!                                OF THE TAIL LENGTH PARAMETER.</span>
-<span class="c">!                                GAMMA SHOULD BE POSITIVE.</span>
-<span class="c">!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT</span>
-<span class="c">!                                POINT FUNCTION VALUE.</span>
-<span class="c">!     OUTPUT--THE  PERCENT POINT FUNCTION .</span>
-<span class="c">!             VALUE PPF FOR THE PARETO DISTRIBUTION</span>
-<span class="c">!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.</span>
-<span class="c">!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.</span>
-<span class="c">!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.</span>
-<span class="c">!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)</span>
-<span class="c">!                   AND 1.0 (EXCLUSIVELY).</span>
-<span class="c">!     MODE OF INTERNAL OPERATIONS--.</span>
-<span class="c">!     ORIGINAL VERSION--NOVEMBER  1975.</span>
-<span class="c">!</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">P</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="nb">Gamma</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">Ppf</span>
 <span class="c">!---------------------------------------------------------------------</span>
-<span class="c">!</span>
-<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
-<span class="c">!</span>
-      <span class="k">IF</span> <span class="p">(</span> <span class="n">P</span><span class="o">&lt;</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">OR</span><span class="p">.</span> <span class="n">P</span><span class="o">&gt;=</span><span class="mf">1.0_wp</span> <span class="p">)</span> <span class="k">THEN</span>
-<span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span>
-<span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE PARPPF SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****&#39;</span><span class="p">)</span>
-         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span> <span class="n">P</span>
-         <span class="n">Ppf</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
-         <span class="k">RETURN</span>
-<span class="k">      </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="nb">Gamma</span><span class="o">&lt;=</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="k">THEN</span>
-<span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span>
-<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARPPF SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS NON-POSITIVE *****&#39;</span><span class="p">)</span>
-         <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span> <span class="nb">Gamma</span>
-<span class="nb">         </span><span class="n">Ppf</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
-         <span class="k">RETURN</span>
-<span class="k">      ELSE</span>
-<span class="c">!</span>
-<span class="c">!-----START POINT-----------------------------------------------------</span>
-<span class="c">!</span>
-         <span class="n">Ppf</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0_wp</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0_wp</span><span class="o">/</span><span class="nb">Gamma</span><span class="p">)</span>
-      <span class="k">ENDIF</span>
-<span class="mi">99003</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
-<span class="c">!</span>
+   <span class="c">!</span>
+   <span class="c">!   CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
+   <span class="c">!</span>
+   <span class="k">IF</span> <span class="p">(</span> <span class="n">P</span><span class="o">&lt;</span><span class="mf">0.0_wp</span> <span class="p">.</span><span class="nb">OR</span><span class="p">.</span> <span class="n">P</span><span class="o">&gt;=</span><span class="mf">1.0_wp</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="k">      WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span>
+      <span class="mi">99001</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--The first  input argument to PARPPF(3f) is outside the allowable (0,1) interval *****&#39;</span><span class="p">)</span>
+      <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span> <span class="n">P</span>
+      <span class="n">Ppf</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+      <span class="k">RETURN</span>
+<span class="k">   </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="nb">Gamma</span><span class="o">&lt;=</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="k">THEN</span>
+<span class="k">      WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span>
+      <span class="mi">99002</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--The second input argument to PARPPF(3f) is non-positive *****&#39;</span><span class="p">)</span>
+      <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span> <span class="nb">Gamma</span>
+<span class="nb">      </span><span class="n">Ppf</span> <span class="o">=</span> <span class="mf">0.0_wp</span>
+      <span class="k">RETURN</span>
+<span class="k">   ELSE</span>
+<span class="k">      </span><span class="n">Ppf</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0_wp</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0_wp</span><span class="o">/</span><span class="nb">Gamma</span><span class="p">)</span>
+   <span class="k">ENDIF</span>
+
+<span class="mi">99003</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** The value of the argument is &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
 <span class="k">END SUBROUTINE </span><span class="n">PARPPF</span>
 </pre></div>
 
@@ -466,7 +452,7 @@ and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-11 06:31  
+             on 2022-06-13 23:09  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

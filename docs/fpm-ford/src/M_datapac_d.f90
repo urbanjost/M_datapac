@@ -248,7 +248,7 @@ contains
 !!
 !!   Results:
 !!##REFERENCES
-!!    Jenkins and Watts, Spectral Analysis and its Applications, 1968, Pages 5, 182.
+!!    Jenkins and Watts, Spectral Analysis and its Applications, 1968, pages 5, 182.
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James J. Filliben of the Statistical
@@ -410,20 +410,20 @@ end subroutine autoco
 !!
 !!   * Greenwood, 'A Fast Generator for Beta-distributed Random Variables',
 !!     Compstat 1974, Proceedings in Computational Statistics, Vienna,
-!!     September, 1974, Pages 19-27.
+!!     September, 1974, pages 19-27.
 !!
-!!   * Tocher, The Art of Simulation, 1963, Pages 24-27.
+!!   * Tocher, The Art of Simulation, 1963, pages 24-27.
 !!
-!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Pages 36-37.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, pages 36-37.
 !!
 !!   * Johnson and Kotz, Continuous Univariate Distributions --2, 1970,
-!!     Pages 37-56.
+!!     pages 37-56.
 !!
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook For
-!!     Students and Practitioners, 1975, Pages 30-35.
+!!     Students and Practitioners, 1975, pages 30-35.
 !!
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Page 952.
+!!     page 952.
 !     VERSION NUMBER--82.3
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -479,7 +479,7 @@ real(kind=wp),parameter :: sqrt3= 1.73205081_wp
 !     2) TRANSFORM THE NORMAL VARIATE TO AN APPROXIMATE
 !        GAMMA VARIATE USING THE WILSON-HILFERTY
 !        APPROXIMATION (SEE THE JOHNSON AND KOTZ
-!        REFERENCE, PAGE 176);
+!        REFERENCE, page 176);
 !     3) FORM THE REJECTION FUNCTION VALUE, BASED
 !        ON THE PROBABILITY DENSITY FUNCTION VALUE
 !        OF THE ACTUAL DISTRIBUTION OF THE PSEUDO-GAMMA
@@ -621,20 +621,20 @@ END SUBROUTINE BETRAN
 !!##REFERENCES
 !!   * Hastings and Peacock, Statistical
 !!     Distributions--A Handbook for Students and Practitioners, 1975,
-!!     Page 38.
+!!     page 38.
 !!   * National Bureau of Standards Applied Mathematics
-!!     Series 55, 1964, Page 945, Formulae 26.5.24 and 26.5.28, and
-!!     Page 929.
+!!     Series 55, 1964, page 945, Formulae 26.5.24 and 26.5.28, and
+!!     page 929.
 !!   * Johnson and Kotz, Discrete
-!!     Distributions, 1969, Pages 50-86, especially Pages 63-64.
+!!     Distributions, 1969, pages 50-86, especially pages 63-64.
 !!   * Feller, An Introduction to Probability
-!!     Theory and its Applications, Volume 1, Edition 2, 1957, Pages
+!!     Theory and its Applications, Volume 1, Edition 2, 1957, pages
 !!     135-142.
 !!   * Kendall and Stuart, The Advanced Theory of
-!!     Statistics, Volume 1, Edition 2, 1963, Pages 120-125.
+!!     Statistics, Volume 1, Edition 2, 1963, pages 120-125.
 !!   * Mood and Grable, Introduction to the Theory
-!!     of Statistics, Edition 2, 1963, Pages 64-69.
-!!   * Owen, Handbook of Statistical Tables, 1962, Pages 264-272.
+!!     of Statistics, Edition 2, 1963, pages 64-69.
+!!   * Owen, Handbook of Statistical Tables, 1962, pages 264-272.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --MAY       1977.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -937,22 +937,22 @@ END SUBROUTINE BINCDF
 !!    CC0-1.0
 !!##REFERENCES
 !!   * Johnson and Kotz, Discrete
-!!     Distributions, 1969, Pages 50-86,
-!!     especially Page 64, Formula 36.
+!!     Distributions, 1969, pages 50-86,
+!!     especially page 64, Formula 36.
 !!   * Hastings and Peacock, Statistical
 !!     Distributions--A Handbook for
 !!     Students and Practitioners, 1975,
-!!     Pages 36-41.
+!!     pages 36-41.
 !!   * National Bureau of Standards Applied Mathematics
-!!     Series 55, 1964, Page 929.
+!!     Series 55, 1964, page 929.
 !!   * Feller, An Introduction to Probability
 !!     Theory and Its Applications, Volume 1,
-!!     Edition 2, 1957, Pages 135-142.
+!!     Edition 2, 1957, pages 135-142.
 !!   * Kendall and Stuart, The Advanced Theory of
-!!     Statistics, Volume 1, Edition 2, 1963, Pages 120-125.
+!!     Statistics, Volume 1, Edition 2, 1963, pages 120-125.
 !!   * Mood and Grable, Introduction to the Theory
-!!     of Statistics, Edition 2, 1963, Pages 64-69.
-!!   * Owen, Handbook of Statistical Tables, 1962, PAGES 264-272.
+!!     of Statistics, Edition 2, 1963, pages 64-69.
+!!   * Owen, Handbook of Statistical Tables, 1962, pages 264-272.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -1046,7 +1046,7 @@ DOUBLE PRECISION :: dppar
 !     PERCENT POINT BY USE OF THE NORMAL APPROXIMATION
 !     TO THE BINOMIAL.
 !     (SEE JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS,
-!     PAGE 64, FORMULA 36).
+!     page 64, FORMULA 36).
 !
                      amean = an*Ppar
                      sd = SQRT(an*Ppar*(1.0_wp-Ppar))
@@ -1336,19 +1336,19 @@ END SUBROUTINE BINPPF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 50-86.
+!!   * Johnson and Kotz, Discrete Distributions, 1969, pages 50-86.
 !!   * Hastings and Peacock, Statistical Distributions,
 !!     A Handbook for Students and Practitioners, 1975,
-!!     Page 41.
+!!     page 41.
 !!   * Feller, An Introduction to Probability Theory and Its Applications,
-!!     Volume 1, Edition 2, 1957, Pages 135-142.
+!!     Volume 1, Edition 2, 1957, pages 135-142.
 !!   * National Bureau of Standards Applied Mathematics
-!!     Series 55, 1964, Page 929.
+!!     Series 55, 1964, page 929.
 !!   * Kendall and Stuart, The Advanced Theory of Statistics,
-!!     Volume 1, Edition 2, 1963, Pages 120-125.
+!!     Volume 1, Edition 2, 1963, pages 120-125.
 !!   * Mood and Grable, Introduction to the Theory of Statistics,
-!!     Edition 2, 1963, Pages 64-69.
-!!   * Tocher, The Art Of Simulation, 1963, Pages 39-40.
+!!     Edition 2, 1963, pages 64-69.
+!!   * Tocher, The Art Of Simulation, 1963, pages 39-40.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -1649,7 +1649,7 @@ end subroutine caucdf
 !!##REFERENCES
 !!
 !!  * Johnson and Kotz, Continuous Univariate Distributions -- 1, 1970,
-!!    Pages 154-165.
+!!    pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -1734,11 +1734,11 @@ end subroutine caupdf
 !!   * Filliben, 'Techniques for Tail Length Analysis', proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army Research
 !!     Development and Testing (Aberdeen, Maryland, October, 1972),
-!!     Pages 425-450.
-!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!     pages 425-450.
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
 !!     260-308.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 154-165.
+!!     pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -1905,11 +1905,11 @@ END SUBROUTINE CAUPLT
 !!    * Filliben, Simple and Robust Linear Estimation
 !!      of the Location Parameter of a Symmetric
 !!      Distribution (Unpublished PH.D. Dissertation,
-!!      Princeton University), 1969, Pages 21-44, 229-231.
+!!      Princeton University), 1969, pages 21-44, 229-231.
 !!    * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
-!!      1970, Pages 28-31.
+!!      1970, pages 28-31.
 !!    * Johnson and Kotz, Continuous Univariate Distributions
-!!      -- 1, 1970, PAGES 154-165.
+!!      -- 1, 1970, pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -1942,7 +1942,11 @@ END SUBROUTINE CAUPPF
 !!
 !!##SYNOPSIS
 !!
-!! SUBROUTINE CAURAN(N,Iseed,X)
+!!       SUBROUTINE CAURAN(N,Iseed,X)
+!!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
 !!
 !!##DESCRIPTION
 !!    CAURAN(3f) generates a random sample of size N from the Cauchy
@@ -1953,112 +1957,164 @@ END SUBROUTINE CAUPPF
 !!
 !!        f(X) = (1/pi)*(1/(1+X*X))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!    N     The desired integer number of random numbers to be generated.
+!!
+!!   ISEED  An integer seed value. Should be set to a non-negative value
 !!          to start a new sequence of values. Will be set to -1 on return
 !!          to indicate the next call should continue the current random
 !!          sequence walk.
 !!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X     A vector (of dimension at least N) into which the generated
+!!          random sample of size N function value for the Cauchy
+!!          distribution will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_cauran
-!!    use M_datapac, only : cauran
+!!    use m_datapac, only : cauran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call cauran(x,y)
+!!    integer,parameter :: n=100
+!!    real              :: x(n)
+!!    integer           :: iseed
+!!       call label('cauran')
+!!       iseed=12345
+!!       call cauran(n,iseed,x)
+!!       write(*,*)x
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_cauran
 !!
 !!   Results:
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.8386762E+02 -                                                 X
+!!      0.7943768E+02 I
+!!      0.7500773E+02 I
+!!      0.7057778E+02 I
+!!      0.6614783E+02 I
+!!      0.6171789E+02 I
+!!      0.5728794E+02 -
+!!      0.5285799E+02 I
+!!      0.4842804E+02 I
+!!      0.4399810E+02 I
+!!      0.3956815E+02 I
+!!      0.3513820E+02 I
+!!      0.3070825E+02 -
+!!      0.2627831E+02 I
+!!      0.2184836E+02 I
+!!      0.1741841E+02 I
+!!      0.1298846E+02 I     X    X
+!!      0.8558517E+01 I            X  X                   X
+!!      0.4128571E+01 -                X X X  X        X   X      XX XX
+!!     -0.3013763E+00 I  XXX XXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.4731323E+01 I  XX       X  X  X   X   XX      X     X
+!!     -0.9161270E+01 I
+!!     -0.1359122E+02 I       X
+!!     -0.1802116E+02 I
+!!     -0.2245111E+02 -     X                            X      X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.2575E+02  0.5050E+02  0.7525E+02  0.1000E+03
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.8386762E+02 -                                                  X
+!!      0.7943768E+02 I
+!!      0.7500773E+02 I
+!!      0.7057778E+02 I
+!!      0.6614783E+02 I
+!!      0.6171789E+02 I
+!!      0.5728794E+02 -
+!!      0.5285799E+02 I
+!!      0.4842804E+02 I
+!!      0.4399810E+02 I
+!!      0.3956815E+02 I
+!!      0.3513820E+02 I
+!!      0.3070825E+02 -
+!!      0.2627831E+02 I
+!!      0.2184836E+02 I
+!!      0.1741841E+02 I
+!!      0.1298846E+02 I                                                 XX
+!!      0.8558517E+01 I                                                XX
+!!      0.4128571E+01 -                                           XXXXX
+!!     -0.3013763E+00 I         XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.4731323E+01 I    XXXXXX
+!!     -0.9161270E+01 I
+!!     -0.1359122E+02 I   X
+!!     -0.1802116E+02 I
+!!     -0.2245111E+02 -  XX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.2575E+02  0.5050E+02  0.7525E+02  0.1000E+03
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
 !!    Statistical Engineering Division, National Institute of Standards
 !!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!  * tocher, the art of simulation, 1963, page 15.
-!!  * hammersley and handscomb, monte carlo methods, 1964, page 36.
-!!  * filliben, simple and robust linear estimation of the location parameter
-!!    of a symmetric distribution (unpublished ph.d. dissertation, princeton
-!!    university), 1969, page 231.
-!!  * filliben, 'the percent point function', (unpublished manuscript),
+!!  * Tocher, The Art of Simulation, 1963, page 15.
+!!  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+!!  * Filliben, Simple and Robust Linear Estimation of the Location Parameter
+!!    of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
+!!    University), 1969, page 231.
+!!  * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
 !!    1970, pages 28-31.
-!!  * johnson and kotz, continuous univariate distributions--1, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!    pages 154-165.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE CAURAN(N,Iseed,X)
-REAL(kind=wp) :: arg , pi , X
-INTEGER :: i , Iseed , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FUNCTION VALUE FOR THE CAUCHY DISTRIBUTION
-!             WITH MEDIAN = 0 AND 75% POINT = 1.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
-!---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!-----DATA STATEMENTS-------------------------------------------------
-!
-      DATA pi/3.14159265359_wp/
-!
-!-----START POINT-----------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CAURAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
-      ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
-         CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N CAUCHY RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
-         DO i = 1 , N
-            arg = pi*X(i)
-            X(i) = -COS(arg)/SIN(arg)
-         ENDDO
-      ENDIF
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CAURAN(N,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: arg , pi
+INTEGER       :: i
+
+DATA pi/3.14159265359_wp/
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to CAURAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      !
+      !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+      !
+      CALL UNIRAN(N,Iseed,X)
+      !
+      !     GENERATE N CAUCHY RANDOM NUMBERS
+      !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+      !
+      DO i = 1 , N
+         arg = pi*X(i)
+         X(i) = -COS(arg)/SIN(arg)
+      ENDDO
+   ENDIF
+
 END SUBROUTINE CAURAN
 !>
 !!##NAME
@@ -2120,11 +2176,11 @@ END SUBROUTINE CAURAN
 !!
 !!  * Filliben, Simple and Robust Linear Estimation of the Location Parameter
 !!    of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
-!!    University), 1969, Pages 21-44, 229-231.
+!!    University), 1969, pages 21-44, 229-231.
 !!  * Filliben, 'The Percent Point Function', (Unpublished manuscript),
-!!    1970, Pages 28-31.
+!!    1970, pages 28-31.
 !!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!    Pages 154-165.
+!!    pages 154-165.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -2204,12 +2260,12 @@ END SUBROUTINE CAUSF
 !!    CC0-1.0
 !!##REFERENCES
 !!  * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!    Page 941, Formulae 26.4.4 and 26.4.5.
+!!    page 941, Formulae 26.4.4 and 26.4.5.
 !!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!    Page 176, Formula 28, and Page 180, Formula 33.1.
-!!  * Owen, Handbook of Statistical Tables, 1962, Pages 50-55.
+!!    page 176, Formula 28, and page 180, Formula 33.1.
+!!  * Owen, Handbook of Statistical Tables, 1962, pages 50-55.
 !!  * Pearson and Hartley, Biometrika Tables for Statisticians, Volume 1,
-!!    1954, Pages 122-131.
+!!    1954, pages 122-131.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -2310,7 +2366,7 @@ DATA b43/17.0D0/
 !     TREAT THE SMALL AND MODERATE DEGREES OF FREEDOM CASE
 !     (THAT IS, WHEN NU IS SMALLER THAN 1000).
 !     METHOD UTILIZED--EXACT FINITE SUM
-!     (SEE AMS 55, PAGE 941, FORMULAE 26.4.4 AND 26.4.5).
+!     (SEE AMS 55, page 941, FORMULAE 26.4.4 AND 26.4.5).
 !
                         chi = DSQRT(dx)
                         ievodd = Nu - 2*(Nu/2)
@@ -2351,7 +2407,7 @@ DATA b43/17.0D0/
 !     (THAT IS, WHEN NU IS EQUAL TO OR GREATER THAN 1000)
 !     AND X IS LESS THAN OR EQUAL TO NU.
 !     METHOD UTILIZED--WILSON-HILFERTY APPROXIMATION
-!     (SEE JOHNSON AND KOTZ, VOLUME 1, PAGE 176, FORMULA 28).
+!     (SEE JOHNSON AND KOTZ, VOLUME 1, page 176, FORMULA 28).
 !
                         dfact = 4.5D0*dnu
                         u = (((dx/dnu)**dpower)-1.0D0+(1.0D0/dfact))    &
@@ -2365,7 +2421,7 @@ DATA b43/17.0D0/
 !     (THAT IS, WHEN NU IS EQUAL TO OR GREATER THAN 1000)
 !     AND X IS LARGER THAN NU.
 !     METHOD UTILIZED--HILL'S ASYMPTOTIC EXPANSION
-!     (SEE JOHNSON AND KOTZ, VOLUME 1, PAGE 180, FORMULA 33.1).
+!     (SEE JOHNSON AND KOTZ, VOLUME 1, page 180, FORMULA 33.1).
 !
                         dw = DSQRT(dx-dnu-dnu*DLOG(dx/dnu))
                         danu = DSQRT(2.0D0/dnu)
@@ -2406,39 +2462,52 @@ DATA b43/17.0D0/
 99999 END SUBROUTINE CHSCDF
 !>
 !!##NAME
-!!    chsplt(3f) - [M_datapac:LINE_PLOT] generate a chi-square probability
+!!    chsplt(3f) - [M_datapac:LINE_PLOT] generate a Chi-square probability
 !!    plot
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE CHSPLT(X,N,Nu)
 !!
-!!##DESCRIPTION
-!!    chsplt(3f) generates a chi-squared probability plot (with integer
-!!    degrees of freedom parameter value = nu).
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in) :: N
+!!        INTEGER,intent(in) :: Nu
 !!
-!!    the prototype chi-squared distribution used herein is defined for all
-!!    non-negative x, and its probability density function is given in the
+!!##DESCRIPTION
+!!    Chsplt(3f) generates a Chi-squared probability plot (with integer
+!!    degrees of freedom parameter value = NU).
+!!
+!!    The prototype Chi-squared distribution used herein is defIned for all
+!!    non-negative X, and its probability density function is given in the
 !!    references below.
 !!
-!!    as used herein, a probability plot for a distribution is a plot
+!!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the chi-squared probability plot is useful in graphically testing
+!!    The Chi-squared probability plot is useful in graphically testing
 !!    the composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which
-!!    the data have been randomly drawn is the chi-squared distribution
-!!    with degrees of freedom parameter value = nu.
+!!    the data have been randomly drawn is the Chi-squared distribution
+!!    with degrees of freedom parameter value = NU.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
 !!    a measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    X      The vector of (unsorted or sorted) observations.
+!!
+!!    N      The integer number of observations in the vector X.
+!!           NU should be positive. The maximum allowable value of N for
+!!           this subroutine is 7500.
+!!
+!!    NU     The integer number of degrees of freedom. NU should be positive.
+!!
+!!##OUTPUT
+!!
+!!   A  one-page Chi-squared probability plot.
 !!
 !!##EXAMPLES
 !!
@@ -2453,8 +2522,9 @@ DATA b43/17.0D0/
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
@@ -2462,160 +2532,138 @@ DATA b43/17.0D0/
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  * wilk, gnanadesikan, and huyett, 'probability plots for the gamma
-!!    distribution', technometrics, 1962, pages 1-15.
-!!  * filliben, 'techniques for tail length analysis', proceedings of the
-!!    eighteenth conference on the design of experiments in army research
-!!    development and testing (aberdeen, maryland, october, 1972), pages
+!!  * Wilk, Gnanadesikan, and Huyett, 'Probability Plots for the Gamma
+!!    Distribution', Technometrics, 1962, pages 1-15.
+!!  * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!    Eighteenth Conference on the Design of Experiments in Army Research
+!!    Development and Testing (Aberdeen, Maryland, October, 1972), pages
 !!    425-450.
-!!  * hahn and shapiro, statistical methods in engineering, 1967, pages
+!!  * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
 !!    260-308.
-!!  * johnson and kotz, continuous univariate distributions--1, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!    pages 166-206.
-!!  * hastings and peacock, statistical distributions--a handbook for students
-!!    and practitioners, 1975, pages 46-51.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE CHSPLT(X,N,Nu)
-REAL(kind=wp) :: an , cc , hold , pp0025 , pp025 , pp975 , pp9975 , q , sum1 ,&
-     &     sum2 , sum3 , tau , W , wbar , WS , X , Y , ybar , yint ,    &
-     &     yslope
-INTEGER i , iupper , N , Nu
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --NU     = THE INTEGER NUMBER OF DEGREES
-!                                OF FREEDOM.
-!                                NU SHOULD BE POSITIVE.
-!     OUTPUT--A ONE-PAGE CHI-SQUARED PROBABILITY PLOT.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!                 --NU SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, CHSPPF, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--.
+!!  * Hastings and Peacock, Statistical Distributions--A Handbook for Students
+!!    and Practitioners, 1975, pages 46-51.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CHSPLT(X,N,Nu)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in) :: N
+INTEGER,intent(in) :: Nu
+REAL(kind=wp) :: an, cc, hold, pp0025, pp025, pp975, pp9975, q, sum1,  sum2, sum3, tau, W, wbar, WS, ybar, yint, yslope, Y
+INTEGER       :: i, iupper
 !
+
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (W(1),WS(7501))
-!
-      iupper = 7500
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
-         WRITE (G_IO,99007) N
-         RETURN
-      ELSEIF ( N==1 ) THEN
-         WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE CHSP&
-     &LT SUBROUTINE HAS THE VALUE 1 *****')
+DIMENSION Y(7500) , W(7500)
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (W(1),WS(7501))
+
+   iupper = 7500
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 .OR. N>iupper ) THEN
+      WRITE (G_IO,99001) iupper
+      99001 FORMAT(' ***** FATAL ERROR--The second input argument to CHSPLT(3f) is outside the allowable (1,',&
+      & i0,') interval *****')
+      WRITE (G_IO,99007) N
+      RETURN
+   ELSEIF ( N==1 ) THEN
+      WRITE (G_IO,99002)
+      99002 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to CHSPLT(3f) has the value 1 *****')
+      RETURN
+   ELSE
+      IF ( Nu<=0 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** FATAL ERROR--The third  input argument to CHSPLT(3f) is non-positive *****')
+         WRITE (G_IO,99007) Nu
          RETURN
       ELSE
-         IF ( Nu<=0 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE CHSPLT SUBROU&
-     &TINE IS NON-POSITIVE *****')
-            WRITE (G_IO,99007) Nu
-            RETURN
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE CHSPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            RETURN
-         ENDIF
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to CHSPLT(3f) has all elements = ',&
+         & E15.8,' *****')
+         RETURN
+      ENDIF
 !
 !-----START POINT-----------------------------------------------------
-!
+
  50      an = N
-!
-!     SORT THE DATA
-!
-         CALL SORT(X,N,Y)
-!
-!     GENERATE UNIFORM ORDER STATISTIC MEDIANS
-!
-         CALL UNIMED(N,W)
-!
-!     COMPUTE CHI-SQUARED DISTRIBUTION ORDER STATISTIC MEDIANS
-!
-         DO i = 1 , N
-            CALL CHSPPF(W(i),Nu,W(i))
-         ENDDO
-!
-!     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
-!     COMPUTE THE TAIL LENGTH MEASURE OF THE DISTRIBUTION.
-!     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
-!     AND THE SAMPLE SIZE.
-!
-         CALL PLOT(Y,W,N)
-         q = .9975_wp
-         CALL CHSPPF(q,Nu,pp9975)
-         q = .0025_wp
-         CALL CHSPPF(q,Nu,pp0025)
-         q = .975_wp
-         CALL CHSPPF(q,Nu,pp975)
-         q = .025_wp
-         CALL CHSPPF(q,Nu,pp025)
-         tau = (pp9975-pp0025)/(pp975-pp025)
-         WRITE (G_IO,99005) Nu , tau , N
-!
-99005    FORMAT (' ',                                                   &
-     &         'CHI-SQUARED PROBABILITY PLOT WITH DEGREES OF FREEDOM = '&
-     &         ,I0,1X,'(TAU = ',E15.8,')',11X,'THE SAMPLE SIZE N = ',I0)
-!
-!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
-!     COMPUTE LOCATION AND SCALE ESTIMATES
-!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
-!     THEN WRITE THEM OUT.
-!
-         sum1 = 0.0_wp
-         sum2 = 0.0_wp
-         DO i = 1 , N
-            sum1 = sum1 + Y(i)
-            sum2 = sum2 + W(i)
-         ENDDO
-         ybar = sum1/an
-         wbar = sum2/an
-         sum1 = 0.0_wp
-         sum2 = 0.0_wp
-         sum3 = 0.0_wp
-         DO i = 1 , N
-            sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
-            sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
-            sum3 = sum3 + (W(i)-wbar)*(W(i)-wbar)
-         ENDDO
-         cc = sum2/SQRT(sum3*sum1)
-         yslope = sum2/sum3
-         yint = ybar - yslope*wbar
-         WRITE (G_IO,99006) cc , yint , yslope
-99006    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
-     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
-     &           'ESTIMATED SLOPE = ',E15.8)
-      ENDIF
-99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-!
+      !
+      !     SORT THE DATA
+      !
+      CALL SORT(X,N,Y)
+      !
+      !     GENERATE UNIFORM ORDER STATISTIC MEDIANS
+      !
+      CALL UNIMED(N,W)
+      !
+      !     COMPUTE CHI-SQUARED DISTRIBUTION ORDER STATISTIC MEDIANS
+      !
+      DO i = 1 , N
+         CALL CHSPPF(W(i),Nu,W(i))
+      ENDDO
+      !
+      !     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.
+      !     COMPUTE THE TAIL LENGTH MEASURE OF THE DISTRIBUTION.
+      !     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION
+      !     AND THE SAMPLE SIZE.
+      !
+      CALL PLOT(Y,W,N)
+      q = .9975_wp
+      CALL CHSPPF(q,Nu,pp9975)
+      q = .0025_wp
+      CALL CHSPPF(q,Nu,pp0025)
+      q = .975_wp
+      CALL CHSPPF(q,Nu,pp975)
+      q = .025_wp
+      CALL CHSPPF(q,Nu,pp025)
+      tau = (pp9975-pp0025)/(pp975-pp025)
+      WRITE (G_IO,99005) Nu , tau , N
+
+      99005    FORMAT (' ',                                                   &
+      &         'Chi-squared probability plot with degrees of freedom = '&
+      &         ,I0,1X,'(TAU = ',E15.8,')',11X,'The sample size N = ',I0)
+      !
+      !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
+      !     COMPUTE LOCATION AND SCALE ESTIMATES
+      !     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.
+      !     THEN WRITE THEM OUT.
+      !
+      sum1 = 0.0_wp
+      sum2 = 0.0_wp
+      DO i = 1 , N
+         sum1 = sum1 + Y(i)
+         sum2 = sum2 + W(i)
+      ENDDO
+      ybar = sum1/an
+      wbar = sum2/an
+      sum1 = 0.0_wp
+      sum2 = 0.0_wp
+      sum3 = 0.0_wp
+      DO i = 1 , N
+         sum1 = sum1 + (Y(i)-ybar)*(Y(i)-ybar)
+         sum2 = sum2 + (Y(i)-ybar)*(W(i)-wbar)
+         sum3 = sum3 + (W(i)-wbar)*(W(i)-wbar)
+      ENDDO
+      cc = sum2/SQRT(sum3*sum1)
+      yslope = sum2/sum3
+      yint = ybar - yslope*wbar
+      WRITE (G_IO,99006) cc , yint , yslope
+      99006    FORMAT (' ','Probability plot correlation coefficient = ',F8.5,&
+       &           5X,'Estimated intercept = ',E15.8,3X,                  &
+       &           'Estimated slope = ',E15.8)
+   ENDIF
+99007 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+
 END SUBROUTINE CHSPLT
 !>
 !!##NAME
@@ -2661,7 +2709,7 @@ END SUBROUTINE CHSPLT
 !!    digits for all tested P in the range P = .001 to P = .999.  for P =
 !!    .95 And smaller, The agreement was even better--7 significant digits.
 !!    (Note that the tabulated values given in the Wilk, Gnanadesikan,
-!!    and Huyett reference below, Page 20, are in error for at least the
+!!    and Huyett reference below, page 20, are in error for at least the
 !!    GAMMA = 1 case-- The worst detected error was agreement to only 3
 !!    significant digits (in their 8 significant digit table) for P = .999.)
 !!
@@ -2692,9 +2740,9 @@ END SUBROUTINE CHSPLT
 !!  * Wilk, gnanadesikan, and huyett, 'probability plots for the gamma
 !!    Distribution', technometrics, 1962, pages 1-15, especially pages 3-5.
 !!  * National bureau of standards applied mathematics series 55, 1964,
-!!    Page 257, formula 6.1.41, and pages 940-943.
+!!    page 257, formula 6.1.41, and pages 940-943.
 !!  * Johnson and kotz, continuous univariate distributions--1, 1970,
-!!    Pages 166-206.
+!!    pages 166-206.
 !!  * Hastings and peacock, statistical distributions--a handbook for
 !!    Students and practitioners, 1975, pages 46-51.
 !     ORIGINAL VERSION--SEPTEMBER 1975.
@@ -2813,7 +2861,7 @@ DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
 !     PERCENT POINT X VALUE AS DEFINED IN EITHER OF THE 2
 !     ITERATION LOOPS IN THE ABOVE CODE.
 !
-!     COMPUTE T-SUB-Q AS DEFINED ON PAGE 4 OF THE WILK, GNANADESIKAN,
+!     COMPUTE T-SUB-Q AS DEFINED ON page 4 OF THE WILK, GNANADESIKAN,
 !     AND HUYETT REFERENCE
 !
  500  sum = 1.0D0/dgamma
@@ -2873,118 +2921,172 @@ END SUBROUTINE CHSPPF
 !!
 !!       SUBROUTINE CHSRAN(N,Nu,Iseed,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(in)        :: Nu
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
 !!    CHSRAN(3f) generates a random sample of size n from the chi-squared
 !!    distribution with integer degrees of freedom parameter = NU.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    N      The desired integer number of random numbers to be generated.
+!!
+!!    NU     The integer degrees of freedom (parameter) for the chi-squared
+!!           distribution. NU should be a positive integer variable.
+!!
+!!    ISEED  An integer seed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!! --X      A vector (of dimension at least N) into which the generated
+!!          random sample of size N from the chi-squared distribution will
+!!          be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_chsran
-!!    use M_datapac, only : chsran
+!!    use m_datapac, only : chsran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call chsran(x,y)
+!!    integer,parameter :: n=4000
+!!    integer           :: iseed
+!!    integer           :: Nu
+!!    real              :: x(n)
+!!       call label('chsran')
+!!       Nu=8
+!!       iseed=12345
+!!       call chsran(N,Nu,Iseed,X)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_chsran
 !!
 !!   Results:
 !!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.3098298E+02 -                                                  X
+!!      0.2972390E+02 I
+!!      0.2846483E+02 I
+!!      0.2720575E+02 I         X
+!!      0.2594668E+02 I        X                 X
+!!      0.2468760E+02 I
+!!      0.2342853E+02 -      X  X                                     X
+!!      0.2216945E+02 I   X             X  X          X              X  X
+!!      0.2091037E+02 I     X     X  X   X X     XX   X  X  XX       X
+!!      0.1965130E+02 I    XXX XX X  XX  X XXX  X     XX  X   XX    X
+!!      0.1839222E+02 I    XXX  X X  XXXXXXX XXX XXX XXXX XX X   X   X XXX
+!!      0.1713315E+02 I   XX X XXX XX XXXX XXXXX XXXX XXX  XXXXX  XXX XX
+!!      0.1587407E+02 -  XXXXXX XXXXXX XX XXXX XX XXX  X  XX XXXX XX XXXX
+!!      0.1461500E+02 I   XXXXXXXXX XX XXXXXXXXX XX XXX XXXXXX X XXXXXXXX
+!!      0.1335592E+02 I  X XXXXX XXXXXXX XXX XXX XX XXXXXXX XXXXXXXX XXXX
+!!      0.1209685E+02 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.1083777E+02 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.9578695E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.8319620E+01 -   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.7060543E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.5801468E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.4542393E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.3283318E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.2024242E+01 I  XXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.7651675E+00 -   X X X        X      XX  X   XXX X XX    X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.3098298E+02 -                                                  X
+!!      0.2972390E+02 I
+!!      0.2846483E+02 I
+!!      0.2720575E+02 I                                                  X
+!!      0.2594668E+02 I                                                  X
+!!      0.2468760E+02 I
+!!      0.2342853E+02 -                                                  X
+!!      0.2216945E+02 I                                                  X
+!!      0.2091037E+02 I                                                  X
+!!      0.1965130E+02 I                                                 XX
+!!      0.1839222E+02 I                                                 X
+!!      0.1713315E+02 I                                                XX
+!!      0.1587407E+02 -                                               XX
+!!      0.1461500E+02 I                                              XX
+!!      0.1335592E+02 I                                            XXX
+!!      0.1209685E+02 I                                         XXXX
+!!      0.1083777E+02 I                                      XXXX
+!!      0.9578695E+01 I                                 XXXXXX
+!!      0.8319620E+01 -                            XXXXXX
+!!      0.7060543E+01 I                     XXXXXXXX
+!!      0.5801468E+01 I               XXXXXXX
+!!      0.4542393E+01 I         XXXXXXX
+!!      0.3283318E+01 I    XXXXXX
+!!      0.2024242E+01 I  XXX
+!!      0.7651675E+00 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!  * tocher, the art of simulation, 1963, pages 34-35.
-!!  * mood and grable, introduction to the theory of statistics, 1963,
+!!  * Tocher, The Art of Simulation, 1963, pages 34-35.
+!!  * Mood and Grable, Introduction to the Theory of Statistics, 1963,
 !!    pages 226-227.
-!!  * johnson and kotz, continuous univariate distributions--1, 1970,
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!    page 171.
-!!  * hastings and peacock, statistical distributions--a handbook for students
-!!    and practitioners, 1975, page 48.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE CHSRAN(N,Nu,Iseed,X)
-REAL(kind=wp) :: arg1 , arg2 , pi , sum , X , y , z
-INTEGER i , Iseed , j , N , Nu
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --NU     = THE INTEGER DEGREES OF FREEDOM
-!                                (PARAMETER) FOR THE CHI-SQUARED
-!                                DISTRIBUTION.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE CHI-SQUARED DISTRIBUTION
-!             WITH DEGREES OF FREEDOM PARAMETER = NU.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--.
+!!  * Hastings and Peacock, Statistical Distributions--A Handbook for Students
+!!    and Practitioners, 1975, page 48.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--FEBRUARY  1975.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CHSRAN(N,Nu,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(in)        :: Nu
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: arg1 , arg2 , sum , y , z
+INTEGER i , j
 !
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+DIMENSION y(2) , z(2)
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION y(2) , z(2)
-!
-!---------------------------------------------------------------------
-!
-!-----DATA STATEMENTS-------------------------------------------------
-!
-      DATA pi/3.14159265359_wp/
-!
-!-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE CHSRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to CHSRAN(3f) is non-positive *****')
          WRITE (G_IO,99003) N
          RETURN
       ELSEIF ( Nu<=0 ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CHSRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--The second input argument to CHSRAN(3f) is non-positive *****')
          WRITE (G_IO,99003) Nu
          RETURN
       ELSE
 !
-!     GENERATE N CHI-SQUARED RANDOM NUMBERS
-!     USING THE DEFINITION THAT
-!     A CHI-SQUARED VARIATE WITH NU DEGREES OF FREEDOM
-!     EQUALS THE SUM OF NU SQUARED NORMAL VARIATES.
-!     FIRST GENERATE 2 UNIFORM (0,1) RANDOM NUMBERS,
-!     THEN GENERATE 2 NORMAL RANDOM NUMBERS,
+!     GENERATE N CHI-SQUARED RANDOM NUMBERS USING THE DEFINITION THAT
+!     A CHI-SQUARED VARIATE WITH NU DEGREES OF FREEDOM EQUALS THE SUM OF NU SQUARED NORMAL VARIATES.
+!     FIRST GENERATE 2 UNIFORM (0,1) RANDOM NUMBERS, THEN GENERATE 2 NORMAL RANDOM NUMBERS,
 !     THEN FORM THE SUM OF SQUARED NORMAL RANDOM NUMBERS.
 !
          DO i = 1 , N
@@ -2992,7 +3094,7 @@ INTEGER i , Iseed , j , N , Nu
             DO j = 1 , Nu , 2
                CALL UNIRAN(2,Iseed,y)
                arg1 = -2.0_wp*LOG(y(1))
-               arg2 = 2.0_wp*pi*y(2)
+               arg2 = 2.0_wp*G_pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
                sum = sum + z(1)*z(1)
@@ -3001,22 +3103,28 @@ INTEGER i , Iseed , j , N , Nu
             X(i) = sum
          ENDDO
       ENDIF
-99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+99003 FORMAT (' ','***** The value of the argument is ',I0,' *****')
 !
 END SUBROUTINE CHSRAN
 !>
 !!##NAME
-!!    code(3f) - [M_datapac:STATISTICS] code the elements of a vector
+!!    code(3f) - [M_datapac:VECTOR_OPERATIONS] code the elements of a vector
 !!    (1 for the minimum, 2 for the next larger value, and so on)
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE CODE(X,N,Y)
 !!
+!!        REAL(kind=wp),intent(in)  :: X(:)
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(out) :: Y(:)
+!!
 !!##DESCRIPTION
 !!
-!!    code(3f) codes the elements of the input vector x and puts the coded
-!!    values into the output vector y.
+!!    CODE(3f) codes the elements of the input vector X and puts the coded
+!!    values into the output vector Y. This essentially ranks the array
+!!    elements so they can be accessed in ascending order like RANK(3f),
+!!    but allowing duplicate ranks.
 !!
 !!    The coding is as follows--
 !!
@@ -3025,9 +3133,23 @@ END SUBROUTINE CHSRAN
 !!     *  the next larger value as 3.0,
 !!     *  etc.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X   The vector of observations to be coded. The input vector X
+!!        remains unaltered.
+!!
+!!    N   The integer number of observations in the vector X. The maximum
+!!        allowable value of N for this subroutine is 15000.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    Y   The vector Y which will contain the coded values corresponding
+!!        to the observations in the vector X. It must be at least as large
+!!        as X.
+!!
+!!          o All occurrances of the minimum are coded as 1.0;
+!!          o All occurances of the next larger value are coded as 2.0;
+!!          o All occurances of the next larger value are coded as 3.0, etc.
 !!
 !!##EXAMPLES
 !!
@@ -3036,158 +3158,218 @@ END SUBROUTINE CHSRAN
 !!    program demo_code
 !!    use M_datapac, only : code
 !!    implicit none
-!!    ! call code(x,y)
+!!    integer,parameter            :: isz=20
+!!    real                         :: vals(isz)
+!!    real                         :: rndx(isz)
+!!    integer                      :: i
+!!       write(*,*)' initializing array with ',isz,' random numbers'
+!!       call random_seed()
+!!       CALL RANDOM_NUMBER(vals)
+!!       vals=vals*450000.0
+!!       ! make sure some duplicates
+!!       vals(3)=vals(6)
+!!       vals(4)=vals(15)
+!!
+!!       call code(vals,isz,rndx) ! code data
+!!       ! check order
+!!       write(*,*)
+!!       write(*,'(2(5x,g0.10,1x))')'Values','Code',(vals(i),nint(rndx(i)),i=1,isz)
+!!
 !!    end program demo_code
 !!
 !!   Results:
 !!
+!!     > initializing array with           20  random numbers
+!!     >
+!!     > Output from the code subroutine
+!!     > Number of distinct code values =       18
+!!     >
+!!     >         Value     Coded Value
+!!     >    3137.9548340          1.
+!!     >   39334.0585938          2.
+!!     >   58048.1054688          3.
+!!     >   60169.2890625          4.
+!!     >   61479.1015625          5.
+!!     >   92335.1250000          6.
+!!     >  101141.3671875          7.
+!!     >  107306.5859375          8.
+!!     >  135199.7343750          9.
+!!     >  185223.0625000         10.
+!!     >  214747.2656250         11.
+!!     >  251820.6718750         12.
+!!     >  267047.5000000         13.
+!!     >  277210.9062500         14.
+!!     >  296296.5625000         15.
+!!     >  382931.3437500         16.
+!!     >  414374.2187500         17.
+!!     >  427620.9375000         18.
+!!     >
+!!     >    Values      Code
+!!     >    277210.9062      14
+!!     >    60169.28906      4
+!!     >    101141.3672      7
+!!     >    382931.3438      16
+!!     >    61479.10156      5
+!!     >    101141.3672      7
+!!     >    296296.5625      15
+!!     >    214747.2656      11
+!!     >    3137.954834      1
+!!     >    267047.5000      13
+!!     >    107306.5859      8
+!!     >    427620.9375      18
+!!     >    414374.2188      17
+!!     >    251820.6719      12
+!!     >    382931.3438      16
+!!     >    58048.10547      3
+!!     >    39334.05859      2
+!!     >    135199.7344      9
+!!     >    185223.0625      10
+!!     >    92335.12500      6
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE CODE(X,N,Y)
-REAL(kind=wp) :: ai , DISt , hold , WS , X , Y
-INTEGER i , iupper , j , N , numdis
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR
-!                                OF OBSERVATIONS TO BE CODED.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
-!                                INTO WHICH THE CODED VALUES
-!                                WILL BE PLACED.
-!     OUTPUT--THE  VECTOR Y
-!             WHICH WILL CONTAIN THE CODED VALUES
-!             CORRESPONDING TO THE OBSERVATIONS IN
-!             THE VECTOR X.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-
-!     COMMENT--ALL OCCURRANCES OF THE MINIMUM ARE CODED AS 1.0;
-!              ALL OCCURANCES OF THE NEXT LARGER VALUE
-!              ARE CODED AS 2.0;
-!              ALL OCCURANCES OF THE NEXT LARGER VALUE
-!              ARE CODED AS 3.0, ETC.
-!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
 !     ORIGINAL VERSION--OCTOBER  1975.
 !     UPDATED         --NOVEMBER 1975.
 !     UPDATED         --JUNE     1977.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CODE(X,N,Y)
+REAL(kind=wp),intent(in)  :: X(:)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(out) :: Y(:)
+REAL(kind=wp) :: ai , DISt , hold , WS
+INTEGER i , iupper , j , numdis
 !---------------------------------------------------------------------
+DIMENSION DISt(15000)
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (DISt(1),WS(1))
 !
-      DIMENSION X(:) , Y(:)
-      DIMENSION DISt(15000)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (DISt(1),WS(1))
+   iupper = 15000
 !
-      iupper = 15000
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 .OR. N>iupper ) THEN
-         WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE CODE   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+   IF ( N<1 .OR. N>iupper ) THEN
+      WRITE (G_IO,99001) iupper
+      99001 FORMAT (' ***** FATAL ERROR--The second input argument to CODE(3f) is outside the allowable (1,',&
+      & I0,') interval *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to CODE(3f) has the value 1 *****')
+         Y(1) = 1.0_wp
          RETURN
       ELSE
-         IF ( N==1 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE CODE&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
-            Y(1) = 1.0_wp
-            RETURN
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE CODE   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
-            DO i = 1 , N
-               Y(i) = i
-            ENDDO
-            RETURN
-         ENDIF
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to CODE(3f) has all elements = ', &
+         & E15.8,' *****')
+         DO i = 1 , N
+            Y(i) = i
+         ENDDO
+         RETURN
+      ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
-!     PERFORM THE CODING--
-!     PULL OUT THE DISTINCT VALUES,
-!     THEN SORT (AND ESSENTIALLY RANK) THE DISTINCT VALUES,
-!     THEN APPLY THE RANKS TO ALL THE VALUES.
+!  PERFORM THE CODING--
+!  PULL OUT THE DISTINCT VALUES,
+!  THEN SORT (AND ESSENTIALLY RANK) THE DISTINCT VALUES,
+!  THEN APPLY THE RANKS TO ALL THE VALUES.
 !
- 50      numdis = 1
-         DISt(numdis) = X(1)
-         DO i = 2 , N
-            DO j = 1 , numdis
-               IF ( X(i)==DISt(j) ) GOTO 100
-            ENDDO
-            numdis = numdis + 1
-            DISt(numdis) = X(i)
- 100     ENDDO
-!
-         CALL SORT(DISt,numdis,DISt)
-!
-         DO i = 1 , N
-            DO j = 1 , numdis
-               IF ( X(i)==DISt(j) ) GOTO 120
-            ENDDO
-            WRITE (G_IO,99005)
-99005       FORMAT (' ','*****INTERNAL ERROR IN CODE SUBROUTINE')
-            WRITE (G_IO,99006) i , X(i)
-99006       FORMAT (' ','NO CODE FOUND FOR ELEMENT NUMBER ',I0,' = ',   &
-     &              F15.7)
-            RETURN
- 120        Y(i) = j
+ 50   continue
+      numdis = 1
+      DISt(numdis) = X(1)
+
+      DO i = 2 , N
+         DO j = 1 , numdis
+            IF ( X(i)==DISt(j) ) cycle
          ENDDO
-!
-!     WRITE OUT A FEW LINES OF SUMMARY INFORMATION ABOUT THE CODING.
-!
-         WRITE (G_IO,99011)
-         WRITE (G_IO,99007)
-99007    FORMAT (' ','OUTPUT FROM THE CODE SUBROUTINE')
-         WRITE (G_IO,99008) numdis
-99008    FORMAT (' ','NUMBER OF DISTINCT CODE VALUES = ',I0)
-         WRITE (G_IO,99011)
-         WRITE (G_IO,99009)
-99009    FORMAT (' ',8X,'VALUE     CODED VALUE')
-         DO i = 1 , numdis
-            ai = i
-            WRITE (G_IO,99010) DISt(i) , ai
-99010       FORMAT (' ',F15.7,6X,F6.0)
+         numdis = numdis + 1
+         DISt(numdis) = X(i)
+      ENDDO
+
+      CALL SORT(DISt,numdis,DISt)
+
+      DO i = 1 , N
+         DO j = 1 , numdis
+            IF ( X(i)==DISt(j) ) GOTO 120
          ENDDO
-      ENDIF
+         WRITE (G_IO,99005)
+         99005 FORMAT (' ','*****Internal error in code subroutine')
+         WRITE (G_IO,99006) i , X(i)
+         99006 FORMAT (' ','No code found for element number ',I0,' = ',F15.7)
+         RETURN
+ 120     Y(i) = j
+      ENDDO
+      !
+      !   WRITE OUT A FEW LINES OF SUMMARY INFORMATION ABOUT THE CODING.
+      !
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99007)
+      99007 FORMAT (' Output from the CODE subroutine')
+      WRITE (G_IO,99008) numdis
+      99008 FORMAT (' Number of distinct code values = ',I0)
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99009)
+      99009 FORMAT (' ',8X,'Value     Coded value')
+      DO i = 1 , numdis
+         ai = i
+         WRITE (G_IO,99010) DISt(i) , ai
+         99010 FORMAT (' ',F15.7,6X,F6.0)
+      ENDDO
+   ENDIF
 99011 FORMAT (' ')
 !
 END SUBROUTINE CODE
 !>
 !!##NAME
-!!    copy(3f) - [M_datapac:STATISTICS] copy the elements of one vector
-!!    into another vector
+!!    copy(3f) - [M_datapac:VECTOR_OPERATION] copy the elements of one
+!!    vector into another vector
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE COPY(X,N,Y)
 !!
-!!##DESCRIPTION
-!!    copy(3f) copies the contents of the REAL vector x into
-!!    the REAL vector y.
+!!        REAL(kind=wp),intent(in)     :: X(:)
+!!        INTEGER,intent(in)           :: N
+!!        REAL(kind=wp),intent(inout)  :: Y(:)
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##DESCRIPTION
+!!    COPY(3f) copies the contents of the REAL vector X into the REAL
+!!    vector Y.
+!!
+!!    The first element of X is copied into the first element of Y; the
+!!    second element of X is copied into the second element of Y, etc.
+!!
+!!    This pre-f90 procedure can be replaced with modern array syntax
+!!    and should not be required in new code.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X    The vector of observations to be copied. the input vector X
+!!         remains unaltered.
+!!
+!!    N    The integer number of observations in the vector X.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    Y    The vector into which the copied data values from X will be
+!!         sequentially placed such that Y will have its first N
+!!         elements identical to the vector X.
 !!
 !!##EXAMPLES
 !!
@@ -3196,14 +3378,22 @@ END SUBROUTINE CODE
 !!    program demo_copy
 !!    use M_datapac, only : copy
 !!    implicit none
-!!    ! call copy(x,y)
+!!    character(len=*),parameter :: g='(*(g0.3,1x))'
+!!    real,allocatable :: from(:), to(:)
+!!       from=[1.0,2.0,3.0,4.0,5.0]
+!!       to=[-1.0,-1.0,-1.0,-1.0,-1.0,-1.0]
+!!       call copy(from,3,to)
+!!       write(*,g)to
 !!    end program demo_copy
 !!
 !!   Results:
 !!
+!!    1.00 2.00 3.00 -1.00 -1.00 -1.00
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
@@ -3212,69 +3402,50 @@ END SUBROUTINE CODE
 !     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
-SUBROUTINE COPY(X,N,Y)
-REAL(kind=wp) :: hold , X , Y
-INTEGER i , N
+subroutine copy(x,n,y)
+real(kind=wp),intent(in)     :: X(:)
+integer,intent(in)           :: N
+real(kind=wp),intent(inout)  :: Y(:)
 !
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                OBSERVATIONS TO BE COPIED.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT ARGUMENTS--Y      = THE  VECTOR
-!                                INTO WHICH THE COPIED DATA VALUES
-!                                FROM X WILL BE SEQUENTIALLY PLACED.
-!     OUTPUT--THE  VECTOR Y.
-!             WHICH WILL HAVE ITS
-!             FIRST N ELEMENTS IDENTICAL
-!             TO THE  VECTOR X.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-
-!     COMMENT--THE FIRST ELEMENT OF X IS COPIED INTO THE FIRST
-!              ELEMENT OF Y; THE SECOND ELEMENT OF X IS COPIED INTO
-!              THE SECOND ELEMENT OF Y, ETC.
-!     COMMENT--THE INPUT VECTOR X REMAINS UNALTERED.
-!
+integer       :: i
+real(kind=wp) :: hold
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:) , Y(:)
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE COPY   SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
-      ELSE
-         IF ( N==1 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE COPY&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE COPY   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
-         ENDIF
-!
-!-----START POINT-----------------------------------------------------
-!
- 50      DO i = 1 , N
-            Y(i) = X(i)
-         ENDDO
-      ENDIF
-!
-END SUBROUTINE COPY
+   !
+   !   CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   if ( N<1 ) then
+
+      write (G_IO,99001)
+      99001    format (' ***** FATAL ERROR--The second input argument to COPY(3f) is non-positive *****')
+      write (G_IO,99002) N
+      99002 format (' ','***** The value of the argument is ',I0,' *****')
+   elseif (N.gt.size(Y)) then
+      write (G_IO,99003)
+      99003    format (' ***** FATAL ERROR--The target vector is too small in COPY(3f) *****')
+      write (G_IO,99004) size(y),n
+      99004 format (' ','***** The size of the target vector is ',I0,' and the requested number of elements is ',i0,' *****')
+   else
+
+      USEABLE: if ( N==1 ) then
+         write (G_IO,99005)
+         99005 format (' ***** NON-FATAL DIAGNOSTIC--The second input argument to COPY(3f) has the value 1 *****')
+      else useable
+         hold = X(1)
+         do i = 2 , N
+            if ( X(i)/=hold ) exit USEABLE
+         enddo
+         write (G_IO,99006) hold
+         99006 format (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to COPY(3f) has all elements =',&
+         & E15.8,' *****')
+      endif USEABLE
+
+      do i = 1 , N
+         Y(i) = X(i)
+      enddo
+
+   endif
+
+end subroutine copy
 !>
 !!##NAME
 !!    corr(3f) - [M_datapac:STATISTICS] compute the sample correlation
@@ -3285,10 +3456,9 @@ END SUBROUTINE COPY
 !!       SUBROUTINE CORR(X,Y,N,Iwrite,C)
 !!
 !!##DESCRIPTION
-!!    corr(3f) computes the sample correlation coefficient between the 2
-!!    sets of data in the input vectors x and y. The sample correlation
-!!    coefficient will be a REAL value between -1.0 and 1.0
-!!    (inclusively).
+!!    CORR(3f) computes the sample correlation coefficient between the 2
+!!    sets of data in the input vectors X and Y. The sample correlation
+!!    coefficient will be a REAL value between -1.0 and 1.0 (inclusively).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -3318,12 +3488,15 @@ END SUBROUTINE COPY
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  * kendall and stuart, the advanced theory of statistics, volume 1,
-!!    edition 2, 1963, pages 235-236.
-!!  * kendall and stuart, the advanced theory of statistics, volume 2,
-!!    edition 1, 1961, pages 292-293.
-!!  * snedecor and cochran, statistical methods, edition 6, 1967, pages
+!!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
+!!    Edition 2, 1963, pages 235-236.
+!!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
+!!    Edition 1, 1961, pages 292-293.
+!!  * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, pages
 !!    172-198.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE CORR(X,Y,N,Iwrite,C)
@@ -3363,20 +3536,10 @@ INTEGER i , iflag , Iwrite , N
 !     OUTPUT--THE COMPUTED  VALUE OF THE
 !             SAMPLE CORRELATION COEFFICIENT BETWEEN THE 2 SETS
 !             OF DATA IN THE INPUT VECTORS X AND Y.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
-!
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:) , Y(:)
+DIMENSION X(:) , Y(:)
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
@@ -3385,17 +3548,13 @@ INTEGER i , iflag , Iwrite , N
       iflag = 0
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE CORR   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--The third input argument to CORR(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002    FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE THIRD  INPUT ARGUMENT TO THE CORR&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The third input argument to CORR(3f) has the value 1 *****')
          RETURN
       ELSE
          hold = X(1)
@@ -3403,18 +3562,16 @@ INTEGER i , iflag , Iwrite , N
             IF ( X(i)/=hold ) GOTO 50
          ENDDO
          WRITE (G_IO,99004) hold
-99004    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE CORR   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to CORR(3f) has all elements =',&
+         & E15.8,' *****')
          iflag = 1
  50      hold = Y(1)
          DO i = 2 , N
             IF ( Y(i)/=hold ) GOTO 100
          ENDDO
          WRITE (G_IO,99005) hold
-99005    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT (A VECTOR) &
-     &TO THE CORR   SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+         99005 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument (a vector) to CORR(3f) has all elements =', &
+         & E15.8,' *****')
          iflag = 1
  100     IF ( iflag==1 ) RETURN
 !
@@ -3428,7 +3585,7 @@ INTEGER i , iflag , Iwrite , N
          ENDDO
          xbar = xbar/an
          ybar = ybar/an
-!
+
          sum1 = 0.0_wp
          sum2 = 0.0_wp
          sum3 = 0.0_wp
@@ -3440,11 +3597,9 @@ INTEGER i , iflag , Iwrite , N
          sum2 = SQRT(sum2)
          sum3 = SQRT(sum3)
          C = sum1/(sum2*sum3)
-!
+
          IF ( Iwrite/=0 ) WRITE (G_IO,99006) N , C
-99006    FORMAT (' ',                                                   &
-     &     'THE LINEAR        CORRELATION COEFFICIENT OF THE 2 SETS OF '&
-     &     ,I0,' OBSERVATIONS IS ',F14.5)
+         99006 FORMAT (' The linear correlation coefficient of the 2 sets of ',I0,' observations is ',F14.5)
       ENDIF
 END SUBROUTINE CORR
 !>
@@ -3805,27 +3960,48 @@ EQUIVALENCE (IPIvot(1),WS(12551)) !     IPIVOT--PERMANENTLY DEFINED
 END SUBROUTINE DECOMP
 !>
 !!##NAME
-!!    define(3f) - [M_datapac:STATISTICS] set all elements of a vector
+!!    define(3f) - [M_datapac:VECTOR_OPERATION] set all elements of a vector
 !!    equal to a specified constant
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE DEFINE(X,N,Xnew)
 !!
+!!        REAL(kind=wp),intent(out)  :: X(:)
+!!        INTEGER,intent(in)         :: N
+!!        REAL(kind=wp),intent(in)   :: Xnew
+!!
 !!##DESCRIPTION
-!!    define(3f) sets all of the elements in the REAL vector
-!!    x equal to xnew.
+!!    DEFINE(3f) sets all of the elements in the REAL vector X equal to XNEW.
 !!
-!!    define(3f) is useful in defining a vector of constants.
+!!    DEFINE(3f) is useful in defining a vector of constants.
 !!
-!!    for example, if the data analyst wishes to treat the equal weights case
+!!    For example, if the data analyst wishes to treat the equal weights case
 !!    in doing a polynomial regression, this could be done by defining as,
-!!    say, 1.0 the input weight vector w to the datapac poly subroutine; such
-!!    defining could be done by use of the define subroutine with xnew = 1.0.
+!!    say, 1.0 the input weight vector W to the datapac POLY(3f) subroutine;
+!!    such defining could be done by use of the DEFINE(3f) subroutine with
+!!    XNEW = 1.0.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Except fo the verbose output, this procedure is deprecated as this
+!!    can easily be done using Fortran array syntax.
+!!
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    X      The vector of (unsorted or sorted) observations.
+!!
+!!    N      The integer number of observations in the vector X.
+!!
+!!    XNEW   The value to which all of the observations in the vector X
+!!           will be set.
+!!
+!!##OUTPUT
+!!
+!!    X      The vector X every element of which will be equal to XNEW.
+!!           Also, 3 lines of summary information will be generated indicating
+!!
+!!               1. What the sample size was (N)
+!!               2. What the defining constant was (XNEW)
 !!
 !!##EXAMPLES
 !!
@@ -3834,90 +4010,73 @@ END SUBROUTINE DECOMP
 !!    program demo_define
 !!    use M_datapac, only : define
 !!    implicit none
-!!    ! call define(x,y)
+!!    real :: x(4)
+!!       call define(x,size(x),3.33333)
+!!       write(*,'(*(g0.4,1x))')x
 !!    end program demo_define
 !!
 !!   Results:
 !!
+!!     Output from the DEFINE(3f) subroutine--
+!!            The input number of observations is 4
+!!            The defining constant is 0.33333299E+01
+!!    3.333 3.333 3.333 3.333
+!!
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED  VERSION--JULY      1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEFINE(X,N,Xnew)
-INTEGER i , N
-REAL(kind=wp) :: X , Xnew
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --XNEW   = THE  VALUE
-!                                TO WHICH ALL OF THE
-!                                OBSERVATIONS IN THE VECTOR X
-!                                WILL BE SET.
-!     OUTPUT--THE  VECTOR X
-!             EVERY ELEMENT OF WHICH
-!             WILL BE EQUAL TO XNEW.
-!             ALSO, 3 LINES OF SUMMARY INFORMATION
-!             WILL BE GENERATED INDICATING
-!             1) WHAT THE SAMPLE SIZE WAS (N);
-!             2) WHAT THE DEFINING CONSTANT WAS (XNEW);
-!     PRINTING--YES.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!     UPDATED  VERSION--JULY      1976.
-!
+REAL(kind=wp),intent(out)  :: X(:)
+INTEGER,intent(in)         :: N
+REAL(kind=wp),intent(in)   :: Xnew
+
+INTEGER                    :: i
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE DEFINE SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
-      ELSE
-         IF ( N==1 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE DEFI&
-     &NE SUBROUTINE HAS THE VALUE 1 *****')
-         ENDIF
-!
-!-----START POINT-----------------------------------------------------
-!
-         DO i = 1 , N
-            X(i) = Xnew
-         ENDDO
-!
-!     WRITE OUT A BRIEF SUMMARY
-!
-         WRITE (G_IO,99004)
-99004    FORMAT (' ')
-         WRITE (G_IO,99005)
-99005    FORMAT (' ','OUTPUT FROM THE DEFINE SUBROUTINE--')
-         WRITE (G_IO,99006) N
-99006    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS  IS ',I0)
-         WRITE (G_IO,99007) Xnew
-99007    FORMAT (' ',7X,'THE DEFINING CONSTANT IS ',E15.8)
+   !
+   !  CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The second input argument to DEFINE(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to DEFINE(3f) has the value 1 *****')
       ENDIF
+      !
+      DO i = 1 , N
+         X(i) = Xnew
+      ENDDO
+      !
+      !  WRITE OUT A BRIEF SUMMARY
+      !
+      WRITE (G_IO,99004)
+      99004 FORMAT (' ')
+      WRITE (G_IO,99005)
+      99005 FORMAT (' ','Output from the DEFINE(3f) subroutine--')
+      WRITE (G_IO,99006) N
+      99006 FORMAT (' ',7X,'The input number of observations is ',I0)
+      WRITE (G_IO,99007) Xnew
+      99007 FORMAT (' ',7X,'The defining constant is ',E15.8)
+   ENDIF
 !
 END SUBROUTINE DEFINE
 !>
 !!##NAME
-!!    delete(3f) - [M_datapac:STATISTICS] delete all elements of a vector
+!!    delete(3f) - [M_datapac:VECTOR_OPERATION] delete all elements of a vector
 !!    within some specified interval
 !!
 !!##SYNOPSIS
@@ -4180,7 +4339,7 @@ INTEGER :: i, iend, iendp1, iflag, ilower, imax1, imax2, imax2m, ip1, istart, iu
 !                               DEMODULATION FREQUENCY.
 !                               F IS IN UNITS OF CYCLES PER DATA POINT.
 !                               F IS BETWEEN 0.0 AND 0.5 (EXCLUSIVELY).
-!     OUTPUT--2 PAGES OF AUTOMATIC PRINTOUT--
+!     OUTPUT--2 pages OF AUTOMATIC PRINTOUT--
 !             1) AN AMPLITUDE PLOT;
 !             2) A PHASE PLOT; AND
 !             3) AN UPDATED DEMODULATION FREQUENCY ESTIMATE.
@@ -4534,7 +4693,7 @@ END SUBROUTINE DEMOD
 !!
 !!##REFERENCES
 !!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!    Pages 22-36.
+!!    pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4614,7 +4773,7 @@ end subroutine dexcdf
 !!
 !!##REFERENCES
 !!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!    Pages 22-36.
+!!    pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4700,12 +4859,12 @@ end subroutine dexpdf
 !!##REFERENCES
 !!  * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!    EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!    DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!    DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!    425-450.
-!!  * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!  * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
 !!    260-308.
 !!  * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!    PAGES 22-36.
+!!    pages 22-36.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE DEXPLT(X,N)
@@ -4717,7 +4876,7 @@ INTEGER :: i , iupper , N
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE DOUBLE EXPONENTIAL PROBABILITY PLOT.
+!     OUTPUT--A ONE-page DOUBLE EXPONENTIAL PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -4887,11 +5046,11 @@ END SUBROUTINE DEXPLT
 !!##REFERENCES
 !!  * Filliben, Simple and Robust Linear Estimation of the Location Parameter
 !!    of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
-!!    University), 1969, Pages 21-44, 229-231.
+!!    University), 1969, pages 21-44, 229-231.
 !!  * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
-!!    1970, Pages 28-31.
+!!    1970, pages 28-31.
 !!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!    Pages 22-36.
+!!    pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -4977,15 +5136,15 @@ END SUBROUTINE DEXPPF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  * Tocher, The Art of Simulation, 1963, Pages 14-15.
-!!  * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+!!  * Tocher, The Art of Simulation, 1963, pages 14-15.
+!!  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
 !!  * Filliben, Simple and Robust Linear Estimation of the Location Parameter
 !!    of a Symmetric Distribution (Unpublished PH.D. dissertation, Princeton
-!!    University), 1969, Page 231.
+!!    University), 1969, page 231.
 !!  * Filliben, 'The percent point function', (Unpublished manuscript),
-!!    1970, Pages 28-31.
+!!    1970, pages 28-31.
 !!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!    Pages 22-36.
+!!    pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5081,11 +5240,11 @@ end subroutine dexran
 !!##REFERENCES
 !!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
-!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!     Princeton University), 1969, pages 21-44, 229-231.
 !!   * Filliben, 'The Percent Point Function', (UNpublished Manuscript),
-!!     1970, Pages 28-31.
+!!     1970, pages 28-31.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Pages 22-36.
+!!     pages 22-36.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -5888,7 +6047,8 @@ INTEGER :: i , icounl , icount , icounu , ip , N , numcla
 END SUBROUTINE DISCRE
 !>
 !!##NAME
-!!    dot(3f) - [M_datapac:STATISTICS] compute a dot product of two vectors
+!!    dot(3f) - [M_datapac:VECTOR_OPERATION] compute a dot product of
+!!    two vectors
 !!
 !!##SYNOPSIS
 !!
@@ -6032,7 +6192,7 @@ end subroutine dot
 !!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 272-295.
+!!     pages 272-295.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -6112,12 +6272,12 @@ END SUBROUTINE EV1CDF
 !!##REFERENCES
 !!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
 !!     260-308.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 272-295.
+!!     pages 272-295.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1PLT(X,N)
@@ -6129,7 +6289,7 @@ INTEGER :: i , iupper , N
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE EXTREME VALUE TYPE 1 PROBABILITY PLOT.
+!     OUTPUT--A ONE-page EXTREME VALUE TYPE 1 PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -6297,7 +6457,7 @@ END SUBROUTINE EV1PLT
 !!    CC0-1.0
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 272-295.
+!!     pages 272-295.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -6329,25 +6489,35 @@ END SUBROUTINE EV1PPF
 !!
 !!       SUBROUTINE EV1RAN(N,Iseed,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
-!!    ev1ran(3f) generates a random sample of size n from the extreme value
+!!    EV1RAN(3f) generates a random sample of size N from the extreme value
 !!    type 1 distribution.
 !!
-!!    the prototype extreme value type 1 distribution used herein has mean
-!!    = euler's number = 0.57721566 and standard deviation = pi/sqrt(6)
-!!    = 1.28254983. This distribution is defined for all x and has the
+!!    The prototype extreme value type 1 distribution used herein has mean
+!!    = Euler's number = 0.57721566 and standard deviation = pi/sqrt(6)
+!!    = 1.28254983. This distribution is defined for all X and has the
 !!    probability density function
 !!
-!!        f(x) = (exp(-x)) * (exp(-(exp(-x))))
+!!        f(X) = (exp(-X)) * (exp(-(exp(-X))))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    N      The desired integer number of random numbers to be generated.
+!!
+!!    ISEED  An integer seed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X     A vector (of dimension at least N) into which the generated
+!!          random sample of size N from the extreme value type 1
+!!          distribution will be placed.
 !!
 !!
 !!##EXAMPLES
@@ -6355,25 +6525,97 @@ END SUBROUTINE EV1PPF
 !!   Sample program:
 !!
 !!    program demo_ev1ran
-!!    use M_datapac, only : ev1ran
+!!    use m_datapac, only : ev1ran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call ev1ran(x,y)
+!!    integer,parameter :: n=4000
+!!    real :: x(n)
+!!    integer :: iseed
+!!       call label('ev1ran')
+!!       iseed=12345
+!!       call ev1ran(n,iseed,x)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_ev1ran
 !!
 !!   Results:
 !!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1011052E+02 -   X
+!!      0.9597239E+01 I
+!!      0.9083955E+01 I
+!!      0.8570670E+01 I
+!!      0.8057385E+01 I                   X
+!!      0.7544101E+01 I                          X
+!!      0.7030817E+01 -                                    X
+!!      0.6517532E+01 I                  X                      X
+!!      0.6004248E+01 I           X        X          X      X   XX
+!!      0.5490964E+01 I   X            X XX X        X X         X X
+!!      0.4977679E+01 I    X X     X X           X   XXX  X   X       X X
+!!      0.4464395E+01 I    X           X XXX    X XX X X    X   XX X    X
+!!      0.3951111E+01 -  X X XX XXXXXX X   X XXX XXX XXXXX XXX XXX X XXXXX
+!!      0.3437826E+01 I  XXXXXXXXXXXXXX XXXXXXXX XX XX XXXX X X XX  XXXXXX
+!!      0.2924542E+01 I  XXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.2411257E+01 I  XXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXX
+!!      0.1897973E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXX
+!!      0.1384688E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.8714046E+00 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.3581200E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.1551647E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.6684484E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.1181733E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.1695018E+01 I  X   XXX XX  XXXXXXXXXXXXXXXXXXXXXXX    X X XXXXX
+!!     -0.2208302E+01 -                       X                  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1011052E+02 -                                                  X
+!!      0.9597239E+01 I
+!!      0.9083955E+01 I
+!!      0.8570670E+01 I
+!!      0.8057385E+01 I                                                  X
+!!      0.7544101E+01 I                                                  X
+!!      0.7030817E+01 -                                                  X
+!!      0.6517532E+01 I                                                  X
+!!      0.6004248E+01 I                                                  X
+!!      0.5490964E+01 I                                                  X
+!!      0.4977679E+01 I                                                  X
+!!      0.4464395E+01 I                                                 XX
+!!      0.3951111E+01 -                                                 X
+!!      0.3437826E+01 I                                                XX
+!!      0.2924542E+01 I                                               XX
+!!      0.2411257E+01 I                                             XXX
+!!      0.1897973E+01 I                                         XXXXX
+!!      0.1384688E+01 I                                    XXXXXX
+!!      0.8714046E+00 -                             XXXXXXXX
+!!      0.3581200E+00 I                     XXXXXXXXX
+!!     -0.1551647E+00 I             XXXXXXXXX
+!!     -0.6684484E+00 I      XXXXXXXX
+!!     -0.1181733E+01 I   XXXX
+!!     -0.1695018E+01 I  XX
+!!     -0.2208302E+01 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 272-295.
+!!   * Tocher, The Art of Simulation, 1963, pages 14-15.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     pages 272-295.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -6381,31 +6623,20 @@ END SUBROUTINE EV1PPF
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV1RAN(N,Iseed,X)
-INTEGER i , Iseed , N
-REAL(kind=wp) :: X(:)
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE EXTREME VALUE TYPE 1 DISTRIBUTION
-!             WITH MEAN = EULER'S NUMBER = 0.57721566
-!             AND STANDARD DEVIATION = PI/SQRT(6) = 1.28254983.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+INTEGER :: i
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
     IF ( N<1 ) THEN
        WRITE (G_IO,99001)
-       99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV1RAN SUBROUTINE IS NON-POSITIVE *****')
+       99001 FORMAT (' ***** FATAL ERROR--The first input argument to EV1RAN(3f) is non-positive *****')
        WRITE (G_IO,99002) N
-       99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+       99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
     ELSE
        !
        !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
@@ -6419,7 +6650,7 @@ REAL(kind=wp) :: X(:)
           X(i) = -LOG(LOG(1.0_wp/X(i)))
        ENDDO
     ENDIF
-!
+
 END SUBROUTINE EV1RAN
 !>
 !!##NAME
@@ -6479,7 +6710,7 @@ END SUBROUTINE EV1RAN
 !!    CC0-1.0
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 272-295.
+!!     pages 272-295.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -6571,12 +6802,12 @@ END SUBROUTINE EV2CDF
 !!##REFERENCES
 !!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
 !!     260-308.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 272-295.
+!!     pages 272-295.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -6597,7 +6828,7 @@ INTEGER i , iupper , N
 !                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT--A ONE-PAGE EXTREME VALUE TYPE 2 PROBABILITY PLOT.
+!     OUTPUT--A ONE-page EXTREME VALUE TYPE 2 PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -6789,7 +7020,7 @@ END SUBROUTINE EV2PLT
 !!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     PAGES 272-295.
+!!     pages 272-295.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -6834,23 +7065,37 @@ END SUBROUTINE EV2PPF
 !!
 !!       SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(in)  :: Gamma
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
-!!    ev2ran(3f) generates a random sample of size n from the extreme value
-!!    type 2 distribution with tail length parameter value = gamma.
+!!    EV2RAN(3f) generates a random sample of size N from the extreme value
+!!    type 2 distribution with tail length parameter value = GAMMA.
 !!
-!!    the prototype extreme value type 2 distribution used herein is defined
-!!    for all non-negative x, and has the probability density function
+!!    The prototype extreme value type 2 distribution used herein is defined
+!!    for all non-negative X, and has the probability density function
 !!
-!!        f(x) = gamma * (x**(-gamma-1)) * exp(-(x**(-gamma))).
+!!        f(X) = GAMMA * (X**(-GAMMA-1)) * exp(-(X**(-GAMMA)))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    N      The desired integer number of random numbers to be generated.
+!!
+!!    ISEED  An integer seed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!    GAMMA  The value of the tail length parameter. GAMMA should be
+!!           positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X      A vector (of dimension at least N) into which the generated
+!!           random sample of size N from the extreme value type 2
+!!           distribution will be placed.
 !!
 !!
 !!##EXAMPLES
@@ -6858,24 +7103,99 @@ END SUBROUTINE EV2PPF
 !!   Sample program:
 !!
 !!    program demo_ev2ran
-!!    use M_datapac, only : ev2ran
+!!    use m_datapac, only : ev2ran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call ev2ran(x,y)
+!!    integer,parameter :: n=8000
+!!    real :: x(n)
+!!    integer :: iseed
+!!    real :: gamma
+!!       call label('ev2ran')
+!!       gamma=3.4
+!!       iseed=12345
+!!       call ev2ran(N,Gamma,Iseed,X)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_ev2ran
 !!
 !!   Results:
 !!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1956361E+02 -   X
+!!      0.1876934E+02 I
+!!      0.1797507E+02 I
+!!      0.1718080E+02 I
+!!      0.1638653E+02 I
+!!      0.1559226E+02 I                                   X
+!!      0.1479799E+02 -
+!!      0.1400372E+02 I
+!!      0.1320944E+02 I
+!!      0.1241517E+02 I
+!!      0.1162090E+02 I          X
+!!      0.1082663E+02 I                                               X
+!!      0.1003236E+02 -
+!!      0.9238092E+01 I              X               X
+!!      0.8443822E+01 I
+!!      0.7649551E+01 I                   X                             X
+!!      0.6855281E+01 I          X          X             X
+!!      0.6061010E+01 I       X   X    X   X X                    X    X
+!!      0.5266740E+01 -   X     XXX    XX    X      X   X X       X  X  X
+!!      0.4472469E+01 I   XX  XX     X XX X XXX XX  X  XX X     X X X X X
+!!      0.3678199E+01 I   XX X  XXX XXXXX XX XX XX XX XXXX  XXXXXXX XXXXXX
+!!      0.2883928E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.2089659E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.1295387E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.5011185E+00 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.2001E+04  0.4000E+04  0.6000E+04  0.8000E+04
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1956361E+02 -                                                  X
+!!      0.1876934E+02 I
+!!      0.1797507E+02 I
+!!      0.1718080E+02 I
+!!      0.1638653E+02 I
+!!      0.1559226E+02 I                                                  X
+!!      0.1479799E+02 -
+!!      0.1400372E+02 I
+!!      0.1320944E+02 I
+!!      0.1241517E+02 I
+!!      0.1162090E+02 I                                                  X
+!!      0.1082663E+02 I                                                  X
+!!      0.1003236E+02 -
+!!      0.9238092E+01 I                                                  X
+!!      0.8443822E+01 I
+!!      0.7649551E+01 I                                                  X
+!!      0.6855281E+01 I                                                  X
+!!      0.6061010E+01 I                                                  X
+!!      0.5266740E+01 -                                                  X
+!!      0.4472469E+01 I                                                  X
+!!      0.3678199E+01 I                                                 XX
+!!      0.2883928E+01 I                                                XX
+!!      0.2089659E+01 I                                           XXXXXX
+!!      0.1295387E+01 I             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.5011185E+00 -  XXXXXXXXXXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.2001E+04  0.4000E+04  0.6000E+04  0.8000E+04
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!  * Tocher, The Art of Simulation, 1963, Pages 14-15.
-!!  * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
-!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970, Pages 272-295.
+!!  * Tocher, The Art of Simulation, 1963, pages 14-15.
+!!  * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!    pages 272-295.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -6883,62 +7203,44 @@ END SUBROUTINE EV2PPF
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EV2RAN(N,Gamma,Iseed,X)
-REAL(kind=wp) :: Gamma , X(:)
-INTEGER i , Iseed , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --GAMMA  = THE  VALUE OF THE
-!                                TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE EXTREME VALUE TYPE 2 DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --GAMMA SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: X(:)
+
+INTEGER :: i
+
+
 !---------------------------------------------------------------------
-!
-!-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EV2RAN SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-         99002 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
-      ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (G_IO,99003)
-         99003 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE EV2RAN SUBROUTINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99004) Gamma
-         99004 FORMAT (' ***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
-         RETURN
-      ELSE
-         !
-         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-         !
-         CALL UNIRAN(N,Iseed,X)
-         !
-         !     GENERATE N EXTREME VALUE TYPE 2 DISTRIBUTION RANDOM NUMBERS
-         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-         !
-         DO i = 1 , N
-            X(i) = (-LOG(X(i)))**(-1.0_wp/Gamma)
-         ENDDO
-      ENDIF
-!
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first  input argument to EV2RAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSEIF ( Gamma<=0.0_wp ) THEN
+      WRITE (G_IO,99003)
+      99003 FORMAT (' ***** FATAL ERROR--the second input argument to EV2RAN(3f) is non-positive *****')
+      WRITE (G_IO,99004) Gamma
+      99004 FORMAT (' ***** THE value of the argument is ',E15.8, ' *****')
+      RETURN
+   ELSE
+      !
+      !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+      !
+      CALL UNIRAN(N,Iseed,X)
+      !
+      !     GENERATE N EXTREME VALUE TYPE 2 DISTRIBUTION RANDOM NUMBERS
+      !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+      !
+      DO i = 1 , N
+         X(i) = (-LOG(X(i)))**(-1.0_wp/Gamma)
+      ENDDO
+   ENDIF
+
 END SUBROUTINE EV2RAN
 !>
 !!##NAME
@@ -6995,7 +7297,7 @@ END SUBROUTINE EV2RAN
 !!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 207-232.
+!!     pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7111,7 +7413,7 @@ END SUBROUTINE EXPCDF
 !!    CC0-1.0
 !!##REFERENCES
 !!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!    Pages 207-232.
+!!    pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7195,11 +7497,11 @@ END SUBROUTINE EXPPDF
 !!##REFERENCES
 !!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES 260-308.
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages 260-308.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 207-232.
+!!     pages 207-232.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXPPLT(X,N)
@@ -7210,7 +7512,7 @@ INTEGER i , iupper , N
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE EXPONENTIAL PROBABILITY PLOT.
+!     OUTPUT--A ONE-page EXPONENTIAL PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -7380,11 +7682,11 @@ END SUBROUTINE EXPPLT
 !!##REFERENCES
 !!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
-!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!     Princeton University), 1969, pages 21-44, 229-231.
 !!   * filliben, 'The Percent Point Function', (Unpublished Manuscript),
-!!     1970, Pages 28-31.
+!!     1970, pages 28-31.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 207-232.
+!!     pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -7417,75 +7719,135 @@ END SUBROUTINE EXPPPF
 !!
 !!       SUBROUTINE EXPRAN(N,Iseed,X)
 !!
+!!        INTEGER,intent(in) :: N
+!!        INTEGER,intent(inout) :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
-!!    expran(3f) generates a random sample of size n from the exponential
+!!    EXPRAN(3f) generates a random sample of size N from the exponential
 !!    distribution with mean = 1 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x, and has the
+!!    This distribution is defined for all non-negative X, and has the
 !!    probability density function
 !!
-!!        f(x) = exp(-x).
+!!        f(X) = exp(-X)
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    N      The desired integer number of random numbers to be generated.
 !!
+!!    ISEED  An integer seed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X   A vector (of dimension at least N) into which the generated
+!!        random sample of size N from the exponential distribution will
+!!        be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_expran
-!!    use M_datapac, only : expran
+!!    use m_datapac, only : expran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call expran(x,y)
+!!    integer,parameter :: n=300
+!!    real :: x(n)
+!!    integer :: iseed
+!!       call label('expran')
+!!       iseed=12345
+!!       call expran(n,iseed,x)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_expran
 !!
 !!   Results:
 !!
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.4256731E+01 -   X         X X
+!!      0.4079369E+01 I                               X
+!!      0.3902006E+01 I
+!!      0.3724644E+01 I    X
+!!      0.3547282E+01 I                      X
+!!      0.3369920E+01 I                    X                X
+!!      0.3192558E+01 -
+!!      0.3015196E+01 I
+!!      0.2837834E+01 I                                         X
+!!      0.2660472E+01 I        X                        X
+!!      0.2483110E+01 I     X X  X           X        X
+!!      0.2305748E+01 I      X   X X           XX                XX  X X
+!!      0.2128386E+01 -  X   X       XX        X X   X    X           X
+!!      0.1951024E+01 I        X       X X XX      X X   X
+!!      0.1773661E+01 I                 X      X             X     X  X
+!!      0.1596299E+01 I    X    X                      X X  X   XX       X
+!!      0.1418937E+01 I   X       X X   X       X          X X
+!!      0.1241575E+01 I   X   X   XX             X X  X     X   XX   X X
+!!      0.1064213E+01 -                X   X  X X    X XXXX XX XX    X
+!!      0.8868508E+00 I          XXX X   X X      X XX XX    XX  X XX XX
+!!      0.7094889E+00 I   XXXXX  XXX X X XX   XX XXX      X   XX  XXX    X
+!!      0.5321269E+00 I  X XXX XX X  X  X XXX   XXX X   XXX   XXXX      XX
+!!      0.3547647E+00 I   XXXX XXX XX X XX   XXX X X XXX X XXXXX  XXXX XX
+!!      0.1774025E+00 I  X    XXX XXX XXX X XXXXX XX  X X XX  X X XXXX   X
+!!      0.4065119E-04 -   X XX      X   X XX  XX XX XX  X  X  X    X XXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.7575E+02  0.1505E+03  0.2252E+03  0.3000E+03
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.4256731E+01 -                                                  X
+!!      0.4079369E+01 I                                                  X
+!!      0.3902006E+01 I
+!!      0.3724644E+01 I                                                 X
+!!      0.3547282E+01 I                                                 X
+!!      0.3369920E+01 I                                                 X
+!!      0.3192558E+01 -
+!!      0.3015196E+01 I
+!!      0.2837834E+01 I                                                 X
+!!      0.2660472E+01 I                                                XX
+!!      0.2483110E+01 I                                               XX
+!!      0.2305748E+01 I                                              XX
+!!      0.2128386E+01 -                                            XXX
+!!      0.1951024E+01 I                                           XX
+!!      0.1773661E+01 I                                          XX
+!!      0.1596299E+01 I                                         XX
+!!      0.1418937E+01 I                                       XXX
+!!      0.1241575E+01 I                                     XXX
+!!      0.1064213E+01 -                                  XXXX
+!!      0.8868508E+00 I                               XXXX
+!!      0.7094889E+00 I                           XXXXX
+!!      0.5321269E+00 I                     XXXXXXX
+!!      0.3547647E+00 I              XXXXXXX
+!!      0.1774025E+00 I      XXXXXXXX
+!!      0.4065119E-04 -  XXXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.7575E+02  0.1505E+03  0.2252E+03  0.3000E+03
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14, 35-36.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 207-232.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 58.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE EXPRAN(N,Iseed,X)
-INTEGER i , Iseed , N
-REAL(kind=wp) :: X
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE EXPONENTIAL DISTRIBUTION
-!             WITH MEAN = 1 AND STANDARD DEVIATION = 1.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Tocher, The Art of Simulation, 1963, pages 14, 35-36.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+!!   * Filliben, 'The Percent Point Function', (unpublished manuscript),
+!!     1970, pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     pages 207-232.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, page 58.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -7493,41 +7855,38 @@ REAL(kind=wp) :: X
 !     UPDATED         --JULY      1976.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EXPRAN(N,Iseed,X)
+INTEGER,intent(in) :: N
+INTEGER,intent(inout) :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+INTEGER :: i
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!---------------------------------------------------------------------
-!
-!-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to EXPRAN(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
          CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N EXPONENTIAL RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
+         !
+         !     GENERATE N EXPONENTIAL RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
          DO i = 1 , N
             X(i) = -LOG(X(i))
          ENDDO
       ENDIF
-!
+
 END SUBROUTINE EXPRAN
 !>
 !!##NAME
@@ -7537,22 +7896,31 @@ END SUBROUTINE EXPRAN
 !!
 !!       SUBROUTINE EXPSF(P,Sf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Sf
+!!
 !!##DESCRIPTION
-!!    expsf(3f) computes the sparsity function value for the exponential
+!!    EXPSF(3f) computes the sparsity function value for the exponential
 !!    distribution with mean = 1 and standard deviation = 1.
 !!
-!!    this distribution is defined for all non-negative x, and has the
+!!    This distribution is defined for all non-negative X, and has the
 !!    probability density function
 !!
-!!        f(x) = exp(-x).
+!!        f(X) = exp(-X)
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
-!!    probability density function (but in units of p rather than x).
+!!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    P   The value at which the sparsity function is to be evaluated.
+!!        P should be between 0.0 (inclusively) and 1.0 (exclusively).
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    SF  The sparsity function value.
 !!
 !!##EXAMPLES
 !!
@@ -7567,60 +7935,45 @@ END SUBROUTINE EXPRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 207-232.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE EXPSF(P,Sf)
-REAL(kind=wp) :: P , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, pages 21-44, 229-231.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     pages 207-232.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE EXPSF(P,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Sf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE EXPSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Sf = 1.0_wp/(1.0_wp-P)
-      ENDIF
+   IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to EXPSF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      Sf = 1.0_wp/(1.0_wp-P)
+   ENDIF
 !
 END SUBROUTINE EXPSF
 !>
@@ -7679,10 +8032,10 @@ END SUBROUTINE EXPSF
 !!##REFERENCES
 !!   * FILLIBEN (1972), 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS
 !!     OF THE EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY
-!!     RESEARCH AND TESTING, PAGES 425-450.
+!!     RESEARCH AND TESTING, pages 425-450.
 !!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', UNPUBLISHED MANUSCRIPT.
 !!   * JOHNSON AND KOTZ (1970), CONTINUOUS UNIVARIATE DISTRIBUTIONS-1,
-!!     1970, PAGES 272-295.
+!!     1970, pages 272-295.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE EXTREM(X,N)
@@ -7694,7 +8047,7 @@ INTEGER       :: i, idis, idismx, iupper, j, jskip, k, N, numam, numdis, numdm1
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--6 PAGES OF AUTOMATIC PRINTOUT.
+!     OUTPUT--6 pages OF AUTOMATIC PRINTOUT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -7952,7 +8305,7 @@ CHARACTER(len=4) :: iflag3
          WRITE (G_IO,99017)
 99017    FORMAT (' ',                                                   &
      &'THE ABOVE IS A PLOT OF THE 46 PROBABILITY PLOT CORRELATION COEFFI&
-     &CIENTS (FROM THE PREVIOUS PAGE)')
+     &CIENTS (FROM THE PREVIOUS page)')
          WRITE (G_IO,99018)
 99018    FORMAT (' ',16X,'VERSUS THE 46 EXTREME VALUE DISTRIBUTIONS')
 !
@@ -8021,7 +8374,7 @@ CHARACTER(len=4) :: iflag3
             IF ( arg>0.0_wp ) h(i,2) = yint + yslope*(-LOG(arg))
          ENDDO
 !
-!     WRITE OUT THE PAGE WITH THE RETURN PERIODS AND THE PREDICTED EXTREMES
+!     WRITE OUT THE page WITH THE RETURN PERIODS AND THE PREDICTED EXTREMES
 !     FOR THE 2 DISTRIBUTIONS--OPTIMAL EXTREME VALUE TYPE 2, AND EXTREME
 !     VALUE TYPE 1.
 !
@@ -8134,14 +8487,14 @@ CHARACTER(len=4) :: iflag3
 !!
 !!##REFERENCES
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Pages 946-947, Formulae 26.6.4, 26.6.5, 26.6.8, and 26.6.15.
+!!     pages 946-947, Formulae 26.6.4, 26.6.5, 26.6.8, and 26.6.15.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Page 83, Formula 20, and Page 84, Third formula.
+!!     page 83, Formula 20, and page 84, Third formula.
 !!   * Paulson, An Approximate Normalization of the Analysis of Variance
 !!     Distribution, Annals of Mathematical Statistics, 1942, Number 13,
-!!     Pages 233-135.
+!!     pages 233-135.
 !!   * Scheffe and Tukey, A Formula for Sample Sizes for Population Tolerance
-!!     Limits, 1944, Number 15, Page 217.
+!!     Limits, 1944, Number 15, page 217.
 !     ORIGINAL VERSION--AUGUST    1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -8252,7 +8605,7 @@ DATA nucut1 , nucut2/100 , 1000/
 !     ARE BOTH SMALL OR MODERATE
 !     (THAT IS, BOTH ARE SMALLER THAN 1000).
 !     METHOD UTILIZED--EXACT FINITE SUM
-!     (SEE AMS 55, PAGE 946, FORMULAE 26.6.4, 26.6.5,
+!     (SEE AMS 55, page 946, FORMULAE 26.6.4, 26.6.5,
 !     AND 26.6.8).
 !
             z = anu2/(anu2+anu1*dx)
@@ -8371,7 +8724,7 @@ DATA nucut1 , nucut2/100 , 1000/
 !     (THAT IS, WHEN NU1 IS SMALLER THAN 100,
 !     AND NU2 IS EQUAL TO OR LARGER THAN 1000).
 !     METHOD UTILIZED--SHEFFE-TUKEY APPROXIMATION
-!     (SEE JOHNSON AND KOTZ, VOLUME 2, PAGE 84, THIRD FORMULA).
+!     (SEE JOHNSON AND KOTZ, VOLUME 2, page 84, THIRD FORMULA).
 !
                term1 = dnu1
                term2 = (dnu1/dnu2)*(0.5D0*dnu1-1.0D0)
@@ -8388,7 +8741,7 @@ DATA nucut1 , nucut2/100 , 1000/
 !     (THAT IS, WHEN NU2 IS SMALLER THAN 100,
 !     AND NU1 IS EQUAL TO OR LARGER THAN 1000).
 !     METHOD UTILIZED--SHEFFE-TUKEY APPROXIMATION
-!     (SEE JOHNSON AND KOTZ, VOLUME 2, PAGE 84, THIRD FORMULA).
+!     (SEE JOHNSON AND KOTZ, VOLUME 2, page 84, THIRD FORMULA).
 !
                   term1 = dnu2
                   term2 = (dnu2/dnu1)*(0.5D0*dnu2-1.0D0)
@@ -8422,7 +8775,7 @@ DATA nucut1 , nucut2/100 , 1000/
 !     BUT SMALLER THAN 1000,
 !     AND NU1 IS EQUAL TO OR LARGER THAN 1000).
 !     METHOD UTILIZED--PAULSON APPROXIMATION
-!     (SEE AMS 55, PAGE 947, FORMULA 26.6.15).
+!     (SEE AMS 55, page 947, FORMULA 26.6.15).
 !
       dfact1 = 1.0D0/(4.5D0*dnu1)
       dfact2 = 1.0D0/(4.5D0*dnu2)
@@ -8557,7 +8910,7 @@ DATA nucut1 , nucut2/100 , 1000/
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * Jenkins and Watts, especially Page 290.
+!!   * Jenkins and Watts, especially page 290.
 !     ORIGINAL VERSION--NOVEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -8810,11 +9163,11 @@ END SUBROUTINE FOURIE
 !!
 !!##REFERENCES
 !!   * Mood and Grable, Introduction to the Theory of Statistics, 1963,
-!!     Pages 231-232.
+!!     pages 231-232.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Pages 75-93.
+!!     pages 75-93.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Page 64.
+!!     Students and Practitioners, 1975, page 64.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -8957,7 +9310,7 @@ END SUBROUTINE FRAN
 !!    CC0-1.0
 !!##REFERENCES
 !!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGE 8.
+!!     EDITION 2, 1963, page 8.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -9147,13 +9500,13 @@ END SUBROUTINE FREQ
 !!
 !!##REFERENCES
 !!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
-!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, pages 1-15, ESPECIALLY pages 3-5.
 !!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 257, FORMULA 6.1.41.
+!!     page 257, FORMULA 6.1.41.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 166-206.
+!!     pages 166-206.
 !!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
+!!     STUDENTS AND PRACTITIONERS, 1975, pages 68-73.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -9221,7 +9574,7 @@ DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
      &       /(z2*z5*z5*z5)
          g = DEXP(a+b)/den
 !
-!     COMPUTE T-SUB-Q AS DEFINED ON PAGE 4 OF THE WILK, GNANADESIKAN,
+!     COMPUTE T-SUB-Q AS DEFINED ON page 4 OF THE WILK, GNANADESIKAN,
 !     AND HUYETT REFERENCE
 !
          sum = 1.0D0/dgamma
@@ -9263,7 +9616,7 @@ END SUBROUTINE GAMCDF
 !!       SUBROUTINE GAMPLT(X,N,Gamma)
 !!
 !!##DESCRIPTION
-!!    gamplt(3f) generates a gamma probability plot (with tail length
+!!    GAMPLT(3f) generates a gamma probability plot (with tail length
 !!    parameter value = gamma).
 !!
 !!    the prototype gamma distribution used herein has mean = gamma and
@@ -9316,17 +9669,17 @@ END SUBROUTINE GAMCDF
 !!    CC0-1.0
 !!##REFERENCES
 !!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
-!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15.
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, pages 1-15.
 !!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 257, FORMULA 6.1.41.
+!!     page 257, FORMULA 6.1.41.
 !!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
 !!     260-308.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 166-206.
+!!     pages 166-206.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GAMPLT(X,N,Gamma)
 REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
@@ -9345,7 +9698,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT--A ONE-PAGE GAMMA PROBABILITY PLOT.
+!     OUTPUT--A ONE-page GAMMA PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -9592,7 +9945,7 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !     PERCENT POINT X VALUE AS DEFINED IN EITHER OF THE 2
 !     ITERATION LOOPS IN THE ABOVE CODE.
 !
-!     COMPUTE T-SUB-Q AS DEFINED ON PAGE 4 OF THE WILK, GNANADESIKAN,
+!     COMPUTE T-SUB-Q AS DEFINED ON page 4 OF THE WILK, GNANADESIKAN,
 !     AND HUYETT REFERENCE
 !
  600  sum = 1.0_wp/dgamma
@@ -9684,13 +10037,13 @@ END SUBROUTINE GAMPLT
 !!    CC0-1.0
 !!##REFERENCES
 !!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
-!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15, ESPECIALLY PAGES 3-5.
+!!     DISTRIBUTION', TECHNOMETRICS, 1962, pages 1-15, ESPECIALLY pages 3-5.
 !!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 257, FORMULA 6.1.41.
+!!     page 257, FORMULA 6.1.41.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 166-206.
+!!     pages 166-206.
 !!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
+!!     STUDENTS AND PRACTITIONERS, 1975, pages 68-73.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE GAMPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
@@ -9722,7 +10075,7 @@ INTEGER :: icount , iloop , j , maxit
 !               P = .999.  FOR P = .95 AND SMALLER, THE AGREEMENT
 !               WAS EVEN BETTER--7 SIGNIFICANT DIGITS.
 !               (NOTE THAT THE TABULATED VALUES GIVEN IN THE WILK,
-!               GNANADESIKAN, AND HUYETT REFERENCE BELOW, PAGE 20,
+!               GNANADESIKAN, AND HUYETT REFERENCE BELOW, page 20,
 !               ARE IN ERROR FOR AT LEAST THE GAMMA = 1 CASE--
 !               THE WORST DETECTED ERROR WAS AGREEMENT TO ONLY 3
 !               SIGNIFICANT DIGITS (IN THEIR 8 SIGNIFICANT DIGIT TABLE)
@@ -9827,7 +10180,7 @@ INTEGER :: icount , iloop , j , maxit
 !     PERCENT POINT X VALUE AS DEFINED IN EITHER OF THE 2
 !     ITERATION LOOPS IN THE ABOVE CODE.
 !
-!     COMPUTE T-SUB-Q AS DEFINED ON PAGE 4 OF THE WILK, GNANADESIKAN,
+!     COMPUTE T-SUB-Q AS DEFINED ON page 4 OF THE WILK, GNANADESIKAN,
 !     AND HUYETT REFERENCE
 !
  500  sum = 1.0D0/dgamma
@@ -9888,39 +10241,149 @@ END SUBROUTINE GAMPPF
 !!
 !!       SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(in)  :: Gamma
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
-!!    gamran(3f) generates a random sample of size n from the gamma
-!!    distribution with tail length parameter value = gamma.
+!!    GAMRAN(3f) generates a random sample of size N from the gamma
+!!    distribution with tail length parameter value = GAMMA.
 !!
-!!    the prototype gamma distribution used herein has mean = gamma and
-!!    standard deviation = sqrt(gamma). this distribution is defined for
-!!    all positive x, and has the probability density function
+!!    The prototype gamma distribution used herein has mean = GAMMA and
+!!    standard deviation = sqrt(GAMMA). This distribution is defined for
+!!    all positive X, and has the probability density function
 !!
-!!        f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!        f(X) = (1/constant) * (X**(GAMMA-1)) * exp(-X)
 !!
-!!    where the constant = the gamma function evaluated at the value gamma.
+!!    where the constant is equal to the Gamma function evaluated at the
+!!    value GAMMA.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##ALGORITHM
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    Generate N Gamma Distribution random numbers using Greenwood's
+!!    Rejection Algorithm--
 !!
+!!     1. Generate a normal random number;
+!!
+!!     2. Transform the normal variate to an approximate gamma variate
+!!        using the Wilson-Hilferty approximation (see the Johnson and Kotz
+!!        reference, page 176);
+!!
+!!     3. Form the rejection function value, based
+!!        on the probability density function value
+!!        of the actual distribution of the pseudo-gamma
+!!        variate, and the probability density function value
+!!        of a true gamma variate.
+!!
+!!     4. Generate a uniform random number;
+!!
+!!     5. If the uniform random number is less than the rejection function
+!!        value, then accept the pseudo-random number as a gamma variate;
+!!        if the uniform random number is larger than the rejection function
+!!        value, then reject the pseudo-random number as a gamma variate.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    N      The desired integer number of random numbers to be generated.
+!!
+!!    GAMMA  The value of the tail length parameter. GAMMA should be
+!!           positive. GAMMA should be larger than 1/3 (algorithmic
+!!           restriction).
+!!
+!!   ISEED   An integer seed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X      A vector (of dimension at least N) into which the generated
+!!           random sample from the gamma distribution will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_gamran
-!!    use M_datapac, only : gamran
+!!    use m_datapac, only : gamran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call gamran(x,y)
+!!    integer,parameter :: n=4000
+!!    real :: x(n)
+!!    integer :: iseed
+!!    real :: gamma
+!!       call label('gamran')
+!!       gamma=3.4
+!!       iseed=12345
+!!       call gamran(n,gamma,iseed,x)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_gamran
 !!
 !!   Results:
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1547529E+02 -               X            X
+!!      0.1483860E+02 I
+!!      0.1420192E+02 I
+!!      0.1356523E+02 I                               X
+!!      0.1292854E+02 I                                   X
+!!      0.1229185E+02 I                                         X   X
+!!      0.1165516E+02 -                                      X
+!!      0.1101848E+02 I          X                        X       X
+!!      0.1038179E+02 I     XX  X      X   X        X       X   X   X
+!!      0.9745100E+01 I    X X  X     XX      X X   XX  X     XX       X X
+!!      0.9108413E+01 I          X X X      XX     X    XXX          XX
+!!      0.8471725E+01 I  X X XX  XX    X  XXXXX XXX X   XX  X X X  X  XX X
+!!      0.7835037E+01 -  X  XXX XX X  XXX  X XX XXXXXXX  XX XXXX XX X  XX
+!!      0.7198349E+01 I   X XXXXX  XXXXX  XXXX  X X XXX XXXXX XXX XXX X X
+!!      0.6561661E+01 I  XXXXXXXXXX XXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.5924973E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.5288285E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.4651597E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.4014910E+01 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.3378222E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.2741534E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.2104846E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.1468158E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.8314705E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.1947823E+00 -   X X   X X  XX X X    X X XX XXXX X X       X  XX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1547529E+02 -                                                  X
+!!      0.1483860E+02 I
+!!      0.1420192E+02 I
+!!      0.1356523E+02 I                                                  X
+!!      0.1292854E+02 I                                                  X
+!!      0.1229185E+02 I                                                  X
+!!      0.1165516E+02 -                                                  X
+!!      0.1101848E+02 I                                                  X
+!!      0.1038179E+02 I                                                  X
+!!      0.9745100E+01 I                                                  X
+!!      0.9108413E+01 I                                                 XX
+!!      0.8471725E+01 I                                                 X
+!!      0.7835037E+01 -                                                XX
+!!      0.7198349E+01 I                                                X
+!!      0.6561661E+01 I                                              XXX
+!!      0.5924973E+01 I                                            XXX
+!!      0.5288285E+01 I                                         XXXX
+!!      0.4651597E+01 I                                     XXXXX
+!!      0.4014910E+01 -                                XXXXXX
+!!      0.3378222E+01 I                         XXXXXXXX
+!!      0.2741534E+01 I                  XXXXXXXX
+!!      0.2104846E+01 I           XXXXXXXX
+!!      0.1468158E+01 I     XXXXXXX
+!!      0.8314705E+00 I  XXXX
+!!      0.1947823E+00 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!! ================================================================================
+!! ```
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -9934,50 +10397,19 @@ END SUBROUTINE GAMPPF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * GREENWOOD, 'A FAST GENERATOR FOR GAMMA-DISTRIBUTED RANDOM VARIABLES',
-!!     COMPSTAT 1974, PROCEEDINGS IN COMPUTATIONAL STATISTICS, VIENNA,
-!!     SEPTEMBER, 1974, PAGES 19-27.
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 24-27.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGES 36-37.
-!!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
-!!     DISTRIBUTION', TECHNOMETRICS, 1962, PAGES 1-15.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 166-206.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 68-73.
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 952.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
-REAL(kind=wp) :: a1 , arg , athird , b1 , funct , Gamma , sqrt3 , term , u(1) ,  &
-     &     X , xg , xg0 , xn(1) , xn0
-INTEGER :: i , Iseed , N
-!     ******STILL NEEDS ALGORITHM WORK ******
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --GAMMA  = THE  VALUE OF THE
-!                                TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!                                GAMMA SHOULD BE LARGER
-!                                THAN 1/3 (ALGORITHMIC RESTRICTION).
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE GAMMA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --GAMMA SHOULD BE POSITIVE.
-!                 --GAMMA SHOULD BE LARGER
-!                   THAN 1/3 (ALGORITHMIC RESTRICTION).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, NORRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, EXP.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Greenwood, 'A Fast generator for Gamma-Distributed Random Variables',
+!!     Compstat 1974, Proceedings in Computational Statistics, Vienna,
+!!     September, 1974, pages 19-27.
+!!   * Tocher, The Art of Simulation, 1963, pages 24-27.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, pages 36-37.
+!!   * Wilk, Gnanadesikan, and Huyett, 'Probability Plots for the Gamma
+!!     Distribution', Technometrics, 1962, pages 1-15.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     pages 166-206.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, pages 68-73.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     page 952.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -9985,70 +10417,43 @@ INTEGER :: i , Iseed , N
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MARCH     1982.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE GAMRAN(N,Gamma,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: a1, arg, athird, b1, funct, sqrt3, term, u(1), xg, xg0, xn(1), xn0
+INTEGER :: i
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!---------------------------------------------------------------------
-!
-!-----DATA STATEMENTS-------------------------------------------------
-!
-      DATA athird/0.3333333_wp/
-      DATA sqrt3/1.73205081_wp/
-!
+DATA athird/0.3333333_wp/
+DATA sqrt3/1.73205081_wp/
 !-----START POINT-----------------------------------------------------
+!     ******STILL NEEDS ALGORITHM WORK ******
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GAMRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001    FORMAT (' ***** FATAL ERROR--The first input argument to GAMRAN(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99003 FORMAT (' ***** FATAL ERROR--The second input argument to GAMRAN(3f) is non-positive *****')
          WRITE (G_IO,99006) Gamma
          RETURN
       ELSEIF ( Gamma<=0.33333333_wp ) THEN
          WRITE (G_IO,99004)
-99004    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMRAN SUBROU&
-     &TINE IS SMALLER THAN OR EQUAL TO 0.33333333 *****')
+         99004 FORMAT (' ***** FATAL ERROR--The second input argument to GAMRAN(3f) is smaller than or equal to 0.33333333 *****')
          WRITE (G_IO,99005)
-99005    FORMAT (' ','                   (ALGORITHMIC RESTIRCTION)')
+         99005 FORMAT ('                    (algorithmic restriction)')
          WRITE (G_IO,99006) Gamma
          RETURN
       ELSE
-!
-!     GENERATE N GAMMA DISTRIBUTION RANDOM NUMBERS
-!     USING GREENWOOD'S REJECTION ALGORITHM--
-!     1) GENERATE A NORMAL RANDOM NUMBER;
-!     2) TRANSFORM THE NORMAL VARIATE TO AN APPROXIMATE
-!        GAMMA VARIATE USING THE WILSON-HILFERTY
-!        APPROXIMATION (SEE THE JOHNSON AND KOTZ
-!        REFERENCE, PAGE 176);
-!     3) FORM THE REJECTION FUNCTION VALUE, BASED
-!        ON THE PROBABILITY DENSITY FUNCTION VALUE
-!        OF THE ACTUAL DISTRIBUTION OF THE PSEUDO-GAMMA
-!        VARIATE, AND THE PROBABILITY DENSITY FUNCTION VALUE
-!        OF A TRUE GAMMA VARIATE.
-!     4) GENERATE A UNIFORM RANDOM NUMBER;
-!     5) IF THE UNIFORM RANDOM NUMBER IS LESS THAN
-!        THE REJECTION FUNCTION VALUE, THEN ACCEPT
-!        THE PSEUDO-RANDOM NUMBER AS A GAMMA VARIATE;
-!        IF THE UNIFORM RANDOM NUMBER IS LARGER THAN
-!        THE REJECTION FUNCTION VALUE, THEN REJECT
-!        THE PSEUDO-RANDOM NUMBER AS A GAMMA VARIATE.
-!
          a1 = 1.0_wp/(9.0_wp*Gamma)
          b1 = SQRT(a1)
          xn0 = -sqrt3 + b1
@@ -10070,7 +10475,7 @@ INTEGER :: i , Iseed , N
             ENDDO
          ENDDO
       ENDIF
-99006 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+99006 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
 !
 END SUBROUTINE GAMRAN
 !>
@@ -10153,9 +10558,9 @@ END SUBROUTINE GAMRAN
 !!    CC0-1.0
 !!##REFERENCES
 !!    * Feller, An Introduction to Probability Theory and its Applications,
-!!      Volume 1, Edition 2, 1957, Pages 155-157, 210.
+!!      Volume 1, Edition 2, 1957, pages 155-157, 210.
 !!    * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!      Page 929.
+!!      page 929.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -10260,12 +10665,12 @@ END SUBROUTINE GEOCDF
 !!##REFERENCES
 !!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!     425-450.
 !!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
-!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!     VOLUME 1, EDITION 2, 1957, pages 155-157, 210.
 !!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 929.
+!!     page 929.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPLT(X,N,P)
 REAL(kind=wp) :: an , cc , hold , P , pp0025 , pp025 , pp975 , pp9975 , q ,   &
@@ -10285,7 +10690,7 @@ INTEGER i , iupper , N
 !                                P SHOULD BE BETWEEN
 !                                0.0 (EXCLUSIVELY) AND
 !                                1.0 (EXCLUSIVELY).
-!     OUTPUT--A ONE-PAGE GEOMETRIC PROBABILITY PLOT.
+!     OUTPUT--A ONE-page GEOMETRIC PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -10476,9 +10881,9 @@ END SUBROUTINE GEOPLT
 !!    CC0-1.0
 !!##REFERENCES
 !!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
-!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!     VOLUME 1, EDITION 2, 1957, pages 155-157, 210.
 !!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 929.
+!!     page 929.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE GEOPPF(P,Ppar,Ppf)
 REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , Ppar , Ppf , ratio
@@ -10577,7 +10982,13 @@ INTEGER iratio
 !!
 !!##SYNOPSIS
 !!
+!!
 !!       SUBROUTINE GEORAN(N,P,Iseed,X)
+!!
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(in)  :: P
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
 !!
 !!##DESCRIPTION
 !!    GEORAN(3f) generates a random sample of size N from the geometric
@@ -10597,149 +11008,195 @@ INTEGER iratio
 !!    Bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = P.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    N   The desired integer number of random numbers to be generated.
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    ISEED  An integer iseed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!    P   The value of the 'Bernoulli probability' parameter for the
+!!        geometric distribution. P should be between 0.0 (exclusively)
+!!        and 1.0 (exclusively).
+!!
+!!##OUTPUT ARGUMENTS
+!!    X   A vector (of dimension at least N) into which the generated random
+!!        sample of size N from the geometric distribution will be placed.
 !!
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
+!!
 !!    program demo_georan
-!!    use M_datapac, only : georan
+!!    use m_datapac, only : georan, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call georan(x,y)
+!!    integer,parameter :: n=4000
+!!    real :: x(n)
+!!    integer :: iseed
+!!    real :: P
+!!       call label('georan')
+!!       P=0.2
+!!       iseed=12345
+!!       call georan(N,P,Iseed,X)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_georan
 !!
 !!   Results:
 !!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.4500000E+02 -   X
+!!      0.4312500E+02 I
+!!      0.4125000E+02 I
+!!      0.3937500E+02 I
+!!      0.3750000E+02 I                   X
+!!      0.3562500E+02 I
+!!      0.3375000E+02 -                          X
+!!      0.3187500E+02 I                                    X
+!!      0.3000000E+02 I
+!!      0.2812500E+02 I                  X                      X
+!!      0.2625000E+02 I           X        X          X      X   XX
+!!      0.2437500E+02 I   X            X XX X        X X           X
+!!      0.2250000E+02 -            X X                 X         X      X
+!!      0.2062500E+02 I    X X             X    XX X XX   X   X  X    X
+!!      0.1875000E+02 I      X  XX     X XXX   X XX  X XX  XX   XX X    XX
+!!      0.1687500E+02 I  X X XX X XXXX X  X  XXX  XX XXXXX  XX XX  X XXXX
+!!      0.1500000E+02 I  XX X  XXXXXXX  X  X  X  X  XX XXXX X X  X   X  XX
+!!      0.1312500E+02 I  XXXX XXXXXX XXXXXXXXX XXXXXXX X X XXXXXXXX XXXX X
+!!      0.1125000E+02 -   XXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXX XX XXX XXX XX
+!!      0.9375000E+01 I  XXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.7500000E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.5625000E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.3750000E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.1875000E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.0000000E+00 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.4500000E+02 -                                                  X
+!!      0.4312500E+02 I
+!!      0.4125000E+02 I
+!!      0.3937500E+02 I
+!!      0.3750000E+02 I                                                  X
+!!      0.3562500E+02 I
+!!      0.3375000E+02 -                                                  X
+!!      0.3187500E+02 I                                                  X
+!!      0.3000000E+02 I
+!!      0.2812500E+02 I                                                  X
+!!      0.2625000E+02 I                                                  X
+!!      0.2437500E+02 I                                                  X
+!!      0.2250000E+02 -                                                  X
+!!      0.2062500E+02 I                                                 XX
+!!      0.1875000E+02 I                                                 X
+!!      0.1687500E+02 I                                                 X
+!!      0.1500000E+02 I                                                XX
+!!      0.1312500E+02 I                                               XX
+!!      0.1125000E+02 -                                              XX
+!!      0.9375000E+01 I                                            XXX
+!!      0.7500000E+01 I                                       XXXXXX
+!!      0.5625000E+01 I                                  XXXXXX
+!!      0.3750000E+01 I                         XXXXXXXXXX
+!!      0.1875000E+01 I            XXXXXXXXXXXXXX
+!!      0.0000000E+00 -  XXXXXXXXXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
-!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 929.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GEORAN(N,P,Iseed,X)
-REAL(kind=wp) :: aden , anum , aratio , arg1 , arg2 , P , ratio , X
-INTEGER :: i , iratio , Iseed , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --P      = THE  VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE GEOMETRIC
-!                                DISTRIBUTION.
-!                                P SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE GEOMETRIC DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
-!              FROM THIS DISCRETE RANDOM NUMBER
-!              GENERATOR MUST NECESSARILY BE A
-!              SEQUENCE OF ***INTEGER*** VALUES,
-!              THE OUTPUT VECTOR X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE .
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
+!!   * Tocher, The Art of Simulation, 1963, pages 14-15.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+!!   * Feller, An Introduction to Probability Theory and its Applications,
+!!     Volume 1, Edition 2, 1957, pages 155-157, 210.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     page 929.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
 !
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT FROM THIS DISCRETE RANDOM NUMBER
+!              GENERATOR MUST NECESSARILY BE A SEQUENCE OF ***INTEGER*** VALUES,
+!              THE OUTPUT VECTOR X IS SINGLE PRECISION IN MODE.
+!              X HAS BEEN SPECIFIED AS SINGLE PRECISION SO AS TO CONFORM WITH THE DATAPAC
+!              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL DATAPAC SUBROUTINES ARE .
+!              THIS CONVENTION IS BASED ON THE BELIEF THAT
 !
-!---------------------------------------------------------------------
+!               1. A MIXTURE OF MODES (FLOATING POINT
+!                  VERSUS INTEGER) IS INCONSISTENT AND
+!                  AN UNNECESSARY COMPLICATION
+!                  IN A DATA ANALYSIS; AND
 !
-      DIMENSION X(:)
-!
-!---------------------------------------------------------------------
-!
-!-----START POINT-----------------------------------------------------
+!               2. FLOATING POINT MACHINE ARITHMETIC
+!                  (AS OPPOSED TO INTEGER ARITHMETIC)
+!                  IS THE MORE NATURAL MODE FOR DOING
+!                  DATA ANALYSIS.
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE GEORAN(N,P,Iseed,X)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: P
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: aden, anum, aratio, arg1, arg2, ratio
+INTEGER :: i, iratio
+
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GEORAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
-      ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GEORAN SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99004) P
-99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
-         CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N GEOMETRIC RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
-         DO i = 1 , N
-            IF ( X(i)/=0.0_wp ) THEN
-               arg1 = 1.0_wp - X(i)
-               arg2 = 1.0_wp - P
-               anum = LOG(arg1)
-               aden = LOG(arg2)
-               ratio = anum/aden
-               iratio = ratio
-               X(i) = iratio
-               aratio = iratio
-               IF ( aratio==ratio ) X(i) = iratio - 1
-            ENDIF
-         ENDDO
-      ENDIF
-!
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to GEORAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99003)
+      99003 FORMAT (' ***** FATAL ERROR--The second input argument to GEORAN(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99004) P
+      99004 FORMAT (' ***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      !
+      !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+      !
+      CALL UNIRAN(N,Iseed,X)
+      !
+      !     GENERATE N GEOMETRIC RANDOM NUMBERS
+      !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+      !
+      DO i = 1 , N
+         IF ( X(i)/=0.0_wp ) THEN
+            arg1 = 1.0_wp - X(i)
+            arg2 = 1.0_wp - P
+            anum = LOG(arg1)
+            aden = LOG(arg2)
+            ratio = anum/aden
+            iratio = ratio
+            X(i) = iratio
+            aratio = iratio
+            IF ( aratio==ratio ) X(i) = iratio - 1
+         ENDIF
+      ENDDO
+   ENDIF
+
 END SUBROUTINE GEORAN
 !>
 !!##NAME
@@ -10844,9 +11301,9 @@ END SUBROUTINE GEORAN
 !!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 53, 59, 81, 83.
+!!     pages 53, 59, 81, 83.
 !!   * Daniel, 'Use of Half-Normal Plots in Interpreting Factorial Two-level
-!!     Experiments', Technometrics, 1959, Pages 311-341.
+!!     Experiments', Technometrics, 1959, pages 311-341.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -10944,15 +11401,15 @@ end subroutine hfncdf
 !!
 !!##REFERENCES
 !!   * Daniel, 'Use of Half-Normal Plots in Interpreting Factorial Two-Level
-!!     Experiments', Technometrics, 1959, Pages 311-341.
+!!     Experiments', Technometrics, 1959, pages 311-341.
 !!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army Research
-!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), pages
 !!     425-450.
-!!   * Hahn anD Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!   * Hahn anD Shapiro, Statistical Methods in Engineering, 1967, pages
 !!     260-308.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 53, 59, 81, 83.
+!!     pages 53, 59, 81, 83.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -11118,9 +11575,9 @@ END SUBROUTINE HFNPLT
 !!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 53, 59, 81, 83.
+!!     pages 53, 59, 81, 83.
 !!   * Daniel, 'Use of Half-Normal Plots in Interpreting Factorial Two-Level
-!!     Experiments', Technometrics, 1959, Pages 311-341.
+!!     Experiments', Technometrics, 1959, pages 311-341.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --OCTOBER   1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -11209,10 +11666,10 @@ END SUBROUTINE HFNPPF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
+!!   * TOCHER, THE ART OF SIMULATION, 1963, pages 14-15.
+!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, page 36.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!   PAGES 53, 59, 81, 83.
+!!   pages 53, 59, 81, 83.
 !     VERSION NUMBER--82/7
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --JULY      1976.
@@ -11335,7 +11792,7 @@ end subroutine hfnran
 !!
 !!##REFERENCES
 !!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
-!!     Edition 2, 1963, Page 4.
+!!     Edition 2, 1963, page 4.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -11813,10 +12270,10 @@ END SUBROUTINE INVXWX
 !!##REFERENCES
 !!   * Hastings, Mosteller, Tukey, and windsor, 'Low MOments for Small
 !!     Samples:  A Comparative Study of Order Statistics', Annals of
-!!     Mathematical Statistics, 18, 1947, Pages 413-426.
+!!     Mathematical Statistics, 18, 1947, pages 413-426.
 !!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
-!!     Princeton University), 1969, Pages 42-44, 53-58.
+!!     Princeton University), 1969, pages 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -12010,10 +12467,10 @@ INTEGER       :: icount
 !!##REFERENCES
 !!  * Hastings, Mosteller, Tukey, and Windsor, 'Low Moments for Small
 !!    Samples:  A Comparative Study of Order Statistics', Annals of MAthematical
-!!    Statistics, 18, 1947, Pages 413-426.
+!!    Statistics, 18, 1947, pages 413-426.
 !!  * Filliben, Simple and Robust Linear Estimation of the Location Parameter
 !!    of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
-!!    University), 1969, Pages 42-44, 53-58.
+!!    University), 1969, pages 42-44, 53-58.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -12126,16 +12583,16 @@ END SUBROUTINE LAMPDF
 !!##REFERENCES
 !!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
 !!     260-308.
 !!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY, 1969), PAGES 21-44, 229-231, PAGES 53-58.
+!!     PRINCETON UNIVERSITY, 1969), pages 21-44, 229-231, pages 53-58.
 !!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
 !!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
-!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
+!!     MATHEMATICAL STATISTICS, 18, 1947, pages 413-426.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , cc , hold , pp0025 , pp025 , pp975 , pp9975 ,  &
@@ -12150,7 +12607,7 @@ INTEGER :: i , iupper , N
 !                                IN THE VECTOR X.
 !                     --ALAMBA = THE  VALUE OF LAMBDA
 !                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT--A ONE-PAGE LAMBDA PROBABILITY PLOT.
+!     OUTPUT--A ONE-page LAMBDA PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -12322,12 +12779,12 @@ END SUBROUTINE LAMPLT
 !!##REFERENCES
 !!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231, PAGES 53-58.
+!!     PRINCETON UNIVERSITY), 1969, pages 21-44, 229-231, pages 53-58.
 !!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
+!!     1970, pages 28-31.
 !!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
 !!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
-!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
+!!     MATHEMATICAL STATISTICS, 18, 1947, pages 413-426.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE LAMPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba , P , Ppf
@@ -12394,146 +12851,227 @@ REAL(kind=wp) :: Alamba , P , Ppf
 !!
 !!       SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
 !!
-!!##DESCRIPTION
-!!    lamran(3f) generates a random sample of size n from the (tukey)
-!!    lambda distribution with tail length parameter value = alamba.
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(in)  :: Alamba
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
 !!
-!!    in general, the probability density function for this distribution
+!!##DESCRIPTION
+!!    LAMRAN(3f) generates a random sample of size N from the (Tukey)
+!!    lambda distribution with tail length parameter value = ALAMBA.
+!!
+!!    In general, the probability density function for this distribution
 !!    is not simple. the percent point function for this distribution is
 !!
-!!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!        g(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    N       The desired integer number of random numbers to be generated.
 !!
+!!    ALAMBA  The value of LAMBDA (the tail length parameter).
+!!
+!!    ISEED   An integer seed value. Should be set to a non-negative value
+!!            to start a new sequence of values. Will be set to -1 on return
+!!            to indicate the next call should continue the current random
+!!            sequence walk.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X       A vector (of dimension at least N) into which the generated
+!!            random sample of size N from the (Tukey) lambda distribution
+!!            will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_lamran
-!!    use M_datapac, only : lamran
+!!    use m_datapac, only : lamran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call lamran(x,y)
+!!    integer,parameter :: n=400
+!!    real :: x(n)
+!!    integer :: iseed
+!!    real :: gamma
+!!       call label('lamran')
+!!       gamma=3.4
+!!       iseed=12345
+!!       call lamran(n,gamma,iseed,x)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_lamran
 !!
 !!   Results:
 !!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.2940770E+00 -              XX       X X                     X
+!!      0.2701390E+00 I   XXX    X        X              X     X X    X
+!!      0.2462010E+00 I    X          XX X X  X            X
+!!      0.2222630E+00 I          X        XX X  X X  X    X X X X
+!!      0.1983251E+00 I     XX     XX  XX         X                    X
+!!      0.1743871E+00 I      XX X  XX    X  X      X X X X   X  XX XXXX
+!!      0.1504491E+00 -       X    X   XX   X  X        X       XX  X X
+!!      0.1265111E+00 I  X   X XXX    X  X    X   XX     XX  XX   X X
+!!      0.1025732E+00 I    X        XX  XXX     XX XXXX  XX X  X      XXXX
+!!      0.7863519E-01 I   X XX XXXXX       X   X     X  X  XXX     X X XX
+!!      0.5469720E-01 I    X      XXX     X X     XX   X X  XX    X XX X
+!!      0.3075922E-01 I  X  XXX X    XXXX  XXX  XX   XXX    X  XX  XX X
+!!      0.6821245E-02 -   XXXX X XX   X  X X X      XX  XX   XX  XX    X X
+!!     -0.1711673E-01 I     X   X X XX  X   XX XX X     XX X         X  XX
+!!     -0.4105473E-01 I        XX    X X   XXXXXX XXXX XX  X  X   X XXX
+!!     -0.6499270E-01 I          X XX X  X    X XX XXXX   X    XX  X
+!!     -0.8893067E-01 I  X   X  X          XX  X    X XX  X X XX   X   X X
+!!     -0.1128686E+00 I   X     X X X     X       X             X X   XX
+!!     -0.1368066E+00 -   XX  X          X     X X X  XXX    X  X   X
+!!     -0.1607446E+00 I       X    XX         X     X     X  X X  XX X  X
+!!     -0.1846826E+00 I  X  X     XX XXX X X X   X         X   X X   X   X
+!!     -0.2086205E+00 I  X  XX X X        X   X        X  XX   XXX
+!!     -0.2325585E+00 I    X  X         X     X  X    X
+!!     -0.2564965E+00 I                XX          X               X    X
+!!     -0.2804345E+00 -   X      X X           X                 X X    X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.2940770E+00 -                                                  X
+!!      0.2701390E+00 I                                                XX
+!!      0.2462010E+00 I                                               XX
+!!      0.2222630E+00 I                                              XX
+!!      0.1983251E+00 I                                             XX
+!!      0.1743871E+00 I                                          XXX
+!!      0.1504491E+00 -                                        XXX
+!!      0.1265111E+00 I                                      XXX
+!!      0.1025732E+00 I                                   XXXX
+!!      0.7863519E-01 I                                XXXX
+!!      0.5469720E-01 I                              XXX
+!!      0.3075922E-01 I                          XXXX
+!!      0.6821245E-02 -                       XXXX
+!!     -0.1711673E-01 I                    XXXX
+!!     -0.4105473E-01 I                 XXXX
+!!     -0.6499270E-01 I               XXX
+!!     -0.8893067E-01 I             XXX
+!!     -0.1128686E+00 I            XX
+!!     -0.1368066E+00 -          XXX
+!!     -0.1607446E+00 I        XXX
+!!     -0.1846826E+00 I      XXX
+!!     -0.2086205E+00 I    XXX
+!!     -0.2325585E+00 I    X
+!!     -0.2564965E+00 I   X
+!!     -0.2804345E+00 -  XX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 53-58.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
-REAL(kind=wp) :: alamb2 , Alamba , q , X
-INTEGER :: i , Iseed , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --ALAMBA = THE  VALUE OF LAMBDA
-!                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE (TUKEY) LAMBDA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = ALAMBA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Tocher, The Art of Simulation, 1963, pages 14-15.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, pages 21-44, 53-58.
+!!   * Filliben, 'The Percent Point Function', (unpublished manuscript),
+!!     1970, pages 28-31.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LAMRAN(N,Alamba,Iseed,X)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: Alamba
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: alamb2 , q
+INTEGER       :: i
+
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!-----START POINT-----------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
       alamb2 = Alamba
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LAMRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to LAMRAN(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
          CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N LAMBDA DISTRIBUTION RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
+         !
+         !     GENERATE N LAMBDA DISTRIBUTION RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
          DO i = 1 , N
             q = X(i)
-            IF ( -0.001_wp<alamb2 .AND. alamb2<0.001_wp ) X(i)                &
-     &           = LOG(q/(1.0-q))
-            IF ( -0.001_wp>=alamb2 .OR. alamb2>=0.001_wp ) X(i)               &
-     &           = (q**alamb2-(1.0_wp-q)**alamb2)/alamb2
+            IF ( -0.001_wp<alamb2 .AND. alamb2<0.001_wp ) X(i) = LOG(q/(1.0-q))
+            IF ( -0.001_wp>=alamb2 .OR. alamb2>=0.001_wp ) X(i) = (q**alamb2-(1.0_wp-q)**alamb2)/alamb2
          ENDDO
       ENDIF
-!
+
 END SUBROUTINE LAMRAN
 !>
 !!##NAME
-!!    lamsf(3f) - [M_datapac:SPARSITY] compute the Tukey-Lambda sparsity function
+!!    lamsf(3f) - [M_datapac:SPARSITY] compute the Tukey-Lambda sparsity
+!!    function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LAMSF(P,Alamba,Sf)
 !!
-!!##DESCRIPTION
-!!    lamsf(3f) computes the sparsity function value for the (tukey) lambda
-!!    distribution with tail length parameter value = alamba.
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(in)  :: Alamba
+!!        REAL(kind=wp),intent(out) :: Sf
 !!
-!!    in general, the probability density function for this distribution
+!!##DESCRIPTION
+!!    LAMSF(3f) computes the sparsity function value for the (Tukey) lambda
+!!    distribution with tail length parameter value = ALAMBA.
+!!
+!!    In general, the probability density function for this distribution
 !!    is not simple.
 !!
-!!    the percent point function for this distribution is
+!!    The percent point function for this distribution is
 !!
-!!        g(p) = ((p**alamba)-((1-p)**alamba))/alamba
+!!        g(P) = ((P**ALAMBA)-((1-P)**ALAMBA))/ALAMBA
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
-!!    probability density function (but in units of p rather than x).
+!!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P       The value (between 0.0 and 1.0) at which the sparsity function
+!!            is to be evaluated.
+!!
+!!    ALAMBA  The value of Lambda (the Tail Length parameter).
+!!
+!!            If ALAMBA is positive, then P should be between 0.0 and 1.0,
+!!            inclusively.
+!!
+!!            If ALAMBA is non-positive, then P should be between 0.0 and
+!!            1.0, exclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    SF      The sparsity function value for the Tukey Lambda distribution
 !!
 !!##EXAMPLES
 !!
@@ -12551,69 +13089,51 @@ END SUBROUTINE LAMRAN
 !!    The original DATAPAC library was written by James Filliben of the
 !!    Statistical Engineering Division, National Institute of Standards
 !!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231, PAGES 53-58.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * HASTINGS, MOSTELLER, TUKEY, AND WINDSOR, 'LOW MOMENTS FOR SMALL
-!!     SAMPLES:  A COMPARATIVE STUDY OF ORDER STATISTICS', ANNALS OF
-!!     MATHEMATICAL STATISTICS, 18, 1947, PAGES 413-426.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LAMSF(P,Alamba,Sf)
-REAL(kind=wp) :: Alamba , P , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --ALAMBA = THE  VALUE OF LAMBDA
-!                                (THE TAIL LENGTH PARAMETER).
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF FOR THE TUKEY LAMBDA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER = ALAMBA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--IF ALAMBA IS POSITIVE,
-!                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, INCLUSIVELY.
-!                   IF ALAMBA IS NON-POSITIVE,
-!                   THEN P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, pages 21-44, 229-231, pages 53-58.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, pages 28-31.
+!!   * Hastings, Mosteller, Tukey, and Windsor, 'Low Moments for Small
+!!     Samples:  A Comparative Study of Order Statistics', Annals of
+!!     Mathematical Statistics, 18, 1947, pages 413-426.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LAMSF(P,Alamba,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(in)  :: Alamba
+REAL(kind=wp),intent(out) :: Sf
 !---------------------------------------------------------------------
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( Alamba>0.0_wp .OR. P>0.0_wp ) THEN
-         IF ( Alamba>0.0_wp .OR. P<1.0_wp ) THEN
-            IF ( Alamba<=0.0_wp .OR. P>=0.0_wp ) THEN
-               IF ( Alamba<=0.0_wp .OR. P<=1.0_wp ) THEN
-!
+   IF ( Alamba>0.0_wp .OR. P>0.0_wp ) THEN
+      IF ( Alamba>0.0_wp .OR. P<1.0_wp ) THEN
+         IF ( Alamba<=0.0_wp .OR. P>=0.0_wp ) THEN
+            IF ( Alamba<=0.0_wp .OR. P<=1.0_wp ) THEN
 !-----START POINT-----------------------------------------------------
-!
-                  Sf = P**(Alamba-1.0_wp) + (1.0-P)**(Alamba-1.0_wp)
-                  GOTO 99999
-               ENDIF
+               Sf = P**(Alamba-1.0_wp) + (1.0-P)**(Alamba-1.0_wp)
+               GOTO 99999
             ENDIF
          ENDIF
       ENDIF
-      WRITE (G_IO,99001)
-99001 FORMAT (' ',                                                      &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LAMSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-      WRITE (G_IO,99002) P
-99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-      RETURN
-!
+   ENDIF
+   WRITE (G_IO,99001)
+   99001 FORMAT (' ***** FATAL ERROR--The first input argument to LAMSF(3f) is outside the allowable (0,1) interval *****')
+   WRITE (G_IO,99002) P
+   99002 FORMAT (' ***** the value of the argument is ',E15.8,' *****')
+   RETURN
+
 99999 END SUBROUTINE LAMSF
 !>
 !!##NAME
@@ -12710,8 +13230,8 @@ REAL(kind=wp) :: Alamba , P , Sf
 !!    CC0-1.0
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 112-136.
-!!   * Cramer, Mathematical Methods of Statistics, 1946, Pages 219-220.
+!!     pages 112-136.
+!!   * Cramer, Mathematical Methods of Statistics, 1946, pages 219-220.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -12803,13 +13323,13 @@ END SUBROUTINE LGNCDF
 !!##REFERENCES
 !!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
 !!     260-308.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 112-136.
-!!   * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+!!     pages 112-136.
+!!   * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, pages 219-220.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNPLT(X,N)
@@ -12820,7 +13340,7 @@ INTEGER :: i , iupper , N
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE LOGNORMAL PROBABILITY PLOT.
+!     OUTPUT--A ONE-page LOGNORMAL PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -12938,6 +13458,9 @@ END SUBROUTINE LGNPLT
 !!
 !!       SUBROUTINE LGNPPF(P,Ppf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Ppf
+!!
 !!##DESCRIPTION
 !!    LGNPPF(3f) computes the percent point function value for the lognormal
 !!    distribution.
@@ -12946,7 +13469,7 @@ END SUBROUTINE LGNPLT
 !!    and standard deviation = sqrt(e*(e-1)) = 2.16119742. This distribution
 !!    is defined for all positive X and has the probability density function
 !!
-!!        f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!        f(X) = (1/(X*sqrt(2*pi))) * exp(-log(X)*log(X)/2)
 !!
 !!    The lognormal distribution used herein is the distribution of the
 !!    variate x = exp(z) where the variate z is normally distributed with
@@ -12956,21 +13479,65 @@ END SUBROUTINE LGNPLT
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P      The value (between 0.0 (exclusively) and 1.0 (exclusively))
+!!           at which the percent point function is to be evaluated.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF    The percent point function value for the lognormal distribution
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_lgnppf
-!!    use M_datapac, only : lgnppf
+!!    !@(#) line plotter graph of function
+!!    use M_datapac, only : lgnppf, plott, label
 !!    implicit none
-!!    ! call lgnppf(x,y)
+!!    integer,parameter :: n=200
+!!    real              :: x(n), y(n)
+!!    integer           :: i
+!!       call label('lgnppf')
+!!       x=[(real(i)/real(n+1),i=1,n)]
+!!       do i=1,n
+!!          call lgnppf(x(i),y(i))
+!!       enddo
+!!       call plott(x,y,n)
 !!    end program demo_lgnppf
 !!
 !!   Results:
+!!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.9950249E+00 -                            X X   X    X          X
+!!      0.9537728E+00 I                  XXXXXXX X
+!!      0.9125207E+00 I               XXXX
+!!      0.8712686E+00 I            XXX
+!!      0.8300166E+00 I           XX
+!!      0.7887645E+00 I         XX
+!!      0.7475125E+00 -         X
+!!      0.7062603E+00 I        X
+!!      0.6650083E+00 I       XX
+!!      0.6237562E+00 I       X
+!!      0.5825042E+00 I      X
+!!      0.5412520E+00 I      X
+!!      0.5000000E+00 -     XX
+!!      0.4587479E+00 I     X
+!!      0.4174958E+00 I     X
+!!      0.3762438E+00 I    XX
+!!      0.3349917E+00 I    X
+!!      0.2937396E+00 I    X
+!!      0.2524875E+00 -   XX
+!!      0.2112355E+00 I   X
+!!      0.1699834E+00 I   X
+!!      0.1287313E+00 I   X
+!!      0.8747923E-01 I   X
+!!      0.4622716E-01 I  XX
+!!      0.4975124E-02 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.7596E-01  0.3348E+01  0.6620E+01  0.9893E+01  0.1316E+02
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -12984,29 +13551,15 @@ END SUBROUTINE LGNPLT
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 112-136.
-!!   * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     pages 112-136.
+!!   * Cramer, Mathematical Methods of Statistics, 1946, pages 219-220.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNPPF(P,Ppf)
-REAL(kind=wp) :: P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (EXCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE LOGNORMAL DISTRIBUTION
-!             WITH MEAN = SQRT(E) = 1.64872127
-!             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Ppf
 !---------------------------------------------------------------------
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -13020,8 +13573,8 @@ REAL(kind=wp) :: P , Ppf
          Ppf = EXP(Ppf)
       ENDIF
 
-99001 FORMAT(' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LGNPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
+99001 FORMAT(' ***** FATAL ERROR--The first input argument to LGNPPF(3f) is outside the allowable (0,1) interval *****')
+99002 FORMAT(' ***** The value of the argument is ',E15.8, ' *****')
 !
 END SUBROUTINE LGNPPF
 !>
@@ -13030,60 +13583,142 @@ END SUBROUTINE LGNPPF
 !!
 !!##SYNOPSIS
 !!
+!!
 !!       SUBROUTINE LGNRAN(N,Iseed,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
-!!    lgnran(3f) generates a random sample of size n from the lognormal
+!!    LGNRAN(3f) generates a random sample of size N from the lognormal
 !!    distribution.
 !!
-!!    the prototype lognormal distribution used herein has mean = sqrt(e)
+!!    The prototype lognormal distribution used herein has mean = sqrt(e)
 !!    = 1.64872127 and standard deviation = sqrt(e*(e-1)) = 2.16119742.
-!!    this distribution is defined for all positive x and has the probability
+!!    this distribution is defined for all positive X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/(x*sqrt(2*pi))) * exp(-log(x)*log(x)/2)
+!!        f(X) = (1/(X*sqrt(2*pi))) * exp(-log(X)*log(X)/2)
 !!
-!!    the prototype lognormal distribution used herein is the distribution
-!!    of the variate x = exp(z) where the variate z is normally distributed
+!!    The prototype lognormal distribution used herein is the distribution
+!!    of the variate X = exp(z) where the variate z is normally distributed
 !!    with mean = 0 and standard deviation = 1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!    N     The desired integer number of random numbers to be generated.
+!!
+!!   ISEED  An integer seed value. Should be set to a non-negative value
 !!          to start a new sequence of values. Will be set to -1 on return
 !!          to indicate the next call should continue the current random
 !!          sequence walk.
 !!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X    A vector (of dimension at least N) into which the generated
+!!         random sample of size N from the lognormal distribution will
+!!         be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_lgnran
-!!    use M_datapac, only : lgnran
+!!    use m_datapac, only : lgnran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call lgnran(x,y)
+!!    integer,parameter :: n=500
+!!    real :: x(n)
+!!    integer :: iseed
+!!       call label('lgnran')
+!!       iseed=12345
+!!       call lgnran(N,Iseed,X)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_lgnran
 !!
 !!   Results:
 !!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.2626150E+02 -                                                X
+!!      0.2516970E+02 I
+!!      0.2407790E+02 I
+!!      0.2298611E+02 I
+!!      0.2189431E+02 I
+!!      0.2080252E+02 I
+!!      0.1971072E+02 -
+!!      0.1861893E+02 I
+!!      0.1752713E+02 I   X
+!!      0.1643533E+02 I                                               X
+!!      0.1534354E+02 I
+!!      0.1425174E+02 I
+!!      0.1315995E+02 -                                        X
+!!      0.1206815E+02 I
+!!      0.1097635E+02 I                                    X
+!!      0.9884558E+01 I                   X                              X
+!!      0.8792763E+01 I                                         XXX
+!!      0.7700968E+01 I          X
+!!      0.6609171E+01 -                X                X      X X       X
+!!      0.5517376E+01 I              XX   X X X        XX X        X
+!!      0.4425579E+01 I          XX X     X X XXXX  XX X   X        XX  X
+!!      0.3333784E+01 I   X  XXX   X  XX   XX   XXX X XXXX  X X    X  X
+!!      0.2241987E+01 I  X XXXXXX XX  XXXX XXXXXXXXXX X XXXXXX XXX XXXXXXX
+!!      0.1150192E+01 I  XXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.5839747E-01 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1258E+03  0.2505E+03  0.3752E+03  0.5000E+03
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.2626150E+02 -                                                  X
+!!      0.2516970E+02 I
+!!      0.2407790E+02 I
+!!      0.2298611E+02 I
+!!      0.2189431E+02 I
+!!      0.2080252E+02 I
+!!      0.1971072E+02 -
+!!      0.1861893E+02 I
+!!      0.1752713E+02 I                                                  X
+!!      0.1643533E+02 I                                                  X
+!!      0.1534354E+02 I
+!!      0.1425174E+02 I
+!!      0.1315995E+02 -                                                  X
+!!      0.1206815E+02 I
+!!      0.1097635E+02 I                                                  X
+!!      0.9884558E+01 I                                                 XX
+!!      0.8792763E+01 I                                                 X
+!!      0.7700968E+01 I                                                 X
+!!      0.6609171E+01 -                                                XX
+!!      0.5517376E+01 I                                                X
+!!      0.4425579E+01 I                                              XX
+!!      0.3333784E+01 I                                           XXX
+!!      0.2241987E+01 I                                    XXXXXXXX
+!!      0.1150192E+01 I                 XXXXXXXXXXXXXXXXXXXX
+!!      0.5839747E-01 -  XXXXXXXXXXXXXXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1258E+03  0.2505E+03  0.3752E+03  0.5000E+03
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   * CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, PAGES 219-220.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 112-136.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 88.
+!!   * Tocher, The Art of Simulation, 1963, pages 14-15.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+!!   * Cramer, Mathematical Methods of Statistics, 1946, pages 219-220.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     pages 112-136.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, page 88.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --JULY      1976.
@@ -13092,64 +13727,37 @@ END SUBROUTINE LGNPPF
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LGNRAN(N,Iseed,X)
-REAL(kind=wp) :: arg1 , arg2 , pi , sqrt1 , u1 , u2 , X , y , z1 , z2
-INTEGER i , ip1 , Iseed , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE LOGNORMAL DISTRIBUTION
-!             WITH MEAN = SQRT(E) = 1.64872127
-!             AND STANDARD DEVIATION = SQRT(E*(E-1)) = 2.16119742.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS, EXP.
-!     MODE OF INTERNAL OPERATIONS--.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: arg1, arg2, sqrt1, u1, u2, y(2), z1, z2
+INTEGER i, ip1
+
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION y(2)
-!
-!-----DATA STATEMENTS-------------------------------------------------
-!
-      DATA pi/3.14159265359_wp/
-!
-!-----START POINT-----------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
+      !
+      !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+      !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LGNRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to LGNRAN(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!     THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
-!     (TO BE USED BELOW IN FORMING THE N-TH NORMAL
-!     RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N
-!     HAPPENS TO BE ODD).
-!
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !     THEN GENERATE 2 ADDITIONAL UNIFORM (0,1) RANDOM NUMBERS
+         !     (TO BE USED BELOW IN FORMING THE N-TH NORMAL
+         !     RANDOM NUMBER WHEN THE DESIRED SAMPLE SIZE N
+         !     HAPPENS TO BE ODD).
+         !
          CALL UNIRAN(N,Iseed,X)
          CALL UNIRAN(2,Iseed,y)
-!
-!     GENERATE N NORMAL RANDOM NUMBERS
-!     USING THE BOX-MULLER METHOD.
-!
+         !
+         !     GENERATE N NORMAL RANDOM NUMBERS
+         !     USING THE BOX-MULLER METHOD.
+         !
          DO i = 1 , N , 2
             ip1 = i + 1
             u1 = X(i)
@@ -13159,24 +13767,24 @@ INTEGER i , ip1 , Iseed , N
                u2 = X(ip1)
             ENDIF
             arg1 = -2.0_wp*LOG(u1)
-            arg2 = 2.0_wp*pi*u2
+            arg2 = 2.0_wp*G_pi*u2
             sqrt1 = SQRT(arg1)
             z1 = sqrt1*COS(arg2)
             z2 = sqrt1*SIN(arg2)
             X(i) = z1
             IF ( i/=N ) X(ip1) = z2
          ENDDO
-!
-!     GENERATE N LOGNORMAL RANDOM NUMBERS
-!     USING THE DEFINITION THAT
-!     A LOGNORMAL VARIATE
-!     EQUALS AN EXPONETIATED NORMAL VARIATE.
-!
+         !
+         !     GENERATE N LOGNORMAL RANDOM NUMBERS
+         !     USING THE DEFINITION THAT
+         !     A LOGNORMAL VARIATE
+         !     EQUALS AN EXPONETIATED NORMAL VARIATE.
+         !
          DO i = 1 , N
             X(i) = EXP(X(i))
          ENDDO
       ENDIF
-!
+
 END SUBROUTINE LGNRAN
 !>
 !!##NAME
@@ -13265,11 +13873,11 @@ END SUBROUTINE LGNRAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * Dixon and Massey, Pages 14, 70, and 71
-!!   * Crow, Journal of the American Statistical Association, Pages 357
+!!   * Dixon and Massey, pages 14, 70, and 71
+!!   * Crow, Journal of the American Statistical Association, pages 357
 !!     and 387
 !!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
-!!     Edition 2, 1963, Page 8.
+!!     Edition 2, 1963, page 8.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -13471,7 +14079,7 @@ END SUBROUTINE LOC
 !!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Pages 1-21.
+!!     pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -13588,7 +14196,7 @@ END SUBROUTINE LOGCDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 1-21.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970, pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13612,32 +14220,41 @@ END SUBROUTINE LOGPDF
 !!
 !!       SUBROUTINE LOGPLT(X,N)
 !!
+!!        INTEGER,intent(in) :: N
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!
 !!##DESCRIPTION
-!!    logplt(3f) generates a logistic probability plot.
+!!    LOGPLT(3f) generates a logistic probability plot.
 !!
-!!    the prototype logistic distribution used herein has mean = 0 and
+!!    The prototype logistic distribution used herein has mean = 0 and
 !!    standard deviation = pi/sqrt(3). This distribution is defined for
-!!    all x and has the probability density function
+!!    all X and has the probability density function
 !!
-!!        f(x) = exp(x) / (1+exp(x)).
+!!        f(X) = exp(X) / (1+exp(X))
 !!
-!!    as used herein, a probability plot for a distribution is a plot
+!!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the logistic probability plot is useful in graphically testing
+!!    The logistic probability plot is useful in graphically testing
 !!    the composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which
 !!    the data have been randomly drawn is the logistic distribution.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
-!!    a measure of such linearity is given by the calculated probability
+!!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X     The vector of (unsorted or sorted) observations.
+!!
+!!    N     The integer number of observations in the vector X.
+!!          The maximum allowable value of N for this subroutine is 7500.
+!!##OUTPUT
+!!
+!!    A one-page logistic probability plot.
 !!
 !!##EXAMPLES
 !!
@@ -13652,21 +14269,25 @@ END SUBROUTINE LOGPDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
-!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and testing (Aberdeen, Maryland, October, 1972), pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
 !!     260-308.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 1-21.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -13674,22 +14295,11 @@ END SUBROUTINE LOGPDF
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGPLT(X,N)
-REAL(kind=wp) :: an , cc , hold , sum1 , sum2 , sum3 , tau , W , wbar , WS ,  X , Y , ybar , yint , yslope
-INTEGER :: i , iupper , N
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE LOGISTIC PROBABILITY PLOT.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!
-!---------------------------------------------------------------------
-!
-DIMENSION X(:)
-DIMENSION Y(7500) , W(7500)
+INTEGER,intent(in) :: N
+REAL(kind=wp),intent(in) :: X(:)
+REAL(kind=wp) :: an, cc, hold, sum1, sum2, sum3, tau, W, wbar, WS, Y, ybar, yint, yslope
+INTEGER :: i, iupper
+DIMENSION Y(7500), W(7500)
 COMMON /BLOCK2_real64/ WS(15000)
 EQUIVALENCE (Y(1),WS(1))
 EQUIVALENCE (W(1),WS(7501))
@@ -13788,7 +14398,8 @@ END SUBROUTINE LOGPLT
 !!
 !!       SUBROUTINE LOGPPF(P,Ppf)
 !!
-!!        REAL(kind=wp) :: P , Ppf
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Ppf
 !!
 !!##DESCRIPTION
 !!    LOGPPF(3f) computes the percent point function value for the logistic
@@ -13803,60 +14414,98 @@ END SUBROUTINE LOGPLT
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!
+!!##INPUT ARGUMENTS
+!!    P      The value at which the percent point function is to be
+!!           evaluated.
+!!
+!!           P should be between 0.0 and 1.0, exclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF    The percent point function value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_logppf
-!!    use M_datapac, only : logppf
+!!    use M_datapac, only : logppf, plott, label
 !!    implicit none
-!!    ! call logppf(x,y)
+!!    integer,parameter :: n=40
+!!    real              :: x(n), y(n)
+!!    integer           :: i
+!!       call label('logppf')
+!!       x=[(real(i)/real(n+1),i=1,n)]
+!!       do i=1,n
+!!          call logppf(x(i),y(i))
+!!       enddo
+!!       call plott(x,y,n)
 !!    end program demo_logppf
 !!
 !!   Results:
 !!
+!!     The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.9756098E+00 -                                                  X
+!!      0.9359756E+00 I                                           X X
+!!      0.8963415E+00 I                                       XX
+!!      0.8567073E+00 I                                     X
+!!      0.8170732E+00 I                                   XX
+!!      0.7774390E+00 I                                  X
+!!      0.7378049E+00 -                                 X
+!!      0.6981707E+00 I                               XX
+!!      0.6585366E+00 I                              X
+!!      0.6189024E+00 I                             XX
+!!      0.5792683E+00 I                            X
+!!      0.5396341E+00 I                           X
+!!      0.5000000E+00 -                          X
+!!      0.4603658E+00 I                         X
+!!      0.4207317E+00 I                        X
+!!      0.3810976E+00 I                      XX
+!!      0.3414634E+00 I                      X
+!!      0.3018292E+00 I                    XX
+!!      0.2621951E+00 -                   X
+!!      0.2225609E+00 I                  X
+!!      0.1829268E+00 I                XX
+!!      0.1432927E+00 I               X
+!!      0.1036585E+00 I            XX
+!!      0.6402433E-01 I       X X
+!!      0.2439024E-01 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!               -0.3689E+01 -0.1844E+01  0.4768E-06  0.1844E+01  0.3689E+01
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 1-21.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, pages 21-44, 229-231.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGPPF(P,Ppf)
-REAL(kind=wp) :: P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT
-!             FUNCTION VALUE PPF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Ppf
 !---------------------------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
+      !
+      !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+      !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (G_IO,99001)
          WRITE (G_IO,99002) P
@@ -13864,8 +14513,8 @@ REAL(kind=wp) :: P , Ppf
          Ppf = LOG(P/(1.0_wp-P))
       ENDIF
 !
-99001 FORMAT(' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGPPF SUBROUTINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8, ' *****')
+99001 FORMAT(' ***** FATAL ERROR--The first input argument to LOGPPF(3f) is outside the allowable (0,1) interval *****')
+99002 FORMAT (' ','***** The value of the argument is ',g0, ' *****')
 END SUBROUTINE LOGPPF
 !>
 !!##NAME
@@ -13874,6 +14523,10 @@ END SUBROUTINE LOGPPF
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE LOGRAN(N,Iseed,X)
+!!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
 !!
 !!##DESCRIPTION
 !!    LOGRAN(3f) generates a random sample of size N from the logistic
@@ -13884,45 +14537,120 @@ END SUBROUTINE LOGPPF
 !!
 !!        f(X) = exp(X)/(1+exp(X))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    N      The desired integer number of random numbers to be generated.
 !!
+!!   ISEED   An integer seed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X      A vector (of dimension at least N) into which the generated
+!!           random sample of size N from the logistic distribution will
+!!           be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_logran
-!!    use M_datapac, only : logran
+!!    use m_datapac, only : logran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call logran(x,y)
+!!    integer,parameter :: n=4000
+!!    integer           :: iseed
+!!    real              :: x(n)
+!!       call label('logran')
+!!       iseed=12345
+!!       call logran(N,Iseed,X)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_logran
 !!
 !!   Results:
 !!
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1011046E+02 -   X
+!!      0.9310020E+01 I
+!!      0.8509579E+01 I                   X
+!!      0.7709137E+01 I                          X
+!!      0.6908696E+01 I                                    X
+!!      0.6108254E+01 I           X      X X          X      X  XXX
+!!      0.5307813E+01 -   X        X X X XX X        X X         X X    X
+!!      0.4507371E+01 I    X X  X      X XXX    XXXX XXX  X X X XX X  X X
+!!      0.3706930E+01 I  XXXXXXXXXXXXX XX XX XXX XXXXXXXXXXXXXXXXX X XXXXX
+!!      0.2906488E+01 I  XXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.2106047E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.1305605E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.5051632E+00 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.2952785E+00 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.1095719E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.1896161E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!     -0.2696603E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXX XXXX XXXXXXXXXXXXXXXXXX
+!!     -0.3497045E+01 I  XX XXXX XXXXX XXXXXXXX  XX XXXX XXXX XXXXXXXXXXXX
+!!     -0.4297486E+01 -  XXX XXXXXXX XX X XXX  XXX XXXX XXXXX   X X XXXX
+!!     -0.5097927E+01 I       XX X     X X XXX XX X    XXXX       X   XXX
+!!     -0.5898369E+01 I        X          X   X  XX XXX  X          X
+!!     -0.6698811E+01 I               X
+!!     -0.7499252E+01 I                       X
+!!     -0.8299694E+01 I
+!!     -0.9100137E+01 -                                          X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1011046E+02 -                                                  X
+!!      0.9310020E+01 I
+!!      0.8509579E+01 I                                                  X
+!!      0.7709137E+01 I                                                  X
+!!      0.6908696E+01 I                                                  X
+!!      0.6108254E+01 I                                                  X
+!!      0.5307813E+01 -                                                  X
+!!      0.4507371E+01 I                                                 XX
+!!      0.3706930E+01 I                                                XX
+!!      0.2906488E+01 I                                              XXX
+!!      0.2106047E+01 I                                          XXXXX
+!!      0.1305605E+01 I                                   XXXXXXXX
+!!      0.5051632E+00 -                           XXXXXXXXX
+!!     -0.2952785E+00 I                  XXXXXXXXXX
+!!     -0.1095719E+01 I           XXXXXXXX
+!!     -0.1896161E+01 I      XXXXXX
+!!     -0.2696603E+01 I    XXX
+!!     -0.3497045E+01 I   XX
+!!     -0.4297486E+01 -  XX
+!!     -0.5097927E+01 I  X
+!!     -0.5898369E+01 I  X
+!!     -0.6698811E+01 I  X
+!!     -0.7499252E+01 I  X
+!!     -0.8299694E+01 I
+!!     -0.9100137E+01 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGE 230.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 1-21.
+!!   * Tocher, The Art of Simulation, 1963, pages 14-15.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, page 230.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     pages 1-21.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -13932,56 +14660,35 @@ END SUBROUTINE LOGPPF
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE LOGRAN(N,Iseed,X)
-INTEGER i , Iseed , N
-REAL(kind=wp) :: X
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE LOGISTIC DISTRIBUTION
-!             WITH MEAN = 0 AND STANDARD DEVIATION = PI/SQRT(3).
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!
+INTEGER,intent(in)        :: N
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+INTEGER :: i
 !---------------------------------------------------------------------
-      DIMENSION X(:)
-!---------------------------------------------------------------------
-!
-!-----START POINT-----------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
+      !
+      !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+      !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to LOGRAN(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          !
          !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
          !
          CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N LOGISTIC RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
+         !
+         !     GENERATE N LOGISTIC RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
          DO i = 1 , N
             X(i) = LOG(X(i)/(1.0_wp-X(i)))
          ENDDO
       ENDIF
-!
+
 END SUBROUTINE LOGRAN
 !>
 !!##NAME
@@ -13991,22 +14698,27 @@ END SUBROUTINE LOGRAN
 !!
 !!       SUBROUTINE LOGSF(P,Sf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Sf
+!!
 !!##DESCRIPTION
-!!    logsf(3f) computes the sparsity function value for the logistic
+!!    LOGSF(3f) computes the sparsity function value for the logistic
 !!    distribution with mean = 0 and standard deviation = pi/sqrt(3).
 !!
-!!    this distribution is defined for all x and has the probability
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = exp(x)/(1+exp(x)).
+!!        f(X) = exp(X)/(1+exp(X))
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
-!!    probability density function (but in units of p rather than x).
+!!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!    P      The value at which the sparsity function is to be evaluated.
+!!           P should be between 0.0 and 1.0, exclusively.
+!!##OUTPUT ARGUMENTS
+!!    SF     The sparsity function value.
 !!
 !!##EXAMPLES
 !!
@@ -14032,56 +14744,39 @@ END SUBROUTINE LOGRAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--2, 1970,
-!!     PAGES 1-21.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE LOGSF(P,Sf)
-REAL(kind=wp) :: P , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, pages 21-44, 229-231.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
+!!     pages 1-21.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LOGSF(P,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Sf
 !---------------------------------------------------------------------
-!
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE LOGSF  SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Sf = 1.0_wp/(P-P*P)
-      ENDIF
-!
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to LOGSF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      Sf = 1.0_wp/(P-P*P)
+   ENDIF
+
 END SUBROUTINE LOGSF
 !>
 !!##NAME
-!!    max(3f) - [M_datapac:STATISTICS] MAX compute the maximum of a data vector
+!!    max(3f) - [M_datapac:VECTOR_OPERATION] MAX compute the maximum of a
+!!    data vector
 !!
 !!##SYNOPSIS
 !!
@@ -14115,21 +14810,21 @@ END SUBROUTINE LOGSF
 !!   Sample program:
 !!
 !!    program demo_max
-!!    !use M_datapac, only : max, label
-!!    use M_datapac, only : intel_max=>max, label !  ifort (IFORT) 2021.3.0 20210609 bug
+!!    use M_datapac, only : max, label
+!!    !use M_datapac, only : intel_max=>max, label !  ifort (IFORT) 2021.3.0 20210609 bug
 !!
 !!    implicit none
 !!    real :: xmax
 !!       call label('max')
-!!       call intel_max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
-!!       !call max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
+!!       !call intel_max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
+!!       call max([-100.0, 200.0, 0.0, 400.0, -200.0],5,1,xmax)
 !!       write(*,*)xmax
 !!    end program demo_max
 !!
 !!   Results:
 !!
-!!     THE MAXIMUM OF THE SET OF      5 OBSERVATIONS IS  0.40000000E+03
-!!       400.0000
+!!     THE MAXIMUM OF THE SET OF 5 OBSERVATIONS IS  0.40000000E+03
+!!       400.000000
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -14155,14 +14850,14 @@ INTEGER i , Iwrite , N
 !
 IF ( N<1 ) THEN
    WRITE (G_IO,99001)
-   99001    FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE MAX    SUBROUTINE IS NON-POSITIVE *****')
+   99001    FORMAT (' ***** FATAL ERROR--The second input argument to MAX(3f) is non-positive *****')
    WRITE (G_IO,99002) N
-   99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+   99002    FORMAT (' ','***** The value of the argument is ',I0,' *****')
    RETURN
 ELSE
    IF ( N==1 ) THEN
       WRITE (G_IO,99003)
-      99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE MAX SUBROUTINE HAS THE VALUE 1 *****')
+      99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to MAX(3f) has the value 1 *****')
       Xmax = X(1)
    ELSE
       hold = X(1)
@@ -14170,9 +14865,7 @@ ELSE
          IF ( X(i)/=hold ) GOTO 50
       ENDDO
       WRITE (G_IO,99004) hold
-      99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO THE MAX SUBROUTINE HAS ALL ELEMENTS = ', &
-      & g0, &
-      & ' *****')
+      99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--the first input argument (a vector) to MAX(3f) has all elements = ',g0,' *****')
       Xmax = X(1)
    ENDIF
 
@@ -14189,7 +14882,7 @@ ENDIF
    WRITE (G_IO,99005)
    99005 FORMAT (' ')
    WRITE (G_IO,99006) N , Xmax
-   99006 FORMAT (' ','THE MAXIMUM OF THE SET OF ',I0,' OBSERVATIONS IS ', e15.8)
+   99006 FORMAT (' ','The maximum of the set of ',I0,' observations is ', e15.8)
 end subroutine max
 !>
 !!##NAME
@@ -14261,11 +14954,11 @@ end subroutine max
 !!
 !!##REFERENCES
 !!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
-!!    Edition 1, 1961, Page 4.
+!!    Edition 1, 1961, page 4.
 !!  * Mood and Grable, Introduction to the Theory of Statistics, Edition 2,
-!!    1963, Page 146.
+!!    1963, page 146.
 !!  * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
-!!    1957, Page 14.
+!!    1957, page 14.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14394,11 +15087,11 @@ end subroutine mean
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1, Edition 2, 1963, Page 326.
-!!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 2, Edition 1, 1961, Page 49.
-!!  * David, Order Statistics, 1970, Page 139.
-!!  * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 123.
-!!  * Dixon and Massey, Introduction to Statistical Analysis, Edition 2, 1957, Page 70.
+!!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1, Edition 2, 1963, page 326.
+!!  * Kendall and Stuart, The Advanced Theory of Statistics, Volume 2, Edition 1, 1961, page 49.
+!!  * David, Order Statistics, 1970, page 139.
+!!  * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, page 123.
+!!  * Dixon and Massey, Introduction to Statistical Analysis, Edition 2, 1957, page 70.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14538,9 +15231,9 @@ END SUBROUTINE MEDIAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * David, Order Statistics, 1970, Pages 129, 136.
+!!   * David, Order Statistics, 1970, pages 129, 136.
 !!   * Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
-!!     American Statistical Association, 1967, Pages 357, 387.
+!!     American Statistical Association, 1967, pages 357, 387.
 !!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
 !!     Princeton University, 1969).
@@ -14705,12 +15398,12 @@ END SUBROUTINE MIDM
 !!
 !!##REFERENCES
 !!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
-!!     Edition 2, 1963, Page 338.
+!!     Edition 2, 1963, page 338.
 !!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 2,
-!!     Edition 1, 1961, Page 91.
-!!   * David, Order Statistics, 1970, Page 97.
+!!     Edition 1, 1961, page 91.
+!!   * David, Order Statistics, 1970, page 97.
 !!   * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
-!!     1957, Page 71.
+!!     1957, page 71.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14820,7 +15513,7 @@ END SUBROUTINE MIDR
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  * David, Order Statistics, 1970, Page 7.
+!!  * David, Order Statistics, 1970, page 7.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -14876,8 +15569,8 @@ end subroutine min
 !>
 !!##NAME
 !!
-!!    move(3f) - [M_datapac:ARRAY_OPERATION] move selected elements of one vector
-!!    into another vector
+!!    move(3f) - [M_datapac:VECTOR_OPERATION] move selected elements of
+!!    one vector into another vector
 !!
 !!##SYNOPSIS
 !!
@@ -15151,18 +15844,18 @@ END SUBROUTINE MOVE
 !!
 !!##REFERENCES
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Page 945, Formulae 26.5.24 and 26.5.28, and Page 929.
-!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 122-142,
-!!     especially Page 127.
+!!     page 945, Formulae 26.5.24 and 26.5.28, and page 929.
+!!   * Johnson and Kotz, Discrete Distributions, 1969, pages 122-142,
+!!     especially page 127.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Pages 92-95.
+!!     Students and Practitioners, 1975, pages 92-95.
 !!   * Feller, an Introduction to Probability Theory and Its Applications,
-!!     Volume 1, Edition 2, 1957, Pages 155-157, 210.
+!!     Volume 1, Edition 2, 1957, pages 155-157, 210.
 !!   * Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
-!!     Edition 2, 1963, Pages 130-131.
+!!     Edition 2, 1963, pages 130-131.
 !!   * Williamson and Bretherton, Tables of the Negative Binomial Probability
 !!     Distribution, 1963.
-!!   * Owen, Handbook of Statistical Tables, 1962, Page 304.
+!!   * Owen, Handbook of Statistical Tables, 1962, page 304.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -15411,19 +16104,19 @@ END SUBROUTINE NBCDF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 122-142,
-!!     ESPECIALLY PAGE 127, FORMULA 22.
+!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, pages 122-142,
+!!     ESPECIALLY page 127, FORMULA 22.
 !!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 92-95.
+!!     STUDENTS AND PRACTITIONERS, 1975, pages 92-95.
 !!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 929.
+!!     page 929.
 !!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
-!!     VOLUME 1, EDITION 2, 1957, PAGES 155-157, 210.
+!!     VOLUME 1, EDITION 2, 1957, pages 155-157, 210.
 !!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGES 130-131.
+!!     EDITION 2, 1963, pages 130-131.
 !!   * WILLIAMSON AND BRETHERTON, TABLES OF THE NEGATIVE BINOMIAL PROBABILITY
 !!     DISTRIBUTION, 1963.
-!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGE 304.
+!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, page 304.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE NBPPF(P,Ppar,N,Ppf)
 REAL(kind=wp) :: amean , an , arcsh , arg , e , P , p0 , p1 , p2 , pf0 ,      &
@@ -15552,7 +16245,7 @@ INTEGER :: i , isd , ix0 , ix0p1 , ix1 , ix2 , N
 !     TRANSFORMATION OF THE NEGATIVE BINOMIAL
 !     TO APPROXIMATE NORMALITY.
 !     (SEE JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS,
-!     PAGE 127, FORMULA 22).
+!     page 127, FORMULA 22).
 !
                         amean = an*(1.0_wp-Ppar)/Ppar
                         sd = SQRT(an*(1.0_wp-Ppar)/(Ppar*Ppar))
@@ -15767,6 +16460,12 @@ END SUBROUTINE NBPPF
 !!
 !!       SUBROUTINE NBRAN(N,P,Npar,Istart,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(in)  :: P
+!!        INTEGER,intent(in)        :: Npar
+!!        INTEGER,intent(inout)     :: Istart
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
 !!    NBRAN(3f) generates a random sample of size N from the negative
 !!    binomial distribution with precision 'Bernoulli probability'
@@ -15789,21 +16488,114 @@ END SUBROUTINE NBPPF
 !!    of Bernoulli (0,1) trials where the probability of success in a precision
 !!    trial = P.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    N       The desired integer number of random numbers to be generated.
+!!
+!!    P       The value of the 'Bernoulli probability' parameter for the
+!!            negative binomial distribution. P Should be between
+!!            0.0 (exclusively) and 1.0 (exclusively).
+!!
+!!    NPAR    The integer value of the 'number of successes in Bernoulli
+!!            trials' parameter. NPAR should be a positive integer.
+!!
+!!    ISTART  An integer flag code which (if set to 0) will start the
+!!            generator over and hence produce the same random sample
+!!            over and over again upon successive calls to this subroutine
+!!            within a run; or (if set to some integer value not equal to 0,
+!!            like, say, 1) will allow the generator to continue from where
+!!            it stopped and hence produce different random samples upon
+!!            successive calls to this subroutine within a run.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X       A vector (of dimension at least N) into which the generated
+!!            random sample of size N from the negative binomial distribution
+!!            will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_nbran
-!!    use M_datapac, only : nbran
+!!    use m_datapac, only : nbran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call nbran(x,y)
+!!    integer,parameter :: n=400
+!!    real              :: p
+!!    integer           :: Npar
+!!    integer           :: Istart
+!!    real              :: x(n)
+!!       call label('nbran')
+!!       p=0.4
+!!       Npar=3
+!!       istart=12345
+!!       call nbran(N,P,Npar,Istart,X)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_nbran
 !!
 !!   Results:
+!!
+!!  The following is a plot of X(I) (vertically) versus I (horizontally)
+!!                    I-----------I-----------I-----------I-----------I
+!!   0.2700000E+02 -                                               X
+!!   0.2600000E+02 I
+!!   0.2500000E+02 I
+!!   0.2400000E+02 I                          X
+!!   0.2300000E+02 I
+!!   0.2200000E+02 I
+!!   0.2100000E+02 -
+!!   0.2000000E+02 I                     X
+!!   0.1900000E+02 I
+!!   0.1800000E+02 I         X                          X X X
+!!   0.1700000E+02 I                X
+!!   0.1600000E+02 I             X                            X
+!!   0.1500000E+02 -            X      X X           X          X
+!!   0.1400000E+02 I           X  X         X        X  X       X
+!!   0.1300000E+02 I                X    X X    X  X  XX      X  X XXXX
+!!   0.1200000E+02 I   X     X    X    X          X              X
+!!   0.1100000E+02 I   XX   X X    X   XX   X      XXX   XXXXX XX   XX
+!!   0.1000000E+02 I    X XX   XXXX   X    XXX   X  XX    X  X     X
+!!   0.9000000E+01 -     XX    XXXX XX   X  XX XX X   X X    X  X XX  X
+!!   0.8000000E+01 I  XXXX XX  XXX  XX XXXXXXX X XX    X XXX   XXXX X X
+!!   0.7000000E+01 I     XX XXXXXX XXXXX X    XXXX  X XXX  X XXX XXXXX
+!!   0.6000000E+01 I  X XXX X X XXXXXX X  X  XXX X XXXX X XXXXX XXXX X
+!!   0.5000000E+01 I  XXXXXXXXXX XXXXXX XX XX XXX XXXX X XXXXXXXXXXX  X
+!!   0.4000000E+01 I  XX X X XXXX  XXXX XXXX XX X  XXXX XX XX   XX   X
+!!   0.3000000E+01 -     X XXX    XX  X XXX  XX XXX    X XX XX     XX X
+!!                    I-----------I-----------I-----------I-----------I
+!!             0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+!!
+!!  The following is a plot of X(I) (vertically) versus I (horizontally)
+!!                    I-----------I-----------I-----------I-----------I
+!!   0.2700000E+02 -                                                  X
+!!   0.2600000E+02 I
+!!   0.2500000E+02 I
+!!   0.2400000E+02 I                                                  X
+!!   0.2300000E+02 I
+!!   0.2200000E+02 I
+!!   0.2100000E+02 -
+!!   0.2000000E+02 I                                                  X
+!!   0.1900000E+02 I
+!!   0.1800000E+02 I                                                 XX
+!!   0.1700000E+02 I                                                 X
+!!   0.1600000E+02 I                                                 X
+!!   0.1500000E+02 -                                                XX
+!!   0.1400000E+02 I                                               XX
+!!   0.1300000E+02 I                                              XX
+!!   0.1200000E+02 I                                             XX
+!!   0.1100000E+02 I                                          XXXX
+!!   0.1000000E+02 I                                       XXXX
+!!   0.9000000E+01 -                                    XXXX
+!!   0.8000000E+01 I                              XXXXXXX
+!!   0.7000000E+01 I                        XXXXXXX
+!!   0.6000000E+01 I                  XXXXXXX
+!!   0.5000000E+01 I           XXXXXXXX
+!!   0.4000000E+01 I      XXXXXX
+!!   0.3000000E+01 -  XXXX
+!!                    I-----------I-----------I-----------I-----------I
+!!             0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -15818,166 +16610,112 @@ END SUBROUTINE NBPPF
 !!
 !!##REFERENCES
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Page 95.
-!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 122-142.
+!!     Students and Practitioners, 1975, page 95.
+!!   * Johnson and Kotz, Discrete Distributions, 1969, pages 122-142.
 !!   * Feller, an Introduction to Probability Theory and its Applications,
-!!     Volume 1, Edition 2, 1957, Pages 155-157, 210.
+!!     Volume 1, Edition 2, 1957, pages 155-157, 210.
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Page 929.
+!!     page 929.
 !!   * Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
-!!     Edition 2, 1963, Pages 130-131.
+!!     Edition 2, 1963, pages 130-131.
+!     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE NBRAN(N,P,Npar,Istart,X)
-REAL(kind=wp) :: b(1) , g(1) , P , X
-INTEGER :: i , ib , ig , Istart , isum , j , N , Npar
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: P
+INTEGER,intent(in)        :: Npar
+INTEGER,intent(inout)     :: Istart
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: b(1), g(1)
+INTEGER :: i, ib, ig, isum, j
 INTEGER,save :: iseed=1
+
+!   NOTE THAT EVEN THOUGH THE OUTPUT FROM THIS DISCRETE RANDOM NUMBER GENERATOR MUST NECESSARILY BE A
+!   SEQUENCE OF ***INTEGER*** VALUES, THE OUTPUT VECTOR X IS SINGLE PRECISION IN MODE.
+!   X HAS BEEN SPECIFIED AS SINGLE PRECISION SO AS TO CONFORM WITH THE DATAPAC
+!   CONVENTION THAT ALL OUTPUT VECTORS FROM ALL DATAPAC SUBROUTINES ARE . THIS CONVENTION IS BASED ON THE BELIEF THAT
 !
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --P      = THE  VALUE
-!                                OF THE 'BERNOULLI PROBABILITY'
-!                                PARAMETER FOR THE NEGATIVE BINOMIAL
-!                                DISTRIBUTION.
-!                                P SHOULD BE BETWEEN
-!                                0.0 (EXCLUSIVELY) AND
-!                                1.0 (EXCLUSIVELY).
-!                     --NPAR   = THE INTEGER VALUE
-!                                OF THE 'NUMBER OF SUCCESSES
-!                                IN BERNOULLI TRIALS' PARAMETER.
-!                                NPAR SHOULD BE A POSITIVE INTEGER.
-!                     --ISTART = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL START THE
-!                                GENERATOR OVER AND HENCE
-!                                PRODUCE THE SAME RANDOM SAMPLE
-!                                OVER AND OVER AGAIN
-!                                UPON SUCCESSIVE CALLS TO
-!                                THIS SUBROUTINE WITHIN A RUN; OR
-!                                (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0,
-!                                LIKE, SAY, 1) WILL ALLOW
-!                                THE GENERATOR TO CONTINUE
-!                                FROM WHERE IT STOPPED
-!                                AND HENCE PRODUCE DIFFERENT
-!                                RANDOM SAMPLES UPON
-!                                SUCCESSIVE CALLS TO
-!                                THIS SUBROUTINE WITHIN A RUN.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE NEGATIVE BINOMIAL DISTRIBUTION
-!             WITH 'BERNOULLI PROBABILITY' PARAMETER = P
-!             AND 'NUMBER OF SUCCESSES IN BERNOULLI TRIALS'
-!             PARAMETER = NPAR.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!                 --NPAR SHOULD BE A POSITIVE INTEGER.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN, BINRAN, GEORAN.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
-!              FROM THIS DISCRETE RANDOM NUMBER
-!              GENERATOR MUST NECESSARILY BE A
-!              SEQUENCE OF ***INTEGER*** VALUES,
-!              THE OUTPUT VECTOR X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE .
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
-!     ORIGINAL VERSION--NOVEMBER  1975.
+!     1. A MIXTURE OF MODES (FLOATING POINT VERSUS INTEGER) IS INCONSISTENT AND
+!     AN UNNECESSARY COMPLICATION IN A DATA ANALYSIS; AND
+!
+!     2. FLOATING POINT MACHINE ARITHMETIC (AS OPPOSED TO INTEGER ARITHMETIC)
+!     IS THE MORE NATURAL MODE FOR DOING DATA ANALYSIS.
 !
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO BINRAN(3f) IS NON-POSITIVE *****')
-         WRITE (G_IO,99005) N
-         RETURN
-      ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99002)
-         99002 FORMAT (' ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO BINRAN(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99003) P
-         99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-         RETURN
-      ELSEIF ( Npar<1 ) THEN
-         WRITE (G_IO,99004)
-         99004 FORMAT (' ***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO BINRAN(3f) IS NON-POSITIVE *****')
-         WRITE (G_IO,99005) Npar
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         CALL UNIRAN(1,Istart,g(1:1))
-!
-!     CHECK ON THE MAGNITUDE OF P,
-!     AND BRANCH TO THE FASTER
-!     GENERATION METHOD ACCORDINGLY.
-!
-         IF ( P<0.1_wp ) THEN
-!
-!     IF P IS SMALL,
-!     GENERATE N NEGATIVE BINOMIAL NUMBERS
-!     BY USING THE FACT THAT THE SUM
-!     OF GEOMETRIC VARIATES IS A
-!     NEGATIVE BINOMIAL VARIATE.
-!
-            DO i = 1 , N
-               isum = 0
-               DO j = 1 , Npar
-                  CALL GEORAN(1,P,1,g)
-                  ig = g(1) + 0.5_wp
-                  isum = isum + ig
-               ENDDO
-               X(i) = isum
-            ENDDO
-            GOTO 99999
-         ENDIF
-      ENDIF
-!
-!     IF P IS MODERATE OR LARGE,
-!     GENERATE N NEGATIVE BINOMIAL NUMBERS
-!     USING THE FACT THAT THE
-!     WAITING TIME FOR NPAR SUCCESSES IN
-!     BERNOULLI TRIALS HAS A
-!     NEGATIVE BINOMIAL DISTRIBUTION.
-!
-      DO i = 1 , N
-         isum = 0
-         j = 1
-         DO
-            CALL BINRAN(1,P,1,iseed,b)
-            ib = b(1) + 0.5_wp
-            isum = isum + ib
-            IF ( isum==Npar ) THEN
-               X(i) = j
-               EXIT
-            ELSE
-               j = j + 1
-            ENDIF
-         ENDDO
-      ENDDO
+   !
+   !  CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to BINRAN(3f) is non-positive *****')
+      WRITE (G_IO,99005) N
       RETURN
-99005 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+   ELSEIF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99002)
+      99002 FORMAT (' ***** FATAL ERROR--The second input argument to BINRAN(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99003) P
+      99003 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSEIF ( Npar<1 ) THEN
+      WRITE (G_IO,99004)
+      99004 FORMAT (' ***** FATAL ERROR--The third input argument to BINRAN(3f) is non-positive *****')
+      WRITE (G_IO,99005) Npar
+      RETURN
+   ELSE
+      CALL UNIRAN(1,Istart,g(1:1))
+      !
+      !  CHECK ON THE MAGNITUDE OF P,
+      !  AND BRANCH TO THE FASTER
+      !  GENERATION METHOD ACCORDINGLY.
+      !
+      IF ( P<0.1_wp ) THEN
+         !
+         !  IF P IS SMALL,
+         !  GENERATE N NEGATIVE BINOMIAL NUMBERS
+         !  BY USING THE FACT THAT THE SUM
+         !  OF GEOMETRIC VARIATES IS A
+         !  NEGATIVE BINOMIAL VARIATE.
+         !
+
+         DO i = 1 , N
+            isum = 0
+            DO j = 1 , Npar
+               CALL GEORAN(1,P,iseed,g)
+               ig = g(1) + 0.5_wp
+               isum = isum + ig
+            ENDDO
+            X(i) = isum
+         ENDDO
+         GOTO 99999
+      ENDIF
+   ENDIF
+   !
+   !  IF P IS MODERATE OR LARGE,
+   !  GENERATE N NEGATIVE BINOMIAL NUMBERS
+   !  USING THE FACT THAT THE
+   !  WAITING TIME FOR NPAR SUCCESSES IN
+   !  BERNOULLI TRIALS HAS A
+   !  NEGATIVE BINOMIAL DISTRIBUTION.
+   !
+   DO i = 1 , N
+      isum = 0
+      j = 1
+      DO
+         CALL BINRAN(1,P,1,iseed,b)
+         ib = b(1) + 0.5_wp
+         isum = isum + ib
+         IF ( isum==Npar ) THEN
+            X(i) = j
+            EXIT
+         ELSE
+            j = j + 1
+         ENDIF
+      ENDDO
+   ENDDO
+   RETURN
+99005 FORMAT (' ','***** The value of the argument is ',I0,' *****')
 !
 99999 END SUBROUTINE NBRAN
 !>
@@ -16073,9 +16811,9 @@ INTEGER,save :: iseed=1
 !!
 !!##REFERENCES
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Page 932, Formula 26.2.17.
+!!     page 932, Formula 26.2.17.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 40-111.
+!!     pages 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16108,6 +16846,9 @@ END SUBROUTINE NORCDF
 !!
 !!       SUBROUTINE NOROUT(X,N)
 !!
+!!        real(kind=wp),intent(in) :: X(:)
+!!        integer,intent(in) :: N
+!!
 !!##DESCRIPTION
 !!
 !!    NOROUT(3f) performs a normal outlier analysis on the data in the
@@ -16132,9 +16873,16 @@ END SUBROUTINE NORCDF
 !!    locate back in the original data vector. A suspected outlier or
 !!    otherwise interesting observation.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X      The vector of (unsorted or sorted) observations.
+!!
+!!    N      The integer number of observations in the vector X.
+!!           The maximum allowable value of N for this subroutine is 7500.
+!!##OUTPUT
+!!
+!!    4 pages of automatic printout as described in the description above.
+!!
 !!
 !!##EXAMPLES
 !!
@@ -16152,58 +16900,40 @@ END SUBROUTINE NORCDF
 !!    The original DATAPAC library was written by James Filliben of the
 !!    Statistical Engineering Division, National Institute of Standards
 !!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21
+!!   * Grubbs, Technometrics, 1969, pages 1-21
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 subroutine norout(X,N)
+real(kind=wp),intent(in) :: X(:)
+integer,intent(in) :: N
 real(kind=wp) :: ai, an, anm1, anm2, anm3, anm4, anm5, cdf, hold, res, s, s1, s13, s14, s2, s23, s24, s3, s4, ssq
 real(kind=wp) :: ssq1, ssq13, ssq14, ssq2, ssq23, ssq24, ssq3, ssq4,  st1, st2, st3, st4, st5, st6, st7, st8, st9, stres, sum, sum4
-real(kind=wp) :: WS, X, xb, xb1, xb13, xb14, xb2, xb23, xb24, xb3, xb4, xline, XPOs, Y
-integer :: i, icount, iflag, irev, iupper, j, mx, N,   nm1, nm2, nm3, nm4, nm5
-!
-!     INPUT ARGUMENTS--X      = THE VECTOR OF (UNSORTED OR SORTED) OBSERVATIONS.
-!                      N      = THE INTEGER NUMBER OF OBSERVATIONS IN THE VECTOR X.
-!     OUTPUT--4 PAGES OF AUTOMATIC PRINTOUT--
-!             1) VARIOUS NORMAL OUTLIER STATISTICS;
-!             2) VARIOUS PARTIAL SAMPLE MEANS
-!             3) VARIOUS PARTIAL SAMPLE STANDARD DEVIATIONS;
-!             4) THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS;
-!             5) A LINE PLOT; AND
-!             6) A NORMAL PROBABILITY PLOT.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-
-!     WRITE OUT THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS,
-!     INCLUDING THEIR RESIDUALS ABOUT THE (FULL) SAMPLE MEAN,
-!     THE STANDARDIZED RESIDUALS,
-!     THE NORMAL N(0,1) CUMULATIVE DISTRIBUTION FUNCTION VALUE
-!     OF THE STANDARDIZED RESIDUAL, AND
-!     THE POSITION NUMBER IN THE ORIGINAL DATA VECTOR X.
-!
+real(kind=wp) :: WS, xb, xb1, xb13, xb14, xb2, xb23, xb24, xb3, xb4, xline, XPOs, Y
+integer :: i, icount, iflag, irev, iupper, j, mx, nm1, nm2, nm3, nm4, nm5
 !---------------------------------------------------------------------
-!
 character(len=4) :: blank , hyphen , alphai , alphax
 character(len=4) :: iline1
 character(len=4) :: iline2
 !
-      DIMENSION X(:)
-      DIMENSION Y(7500) , XPOs(7500)
-      DIMENSION iline1(130) , iline2(130)
-      DIMENSION xline(13)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (XPOs(1),WS(7501))
+DIMENSION Y(7500) , XPOs(7500)
+DIMENSION iline1(130) , iline2(130)
+DIMENSION xline(13)
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (XPOs(1),WS(7501))
 !
-      DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
+DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
 !
       iupper = 7500
 !
@@ -16211,18 +16941,15 @@ character(len=4) :: iline2
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE NOROUT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--The second input argument to NOROUT(3f) is outside the allowable (1,',&
+         & I0,') intervaL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE NORO&
-     &UT SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to NOROUT(3f) has the value 1 *****')
             RETURN
          ELSE
             hold = X(1)
@@ -16230,9 +16957,8 @@ character(len=4) :: iline2
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE NOROUT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to NOROUT(3f) has all elements = ',&
+            & E15.8,' *****')
             RETURN
          ENDIF
 !
@@ -16382,66 +17108,55 @@ character(len=4) :: iline2
 !
          WRITE (G_IO,99041)
          WRITE (G_IO,99005)
-99005    FORMAT (' ',48X,'NORMAL OUTLIER ANALYSIS')
+         99005    FORMAT (' ',48X,'NORMAL OUTLIER ANALYSIS')
          WRITE (G_IO,99042)
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
+         99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99042)
          WRITE (G_IO,99007)
-99007    FORMAT (' ',39X,                                               &
-     &           'REFERENCE--GRUBBS, TECHNOMETRICS, 1969, PAGES 1-21')
+         99007    FORMAT (' ',39X,'REFERENCE--GRUBBS, TECHNOMETRICS, 1969, pages 1-21')
          DO i = 1 , 6
             WRITE (G_IO,99042)
          ENDDO
          WRITE (G_IO,99008)
-99008    FORMAT (' ',49X,'OUTLIER STATISTICS')
+         99008    FORMAT (' ',49X,'OUTLIER STATISTICS')
          WRITE (G_IO,99042)
          WRITE (G_IO,99042)
          WRITE (G_IO,99009)
-99009    FORMAT (' ',                                                   &
-     &'    OMIT             TEST                    FORM                &
-     &  VALUE       PSEUDO-SAMPLE SIZE            TABLE')
+         99009    FORMAT (&
+         & '     OMIT             TEST                    FORM                  VALUE       PSEUDO-SAMPLE SIZE            TABLE')
          WRITE (G_IO,99010)
-99010    FORMAT (' ',                                                   &
-     &'AS AN OUTLIER    AS AN OUTLIER           OF STATISTIC           O&
-     &F STATISTIC   FOR TABLE LOOK-UP           REFERENCE')
+         99010    FORMAT (&
+         & ' AS AN OUTLIER    AS AN OUTLIER           OF STATISTIC           OF STATISTIC   FOR TABLE LOOK-UP           REFERENCE')
          WRITE (G_IO,99042)
          WRITE (G_IO,99011) st1 , N
-99011    FORMAT (' ',                                                   &
-     &'    NONE             X(1)              (XBAR - X(1))/S           &
-     &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  4')
+         99011    FORMAT (&
+         & '     NONE             X(1)              (XBAR - X(1))/S           ',F8.4,'           N = ',&
+         & I5,'     GRUBBS, TECH., 1969, P.  4')
          WRITE (G_IO,99012) st2 , N
-99012    FORMAT (' ',                                                   &
-     &'    NONE             X(N)              (X(N) - XBAR)/S           &
+         99012    FORMAT (' ','    NONE             X(N)              (X(N) - XBAR)/S           &
      &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  4')
          WRITE (G_IO,99013) st3 , N
-99013    FORMAT (' ',                                                   &
-     &'    NONE         X(1) AND X(N)             RANGE/S               &
-     &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  8')
+         99013 FORMAT (' ',&
+   &'    NONE         X(1) AND X(N)             RANGE/S               ',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P.  8')
          WRITE (G_IO,99014) st4 , N
-99014    FORMAT (' ',                                                   &
-     &'    X(1)             X(2)               SSQD(1,2)/SSQD           &
-     &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P. 11')
+         99014    FORMAT (' ',&
+   &'    X(1)             X(2)               SSQD(1,2)/SSQD           ',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P. 11')
          WRITE (G_IO,99015) st5 , N
-99015    FORMAT (' ',                                                   &
-     &'    X(N)            X(N-1)             SSQD(N-1,N)/SSQD          &
-     &',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P. 11')
+         99015    FORMAT (' ',&
+   &'    X(N)            X(N-1)             SSQD(N-1,N)/SSQD          ',F8.4,'           N = ',I5,'     GRUBBS, TECH., 1969, P. 11')
          WRITE (G_IO,99016) st6 , nm2
-99016    FORMAT (' ',                                                   &
-     &'X(1) AND X(N)        X(2)          (XBAR(1,N) - X(2))/S(1,N)     &
-     &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  4')
+         99016    FORMAT (' ',&
+   &'X(1) AND X(N)        X(2)          (XBAR(1,N) - X(2))/S(1,N)     ',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  4')
          WRITE (G_IO,99017) st7 , nm2
-99017    FORMAT (' ',                                                   &
-     &'X(1) AND X(N)       X(N-1)        (X(N-1) - XBAR(1,N))/S(1,N)    &
-     &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  4')
+         99017    FORMAT (' ',&
+   &'X(1) AND X(N)       X(N-1)        (X(N-1) - XBAR(1,N))/S(1,N)    ',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  4')
          WRITE (G_IO,99018) st8 , nm2
-99018    FORMAT (' ',                                                   &
-     &'X(1) AND X(N)   X(2) AND X(N-1)       RANGE(1,N)/S(1,N)          &
-     &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  8')
+         99018    FORMAT (' ',&
+   &'X(1) AND X(N)   X(2) AND X(N-1)       RANGE(1,N)/S(1,N)          ',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P.  8')
          WRITE (G_IO,99019) st9 , nm2
-99019    FORMAT (' ',                                                   &
-     &'X(1) AND X(N)   X(2) AND X(N-1)      SAMPLE KURTOSIS(1,N)        &
-     &',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P. 14')
+         99019    FORMAT (' ',&
+   &'X(1) AND X(N)   X(2) AND X(N-1)      SAMPLE KURTOSIS(1,N)        ',F8.4,'         N-2 = ',I5,'     GRUBBS, TECH., 1969, P. 14')
          DO i = 1 , 10
             WRITE (G_IO,99042)
          ENDDO
@@ -16451,7 +17166,7 @@ character(len=4) :: iline2
 !
          WRITE (G_IO,99020)
 99020    FORMAT (' ',30X,                                               &
-     &     'PARTIAL SAMPLE MEANS AND PARTIAL SAMPLE STANDARD DEVIATIONS'&
+     &     'Partial sample means and partial sample standard deviations'&
      &     )
          WRITE (G_IO,99042)
          WRITE (G_IO,99042)
@@ -16465,23 +17180,23 @@ character(len=4) :: iline2
      &ON')
          WRITE (G_IO,99042)
          WRITE (G_IO,99023) xb , s
-99023    FORMAT (' ','            NONE             ',E15.8,5X,E15.8)
+         99023    FORMAT (' ','            NONE             ',E15.8,5X,E15.8)
          WRITE (G_IO,99024) xb1 , s1
-99024    FORMAT (' ','            X(1)             ',E15.8,5X,E15.8)
+         99024    FORMAT (' ','            X(1)             ',E15.8,5X,E15.8)
          WRITE (G_IO,99025) xb4 , s4
-99025    FORMAT (' ','            X(N)             ',E15.8,5X,E15.8)
+         99025    FORMAT (' ','            X(N)             ',E15.8,5X,E15.8)
          WRITE (G_IO,99026) xb14 , s14
-99026    FORMAT (' ','       X(1) AND X(N)         ',E15.8,5X,E15.8)
+         99026    FORMAT (' ','       X(1) AND X(N)         ',E15.8,5X,E15.8)
          WRITE (G_IO,99027) xb2 , s2
-99027    FORMAT (' ','       X(1) AND X(2)         ',E15.8,5X,E15.8)
+         99027    FORMAT (' ','       X(1) AND X(2)         ',E15.8,5X,E15.8)
          WRITE (G_IO,99028) xb3 , s3
-99028    FORMAT (' ','      X(N-1) AND X(N)        ',E15.8,5X,E15.8)
+         99028    FORMAT (' ','      X(N-1) AND X(N)        ',E15.8,5X,E15.8)
          WRITE (G_IO,99029) xb24 , s24
-99029    FORMAT (' ','    X(1), X(2), AND X(N)     ',E15.8,5X,E15.8)
+         99029    FORMAT (' ','    X(1), X(2), AND X(N)     ',E15.8,5X,E15.8)
          WRITE (G_IO,99030) xb13 , s13
-99030    FORMAT (' ','   X(1), X(N-1), AND X(N)    ',E15.8,5X,E15.8)
+         99030    FORMAT (' ','   X(1), X(N-1), AND X(N)    ',E15.8,5X,E15.8)
          WRITE (G_IO,99031) xb23 , s23
-99031    FORMAT (' ','X(1), X(2), X(N-1), AND X(N) ',E15.8,5X,E15.8)
+         99031    FORMAT (' ','X(1), X(2), X(N-1), AND X(N) ',E15.8,5X,E15.8)
 !
 !     WRITE OUT THE FIRST 40 AND LAST 40 ORDERED OBSERVATIONS,
 !     INCLUDING THEIR RESIDUALS ABOUT THE (FULL) SAMPLE MEAN,
@@ -16492,28 +17207,24 @@ character(len=4) :: iline2
 !
          WRITE (G_IO,99041)
          WRITE (G_IO,99032)
-99032    FORMAT (' ',                                                   &
-     &'ORDER STATISTICS, RESIDUALS ABOUT THE SAMPLE MEAN, STANDARDIZED R&
-     &ESIDUALS, AND NORMAL(0,1) CUMULATIVE DISTRIBUTION FUNCTION VALUES'&
+         99032 FORMAT (' ',&
+     &'Order Statistics, Residuals about the sample mean, Standardized r&
+     &Esiduals, and Normal(0,1) cumulative distribution function values'&
      &)
          WRITE (G_IO,99042)
          WRITE (G_IO,99042)
          WRITE (G_IO,99033)
-99033    FORMAT (' ',                                                   &
-     &'  INDEX       ORDERED        RESIDUALS        STANDARDIZED       &
-     &NORMAL(0,1)        OBSERVATION')
+         99033 FORMAT (' ',&
+         &'  INDEX       ORDERED        RESIDUALS        STANDARDIZED       NORMAL(0,1)        OBSERVATION')
          WRITE (G_IO,99034)
-99034    FORMAT (' ',                                                   &
-     &'            OBSERVATIONS     ABOUT THE         RESIDUALS      CDF&
-     & VALUES OF THE       NUMBER')
+         99034    FORMAT (' ',&
+         &'            OBSERVATIONS     ABOUT THE         RESIDUALS      CDF VALUES OF THE       NUMBER')
          WRITE (G_IO,99035)
-99035    FORMAT (' ',                                                   &
-     &'                            SAMPLE MEAN                         S&
-     &TANDARDIZED')
+         99035    FORMAT (' ',&
+         &'                            SAMPLE MEAN                         STANDARDIZED')
          WRITE (G_IO,99036)
-99036    FORMAT (' ',                                                   &
-     &'                                                                 &
-     &RESIDUALS')
+         99036    FORMAT (' ',&
+         &'                                                                 RESIDUALS')
          WRITE (G_IO,99042)
          IF ( N<=80 ) THEN
             DO i = 1 , N
@@ -16555,16 +17266,14 @@ character(len=4) :: iline2
          WRITE (G_IO,99044) (iline1(i),i=1,130)
          WRITE (G_IO,99044) (iline2(i),i=1,130)
          WRITE (G_IO,99038)
-99038    FORMAT (' ',                                                   &
-     &'     -6        -5        -4        -3        -2        -1        &
-     & 0         1         2         3         4         5         6')
+         99038    FORMAT (' ',&
+ &'     -6        -5        -4        -3        -2        -1         0         1         2         3         4         5         6')
          WRITE (G_IO,99039) (xline(i),i=1,13)
-99039    FORMAT (' ',13F10.4)
+         99039    FORMAT (' ',13F10.4)
          WRITE (G_IO,99042)
          WRITE (G_IO,99040) icount
-99040    FORMAT (' ',10X,I5,                                            &
-     &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
-     & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
+         99040    FORMAT (' ',10X,I5,&
+         &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
 !
 !     WRITE OUT A NORMAL PROBABILITY PLOT
 !
@@ -16639,7 +17348,7 @@ END SUBROUTINE NOROUT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970, Pages 40-111.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970, pages 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16711,16 +17420,16 @@ END SUBROUTINE NORPDF
 !!##REFERENCES
 !!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!     425-450.
 !!   * FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
-!!     NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!!     NORMALITY', TECHNOMETRICS, 1975, pages 111-117.
 !!   * RYAN AND JOINER, 'NORMAL PROBABILITY PLOTS AND TESTS FOR NORMALITY'
 !!     PENNSYLVANIA STATE UNIVERSITY REPORT.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
 !!     260-308.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 40-111.
+!!     pages 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -16735,7 +17444,7 @@ INTEGER :: i , iupper , N
 !                                (UNSORTED OR SORTED) OBSERVATIONS.
 !                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE NORMAL PROBABILITY PLOT.
+!     OUTPUT--A ONE-page NORMAL PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -16881,25 +17590,25 @@ END SUBROUTINE NORPLT
 !!    CC0-1.0
 !!##REFERENCES
 !!   * ODEH AND EVANS, THE PERCENTAGE POINTS OF THE NORMAL DISTRIBUTION,
-!!     ALGORITHM 70, APPLIED STATISTICS, 1974, PAGES 96-97.
+!!     ALGORITHM 70, APPLIED STATISTICS, 1974, pages 96-97.
 !!   * EVANS, ALGORITHMS FOR MINIMAL DEGREE POLYNOMIAL AND RATIONAL
 !!     APPROXIMATION, M. SC. THESIS, 1972, UNIVERSITY OF VICTORIA, B. C.,
 !!     CANADA.
-!!   * HASTINGS, APPROXIMATIONS FOR DIGITAL COMPUTERS, 1955, PAGES 113,
+!!   * HASTINGS, APPROXIMATIONS FOR DIGITAL COMPUTERS, 1955, pages 113,
 !!     191, 192.
 !!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 933, FORMULA 26.2.23.
+!!     page 933, FORMULA 26.2.23.
 !!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
 !!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
+!!     PRINCETON UNIVERSITY), 1969, pages 21-44, 229-231.
 !!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
+!!     1970, pages 28-31.
 !!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 40-111.
+!!     pages 40-111.
 !!   * THE KELLEY STATISTICAL TABLES, 1948.
-!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, PAGES 3-16.
+!!   * OWEN, HANDBOOK OF STATISTICAL TABLES, 1962, pages 3-16.
 !!   * PEARSON AND HARTLEY, BIOMETRIKA TABLES FOR STATISTICIANS, VOLUME 1,
-!!     1954, PAGES 104-113.
+!!     1954, pages 104-113.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -17112,11 +17821,11 @@ REAL(kind=wp) :: aden , anum , P , p0 , p1 , p2 , p3 , p4 , Ppf , q0 , q1 , q2 ,
 !!
 !!##REFERENCES
 !!   * Box and Muller, 'A Note on the Generation of Random Normal Deviates',
-!!     Journal of the Association for Computing Machinery, 1958, Pages 610-611.
-!!   * Tocher, The Art of Simulation, 1963, Pages 33-34.
-!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 39.
+!!     Journal of the Association for Computing Machinery, 1958, pages 610-611.
+!!   * Tocher, The Art of Simulation, 1963, pages 33-34.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 39.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 40-111.
+!!     pages 40-111.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -17182,22 +17891,30 @@ END SUBROUTINE NORRAN
 !!
 !!       SUBROUTINE NORSF(P,Sf)
 !!
-!!##DESCRIPTION
-!!    norsf(3f) computes the sparsity function value for the normal
-!!    (gaussian) distribution with mean = 0 and standard deviation = 1.
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(out) :: Sf
 !!
-!!    this distribution is defined for all x and has the probability
+!!##DESCRIPTION
+!!    NORSF(3f) computes the sparsity function value for the normal
+!!    (Gaussian) distribution with mean = 0 and standard deviation = 1.
+!!
+!!    This distribution is defined for all X and has the probability
 !!    density function
 !!
-!!        f(x) = (1/sqrt(2*pi))*exp(-x*x/2).
+!!        f(X) = (1/sqrt(2*pi))*exp(-x*x/2)
 !!
-!!    note that the sparsity function of a distribution is the derivative
+!!    Note that the sparsity function of a distribution is the derivative
 !!    of the percent point function, and also is the reciprocal of the
-!!    probability density function (but in units of p rather than x).
+!!    probability density function (but in units of P rather than X).
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P   The value at which the sparsity function is to be evaluated.
+!!        P should be between 0.0 and 1.0, exclusively.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    SF  The sparsity function value.
 !!
 !!##EXAMPLES
 !!
@@ -17212,58 +17929,50 @@ END SUBROUTINE NORRAN
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * FILLIBEN, SIMPLE AND ROBUST LINEAR ESTIMATION OF THE LOCATION
-!!     PARAMETER OF A SYMMETRIC DISTRIBUTION (UNPUBLISHED PH.D. DISSERTATION,
-!!     PRINCETON UNIVERSITY), 1969, PAGES 21-44, 229-231.
-!!   * FILLIBEN, 'THE PERCENT POINT FUNCTION', (UNPUBLISHED MANUSCRIPT),
-!!     1970, PAGES 28-31.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 40-111.
+!!   * Filliben, Simple and Robust Linear Estimation of the Location
+!!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+!!     Princeton University), 1969, pages 21-44, 229-231.
+!!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
+!!     1970, pages 28-31.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     pages 40-111.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE NORSF(P,Sf)
-REAL(kind=wp) :: c , P , pdf , ppf , Sf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                AT WHICH THE SPARSITY
-!                                FUNCTION IS TO BE EVALUATED.
-!     OUTPUT ARGUMENTS--SF     = THE
-!                                SPARSITY FUNCTION VALUE.
-!     OUTPUT--THE  SPARSITY
-!             FUNCTION VALUE SF.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--P SHOULD BE BETWEEN 0.0 AND 1.0, EXCLUSIVELY.
 
+SUBROUTINE NORSF(P,Sf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Sf
+
+REAL(kind=wp) :: c, pdf, ppf
 !---------------------------------------------------------------------
-!
       DATA c/0.3989422804_wp/
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-         99001 FORMAT (' ***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO NORSF(3f) IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99002) P
-         99002 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         CALL NORPPF(P,ppf)
-         pdf = c*EXP(-(ppf*ppf)/2.0_wp)
-         Sf = 1.0_wp/pdf
-      ENDIF
+   IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--THE first input argument to NORSF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99002) P
+      99002 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      CALL NORPPF(P,ppf)
+      pdf = c*EXP(-(ppf*ppf)/2.0_wp)
+      Sf = 1.0_wp/pdf
+   ENDIF
 !
 END SUBROUTINE NORSF
 !>
@@ -17367,9 +18076,9 @@ END SUBROUTINE NORSF
 !!    CC0-1.0
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 233-249.
+!!     pages 233-249.
 !!   * hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Page 102.
+!!     Students and Practitioners, 1975, page 102.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
@@ -17464,12 +18173,12 @@ END SUBROUTINE PARCDF
 !!##REFERENCES
 !!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army Research
-!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), pages
 !!     425-450.
-!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
 !!     260-308.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 233-249.
+!!     pages 233-249.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARPLT(X,N,Gamma)
@@ -17484,7 +18193,7 @@ INTEGER       :: i, iupper, N
 !                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT--A ONE-PAGE PARETO PROBABILITY PLOT.
+!     OUTPUT--A ONE-page PARETO PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -17614,11 +18323,16 @@ INTEGER       :: i, iupper, N
 END SUBROUTINE PARPLT
 !>
 !!##NAME
-!!    parppf(3f) - [M_datapac:PERCENT_POINT] compute the Pareto percent point function
+!!    parppf(3f) - [M_datapac:PERCENT_POINT] compute the Pareto percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE PARPPF(P,Gamma,Ppf)
+!!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(in)  :: Gamma
+!!        REAL(kind=wp),intent(out) :: Ppf
 !!
 !!##DESCRIPTION
 !!    PARPPF(3f) computes the percent point function value for the Pareto
@@ -17633,9 +18347,17 @@ END SUBROUTINE PARPLT
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P      The value (between 0.0 (inclusively) and 1.0 (exclusively))
+!!           at which the percent point function is to be evaluated.
+!!
+!!    GAMMA  The value of the tail length parameter. GAMMA should be
+!!           positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF    The percent point function value for the Pareto distribution
 !!
 !!##EXAMPLES
 !!
@@ -17662,62 +18384,37 @@ END SUBROUTINE PARPLT
 !!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 233-249.
+!!     pages 233-249.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Page 102.
+!!     Students and Practitioners, 1975, page 102.
+!     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE PARPPF(P,Gamma,Ppf)
-REAL(kind=wp) :: Gamma , P , Ppf
-!
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (INCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE PARETO DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --P SHOULD BE BETWEEN 0.0 (INCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--NOVEMBER  1975.
-!
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: Ppf
 !---------------------------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE PARPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
-         WRITE (G_IO,99003) P
-         Ppf = 0.0_wp
-         RETURN
-      ELSEIF ( Gamma<=0.0_wp ) THEN
-         WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARPPF SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99003) Gamma
-         Ppf = 0.0_wp
-         RETURN
-      ELSE
-!
-!-----START POINT-----------------------------------------------------
-!
-         Ppf = (1.0_wp-P)**(-1.0_wp/Gamma)
-      ENDIF
-99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
-!
+   !
+   !   CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( P<0.0_wp .OR. P>=1.0_wp ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first  input argument to PARPPF(3f) is outside the allowable (0,1) interval *****')
+      WRITE (G_IO,99003) P
+      Ppf = 0.0_wp
+      RETURN
+   ELSEIF ( Gamma<=0.0_wp ) THEN
+      WRITE (G_IO,99002)
+      99002 FORMAT (' ***** FATAL ERROR--The second input argument to PARPPF(3f) is non-positive *****')
+      WRITE (G_IO,99003) Gamma
+      Ppf = 0.0_wp
+      RETURN
+   ELSE
+      Ppf = (1.0_wp-P)**(-1.0_wp/Gamma)
+   ENDIF
+
+99003 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
 END SUBROUTINE PARPPF
 !>
 !!##NAME
@@ -17727,120 +18424,181 @@ END SUBROUTINE PARPPF
 !!
 !!       SUBROUTINE PARRAN(N,Gamma,Iseed,X)
 !!
-!!##DESCRIPTION
-!!    parran(3f) generates a random sample of size n from the pareto
-!!    distribution with tail length parameter value = gamma.
+!!        INTEGER       :: N
+!!        REAL(kind=wp) :: Gamma
+!!        INTEGER       :: Iseed
+!!        REAL(kind=wp) :: X(:)
 !!
-!!    the prototype pareto distribution used herein is defined for all x
+!!##DESCRIPTION
+!!    PARRAN(3f) generates a random sample of size N from the Pareto
+!!    distribution with tail length parameter value = GAMMA.
+!!
+!!    The prototype Pareto distribution used herein is defined for all X
 !!    greater than or equal to 1, and has the probability density function
 !!
-!!        f(x) = gamma / (x**(gamma+1)).
+!!        f(X) = GAMMA / (X**(GAMMA+1))
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    N      The desired integer number of random numbers to be generated.
 !!
+!!    GAMMA  The  value of the tail length parameter. GAMMA should be
+!!           positive.
+!!
+!!    ISEED  An integer seed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X      A vector (of dimension at least N) into which the generated
+!!           random sample from the Pareto distribution will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_parran
-!!    use M_datapac, only : parran
+!!    use m_datapac, only : parran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call parran(x,y)
+!!    integer,parameter :: n=4000
+!!    real :: x(n)
+!!    integer :: iseed
+!!    real :: gamma
+!!       call label('parran')
+!!       gamma=3.4
+!!       iseed=12345
+!!       call parran(n,gamma,iseed,x)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_parran
 !!
 !!   Results:
 !!
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1956372E+02 -   X
+!!      0.1879024E+02 I
+!!      0.1801675E+02 I
+!!      0.1724326E+02 I
+!!      0.1646978E+02 I
+!!      0.1569629E+02 I
+!!      0.1492280E+02 -
+!!      0.1414931E+02 I
+!!      0.1337583E+02 I
+!!      0.1260234E+02 I
+!!      0.1182885E+02 I
+!!      0.1105537E+02 I                   X
+!!      0.1028188E+02 -
+!!      0.9508391E+01 I
+!!      0.8734904E+01 I                          X
+!!      0.7961417E+01 I                                    X
+!!      0.7187930E+01 I
+!!      0.6414443E+01 I                  X X                 X  XX
+!!      0.5640956E+01 -           X                  XX          XX
+!!      0.4867469E+01 I   X        X X X XX X          X         X X
+!!      0.4093982E+01 I    X X             X    XX X XX   X   X  X    X X
+!!      0.3320494E+01 I  X X XX XXXXXX X XXX XXX XXX XXXXX XXX XXX X XXXXX
+!!      0.2547007E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.1773520E+01 I  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.1000033E+01 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1956372E+02 -                                                  X
+!!      0.1879024E+02 I
+!!      0.1801675E+02 I
+!!      0.1724326E+02 I
+!!      0.1646978E+02 I
+!!      0.1569629E+02 I
+!!      0.1492280E+02 -
+!!      0.1414931E+02 I
+!!      0.1337583E+02 I
+!!      0.1260234E+02 I
+!!      0.1182885E+02 I
+!!      0.1105537E+02 I                                                  X
+!!      0.1028188E+02 -
+!!      0.9508391E+01 I
+!!      0.8734904E+01 I                                                  X
+!!      0.7961417E+01 I                                                  X
+!!      0.7187930E+01 I
+!!      0.6414443E+01 I                                                  X
+!!      0.5640956E+01 -                                                  X
+!!      0.4867469E+01 I                                                  X
+!!      0.4093982E+01 I                                                 XX
+!!      0.3320494E+01 I                                                 X
+!!      0.2547007E+01 I                                              XXXX
+!!      0.1773520E+01 I                                  XXXXXXXXXXXXX
+!!      0.1000033E+01 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1001E+04  0.2000E+04  0.3000E+04  0.4000E+04
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 14-15.
-!!   * HAMMERSLEY AND HANDSCOMB, MONTE CARLO METHODS, 1964, PAGE 36.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
-!!     PAGES 233-249.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGE 104.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-
-SUBROUTINE PARRAN(N,Gamma,Iseed,X)
-REAL(kind=wp) :: Gamma , X
-INTEGER :: i , Iseed , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --GAMMA  = THE  VALUE OF THE
-!                                TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE PARETO DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --GAMMA SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     MODE OF INTERNAL OPERATIONS--.
+!!   * Tocher, The Art of Simulation, 1963, pages 14-15.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+!!     pages 233-249.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, page 104.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-      DIMENSION X(:)
-!
-!---------------------------------------------------------------------
-!
-!-----START POINT-----------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE PARRAN(N,Gamma,Iseed,X)
+INTEGER       :: N
+REAL(kind=wp) :: Gamma
+INTEGER       :: Iseed
+REAL(kind=wp) :: X(:)
+
+INTEGER       :: i
+      !---------------------------------------------------------------------
+      !
+      !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+      !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE PARRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to PARRAN(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE PARRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99003 FORMAT (' ***** FATAL ERROR--The second input argument to PARRAN(3f) subroutine is non-positive *****')
          WRITE (G_IO,99004) Gamma
-99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
+         99004 FORMAT (' ***** The value of the argument is ',E15.8,' *****')
          RETURN
       ELSE
-!
-!     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
-!
+         !
+         !     GENERATE N UNIFORM (0,1) RANDOM NUMBERS;
+         !
          CALL UNIRAN(N,Iseed,X)
-!
-!     GENERATE N PARETO DISTRIBUTION RANDOM NUMBERS
-!     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
-!
+         !
+         !     GENERATE N PARETO DISTRIBUTION RANDOM NUMBERS
+         !     USING THE PERCENT POINT FUNCTION TRANSFORMATION METHOD.
+         !
          DO i = 1 , N
             X(i) = (1.0_wp-X(i))**(-1.0_wp/Gamma)
          ENDDO
       ENDIF
-!
+
 END SUBROUTINE PARRAN
 !>
 !!##NAME
@@ -18738,7 +19496,7 @@ INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !                               DESIRED MINIMUM FOR THE HORIZONTAL AXIS.
 !                    --XMAX   = THE  VALUE OF
 !                               DESIRED MAXIMUM FOR THE HORIZONTAL AXIS.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
+!     OUTPUT--A ONE-page PRINTER PLOT OF Y(I) VERSUS X(I),
 !             WITH SPECIAL PLOT CHARACTERS,
 !             AND WITH SPECIFIED AXIS LIMITS.
 !     PRINTING--YES.
@@ -19167,7 +19925,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
+!     OUTPUT--A ONE-page PRINTER PLOT OF Y(I) VERSUS X(I),
 !             WITH SPECIAL PLOT CHARACTERS,
 !             WITH SPECIFIED AXIS LIMITS,
 !             AND ONLY FOR A SPECIFIED SUBSET OF THE DATA.
@@ -19644,7 +20402,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !                               (AT MOST 6 CHARACTERS)
 !                               OF THE DESIRED LABEL FOR THE
 !                               PLOTTING CHARACTER VARIABLE.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
+!     OUTPUT--A ONE-page PRINTER PLOT OF Y(I) VERSUS X(I),
 !             WITH SPECIAL PLOT CHARACTERS,
 !             WITH SPECIFIED AXIS LIMITS,
 !             AND WITH SPECIFIED LABELS.
@@ -20039,7 +20797,7 @@ INTEGER       :: i, iarg, iflag, ip2, j, k, mx, my, N, n2
 !                               CHARACTER.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR Y.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I)
+!     OUTPUT--A ONE-page PRINTER PLOT OF Y(I) VERSUS X(I)
 !             WITH SPECIAL PLOT CHARACTERS.
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
@@ -20475,11 +21233,11 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
          IF ( N<=24 ) iaxdel = 5
          IF ( 25<=N .AND. N<=40 ) iaxdel = 15
 !
-!     DETERMINE THE NUMBER OF PAGES THE PLOT WILL TAKE UP
+!     DETERMINE THE NUMBER OF pages THE PLOT WILL TAKE UP
 !
          numpag = ((N-1)/120) + 1
 !
-!     OPERATE  ON EACH PAGE
+!     OPERATE  ON EACH page
 !
          DO iz = 1 , numpag
 !
@@ -20567,9 +21325,9 @@ DATA blank, star, hyphen, alphai/' ', '*', '-', 'I'/
             WRITE (G_IO,99005)
 99005       FORMAT ('1')
             IF ( iz==1 ) WRITE (G_IO,99006) N
-99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL PAGES) IS ',I0)
+99006       FORMAT ( ' THE TOTAL NUMBER OF POINTS PLOTTED (ON ALL pages) IS ',I0)
             IF ( iz>=2 ) WRITE (G_IO,99007)
-99007       FORMAT (' THE PLOT ON THIS PAGE IS A CONTINUATION OF THE PLOT ON THE PREVIOUS PAGE')
+99007       FORMAT (' THE PLOT ON THIS page IS A CONTINUATION OF THE PLOT ON THE PREVIOUS page')
             WRITE (G_IO,99008)
 99008       FORMAT (' ')
             IF ( N<=24 ) WRITE (G_IO,99011) (ix(i),i=1,25)
@@ -21440,7 +22198,7 @@ INTEGER :: i , iarg , iflag , ip2 , j , k , mx , my , N , n2
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
+!     OUTPUT--A ONE-page PRINTER PLOT OF Y(I) VERSUS X(I),
 !             WITH SPECIAL PLOT CHARACTERS,
 !             AND FOR ONLY OF A SPECIFIED SUBSET OF THE DATA.
 !     PRINTING--YES.
@@ -21902,7 +22660,7 @@ INTEGER i , iflag , ip2 , j , k , mx , my , N , n2
 !                               WHICH DEFINES THE UPPER BOUND
 !                               (INCLUSIVELY) OF THE PARTICULAR
 !                               SUBSET OF INTEREST TO BE PLOTTED.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF Y(I) VERSUS X(I),
+!     OUTPUT--A ONE-page PRINTER PLOT OF Y(I) VERSUS X(I),
 !             FOR ONLY OF A SPECIFIED SUBSET OF THE DATA.
 !     PRINTING--YES.
 !     COMMENT--FOR A GIVEN DUMMY INDEX I,
@@ -23237,10 +23995,10 @@ END SUBROUTINE PLOTT
 !!##REFERENCES
 !!   * FILLIBEN, 'SOME USEFUL COMPUTERIZED TECHNIQUES FOR DATA ANALYSIS',
 !!     (UNPUBLISHED MANUSCRIPT AVAILABLE FROM AUTHOR), 1975.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
 !!     260-308.
 !!   * FILLIBEN, 'THE PROBABILITY PLOT CORRELATION COEFFICIENT TEST FOR
-!!     NORMALITY', TECHNOMETRICS, 1975, PAGES 111-117.
+!!     NORMALITY', TECHNOMETRICS, 1975, pages 111-117.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PLOTU(X,N)
 REAL(kind=wp) :: ai , an , anum , cwidsd , cwidth , height , hold , promax ,  &
@@ -23263,7 +24021,7 @@ INTEGER :: my , N , n2 , nhalf , nhalfp , nm1 , nmi , numcla ,       &
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--4 PLOTS (ALL ON THE SAME PRINTER PAGE)--
+!     OUTPUT--4 PLOTS (ALL ON THE SAME PRINTER page)--
 !             1) DATA PLOT--X(I) VERSUS I
 !             2) AUTOREGRESSION PLOT--X(I) VERSUS X(I-1)
 !             3) HISTOGRAM
@@ -23807,7 +24565,7 @@ INTEGER i , iflag , ip2 , j , k , mx , my , N
 !                               TO BE PLOTTED VERTICALLY.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF X(I) VERSUS I.
+!     OUTPUT--A ONE-page PRINTER PLOT OF X(I) VERSUS I.
 !     PRINTING--YES.
 !     COMMENT--VALUES IN THE VERTICAL AXIS VECTOR (X) WHICH ARE
 !              EQUAL TO OR IN EXCESS OF 10.0**10 WILL NOT BE
@@ -24119,7 +24877,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
          WRITE (G_IO,99001) N
-         99001 FORMAT (' IS NON-NEGATIVE (WITH VALUE = ',I0,')')
+         99001 FORMAT (' is non-negative (with value = ',I0,')')
          WRITE (G_IO,99010)
          RETURN
       ELSE
@@ -24128,7 +24886,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             WRITE (G_IO,99011)
             WRITE (G_IO,99012) alph21 , alph22 , sbnam1 , sbnam2
             WRITE (G_IO,99002) N
-            99002 FORMAT (' HAS THE VALUE 1')
+            99002 FORMAT (' has the value 1')
             WRITE (G_IO,99010)
             RETURN
          ELSE
@@ -24141,7 +24899,7 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
             WRITE (G_IO,99011)
             WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
             WRITE (G_IO,99003) hold
-            99003 FORMAT (' ','HAS ALL ELEMENTS = ',E15.8)
+            99003 FORMAT (' ','has all elements = ',E15.8)
             WRITE (G_IO,99010)
             RETURN
          ENDIF
@@ -24153,9 +24911,9 @@ DATA blank , hyphen , alphai , alphax/' ' , '-' , 'I' , 'X'/
          WRITE (G_IO,99011)
          WRITE (G_IO,99012) alph11 , alph12 , sbnam1 , sbnam2
          WRITE (G_IO,99004)
-         99004 FORMAT (' ','HAS ALL ELEMENTS IN EXCESS OF THE CUTOFF')
+         99004 FORMAT (' ','has all elements in excess of the cutoff')
          WRITE (G_IO,99005) cutoff
-         99005 FORMAT (' ','VALUE OF ',E15.8)
+         99005 FORMAT (' ','value of ',E15.8)
          WRITE (G_IO,99010)
          RETURN
       ENDIF
@@ -24331,7 +25089,7 @@ INTEGER :: i , iflag , im1 , ip2 , j , k , mx , my , N
 !                               AUTOCORRELATION.
 !                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--A ONE-PAGE PRINTER PLOT OF X(I) VERSUS X(I-1).
+!     OUTPUT--A ONE-page PRINTER PLOT OF X(I) VERSUS X(I-1).
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
@@ -25444,18 +26202,18 @@ END SUBROUTINE PLTXXT
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 87-121,
-!!     especially Page 114, Formula 93.
+!!   * Johnson and Kotz, Discrete Distributions, 1969, pages 87-121,
+!!     especially page 114, Formula 93.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Page 112.
+!!     Students and Practitioners, 1975, page 112.
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Page 941, Formulae 26.4.4 and 26.4.5, and Page 929.
+!!     page 941, Formulae 26.4.4 and 26.4.5, and page 929.
 !!   * Feller, An Introduction to Probability Theory and Its Applications,
-!!     Volume 1, Edition 2, 1957, Pages 146-154.
-!!   * Cox and Miller, The Theory of Stochastic Processes, 1965, Page 7.
+!!     Volume 1, Edition 2, 1957, pages 146-154.
+!!   * Cox and Miller, The Theory of Stochastic Processes, 1965, page 7.
 !!   * General Electric Company, Tables of the Individual and Cumulative
 !!     Terms of Poisson Distribution, 1962.
-!!   * Owen, Handbook of Statistical Tables, 1962, Pages 259-261.
+!!   * Owen, Handbook of Statistical Tables, 1962, pages 259-261.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
@@ -25623,11 +26381,11 @@ END SUBROUTINE POICDF
 !!##REFERENCES
 !!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
 !!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), PAGES
+!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, PAGES
+!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
 !!     260-308.
-!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
+!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, pages 87-121.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPLT(X,N,Alamba)
 REAL(kind=wp) :: Alamba , an , arg1 , cc , cdf , cutoff , hold , sqalam ,     &
@@ -25643,7 +26401,7 @@ INTEGER :: i , iarg2 , ilamba , imax , irev , iupper , j ,     &
 !                     --ALAMBA = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT--A ONE-PAGE POISSON PROBABILITY PLOT.
+!     OUTPUT--A ONE-page POISSON PROBABILITY PLOT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 5000.
@@ -25904,17 +26662,17 @@ END SUBROUTINE POIPLT
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * Johnson and Kotz, Discrete Distributions, 1969, Pages 87-121,
-!!     especially Page 102, Formula 36.1.  --Hastings and Peacock, Statistical
+!!   * Johnson and Kotz, Discrete Distributions, 1969, pages 87-121,
+!!     especially page 102, Formula 36.1.  --Hastings and Peacock, Statistical
 !!     Distributions--A Handbook for Students and Practitioners, 1975,
-!!     Pages 108-113.
+!!     pages 108-113.
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Page 929.  --Feller, An Introduction to Probability Theory and Its
-!!     Applications, Volume 1, Edition 2, 1957, Pages 146-154.
-!!   * Cox and Miller, The Theory of Stochastic Processes, 1965, Page 7.
+!!     page 929.  --Feller, An Introduction to Probability Theory and Its
+!!     Applications, Volume 1, Edition 2, 1957, pages 146-154.
+!!   * Cox and Miller, The Theory of Stochastic Processes, 1965, page 7.
 !!   * General Electric Company, Tables of the Individual and Cumulative
 !!     Terms of Poisson Distribution, 1962.
-!!   * Owen, Handbook of Statistical Tables, 1962, Pages 259-261.
+!!   * Owen, Handbook of Statistical Tables, 1962, pages 259-261.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE POIPPF(P,Alamba,Ppf)
 REAL(kind=wp) :: Alamba, amean, P, p0, p1, p2, pf0, Ppf, sd, x0, x1, x2, zppf
@@ -26012,7 +26770,7 @@ INTEGER :: i, isd, ix0, ix0p1, ix1, ix2
 !     PERCENT POINT BY USE OF THE NORMAL APPROXIMATION
 !     TO THE POISSON.
 !     (SEE JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS,
-!     PAGE 102, FORMULA 36.1).
+!     page 102, FORMULA 36.1).
 !
                   amean = Alamba
                   sd = SQRT(Alamba)
@@ -26203,169 +26961,219 @@ END SUBROUTINE POIPPF
 !!
 !!       SUBROUTINE POIRAN(N,Alamba,Iseed,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(in)  :: Alamba
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
-!!    poiran(3f) generates a random sample of size n from the poisson
-!!    distribution with REAL tail length parameter = alamba.
+!!    POIRAN(3f) generates a random sample of size N from the Poisson
+!!    distribution with REAL tail length parameter = ALAMBA.
 !!
-!!    the poisson distribution used herein has mean = alamba and standard
-!!    deviation = sqrt(alamba).
+!!    The Poisson distribution used herein has mean = ALAMBA and standard
+!!    deviation = sqrt(ALAMBA).
 !!
-!!    this distribution is defined for all discrete non-negative integer
-!!    x--x = 0, 1, 2, ... .
+!!    This distribution is defined for all discrete non-negative integer
+!!    X where X = 0, 1, 2, ... .
 !!
-!!    this distribution has the probability function
+!!    This distribution has the probability function
 !!
-!!        f(x) = exp(-alamba) * alamba**x / x!.
+!!        f(X) = exp(-ALAMBA) * ALAMBA**X / X!
 !!
-!!    the poisson distribution is the distribution of the number of events
-!!    in the interval (0,alamba) when the waiting time between events is
+!!    The Poisson distribution is the distribution of the number of events
+!!    in the interval (0,ALAMBA) when the waiting time between events is
 !!    exponentially distributed with mean = 1 and standard deviation = 1.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!    Note that even though the output from this discrete random number
+!!    generator must necessarily be a sequence of ***integer*** values,
+!!    the output vector X is REAL in mode.
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
-!!          to start a new sequence of values. Will be set to -1 on return
-!!          to indicate the next call should continue the current random
-!!          sequence walk.
+!!    X has been specified as REAL so as to conform with the DATAPAC
+!!    convention that all output vectors from all DATAPAC subroutines
+!!    are REAL.  this convention is based on the belief that
 !!
+!!    1. A mixture of modes (floating point versus integer) is inconsistent
+!!       and an unnecessary complication in a data analysis; and
+!!
+!!    2. Floating point machine arithmetic (as opposed to integer arithmetic)
+!!       is the more natural mode for doing data analysis.
+!!
+!!##INPUT ARGUMENTS
+!!
+!!    N      The desired integer number of random numbers to be generated.
+!!
+!!    ISEED  An integer seed value. Should be set to a non-negative value
+!!           to start a new sequence of values. Will be set to -1 on return
+!!           to indicate the next call should continue the current random
+!!           sequence walk.
+!!
+!!    ALAMBA The value of the tail length parameter. Note the tail length
+!!           parameter ALAMBA is not restricted to only integer values. ALAMBA
+!!           can be set to any positive real value--integer or non-integer.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X      A vector (of dimension at least N) into which the generated
+!!           random sample of size N from the poisson distribution will
+!!           be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_poiran
-!!    use M_datapac, only : poiran
+!!    use m_datapac, only : poiran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call poiran(x,y)
+!!    integer,parameter :: n=500
+!!    real :: x(n)
+!!    integer :: iseed
+!!    real :: alamba
+!!       call label('poiran')
+!!       alamba=2.0
+!!       iseed=12345
+!!       call poiran(N,Alamba,Iseed,X)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_poiran
 !!
 !!   Results:
 !!
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.7000000E+01 -                                 X
+!!      0.6708333E+01 I
+!!      0.6416667E+01 I
+!!      0.6125000E+01 I        X         XX       X      X   X          X
+!!      0.5833333E+01 I
+!!      0.5541667E+01 I
+!!      0.5250000E+01 -
+!!      0.4958333E+01 I         XX   XXXX   X  X X  X   X     XX    X
+!!      0.4666667E+01 I
+!!      0.4375000E+01 I
+!!      0.4083333E+01 I  XXXX   XXX X XXXXXXX  XX XXXX  XXXXXX  X X XX XX
+!!      0.3791667E+01 I
+!!      0.3500000E+01 -
+!!      0.3208333E+01 I
+!!      0.2916667E+01 I  XXX XXXXXX X   XX XX  XXX  XXXXXXXXXXX X XXXXXXX
+!!      0.2625000E+01 I
+!!      0.2333333E+01 I
+!!      0.2041667E+01 I  XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXX XXXXXXXXXXXXXX
+!!      0.1750000E+01 -
+!!      0.1458333E+01 I
+!!      0.1166667E+01 I
+!!      0.8750000E+00 I   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+!!      0.5833335E+00 I
+!!      0.2916670E+00 I
+!!      0.0000000E+00 -  XXXXXXXXXXXXXXX  XX XX XXXXXXXXXXXXX  XX XXXXXX X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1258E+03  0.2505E+03  0.3752E+03  0.5000E+03
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.7000000E+01 -                                                  X
+!!      0.6708333E+01 I
+!!      0.6416667E+01 I
+!!      0.6125000E+01 I                                                 XX
+!!      0.5833333E+01 I
+!!      0.5541667E+01 I
+!!      0.5250000E+01 -
+!!      0.4958333E+01 I                                                XX
+!!      0.4666667E+01 I
+!!      0.4375000E+01 I
+!!      0.4083333E+01 I                                            XXXX
+!!      0.3791667E+01 I
+!!      0.3500000E+01 -
+!!      0.3208333E+01 I
+!!      0.2916667E+01 I                                    XXXXXXXXX
+!!      0.2625000E+01 I
+!!      0.2333333E+01 I
+!!      0.2041667E+01 I                        XXXXXXXXXXXXX
+!!      0.1750000E+01 -
+!!      0.1458333E+01 I
+!!      0.1166667E+01 I
+!!      0.8750000E+00 I         XXXXXXXXXXXXXXXX
+!!      0.5833335E+00 I
+!!      0.2916670E+00 I
+!!      0.0000000E+00 -  XXXXXXXX
+!!
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1258E+03  0.2505E+03  0.3752E+03  0.5000E+03
+!!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * COX AND MILLER, THE THEORY OF STOCHASTIC PROCESSES, 1965, PAGE 7.
-!!   * TOCHER, THE ART OF SIMULATION, 1963, PAGES 36-37.
-!!   * JOHNSON AND KOTZ, DISCRETE DISTRIBUTIONS, 1969, PAGES 87-121.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, PAGES 108-113.
-!!   * FELLER, AN INTRODUCTION TO PROBABILITY THEORY AND ITS APPLICATIONS,
-!!     VOLUME 1, EDITION 2, 1957, PAGES 146-154.
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     PAGE 929.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE POIRAN(N,Alamba,Iseed,X)
-REAL(kind=wp) :: Alamba , e , sum , u(1) , X
-INTEGER :: i , Iseed , j , N
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --ALAMBA = THE  VALUE
-!                                OF THE TAIL LENGTH PARAMETER.
-!                                ALAMBA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE POISSON DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER = ALAMBA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --ALAMBA SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG.
-!     MODE OF INTERNAL OPERATIONS--.
-!     COMMENT--THE  TAIL LENGTH
-!              PARAMETER ALAMBA IS     NOT     RESTRICTED
-!              TO ONLY INTEGER VALUES.
-!              ALAMBA CAN BE SET TO ANY POSITIVE REAL
-!              VALUE--INTEGER OR NON-INTEGER.
-!     COMMENT--NOTE THAT EVEN THOUGH THE OUTPUT
-!              FROM THIS DISCRETE RANDOM NUMBER
-!              GENERATOR MUST NECESSARILY BE A
-!              SEQUENCE OF ***INTEGER*** VALUES,
-!              THE OUTPUT VECTOR X IS SINGLE
-!              PRECISION IN MODE.
-!              X HAS BEEN SPECIFIED AS SINGLE
-!              PRECISION SO AS TO CONFORM WITH THE DATAPAC
-!              CONVENTION THAT ALL OUTPUT VECTORS FROM ALL
-!              DATAPAC SUBROUTINES ARE .
-!              THIS CONVENTION IS BASED ON THE BELIEF THAT
-!              1) A MIXTURE OF MODES (FLOATING POINT
-!              VERSUS INTEGER) IS INCONSISTENT AND
-!              AN UNNECESSARY COMPLICATION
-!              IN A DATA ANALYSIS; AND
-!              2) FLOATING POINT MACHINE ARITHMETIC
-!              (AS OPPOSED TO INTEGER ARITHMETIC)
-!              IS THE MORE NATURAL MODE FOR DOING
-!              DATA ANALYSIS.
+!!   * Cox and Miller, The Theory of Stochastic Processes, 1965, page 7.
+!!   * Tocher, The Art of Simulation, 1963, pages 36-37.
+!!   * Johnson and Kotz, Discrete Distributions, 1969, pages 87-121.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, pages 108-113.
+!!   * Feller, An Introduction to Probability Theory and Its Applications,
+!!     Volume 1, Edition 2, 1957, pages 146-154.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     page 929.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE POIRAN(N,Alamba,Iseed,X)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: Alamba
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+INTEGER :: i , j
+REAL(kind=wp) :: e , sum , u(1)
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-!
-!---------------------------------------------------------------------
-!
-!-----START POINT-----------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE POIRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
-      ELSEIF ( Alamba<=0.0_wp ) THEN
-         WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE POIRAN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99004) Alamba
-99004    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,       &
-     &           ' *****')
-         RETURN
-      ELSE
-!
-!     GENERATE N POISSON RANDOM NUMBERS
-!     USING THE FACT THAT THE DISTRIBUTION
-!     OF EXPONENTIAL WAITING TIMES IS POISSON.
-!
-         DO i = 1 , N
-            sum = 0.0_wp
-            j = 1
-            DO
-               CALL UNIRAN(1,Iseed,u)
-               e = -LOG(1.0_wp-u(1))
-               sum = sum + e
-               IF ( sum>Alamba ) THEN
-                  X(i) = j - 1
-                  EXIT
-               ELSE
-                  j = j + 1
-               ENDIF
-            ENDDO
+   !
+   !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The first input argument to POIRAN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSEIF ( Alamba<=0.0_wp ) THEN
+      WRITE (G_IO,99003)
+      99003 FORMAT (' ***** FATAL ERROR--The second input argument to POIRAN(3f) is non-positive *****')
+      WRITE (G_IO,99004) Alamba
+      99004 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+      RETURN
+   ELSE
+      !
+      !     GENERATE N POISSON RANDOM NUMBERS USING THE FACT THAT THE DISTRIBUTION
+      !     OF EXPONENTIAL WAITING TIMES IS POISSON.
+      !
+      DO i = 1 , N
+         sum = 0.0_wp
+         j = 1
+         DO
+            CALL UNIRAN(1,Iseed,u)
+            e = -LOG(1.0_wp-u(1))
+            sum = sum + e
+            IF ( sum>Alamba ) THEN
+               X(i) = j - 1
+               EXIT
+            ELSE
+               j = j + 1
+            ENDIF
          ENDDO
-      ENDIF
-!
+      ENDDO
+   ENDIF
+
 END SUBROUTINE POIRAN
 !>
 !!##NAME
@@ -26407,10 +27215,10 @@ END SUBROUTINE POIRAN
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
+!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, pages
 !!     207-213.
 !!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2,
-!!     1957, PAGES 81-82, 228-231.
+!!     1957, pages 81-82, 228-231.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE PROPOR(X,N,Xmin,Xmax,Iwrite,Xprop)
 REAL(kind=wp) :: an , hold , sum , X , Xmax , Xmin , Xprop
@@ -26560,12 +27368,19 @@ END SUBROUTINE PROPOR
 !!
 !!##REFERENCES
 !!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
-!!     Edition 2, 1963, Page 338.
-!!   * David, Order Statistics, 1970, Page 10-11.
-!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 39.
+!!     Edition 2, 1963, page 338.
+!!   * David, Order Statistics, 1970, page 10-11.
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, page 39.
 !!   * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
-!!     1957, Page 21.
+!!     1957, page 21.
+!     MODE OF INTERNAL OPERATIONS--.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --JUNE      1974.
+!     UPDATED         --APRIL     1975.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 INTEGER :: i , Iwrite , N
@@ -26594,12 +27409,6 @@ INTEGER :: i , Iwrite , N
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --JUNE      1974.
-!     UPDATED         --APRIL     1975.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
@@ -26751,11 +27560,11 @@ END SUBROUTINE RANGE
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * CACM March 1969, Page 186 (Binary Sort Algorithm by Richard
+!!   * CACM March 1969, page 186 (Binary Sort Algorithm by Richard
 !!     C. Singleton).
-!!   * CACM January 1970, Page 54.
-!!   * CACM October 1970, Page 624.
-!!   * JACM January 1961, Page 41.
+!!   * CACM January 1970, page 54.
+!!   * CACM October 1970, page 624.
+!!   * JACM January 1961, page 41.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --JANUARY   1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -27043,8 +27852,8 @@ END SUBROUTINE RANPER
 !!    CC0-1.0
 !!##REFERENCES
 !!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGES 47, 233.
-!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES
+!!     EDITION 2, 1963, pages 47, 233.
+!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, pages
 !!     62-65.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE RELSD(X,N,Iwrite,Xrelsd)
@@ -27144,27 +27953,28 @@ INTEGER :: i , Iwrite , N
 END SUBROUTINE RELSD
 !>
 !!##NAME
-!!    replac(3f) - [M_datapac:STATISTICS] replace all observations in a
-!!    vector within a given interval with a user-specified constant
+!!    replac(3f) - [M_datapac:VECTOR_OPERATION] replace all observations
+!!    in a vector within a given interval with a user-specified constant
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
 !!
 !!##DESCRIPTION
-!!    REPLAC(3f) replaces (with the value xnew) all observations in the
-!!    REAL vector X which are inside the closed (inclusive)
-!!    interval defined by XMIN and XMAX.
+!!    REPLAC(3f) replaces (with the value XNEW) all observations in the REAL
+!!    vector X which are inside the closed (inclusive) interval defined by
+!!    XMIN and XMAX.
 !!
 !!    All observations outside of this interval are left unchanged.
-!!    thus all observations in X which are equal to or larger than XMIN
+!!    Thus all observations in X which are equal to or larger than XMIN
 !!    and equal to or smaller than XMAX, will be replaced by XNEW.
 !!
-!!    REPLAC(3f) (and the retain and delete subroutines) gives the data
-!!    analyst the ability to easily 'clean up' a data set which has missing
-!!    and/or outlying observations so that a more appropriate subsequent
-!!    data analysis may be performed. For example, replacement of an
-!!    outlier with a more appropriate value can easily be done by REPLAC(3f).
+!!    REPLAC(3f) (and the RETAIN(3f) and DELETE(3f) subroutines) gives
+!!    the data analyst the ability to easily 'clean up' a data set which
+!!    has missing and/or outlying observations so that a more appropriate
+!!    subsequent data analysis may be performed. For example, replacement
+!!    of an outlier with a more appropriate value can easily be done by
+!!    REPLAC(3f).
 !!
 !!##OPTIONS
 !!     X   description of parameter
@@ -27183,14 +27993,16 @@ END SUBROUTINE RELSD
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
+
+SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 INTEGER :: i , k , N , ndel
 !
@@ -27262,27 +28074,22 @@ INTEGER :: i , k , N , ndel
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE REPLAC SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001    FORMAT (' ***** FATAL ERROR--The second input argument to REPLAC(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002    FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE REPL&
-     &AC SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to REPLAC(3f) has the value 1 *****')
          ELSE
             hold = X(1)
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE REPLAC SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to REPLAC(3f) has all elements =',&
+            & E15.8,' *****')
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
@@ -27304,32 +28111,31 @@ INTEGER :: i , k , N , ndel
 !     WRITE OUT A BRIEF SUMMARY
 !
          WRITE (G_IO,99005)
-99005    FORMAT (' ')
+         99005 FORMAT (' ')
          WRITE (G_IO,99006)
-99006    FORMAT (' ','OUTPUT FROM THE REPLAC SUBROUTINE--')
+         99006 FORMAT (' ','output from the REPLAC subroutine--')
          WRITE (G_IO,99007) pointl , pointu
-99007    FORMAT (' ',7X,'ONLY OBSERVATIONS BETWEEN ',E15.8,' AND ',     &
-     &           E15.8)
+         99007 FORMAT (' ',7X,'only observations between ',E15.8,' and ', E15.8)
          WRITE (G_IO,99008)
-99008    FORMAT (' ',7X,'(INCLUSIVE) HAVE BEEN REPLACED.')
+         99008 FORMAT (' ',7X,'(inclusive) have been replaced.')
          WRITE (G_IO,99009)
-99009    FORMAT (' ',7X,'ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL')
+         99009 FORMAT (' ',7X,'all observations outside of this interval')
          WRITE (G_IO,99010)
-99010    FORMAT (' ',7X,'HAVE BEEN LEFT UNCHANGED.')
+         99010 FORMAT (' ',7X,'have been left unchanged.')
          WRITE (G_IO,99011) Xnew
-99011    FORMAT (' ',7X,'THE REPLACEMENT VALUE IS ',E15.8)
+         99011 FORMAT (' ',7X,'The replacement value is ',E15.8)
          WRITE (G_IO,99012) N
-99012    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS    IS ',I0)
+         99012 FORMAT (' ',7X,'The input  number of observations    is ',I0)
          WRITE (G_IO,99013) k
-99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS REPLACED  IS ',I0)
+         99013 FORMAT (' ',7X,'The number of observations replaced  is ',I0)
          WRITE (G_IO,99014) ndel
-99014    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS UNCHANGED IS ',I0)
+         99014 FORMAT (' ',7X,'The number of observations unchanged is ',I0)
       ENDIF
 !
 END SUBROUTINE REPLAC
 !>
 !!##NAME
-!!    retain(3f) - [M_datapac:STATISTICS] retain all observations in a
+!!    retain(3f) - [M_datapac:VECTOR_OPERATION] retain all observations in a
 !!    vector within a user-specified interval
 !!
 !!##SYNOPSIS
@@ -27337,9 +28143,9 @@ END SUBROUTINE REPLAC
 !!       SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
 !!
 !!##DESCRIPTION
-!!    RETAIN(3f) retains all observations in the REAL vector
-!!    X which are inside the closed (inclusive) interval defined by XMIN
-!!    and XMAX, while deleting all observations outside of this interval.
+!!    RETAIN(3f) retains all observations in the REAL vector X which are
+!!    inside the closed (inclusive) interval defined by XMIN and XMAX,
+!!    while deleting all observations outside of this interval.
 !!
 !!    Thus all observations in X which are smaller than XMIN or larger
 !!    than XMAX are deleted from X. RETAIN(3f) (and the REPLAC and DELETE
@@ -27372,6 +28178,9 @@ END SUBROUTINE REPLAC
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
+!     ORIGINAL VERSION--NOVEMBER  1972.
+!     UPDATED         --JULY      1974.
+!     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 
 SUBROUTINE RETAIN(X,N,Xmin,Xmax,Newn)
@@ -27433,9 +28242,6 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !              AS BOTH THE SECOND AND FIFTH ARGUMENTS.
 !     COMMENT--THIS IS ONE OF THE FEW SUBROUTINES IN DATAPAC
 !              IN WHICH THE INPUT VECTOR X IS ALTERED.
-!     ORIGINAL VERSION--NOVEMBER  1972.
-!     UPDATED         --JULY      1974.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
@@ -27443,79 +28249,65 @@ INTEGER :: i , k , N , ndel , Newn , newnp1 , nold
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
 !
-      IF ( N<1 ) THEN
-         WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE RETAIN SUBROU&
-     &TINE IS NON-POSITIVE *****')
-         WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-         RETURN
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The second input argument to RETAIN(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to RETAIN(3f) has the value 1 *****')
       ELSE
-         IF ( N==1 ) THEN
-            WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE RETA&
-     &IN SUBROUTINE HAS THE VALUE 1 *****')
-         ELSE
-            hold = X(1)
-            DO i = 2 , N
-               IF ( X(i)/=hold ) GOTO 50
-            ENDDO
-            WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE RETAIN SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
-         ENDIF
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to RETAIN(3f) has all elements =', &
+         & E15.8,' *****')
+      ENDIF
 !
 !-----START POINT-----------------------------------------------------
 !
- 50      pointl = Xmin
-         pointu = Xmax
-         IF ( Xmin>Xmax ) pointl = Xmax
-         IF ( Xmin>Xmax ) pointu = Xmin
-!
-         nold = N
-         k = 0
-         DO i = 1 , nold
-            IF ( X(i)>=pointl .AND. X(i)<=pointu ) THEN
-               k = k + 1
-               X(k) = X(i)
-            ENDIF
-         ENDDO
-         Newn = k
-         ndel = nold - Newn
-!
-         newnp1 = Newn + 1
-         IF ( newnp1<=nold ) THEN
-            DO i = newnp1 , nold
-               X(i) = 0.0_wp
-            ENDDO
+ 50   continue
+      pointl = Xmin
+      pointu = Xmax
+      IF ( Xmin>Xmax ) pointl = Xmax
+      IF ( Xmin>Xmax ) pointu = Xmin
+
+      nold = N
+      k = 0
+      DO i = 1 , nold
+         IF ( X(i)>=pointl .AND. X(i)<=pointu ) THEN
+            k = k + 1
+            X(k) = X(i)
          ENDIF
-!
-!     WRITE OUT A BRIEF SUMMARY
-!
-         WRITE (G_IO,99005)
-99005    FORMAT (' ')
-         WRITE (G_IO,99006)
-99006    FORMAT (' ','OUTPUT FROM THE RETAIN SUBROUTINE--')
-         WRITE (G_IO,99007) pointl , pointu
-99007    FORMAT (' ',7X,'ONLY OBSERVATIONS BETWEEN ',E15.8,' AND ',     &
-     &           E15.8)
-         WRITE (G_IO,99008)
-99008    FORMAT (' ',7X,'(INCLUSIVE) HAVE BEEN RETAINED.')
-         WRITE (G_IO,99009)
-99009    FORMAT (' ',7X,'ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL')
-         WRITE (G_IO,99010)
-99010    FORMAT (' ',7X,'HAVE BEEN DELETED.')
-         WRITE (G_IO,99011) nold
-99011    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS ', I0)
-         WRITE (G_IO,99012) Newn
-99012    FORMAT (' ',7X,'THE OUTPUT NUMBER OF OBSERVATIONS (IN X) IS ', I0)
-         WRITE (G_IO,99013) ndel
-99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS DELETED       IS ', I0)
+      ENDDO
+      Newn = k
+      ndel = nold - Newn
+
+      newnp1 = Newn + 1
+      IF ( newnp1<=nold ) THEN
+         DO i = newnp1 , nold
+            X(i) = 0.0_wp
+         ENDDO
       ENDIF
-!
+      !
+      !     WRITE OUT A BRIEF SUMMARY
+      !
+      WRITE(G_IO, "(' ')"                                                      )
+      WRITE(G_IO, "(' ','Output from the RETAIN subroutine--')"                )
+      WRITE(G_IO, "(' ',7X,'Only observations between ',E15.8,' AND ', E15.8)" ) pointl , pointu
+      WRITE(G_IO, "(' ',7X,'(inclusive) have been retained.')"                 )
+      WRITE(G_IO, "(' ',7X,'All observations outside of this interval')"       )
+      WRITE(G_IO, "(' ',7X,'have been deleted.')"                              )
+      WRITE(G_IO, "(' ',7X,'The input  number of observations (in X) is ', I0)") nold
+      WRITE(G_IO, "(' ',7X,'The output number of observations (in X) is ', I0)") Newn
+      WRITE(G_IO, "(' ',7X,'The number of observations deleted       is ', I0)") ndel
+   ENDIF
+
 END SUBROUTINE RETAIN
 !>
 !!##NAME
@@ -27580,10 +28372,10 @@ END SUBROUTINE RETAIN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  * Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, Pages
+!!  * Levene and Wolfowitz, Annals of Mathematical Statistics, 1944, pages
 !!    58-69; especially pages 60, 63, and 64.
 !!  * Bradley, Distribution-free Statistical Tests, 1968, Chapter 12,
-!!    Pages 271-282.
+!!    pages 271-282.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -27986,10 +28778,10 @@ END SUBROUTINE RUNS
 !!
 !!##REFERENCES
 !!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
-!!     Edition 2, 1963, Pages 236-239, 243.
+!!     Edition 2, 1963, pages 236-239, 243.
 !!   * Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
-!!     1963, Pages 406-407.
-!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 125.
+!!     1963, pages 406-407.
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, page 125.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SAMPP(X,N,P,Iwrite,Pp)
 REAL(kind=wp) :: aj , ajint , an , anp1 , hold , hunp , P , Pp , w , WS , X , Y
@@ -28164,13 +28956,13 @@ END SUBROUTINE SAMPP
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * DIXON AND MASSEY, PAGES 19 AND 21
-!!   * SNEDECOR AND COCHRAN, PAGE 62
-!!   * DIXON AND MASSEY, PAGES 14, 70, AND 71
-!!   * CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, PAGES 357
+!!   * DIXON AND MASSEY, pages 19 AND 21
+!!   * SNEDECOR AND COCHRAN, page 62
+!!   * DIXON AND MASSEY, pages 14, 70, AND 71
+!!   * CROW, JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, pages 357
 !!     AND 387
 !!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 1,
-!!     EDITION 2, 1963, PAGE 8.
+!!     EDITION 2, 1963, page 8.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SCALE(X,N)
 
@@ -28181,7 +28973,7 @@ INTEGER i , N
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--1/4 PAGE OF AUTOMATIC OUTPUT
+!     OUTPUT--1/4 page OF AUTOMATIC OUTPUT
 !             CONSISTING OF THE FOLLOWING 4
 !             ESTIMATES OF SCALE
 !             FOR THE DATA IN THE INPUT VECTOR X--
@@ -28352,9 +29144,9 @@ END SUBROUTINE SCALE
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, page 44.
 !!   * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
-!!     1957, Pages 19, 76.
+!!     1957, pages 19, 76.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SD(X,N,Iwrite,Xsd)
 REAL(kind=wp) :: an , hold , sum , var , X , xmean , Xsd
@@ -28561,10 +29353,10 @@ END SUBROUTINE SD
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##REFERENCES
-!!   1. CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
-!!   2. CACM JANUARY 1970, PAGE 54.
-!!   3. CACM OCTOBER 1970, PAGE 624.
-!!   4. JACM JANUARY 1961, PAGE 41.
+!!   1. CACM MARCH 1969, page 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
+!!   2. CACM JANUARY 1970, page 54.
+!!   3. CACM OCTOBER 1970, page 624.
+!!   4. JACM JANUARY 1961, page 41.
 !!##LICENSE
 !!    CC0-1.0
 !     ORIGINAL VERSION--JUNE      1972.
@@ -28820,10 +29612,10 @@ END SUBROUTINE SORTC
 !!    John Urban, 2022.05.31
 !!
 !!##REFERENCES
-!!    1. CACM MARCH 1969, PAGE 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
-!!    2. CACM JANUARY 1970, PAGE 54.
-!!    3. CACM OCTOBER 1970, PAGE 624.
-!!    1. JACM JANUARY 1961, PAGE 41.
+!!    1. CACM MARCH 1969, page 186 (BINARY SORT ALGORITHM BY RICHARD C. SINGLETON).
+!!    2. CACM JANUARY 1970, page 54.
+!!    3. CACM OCTOBER 1970, page 624.
+!!    1. JACM JANUARY 1961, page 41.
 !!
 !!##LICENSE
 !!    CC0-1.0
@@ -29069,10 +29861,10 @@ END SUBROUTINE SORT
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * CACM March 1969, Page 186 (Binary Sort Algorithm by Richard C. Singleton).
-!!   * CACM January 1970, Page 54.
-!!   * CACM October 1970, Page 624.
-!!   * JACM January 1961, Page 41.
+!!   * CACM March 1969, page 186 (Binary Sort Algorithm by Richard C. Singleton).
+!!   * CACM January 1970, page 54.
+!!   * CACM October 1970, page 624.
+!!   * JACM January 1961, page 41.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE SORTP(X,N,Y,Xpos)
 REAL(kind=wp) :: amed , bmed , hold , tt , X , Xpos , Y
@@ -29368,10 +30160,10 @@ END SUBROUTINE SORTP
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2, EDITION 1, 1961, PAGES 476-477.
-!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, PAGES 193-195.
-!!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2, 1957, PAGES 294-295.
-!!   * MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY OF STATISTICS, EDITION 2, 1963, PAGE 424.
+!!   * KENDALL AND STUART, THE ADVANCED THEORY OF STATISTICS, VOLUME 2, EDITION 1, 1961, pages 476-477.
+!!   * SNEDECOR AND COCHRAN, STATISTICAL METHODS, EDITION 6, 1967, pages 193-195.
+!!   * DIXON AND MASSEY, INTRODUCTION TO STATISTICAL ANALYSIS, EDITION 2, 1957, pages 294-295.
+!!   * MOOD AND GRABLE, 'INTRODUCTION TO THE THEORY OF STATISTICS, EDITION 2, 1963, page 424.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --OCTOBER   1974.
 !     UPDATED         --JANUARY   1975.
@@ -29529,8 +30321,8 @@ END SUBROUTINE SPCORR
 !!
 !!##REFERENCES
 !!   * Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
-!!     Edition 2, 1963, Pages 85, 234, 243, 297-298, 305.
-!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
+!!     Edition 2, 1963, pages 85, 234, 243, 297-298, 305.
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, pages
 !!     86-90.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
       SUBROUTINE STMOM3(X,N,Iwrite,Xsmom3)
@@ -29678,8 +30470,8 @@ END SUBROUTINE STMOM3
 !!
 !!##REFERENCES
 !!   * Kendall and Stuart, The Advanced Theory of Statistics, Volume 1,
-!!     Edition 2, 1963, Pages 85, 243.
-!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Pages
+!!     Edition 2, 1963, pages 85, 243.
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, pages
 !!     86-90.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
@@ -29781,7 +30573,7 @@ END SUBROUTINE STMOM4
 !>
 !!##NAME
 !!
-!!    subse1(3f) - [M_datapac:STATISTICS] extract the elements of a vector
+!!    subse1(3f) - [M_datapac:VECTOR_OPERATION] extract the elements of a vector
 !!    which fall into a user-specified subset (one subset variable)
 !!
 !!##SYNOPSIS
@@ -29991,7 +30783,7 @@ INTEGER i , k , N , ndel , Ny
 END SUBROUTINE SUBSE1
 !>
 !!##NAME
-!!    subse2(3f) - [M_datapac:STATISTICS] extract the elements of a vector
+!!    subse2(3f) - [M_datapac:VECTOR_OPERATION] extract the elements of a vector
 !!    which fall into a user-specified subset (two subset variables)
 !!
 !!##SYNOPSIS
@@ -30221,7 +31013,7 @@ INTEGER       :: i, k, N, ndel, Ny
 END SUBROUTINE SUBSE2
 !>
 !!##NAME
-!!    subset(3f) - [M_datapac:STATISTICS] extract the elements of a vector
+!!    subset(3f) - [M_datapac:VECTOR_OPERATION] extract the elements of a vector
 !!    which fall into a user-specified subset (one subset variable)
 !!
 !!##SYNOPSIS
@@ -30542,10 +31334,10 @@ END SUBROUTINE SUBSET
 !!##REFERENCE
 !!   * Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
 !!     of the Eighteenth Conference on the Design of Experiments in Army
-!!     Research and Testing, Pages 425-450.
+!!     Research and Testing, pages 425-450.
 !!   * Filliben, 'The Percent Point Function', Unpublished Manuscript.
 !!   * Johnson and Kotz (1970), Continuous Univariate Distributions-1,
-!!     Pages 250-271.
+!!     pages 250-271.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
@@ -30574,6 +31366,8 @@ CHARACTER(len=4) :: blank
 CHARACTER(len=4) :: hyphen
 CHARACTER(len=4) :: alphai
 CHARACTER(len=4) :: alphax
+character(len=256) :: message
+integer :: ios
 !
 DIMENSION Y(3000) , Z(3000) , YM(3000)
 DIMENSION P(3000) , PTEnth(3000)
@@ -30598,18 +31392,15 @@ DATA constn/.3989422804_wp/
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TAIL   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--The second input argument to TAIL(3f) is outside the allowable (1,',I0,&
+         & ') INTERVAL *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TAIL&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to TAIL(3f) has the value 1 *****')
             RETURN
          ELSE
             hold = X(1)
@@ -30617,9 +31408,8 @@ DATA constn/.3989422804_wp/
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE TAIL   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to TAIL(3f) has all elements = ', &
+            & E15.8,' *****')
             RETURN
          ENDIF
 !
@@ -30659,15 +31449,14 @@ DATA constn/.3989422804_wp/
 !
 !     COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION OF B1 AND B2
 !     UNDER THE NORMALITY ASSUMPTION
-!     REFERENCE--CRAMER, PAGE 386
+!     REFERENCE--CRAMER, page 386
 !
          eb1 = 0.0_wp
          sdb1 = 6.0_wp*(an-2.0_wp)/((an+1.0_wp)*(an+3.0_wp))
          sdb1 = SQRT(sdb1)
          zb1 = (b1-eb1)/sdb1
          eb2 = 3.0_wp - 6.0_wp/(an+1.0_wp)
-         sdb2 = 24.0_wp*an*(an-2.0_wp)*(an-3.0_wp)                               &
-     &          /((an+1.0_wp)*(an+1.0_wp)*(an+3.0_wp)*(an+5.0_wp))
+         sdb2 = 24.0_wp*an*(an-2.0_wp)*(an-3.0_wp) / ((an+1.0_wp)*(an+1.0_wp)*(an+3.0_wp)*(an+5.0_wp))
          zb2 = (b2-eb2)/sdb2
 !
 !     COMPUTE GEARY'S STATISTIC
@@ -30681,13 +31470,11 @@ DATA constn/.3989422804_wp/
 !
 !     COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION
 !     OF GEARY'S STATISTIC UNDER THE NORMALITY ASSUMPTION
-!     REFERENCE--BIOMETRIKA, 1936, PAGE 296
+!     REFERENCE--BIOMETRIKA, 1936, page 296
 !
          aa = SQRT(2.0_wp/picons)
          bb = SQRT(2.0_wp/(an-1.0))
-         IF ( N>=100 ) cc = SQRT(an/2.0_wp)                                &
-     &                      *(1.0_wp-(1.0_wp/(8.0_wp*an/2.0_wp))+(1.0_wp/(128.0_wp*an*an/ &
-     &                      4.0_wp)))
+         IF ( N>=100 ) cc = SQRT(an/2.0_wp) * (1.0_wp-(1.0_wp/(8.0_wp*an/2.0_wp))+(1.0_wp/(128.0_wp*an*an/ 4.0_wp)))
          IF ( N<100 ) THEN
             coef = 1.0
             imax = N - 1
@@ -30726,7 +31513,7 @@ DATA constn/.3989422804_wp/
 !
 !     COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION OF THE RANGE/S
 !     UNDER THE NORMALITY ASSUMPTION
-!     REFERENCE--BIOMETRIKA, 1954, PAGE 483
+!     REFERENCE--BIOMETRIKA, 1954, page 483
 !
          g = .33000598_wp + ((an-2.0_wp)**.16_wp)/41.785_wp
          pn = (an-g)/(an-2.0_wp*g+1.0_wp)
@@ -30777,16 +31564,14 @@ DATA constn/.3989422804_wp/
 !
 !     COMPUTE THE EXPECTED VALUE AND STANDARD DEVIATION OF THE WILK-SHAPIRO
 !     STATISTIC UNDER THE NORMALITY ASSUMPTION
-!     REFERENCE--JJF APPROXIMATION TO MOMENTS ON PAGE 601 OF BIOMETRIKA (1965)
+!     REFERENCE--JJF APPROXIMATION TO MOMENTS ON page 601 OF BIOMETRIKA (1965)
 !
          IF ( N==3 ) ewilks = .9135_wp
          IF ( N==4 ) ewilks = .9012_wp
-         IF ( N>=5 ) ewilks = .9026_wp + (an-5.0_wp)                          &
-     &                        /(44.608_wp+13.593_wp*SQRT(an)+10.267_wp*an)
+         IF ( N>=5 ) ewilks = .9026_wp + (an-5.0_wp)/(44.608_wp+13.593_wp*SQRT(an)+10.267_wp*an)
          IF ( N==3 ) sdwilk = .0755_wp
          IF ( N==4 ) sdwilk = .0719_wp
-         IF ( N>=5 ) sdwilk = .0670_wp + (an-5.0_wp)                          &
-     &                        /(-42.368_wp-5.026_wp*SQRT(an)-14.925_wp*an)
+         IF ( N>=5 ) sdwilk = .0670_wp + (an-5.0_wp)/(-42.368_wp-5.026_wp*SQRT(an)-14.925_wp*an)
          zwilks = (wilksh-ewilks)/sdwilk
 !
 !     COMPUTE THE CORRELATION COEFFICIENT BETWEEN THE ORDERED OBSERVATIONS
@@ -30930,90 +31715,75 @@ DATA constn/.3989422804_wp/
 !
          IF ( N==2 ) ecc = 1.0_wp
          IF ( N==3 ) ecc = .95492958_wp
-         IF ( N>=4 ) ecc = .94947355_wp + (an-4.0_wp)                         &
-     &                     /(196.815_wp-2.9418_wp*SQRT(an)+19.7916_wp*an)
+         IF ( N>=4 ) ecc = .94947355_wp + (an-4.0_wp)/(196.815_wp-2.9418_wp*SQRT(an)+19.7916_wp*an)
          IF ( N==2 ) sdcc = 99999999.9999_wp
          IF ( N==3 ) sdcc = .04007697_wp
          IF ( N>=4 ) sdcc = .039492_wp + (an-4.0_wp)/(-127.0_wp-25.3_wp*an)
          zcc = (cc-ecc)/sdcc
 !
-!     WRITE OUT THE NORMAL TAIL LENGTH STATISTICS PAGE
+!     WRITE OUT THE NORMAL TAIL LENGTH STATISTICS page
 !
          WRITE (G_IO,99044)
          WRITE (G_IO,99005)
 !
-99005    FORMAT (' ',48X,'TAIL LENGTH ANALYSIS')
+         99005 FORMAT (' ',48X,'TAIL LENGTH ANALYSIS')
          WRITE (G_IO,99045)
          WRITE (G_IO,99006) N
-99006    FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
+         99006 FORMAT (' ',46X,'(THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99007) xbar
-99007    FORMAT (' ',40X,'(THE SAMPLE MEAN = ',E15.8,')')
+         99007 FORMAT (' ',40X,'(THE SAMPLE MEAN = ',E15.8,')')
          WRITE (G_IO,99008) s
-99008    FORMAT (' ',35X,'(THE SAMPLE STANDARD DEVIATION = ',E15.8,')')
+         99008 FORMAT (' ',35X,'(THE SAMPLE STANDARD DEVIATION = ',E15.8,')')
          WRITE (G_IO,99045)
          WRITE (G_IO,99009)
-99009    FORMAT (' ',35X,                                               &
-     & 'REFERENCE--SHAPIRO, WILK, AND CHEN, JASA, 1968, PAGES 1343-1372'&
-     & )
+         99009 FORMAT (' ',35X,'REFERENCE--SHAPIRO, WILK, AND CHEN, JASA, 1968, pages 1343-1372')
          WRITE (G_IO,99010)
-99010    FORMAT (' ',35X,'REFERENCE--CRAMER, PAGES 386-387')
+         99010 FORMAT (' ',35X,'REFERENCE--CRAMER, pages 386-387')
          WRITE (G_IO,99011)
-99011    FORMAT (' ',35X,                                               &
-     &           'REFERENCE--GEARY, BIOMETRIKA, 1947, PAGES 209-242')
+         99011 FORMAT (' ',35X,'REFERENCE--GEARY, BIOMETRIKA, 1947, pages 209-242')
          WRITE (G_IO,99012)
-99012    FORMAT (' ',35X,                                               &
-     &'REFERENCE--BIOMETRIKA TABLES, VOLUME 1, PAGES 67-69, 59-60, 207-2&
-     &08, AND 200')
+         99012 FORMAT (' ',35X,'REFERENCE--BIOMETRIKA TABLES, VOLUME 1, pages 67-69, 59-60, 207-208, AND 200')
          WRITE (G_IO,99013)
-99013    FORMAT (' ',35X,                                               &
-     &    'REFERENCE--SHAPIRO AND WILK, BIOMETRIKA, 1965, PAGES 591-611'&
-     &    )
+         99013 FORMAT (' ',35X,'REFERENCE--SHAPIRO AND WILK, BIOMETRIKA, 1965, pages 591-611')
          DO i = 1 , 6
             WRITE (G_IO,99045)
          ENDDO
          WRITE (G_IO,99014)
-99014    FORMAT (' ',49X,'TAIL LENGTH STATISTICS')
+         99014 FORMAT (' ',49X,'TAIL LENGTH STATISTICS')
          WRITE (G_IO,99015)
-99015    FORMAT (' ',5X,                                                &
-     &'THE EXPECTED VALUE AND STANDARD DEVIATION OF STATISTICS ON THIS P&
-     &AGE ARE BASED ON THE NORMALITY ASSUMPTION')
+         99015 FORMAT (' ',5X,&
+         & 'THE EXPECTED VALUE AND STANDARD DEVIATION OF STATISTICS ON THIS page ARE BASED ON THE NORMALITY ASSUMPTION')
          WRITE (G_IO,99045)
          WRITE (G_IO,99045)
          WRITE (G_IO,99016)
-99016    FORMAT (' ',                                                   &
-     &'          FORM OF STATISTIC               VALUE OF STAT    EXP(ST&
-     &AT)    SD(STAT)    (STAT-EXP(STAT))/SD(STAT)    TABLE REFERENCE')
+         99016 FORMAT ('           ',&
+         & 'FORM OF STATISTIC               VALUE OF STAT    EXP(STAT)    SD(STAT)    (STAT-EXP(STAT))/SD(STAT)    TABLE REFERENCE')
          WRITE (G_IO,99045)
          WRITE (G_IO,99017) b1 , eb1 , sdb1 , zb1
-99017    FORMAT (' ','STANDARDIZED THIRD CENTRAL MOMENT        ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
+         99017 FORMAT (' ','STANDARDIZED THIRD CENTRAL MOMENT        ',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
          WRITE (G_IO,99018)
-99018    FORMAT (' ',111X,'VOL. 1, PAGE 207')
+         99018 FORMAT (' ',111X,'VOL. 1, page 207')
          WRITE (G_IO,99019) b2 , eb2 , sdb2 , zb2
-99019    FORMAT (' ','STANDARDIZED FOURTH CENTRAL MOMENT       ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
+         99019 FORMAT (' ','STANDARDIZED FOURTH CENTRAL MOMENT       ',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
          WRITE (G_IO,99020)
-99020    FORMAT (' ',111X,'VOL. 1, PAGE 208')
+         99020 FORMAT (' ',111X,'VOL. 1, page 208')
          WRITE (G_IO,99021) geary , egeary , sdgear , zgeary
-99021    FORMAT (' ','GEARY STATISTIC (MEAN DEVIATION/S)       ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
+         99021 FORMAT (' ','GEARY STATISTIC (MEAN DEVIATION/S)       ',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
          WRITE (G_IO,99022)
-99022    FORMAT (' ',111X,'VOL. 1, PAGE 207')
+         99022 FORMAT (' ',111X,'VOL. 1, page 207')
          WRITE (G_IO,99023) rs , ers , sdrs , zrs
-99023    FORMAT (' ','RANGE/S                                  ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
+         99023 FORMAT (' ','RANGE/S                                  ',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA TABLES')
          WRITE (G_IO,99024)
-99024    FORMAT (' ',111X,'VOL. 1, PAGE 200')
+         99024 FORMAT (' ',111X,'VOL. 1, page 200')
          WRITE (G_IO,99025) wilksh , ewilks , sdwilk , zwilks
-99025    FORMAT (' ','WILK-SHAPIRO STATISTIC (BLUE FOR SCALE/S)',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA (1965)')
+         99025 FORMAT (' ','WILK-SHAPIRO STATISTIC (BLUE FOR SCALE/S)',F10.5,6X,F10.5,2X,F10.5,9X,F10.5,13X,'BIOMETRIKA (1965)')
          WRITE (G_IO,99026)
-99026    FORMAT (' ',111X,'PAGE 605')
+         99026 FORMAT (' ',111X,'page 605')
          WRITE (G_IO,99027) cc , ecc , sdcc , zcc
-99027    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT ',F10.5, &
-     &           6X,F10.5,2X,F10.5,9X,F10.5,13X,'UNPUBLISHED JJF')
+         99027 FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT ',F10.5, &
+         & 6X,F10.5,2X,F10.5,9X,F10.5,13X,'UNPUBLISHED JJF')
          WRITE (G_IO,99028)
-99028    FORMAT (' ',111X,'MANUSCRIPT')
+         99028    FORMAT (' ',111X,'MANUSCRIPT')
 !
 !     COMPUTE THE LINE PLOT WHICH SHOWS THE DISTRIBUTION OF THE OBSERVED
 !     VALUES IN TERMS OF MULTIPLES OF SAMPLE STANDARD DEVIATIONS AWAY FROM
@@ -31052,34 +31822,32 @@ DATA constn/.3989422804_wp/
             WRITE (G_IO,99045)
          ENDDO
          WRITE (G_IO,99029)
-99029    FORMAT (' ',                                                   &
-     &'LINE PLOT SHOWING THE DISTRIBUTION OF THE OBSERVATIONS ABOUT THE &
-     &SAMPLE MEAN IN TERMS OF MULTIPLES OF THE SAMPLE STANDARD DEVIATION&
-     &')
+         99029    FORMAT (&
+         & ' LINE PLOT SHOWING THE DISTRIBUTION OF THE OBSERVATIONS ABOUT THE SAMPLE MEAN ',&
+         & 'IN TERMS OF MULTIPLES OF THE SAMPLE STANDARD DEVIATION')
          WRITE (G_IO,99045)
          WRITE (G_IO,99045)
          WRITE (G_IO,99042) (iline1(i),i=1,130)
          WRITE (G_IO,99042) (iline2(i),i=1,130)
          WRITE (G_IO,99030)
-99030    FORMAT (' ',                                                   &
-     &'     -6        -5        -4        -3        -2        -1        &
-     & 0         1         2         3         4         5         6')
-         WRITE (G_IO,99031) (xline(i),i=1,13)
-99031    FORMAT (' ',13F10.4)
+         99030 FORMAT (' ', &
+         &'     -6        -5        -4        -3        -2        -1        &
+         & 0         1         2         3         4         5         6')
+         WRITE (G_IO,99031,iostat=ios,iomsg=message) (xline(i),i=1,13)
+         99031 FORMAT (' ',13F10.4)
+         if(ios.ne.0)write(G_IO,'(A)')message(:len_trim(message))
          WRITE (G_IO,99045)
          WRITE (G_IO,99032) icount
-99032    FORMAT (' ',10X,I0,                                            &
-     &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
-     & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
+         99032 FORMAT (' ',10X,I0, &
+         &' OBSERVATIONS WERE IN EXCESS OF 6 SAMPLE STANDARD DEVIATIONS FROM&
+         & THE SAMPLE MEAN AND SO WERE NOT PLOTTED')
 !
 !     GENERATE UNIFORM, NORMAL, LAMBDA = -0.5, AND CAUCHY PROBABILITY PLOTS
 !
          nhalf = (N/2) + 1
          CALL PLOT(Y,Z,N)
          WRITE (G_IO,99033) N
-99033    FORMAT (' ',35X,                                               &
-     &           'UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,  &
-     &           ')')
+         99033 FORMAT (' ',35X,'UNIFORM PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99043) corr(11)
          DO i = 1 , nhalf
             irev = N - i + 1
@@ -31088,9 +31856,9 @@ DATA constn/.3989422804_wp/
          ENDDO
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99034) N
-99034    FORMAT (' ',35X,                                               &
-     &           'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
-     &           ')')
+         99034 FORMAT (' ',35X,&
+         & 'NORMAL PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
+         & ')')
          WRITE (G_IO,99043) corr(20)
          alamba = -0.5_wp
          DO i = 1 , nhalf
@@ -31101,8 +31869,7 @@ DATA constn/.3989422804_wp/
          ENDDO
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99035) alamba , N
-99035    FORMAT (' ',35X,'LAMBDA = ',F4.1,                              &
-     &           ' PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
+         99035 FORMAT (' ',35X,'LAMBDA = ',F4.1,' PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99043) corr(28)
          DO i = 1 , nhalf
             irev = N - i + 1
@@ -31112,50 +31879,39 @@ DATA constn/.3989422804_wp/
          ENDDO
          CALL PLOT(Y,YM,N)
          WRITE (G_IO,99036) N
-99036    FORMAT (' ',35X,                                               &
-     &           'CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,   &
-     &           ')')
+         99036 FORMAT (' ',35X,'CAUCHY PROBABILITY PLOT  (THE SAMPLE SIZE N = ',I0,')')
          WRITE (G_IO,99043) corr(33)
 !
-!      WRITE OUT THE PROBABILITY PLOT CORRELATION COEFFICIENT PAGE
+!      WRITE OUT THE PROBABILITY PLOT CORRELATION COEFFICIENT page
 !
          WRITE (G_IO,99044)
          DO idis = 1 , numdis
             IF ( idis==20 ) THEN
-               WRITE (G_IO,99037) N , corr(idis) , iflag1(idis) ,        &
-     &                           iflag2(idis) , iflag3(idis)
-99037          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE NORMAL DISTRIB&
-     &UTION IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99037) N , corr(idis) , iflag1(idis) , iflag2(idis) , iflag3(idis)
+               99037 FORMAT (' ','THE CORRELATION BETWEEN THE ',I0, &
+               &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE NORMAL DISTRIBUTION IS ',F8.5,1X,3A1)
             ELSEIF ( idis==22 ) THEN
-               WRITE (G_IO,99038) N , corr(idis) , iflag1(idis) ,        &
-     &                           iflag2(idis) , iflag3(idis)
-99038          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LOGISTIC DIST.&
-     &      IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99038) N , corr(idis) , iflag1(idis) , iflag2(idis) , iflag3(idis)
+               99038 FORMAT (' ','THE CORRELATION BETWEEN THE ',I0, &
+               &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LOGISTIC DIST.      IS ',F8.5,1X,3A1)
             ELSEIF ( idis==23 ) THEN
-               WRITE (G_IO,99039) N , corr(idis) , iflag1(idis) ,        &
-     &                           iflag2(idis) , iflag3(idis)
-99039          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE DOUBLE EXP. DI&
-     &ST.   IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99039) N , corr(idis) , iflag1(idis) , iflag2(idis) , iflag3(idis)
+               99039 FORMAT (' THE CORRELATION BETWEEN THE ',I0, &
+               & ' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE DOUBLE EXP. DIST.   IS ',F8.5,1X,3A1)
             ELSEIF ( idis==33 ) THEN
-               WRITE (G_IO,99040) N , corr(idis) , iflag1(idis) ,        &
-     &                           iflag2(idis) , iflag3(idis)
-99040          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE CAUCHY DISTRIB&
-     &UTION IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99040) N , corr(idis) , iflag1(idis) , iflag2(idis) , iflag3(idis)
+               99040 FORMAT (' ','THE CORRELATION BETWEEN THE ',I0, &
+               &' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE CAUCHY DISTRIBUTION IS ',F8.5,1X,3A1)
             ELSE
                IF ( idis<20 ) idis2 = idis
                IF ( idis==21 ) idis2 = idis - 1
                IF ( 23<idis .AND. idis<33 ) idis2 = idis - 2
                IF ( 33<idis ) idis2 = idis - 3
                alamba = -(0.1)*FLOAT(idis2) + 2.1
-               WRITE (G_IO,99041) N , alamba , corr(idis) , iflag1(idis) &
-     &                           , iflag2(idis) , iflag3(idis)
-99041          FORMAT (' ','THE CORRELATION BETWEEN THE ',I0,           &
-     &    ' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LAMBDA = '&
-     &    ,F4.1,' DIST. IS ',F8.5,1X,3A1)
+               WRITE (G_IO,99041) N, alamba, corr(idis), iflag1(idis), iflag2(idis), iflag3(idis)
+               99041 FORMAT (' ','THE CORRELATION BETWEEN THE ',I0, &
+               & ' ORDERED OBS. AND THE ORDER STAT. MEDIANS FROM THE LAMBDA = '&
+               & ,F4.1,' DIST. IS ',F8.5,1X,3A1)
             ENDIF
          ENDDO
       ENDIF
@@ -31270,15 +32026,15 @@ END SUBROUTINE TAIL
 !!##REFERENCES
 !!
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Page 948, Formulae 26.7.3 and 26.7.4.
+!!     page 948, Formulae 26.7.3 and 26.7.4.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Pages 94-129.
+!!     pages 94-129.
 !!   * Federighi, Extended Tables of the Percentage Points Of Student'S
 !!     T-Distribution, Journal of the American Statistical Association, 1959,
-!!     Pages 683-688.
-!!   * Owen, Handbook of Statistical Tables, 1962, Pages 27-30.
+!!     pages 683-688.
+!!   * Owen, Handbook of Statistical Tables, 1962, pages 27-30.
 !!   * Pearson and Hartley, Biometrika Tables for Statisticians, Volume 1,
-!!     1954, Pages 132-134.
+!!     1954, pages 132-134.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --MAY       1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -31360,7 +32116,7 @@ DATA b32 , b33 , b34 , b35 , b36 , b37/1.0D0 , -11.0D0 , 14.0D0 , &
 !
 !     TREAT THE SMALL AND MODERATE DEGREES OF FREEDOM CASE
 !     METHOD UTILIZED--EXACT FINITE SUM
-!     (SEE AMS 55, PAGE 948, FORMULAE 26.7.3 AND 26.7.4).
+!     (SEE AMS 55, page 948, FORMULAE 26.7.3 AND 26.7.4).
 !
          c = DSQRT(dnu/(dx*dx+dnu))
          csq = dnu/(dx*dx+dnu)
@@ -31396,8 +32152,8 @@ DATA b32 , b33 , b34 , b35 , b36 , b37/1.0D0 , -11.0D0 , 14.0D0 , &
 !
 !     TREAT THE LARGE DEGREES OF FREEDOM CASE.
 !     METHOD UTILIZED--TRUNCATED ASYMPTOTIC EXPANSION
-!     (SEE JOHNSON AND KOTZ, VOLUME 2, PAGE 102, FORMULA 10;
-!     SEE FEDERIGHI, PAGE 687).
+!     (SEE JOHNSON AND KOTZ, VOLUME 2, page 102, FORMULA 10;
+!     SEE FEDERIGHI, page 687).
 !
          CALL NORCDF(X,cdfn)
          dcdfn = cdfn
@@ -31478,7 +32234,7 @@ END SUBROUTINE TCDF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * Jenkins and Watts, especially Page 290.
+!!   * Jenkins and Watts, especially page 290.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1977.
@@ -31494,12 +32250,12 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
 !                               (UNSORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--7 TO 11 PAGES (DEPENDING ON
+!     OUTPUT--7 TO 11 pages (DEPENDING ON
 !             THE INPUT SAMPLE SIZE) OF
 !             AUTOMATIC PRINTOUT--
 !             1) A PLOT OF AUTOCORRELATION VERSUS LAG NUMBER;
 !                THIS PLOT MAY TAKE AS LITTLE AS 1
-!                OR AS MANY AS 5 PAGES
+!                OR AS MANY AS 5 pages
 !                (THE EXACT NUMBER DEPENDING ON
 !                THE INPUT SAMPLE SIZE N);
 !             2) A TEST FOR WHITE NOISE (ASSUMING NORMALITY);
@@ -31532,7 +32288,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
 !              NUMBER OF LAGS = 500
 !              (WHICH CORRESPONDS TO AN
 !              AUTOCORRELATION PLOT COVERING
-!              5 COMPUTER PAGES).
+!              5 COMPUTER pages).
 !              IF MORE LAGS ARE DESIRED,
 !              CHANGE THE VALUE OF THE
 !              VARIABLE     MAXLAG
@@ -31616,7 +32372,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       sd = SQRT(var)
 !
 !     COMPUTE THE SAMPLE AUTOCORRELATIONS
-!     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 259 (7.1.6)
+!     REFERENCE--JENKINS AND WATTS, pages 290 AND 259 (7.1.6)
 !
       kmax = N/4
       IF ( N<=32 ) kmax = N/2
@@ -31688,7 +32444,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       99013 FORMAT (' ','THE BIASED SAMPLE VARIANCE = ',E15.8)
 !
 !     COMPUTE THE PILOT SPECTRUM FOR THE REDUCED (2**J) SAMPLE
-!     REFERENCE--JENKINS AND WATTS, PAGE 288
+!     REFERENCE--JENKINS AND WATTS, page 288
 !
       DO i = 1 , 20
          ndiv = N/(2**i)
@@ -31736,7 +32492,7 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       99014 FORMAT (' ',50X,'PILOT SPECTRUM')
 !
 !     DEFINE 4 LAG WINDOW TRUNCATION POINTS
-!     REFERENCE--JENKINS AND WATTS, PAGES 290 AND 260
+!     REFERENCE--JENKINS AND WATTS, pages 290 AND 260
 !
       p(1) = 0.2_wp
       p(2) = 0.1_wp
@@ -31794,18 +32550,18 @@ INTEGER :: maxlag, N, n2, ndiv, nmk, numout, numsp
       ENDIF
 !
 !     COMPUTE THE 4 SPECTRUM ESTIMATES
-!     REFERENCE--JENKINS AND WATTS, PAGES 260 AND 244
+!     REFERENCE--JENKINS AND WATTS, pages 260 AND 244
 !
 !     COMPUTE BANDWIDTHS
-!     REFERENCE--JENKINS AND WATTS, PAGES 257 AND 252
+!     REFERENCE--JENKINS AND WATTS, pages 257 AND 252
 !
 !     COMPUTE DEGREES OF FREEDOM FOR THE SPECTAL DENSITY ESTIMATE AT INDIVIDUAL
 !     FREQUENCIES
-!     REFERENCE--JENKINS AND WATTS, PAGES 254 AND 252
+!     REFERENCE--JENKINS AND WATTS, pages 254 AND 252
 !
 !     COMPUTE 95 PERCENT CONFIDENCE INTERVAL LENGTHS FOR THE LOG SPECTRAL
 !     DENSITY ESTIMATES
-!     REFERENCE--JENKINS AND WATTS, PAGES 255 AND 252
+!     REFERENCE--JENKINS AND WATTS, pages 255 AND 252
 !
 !     WRITE OUT THE 4 SPECTRUM PLOTS
 !
@@ -31879,9 +32635,9 @@ END SUBROUTINE TIME
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * GARDINER AND HULL, TECHNOMETRICS, 1966, PAGES 115-122
-!!   * WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, PAGE 92
-!!   * MOOD AND GRABLE, PAGES 416-417
+!!   * GARDINER AND HULL, TECHNOMETRICS, 1966, pages 115-122
+!!   * WILKS, ANNALS OF MATHEMATICAL STATISTICS, 1941, page 92
+!!   * MOOD AND GRABLE, pages 416-417
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TOL(X,N)
 REAL(kind=wp) :: a , a0 , a1 , a2 , a3 , a4 , a5 , ak , an , an1 , an2 , an3 ,&
@@ -31897,9 +32653,9 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--2 PAGES OF AUTOMATIC PRINTOUT--
-!             1 PAGE GIVING NORMAL TOLERANCE LIMITS; AND
-!             1 PAGE GIVING DISTRIBUTION-FREE TOLERANCE LIMITS.
+!     OUTPUT--2 pages OF AUTOMATIC PRINTOUT--
+!             1 page GIVING NORMAL TOLERANCE LIMITS; AND
+!             1 page GIVING DISTRIBUTION-FREE TOLERANCE LIMITS.
 !     PRINTING--YES.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
@@ -32046,7 +32802,7 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
      &           ' OBSERVATIONS')
          WRITE (G_IO,99017)
          WRITE (G_IO,99006)
-99006    FORMAT (' ','             REFERENCE--CRC HANDBOOK, PAGES 32-35'&
+99006    FORMAT (' ','             REFERENCE--CRC HANDBOOK, pages 32-35'&
      &           )
          WRITE (G_IO,99007)
 99007    FORMAT (' ',                                                   &
@@ -32185,10 +32941,10 @@ INTEGER :: i , j , k , locmax , locmin , locmn2 , locmn3 ,     &
          WRITE (G_IO,99017)
          WRITE (G_IO,99011)
 99011    FORMAT (' ',                                                   &
-     &           '            REFERENCE--WILKS, ANNALS, 1941, PAGE 92')
+     &           '            REFERENCE--WILKS, ANNALS, 1941, page 92')
          WRITE (G_IO,99012)
 99012    FORMAT (' ',                                                   &
-     &           '            REFERENCE--MOOD AND GRABLE, PAGES 416-417'&
+     &           '            REFERENCE--MOOD AND GRABLE, pages 416-417'&
      &           )
          WRITE (G_IO,99017)
          WRITE (G_IO,99017)
@@ -32292,19 +33048,19 @@ END SUBROUTINE TOL
 !!##REFERENCES
 !!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army Research
-!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), pages
 !!     425-450.
-!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
 !!     260-308.
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Page 949, FormulA 26.7.5.
+!!     page 949, FormulA 26.7.5.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Page 102, Formula 11.
+!!     page 102, Formula 11.
 !!   * Federighi, 'Extended Tables of the Percentage Points of Student's
 !!     T Distribution, Journal of the American Statistical Association,
-!!     1969, Pages 683-688.
+!!     1969, pages 683-688.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Pages 120-123.
+!!     Students and Practitioners, 1975, pages 120-123.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
 !     UPDATED         --FEBRUARY  1977.
@@ -32474,14 +33230,14 @@ END SUBROUTINE TPLT
 !!
 !!##REFERENCES
 !!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
-!!     Page 949, Formula 26.7.5.
+!!     page 949, Formula 26.7.5.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Page 102, Formula 11.
+!!     page 102, Formula 11.
 !!   * Federighi, 'Extended Tables of the Percentage Points of Student's T
 !!     Distribution, Journal of the American Statistical Association, 1969,
-!!     Pages 683-688.
+!!     pages 683-688.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Pages 120-123.
+!!     Students and Practitioners, 1975, pages 120-123.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE TPPF(P,Nu,Ppf)
 INTEGER ipass , maxit , Nu
@@ -32670,38 +33426,120 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !>
 !!##NAME
 !!    tran(3f) - [M_datapac:RANDOM] a random sample of size n from the
-!!    student's t distribution with integer degrees of freedom parameter NU.
+!!    Student's t distribution with integer degrees of freedom parameter NU.
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE TRAN(N,Nu,Iseed,X)
 !!
+!!        INTEGER,intent(in)        :: N
+!!        INTEGER,intent(in)        :: Nu
+!!        INTEGER,intent(inout)     :: Iseed
+!!        REAL(kind=wp),intent(out) :: X(:)
+!!
 !!##DESCRIPTION
 !!
-!!    This subroutine generates a random sample of size N from the student's
+!!    This subroutine generates a random sample of size N from the Student's
 !!    T distribution with integer degrees of freedom parameter = NU.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
 !!
-!!   ISEED  An integer iseed value. Should be set to a non-negative value
+!!    N     The desired integer number of random numbers to be generated.
+!!
+!!    NU    The integer degrees of freedom (parameter) for the T
+!!          distribution. NU should be a positive integer variable.
+!!
+!!   ISEED  An integer seed value. Should be set to a non-negative value
 !!          to start a new sequence of values. Will be set to -1 on return
 !!          to indicate the next call should continue the current random
-!!          sequence walk.
 !!
+!!##OUTPUT ARGUMENTS
+!!
+!!    X     A vector (of dimension at least N) into which the generated
+!!          random sample of size N from the Student's T distribution
+!!          will be placed.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_tran
-!!    use M_datapac, only : tran
+!!    use m_datapac, only : tran, plott, label, plotxt, sort
 !!    implicit none
-!!    ! call tran(x,y)
+!!    integer,parameter :: n=400
+!!    real :: x(n)
+!!    integer :: iseed
+!!    integer :: nu
+!!       call label('tran')
+!!       nu=3
+!!       iseed=12345
+!!       call tran(N,Nu,Iseed,X)
+!!       call plotxt(x,n)
+!!       call sort(x,n,x) ! sort to show distribution
+!!       call plotxt(x,n)
 !!    end program demo_tran
 !!
 !!   Results:
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1029407E+02 -                                          X
+!!      0.9486016E+01 I
+!!      0.8677961E+01 I
+!!      0.7869905E+01 I
+!!      0.7061851E+01 I                          X
+!!      0.6253795E+01 I                               X
+!!      0.5445739E+01 -
+!!      0.4637684E+01 I
+!!      0.3829628E+01 I          X        X         X      X
+!!      0.3021573E+01 I      X X  X XX       X X     X                 X
+!!      0.2213517E+01 I  X    XX       XX  X    X X      X X   X
+!!      0.1405462E+01 I   X   XXXX XXXXXXXXXXXX XX    XXX  XXX  XXXXXX
+!!      0.5974064E+00 -  XX XXXXXXXXXXXXXXXXXXXXXXXX XXX XXXXXXXXXXXX XXX
+!!     -0.2106485E+00 I   XXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXX
+!!     -0.1018704E+01 I  XX XX XX X XXX XX XXXXXXXXXXXX  XX  XXXX XX XXX X
+!!     -0.1826759E+01 I    XXXXXX XX  XX  XX  X   XX  X     X X    XX   XX
+!!     -0.2634815E+01 I     X           XX        X         X   X    XX
+!!     -0.3442871E+01 I          X                   X
+!!     -0.4250926E+01 -                        X          X          X  X
+!!     -0.5058982E+01 I                                X              X
+!!     -0.5867038E+01 I                     X
+!!     -0.6675092E+01 I
+!!     -0.7483148E+01 I
+!!     -0.8291203E+01 I
+!!     -0.9099259E+01 -                          X                      X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
+!!
+!!     THE FOLLOWING IS A PLOT OF X(I) (VERTICALLY) VERSUS I (HORIZONTALLY
+!!                       I-----------I-----------I-----------I-----------I
+!!      0.1029407E+02 -                                                  X
+!!      0.9486016E+01 I
+!!      0.8677961E+01 I
+!!      0.7869905E+01 I
+!!      0.7061851E+01 I                                                  X
+!!      0.6253795E+01 I                                                  X
+!!      0.5445739E+01 -
+!!      0.4637684E+01 I
+!!      0.3829628E+01 I                                                 XX
+!!      0.3021573E+01 I                                                XX
+!!      0.2213517E+01 I                                              XXX
+!!      0.1405462E+01 I                                         XXXXXX
+!!      0.5974064E+00 -                              XXXXXXXXXXXX
+!!     -0.2106485E+00 I                XXXXXXXXXXXXXXX
+!!     -0.1018704E+01 I        XXXXXXXXX
+!!     -0.1826759E+01 I    XXXXX
+!!     -0.2634815E+01 I   XX
+!!     -0.3442871E+01 I   X
+!!     -0.4250926E+01 -   X
+!!     -0.5058982E+01 I  X
+!!     -0.5867038E+01 I  X
+!!     -0.6675092E+01 I
+!!     -0.7483148E+01 I
+!!     -0.8291203E+01 I
+!!     -0.9099259E+01 -  X
+!!                       I-----------I-----------I-----------I-----------I
+!!                0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03
 !!
 !!##AUTHOR
 !!    The original DATAPAC library was written by James Filliben of the
@@ -32716,110 +33554,75 @@ REAL(kind=wp) :: P , Ppf , ppfn
 !!
 !!##REFERENCES
 !!   * Mood and Grable, Introduction to the Theory of Statistics, 1963,
-!!     Page 233.
+!!     page 233.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Page 94.
+!!     page 94.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Page 121.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE TRAN(N,Nu,Iseed,X)
-REAL(kind=wp) :: anu , arg1 , arg2 , pi , sum , X , y , z , znorm
-INTEGER i , Iseed , j , N , Nu
-!
-!     INPUT ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
-!                                OF RANDOM NUMBERS TO BE
-!                                GENERATED.
-!                     --NU     = THE INTEGER DEGREES OF FREEDOM
-!                                (PARAMETER) FOR THE T
-!                                DISTRIBUTION.
-!     OUTPUT ARGUMENTS--X      = A  VECTOR
-!                                (OF DIMENSION AT LEAST N)
-!                                INTO WHICH THE GENERATED
-!                                RANDOM SAMPLE WILL BE PLACED.
-!     OUTPUT--A RANDOM SAMPLE OF SIZE N
-!             FROM THE STUDENT'S T DISTRIBUTION
-!             WITH DEGREES OF FREEDOM PARAMETER = NU.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
-!                   OF N FOR THIS SUBROUTINE.
-!                 --NU SHOULD BE A POSITIVE INTEGER VARIABLE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--UNIRAN.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--LOG, SQRT, SIN, COS.
-!     MODE OF INTERNAL OPERATIONS--.
+!!     Students and Practitioners, 1975, page 121.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
 !     UPDATED         --MAY       1982.
-!
-!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE TRAN(N,Nu,Iseed,X)
+INTEGER,intent(in)        :: N
+INTEGER,intent(in)        :: Nu
+INTEGER,intent(inout)     :: Iseed
+REAL(kind=wp),intent(out) :: X(:)
+
+REAL(kind=wp) :: anu, arg1, arg2, sum, y(2), z(2), znorm
+INTEGER i, j
+
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION y(2) , z(2)
-!
-!---------------------------------------------------------------------
-!
-!-----DATA STATEMENTS-------------------------------------------------
-!
-      DATA pi/3.14159265359_wp/
-!
-!-----START POINT-----------------------------------------------------
-!
-!     CHECK THE INPUT ARGUMENTS FOR ERRORS
-!
+      !
+      !     CHECK THE INPUT ARGUMENTS FOR ERRORS
+      !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE TRAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to TRAN(3f) is non-positive *****')
          WRITE (G_IO,99003) N
          RETURN
       ELSEIF ( Nu<=0 ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TRAN   SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--The second input argument to TRAN(3f) is non-positive *****')
          WRITE (G_IO,99003) Nu
          RETURN
       ELSE
-!
-!     GENERATE N STUDENT'S T RANDOM NUMBERS
-!     USING THE DEFINITION THAT
-!     A STUDENT'S T VARIATE WITH NU DEGREES OF FREEDOM
-!     EQUALS A NORMAL VARIATE DIVIDED BY
-!     A STANDARDIZED CHI VARIATE
-!     (WHERE THE LATTER EQUALS SQRT(CHI-SQUARED/NU).
-!     FIRST GENERATE A NORMAL RANDOM NUMBER,
-!     THEN GENERATE A STANDARDIZED CHI RANDOM NUMBER,
-!     THEN FORM THE RATIO OF THE FIRST DIVIDED BY
-!     THE SECOND.
-!
+         !
+         !     GENERATE N STUDENT'S T RANDOM NUMBERS USING THE DEFINITION THAT
+         !     A STUDENT'S T VARIATE WITH NU DEGREES OF FREEDOM
+         !     EQUALS A NORMAL VARIATE DIVIDED BY A STANDARDIZED CHI VARIATE
+         !     (WHERE THE LATTER EQUALS SQRT(CHI-SQUARED/NU).
+         !     FIRST GENERATE A NORMAL RANDOM NUMBER,
+         !     THEN GENERATE A STANDARDIZED CHI RANDOM NUMBER,
+         !     THEN FORM THE RATIO OF THE FIRST DIVIDED BY THE SECOND.
+         !
          anu = Nu
          DO i = 1 , N
-!
+
             CALL UNIRAN(2,Iseed,y)
             arg1 = -2.0_wp*LOG(y(1))
-            arg2 = 2.0_wp*pi*y(2)
+            arg2 = 2.0_wp*G_pi*y(2)
             znorm = (SQRT(arg1))*(COS(arg2))
-!
+
             sum = 0.0_wp
             DO j = 1 , Nu , 2
                CALL UNIRAN(2,Iseed,y)
                arg1 = -2.0_wp*LOG(y(1))
-               arg2 = 2.0_wp*pi*y(2)
+               arg2 = 2.0_wp*G_pi*y(2)
                z(1) = (SQRT(arg1))*(COS(arg2))
                z(2) = (SQRT(arg1))*(SIN(arg2))
                sum = sum + z(1)*z(1)
                IF ( j/=Nu ) sum = sum + z(2)*z(2)
             ENDDO
-!
+
             X(i) = znorm/SQRT(sum/anu)
-!
+
          ENDDO
       ENDIF
-99003 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
-!
+99003 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+
 END SUBROUTINE TRAN
 !>
 !!##NAME
@@ -32830,16 +33633,50 @@ END SUBROUTINE TRAN
 !!
 !!       SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
 !!
+!!        REAL(kind=wp),intent(in)  :: X(:)
+!!        INTEGER,intent(in)        :: N
+!!        REAL(kind=wp),intent(in)  :: P1
+!!        REAL(kind=wp),intent(in)  :: P2
+!!        INTEGER,intent(in)        :: Iwrite
+!!        REAL(kind=wp),intent(out) :: Xtrim
+!!
 !!##DESCRIPTION
-!!    trim(3f) computes the sample trimmed mean of the data in the input
-!!    vector x.
+!!    TRIM(3f) computes the sample trimmed mean of the data in the input
+!!    vector X.
 !!
-!!    the trimming is such that the lower 100*p1 % of the data is trimmed
-!!    off and the upper 100*p2 % of the data is trimmed off.
+!!    The trimming is such that the lower 100*P1 % of the data is trimmed
+!!    off and the upper 100*P2 % of the data is trimmed off.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X        The vector of (unsorted or sorted) observations.
+!!
+!!    N        The integer number of observations in the vector X.
+!!             The maximum allowable value of N for this subroutine is 15000.
+!!
+!!    P1       The value (between 0.0 and 1.0) which defines what fraction
+!!             of the lower order statistics is to be trimmed off before
+!!             computing the trimmed mean. P1 should be non-negative.
+!!             P1 should be smaller than 1.0 .
+!!
+!!    P2       The value (between 0.0 and 1.0) which defines what fraction
+!!             of the upper order statistics is to be trimmed off before
+!!             computing the trimmed mean. P2 should be non-negative.
+!!             P2 should be smaller than 1.0. The sum of P1 and P2 should
+!!             be smaller than 1.0.
+!!
+!!    IWRITE   An integer flag code which (if set to 0) will suppress the
+!!             printing of the sample trimmed mean as it is computed; or
+!!             (if set to some integer value not equal to 0), like, say,
+!!             "1" will cause the printing of the sample trimmed mean at the
+!!             time it is computed.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    XTRIM  The value of the computed sample trimmed mean where 100*P1 %
+!!           of the smallest and 100*P2 % of the largest ordered observations
+!!           have been trimmed away before computing the mean of the remaining
+!!           observations in the middle.
 !!
 !!##EXAMPLES
 !!
@@ -32865,80 +33702,28 @@ END SUBROUTINE TRAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * David, Order Statistics, 1970, Pages 126-130, 136.
+!!   * David, Order Statistics, 1970, pages 126-130, 136.
 !!   * Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
-!!     American Statistical Association, 1967, Pages 357, 387.
+!!     American Statistical Association, 1967, pages 357, 387.
 !!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
 !!     Princeton University, 1969).
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
-REAL(kind=wp) :: ak, an, hold, P1, P2, perp1, perp2, perp3, psum,sum, WS, X, Xtrim, Y
-INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
-
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --P1     = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                WHICH DEFINES WHAT FRACTION
-!                                OF THE LOWER ORDER STATISTICS
-!                                IS TO BE TRIMMED OFF
-!                                BEFORE COMPUTING THE TRIMMED MEAN.
-!                     --P2     = THE  VALUE
-!                                (BETWEEN 0.0 AND 1.0)
-!                                WHICH DEFINES WHAT FRACTION
-!                                OF THE UPPER ORDER STATISTICS
-!                                IS TO BE TRIMMED OFF
-!                                BEFORE COMPUTING THE TRIMMED MEAN.
-!                     --IWRITE = AN INTEGER FLAG CODE WHICH
-!                                (IF SET TO 0) WILL SUPPRESS
-!                                THE PRINTING OF THE
-!                                SAMPLE TRIMMED MEAN
-!                                AS IT IS COMPUTED;
-!                                OR (IF SET TO SOME INTEGER
-!                                VALUE NOT EQUAL TO 0),
-!                                LIKE, SAY, 1) WILL CAUSE
-!                                THE PRINTING OF THE
-!                                SAMPLE TRIMMED MEAN
-!                                AT THE TIME IT IS COMPUTED.
-!     OUTPUT ARGUMENTS--XTRIM  = THE  VALUE OF THE
-!                                COMPUTED SAMPLE TRIMMED MEAN
-!                                WHERE 100*P1 % OF THE SMALLEST
-!                                AND 100*P2 % OF THE LARGEST
-!                                ORDERED OBSERVATIONS HAVE BEEN
-!                                TRIMMED AWAY BEFORE COMPUTING THE
-!                                MEAN OF THE REMAINING OBSERVATIONS
-!                                IN THE MIDDLE.
-!     OUTPUT--THE COMPUTED  VALUE OF THE
-!             SAMPLE TRIMMED MEAN
-!             WHERE 100*P1 % OF THE SMALLEST
-!             AND   100*P2 % OF THE LARGEST
-!             ORDERED OBSERVATIONS HAVE BEEN TRIMMED AWAY.
-!     PRINTING--NONE, UNLESS IWRITE HAS BEEN SET TO A NON-ZERO
-!               INTEGER, OR UNLESS AN INPUT ARGUMENT ERROR
-!               CONDITION EXISTS.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 15000.
-!                 --P1 SHOULD BE NON-NEGATIVE.
-!                 --P1 SHOULD BE SMALLER THAN 1.0
-!                 --P2 SHOULD BE NON-NEGATIVE.
-!                 --P2 SHOULD BE SMALLER THAN 1.0
-!                 --THE SUM OF P1 AND P2 SHOULD BE
-!                   SMALLER THAN 1.0.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT.
-!     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
+REAL(kind=wp),intent(in)  :: X(:)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: P1
+REAL(kind=wp),intent(in)  :: P2
+INTEGER,intent(in)        :: Iwrite
+REAL(kind=wp),intent(out) :: Xtrim
+REAL(kind=wp) :: ak, an, hold, perp1, perp2, perp3, psum,sum, WS, Y
+INTEGER i, istart, istop, iupper, k, np1, np2
+DIMENSION Y(15000)
+COMMON /BLOCK2_real64/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
 !---------------------------------------------------------------------
-!
-      DIMENSION X(:)
-      DIMENSION Y(15000)
-      COMMON /BLOCK2_real64/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-!
       iupper = 15000
 !
 !     CHECK THE INPUT ARGUMENTS FOR ERRORS
@@ -32946,18 +33731,15 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
       an = N
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE TRIM   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
+         99001 format (' ***** FATAL ERROR--The second input argument to TRIM(3f) is outside the allowable (1,',&
+         & I0,') interval *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE TRIM&
-     &   SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to TRIM(3f) has the value 1 *****')
             Xtrim = X(1)
          ELSE
             hold = X(1)
@@ -32965,25 +33747,22 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE TRIM   SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) TO TRIM(3f) has all elements = ',&
+            & E15.8,' *****')
             Xtrim = X(1)
          ENDIF
          GOTO 100
  50      IF ( P1<0.0_wp .OR. P1>=1.0_wp ) THEN
             WRITE (G_IO,99005)
-99005       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE TRIM   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
+            99005 FORMAT (&
+            &' ***** FATAL ERROR--The third input argument to TRIM(3f) is outside the allowable (0.0,1.0) interval *****')
             WRITE (G_IO,99017) P1
             Xtrim = 0.0_wp
             RETURN
          ELSEIF ( P2<0.0_wp .OR. P2>=1.0_wp ) THEN
             WRITE (G_IO,99006)
-99006       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE FOURTH INPUT ARGUMENT TO THE TRIM   SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0.0,1.0)   INTERVAL *****')
+            99006 FORMAT (&
+            & ' ***** FATAL ERROR--The fourth input argument to TRIM(3f) is outside the allowable (0.0,1.0) interval *****')
             WRITE (G_IO,99017) P2
             Xtrim = 0.0_wp
             RETURN
@@ -32991,19 +33770,16 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
             psum = P1 + P2
             IF ( psum<0.0_wp .OR. psum>=1.0_wp ) THEN
                WRITE (G_IO,99007)
-99007          FORMAT (' ',                                             &
-     &                 '***** FATAL ERROR--THE SUM OF INPUT ARGUMENTS ',&
-     &      '3 AND 4 TO THE TRIM   SUBROUTINE IS OUTSIDE THE ALLOWABLE '&
-     &      ,'(0.0,1.0) INTERVAL *****')
+               99007 FORMAT (' ',                                             &
+               &                 '***** FATAL ERROR--THE SUM OF INPUT ARGUMENTS ',&
+               &      '3 AND 4 TO THE TRIM   SUBROUTINE IS OUTSIDE THE ALLOWABLE '&
+               &      ,'(0.0,1.0) INTERVAL *****')
                WRITE (G_IO,99008) P1
-99008          FORMAT (' ','                  INPUT ARGUMENT 3   ',     &
-     &                 '                 = ',E15.8)
+               99008 FORMAT (' ','                  INPUT ARGUMENT 3                    = ',E15.8)
                WRITE (G_IO,99009) P2
-99009          FORMAT (' ','                  INPUT ARGUMENT 4   ',     &
-     &                 '                 = ',E15.8)
+               99009 FORMAT (' ','                  INPUT ARGUMENT 4                    = ',E15.8)
                WRITE (G_IO,99010) psum
-99010          FORMAT (' ','                  INPUT ARGUMENT 3 + ',     &
-     &                 'INPUT ARGUMENT 4 = ',E15.8)
+               99010 FORMAT (' ','                  INPUT ARGUMENT 3 + INPUT ARGUMENT 4 = ',E15.8)
                Xtrim = 0.0_wp
                RETURN
             ELSE
@@ -33021,9 +33797,7 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
                k = 0
                IF ( istart>istop ) THEN
                   WRITE (G_IO,99011)
-99011             FORMAT (' ','INTERNAL ERROR IN TRIM   SUBROUTINE--',  &
-     &                   'THE START INDEX IS HIGHER THAN THE STOP INDEX'&
-     &                   )
+                  99011 FORMAT (' Internal error in TRIM(3f) --the start index is higher than the stop index')
                   Xtrim = 0.0_wp
                   RETURN
                ELSE
@@ -33043,20 +33817,16 @@ INTEGER i, istart, istop, iupper, Iwrite, k, N, np1, np2
       perp2 = 100.0_wp*P2
       perp3 = 100.0_wp - perp1 - perp2
       WRITE (G_IO,99012)
-99012 FORMAT (' ')
+      99012 FORMAT (' ')
       WRITE (G_IO,99013) N , Xtrim
-99013 FORMAT (' ','THE SAMPLE TRIMMED MEAN OF THE ',I0,' OBSERVATIONS', &
-     &        ' IS ',E15.8)
+      99013 FORMAT (' ','The sample trimmed mean of the ',I0,' observations is ',E15.8)
       WRITE (G_IO,99014) perp1 , np1
-99014 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) ',         &
-     &        'OF THE DATA WERE TRIMMED     FROM BELOW')
+      99014 FORMAT (' ',8X,F10.4,' Percent (= ',i0,' observations) of the data were trimmed     from below')
       WRITE (G_IO,99015) perp2 , np2
-99015 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) ',         &
-     &        'OF THE DATA WERE TRIMMED     FROM ABOVE')
+      99015 FORMAT (' ',8X,F10.4,' Percent (= ',i0,' observations) of the data were trimmed     from above')
       WRITE (G_IO,99016) perp3 , k
-99016 FORMAT (' ',8X,F10.4,' PERCENT (= ',I0,' OBSERVATIONS) ',         &
-     &        ' OF THE DATA REMAIN IN THE MIDDLE AFTER THE TRIMMING')
-99017 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+      99016 FORMAT (' ',8X,F10.4,' percent (= ',i0,' observations)  of the data remain in the middle after the trimming')
+      99017 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
 !
 END SUBROUTINE TRIM
 !>
@@ -33155,7 +33925,7 @@ END SUBROUTINE TRIM
 !!
 !!##REFERENCES
 !!  * Johnson and Kotz, Continuous Univariate Distributions -- 2, 1970,
-!!  Pages 57-74.
+!!  pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -33289,7 +34059,7 @@ end subroutine unicdf
 !!
 !!##REFERENCES
 !!   * Filliben, 'The Probability Plot Correlation Coefficient Test for
-!!     Normality', Technometrics, 1975, Pages 111-117.
+!!     Normality', Technometrics, 1975, pages 111-117.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -33413,7 +34183,7 @@ END SUBROUTINE UNIMED
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970, Pages 57-74.
+!!  * Johnson and Kotz, Continuous Univariate Distributions--2, 1970, pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -33512,12 +34282,12 @@ END SUBROUTINE UNIPDF
 !!##REFERENCES
 !!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army REsearch
-!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), pages
 !!     425-450.
-!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
 !!     260-308.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Pages 57-74.
+!!     pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -33670,11 +34440,11 @@ END SUBROUTINE UNIPLT
 !!##REFERENCES
 !!   * Filliben, Simple and Robust Linear Estimation of the Location Parameter
 !!     of a Symmetric Distribution (Unpublished PH.D. Dissertation, Princeton
-!!     University), 1969, Pages 21-44, 229-231.
+!!     University), 1969, pages 21-44, 229-231.
 !!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
-!!     1970, Pages 28-31.
+!!     1970, pages 28-31.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Pages 57-74.
+!!     pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -33738,7 +34508,7 @@ END SUBROUTINE UNIPPF
 !!   Sample program:
 !!
 !!    program demo_uniran
-!!    use M_datapac, only : uniran, plotxt, sort, last
+!!    use M_datapac, only : uniran, plotxt, sort, label
 !!    implicit none
 !!    integer,parameter :: n=400
 !!    real :: x(n)
@@ -33854,7 +34624,7 @@ END SUBROUTINE UNIPPF
 !!   * Marsaglia G., "Comments on the Perfect Uniform Random Number
 !!     Generator", Unpublished Notes, Wash S. U.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Pages 57-74.
+!!     pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1974.
 !     UPDATED         --SEPTEMBER 1975.
@@ -34114,11 +34884,11 @@ END SUBROUTINE UNIRAN
 !!##REFERENCES
 !!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     Parameter of a Symmetric Distribution (Unpublished PH.D. DIssertation,
-!!     Princeton University), 1969, Pages 21-44, 229-231.
+!!     Princeton University), 1969, pages 21-44, 229-231.
 !!   * Filliben, 'The Percent Point Function', (Unpublished Manuscript),
-!!     1970, Pages 28-31.
+!!     1970, pages 28-31.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--2, 1970,
-!!     Pages 57-74.
+!!     pages 57-74.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -34212,11 +34982,11 @@ END SUBROUTINE UNISF
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, Page 44.
+!!   * Snedecor and Cochran, Statistical Methods, Edition 6, 1967, page 44.
 !!   * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
-!!     1957, Page 38.
+!!     1957, page 38.
 !!   * Mood and Grable, 'Introduction to the Theory of Statistics, Edition 2,
-!!     1963, Page 171.
+!!     1963, page 171.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -34335,10 +35105,10 @@ END SUBROUTINE VAR
 !!##REFERENCE
 !!   * Filliben (1972), 'Techniques for Tail Length Analysis', Proceedings
 !!     of the Eighteenth Conference on the Design of Experiments in Army
-!!     Research and Testing, Pages 425-450.
+!!     Research and Testing, pages 425-450.
 !!   * Filliben, 'The Percent Point Function', UNpublished Manuscript.
 !!   * Johnson and Kotz (1970), Continuous Univariate Distributions-1,
-!!     Pages 250-271.
+!!     pages 250-271.
 !     ORIGINAL VERSION--JUNE      1972.
 !     UPDATED         --AUGUST    1975.
 !     UPDATED         --NOVEMBER  1975.
@@ -34355,7 +35125,7 @@ INTEGER i , idis , idismx , iupper , N , numdis , numdm1
 !                               (UNSORTED OR SORTED) OBSERVATIONS.
 !                      N      = THE INTEGER NUMBER OF OBSERVATIONS
 !                               IN THE VECTOR X.
-!     OUTPUT--4 PAGES OF AUTOMATIC PRINTOUT.
+!     OUTPUT--4 pages OF AUTOMATIC PRINTOUT.
 !     PRINTING--YES.
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -34606,7 +35376,7 @@ DATA aindex(26) , aindex(27) , aindex(28) , aindex(29) ,          &
          WRITE (G_IO,99018)
 99018    FORMAT (' ',                                                   &
      &'THE ABOVE IS A PLOT OF THE 46 PROBABILITY PLOT CORRELATION COEFFI&
-     &CIENTS (FROM THE PREVIOUS PAGE)')
+     &CIENTS (FROM THE PREVIOUS page)')
          WRITE (G_IO,99019)
 99019    FORMAT (' ',16X,'VERSUS THE 46 WEIBULL DISTRIBUTIONS')
 !
@@ -34728,9 +35498,9 @@ END SUBROUTINE WEIB
 !!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 250-271.
+!!     pages 250-271.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Page 124.
+!!     Students and Practitioners, 1975, page 124.
 !     ORIGINAL VERSION--NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEICDF(X,Gamma,Cdf)
@@ -34822,12 +35592,12 @@ END SUBROUTINE WEICDF
 !!##REFERENCES
 !!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
 !!     Eighteenth Conference on the Design of Experiments in Army Research
-!!     Development and Testing (Aberdeen, Maryland, October, 1972), Pages
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), pages
 !!     425-450.
-!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, Pages
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
 !!     260-308.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 250-271.
+!!     pages 250-271.
 !     MODE OF INTERNAL OPERATIONS--.
 !     ORIGINAL VERSION--DECEMBER  1972.
 !     UPDATED         --MARCH     1975.
@@ -34850,7 +35620,7 @@ INTEGER i , iupper , N
 !                     --GAMMA  = THE  VALUE OF THE
 !                                TAIL LENGTH PARAMETER.
 !                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT--A ONE-PAGE WEIBULL PROBABILITY PLOT.
+!     OUTPUT--A ONE-page WEIBULL PROBABILITY PLOT.
 
 !     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
 !                   FOR THIS SUBROUTINE IS 7500.
@@ -35024,9 +35794,9 @@ END SUBROUTINE WEIPLT
 !!
 !!##REFERENCES
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 250-271.
+!!     pages 250-271.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Page 124.
+!!     Students and Practitioners, 1975, page 124.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
 SUBROUTINE WEIPPF(P,Gamma,Ppf)
 REAL(kind=wp) :: Gamma , P , Ppf
@@ -35142,12 +35912,12 @@ END SUBROUTINE WEIPPF
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * Tocher, the Art of Simulation, 1963, Pages 14-15.
-!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, Page 36.
+!!   * Tocher, the Art of Simulation, 1963, pages 14-15.
+!!   * Hammersley and Handscomb, Monte Carlo Methods, 1964, page 36.
 !!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
-!!     Pages 250-271.
+!!     pages 250-271.
 !!   * Hastings and Peacock, Statistical Distributions--A Handbook for
-!!     Students and Practitioners, 1975, Page 128.
+!!     Students and Practitioners, 1975, page 128.
 !     VERSION NUMBER--82.6
 !     ORIGINAL VERSION--NOVEMBER  1975.
 !     UPDATED         --DECEMBER  1981.
@@ -35238,9 +36008,9 @@ END SUBROUTINE WEIRAN
 !!    CC0-1.0
 !!
 !!##REFERENCES
-!!   * David, Order Statistics, 1970, Pages 126-130, 136.
+!!   * David, Order Statistics, 1970, pages 126-130, 136.
 !!   * Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
-!!     American Statistical Association, 1967, Pages 357, 387.
+!!     American Statistical Association, 1967, pages 357, 387.
 !!   * Filliben, Simple and Robust Linear Estimation of the Location
 !!     Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
 !!     Princeton University, 1969).

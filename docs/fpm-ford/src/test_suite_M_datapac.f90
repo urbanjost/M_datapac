@@ -37,7 +37,6 @@ implicit none
    call test_chsppf()
    call test_chsran()
    call test_code()
-   call test_copy()
    call test_corr()
    call test_count()
    call test_decomp()
@@ -53,7 +52,6 @@ implicit none
    call test_discr2()
    call test_discr3()
    call test_discre()
-   call test_dot()
    call test_ev1cdf()
    call test_ev1plt()
    call test_ev1ppf()
@@ -104,12 +102,7 @@ implicit none
    call test_logppf()
    call test_logran()
    call test_logsf()
-   call test_max()
-   call test_mean()
    call test_median()
-   call test_midm()
-   call test_midr()
-   call test_min()
    call test_move()
    call test_nbcdf()
    call test_nbppf()
@@ -164,8 +157,6 @@ implicit none
    call test_scale()
    call test_sd()
    call test_skipr()
-   call test_sort()
-   call test_sortc()
    call test_sortp()
    call test_spcorr()
    call test_stmom3()
@@ -181,14 +172,12 @@ implicit none
    call test_tppf()
    call test_tran()
    call test_trim()
-   call test_unicdf()
    call test_unimed()
    call test_unipdf()
    call test_uniplt()
    call test_unippf()
    call test_uniran()
    call test_unisf()
-   call test_var()
    call test_weib()
    call test_weicdf()
    call test_weiplt()
@@ -196,6 +185,18 @@ implicit none
    call test_weiran()
    call test_wind()
    call test_write()
+
+   call test_copy()
+   call test_dot()
+   call test_max()
+   call test_mean()
+   call test_midm()
+   call test_midr()
+   call test_min()
+   call test_sort()
+   call test_sortc()
+   call test_unicdf()
+   call test_var()
 !! teardown
    call unit_check_stop()
 !===================================================================================================================================
@@ -300,8 +301,18 @@ subroutine test_code()
 end subroutine test_code
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_copy()
+real,allocatable :: from(:), to(:)
    call unit_check_start('copy',msg='')
-   !!call unit_check('copy', 0.eq.0, 'checking',100)
+
+   from=[1.0,2.0,3.0,4.0,5.0]
+   to=[-1.0,-1.0,-1.0,-1.0,-1.0,-1.0]
+
+   call copy(from,3,to)
+   call unit_check('copy',all(to==[1.00,2.00,3.00,-1.00,-1.00,-1.00]),'simple')
+
+   call copy([10.0,20.0,30.0],3,to(3:5))
+   call unit_check('copy',all(to==[1.00,2.00,10.00,20.00,30.00,-1.00]),'subvector')
+
    call unit_check_done('copy',msg='')
 end subroutine test_copy
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT

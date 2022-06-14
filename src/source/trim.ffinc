@@ -1,0 +1,206 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file trim.3m_datapac.man
+NAME
+   trim(3f) - [M_datapac:STATISTICS] computes the sample trimmed mean
+   of the data in the input vector X.
+
+SYNOPSIS
+      SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
+
+       REAL(kind=wp),intent(in)  :: X(:)
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(in)  :: P1
+       REAL(kind=wp),intent(in)  :: P2
+       INTEGER,intent(in)        :: Iwrite
+       REAL(kind=wp),intent(out) :: Xtrim
+
+DESCRIPTION
+   TRIM(3f) computes the sample trimmed mean of the data in the input
+   vector X.
+
+   The trimming is such that the lower 100*P1 % of the data is trimmed
+   off and the upper 100*P2 % of the data is trimmed off.
+
+INPUT ARGUMENTS
+
+   X        The vector of (unsorted or sorted) observations.
+
+   N        The integer number of observations in the vector X.
+            The maximum allowable value of N for this subroutine is 15000.
+
+   P1       The value (between 0.0 and 1.0) which defines what fraction
+            of the lower order statistics is to be trimmed off before
+            computing the trimmed mean. P1 should be non-negative.
+            P1 should be smaller than 1.0 .
+
+   P2       The value (between 0.0 and 1.0) which defines what fraction
+            of the upper order statistics is to be trimmed off before
+            computing the trimmed mean. P2 should be non-negative.
+            P2 should be smaller than 1.0. The sum of P1 and P2 should
+            be smaller than 1.0.
+
+   IWRITE   An integer flag code which (if set to 0) will suppress the
+            printing of the sample trimmed mean as it is computed; or
+            (if set to some integer value not equal to 0), like, say,
+            "1" will cause the printing of the sample trimmed mean at the
+            time it is computed.
+
+OUTPUT ARGUMENTS
+
+   XTRIM  The value of the computed sample trimmed mean where 100*P1 %
+          of the smallest and 100*P2 % of the largest ordered observations
+          have been trimmed away before computing the mean of the remaining
+          observations in the middle.
+
+EXAMPLES
+  Sample program:
+
+   program demo_trim
+   use M_datapac, only : trim
+   implicit none
+   ! call trim(x,y)
+   end program demo_trim
+
+  Results:
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * David, Order Statistics, 1970, pages 126-130, 136.
+  * Crow and Siddiqui, 'Robust Estimation of Location', Journal of the
+    American Statistical Association, 1967, pages 357, 387.
+  * Filliben, Simple and Robust Linear Estimation of the Location
+    Parameter of a Symmetric Distribution (Unpublished PH.D. Dissertation,
+    Princeton University, 1969).
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED         --FEBRUARY  1976.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+SUBROUTINE TRIM(X,N,P1,P2,Iwrite,Xtrim)
+REAL(kind=wp),intent(in)  :: X(:)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(in)  :: P1
+REAL(kind=wp),intent(in)  :: P2
+INTEGER,intent(in)        :: Iwrite
+REAL(kind=wp),intent(out) :: Xtrim
+REAL(kind=wp) :: ak, an, hold, perp1, perp2, perp3, psum,sum, WS, Y
+INTEGER i, istart, istop, iupper, k, np1, np2
+DIMENSION Y(15000)
+COMMON /BLOCK2_${KIND}/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+!---------------------------------------------------------------------
+      iupper = 15000
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      an = N
+      IF ( N<1 .OR. N>iupper ) THEN
+         WRITE (G_IO,99001) iupper
+         99001 format (' ***** FATAL ERROR--The second input argument to TRIM(3f) is outside the allowable (1,',&
+	 & I0,') interval *****')
+         WRITE (G_IO,99002) N
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
+         RETURN
+      ELSE
+         IF ( N==1 ) THEN
+            WRITE (G_IO,99003)
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to TRIM(3f) has the value 1 *****')
+            Xtrim = X(1)
+         ELSE
+            hold = X(1)
+            DO i = 2 , N
+               IF ( X(i)/=hold ) GOTO 50
+            ENDDO
+            WRITE (G_IO,99004) hold
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) TO TRIM(3f) has all elements = ',&
+	    & E15.8,' *****')
+            Xtrim = X(1)
+         ENDIF
+         GOTO 100
+ 50      IF ( P1<0.0_wp .OR. P1>=1.0_wp ) THEN
+            WRITE (G_IO,99005)
+            99005 FORMAT (&
+	    &' ***** FATAL ERROR--The third input argument to TRIM(3f) is outside the allowable (0.0,1.0) interval *****')
+            WRITE (G_IO,99017) P1
+            Xtrim = 0.0_wp
+            RETURN
+         ELSEIF ( P2<0.0_wp .OR. P2>=1.0_wp ) THEN
+            WRITE (G_IO,99006)
+            99006 FORMAT (&
+	    & ' ***** FATAL ERROR--The fourth input argument to TRIM(3f) is outside the allowable (0.0,1.0) interval *****')
+            WRITE (G_IO,99017) P2
+            Xtrim = 0.0_wp
+            RETURN
+         ELSE
+            psum = P1 + P2
+            IF ( psum<0.0_wp .OR. psum>=1.0_wp ) THEN
+               WRITE (G_IO,99007)
+               99007 FORMAT (' ',                                             &
+               &                 '***** FATAL ERROR--THE SUM OF INPUT ARGUMENTS ',&
+               &      '3 AND 4 TO THE TRIM   SUBROUTINE IS OUTSIDE THE ALLOWABLE '&
+               &      ,'(0.0,1.0) INTERVAL *****')
+               WRITE (G_IO,99008) P1
+               99008 FORMAT (' ','                  INPUT ARGUMENT 3                    = ',E15.8)
+               WRITE (G_IO,99009) P2
+               99009 FORMAT (' ','                  INPUT ARGUMENT 4                    = ',E15.8)
+               WRITE (G_IO,99010) psum
+               99010 FORMAT (' ','                  INPUT ARGUMENT 3 + INPUT ARGUMENT 4 = ',E15.8)
+               Xtrim = 0.0_wp
+               RETURN
+            ELSE
+!
+!-----START POINT-----------------------------------------------------
+!
+               CALL SORT(X,N,Y)
+!
+               an = N
+               np1 = P1*an + 0.0001_wp
+               istart = np1 + 1
+               np2 = P2*an + 0.0001_wp
+               istop = N - np2
+               sum = 0.0_wp
+               k = 0
+               IF ( istart>istop ) THEN
+                  WRITE (G_IO,99011)
+                  99011 FORMAT (' Internal error in TRIM(3f) --the start index is higher than the stop index')
+                  Xtrim = 0.0_wp
+                  RETURN
+               ELSE
+                  DO i = istart , istop
+                     k = k + 1
+                     sum = sum + X(i)
+                  ENDDO
+                  ak = k
+                  Xtrim = sum/ak
+               ENDIF
+            ENDIF
+         ENDIF
+      ENDIF
+!
+ 100  IF ( Iwrite==0 ) RETURN
+      perp1 = 100.0_wp*P1
+      perp2 = 100.0_wp*P2
+      perp3 = 100.0_wp - perp1 - perp2
+      WRITE (G_IO,99012)
+      99012 FORMAT (' ')
+      WRITE (G_IO,99013) N , Xtrim
+      99013 FORMAT (' ','The sample trimmed mean of the ',I0,' observations is ',E15.8)
+      WRITE (G_IO,99014) perp1 , np1
+      99014 FORMAT (' ',8X,F10.4,' Percent (= ',i0,' observations) of the data were trimmed     from below')
+      WRITE (G_IO,99015) perp2 , np2
+      99015 FORMAT (' ',8X,F10.4,' Percent (= ',i0,' observations) of the data were trimmed     from above')
+      WRITE (G_IO,99016) perp3 , k
+      99016 FORMAT (' ',8X,F10.4,' percent (= ',i0,' observations)  of the data remain in the middle after the trimming')
+      99017 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
+!
+END SUBROUTINE TRIM

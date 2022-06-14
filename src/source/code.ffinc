@@ -1,0 +1,230 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file code.3m_datapac.man
+NAME
+   code(3f) - [M_datapac:VECTOR_OPERATIONS] code the elements of a vector
+   (1 for the minimum, 2 for the next larger value, and so on)
+
+SYNOPSIS
+      SUBROUTINE CODE(X,N,Y)
+
+       REAL(kind=wp),intent(in)  :: X(:)
+       INTEGER,intent(in)        :: N
+       REAL(kind=wp),intent(out) :: Y(:)
+
+DESCRIPTION
+
+   CODE(3f) codes the elements of the input vector X and puts the coded
+   values into the output vector Y. This essentially ranks the array
+   elements so they can be accessed in ascending order like RANK(3f),
+   but allowing duplicate ranks.
+
+   The coding is as follows--
+
+    *  the minimum is coded as 1.0.
+    *  the next larger value as 2.0,
+    *  the next larger value as 3.0,
+    *  etc.
+
+INPUT ARGUMENTS
+
+   X   The vector of observations to be coded. The input vector X
+       remains unaltered.
+
+   N   The integer number of observations in the vector X. The maximum
+       allowable value of N for this subroutine is 15000.
+
+OUTPUT ARGUMENTS
+
+   Y   The vector Y which will contain the coded values corresponding
+       to the observations in the vector X. It must be at least as large
+       as X.
+
+         o All occurrances of the minimum are coded as 1.0;
+         o All occurances of the next larger value are coded as 2.0;
+         o All occurances of the next larger value are coded as 3.0, etc.
+
+EXAMPLES
+  Sample program:
+
+   program demo_code
+   use M_datapac, only : code
+   implicit none
+   integer,parameter            :: isz=20
+   real                         :: vals(isz)
+   real                         :: rndx(isz)
+   integer                      :: i
+      write(*,*)' initializing array with ',isz,' random numbers'
+      call random_seed()
+      CALL RANDOM_NUMBER(vals)
+      vals=vals*450000.0
+      ! make sure some duplicates
+      vals(3)=vals(6)
+      vals(4)=vals(15)
+
+      call code(vals,isz,rndx) ! code data
+      ! check order
+      write(*,*)
+      write(*,'(2(5x,g0.10,1x))')'Values','Code',(vals(i),nint(rndx(i)),i=1,isz)
+
+   end program demo_code
+
+  Results:
+
+    > initializing array with           20  random numbers
+    > 
+    > Output from the code subroutine
+    > Number of distinct code values =       18
+    >
+    >         Value     Coded Value
+    >    3137.9548340          1.
+    >   39334.0585938          2.
+    >   58048.1054688          3.
+    >   60169.2890625          4.
+    >   61479.1015625          5.
+    >   92335.1250000          6.
+    >  101141.3671875          7.
+    >  107306.5859375          8.
+    >  135199.7343750          9.
+    >  185223.0625000         10.
+    >  214747.2656250         11.
+    >  251820.6718750         12.
+    >  267047.5000000         13.
+    >  277210.9062500         14.
+    >  296296.5625000         15.
+    >  382931.3437500         16.
+    >  414374.2187500         17.
+    >  427620.9375000         18.
+    >
+    >    Values      Code
+    >    277210.9062      14
+    >    60169.28906      4
+    >    101141.3672      7
+    >    382931.3438      16
+    >    61479.10156      5
+    >    101141.3672      7
+    >    296296.5625      15
+    >    214747.2656      11
+    >    3137.954834      1
+    >    267047.5000      13
+    >    107306.5859      8
+    >    427620.9375      18
+    >    414374.2188      17
+    >    251820.6719      12
+    >    382931.3438      16
+    >    58048.10547      3
+    >    39334.05859      2
+    >    135199.7344      9
+    >    185223.0625      10
+    >    92335.12500      6
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+!     ORIGINAL VERSION--OCTOBER  1975.
+!     UPDATED         --NOVEMBER 1975.
+!     UPDATED         --JUNE     1977.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE CODE(X,N,Y)
+REAL(kind=wp),intent(in)  :: X(:)
+INTEGER,intent(in)        :: N
+REAL(kind=wp),intent(out) :: Y(:)
+REAL(kind=wp) :: ai , DISt , hold , WS
+INTEGER i , iupper , j , numdis
+!---------------------------------------------------------------------
+DIMENSION DISt(15000)
+COMMON /BLOCK2_${KIND}/ WS(15000)
+EQUIVALENCE (DISt(1),WS(1))
+!
+   iupper = 15000
+!
+!  CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+   IF ( N<1 .OR. N>iupper ) THEN
+      WRITE (G_IO,99001) iupper
+      99001 FORMAT (' ***** FATAL ERROR--The second input argument to CODE(3f) is outside the allowable (1,',&
+      & I0,') interval *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to CODE(3f) has the value 1 *****')
+         Y(1) = 1.0_wp
+         RETURN
+      ELSE
+         hold = X(1)
+         DO i = 2 , N
+            IF ( X(i)/=hold ) GOTO 50
+         ENDDO
+         WRITE (G_IO,99004) hold
+         99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to CODE(3f) has all elements = ', &
+         & E15.8,' *****')
+         DO i = 1 , N
+            Y(i) = i
+         ENDDO
+         RETURN
+      ENDIF
+!
+!-----START POINT-----------------------------------------------------
+!
+!  PERFORM THE CODING--
+!  PULL OUT THE DISTINCT VALUES,
+!  THEN SORT (AND ESSENTIALLY RANK) THE DISTINCT VALUES,
+!  THEN APPLY THE RANKS TO ALL THE VALUES.
+!
+ 50   continue
+      numdis = 1
+      DISt(numdis) = X(1)
+
+      DO i = 2 , N
+         DO j = 1 , numdis
+            IF ( X(i)==DISt(j) ) cycle
+         ENDDO
+         numdis = numdis + 1
+         DISt(numdis) = X(i)
+      ENDDO
+
+      CALL SORT(DISt,numdis,DISt)
+
+      DO i = 1 , N
+         DO j = 1 , numdis
+            IF ( X(i)==DISt(j) ) GOTO 120
+         ENDDO
+         WRITE (G_IO,99005)
+         99005 FORMAT (' ','*****Internal error in code subroutine')
+         WRITE (G_IO,99006) i , X(i)
+         99006 FORMAT (' ','No code found for element number ',I0,' = ',F15.7)
+         RETURN
+ 120     Y(i) = j
+      ENDDO
+      !
+      !   WRITE OUT A FEW LINES OF SUMMARY INFORMATION ABOUT THE CODING.
+      !
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99007)
+      99007 FORMAT (' Output from the CODE subroutine')
+      WRITE (G_IO,99008) numdis
+      99008 FORMAT (' Number of distinct code values = ',I0)
+      WRITE (G_IO,99011)
+      WRITE (G_IO,99009)
+      99009 FORMAT (' ',8X,'Value     Coded value')
+      DO i = 1 , numdis
+         ai = i
+         WRITE (G_IO,99010) DISt(i) , ai
+         99010 FORMAT (' ',F15.7,6X,F6.0)
+      ENDDO
+   ENDIF
+99011 FORMAT (' ')
+!
+END SUBROUTINE CODE

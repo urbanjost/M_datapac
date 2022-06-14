@@ -1,7 +1,8 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file dot.3m_datapac.man
 NAME
-   dot(3f) - [M_datapac:STATISTICS] compute a dot product of two vectors
+   dot(3f) - [M_datapac:VECTOR_OPERATION] compute a dot product of
+   two vectors
 
 SYNOPSIS
    subroutine dot(A,B,Imin,Imax,Parpro,Dotpro)

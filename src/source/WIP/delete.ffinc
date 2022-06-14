@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file delete.3m_datapac.man
 NAME
-   delete(3f) - [M_datapac:STATISTICS] delete all elements of a vector
+   delete(3f) - [M_datapac:VECTOR_OPERATION] delete all elements of a vector
    within some specified interval
 
 SYNOPSIS

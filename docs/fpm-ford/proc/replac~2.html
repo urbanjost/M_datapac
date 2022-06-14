@@ -171,9 +171,9 @@
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/replac~2.html#variable-hold~150">hold</a>
+      <a class="list-group-item" href="../proc/replac~2.html#variable-hold~149">hold</a>
       
-      <a class="list-group-item" href="../proc/replac~2.html#variable-i~212">i</a>
+      <a class="list-group-item" href="../proc/replac~2.html#variable-i~211">i</a>
       
       <a class="list-group-item" href="../proc/replac~2.html#variable-k~54">k</a>
       
@@ -232,8 +232,8 @@ public subroutine REPLAC(X, N, Xmin, Xmax, Xnew)
 
     
     <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">replac</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="o">-</span> <span class="p">[</span><span class="n">M_datapac</span><span class="p">:</span><span class="n">STATISTICS</span><span class="p">]</span> <span class="n">replace</span> <span class="n">all</span> <span class="n">observations</span> <span class="ow">in</span> <span class="n">a</span>
-<span class="n">vector</span> <span class="n">within</span> <span class="n">a</span> <span class="n">given</span> <span class="n">interval</span> <span class="n">with</span> <span class="n">a</span> <span class="n">user</span><span class="o">-</span><span class="n">specified</span> <span class="n">constant</span>
+<div class="codehilite"><pre><span></span><code><span class="n">replac</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="o">-</span> <span class="p">[</span><span class="n">M_datapac</span><span class="p">:</span><span class="n">VECTOR_OPERATION</span><span class="p">]</span> <span class="n">replace</span> <span class="n">all</span> <span class="n">observations</span>
+<span class="ow">in</span> <span class="n">a</span> <span class="n">vector</span> <span class="n">within</span> <span class="n">a</span> <span class="n">given</span> <span class="n">interval</span> <span class="n">with</span> <span class="n">a</span> <span class="n">user</span><span class="o">-</span><span class="n">specified</span> <span class="n">constant</span>
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
@@ -241,19 +241,20 @@ public subroutine REPLAC(X, N, Xmin, Xmax, Xnew)
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">REPLAC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">replaces</span> <span class="ss">(</span><span class="nv">with</span> <span class="nv">the</span> <span class="nv">value</span> <span class="nv">xnew</span><span class="ss">)</span> <span class="nv">all</span> <span class="nv">observations</span> <span class="nv">in</span> <span class="nv">the</span>
-<span class="nv">REAL</span> <span class="nv">vector</span> <span class="nv">X</span> <span class="nv">which</span> <span class="nv">are</span> <span class="nv">inside</span> <span class="nv">the</span> <span class="nv">closed</span> <span class="ss">(</span><span class="nv">inclusive</span><span class="ss">)</span>
-<span class="nv">interval</span> <span class="nv">defined</span> <span class="nv">by</span> <span class="nv">XMIN</span> <span class="nv">and</span> <span class="nv">XMAX</span>.
+<div class="codehilite"><pre><span></span><code><span class="nv">REPLAC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">replaces</span> <span class="ss">(</span><span class="nv">with</span> <span class="nv">the</span> <span class="nv">value</span> <span class="nv">XNEW</span><span class="ss">)</span> <span class="nv">all</span> <span class="nv">observations</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">REAL</span>
+<span class="nv">vector</span> <span class="nv">X</span> <span class="nv">which</span> <span class="nv">are</span> <span class="nv">inside</span> <span class="nv">the</span> <span class="nv">closed</span> <span class="ss">(</span><span class="nv">inclusive</span><span class="ss">)</span> <span class="nv">interval</span> <span class="nv">defined</span> <span class="nv">by</span>
+<span class="nv">XMIN</span> <span class="nv">and</span> <span class="nv">XMAX</span>.
 
 <span class="nv">All</span> <span class="nv">observations</span> <span class="nv">outside</span> <span class="nv">of</span> <span class="nv">this</span> <span class="nv">interval</span> <span class="nv">are</span> <span class="nv">left</span> <span class="nv">unchanged</span>.
-<span class="nv">thus</span> <span class="nv">all</span> <span class="nv">observations</span> <span class="nv">in</span> <span class="nv">X</span> <span class="nv">which</span> <span class="nv">are</span> <span class="nv">equal</span> <span class="nv">to</span> <span class="nv">or</span> <span class="nv">larger</span> <span class="nv">than</span> <span class="nv">XMIN</span>
+<span class="nv">Thus</span> <span class="nv">all</span> <span class="nv">observations</span> <span class="nv">in</span> <span class="nv">X</span> <span class="nv">which</span> <span class="nv">are</span> <span class="nv">equal</span> <span class="nv">to</span> <span class="nv">or</span> <span class="nv">larger</span> <span class="nv">than</span> <span class="nv">XMIN</span>
 <span class="nv">and</span> <span class="nv">equal</span> <span class="nv">to</span> <span class="nv">or</span> <span class="nv">smaller</span> <span class="nv">than</span> <span class="nv">XMAX</span>, <span class="nv">will</span> <span class="nv">be</span> <span class="nv">replaced</span> <span class="nv">by</span> <span class="nv">XNEW</span>.
 
-<span class="nv">REPLAC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="ss">(</span><span class="nv">and</span> <span class="nv">the</span> <span class="nv">retain</span> <span class="nv">and</span> <span class="nv">delete</span> <span class="nv">subroutines</span><span class="ss">)</span> <span class="nv">gives</span> <span class="nv">the</span> <span class="nv">data</span>
-<span class="nv">analyst</span> <span class="nv">the</span> <span class="nv">ability</span> <span class="nv">to</span> <span class="nv">easily</span> <span class="s1">&#39;</span><span class="s">clean up</span><span class="s1">&#39;</span> <span class="nv">a</span> <span class="nv">data</span> <span class="nv">set</span> <span class="nv">which</span> <span class="nv">has</span> <span class="nv">missing</span>
-<span class="nv">and</span><span class="o">/</span><span class="nv">or</span> <span class="nv">outlying</span> <span class="nv">observations</span> <span class="nv">so</span> <span class="nv">that</span> <span class="nv">a</span> <span class="nv">more</span> <span class="nv">appropriate</span> <span class="nv">subsequent</span>
-<span class="nv">data</span> <span class="nv">analysis</span> <span class="nv">may</span> <span class="nv">be</span> <span class="nv">performed</span>. <span class="k">For</span> <span class="nv">example</span>, <span class="nv">replacement</span> <span class="nv">of</span> <span class="nv">an</span>
-<span class="nv">outlier</span> <span class="nv">with</span> <span class="nv">a</span> <span class="nv">more</span> <span class="nv">appropriate</span> <span class="nv">value</span> <span class="nv">can</span> <span class="nv">easily</span> <span class="nv">be</span> <span class="nv">done</span> <span class="nv">by</span> <span class="nv">REPLAC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>.
+<span class="nv">REPLAC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="ss">(</span><span class="nv">and</span> <span class="nv">the</span> <span class="nv">RETAIN</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">and</span> <span class="nv">DELETE</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">subroutines</span><span class="ss">)</span> <span class="nv">gives</span>
+<span class="nv">the</span> <span class="nv">data</span> <span class="nv">analyst</span> <span class="nv">the</span> <span class="nv">ability</span> <span class="nv">to</span> <span class="nv">easily</span> <span class="s1">&#39;</span><span class="s">clean up</span><span class="s1">&#39;</span> <span class="nv">a</span> <span class="nv">data</span> <span class="nv">set</span> <span class="nv">which</span>
+<span class="nv">has</span> <span class="nv">missing</span> <span class="nv">and</span><span class="o">/</span><span class="nv">or</span> <span class="nv">outlying</span> <span class="nv">observations</span> <span class="nv">so</span> <span class="nv">that</span> <span class="nv">a</span> <span class="nv">more</span> <span class="nv">appropriate</span>
+<span class="nv">subsequent</span> <span class="nv">data</span> <span class="nv">analysis</span> <span class="nv">may</span> <span class="nv">be</span> <span class="nv">performed</span>. <span class="k">For</span> <span class="nv">example</span>, <span class="nv">replacement</span>
+<span class="nv">of</span> <span class="nv">an</span> <span class="nv">outlier</span> <span class="nv">with</span> <span class="nv">a</span> <span class="nv">more</span> <span class="nv">appropriate</span> <span class="nv">value</span> <span class="nv">can</span> <span class="nv">easily</span> <span class="nv">be</span> <span class="nv">done</span> <span class="nv">by</span>
+<span class="nv">REPLAC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>.
 </code></pre></div>
 
 <h2 id="options">OPTIONS</h2>
@@ -272,8 +273,9 @@ public subroutine REPLAC(X, N, Xmin, Xmax, Xnew)
 
 <p>Results:</p>
 <h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </code></pre></div>
 
 <h2 id="maintainer">MAINTAINER</h2>
@@ -303,7 +305,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~232"></span>real(kind=wp)</td>
+  <td><span class="anchor" id="variable-x~231"></span>real(kind=wp)</td>
   <td></td>
   <td></td>
   
@@ -318,7 +320,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-n~194"></span>integer</td>
+  <td><span class="anchor" id="variable-n~193"></span>integer</td>
   <td></td>
   <td></td>
   
@@ -394,9 +396,9 @@ Engineering Division, National Institute of Standards and Technology.
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/replac~2.html#variable-hold~150">hold</a>
+      <a class="list-group-item" href="../proc/replac~2.html#variable-hold~149">hold</a>
       
-      <a class="list-group-item" href="../proc/replac~2.html#variable-i~212">i</a>
+      <a class="list-group-item" href="../proc/replac~2.html#variable-i~211">i</a>
       
       <a class="list-group-item" href="../proc/replac~2.html#variable-k~54">k</a>
       
@@ -462,7 +464,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-hold~150"></span>real(kind=wp),</td>
+  <td><span class="anchor" id="variable-hold~149"></span>real(kind=wp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -476,7 +478,7 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-i~212"></span>integer,</td>
+  <td><span class="anchor" id="variable-i~211"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -563,7 +565,7 @@ Engineering Division, National Institute of Standards and Technology.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span>      <span class="k">SUBROUTINE </span><span class="n">REPLAC</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">Xmin</span><span class="p">,</span><span class="n">Xmax</span><span class="p">,</span><span class="n">Xnew</span><span class="p">)</span>
+    <div class="highlight"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">REPLAC</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">Xmin</span><span class="p">,</span><span class="n">Xmax</span><span class="p">,</span><span class="n">Xnew</span><span class="p">)</span>
 <span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">hold</span> <span class="p">,</span> <span class="n">pointl</span> <span class="p">,</span> <span class="n">pointu</span> <span class="p">,</span> <span class="n">X</span> <span class="p">,</span> <span class="n">Xmax</span> <span class="p">,</span> <span class="n">Xmin</span> <span class="p">,</span> <span class="n">Xnew</span>
 <span class="kt">INTEGER</span> <span class="kd">::</span> <span class="n">i</span> <span class="p">,</span> <span class="n">k</span> <span class="p">,</span> <span class="n">N</span> <span class="p">,</span> <span class="n">ndel</span>
 <span class="c">!</span>
@@ -635,27 +637,22 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="c">!</span>
       <span class="k">IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">&lt;</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span>
-<span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE REPLAC SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS NON-POSITIVE *****&#39;</span><span class="p">)</span>
+         <span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--The second input argument to REPLAC(3f) is non-positive *****&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span> <span class="n">N</span>
-<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+         <span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** The value of the argument is &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
          <span class="k">RETURN</span>
 <span class="k">      ELSE</span>
 <span class="k">         IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">            WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span>
-<span class="mi">99003</span>       <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE REPL&amp;</span>
-<span class="s1">     &amp;AC SUBROUTINE HAS THE VALUE 1 *****&#39;</span><span class="p">)</span>
+            <span class="mi">99003</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--The second input argument to REPLAC(3f) has the value 1 *****&#39;</span><span class="p">)</span>
          <span class="k">ELSE</span>
 <span class="k">            </span><span class="n">hold</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">DO </span><span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">,</span> <span class="n">N</span>
                <span class="k">IF</span> <span class="p">(</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span> <span class="p">)</span> <span class="k">GOTO </span><span class="mi">50</span>
             <span class="k">ENDDO</span>
 <span class="k">            WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span> <span class="n">hold</span>
-<span class="mi">99004</span>       <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &amp;</span>
-<span class="s1">     &amp;TO THE REPLAC SUBROUTINE HAS ALL ELEMENTS =&#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+            <span class="mi">99004</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to REPLAC(3f) has all elements =&#39;</span><span class="p">,&amp;</span>
+            <span class="p">&amp;</span> <span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
          <span class="k">ENDIF</span>
 <span class="c">!</span>
 <span class="c">!-----START POINT-----------------------------------------------------</span>
@@ -677,26 +674,25 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="c">!     WRITE OUT A BRIEF SUMMARY</span>
 <span class="c">!</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span>
-<span class="mi">99005</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+         <span class="mi">99005</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span>
-<span class="mi">99006</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;OUTPUT FROM THE REPLAC SUBROUTINE--&#39;</span><span class="p">)</span>
+         <span class="mi">99006</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;output from the REPLAC subroutine--&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span> <span class="n">pointl</span> <span class="p">,</span> <span class="n">pointu</span>
-<span class="mi">99007</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;ONLY OBSERVATIONS BETWEEN &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; AND &#39;</span><span class="p">,</span>     <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
+         <span class="mi">99007</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;only observations between &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; and &#39;</span><span class="p">,</span> <span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99008</span><span class="p">)</span>
-<span class="mi">99008</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;(INCLUSIVE) HAVE BEEN REPLACED.&#39;</span><span class="p">)</span>
+         <span class="mi">99008</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;(inclusive) have been replaced.&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99009</span><span class="p">)</span>
-<span class="mi">99009</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL&#39;</span><span class="p">)</span>
+         <span class="mi">99009</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;all observations outside of this interval&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99010</span><span class="p">)</span>
-<span class="mi">99010</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;HAVE BEEN LEFT UNCHANGED.&#39;</span><span class="p">)</span>
+         <span class="mi">99010</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;have been left unchanged.&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span> <span class="n">Xnew</span>
-<span class="mi">99011</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE REPLACEMENT VALUE IS &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
+         <span class="mi">99011</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;The replacement value is &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span> <span class="n">N</span>
-<span class="mi">99012</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE INPUT  NUMBER OF OBSERVATIONS    IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span>
+         <span class="mi">99012</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;The input  number of observations    is &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span> <span class="n">k</span>
-<span class="mi">99013</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE NUMBER OF OBSERVATIONS REPLACED  IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span>
+         <span class="mi">99013</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;The number of observations replaced  is &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99014</span><span class="p">)</span> <span class="n">ndel</span>
-<span class="mi">99014</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE NUMBER OF OBSERVATIONS UNCHANGED IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span>
+         <span class="mi">99014</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;The number of observations unchanged is &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span>
       <span class="k">ENDIF</span>
 <span class="c">!</span>
 <span class="k">END SUBROUTINE </span><span class="n">REPLAC</span>
@@ -721,7 +717,7 @@ Engineering Division, National Institute of Standards and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-11 06:31  
+             on 2022-06-13 23:09  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

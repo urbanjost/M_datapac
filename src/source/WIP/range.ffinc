@@ -44,8 +44,15 @@ REFERENCES
   * Dixon and Massey, Introduction to Statistical Analysis, Edition 2,
     1957, page 21.
 $ENDBLOCK
+!     MODE OF INTERNAL OPERATIONS--.
+!     ORIGINAL VERSION--JUNE      1972.
+!     UPDATED         --JUNE      1974.
+!     UPDATED         --APRIL     1975.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
 SUBROUTINE RANGE(X,N,Iwrite,Xrange)
 REAL(kind=wp) :: hold , X , xmax , xmin , xramge , Xrange
 INTEGER :: i , Iwrite , N
@@ -74,12 +81,6 @@ INTEGER :: i , Iwrite , N
 !               CONDITION EXISTS.
 !     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
 !                   OF N FOR THIS SUBROUTINE.
-!     MODE OF INTERNAL OPERATIONS--.
-!     ORIGINAL VERSION--JUNE      1972.
-!     UPDATED         --JUNE      1974.
-!     UPDATED         --APRIL     1975.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !

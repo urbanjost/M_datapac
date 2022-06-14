@@ -1,0 +1,117 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file define.3m_datapac.man
+NAME
+   define(3f) - [M_datapac:VECTOR_OPERATION] set all elements of a vector
+   equal to a specified constant
+
+SYNOPSIS
+      SUBROUTINE DEFINE(X,N,Xnew)
+
+       REAL(kind=wp),intent(out)  :: X(:)
+       INTEGER,intent(in)         :: N
+       REAL(kind=wp),intent(in)   :: Xnew
+
+DESCRIPTION
+   DEFINE(3f) sets all of the elements in the REAL vector X equal to XNEW.
+
+   DEFINE(3f) is useful in defining a vector of constants.
+
+   For example, if the data analyst wishes to treat the equal weights case
+   in doing a polynomial regression, this could be done by defining as,
+   say, 1.0 the input weight vector W to the datapac POLY(3f) subroutine;
+   such defining could be done by use of the DEFINE(3f) subroutine with
+   XNEW = 1.0.
+
+   Except fo the verbose output, this procedure is deprecated as this
+   can easily be done using Fortran array syntax.
+
+
+INPUT ARGUMENTS
+
+   X      The vector of (unsorted or sorted) observations.
+
+   N      The integer number of observations in the vector X.
+
+   XNEW   The value to which all of the observations in the vector X
+          will be set.
+
+OUTPUT
+
+   X      The vector X every element of which will be equal to XNEW.
+          Also, 3 lines of summary information will be generated indicating
+
+              1. What the sample size was (N)
+              2. What the defining constant was (XNEW)
+
+EXAMPLES
+  Sample program:
+
+   program demo_define
+   use M_datapac, only : define
+   implicit none
+   real :: x(4)
+      call define(x,size(x),3.33333)
+      write(*,'(*(g0.4,1x))')x
+   end program demo_define
+
+  Results:
+    
+    Output from the DEFINE(3f) subroutine--
+           The input number of observations is 4
+           The defining constant is 0.33333299E+01
+   3.333 3.333 3.333 3.333
+
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+MAINTAINER
+   John Urban, 2022.05.31
+LICENSE
+   CC0-1.0
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+!     UPDATED  VERSION--JULY      1976.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE DEFINE(X,N,Xnew)
+REAL(kind=wp),intent(out)  :: X(:)
+INTEGER,intent(in)         :: N
+REAL(kind=wp),intent(in)   :: Xnew
+
+INTEGER                    :: i
+!---------------------------------------------------------------------
+   !
+   !  CHECK THE INPUT ARGUMENTS FOR ERRORS
+   !
+   IF ( N<1 ) THEN
+      WRITE (G_IO,99001)
+      99001 FORMAT (' ***** FATAL ERROR--The second input argument to DEFINE(3f) is non-positive *****')
+      WRITE (G_IO,99002) N
+      99002 FORMAT (' ***** The value of the argument is ',I0,' *****')
+      RETURN
+   ELSE
+      IF ( N==1 ) THEN
+         WRITE (G_IO,99003)
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to DEFINE(3f) has the value 1 *****')
+      ENDIF
+      !
+      DO i = 1 , N
+         X(i) = Xnew
+      ENDDO
+      !
+      !  WRITE OUT A BRIEF SUMMARY
+      !
+      WRITE (G_IO,99004)
+      99004 FORMAT (' ')
+      WRITE (G_IO,99005)
+      99005 FORMAT (' ','Output from the DEFINE(3f) subroutine--')
+      WRITE (G_IO,99006) N
+      99006 FORMAT (' ',7X,'The input number of observations is ',I0)
+      WRITE (G_IO,99007) Xnew
+      99007 FORMAT (' ',7X,'The defining constant is ',E15.8)
+   ENDIF
+!
+END SUBROUTINE DEFINE

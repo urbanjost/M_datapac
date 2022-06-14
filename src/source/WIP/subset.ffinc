@@ -1,7 +1,7 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file subset.3m_datapac.man
 NAME
-   subset(3f) - [M_datapac:STATISTICS] extract the elements of a vector
+   subset(3f) - [M_datapac:VECTOR_OPERATION] extract the elements of a vector
    which fall into a user-specified subset (one subset variable)
 
 SYNOPSIS

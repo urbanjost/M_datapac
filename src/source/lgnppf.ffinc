@@ -1,0 +1,130 @@
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$BLOCK COMMENT --file lgnppf.3m_datapac.man
+NAME
+   lgnppf(3f) - [M_datapac:PERCENT_POINT] compute the lognormal percent
+   point function
+
+SYNOPSIS
+      SUBROUTINE LGNPPF(P,Ppf)
+
+       REAL(kind=wp),intent(in)  :: P
+       REAL(kind=wp),intent(out) :: Ppf
+
+DESCRIPTION
+   LGNPPF(3f) computes the percent point function value for the lognormal
+   distribution.
+
+   The lognormal distribution used herein has mean = sqrt(e) = 1.64872127
+   and standard deviation = sqrt(e*(e-1)) = 2.16119742. This distribution
+   is defined for all positive X and has the probability density function
+
+       f(X) = (1/(X*sqrt(2*pi))) * exp(-log(X)*log(X)/2)
+
+   The lognormal distribution used herein is the distribution of the
+   variate x = exp(z) where the variate z is normally distributed with
+   mean = 0 and standard deviation = 1.
+
+   Note that the percent point function of a distribution is identically
+   the same as the inverse cumulative distribution function of the
+   distribution.
+
+INPUT ARGUMENTS
+
+   P      The value (between 0.0 (exclusively) and 1.0 (exclusively))
+          at which the percent point function is to be evaluated.
+
+OUTPUT ARGUMENTS
+
+   PPF    The percent point function value for the lognormal distribution
+
+EXAMPLES
+  Sample program:
+
+   program demo_lgnppf
+   !@(#) line plotter graph of function
+   use M_datapac, only : lgnppf, plott, label
+   implicit none
+   integer,parameter :: n=200
+   real              :: x(n), y(n)
+   integer           :: i
+      call label('lgnppf')
+      x=[(real(i)/real(n+1),i=1,n)]
+      do i=1,n
+         call lgnppf(x(i),y(i))
+      enddo
+      call plott(x,y,n)
+   end program demo_lgnppf
+
+  Results:
+
+    The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                      I-----------I-----------I-----------I-----------I
+     0.9950249E+00 -                            X X   X    X          X
+     0.9537728E+00 I                  XXXXXXX X
+     0.9125207E+00 I               XXXX
+     0.8712686E+00 I            XXX
+     0.8300166E+00 I           XX
+     0.7887645E+00 I         XX
+     0.7475125E+00 -         X
+     0.7062603E+00 I        X
+     0.6650083E+00 I       XX
+     0.6237562E+00 I       X
+     0.5825042E+00 I      X
+     0.5412520E+00 I      X
+     0.5000000E+00 -     XX
+     0.4587479E+00 I     X
+     0.4174958E+00 I     X
+     0.3762438E+00 I    XX
+     0.3349917E+00 I    X
+     0.2937396E+00 I    X
+     0.2524875E+00 -   XX
+     0.2112355E+00 I   X
+     0.1699834E+00 I   X
+     0.1287313E+00 I   X
+     0.8747923E-01 I   X
+     0.4622716E-01 I  XX
+     0.4975124E-02 -  X
+                      I-----------I-----------I-----------I-----------I
+               0.7596E-01  0.3348E+01  0.6620E+01  0.9893E+01  0.1316E+02
+
+AUTHOR
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
+
+MAINTAINER
+   John Urban, 2022.05.31
+
+LICENSE
+   CC0-1.0
+
+REFERENCES
+  * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
+    pages 112-136.
+  * Cramer, Mathematical Methods of Statistics, 1946, pages 219-220.
+
+$ENDBLOCK
+!     ORIGINAL VERSION--NOVEMBER  1975.
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE LGNPPF(P,Ppf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(out) :: Ppf
+!---------------------------------------------------------------------
+!
+!     CHECK THE INPUT ARGUMENTS FOR ERRORS
+!
+      IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
+         WRITE (G_IO,99001)
+         WRITE (G_IO,99002) P
+         Ppf = 0.0_wp
+      ELSE
+         CALL NORPPF(P,Ppf)
+         Ppf = EXP(Ppf)
+      ENDIF
+
+99001 FORMAT(' ***** FATAL ERROR--The first input argument to LGNPPF(3f) is outside the allowable (0,1) interval *****')
+99002 FORMAT(' ***** The value of the argument is ',E15.8, ' *****')
+!
+END SUBROUTINE LGNPPF

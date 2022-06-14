@@ -1,26 +1,27 @@
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file replac.3m_datapac.man
 NAME
-   replac(3f) - [M_datapac:STATISTICS] replace all observations in a
-   vector within a given interval with a user-specified constant
+   replac(3f) - [M_datapac:VECTOR_OPERATION] replace all observations
+   in a vector within a given interval with a user-specified constant
 
 SYNOPSIS
       SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
 
 DESCRIPTION
-   REPLAC(3f) replaces (with the value xnew) all observations in the
-   REAL vector X which are inside the closed (inclusive)
-   interval defined by XMIN and XMAX.
+   REPLAC(3f) replaces (with the value XNEW) all observations in the REAL
+   vector X which are inside the closed (inclusive) interval defined by
+   XMIN and XMAX.
 
    All observations outside of this interval are left unchanged.
-   thus all observations in X which are equal to or larger than XMIN
+   Thus all observations in X which are equal to or larger than XMIN
    and equal to or smaller than XMAX, will be replaced by XNEW.
 
-   REPLAC(3f) (and the retain and delete subroutines) gives the data
-   analyst the ability to easily 'clean up' a data set which has missing
-   and/or outlying observations so that a more appropriate subsequent
-   data analysis may be performed. For example, replacement of an
-   outlier with a more appropriate value can easily be done by REPLAC(3f).
+   REPLAC(3f) (and the RETAIN(3f) and DELETE(3f) subroutines) gives
+   the data analyst the ability to easily 'clean up' a data set which
+   has missing and/or outlying observations so that a more appropriate
+   subsequent data analysis may be performed. For example, replacement
+   of an outlier with a more appropriate value can easily be done by
+   REPLAC(3f).
 
 OPTIONS
     X   description of parameter
@@ -38,8 +39,9 @@ EXAMPLES
   Results:
 
 AUTHOR
-   The original DATAPAC library was written by James Filliben of the Statistical
-   Engineering Division, National Institute of Standards and Technology.
+   The original DATAPAC library was written by James Filliben of the
+   Statistical Engineering Division, National Institute of Standards
+   and Technology.
 MAINTAINER
    John Urban, 2022.05.31
 LICENSE
@@ -47,7 +49,8 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
+
+SUBROUTINE REPLAC(X,N,Xmin,Xmax,Xnew)
 REAL(kind=wp) :: hold , pointl , pointu , X , Xmax , Xmin , Xnew
 INTEGER :: i , k , N , ndel
 !
@@ -119,27 +122,22 @@ INTEGER :: i , k , N , ndel
 !
       IF ( N<1 ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE REPLAC SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99001    FORMAT (' ***** FATAL ERROR--The second input argument to REPLAC(3f) is non-positive *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002    FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSE
          IF ( N==1 ) THEN
             WRITE (G_IO,99003)
-99003       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE REPL&
-     &AC SUBROUTINE HAS THE VALUE 1 *****')
+            99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to REPLAC(3f) has the value 1 *****')
          ELSE
             hold = X(1)
             DO i = 2 , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99004) hold
-99004       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE REPLAC SUBROUTINE HAS ALL ELEMENTS =',E15.8,' *****')
+            99004 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to REPLAC(3f) has all elements =',&
+	    & E15.8,' *****')
          ENDIF
 !
 !-----START POINT-----------------------------------------------------
@@ -161,26 +159,25 @@ INTEGER :: i , k , N , ndel
 !     WRITE OUT A BRIEF SUMMARY
 !
          WRITE (G_IO,99005)
-99005    FORMAT (' ')
+         99005 FORMAT (' ')
          WRITE (G_IO,99006)
-99006    FORMAT (' ','OUTPUT FROM THE REPLAC SUBROUTINE--')
+         99006 FORMAT (' ','output from the REPLAC subroutine--')
          WRITE (G_IO,99007) pointl , pointu
-99007    FORMAT (' ',7X,'ONLY OBSERVATIONS BETWEEN ',E15.8,' AND ',     &
-     &           E15.8)
+         99007 FORMAT (' ',7X,'only observations between ',E15.8,' and ', E15.8)
          WRITE (G_IO,99008)
-99008    FORMAT (' ',7X,'(INCLUSIVE) HAVE BEEN REPLACED.')
+         99008 FORMAT (' ',7X,'(inclusive) have been replaced.')
          WRITE (G_IO,99009)
-99009    FORMAT (' ',7X,'ALL OBSERVATIONS OUTSIDE OF THIS INTERVAL')
+         99009 FORMAT (' ',7X,'all observations outside of this interval')
          WRITE (G_IO,99010)
-99010    FORMAT (' ',7X,'HAVE BEEN LEFT UNCHANGED.')
+         99010 FORMAT (' ',7X,'have been left unchanged.')
          WRITE (G_IO,99011) Xnew
-99011    FORMAT (' ',7X,'THE REPLACEMENT VALUE IS ',E15.8)
+         99011 FORMAT (' ',7X,'The replacement value is ',E15.8)
          WRITE (G_IO,99012) N
-99012    FORMAT (' ',7X,'THE INPUT  NUMBER OF OBSERVATIONS    IS ',I0)
+         99012 FORMAT (' ',7X,'The input  number of observations    is ',I0)
          WRITE (G_IO,99013) k
-99013    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS REPLACED  IS ',I0)
+         99013 FORMAT (' ',7X,'The number of observations replaced  is ',I0)
          WRITE (G_IO,99014) ndel
-99014    FORMAT (' ',7X,'THE NUMBER OF OBSERVATIONS UNCHANGED IS ',I0)
+         99014 FORMAT (' ',7X,'The number of observations unchanged is ',I0)
       ENDIF
 !
 END SUBROUTINE REPLAC
