@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.6% of total for procedures.">180 statements</a>
+    title=" 0.6% of total for procedures.">182 statements</a>
      </li> 
      
      
@@ -355,41 +355,53 @@ public subroutine GAMPLT(X, N, Gamma)
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <div class="codehilite"><pre><span></span><code>   SUBROUTINE GAMPLT(X,N,Gamma)
+
+    REAL(kind=wp),intent(in) :: X(:)
+    INTEGER,intent(in)       :: N
+    REAL(kind=wp),intent(in) :: Gamma
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
 <div class="codehilite"><pre><span></span><code><span class="n">GAMPLT</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="n">generates</span> <span class="n">a</span> <span class="n">gamma</span> <span class="n">probability</span> <span class="n">plot</span> <span class="p">(</span><span class="n">with</span> <span class="n">tail</span> <span class="n">length</span>
-<span class="n">parameter</span> <span class="n">value</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">)</span><span class="o">.</span>
+<span class="n">parameter</span> <span class="n">value</span> <span class="o">=</span> <span class="n">GAMMA</span><span class="p">)</span><span class="o">.</span>
 
-<span class="n">the</span> <span class="n">prototype</span> <span class="n">gamma</span> <span class="n">distribution</span> <span class="n">used</span> <span class="n">herein</span> <span class="n">has</span> <span class="n">mean</span> <span class="o">=</span> <span class="n">gamma</span> <span class="ow">and</span>
-<span class="n">standard</span> <span class="n">deviation</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span><span class="o">.</span>
+<span class="n">The</span> <span class="n">prototype</span> <span class="n">gamma</span> <span class="n">distribution</span> <span class="n">used</span> <span class="n">herein</span> <span class="n">has</span> <span class="n">mean</span> <span class="o">=</span> <span class="n">GAMMA</span> <span class="ow">and</span>
+<span class="n">standard</span> <span class="n">deviation</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">GAMMA</span><span class="p">)</span><span class="o">.</span>
 
-<span class="n">this</span> <span class="n">distribution</span> <span class="k">is</span> <span class="n">defined</span> <span class="k">for</span> <span class="n">all</span> <span class="n">positive</span> <span class="n">x</span><span class="p">,</span> <span class="ow">and</span> <span class="n">has</span> <span class="n">the</span>
+<span class="n">This</span> <span class="n">distribution</span> <span class="k">is</span> <span class="n">defined</span> <span class="k">for</span> <span class="n">all</span> <span class="n">positive</span> <span class="n">X</span><span class="p">,</span> <span class="ow">and</span> <span class="n">has</span> <span class="n">the</span>
 <span class="n">probability</span> <span class="n">density</span> <span class="n">function</span>
 
-    <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">constant</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">gamma</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">constant</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="p">(</span><span class="n">GAMMA</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">X</span><span class="p">)</span>
 
-<span class="n">where</span> <span class="n">the</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">the</span> <span class="n">gamma</span> <span class="n">function</span> <span class="n">evaluated</span> <span class="n">at</span> <span class="n">the</span> <span class="n">value</span> <span class="n">gamma</span><span class="o">.</span>
+<span class="n">Where</span> <span class="n">the</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">the</span> <span class="n">gamma</span> <span class="n">function</span> <span class="n">evaluated</span> <span class="n">at</span> <span class="n">the</span> <span class="n">value</span> <span class="n">GAMMA</span><span class="o">.</span>
 
-<span class="k">as</span> <span class="n">used</span> <span class="n">herein</span><span class="p">,</span> <span class="n">a</span> <span class="n">probability</span> <span class="n">plot</span> <span class="k">for</span> <span class="n">a</span> <span class="n">distribution</span> <span class="k">is</span> <span class="n">a</span> <span class="n">plot</span>
+<span class="n">As</span> <span class="n">used</span> <span class="n">herein</span><span class="p">,</span> <span class="n">a</span> <span class="n">probability</span> <span class="n">plot</span> <span class="k">for</span> <span class="n">a</span> <span class="n">distribution</span> <span class="k">is</span> <span class="n">a</span> <span class="n">plot</span>
 <span class="n">of</span> <span class="n">the</span> <span class="n">ordered</span> <span class="n">observations</span> <span class="n">versus</span> <span class="n">the</span> <span class="n">order</span> <span class="n">statistic</span> <span class="n">medians</span> <span class="k">for</span>
 <span class="n">that</span> <span class="n">distribution</span><span class="o">.</span>
 
-<span class="n">the</span> <span class="n">gamma</span> <span class="n">probability</span> <span class="n">plot</span> <span class="k">is</span> <span class="n">useful</span> <span class="ow">in</span> <span class="n">graphically</span> <span class="n">testing</span> <span class="n">the</span>
+<span class="n">The</span> <span class="n">gamma</span> <span class="n">probability</span> <span class="n">plot</span> <span class="k">is</span> <span class="n">useful</span> <span class="ow">in</span> <span class="n">graphically</span> <span class="n">testing</span> <span class="n">the</span>
 <span class="n">composite</span> <span class="p">(</span><span class="n">that</span> <span class="k">is</span><span class="p">,</span> <span class="n">location</span> <span class="ow">and</span> <span class="n">scale</span> <span class="n">parameters</span> <span class="n">need</span> <span class="ow">not</span> <span class="n">be</span>
 <span class="n">specified</span><span class="p">)</span> <span class="n">hypothesis</span> <span class="n">that</span> <span class="n">the</span> <span class="n">underlying</span> <span class="n">distribution</span> <span class="n">from</span> <span class="n">which</span>
 <span class="n">the</span> <span class="n">data</span> <span class="n">have</span> <span class="n">been</span> <span class="n">randomly</span> <span class="n">drawn</span> <span class="k">is</span> <span class="n">the</span> <span class="n">gamma</span> <span class="n">distribution</span> <span class="n">with</span>
-<span class="n">tail</span> <span class="n">length</span> <span class="n">parameter</span> <span class="n">value</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span>
+<span class="n">tail</span> <span class="n">length</span> <span class="n">parameter</span> <span class="n">value</span> <span class="o">=</span> <span class="n">GAMMA</span><span class="o">.</span>
 
-<span class="k">if</span> <span class="n">the</span> <span class="n">hypothesis</span> <span class="k">is</span> <span class="bp">true</span><span class="p">,</span> <span class="n">the</span> <span class="n">probability</span> <span class="n">plot</span> <span class="n">should</span> <span class="n">be</span> <span class="n">near</span><span class="o">-</span><span class="n">linear</span><span class="o">.</span>
+<span class="n">If</span> <span class="n">the</span> <span class="n">hypothesis</span> <span class="k">is</span> <span class="bp">true</span><span class="p">,</span> <span class="n">the</span> <span class="n">probability</span> <span class="n">plot</span> <span class="n">should</span> <span class="n">be</span> <span class="n">near</span><span class="o">-</span><span class="n">linear</span><span class="o">.</span>
 
-<span class="n">a</span> <span class="n">measure</span> <span class="n">of</span> <span class="n">such</span> <span class="n">linearity</span> <span class="k">is</span> <span class="n">given</span> <span class="n">by</span> <span class="n">the</span> <span class="n">calculated</span> <span class="n">probability</span>
+<span class="n">A</span> <span class="n">measure</span> <span class="n">of</span> <span class="n">such</span> <span class="n">linearity</span> <span class="k">is</span> <span class="n">given</span> <span class="n">by</span> <span class="n">the</span> <span class="n">calculated</span> <span class="n">probability</span>
 <span class="n">plot</span> <span class="n">correlation</span> <span class="n">coefficient</span><span class="o">.</span>
 </code></pre></div>
 
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> X   description of parameter
- Y   description of parameter
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">X</span>       <span class="nv">The</span> <span class="nv">vector</span> <span class="nv">of</span> <span class="ss">(</span><span class="nv">unsorted</span> <span class="nv">or</span> <span class="nv">sorted</span><span class="ss">)</span> <span class="nv">observations</span>.
+
+<span class="nv">N</span>       <span class="nv">The</span> <span class="nv">integer</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">observations</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">X</span>.
+        <span class="nv">The</span> <span class="nv">maximum</span> <span class="nv">allowable</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">N</span> <span class="k">for</span> <span class="nv">this</span> <span class="nv">subroutine</span> <span class="nv">is</span> <span class="mi">7500</span>.
+
+<span class="nv">GAMMA</span>   <span class="nv">The</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">tail</span> <span class="nv">length</span> <span class="nv">parameter</span>. <span class="nv">Gamma</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">positive</span>.
+</code></pre></div>
+
+<h2 id="output">OUTPUT</h2>
+<div class="codehilite"><pre><span></span><code>A one-page gamma probability plot.
 </code></pre></div>
 
 <h2 id="examples">EXAMPLES</h2>
@@ -403,8 +415,9 @@ public subroutine GAMPLT(X, N, Gamma)
 
 <p>Results:</p>
 <h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </code></pre></div>
 
 <h2 id="maintainer">MAINTAINER</h2>
@@ -417,17 +430,17 @@ Engineering Division, National Institute of Standards and Technology.
 
 <h2 id="references">REFERENCES</h2>
 <ul>
-<li>WILK, GNANADESIKAN, AND HUYETT, &lsquo;PROBABILITY PLOTS FOR THE GAMMA
-     DISTRIBUTION&rsquo;, TECHNOMETRICS, 1962, pages 1-15.</li>
-<li>NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-     page 257, FORMULA 6.1.41.</li>
-<li>FILLIBEN, &lsquo;TECHNIQUES FOR TAIL LENGTH ANALYSIS&rsquo;, PROCEEDINGS OF THE
-     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
+<li>Wilk, Gnanadesikan, and Huyett, &lsquo;Probability Plots for the Gamma
+     Distribution&rsquo;, Technometrics, 1962, pages 1-15.</li>
+<li>National Bureau of Standards Applied Mathematics Series 55, 1964,
+     page 257, Formula 6.1.41.</li>
+<li>Filliben, &lsquo;Techniques for Tail Length Analysis&rsquo;, Proceedings of the
+     Eighteenth Conference on the Design of Experiments in Army Research
+     Development and Testing (Aberdeen, Maryland, October, 1972), pages
      425-450.</li>
-<li>HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
+<li>Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
      260-308.</li>
-<li>JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS&ndash;1, 1970,
+<li>Johnson and Kotz, Continuous Univariate Distributions&ndash;1, 1970,
      pages 166-206.</li>
 </ul>
 <hr>
@@ -459,12 +472,12 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-x~35"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-x~35"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
-  <td><strong>X</strong></td><td></td>
+  <td><strong>X</strong>(:)</td><td></td>
   
 </tr>
 
@@ -474,8 +487,8 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-n~30"></span>integer</td>
-  <td></td>
+  <td><span class="anchor" id="variable-n~30"></span>integer,</td>
+  <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -489,8 +502,8 @@ Engineering Division, National Institute of Standards and Technology.
   
 <tr>
   
-  <td><span class="anchor" id="variable-gamma~6"></span>real(kind=wp)</td>
-  <td></td>
+  <td><span class="anchor" id="variable-gamma~6"></span>real(kind=wp),</td>
+  <td>intent(in)</td>
   <td></td>
   
   <td></td><td>::</td>
@@ -1591,52 +1604,28 @@ Engineering Division, National Institute of Standards and Technology.
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">GAMPLT</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="nb">Gamma</span><span class="p">)</span>
-<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">acount</span> <span class="p">,</span> <span class="n">aj</span> <span class="p">,</span> <span class="n">an</span> <span class="p">,</span> <span class="n">cc</span> <span class="p">,</span> <span class="n">cut1</span> <span class="p">,</span> <span class="n">cut2</span> <span class="p">,</span> <span class="n">cutoff</span> <span class="p">,</span> <span class="n">dgamma</span> <span class="p">,</span> <span class="n">dp</span> <span class="p">,</span> <span class="p">&amp;</span>
-     <span class="p">&amp;</span>     <span class="n">dx</span> <span class="p">,</span> <span class="n">g</span> <span class="p">,</span> <span class="nb">Gamma</span> <span class="p">,</span> <span class="n">hold</span> <span class="p">,</span> <span class="n">pcalc</span> <span class="p">,</span> <span class="n">pp0025</span> <span class="p">,</span> <span class="n">pp025</span> <span class="p">,</span> <span class="n">pp975</span> <span class="p">,</span>     <span class="p">&amp;</span>
-     <span class="p">&amp;</span>     <span class="n">pp9975</span> <span class="p">,</span> <span class="nb">sum</span> <span class="p">,</span> <span class="n">sum1</span>
-<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">sum2</span> <span class="p">,</span> <span class="n">sum3</span> <span class="p">,</span> <span class="n">t</span> <span class="p">,</span> <span class="n">tau</span> <span class="p">,</span> <span class="n">term</span> <span class="p">,</span> <span class="n">u</span> <span class="p">,</span> <span class="n">W</span> <span class="p">,</span> <span class="n">wbar</span> <span class="p">,</span> <span class="n">WS</span> <span class="p">,</span> <span class="n">X</span> <span class="p">,</span> <span class="n">xdel</span> <span class="p">,&amp;</span>
-     <span class="p">&amp;</span>     <span class="n">xlower</span> <span class="p">,</span> <span class="n">xmax</span> <span class="p">,</span> <span class="n">xmid</span> <span class="p">,</span> <span class="n">xmin</span> <span class="p">,</span> <span class="n">xmin0</span> <span class="p">,</span> <span class="n">xupper</span> <span class="p">,</span> <span class="n">Y</span> <span class="p">,</span> <span class="n">ybar</span> <span class="p">,</span>    <span class="p">&amp;</span>
-     <span class="p">&amp;</span>     <span class="n">yint</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">X</span><span class="p">(:)</span>
+<span class="kt">INTEGER</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>       <span class="kd">::</span> <span class="n">N</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="nb">Gamma</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">acount</span><span class="p">,</span> <span class="n">aj</span><span class="p">,</span> <span class="n">an</span><span class="p">,</span> <span class="n">cc</span><span class="p">,</span> <span class="n">cut1</span><span class="p">,</span> <span class="n">cut2</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">dgamma</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">hold</span><span class="p">,</span> <span class="n">pcalc</span><span class="p">,</span> <span class="n">pp0025</span><span class="p">,</span> <span class="n">pp025</span><span class="p">,</span> <span class="n">pp975</span><span class="p">,</span> <span class="n">pp9975</span><span class="p">,</span> <span class="nb">sum</span><span class="p">,</span> <span class="n">sum1</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">sum2</span><span class="p">,</span> <span class="n">sum3</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">wbar</span><span class="p">,</span> <span class="n">WS</span><span class="p">,</span> <span class="n">xdel</span><span class="p">,</span> <span class="n">xlower</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">xmid</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmin0</span><span class="p">,</span> <span class="n">xupper</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">ybar</span><span class="p">,</span> <span class="n">yint</span>
 <span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">yslope</span>
-<span class="kt">INTEGER </span><span class="n">i</span> <span class="p">,</span> <span class="n">icount</span> <span class="p">,</span> <span class="n">iloop</span> <span class="p">,</span> <span class="n">ip1</span> <span class="p">,</span> <span class="n">itail</span> <span class="p">,</span> <span class="n">iupper</span> <span class="p">,</span> <span class="n">j</span> <span class="p">,</span> <span class="n">N</span>
-<span class="c">!</span>
-<span class="c">!     INPUT ARGUMENTS--X      = THE  VECTOR OF</span>
-<span class="c">!                                (UNSORTED OR SORTED) OBSERVATIONS.</span>
-<span class="c">!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS</span>
-<span class="c">!                                IN THE VECTOR X.</span>
-<span class="c">!                     --GAMMA  = THE  VALUE OF THE</span>
-<span class="c">!                                TAIL LENGTH PARAMETER.</span>
-<span class="c">!                                GAMMA SHOULD BE POSITIVE.</span>
-<span class="c">!     OUTPUT--A ONE-page GAMMA PROBABILITY PLOT.</span>
-<span class="c">!     PRINTING--YES.</span>
-<span class="c">!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N</span>
-<span class="c">!                   FOR THIS SUBROUTINE IS 7500.</span>
-<span class="c">!                 --GAMMA SHOULD BE POSITIVE.</span>
-<span class="c">!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.</span>
-<span class="c">!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ABS, EXP, DEXP, DLOG.</span>
-<span class="c">!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION</span>
-<span class="c">!     ORIGINAL VERSION--NOVEMBER  1974.</span>
-<span class="c">!     UPDATED         --SEPTEMBER 1975.</span>
-<span class="c">!     UPDATED         --NOVEMBER  1975.</span>
-<span class="c">!     UPDATED         --FEBRUARY  1976.</span>
-<span class="c">!</span>
+<span class="kt">INTEGER </span><span class="n">i</span><span class="p">,</span> <span class="n">icount</span><span class="p">,</span> <span class="n">iloop</span><span class="p">,</span> <span class="n">ip1</span><span class="p">,</span> <span class="n">itail</span><span class="p">,</span> <span class="n">iupper</span><span class="p">,</span> <span class="n">j</span>
 <span class="c">!---------------------------------------------------------------------</span>
-<span class="c">!</span>
-      <span class="kt">DOUBLE PRECISION </span><span class="n">z</span> <span class="p">,</span> <span class="n">z2</span> <span class="p">,</span> <span class="n">z3</span> <span class="p">,</span> <span class="n">z4</span> <span class="p">,</span> <span class="n">z5</span> <span class="p">,</span> <span class="n">den</span> <span class="p">,</span> <span class="n">a</span> <span class="p">,</span> <span class="n">b</span> <span class="p">,</span> <span class="n">c</span> <span class="p">,</span> <span class="n">d</span>
-      <span class="kt">DOUBLE PRECISION </span><span class="nb">DEXP</span> <span class="p">,</span> <span class="nb">DLOG</span>
-<span class="nb">      </span><span class="k">DIMENSION </span><span class="n">d</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-      <span class="k">DIMENSION </span><span class="n">X</span><span class="p">(:)</span>
-      <span class="k">DIMENSION </span><span class="n">Y</span><span class="p">(</span><span class="mi">7500</span><span class="p">)</span> <span class="p">,</span> <span class="n">W</span><span class="p">(</span><span class="mi">7500</span><span class="p">)</span>
-      <span class="k">COMMON</span> <span class="o">/</span><span class="n">BLOCK2_real64</span><span class="o">/</span> <span class="n">WS</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
-      <span class="k">EQUIVALENCE</span> <span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-      <span class="k">EQUIVALENCE</span> <span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">7501</span><span class="p">))</span>
-      <span class="k">DATA </span><span class="n">c</span><span class="o">/</span><span class="p">.</span><span class="mi">918938533204672741</span><span class="n">D0</span><span class="o">/</span>
-      <span class="k">DATA </span><span class="n">d</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">,</span> <span class="n">d</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">,</span> <span class="n">d</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="n">d</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">,</span> <span class="n">d</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">/</span> <span class="o">+</span> <span class="p">.</span><span class="mi">833333333333333333</span><span class="n">D</span><span class="o">-</span><span class="mi">1</span> <span class="p">,</span> <span class="p">&amp;</span>
-     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">277777777777777778</span><span class="n">D</span><span class="o">-</span><span class="mi">2</span> <span class="p">,</span> <span class="o">+</span><span class="p">.</span><span class="mi">793650793650793651</span><span class="n">D</span><span class="o">-</span><span class="mi">3</span> <span class="p">,</span>          <span class="p">&amp;</span>
-     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">595238095238095238</span><span class="n">D</span><span class="o">-</span><span class="mi">3</span> <span class="p">,</span> <span class="o">+</span><span class="p">.</span><span class="mi">841750841750841751</span><span class="n">D</span><span class="o">-</span><span class="mi">3</span><span class="o">/</span>
-      <span class="k">DATA </span><span class="n">d</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="p">,</span> <span class="n">d</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="p">,</span> <span class="n">d</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="p">,</span> <span class="n">d</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="p">,</span> <span class="n">d</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span> <span class="o">-</span> <span class="p">.</span><span class="mi">191752691752691753</span><span class="n">D</span><span class="o">-</span><span class="mi">2</span> <span class="p">,&amp;</span>
-     <span class="p">&amp;</span>     <span class="o">+</span><span class="p">.</span><span class="mi">641025641025641025</span><span class="n">D</span><span class="o">-</span><span class="mi">2</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">295506535947712418</span><span class="n">D</span><span class="o">-</span><span class="mi">1</span> <span class="p">,</span>          <span class="p">&amp;</span>
-     <span class="p">&amp;</span>     <span class="o">+</span><span class="p">.</span><span class="mi">179644372368830573</span><span class="n">D0</span> <span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">139243221690590111</span><span class="n">D1</span><span class="o">/</span>
+<span class="kt">DOUBLE PRECISION </span><span class="n">z</span><span class="p">,</span> <span class="n">z2</span><span class="p">,</span> <span class="n">z3</span><span class="p">,</span> <span class="n">z4</span><span class="p">,</span> <span class="n">z5</span><span class="p">,</span> <span class="n">den</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span>
+<span class="kt">DOUBLE PRECISION </span><span class="nb">DEXP</span><span class="p">,</span> <span class="nb">DLOG</span>
+<span class="k">DIMENSION </span><span class="n">d</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">DIMENSION </span><span class="n">Y</span><span class="p">(</span><span class="mi">7500</span><span class="p">),</span> <span class="n">W</span><span class="p">(</span><span class="mi">7500</span><span class="p">)</span>
+<span class="k">COMMON</span> <span class="o">/</span><span class="n">BLOCK2_real64</span><span class="o">/</span> <span class="n">WS</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span>
+<span class="k">EQUIVALENCE</span> <span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="k">EQUIVALENCE</span> <span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">7501</span><span class="p">))</span>
+<span class="k">DATA </span><span class="n">c</span><span class="o">/</span><span class="p">.</span><span class="mi">918938533204672741</span><span class="n">D0</span><span class="o">/</span>
+<span class="k">DATA </span><span class="n">d</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">d</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">d</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">d</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">d</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">/</span> <span class="o">+</span> <span class="p">.</span><span class="mi">833333333333333333</span><span class="n">D</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">277777777777777778</span><span class="n">D</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">+</span><span class="p">.</span><span class="mi">793650793650793651</span><span class="n">D</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span>          <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">-</span><span class="p">.</span><span class="mi">595238095238095238</span><span class="n">D</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">+</span><span class="p">.</span><span class="mi">841750841750841751</span><span class="n">D</span><span class="o">-</span><span class="mi">3</span><span class="o">/</span>
+<span class="k">DATA </span><span class="n">d</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">d</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="n">d</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span> <span class="n">d</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span> <span class="n">d</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span> <span class="o">-</span> <span class="p">.</span><span class="mi">191752691752691753</span><span class="n">D</span><span class="o">-</span><span class="mi">2</span><span class="p">,&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">+</span><span class="p">.</span><span class="mi">641025641025641025</span><span class="n">D</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">295506535947712418</span><span class="n">D</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>          <span class="p">&amp;</span>
+     <span class="p">&amp;</span>     <span class="o">+</span><span class="p">.</span><span class="mi">179644372368830573</span><span class="n">D0</span><span class="p">,</span> <span class="o">-</span><span class="p">.</span><span class="mi">139243221690590111</span><span class="n">D1</span><span class="o">/</span>
 <span class="c">!</span>
       <span class="n">iupper</span> <span class="o">=</span> <span class="mi">7500</span>
 <span class="c">!</span>
@@ -1644,27 +1633,21 @@ Engineering Division, National Institute of Standards and Technology.
 <span class="c">!</span>
       <span class="k">IF</span> <span class="p">(</span> <span class="n">N</span><span class="o">&lt;</span><span class="mi">1</span> <span class="p">.</span><span class="nb">OR</span><span class="p">.</span> <span class="n">N</span><span class="o">&gt;</span><span class="n">iupper</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span> <span class="n">iupper</span>
-<span class="mi">99001</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPLT SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
+         <span class="mi">99001</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--The second input argument to GAMPLT(3f) is outside the allowable (1,&#39;</span><span class="p">,&amp;</span>
+         <span class="p">&amp;</span> <span class="n">I0</span><span class="p">,</span><span class="s1">&#39;) interval *****&#39;</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span> <span class="n">N</span>
-<span class="mi">99002</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+         <span class="mi">99002</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** The value of the argument is &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
          <span class="k">RETURN</span>
 <span class="k">      </span><span class="n">ELSEIF</span> <span class="p">(</span> <span class="n">N</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">         WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span>
-<span class="mi">99003</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                   <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE GAMP&amp;</span>
-<span class="s1">     &amp;LT SUBROUTINE HAS THE VALUE 1 *****&#39;</span><span class="p">)</span>
+         <span class="mi">99003</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--The second input argument to GAMPLT(3f) has the value 1 *****&#39;</span><span class="p">)</span>
          <span class="k">RETURN</span>
 <span class="k">      ELSE</span>
 <span class="k">         IF</span> <span class="p">(</span> <span class="nb">Gamma</span><span class="o">&lt;=</span><span class="mf">0.0_wp</span> <span class="p">)</span> <span class="k">THEN</span>
 <span class="k">            WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span>
-<span class="mi">99004</span>       <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE GAMPLT SUBROU&amp;</span>
-<span class="s1">     &amp;TINE IS NON-POSITIVE *****&#39;</span><span class="p">)</span>
+            <span class="mi">99004</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** FATAL ERROR--The third input argument to GAMPLT(3f) is non-positive *****&#39;</span><span class="p">)</span>
             <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span> <span class="nb">Gamma</span>
-<span class="mi">99005</span>       <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span>    <span class="p">&amp;</span>
-     <span class="p">&amp;</span>              <span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="nb">            </span><span class="mi">99005</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** The value of the argument is &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
             <span class="k">RETURN</span>
 <span class="k">         ELSE</span>
 <span class="k">            </span><span class="n">hold</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -1672,9 +1655,8 @@ Engineering Division, National Institute of Standards and Technology.
                <span class="k">IF</span> <span class="p">(</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span> <span class="p">)</span> <span class="k">GOTO </span><span class="mi">50</span>
             <span class="k">ENDDO</span>
 <span class="k">            WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span> <span class="n">hold</span>
-<span class="mi">99006</span>       <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span>                                                <span class="p">&amp;</span>
-     <span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &amp;</span>
-<span class="s1">     &amp;TO THE GAMPLT SUBROUTINE HAS ALL ELEMENTS = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+            <span class="mi">99006</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to GAMPLT(3f) has all elements = &#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+            <span class="p">&amp;</span> <span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
             <span class="k">RETURN</span>
 <span class="k">         ENDIF</span>
 <span class="c">!</span>
@@ -1812,9 +1794,9 @@ Engineering Division, National Institute of Standards and Technology.
          <span class="n">tau</span> <span class="o">=</span> <span class="p">(</span><span class="n">pp9975</span><span class="o">-</span><span class="n">pp0025</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">pp975</span><span class="o">-</span><span class="n">pp025</span><span class="p">)</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span> <span class="nb">Gamma</span> <span class="p">,</span> <span class="n">tau</span> <span class="p">,</span> <span class="n">N</span>
 <span class="c">!</span>
-<span class="mi">99007</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;GAMMA PROBABILITY PLOT WITH SHAPE PARAMETER = &#39;</span><span class="p">,</span>  <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="n">E17</span><span class="p">.</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;(TAU = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">,</span><span class="mi">16</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;SAMPLE SIZE N = &#39;</span><span class="p">,</span>  <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="n">I0</span><span class="p">)</span>
+         <span class="mi">99007</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;Gamma probability plot with shape parameter = &#39;</span><span class="p">,</span>  <span class="p">&amp;</span>
+              <span class="p">&amp;</span>           <span class="n">E17</span><span class="p">.</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;(TAU = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">,</span><span class="mi">16</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;sample size N = &#39;</span><span class="p">,</span>  <span class="p">&amp;</span>
+              <span class="p">&amp;</span>           <span class="n">I0</span><span class="p">)</span>
 <span class="c">!</span>
 <span class="c">!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.</span>
 <span class="c">!     COMPUTE LOCATION AND SCALE ESTIMATES</span>
@@ -1841,9 +1823,9 @@ Engineering Division, National Institute of Standards and Technology.
          <span class="n">yslope</span> <span class="o">=</span> <span class="n">sum2</span><span class="o">/</span><span class="n">sum3</span>
          <span class="n">yint</span> <span class="o">=</span> <span class="n">ybar</span> <span class="o">-</span> <span class="n">yslope</span><span class="o">*</span><span class="n">wbar</span>
          <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99008</span><span class="p">)</span> <span class="n">cc</span> <span class="p">,</span> <span class="n">yint</span> <span class="p">,</span> <span class="n">yslope</span>
-<span class="mi">99008</span>    <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;PROBABILITY PLOT CORRELATION COEFFICIENT = &#39;</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">5</span><span class="p">,&amp;</span>
-     <span class="p">&amp;</span>           <span class="mi">5</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;ESTIMATED INTERCEPT = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="n">X</span><span class="p">,</span>                  <span class="p">&amp;</span>
-     <span class="p">&amp;</span>           <span class="s1">&#39;ESTIMATED SLOPE = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
+         <span class="mi">99008</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;Probability plot correlation coefficient = &#39;</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">5</span><span class="p">,&amp;</span>
+          <span class="p">&amp;</span>           <span class="mi">5</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;estimated intercept = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="n">X</span><span class="p">,</span>                  <span class="p">&amp;</span>
+          <span class="p">&amp;</span>           <span class="s1">&#39;estimated slope = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
 <span class="c">!</span>
          <span class="k">RETURN</span>
 <span class="k">      ENDIF</span>
@@ -1869,10 +1851,9 @@ Engineering Division, National Institute of Standards and Technology.
          <span class="k">IF</span> <span class="p">(</span> <span class="n">aj</span><span class="o">&gt;</span><span class="n">cutoff</span> <span class="p">)</span> <span class="k">GOTO </span><span class="mi">700</span>
       <span class="k">ENDDO</span>
 <span class="k">      WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99009</span><span class="p">)</span>
-<span class="mi">99009</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;*****ERROR IN INTERNAL OPERATIONS IN THE GAMPLT &#39;</span><span class="p">,</span>   <span class="p">&amp;</span>
-     <span class="p">&amp;</span>        <span class="s1">&#39;SUBROUTINE--THE NUMBER OF CDF ITERATIONS EXCEEDS 1000&#39;</span><span class="p">)</span>
+      <span class="mi">99009</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; *****Error in internal operations in the GAMPLT subroutine--The number of CDF iterations exceeds 1000&#39;</span><span class="p">)</span>
       <span class="k">WRITE</span> <span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99010</span><span class="p">)</span> <span class="nb">Gamma</span>
-<span class="mi">99010</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;     THE INPUT VALUE OF GAMMA IS &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
+<span class="nb">      </span><span class="mi">99010</span> <span class="k">FORMAT</span> <span class="p">(</span><span class="s1">&#39;      The input value of GAMMA is &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
  <span class="mi">700</span>  <span class="n">t</span> <span class="o">=</span> <span class="nb">sum</span>
 <span class="nb">      </span><span class="n">pcalc</span> <span class="o">=</span> <span class="p">(</span><span class="n">dx</span><span class="o">**</span><span class="n">dgamma</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nb">EXP</span><span class="p">(</span><span class="o">-</span><span class="n">dx</span><span class="p">))</span><span class="o">*</span><span class="n">t</span><span class="o">/</span><span class="n">g</span>
       <span class="k">IF</span> <span class="p">(</span> <span class="n">iloop</span><span class="o">==</span><span class="mi">1</span> <span class="p">)</span> <span class="k">THEN</span>
@@ -1918,7 +1899,7 @@ Engineering Division, National Institute of Standards and Technology.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-06-14 03:55  
+             on 2022-06-15 09:31  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> M_datapac was developed by John S. Urban</p></div>

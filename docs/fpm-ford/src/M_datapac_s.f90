@@ -9615,38 +9615,50 @@ END SUBROUTINE GAMCDF
 !!
 !!       SUBROUTINE GAMPLT(X,N,Gamma)
 !!
+!!        REAL(kind=wp),intent(in) :: X(:)
+!!        INTEGER,intent(in)       :: N
+!!        REAL(kind=wp),intent(in) :: Gamma
+!!
 !!##DESCRIPTION
 !!    GAMPLT(3f) generates a gamma probability plot (with tail length
-!!    parameter value = gamma).
+!!    parameter value = GAMMA).
 !!
-!!    the prototype gamma distribution used herein has mean = gamma and
-!!    standard deviation = sqrt(gamma).
+!!    The prototype gamma distribution used herein has mean = GAMMA and
+!!    standard deviation = sqrt(GAMMA).
 !!
-!!    this distribution is defined for all positive x, and has the
+!!    This distribution is defined for all positive X, and has the
 !!    probability density function
 !!
-!!        f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!        f(X) = (1/constant) * (X**(GAMMA-1)) * exp(-X)
 !!
-!!    where the constant = the gamma function evaluated at the value gamma.
+!!    Where the constant = the gamma function evaluated at the value GAMMA.
 !!
-!!    as used herein, a probability plot for a distribution is a plot
+!!    As used herein, a probability plot for a distribution is a plot
 !!    of the ordered observations versus the order statistic medians for
 !!    that distribution.
 !!
-!!    the gamma probability plot is useful in graphically testing the
+!!    The gamma probability plot is useful in graphically testing the
 !!    composite (that is, location and scale parameters need not be
 !!    specified) hypothesis that the underlying distribution from which
 !!    the data have been randomly drawn is the gamma distribution with
-!!    tail length parameter value = gamma.
+!!    tail length parameter value = GAMMA.
 !!
-!!    if the hypothesis is true, the probability plot should be near-linear.
+!!    If the hypothesis is true, the probability plot should be near-linear.
 !!
-!!    a measure of such linearity is given by the calculated probability
+!!    A measure of such linearity is given by the calculated probability
 !!    plot correlation coefficient.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    X       The vector of (unsorted or sorted) observations.
+!!
+!!    N       The integer number of observations in the vector X.
+!!            The maximum allowable value of N for this subroutine is 7500.
+!!
+!!    GAMMA   The value of the tail length parameter. Gamma should be positive.
+!!
+!!##OUTPUT
+!!    A one-page gamma probability plot.
 !!
 !!##EXAMPLES
 !!
@@ -9661,73 +9673,58 @@ END SUBROUTINE GAMCDF
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
+!!
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
+!!
 !!##LICENSE
 !!    CC0-1.0
+!!
 !!##REFERENCES
-!!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
-!!     DISTRIBUTION', TECHNOMETRICS, 1962, pages 1-15.
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     page 257, FORMULA 6.1.41.
-!!   * FILLIBEN, 'TECHNIQUES FOR TAIL LENGTH ANALYSIS', PROCEEDINGS OF THE
-!!     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
-!!     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
+!!   * Wilk, Gnanadesikan, and Huyett, 'Probability Plots for the Gamma
+!!     Distribution', Technometrics, 1962, pages 1-15.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     page 257, Formula 6.1.41.
+!!   * Filliben, 'Techniques for Tail Length Analysis', Proceedings of the
+!!     Eighteenth Conference on the Design of Experiments in Army Research
+!!     Development and Testing (Aberdeen, Maryland, October, 1972), pages
 !!     425-450.
-!!   * HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
+!!   * Hahn and Shapiro, Statistical Methods in Engineering, 1967, pages
 !!     260-308.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     pages 166-206.
-! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-SUBROUTINE GAMPLT(X,N,Gamma)
-REAL(kind=wp) :: acount , aj , an , cc , cut1 , cut2 , cutoff , dgamma , dp , &
-     &     dx , g , Gamma , hold , pcalc , pp0025 , pp025 , pp975 ,     &
-     &     pp9975 , sum , sum1
-REAL(kind=wp) :: sum2 , sum3 , t , tau , term , u , W , wbar , WS , X , xdel ,&
-     &     xlower , xmax , xmid , xmin , xmin0 , xupper , Y , ybar ,    &
-     &     yint
-REAL(kind=wp) :: yslope
-INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
-!
-!     INPUT ARGUMENTS--X      = THE  VECTOR OF
-!                                (UNSORTED OR SORTED) OBSERVATIONS.
-!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
-!                                IN THE VECTOR X.
-!                     --GAMMA  = THE  VALUE OF THE
-!                                TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT--A ONE-page GAMMA PROBABILITY PLOT.
-!     PRINTING--YES.
-!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N
-!                   FOR THIS SUBROUTINE IS 7500.
-!                 --GAMMA SHOULD BE POSITIVE.
-!     OTHER DATAPAC   SUBROUTINES NEEDED--SORT, UNIMED, PLOT.
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT, ABS, EXP, DEXP, DLOG.
-!     MODE OF INTERNAL OPERATIONS-- AND DOUBLE PRECISION
 !     ORIGINAL VERSION--NOVEMBER  1974.
 !     UPDATED         --SEPTEMBER 1975.
 !     UPDATED         --NOVEMBER  1975.
 !     UPDATED         --FEBRUARY  1976.
-!
+! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
+
+SUBROUTINE GAMPLT(X,N,Gamma)
+REAL(kind=wp),intent(in) :: X(:)
+INTEGER,intent(in)       :: N
+REAL(kind=wp),intent(in) :: Gamma
+REAL(kind=wp) :: acount, aj, an, cc, cut1, cut2, cutoff, dgamma, dp, dx, g, hold, pcalc, pp0025, pp025, pp975, pp9975, sum, sum1
+REAL(kind=wp) :: sum2, sum3, t, tau, term, u, W, wbar, WS, xdel, xlower, xmax, xmid, xmin, xmin0, xupper, Y, ybar, yint
+REAL(kind=wp) :: yslope
+INTEGER i, icount, iloop, ip1, itail, iupper, j
 !---------------------------------------------------------------------
-!
-      DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d
-      DOUBLE PRECISION DEXP , DLOG
-      DIMENSION d(10)
-      DIMENSION X(:)
-      DIMENSION Y(7500) , W(7500)
-      COMMON /BLOCK2_real32/ WS(15000)
-      EQUIVALENCE (Y(1),WS(1))
-      EQUIVALENCE (W(1),WS(7501))
-      DATA c/.918938533204672741D0/
-      DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
-     &     -.277777777777777778D-2 , +.793650793650793651D-3 ,          &
-     &     -.595238095238095238D-3 , +.841750841750841751D-3/
-      DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
-     &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
-     &     +.179644372368830573D0 , -.139243221690590111D1/
+DOUBLE PRECISION z, z2, z3, z4, z5, den, a, b, c, d
+DOUBLE PRECISION DEXP, DLOG
+DIMENSION d(10)
+DIMENSION Y(7500), W(7500)
+COMMON /BLOCK2_real32/ WS(15000)
+EQUIVALENCE (Y(1),WS(1))
+EQUIVALENCE (W(1),WS(7501))
+DATA c/.918938533204672741D0/
+DATA d(1), d(2), d(3), d(4), d(5)/ + .833333333333333333D-1, &
+     &     -.277777777777777778D-2, +.793650793650793651D-3,          &
+     &     -.595238095238095238D-3, +.841750841750841751D-3/
+DATA d(6), d(7), d(8), d(9), d(10)/ - .191752691752691753D-2,&
+     &     +.641025641025641025D-2, -.295506535947712418D-1,          &
+     &     +.179644372368830573D0, -.139243221690590111D1/
 !
       iupper = 7500
 !
@@ -9735,27 +9732,21 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 !
       IF ( N<1 .OR. N>iupper ) THEN
          WRITE (G_IO,99001) iupper
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPLT SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (1,',I0,') INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--The second input argument to GAMPLT(3f) is outside the allowable (1,',&
+         & I0,') interval *****')
          WRITE (G_IO,99002) N
-99002    FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',I0,' *****')
+         99002 FORMAT (' ','***** The value of the argument is ',I0,' *****')
          RETURN
       ELSEIF ( N==1 ) THEN
          WRITE (G_IO,99003)
-99003    FORMAT (' ',                                                   &
-     &'***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE GAMP&
-     &LT SUBROUTINE HAS THE VALUE 1 *****')
+         99003 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The second input argument to GAMPLT(3f) has the value 1 *****')
          RETURN
       ELSE
          IF ( Gamma<=0.0_wp ) THEN
             WRITE (G_IO,99004)
-99004       FORMAT (' ',                                                &
-     &'***** FATAL ERROR--THE THIRD  INPUT ARGUMENT TO THE GAMPLT SUBROU&
-     &TINE IS NON-POSITIVE *****')
+            99004 FORMAT (' ***** FATAL ERROR--The third input argument to GAMPLT(3f) is non-positive *****')
             WRITE (G_IO,99005) Gamma
-99005       FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,    &
-     &              ' *****')
+            99005 FORMAT (' ','***** The value of the argument is ',E15.8,' *****')
             RETURN
          ELSE
             hold = X(1)
@@ -9763,9 +9754,8 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
                IF ( X(i)/=hold ) GOTO 50
             ENDDO
             WRITE (G_IO,99006) hold
-99006       FORMAT (' ',                                                &
-     &'***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &
-     &TO THE GAMPLT SUBROUTINE HAS ALL ELEMENTS = ',E15.8,' *****')
+            99006 FORMAT (' ***** NON-FATAL DIAGNOSTIC--The first input argument (a vector) to GAMPLT(3f) has all elements = ', &
+            & E15.8,' *****')
             RETURN
          ENDIF
 !
@@ -9903,9 +9893,9 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
          tau = (pp9975-pp0025)/(pp975-pp025)
          WRITE (G_IO,99007) Gamma , tau , N
 !
-99007    FORMAT (' ','GAMMA PROBABILITY PLOT WITH SHAPE PARAMETER = ',  &
-     &           E17.10,1X,'(TAU = ',E15.8,')',16X,'SAMPLE SIZE N = ',  &
-     &           I0)
+         99007    FORMAT (' ','Gamma probability plot with shape parameter = ',  &
+              &           E17.10,1X,'(TAU = ',E15.8,')',16X,'sample size N = ',  &
+              &           I0)
 !
 !     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.
 !     COMPUTE LOCATION AND SCALE ESTIMATES
@@ -9932,9 +9922,9 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
          yslope = sum2/sum3
          yint = ybar - yslope*wbar
          WRITE (G_IO,99008) cc , yint , yslope
-99008    FORMAT (' ','PROBABILITY PLOT CORRELATION COEFFICIENT = ',F8.5,&
-     &           5X,'ESTIMATED INTERCEPT = ',E15.8,3X,                  &
-     &           'ESTIMATED SLOPE = ',E15.8)
+         99008 FORMAT (' ','Probability plot correlation coefficient = ',F8.5,&
+          &           5X,'estimated intercept = ',E15.8,3X,                  &
+          &           'estimated slope = ',E15.8)
 !
          RETURN
       ENDIF
@@ -9960,10 +9950,9 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
          IF ( aj>cutoff ) GOTO 700
       ENDDO
       WRITE (G_IO,99009)
-99009 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMPLT ',   &
-     &        'SUBROUTINE--THE NUMBER OF CDF ITERATIONS EXCEEDS 1000')
+      99009 FORMAT (' *****Error in internal operations in the GAMPLT subroutine--The number of CDF iterations exceeds 1000')
       WRITE (G_IO,99010) Gamma
-99010 FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
+      99010 FORMAT ('      The input value of GAMMA is ',E15.8)
  700  t = sum
       pcalc = (dx**dgamma)*(EXP(-dx))*t/g
       IF ( iloop==1 ) THEN
@@ -9990,31 +9979,43 @@ INTEGER i , icount , iloop , ip1 , itail , iupper , j , N
 END SUBROUTINE GAMPLT
 !>
 !!##NAME
-!!    gamppf(3f) - [M_datapac:PERCENT_POINT] compute the gamma percent point function
+!!    gamppf(3f) - [M_datapac:PERCENT_POINT] compute the gamma percent
+!!    point function
 !!
 !!##SYNOPSIS
 !!
 !!       SUBROUTINE GAMPPF(P,Gamma,Ppf)
 !!
+!!        REAL(kind=wp),intent(in)  :: P
+!!        REAL(kind=wp),intent(in)  :: Gamma
+!!        REAL(kind=wp),intent(out) :: Ppf
+!!
 !!##DESCRIPTION
-!!    gamppf(3f) computes the percent point function value for the gamma
-!!    distribution with REAL tail length parameter = gamma.
+!!    GAMPPF(3f) computes the percent point function value for the gamma
+!!    distribution with REAL tail length parameter = GAMMA.
 !!
-!!    the gamma distribution used herein has mean = gamma and standard
-!!    deviation = sqrt(gamma). this distribution is defined for all positive
-!!    x, and has the probability density function
+!!    The gamma distribution used herein has mean = GAMMA and standard
+!!    deviation = sqrt(GAMMA). This distribution is defined for all positive
+!!    X, and has the probability density function
 !!
-!!        f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+!!        f(X) = (1/constant) * (X**(GAMMA-1)) * exp(-X)
 !!
-!!    where the constant = the gamma function evaluated at the value gamma.
+!!    where the constant = the gamma function evaluated at the value GAMMA.
 !!
-!!    note that the percent point function of a distribution is identically
+!!    Note that the percent point function of a distribution is identically
 !!    the same as the inverse cumulative distribution function of the
 !!    distribution.
 !!
-!!##OPTIONS
-!!     X   description of parameter
-!!     Y   description of parameter
+!!##INPUT ARGUMENTS
+!!
+!!    P       The value (between 0.0 (exclusively) and 1.0 (exclusively))
+!!            at which the percent point function is to be evaluated.
+!!
+!!    GAMMA   The value of the tail length parameter. GAMMA should be positive.
+!!
+!!##OUTPUT ARGUMENTS
+!!
+!!    PPF     The percent point function value for the gamma distribution
 !!
 !!##EXAMPLES
 !!
@@ -10029,45 +10030,33 @@ END SUBROUTINE GAMPLT
 !!   Results:
 !!
 !!##AUTHOR
-!!    The original DATAPAC library was written by James Filliben of the Statistical
-!!    Engineering Division, National Institute of Standards and Technology.
+!!    The original DATAPAC library was written by James Filliben of the
+!!    Statistical Engineering Division, National Institute of Standards
+!!    and Technology.
 !!##MAINTAINER
 !!    John Urban, 2022.05.31
 !!##LICENSE
 !!    CC0-1.0
 !!##REFERENCES
-!!   * WILK, GNANADESIKAN, AND HUYETT, 'PROBABILITY PLOTS FOR THE GAMMA
-!!     DISTRIBUTION', TECHNOMETRICS, 1962, pages 1-15, ESPECIALLY pages 3-5.
-!!   * NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-!!     page 257, FORMULA 6.1.41.
-!!   * JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS--1, 1970,
+!!   * Wilk, Gnanadesikan, and Huyett, 'Probability Plots for the Gamma
+!!     Distribution', Technometrics, 1962, pages 1-15, especially pages 3-5.
+!!   * National Bureau of Standards Applied Mathematics Series 55, 1964,
+!!     page 257, Formula 6.1.41.
+!!   * Johnson and Kotz, Continuous Univariate Distributions--1, 1970,
 !!     pages 166-206.
-!!   * HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS--A HANDBOOK FOR
-!!     STUDENTS AND PRACTITIONERS, 1975, pages 68-73.
+!!   * Hastings and Peacock, Statistical Distributions--A Handbook for
+!!     Students and Practitioners, 1975, pages 68-73.
+!     ORIGINAL VERSION--NOVEMBER  1974.
+!     UPDATED         --SEPTEMBER 1975.
+!     UPDATED         --NOVEMBER  1975.
 ! processed by SPAG 7.51RB at 12:54 on 18 Mar 2022
-      SUBROUTINE GAMPPF(P,Gamma,Ppf)
-REAL(kind=wp) :: Gamma , P , Ppf
+
+SUBROUTINE GAMPPF(P,Gamma,Ppf)
+REAL(kind=wp),intent(in)  :: P
+REAL(kind=wp),intent(in)  :: Gamma
+REAL(kind=wp),intent(out) :: Ppf
 INTEGER :: icount , iloop , j , maxit
 !
-!     INPUT ARGUMENTS--P      = THE  VALUE
-!                                (BETWEEN 0.0 (EXCLUSIVELY)
-!                                AND 1.0 (EXCLUSIVELY))
-!                                AT WHICH THE PERCENT POINT
-!                                FUNCTION IS TO BE EVALUATED.
-!                     --GAMMA  = THE  VALUE OF THE
-!                                TAIL LENGTH PARAMETER.
-!                                GAMMA SHOULD BE POSITIVE.
-!     OUTPUT ARGUMENTS--PPF    = THE  PERCENT
-!                                POINT FUNCTION VALUE.
-!     OUTPUT--THE  PERCENT POINT FUNCTION .
-!             VALUE PPF FOR THE GAMMA DISTRIBUTION
-!             WITH TAIL LENGTH PARAMETER VALUE = GAMMA.
-!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
-!     RESTRICTIONS--GAMMA SHOULD BE POSITIVE.
-!                 --P SHOULD BE BETWEEN 0.0 (EXCLUSIVELY)
-!                   AND 1.0 (EXCLUSIVELY).
-!     FORTRAN LIBRARY SUBROUTINES NEEDED--DEXP, DLOG.
-!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
 !     ACCURACY--(ON THE UNIVAC 1108, EXEC 8 SYSTEM AT NBS)
 !               COMPARED TO THE KNOWN GAMMA = 1 (EXPONENTIAL)
 !               RESULTS, AGREEMENT WAS HAD OUT TO 6 SIGNIFICANT
@@ -10080,24 +10069,21 @@ INTEGER :: icount , iloop , j , maxit
 !               THE WORST DETECTED ERROR WAS AGREEMENT TO ONLY 3
 !               SIGNIFICANT DIGITS (IN THEIR 8 SIGNIFICANT DIGIT TABLE)
 !               FOR P = .999.)
-!     ORIGINAL VERSION--NOVEMBER  1974.
-!     UPDATED         --SEPTEMBER 1975.
-!     UPDATED         --NOVEMBER  1975.
 !
 !---------------------------------------------------------------------
 !
-      DOUBLE PRECISION dp , dgamma
-      DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d , g
-      DOUBLE PRECISION xmin0 , xmin , ai , xmax , dx , pcalc , xmid
-      DOUBLE PRECISION xlower , xupper , xdel
-      DOUBLE PRECISION sum , term , cut1 , cut2 , aj , cutoff , t
-      DOUBLE PRECISION DEXP , DLOG
-      DIMENSION d(10)
-      DATA c/.918938533204672741D0/
-      DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
+DOUBLE PRECISION dp , dgamma
+DOUBLE PRECISION z , z2 , z3 , z4 , z5 , den , a , b , c , d , g
+DOUBLE PRECISION xmin0 , xmin , ai , xmax , dx , pcalc , xmid
+DOUBLE PRECISION xlower , xupper , xdel
+DOUBLE PRECISION sum , term , cut1 , cut2 , aj , cutoff , t
+DOUBLE PRECISION DEXP , DLOG
+DIMENSION d(10)
+DATA c/.918938533204672741D0/
+DATA d(1) , d(2) , d(3) , d(4) , d(5)/ + .833333333333333333D-1 , &
      &     -.277777777777777778D-2 , +.793650793650793651D-3 ,          &
      &     -.595238095238095238D-3 , +.841750841750841751D-3/
-      DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
+DATA d(6) , d(7) , d(8) , d(9) , d(10)/ - .191752691752691753D-2 ,&
      &     +.641025641025641025D-2 , -.295506535947712418D-1 ,          &
      &     +.179644372368830573D0 , -.139243221690590111D1/
 !
@@ -10105,17 +10091,13 @@ INTEGER :: icount , iloop , j , maxit
 !
       IF ( P<=0.0_wp .OR. P>=1.0_wp ) THEN
          WRITE (G_IO,99001)
-99001    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE FIRST  INPUT ARGUMENT TO THE GAMPPF SUBROU&
-     &TINE IS OUTSIDE THE ALLOWABLE (0,1) INTERVAL *****')
+         99001 FORMAT (' ***** FATAL ERROR--The first input argument to GAMPPF(3f) is outside the allowable (0,1) interval *****')
          WRITE (G_IO,99007) P
          Ppf = 0.0_wp
          RETURN
       ELSEIF ( Gamma<=0.0_wp ) THEN
          WRITE (G_IO,99002)
-99002    FORMAT (' ',                                                   &
-     &'***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE GAMPPF SUBROU&
-     &TINE IS NON-POSITIVE *****')
+         99002 FORMAT (' ***** FATAL ERROR--The second input argument to GAMPPF(3f) is non-positive *****')
          WRITE (G_IO,99007) Gamma
          Ppf = 0.0_wp
          RETURN
@@ -10196,14 +10178,13 @@ INTEGER :: icount , iloop , j , maxit
       ENDDO
       WRITE (G_IO,99003) maxit
 !
-99003 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS IN THE GAMPPF ',   &
-     &        'SUBROUTINE--THE NUMBER OF ITERATIONS EXCEEDS ',I0)
+      99003 FORMAT (' ','*****ERROR IN INTERNAL OPERATIONS in GAMPPF(3f) --The number of iterations exceeds ',I0)
       WRITE (G_IO,99004) P
-99004 FORMAT (' ','     THE INPUT VALUE OF P     IS ',E15.8)
+      99004 FORMAT (' ','     The input value of P     is ',E15.8)
       WRITE (G_IO,99005) Gamma
-99005 FORMAT (' ','     THE INPUT VALUE OF GAMMA IS ',E15.8)
+      99005 FORMAT (' ','     The input value of GAMMA is ',E15.8)
       WRITE (G_IO,99006)
-99006 FORMAT (' ','     THE OUTPUT VALUE OF PPF HAS BEEN SET TO 0.0')
+      99006 FORMAT (' ','     The output value of PPF has been set to 0.0')
       Ppf = 0.0_wp
       RETURN
 !
@@ -10230,7 +10211,7 @@ INTEGER :: icount , iloop , j , maxit
          IF ( xdel>=0.0000000001D0 .AND. icount<=100 ) GOTO 300
          GOTO 400
       ENDIF
-99007 FORMAT (' ','***** THE VALUE OF THE ARGUMENT IS ',E15.8,' *****')
+99007 FORMAT (' ***** The value of the argument is ',E15.8,' *****')
 !
 END SUBROUTINE GAMPPF
 !>

@@ -53,27 +53,36 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 
 </A>
 <BLOCKQUOTE>
-<B>gamppf</B>(3f) - [M_datapac:PERCENT_POINT] compute the gamma percent point function
+<B>gamppf</B>(3f) - [M_datapac:PERCENT_POINT] compute the gamma percent
+point function
 <P>
 </BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
 <BLOCKQUOTE>
 <A HREF=#1>Synopsis</A><BR>
 <A HREF=#2>Description</A><BR>
-<A HREF=#3>Options</A><BR>
-<A HREF=#4>Examples</A><BR>
-<A HREF=#5>Author</A><BR>
-<A HREF=#6>Maintainer</A><BR>
-<A HREF=#7>License</A><BR>
-<A HREF=#8>References</A><BR>
+<A HREF=#3>Input Arguments</A><BR>
+<A HREF=#4>Output Arguments</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>Maintainer</A><BR>
+<A HREF=#8>License</A><BR>
+<A HREF=#9>References</A><BR>
 </BLOCKQUOTE>
-<A name=9>
+<A name=10>
 
      <H3>SYNOPSIS</H3>
 
 </A>
 <BLOCKQUOTE>
 SUBROUTINE <B>GAMPPF</B>(P,Gamma,Ppf)
+<P>
+<PRE>
+       REAL(kind=wp),intent(in)  :: P
+       REAL(kind=wp),intent(in)  :: Gamma
+       REAL(kind=wp),intent(out) :: Ppf
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=2>
 
@@ -81,40 +90,55 @@ SUBROUTINE <B>GAMPPF</B>(P,Gamma,Ppf)
 
 </A>
 <BLOCKQUOTE>
-<B>gamppf</B>(3f) computes the percent point function value for the gamma
-distribution with REAL tail length parameter = gamma.
+<B>GAMPPF</B>(3f) computes the percent point function value for the gamma
+distribution with REAL tail length parameter = GAMMA.
 <P>
-the gamma distribution used herein has mean = gamma and standard
-deviation = <B>sqrt</B>(gamma). this distribution is defined for all positive
-x, and has the probability density function
+The gamma distribution used herein has mean = GAMMA and standard
+deviation = <B>sqrt</B>(GAMMA). This distribution is defined for all positive
+X, and has the probability density function
 <P>
 <PRE>
-       f(x) = (1/constant) * (x**(gamma-1)) * exp(-x)
+       f(X) = (1/constant) * (X**(GAMMA-1)) * exp(-X)
 <P>
 </PRE>
-where the constant = the gamma function evaluated at the value gamma.
+where the constant = the gamma function evaluated at the value GAMMA.
 <P>
-note that the percent point function of a distribution is identically
+Note that the percent point function of a distribution is identically
 the same as the inverse cumulative distribution function of the
 distribution.
 </BLOCKQUOTE>
 <A name=3>
 
-     <H3>OPTIONS</H3>
+     <H3>INPUT ARGUMENTS</H3>
 
 </A>
 <BLOCKQUOTE>
+<P>
 <TABLE cellpadding=3>
 <TR valign=top><TD width=6% nowrap>
-<B>X</B> </TD><TD valign=bottom>
-description of parameter
+<B>P</B> </TD><TD valign=bottom>
+The value (between 0.0 (exclusively) and 1.0 (exclusively))
+at which the percent point function is to be evaluated.
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
-<B>Y</B> </TD><TD valign=bottom>
-description of parameter
+<B>GAMMA</B> </TD><TD valign=bottom>
+The value of the tail length parameter. GAMMA should be positive.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
+
+     <H3>OUTPUT ARGUMENTS</H3>
+
+</A>
+<BLOCKQUOTE>
+<P>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B>PPF</B> </TD><TD valign=bottom>
+The percent point function value for the gamma distribution
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
 
      <H3>EXAMPLES</H3>
 
@@ -132,16 +156,17 @@ Sample program:
 </PRE>
 Results:
 </BLOCKQUOTE>
-<A name=5>
+<A name=6>
 
      <H3>AUTHOR</H3>
 
 </A>
 <BLOCKQUOTE>
-The original DATAPAC library was written by James Filliben of the Statistical
-Engineering Division, National Institute of Standards and Technology.
+The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
 </BLOCKQUOTE>
-<A name=6>
+<A name=7>
 
      <H3>MAINTAINER</H3>
 
@@ -149,7 +174,7 @@ Engineering Division, National Institute of Standards and Technology.
 <BLOCKQUOTE>
 John Urban, 2022.05.31
 </BLOCKQUOTE>
-<A name=7>
+<A name=8>
 
      <H3>LICENSE</H3>
 
@@ -157,7 +182,7 @@ John Urban, 2022.05.31
 <BLOCKQUOTE>
 CC0-1.0
 </BLOCKQUOTE>
-<A name=8>
+<A name=9>
 
      <H3>REFERENCES</H3>
 
@@ -167,30 +192,30 @@ CC0-1.0
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-WILK, GNANADESIKAN, AND HUYETT, &#146;PROBABILITY PLOTS FOR THE GAMMA
-DISTRIBUTION&#146;, TECHNOMETRICS, 1962, pages 1-15, ESPECIALLY pages 3-5.
+Wilk, Gnanadesikan, and Huyett, &#146;Probability Plots for the Gamma
+Distribution&#146;, Technometrics, 1962, pages 1-15, especially pages 3-5.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-NATIONAL BUREAU OF STANDARDS APPLIED MATHEMATICS SERIES 55, 1964,
-page 257, FORMULA 6.1.41.
+National Bureau of Standards Applied Mathematics Series 55, 1964,
+page 257, Formula 6.1.41.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS-<B>-1</B>, 1970,
+Johnson and Kotz, Continuous Univariate Distributions-<B>-1</B>, 1970,
 pages 166-206.
 </TD></TR>
 <TR valign=top><TD width=3%>
 o
 </TD><TD>
-HASTINGS AND PEACOCK, STATISTICAL DISTRIBUTIONS-<B>-A</B> HANDBOOK FOR
-STUDENTS AND PRACTITIONERS, 1975, pages 68-73.
+Hastings and Peacock, Statistical Distributions-<B>-A</B> Handbook for
+Students and Practitioners, 1975, pages 68-73.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>gamppf (3m_datapac)</TD> <TD align=right width=33%><I>June 14, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 53e9f7cc-d63a-4fb7-8613-487738931dc8 using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>gamppf (3m_datapac)</TD> <TD align=right width=33%><I>June 15, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 33f37699-3697-455e-b4ff-b5d89606a644 using man macros.</FONT>
 <br><br><center><img src="images/gamppf.gif"></center>
 </div>
 </div>
