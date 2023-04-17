@@ -1,0 +1,663 @@
+      SUBROUTINE UNIRAN(N,ISEED,X)
+C
+C     PURPOSE--THIS SUBROUTINE GENERATES A RANDOM SAMPLE OF SIZE N
+C              FROM THE UNIFORM (RECTANGULAR)
+C              DISTRIBUTION ON THE UNIT INTERVAL (0,1).
+C              THIS DISTRIBUTION HAS MEAN = 0.5
+C              AND STANDARD DEVIATION = SQRT(1/12) = 0.28867513.
+C              THIS DISTRIBUTION HAS THE PROBABILITY
+C              DENSITY FUNCTION F(X) = 1.
+C
+C     INPUT  ARGUMENTS--N      = THE DESIRED INTEGER NUMBER
+C                                OF RANDOM NUMBERS TO BE
+C                                GENERATED.
+C                     --ISEED  = AN INTEGER ISEED VALUE
+C     OUTPUT ARGUMENTS--X      = A SINGLE PRECISION VECTOR
+C                                (OF DIMENSION AT LEAST N)
+C                                INTO WHICH THE GENERATED
+C                                RANDOM SAMPLE WILL BE PLACED.
+C     OUTPUT--A RANDOM SAMPLE OF SIZE N
+C             FROM THE RECTANGULAR DISTRIBUTION ON (0,1).
+C     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+C     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+C                   OF N FOR THIS SUBROUTINE.
+C     OTHER           SUBROUTINES NEEDED--NONE.
+C     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+C     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+C     LANGUAGE--ANSI FORTRAN (1977)
+C
+C     ALGORITHM--FIBONACCI GENERATOR
+C                AS DEFINED BY GEORGE MARSAGLIA.
+C
+C     NOTE--THIS GENERATOR IS TRANSPORTABLE.
+C           IT IS NOT MACHINE-INDEPENDENT
+C           IN THE SENSE THAT FOR A GIVEN VALUE
+C           OF THE INPUT SEED ISEED AND FOR A GIVEN VALUE
+C           OF MDIG (TO BE DEFINED BELOW),
+C           THE SAME SEQUENCE OF UNIRFORM RANDOM
+C           NUMBERS WILL RESULT ON DIFFERENT COMPUTERS
+C           (VAX, PRIME, PERKIN-ELMER, IBM, UNIVAC, HONEYWELL, ETC.)
+C
+C     NOTE--IF MDIG = 32 AND IF ISEED = 305,
+C           THEN THE OUTPUT FROM THIS GENERATOR SHOULD BE AS FOLLOWS--
+C           THE FIRST      NUMBER TO RESULT IS .4771580...
+C           THE SECOND     NUMBER TO RESULT IS .4219293...
+C           THE THIRD      NUMBER TO RESULT IS .6646181...
+C           ...
+C           THE THOUSANDTH NUMBER TO RESULT IS .2036834...
+C
+C     NOTE--IF MDIG = 16 AND IF ISEED = 305,
+C           THEN THE OUTPUT FROM THIS GENERATOR SHOULD BE AS FOLLOWS--
+C           THE FIRST      NUMBER TO RESULT IS .027832881...
+C           THE SECOND     NUMBER TO RESULT IS .56102176...
+C           THE THIRD      NUMBER TO RESULT IS .41456343...
+C           ...
+C           THE THOUSANDTH NUMBER TO RESULT IS .19797357...
+C
+C     NOTE--IT IS RECOMMENDED THAT UPON
+C           IMPLEMENTATION OF DATAPLOT, THE OUTPUT
+C           FROM UNIRAN BE CHECKED FOR AGREEMENT
+C           WITH THE ABOVE SAMPLE OUTPUT.
+C           ALSO, THERE ARE MANY ANALYSIS AND DIAGNOSTIC
+C           TOOLS IN DATAPLOT THAT WILL ALLOW THE
+C           TESTING OF THE RANDOMNESS AND UNIFORMITY
+C           OF THIS GENERATOR.
+C           SUCH CHECKING IS ESPECIALLY IMPORTANT
+C           IN LIGHT OF THE FACT THAT OTHER DATAPLOT RANDOM
+C           NUMBER GENERATOR SUBROUTINES (NORRAN--NORMAL,
+C           LOGRAN--LOGISTIC, ETC.) ALL MAKE USE OF INTERMEDIATE
+C           OUTPUT FROM UNIRAN.
+C
+C     NOTE--THE OUTPUT FROM THIS SUBROUTINE DEPENDS
+C           ON THE INPUT SEED (ISEED) AND ON THE
+C           VALUE OF MDIG.
+C           MDIG MAY NOT BE SMALLER THAN 16.
+C           MDIG MAY NOT BE LARGER THAN MAX INTEGER ON YOUR COMPUTER.
+C
+C     NOTE--BECAUSE OF THE PREPONDERANCE OF MAINFRAMES
+C           WHICH HAVE WORDS OF 32 BITS AND LARGER
+C           (E.G, VAX (= 32 BITS), UNIVAC (= 36 BITS), CDC (= 60 BITS), ETC.)
+C           MDIG HAS BEEN SET TO 32.
+C           THUS THE SAME SEQUENCE OF RANDOM NUMBERS SHOULD RESULT
+C           ON ALL OF THESE COMPUTERS.
+C
+C     NOTE--FOR SMALLER WORD SIZE COMPUTERS (E.G., 24-BIT AND 16-BIT),
+C           THE VALUE OF MDIG SHOULD BE CHANGED TO 24 OR 16.
+C           IN SUCH CASE, THE OUTPUT WILL NOT BE IDENTICAL TO
+C           THE OUTPUT WHEN MDIG = 32.
+C
+C     NOTE--THE CYCLE OF THE RANDOM NUMBERS DEPENDS ON MDIG.
+C           THE CYCLE FROM MDIG = 32 IS LONG ENOUGH FOR MOST
+C           PRACTICAL APPLICATIONS.
+C           IF A LONGER CYCLE IS DESIRED, THEN INCREASE MDIG.
+C
+C     NOTE--THE SEED MAY BE ANY POSITIVE INTEGER.
+C           NO APPRECIABLE DIFFERENCE IN THE QUALITY
+C           OF THE RANDOM NUMBERS HAS BEEN NOTED
+C           BY THE CHOICE OF THE SEED.  THERE IS NO
+C           NEED TO USE PRIMES, NOR TO USE EXCEPTIONALLY
+C           LARGE NUMBERS, ETC.
+C
+C     REFERENCES--MARSAGLIA G., "COMMENTS ON THE PERFECT UNIFORM RANDOM
+C                 NUMBER GENERATOR", UNPUBLISHED NOTES, WASH S. U.
+C               --JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE
+C                 DISTRIBUTIONS--2, 1970, PAGES 57-74.
+C     WRITTEN BY--JAMES BLUE
+C                 SCIENTIFIC COMPUTING DIVISION
+C                 CENTER FOR APPLIED MATHEMATICS
+C                 NATIONAL BUREAU OF STANDARDS
+C                 WASHINGTON, D. C. 20234
+C               --DAVID KAHANER
+C                 SCIENTIFIC COMPUTING DIVISION
+C                 CENTER FOR APPLIED MATHEMATICS
+C                 NATIONAL BUREAU OF STANDARDS
+C               --GEORGE MARSAGLIA
+C                 COMPUTER SCIENCE DEPARTMENT
+C                 WASHINGTON STATE UNIVERSITY
+C               --JAMES J. FILLIBEN
+C                 STATISTICAL ENGINEERING DIVISION
+C                 CENTER FOR APPLIED MATHEMATICS
+C                 NATIONAL BUREAU OF STANDARDS
+C
+C     LANGUAGE--ANSI FORTRAN (1977)
+C     ORIGINAL VERSION--JUNE      1972.
+C     UPDATED         --AUGUST    1974.
+C     UPDATED         --SEPTEMBER 1975.
+C     UPDATED         --NOVEMBER  1975.
+C     UPDATED         --NOVEMBER  1981.
+C     UPDATED         --MAY       1982.
+C     UPDATED         --MARCH     1984.
+C     UPDATED         --MAY       2002. ADD SUPPORT FOR ADDITIONAL
+C                                       RANDOM NUMBER GENERATORS.
+C                                       INITIAL LIST INCLUDES:
+C                                       RUNIF = LINEAR CONGRUENTIAL
+C                                       SUNIF = MULTIPLICATIVE
+C                                               CONGRUENTIAL
+C                                       NOTE THAT DEFAULT GENERATOR
+C                                       IS EQUIVALENT TO CMLIB
+C                                       ROUTINE "UNI" (SO WE DO NOT
+C                                       INCLUDE THAT ONE).
+C                                       GENERALIZED FEEDBACK SHIFT
+C                                       REGISTER (GFSR) OF PAYNE AND
+C                                       LEWIS (AS IMPLEMENTED BY
+C                                       MONOHAN).
+C                                       GENERALIZED FEEDBACK SHIFT
+C                                       REGISTER (GFSR) OF FUSHIMI AND
+C                                       TEZUKA (AS IMPLEMENTED BY
+C                                       MONOHAN).
+C                                       APPLIED STATISTICS 183 (SUM
+C                                       OF 3 MULTIPLICATIVE
+C                                       CONGRUENTIAL GENERATORS)
+C     UPDATED         --APRIL     2003. ADD ALAN GENZ GENERATOR
+C     UPDATED         --MAY       2003. ADD R250 AND RANLUX
+C                                       GENERATORS
+C     UPDATED         --NOVEMBER  2003. ADD MERSENNE TWISTER
+C                                       ALGORITHM
+C     UPDATED         --DECEMBER  2003. SEPARATE SEED VALUES FOR
+C                                       DIFFERENT GENERATORS
+C
+C-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+C
+C---------------------------------------------------------------------
+C
+      DIMENSION X(*)
+C
+      DIMENSION M(17)
+      DIMENSION T(33)
+C
+      EXTERNAL UNI
+      DOUBLE PRECISION UNI
+      DOUBLE PRECISION GRND
+C
+C---------------------------------------------------------------------
+C
+      INCLUDE 'DPCOST.INC'
+C
+      CHARACTER*4 IFEEDB
+      CHARACTER*4 IPRINT
+      CHARACTER*240 ICOUT
+C
+      COMMON /MACH/IRD,IPR,CPUMIN,CPUMAX,NUMBPC,NUMCPW,NUMBPW
+      COMMON /PRINT/IFEEDB,IPRINT
+      COMMON /TEXTOU/ICOUT,NCOUT,ILOUT
+C
+C-----SAVE STATEMENTS-------------------------------------------------
+C
+      SAVE I,J,M,M1,M2
+      SAVE ISED1,ISED2,ISED3,ISED4,ISED5,ISED6
+      SAVE ISED7,ISED8,ISED9,ISED10,ISED11
+      SAVE ISDSAV
+C
+C-----DATA STATEMENTS-------------------------------------------------
+C
+      DATA M(1),M(2),M(3),M(4),M(5),M(6),M(7),M(8),M(9),M(10),M(11),
+     1     M(12),M(13),M(14),M(15),M(16),M(17)
+     1/    30788,23052,2053,19346,10646,19427,23975,
+     1     19049,10949,19693,29746,26748,2796,23890,
+     1     29168,31924,16499/
+      DATA M1,M2,I,J / 32767,256,5,17 /
+      DATA ISED1 /0/
+      DATA ISED2 /0/
+      DATA ISED3 /0/
+      DATA ISED4 /0/
+      DATA ISED5 /0/
+      DATA ISED6 /0/
+      DATA ISED7 /0/
+      DATA ISED8 /0/
+      DATA ISED9 /0/
+      DATA ISED10 /0/
+      DATA ISED11 /0/
+      DATA ISDSAV /305/
+C
+C-----START POINT-----------------------------------------------------
+C
+C               ********************************************
+C               **  STEP 1--                              **
+C               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+C               ********************************************
+C
+      IF(N.LT.1)THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** ERROR IN UNIRAN--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)
+   52   FORMAT('      THE INPUT NUMBER OF OBSERVATIONS IS ',
+     1         'NON-POSITIVE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)N
+   53   FORMAT('      N = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        GOTO9000
+      ENDIF
+C
+      IF(IRANAL.EQ.'FIBO')GOTO1000
+      IF(IRANAL.EQ.'FIBC')GOTO1500
+      IF(IRANAL.EQ.'LINE')GOTO2000
+      IF(IRANAL.EQ.'MULT')GOTO3000
+      IF(IRANAL.EQ.'GFSR')GOTO4000
+      IF(IRANAL.EQ.'GFS2')GOTO5000
+      IF(IRANAL.EQ.'183 ')GOTO6000
+      IF(IRANAL.EQ.'GENZ')GOTO7000
+      IF(IRANAL.EQ.'R250')GOTO8000
+      IF(IRANAL.EQ.'LUXU')GOTO8500
+      IF(IRANAL.EQ.'MERT')GOTO8600
+C
+ 1000 CONTINUE
+C
+C               *******************************************************
+C               **  STEP 2--                                         **
+C               **  IF A POSITIVE INPUT SEED HAS BEEN GIVEN,         **
+C               **  THEN THIS INDICATES THAT THE GENERATOR           **
+C               **  SHOULD HAVE ITS INTERNAL M(.) ARRAY REDEFINED--  **
+C               **  DO SO IN THIS SECTION.                           **
+C               **  IF A NON-POSITIVE INPUT SEED HAS BEEN GIVEN,     **
+C               **  THEN THIS INDICATES THAT THE GENERATOR           **
+C               **  SHOULD CONTINUE ON FROM WHERE IT LEFT OFF,       **
+C               **  AND THEREFORE THIS SECTION IS SKIPPED.           **
+C               *******************************************************
+C
+CCCCC IF(ISEED.LE.0)GOTO290
+C
+C  INITIALIZE IF NECESSARY
+C
+      IF(ISED1.EQ.0)THEN
+        ISED1=-1
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+        ELSE
+          ISEED=ISDSAV
+        ENDIF
+      ELSE
+        IF(ISEED.LE.0)GOTO290
+        ISDSAV=ISEED
+      ENDIF
+C
+C  END OF INITIALIZATION
+C
+C
+CCCCC MDIG=16
+      MDIG=32
+C
+      M1=2**(MDIG-2)+(2**(MDIG-2)-1)
+      M2=2**(MDIG/2)
+CCCCC ISEED3=MIN0(IABS(ISEED),M1)
+      ISEED3=IABS(ISEED)
+      IF(M1.LT.IABS(ISEED))ISEED3=M1
+      IF(MOD(ISEED3,2).EQ.0)ISEED3=ISEED3-1
+      K0=MOD(9069,M2)
+      K1=9069/M2
+      J0=MOD(ISEED3,M2)
+      J1=ISEED3/M2
+C
+      DO200I=1,17
+      ISEED3=J0*K0
+      J1=MOD(ISEED3/M2+J0*K1+J1*K0,M2/2)
+      J0=MOD(ISEED3,M2)
+      M(I)=J0+M2*J1
+  200 CONTINUE
+C
+      I=5
+      J=17
+C
+  290 CONTINUE
+C
+C               *************************************
+C               **  STEP 3--                       **
+C               **  GENERATE THE N RANDOM NUMBERS  **
+C               *************************************
+C
+      DO300L=1,N
+      K=M(I)-M(J)
+      IF(K.LT.0)K=K+M1
+      M(J)=K
+      I=I-1
+      IF(I.EQ.0)I=17
+      J=J-1
+      IF(J.EQ.0)J=17
+      AK=K
+      AM1=M1
+      X(L)=AK/AM1
+  300 CONTINUE
+C
+C               *****************************************************
+C               **  STEP 4--                                       **
+C               **  REGARDLESS OF THE VALUE OF THE INPUT SEED,     **
+C               **  REDEFINE THE VALUE OF ISEED UPON EXIT HERE     **
+C               **  TO -1 WITH THE NET EFFECT THAT                 **
+C               **  IF THE USER DOES NOT REDEFINE THE SEED         **
+C               **  VALUE BEFORE THE NEXT CALL TO THIS GENERATOR,  **
+C               **  THEN THIS GENERATOR WILL PICK UP               **
+C               **  WHERE IT LEFT OFF.                             **
+C               *****************************************************
+C
+      ISEED=(-1)
+      GOTO9000
+C
+C               *****************************************
+C               **  STEP 1500--                        **
+C               **  GENERATE THE N RANDOM NUMBERS      **
+C               **  USING THE COMBINED FIBONACCI/      **
+C               **  CONGUENTIAL GENERATOR OF           **
+C               **  KAHANER AND MARSAGALIA GIVEN       **
+C               **  IN "NUMERICAL METHODS AND SOFTWARE"**
+C               **  BY KAHANER, MOLER, AND NASH.       **
+C               *****************************************
+C
+ 1500 CONTINUE
+C
+C  INITIALIZE IF NECESSARY
+C
+      IF(ISED2.EQ.0)THEN
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          USEED=USTART(ISEED)
+          ISEED=(-1)
+        ELSE
+          USEED=USTART(ISDSAV)
+        ENDIF
+        ISED2=-1
+      ELSE
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          USEED=USTART(ISEED)
+          ISEED=(-1)
+        ENDIF
+      ENDIF
+C
+C  END OF INITIALIZATION
+C
+      DO1510L=1,N
+        X(L)=UNIKMN()
+ 1510 CONTINUE
+      GOTO9000
+C
+C               *************************************
+C               **  STEP 2000--                    **
+C               **  GENERATE THE N RANDOM NUMBERS  **
+C               **  USING THE LINEAR CONGRUENTIAL  **
+C               **  GENERATOR RUNIF (FROM CMLIB).  **
+C               *************************************
+C
+ 2000 CONTINUE
+      NSIZE=32
+      NSTRT=1
+C
+C  INITIALIZE IF NECESSARY
+C
+      IF(ISED3.EQ.0)THEN
+        NSTRT=2
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          X(1)=RUNIF(T,NSIZE)
+          ISEED=(-1)
+        ELSE
+          X(1)=RUNIF(T,NSIZE)
+        ENDIF
+        ISED3=-1
+      ELSE
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          X(1)=RUNIF(T,NSIZE)
+          ISEED=(-1)
+          NSTRT=2
+        ENDIF
+      ENDIF
+C
+C  END OF INITIALIZATION
+C
+      IF(NSTRT.LE.N)THEN
+        DO2020L=NSTRT,N
+          X(L)=RUNIF(T,NSIZE)
+ 2020   CONTINUE
+      ENDIF
+      ISEED=(-1)
+      GOTO9000
+C
+C               **********************************************
+C               **  STEP 3000--                             **
+C               **  GENERATE THE N RANDOM NUMBERS           **
+C               **  USING THE MULTIPLICATIVE CONGRUENTIAL   **
+C               **  GENERATOR SUNIF (FROM ACM 599).         **
+C               **********************************************
+C
+ 3000 CONTINUE
+C
+C  INITIALIZE IF NECESSARY
+C
+      NSTRT=1
+      IF(ISED3.EQ.0)THEN
+        NSTRT=2
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          X(1)=SUNIF(ISEED)
+        ELSE
+          ISEED=ISDSAV
+          X(1)=SUNIF(ISEED)
+        ENDIF
+        ISED3=-1
+      ELSE
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          X(1)=SUNIF(ISEED)
+          ISEED=(-1)
+          NSTRT=2
+        ENDIF
+      ENDIF
+C
+C  END OF INITIALIZATION
+C
+      IF(NSTRT.LE.N)THEN
+        DO3020L=NSTRT,N
+          X(L)=SUNIF(ISEED)
+ 3020   CONTINUE
+        ISEED=(-1)
+      ENDIF
+      GOTO9000
+C
+C               **********************************************
+C               **  STEP 4000--                             **
+C               **  GENERATE THE N RANDOM NUMBERS           **
+C               **  USING THE GENERALIZED FEEDACK SHIFT     **
+C               **  REGISTER (GFSR) GENERATOR RANLP (FROM   **
+C               **  MONOHAM, 2001).                         **
+C               **********************************************
+C
+ 4000 CONTINUE
+      DO4020L=1,N
+        X(L)=RANLP(L)
+ 4020 CONTINUE
+      GOTO9000
+C
+C               **********************************************
+C               **  STEP 5000--                             **
+C               **  GENERATE THE N RANDOM NUMBERS           **
+C               **  USING THE GENERALIZED FEEDACK SHIFT     **
+C               **  REGISTER (GFSR) GENERATOR RANFT (FROM   **
+C               **  MONOHAM, 2001).                         **
+C               **********************************************
+C
+ 5000 CONTINUE
+      DO5020L=1,N
+        X(L)=RANFT(L)
+ 5020 CONTINUE
+      GOTO9000
+C
+C               **********************************************
+C               **  STEP 6000--                             **
+C               **  GENERATE THE N RANDOM NUMBERS           **
+C               **  USING APPLIED STATISTICS ALGORITHM 183. **
+C               **  NOTE: GENERATE 3 RANDOM NUMBERS BEFORE  **
+C               **  CALLING RAN183.                         **
+C               **********************************************
+C
+ 6000 CONTINUE
+C
+C  INITIALIZE IF NECESSARY
+C
+      IF(ISED4.EQ.0)THEN
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+        ELSE
+          ISEED=ISDSAV
+        ENDIF
+        XTEMP=SUNIF(ISEED)
+        IX=INT(30000.*XTEMP)
+        XTEMP=SUNIF(ISEED)
+        IY=INT(30000.*XTEMP)
+        XTEMP=SUNIF(ISEED)
+        IZ=INT(30000.*XTEMP)
+        ISED4=-1
+        ISEED=(-1)
+      ELSE
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          XTEMP=SUNIF(ISEED)
+          IX=INT(30000.*XTEMP)
+          XTEMP=SUNIF(ISEED)
+          IY=INT(30000.*XTEMP)
+          XTEMP=SUNIF(ISEED)
+          IZ=INT(30000.*XTEMP)
+          ISEED=(-1)
+        ENDIF
+      ENDIF
+C
+C  END OF INITIALIZATION
+C
+C
+      DO6020L=1,N
+        X(L)=RAN183(IX,IY,IZ)
+ 6020 CONTINUE
+      GOTO9000
+C
+C               **********************************************
+C               **  STEP 7000--                             **
+C               **  GENERATE THE N RANDOM NUMBERS           **
+C               **  USING ALGORITHM FROM ALAN GENZ.  BASED  **
+C               **  ON: L'Ecuyer, Pierre (1996).  "Combined **
+C               **  Multiple Recursive Random Number        **
+C               **  Generator", Operations Research 44,     **
+C               **  pp. 816-822.                            **
+C               **********************************************
+C
+ 7000 CONTINUE
+C
+      DO7020L=1,N
+        X(L)=REAL(UNI())
+ 7020 CONTINUE
+      GOTO9000
+C               **********************************************
+C               **  STEP 8000--                             **
+C               **  GENERATE THE N RANDOM NUMBERS           **
+C               **  USING R250 ALGORITHM.                   **
+C               **  BASED ON KIRKPATRICK AND STOLL          **
+C               **  FAST SHOFT-REGISTER SEQUENCE GENERATOR. **
+C               **********************************************
+C
+ 8000 CONTINUE
+C
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,8051)
+ 8051 FORMAT('***** WARNING FROM UNIRAN--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,8053)
+ 8053 FORMAT('      THE R250 GENERATOR IS NOT CURRENTLY WORKING.')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,8055)
+ 8055 FORMAT('      THE RESULTS FROM THIS GENERATOR ARE NOT VALID.')
+      CALL DPWRST('XXX','BUG ')
+C
+C
+C  INITIALIZE IF NECESSARY
+C
+      IF(ISED5.EQ.0)THEN
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          CALL R250IN(ISEED)
+          ISEED=(-1)
+        ELSE
+          CALL R250IN(ISDSAV)
+        ENDIF
+        ISED5=-1
+      ELSE
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          CALL R250IN(ISEED)
+          ISEED=(-1)
+        ENDIF
+      ENDIF
+C
+C  END OF INITIALIZATION
+C
+      DO8050L=1,N
+        X(L)=RND250()
+ 8050 CONTINUE
+      GOTO9000
+C               **********************************************
+C               **  STEP 8500--                             **
+C               **  GENERATE THE N RANDOM NUMBERS           **
+C               **  USING LUXURY GENERATOR OF F. JAMES.     **
+C               **  THIS IS A MODIFICATION OF MARSAGLIA AND **
+C               **  ZAMAN RCARRY GENERATOR.                 **
+C               **  RANLUX KEEPS TRACK OF INITIALIZATION    **
+C               **********************************************
+C
+ 8500 CONTINUE
+C
+      CALL RANLUX(X,N)
+      GOTO9000
+C
+C               **********************************************
+C               **  STEP 8600--                             **
+C               **  GENERATE THE N RANDOM NUMBERS           **
+C               **  USING MERSENNE TWISTER GENERATOR.       **
+C               **  THIS IS A FORTRAN IMPLEMENTATION        **
+C               **  PROVIDED BY HIROSHI TAKANO.             **
+C               **********************************************
+C
+ 8600 CONTINUE
+C
+C
+C  INITIALIZE IF NECESSARY
+C
+      IF(ISED6.EQ.0)THEN
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          CALL SGRND(ISEED)
+          ISEED=(-1)
+        ELSE
+          ISEED=ISDSAV
+          CALL SGRND(ISEED)
+        ENDIF
+        ISED6=-1
+      ELSE
+        IF(ISEED.GT.0)THEN
+          ISDSAV=ISEED
+          CALL SGRND(ISEED)
+          ISEED=(-1)
+        ENDIF
+      ENDIF
+C
+C  END OF INITIALIZATION
+C
+      DO8610I=1,N
+        X(I)=REAL(GRND())
+ 8610 CONTINUE
+C
+      GOTO9000
+C
+C
+C               *****************
+C               **  STEP 90--  **
+C               **  EXIT       **
+C               *****************
+C
+ 9000 CONTINUE
+      RETURN
+CCCCC DEBUG TRACE,INIT
+CCCCC AT 90
+CCCCC TRACE ON
+      END

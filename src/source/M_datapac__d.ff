@@ -1,0 +1,6 @@
+$SET KIND real64
+module M_datapac__d
+! build real64 version
+use,intrinsic :: iso_fortran_env, only : wp=>real64
+$INCLUDE "M_datapac.ffinc"
+end module M_datapac__d

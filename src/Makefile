@@ -206,5 +206,5 @@ man:
 	: SPELLING
 	@env MANPATH=../man MANWIDTH=80  man -Tutf8 --regex '.*'|col -b|spell|xargs -n 5|column -t
 #-------------------------------------------------------------------------------
-M_datapac.o: M_datapac_s.o M_datapac_d.o
+M_datapac.o: M_datapac__s.o M_datapac__d.o
 #-------------------------------------------------------------------------------
