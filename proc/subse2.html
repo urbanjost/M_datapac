@@ -1,0 +1,604 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Statistics">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>SUBSE2 &ndash; M_datapac</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_datapac </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>SUBSE2
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.2% of total for procedures.">71 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_datapac__d.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_datapac__d.f90.html'>M_datapac__d.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_datapac__d.html'>M_datapac__d</a></li>
+            <li class="breadcrumb-item active" aria-current="page">SUBSE2</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/subse2.html#src">SUBSE2</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine SUBSE2(X, N, D1, D1min, D1max, D2, D2min, D2max, Y, Ny)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">subse2</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">M_datapac</span><span class="p">:</span><span class="n">VECTOR_OPERATION</span><span class="p">]</span><span class="w"> </span><span class="n">extract</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">elements</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">vector</span>
+<span class="n">which</span><span class="w"> </span><span class="n">fall</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">user</span><span class="o">-</span><span class="n">specified</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="p">(</span><span class="n">two</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="n">variables</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>SUBROUTINE SUBSE2(X,N,D1,D1min,D1max,D2,D2min,D2max,Y,Ny)
+
+ REAL(kind=wp) :: D1(:), D1max, D1min, D2(:), D2max, D2min, X(:), Y(:)
+ INTEGER       :: N, Ny
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">This</span><span class="w"> </span><span class="nv">subroutine</span><span class="w"> </span><span class="nv">carries</span><span class="w"> </span><span class="nv">over</span><span class="w"> </span><span class="nv">into</span><span class="w"> </span><span class="nv">Y</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">observations</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">precision</span>
+<span class="nv">precision</span><span class="w"> </span><span class="nv">vector</span><span class="w"> </span><span class="nv">X</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">which</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">corresponding</span><span class="w"> </span><span class="nv">elements</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">precision</span>
+<span class="nv">precision</span><span class="w"> </span><span class="nv">vector</span><span class="w"> </span><span class="nv">D1</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">inside</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">closed</span><span class="w"> </span><span class="ss">(</span><span class="nv">inclusive</span><span class="ss">)</span><span class="w"> </span><span class="nv">interval</span><span class="w"> </span><span class="nv">defined</span>
+<span class="nv">by</span><span class="w"> </span><span class="nv">D1MIN</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">D1MAX</span>,<span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">also</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">which</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">corresponding</span><span class="w"> </span><span class="nv">elements</span>
+<span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">vector</span><span class="w"> </span><span class="nv">D2</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">inside</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">closed</span><span class="w"> </span><span class="ss">(</span><span class="nv">inclusive</span><span class="ss">)</span>
+<span class="nv">interval</span><span class="w"> </span><span class="nv">defined</span><span class="w"> </span><span class="nv">by</span><span class="w"> </span><span class="nv">D2MIN</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">D2MAX</span>.
+
+<span class="nv">No</span><span class="w"> </span><span class="nv">observations</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">X</span><span class="w"> </span><span class="nv">corresponding</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">elements</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">D1</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">D2</span><span class="w"> </span><span class="nv">outside</span>
+<span class="nv">of</span><span class="w"> </span><span class="nv">their</span><span class="w"> </span><span class="nv">respective</span><span class="w"> </span><span class="nv">intervals</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">carried</span><span class="w"> </span><span class="nv">over</span><span class="w"> </span><span class="nv">into</span><span class="w"> </span><span class="nv">Y</span>.
+
+<span class="nv">The</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="nv">vector</span><span class="w"> </span><span class="nv">X</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">itself</span><span class="w"> </span><span class="nv">unaltered</span><span class="c1">; those elements of X to be</span>
+<span class="nv">retained</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">copied</span><span class="w"> </span><span class="nv">over</span><span class="w"> </span><span class="nv">into</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">output</span><span class="w"> </span><span class="nv">vector</span><span class="w"> </span><span class="nv">Y</span>.
+
+<span class="nv">Thus</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">observations</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">X</span><span class="w"> </span><span class="nv">which</span><span class="w"> </span><span class="nv">correspond</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">elements</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">D1</span><span class="w"> </span><span class="nv">which</span>
+<span class="nv">are</span><span class="w"> </span><span class="nv">smaller</span><span class="w"> </span><span class="nv">than</span><span class="w"> </span><span class="nv">D1MIN</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">larger</span><span class="w"> </span><span class="nv">than</span><span class="w"> </span><span class="nv">D1MAX</span>,<span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">which</span><span class="w"> </span><span class="nv">correspond</span><span class="w"> </span><span class="nv">to</span>
+<span class="nv">elements</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">D2</span><span class="w"> </span><span class="nv">which</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">smaller</span><span class="w"> </span><span class="nv">than</span><span class="w"> </span><span class="nv">D2MIN</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">larger</span><span class="w"> </span><span class="nv">than</span><span class="w"> </span><span class="nv">D2MAX</span>,
+<span class="nv">are</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">copied</span><span class="w"> </span><span class="nv">over</span><span class="w"> </span><span class="nv">into</span><span class="w"> </span><span class="nv">Y</span>.
+
+<span class="nv">The</span><span class="w"> </span><span class="nv">use</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">subse2</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span><span class="w"> </span><span class="nv">gives</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">analyst</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">capability</span>
+<span class="nv">to</span><span class="w"> </span><span class="nv">easily</span><span class="w"> </span><span class="nv">extract</span><span class="w"> </span><span class="nv">subsets</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">prior</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">analysis</span><span class="w"> </span><span class="nv">on</span>
+<span class="nv">each</span><span class="w"> </span><span class="nv">subset</span>.
+</code></pre></div>
+
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">X</span><span class="w">      </span><span class="n">the</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="p">(</span><span class="n">unsorted</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">sorted</span><span class="p">)</span><span class="w"> </span><span class="n">observations</span><span class="o">.</span>
+
+<span class="n">N</span><span class="w">      </span><span class="n">The</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">observations</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">x</span><span class="o">.</span>
+
+<span class="n">D1</span><span class="w">     </span><span class="n">A</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="p">(</span><span class="ow">in</span><span class="w"> </span><span class="n">conjunction</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">d2</span><span class="p">)</span><span class="w"> </span><span class="s2">&quot;defines&quot;</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">various</span>
+<span class="w">       </span><span class="n">possible</span><span class="w"> </span><span class="n">subsets</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">x</span><span class="o">.</span>
+
+<span class="n">D1MIN</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">defines</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">limit</span>
+<span class="w">       </span><span class="p">(</span><span class="n">inclusively</span><span class="p">)</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">particular</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">interest</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span>
+<span class="w">       </span><span class="n">retained</span><span class="o">.</span>
+
+<span class="n">D1MAX</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">defines</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">upper</span><span class="w"> </span><span class="n">limit</span>
+<span class="w">       </span><span class="p">(</span><span class="n">inclusively</span><span class="p">)</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">particular</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">interest</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span>
+<span class="w">       </span><span class="n">retained</span><span class="o">.</span>
+
+<span class="n">D2</span><span class="w">     </span><span class="n">A</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="p">(</span><span class="ow">in</span><span class="w"> </span><span class="n">conjunction</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">d2</span><span class="p">)</span><span class="w"> </span><span class="s2">&quot;defines&quot;</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">various</span>
+<span class="w">       </span><span class="n">possible</span><span class="w"> </span><span class="n">subsets</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">x</span><span class="o">.</span>
+
+<span class="n">D2MIN</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">defines</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">d2</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">lower</span><span class="w"> </span><span class="n">limit</span>
+<span class="w">       </span><span class="p">(</span><span class="n">inclusively</span><span class="p">)</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">particular</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">interest</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">retained</span><span class="o">.</span>
+
+<span class="n">D2MAX</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">defines</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">d2</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">upper</span><span class="w"> </span><span class="n">limit</span>
+<span class="w">       </span><span class="p">(</span><span class="n">inclusively</span><span class="p">)</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">particular</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">interest</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">retained</span><span class="o">.</span>
+</code></pre></div>
+
+<h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code>Y      The vector containing only those elements
+       of X simultaneously corresponding to values of the D1 vector
+       in the interval D1MIN to D1MAX (inclusive), and values of the
+       D2 vector in the interval D2MIN to D2MAX (inclusive).
+
+NY     The integer number of retained observations copied into
+       the vector Y.
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">program</span><span class="w"> </span><span class="nx">demo_subse2</span>
+<span class="nx">use</span><span class="w"> </span><span class="nx">M_datapac</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">subse2</span>
+<span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
+<span class="p">!</span><span class="w"> </span><span class="nx">call</span><span class="w"> </span><span class="nx">subse2</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">)</span>
+<span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_subse2</span>
+</code></pre></div>
+
+<p>Results:</p>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code><span class="nx">The</span><span class="w"> </span><span class="nx">original</span><span class="w"> </span><span class="nx">DATAPAC</span><span class="w"> </span><span class="kn">library</span><span class="w"> </span><span class="nx">was</span><span class="w"> </span><span class="nx">written</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">James</span><span class="w"> </span><span class="nx">Filliben</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Statistical</span>
+<span class="nx">Engineering</span><span class="w"> </span><span class="nx">Division</span><span class="p">,</span><span class="w"> </span><span class="nx">National</span><span class="w"> </span><span class="nx">Institute</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">Standards</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">Technology</span><span class="p">.</span>
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~119"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>X</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~101"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>N</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d1"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D1</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d1min"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D1min</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d1max"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D1max</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d2"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D2</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d2min"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D2min</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d2max"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D2max</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-y~51"></span>
+              real(kind=wp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Y</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ny~2"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ny</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">SUBSE2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">D1</span><span class="p">,</span><span class="n">D1min</span><span class="p">,</span><span class="n">D1max</span><span class="p">,</span><span class="n">D2</span><span class="p">,</span><span class="n">D2min</span><span class="p">,</span><span class="n">D2max</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Ny</span><span class="p">)</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">D1</span><span class="p">(:),</span><span class="w"> </span><span class="n">D1max</span><span class="p">,</span><span class="w"> </span><span class="n">D1min</span><span class="p">,</span><span class="w"> </span><span class="n">D2</span><span class="p">(:),</span><span class="w"> </span><span class="n">D2max</span><span class="p">,</span><span class="w"> </span><span class="n">D2min</span><span class="p">,</span><span class="w"> </span><span class="n">hold</span><span class="p">,</span><span class="w"> </span><span class="n">poin1l</span><span class="p">,</span><span class="w"> </span><span class="n">poin1u</span><span class="p">,</span><span class="w"> </span><span class="n">poin2l</span><span class="p">,</span><span class="w"> </span><span class="n">poin2u</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">(:),</span><span class="w"> </span><span class="n">Y</span><span class="p">(:)</span>
+<span class="kt">INTEGER</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">ndel</span><span class="p">,</span><span class="w"> </span><span class="n">Ny</span>
+
+<span class="c">!     OUTPUT--THE VECTOR Y</span>
+<span class="c">!             INTO WHICH HAVE BEEN COPIED</span>
+<span class="c">!             ONLY THOSE VALUES OF X WHICH</span>
+<span class="c">!             SIMULTANEOUSLY CORRESPOND TO VALUES</span>
+<span class="c">!             IN THE D1 AND D2 VECTORS INSIDE</span>
+<span class="c">!             (INCLUSIVELY) THE RESPECTIVE</span>
+<span class="c">!             INTERVALS OF INTEREST, AND</span>
+<span class="c">!             THE INTEGER VALUE NY</span>
+<span class="c">!             WHICH GIVES THE NUMBER OF</span>
+<span class="c">!             OBSERVATIONS COPIED INTO Y.</span>
+<span class="c">!             ALSO, 13 LINES OF SUMMARY INFORMATION</span>
+<span class="c">!             WILL BE GENERATED INDICATING</span>
+<span class="c">!             1) WHAT THE INTERVAL OF INTEREST WAS</span>
+<span class="c">!                IN THE D1 VECTOR;</span>
+<span class="c">!             2) WHAT THE INTERVAL OF INTEREST WAS</span>
+<span class="c">!                IN THE D2 VECTOR;</span>
+<span class="c">!             3) HOW MANY OBSERVATIONS WERE DELETED;</span>
+<span class="c">!             4) WHAT THE SAMPLE SIZE OF X WAS (N);</span>
+<span class="c">!             5) WHAT THE SAMPLE SIZE OF Y WAS (NY);</span>
+<span class="c">!     PRINTING--YES.</span>
+<span class="c">!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE</span>
+<span class="c">!                   OF N FOR THIS SUBROUTINE.</span>
+
+<span class="c">!     COMMENT--THE INPUT VECTOR X IS NOT ALTERED</span>
+<span class="c">!              BY APPLICATION OF THIS SUBROUTINE.</span>
+<span class="c">!              THIS IS A MAJOR DISTINCTION</span>
+<span class="c">!              BETWEEN THIS SUBROUTINE AND, SAY,</span>
+<span class="c">!              THE SUBSET SUBROUTINE.</span>
+<span class="c">!     COMMENT--IN THE END, AFTER THIS SUBROUTINE HAS</span>
+<span class="c">!              MADE WHATEVER DELETIONS ARE APPROPRIATE,</span>
+<span class="c">!              THE OUTPUT VECTOR Y WILL BE &#39;PACKED&#39;;</span>
+<span class="c">!              THAT IS, NO &#39;HOLES&#39; WILL EXIST IN THE</span>
+<span class="c">!              VECTOR Y--ALL OF THE RETAINED ELEMENTS</span>
+<span class="c">!              OF Y WILL BE PACKED INTO THE FIRST AVAILABLE</span>
+<span class="c">!              LOCATIONS IN Y, WHILE THE REMAINDER</span>
+<span class="c">!              OF THE N LOCATIONS IN Y WILL BE ZERO-FILLED.</span>
+<span class="c">!     COMMENT--ALTHOUGH THERE</span>
+<span class="c">!              MAY BE A CORRESPONDANCE BETWEEN</span>
+<span class="c">!              THE ELEMENTS OF THE X AND D1 VECTORS</span>
+<span class="c">!              AND ELEMENTS OF THE X AND D2 VECTORS</span>
+<span class="c">!              BEFORE APPLICATION OF</span>
+<span class="c">!              THIS SUBROUTINE, THERE WILL</span>
+<span class="c">!              BE NO CORRESPONDANCE BETWEEN</span>
+<span class="c">!              Y AND D1, AND Y AND D2</span>
+<span class="c">!              (DUE TO THE PACKING OF</span>
+<span class="c">!              THE RETAINED ELEMENTS IN Y)</span>
+<span class="c">!              AFTER APPLICATION OF THIS SUBROUTINE.</span>
+<span class="c">!</span>
+<span class="c">!---------------------------------------------------------------------</span>
+<span class="c">!</span>
+<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="o">&lt;</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">         WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span>
+<span class="mi">99001</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w">                                                   </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE SUBSE2 SUBROUTINE IS NON-POSITIVE *****&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span><span class="w"> </span><span class="n">N</span>
+<span class="mi">99002</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">RETURN</span>
+<span class="k">      ELSE</span>
+<span class="k">         IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">            WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span>
+<span class="mi">99003</span><span class="w">       </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w">                                                </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE SUBSE2 SUBROUTINE HAS THE VALUE 1 *****&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">ELSE</span>
+<span class="k">            </span><span class="n">hold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">            </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span>
+<span class="w">               </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">50</span>
+<span class="w">            </span><span class="k">ENDDO</span>
+<span class="k">            WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span><span class="w"> </span><span class="n">hold</span>
+<span class="mi">99004</span><span class="w">       </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w">                                                </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) TO THE SUBSE2 SUBROUTINE HAS ALL ELEMENTS =&#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">ENDIF</span>
+<span class="c">!</span>
+<span class="c">!-----START POINT-----------------------------------------------------</span>
+<span class="c">!</span>
+<span class="w"> </span><span class="mi">50</span><span class="w">      </span><span class="k">continue</span>
+<span class="k">         </span><span class="n">poin1l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D1min</span>
+<span class="w">         </span><span class="n">poin1u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D1max</span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">D1min</span><span class="o">&gt;</span><span class="n">D1max</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">poin1l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D1max</span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">D1min</span><span class="o">&gt;</span><span class="n">D1max</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">poin1u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D1min</span>
+<span class="c">!</span>
+<span class="w">         </span><span class="n">poin2l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D2min</span>
+<span class="w">         </span><span class="n">poin2u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D2max</span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">D2min</span><span class="o">&gt;</span><span class="n">D2max</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">poin2l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D2max</span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">D2min</span><span class="o">&gt;</span><span class="n">D2max</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">poin2u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D2min</span>
+<span class="w">         </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">         </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span>
+<span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">D1</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;=</span><span class="n">poin1l</span><span class="w"> </span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="w"> </span><span class="n">D1</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">poin1u</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">               IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">D2</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;=</span><span class="n">poin2l</span><span class="w"> </span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="w"> </span><span class="n">D2</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">poin2u</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">                  </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="n">Y</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">               </span><span class="k">ENDIF</span>
+<span class="k">            ENDIF</span>
+<span class="k">         ENDDO</span>
+<span class="k">         </span><span class="n">Ny</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span>
+<span class="w">         </span><span class="n">ndel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Ny</span>
+<span class="c">!</span>
+<span class="c">!     WRITE OUT A BRIEF SUMMARY</span>
+<span class="c">!</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span>
+<span class="mi">99005</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span>
+<span class="mi">99006</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;OUTPUT FROM THE SUBSE2 SUBROUTINE--&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span><span class="w"> </span><span class="n">poin1l</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">poin1u</span>
+<span class="mi">99007</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;D1 LIMITS (INCLUSIVE)--   &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; AND &#39;</span><span class="p">,</span><span class="w">     </span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99008</span><span class="p">)</span><span class="w"> </span><span class="n">poin2l</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">poin2u</span>
+<span class="mi">99008</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;D2 LIMITS (INCLUSIVE)--   &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; AND &#39;</span><span class="p">,</span><span class="w">     </span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99009</span><span class="p">)</span>
+<span class="mi">99009</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;ONLY THOSE OBSERVATIONS IN X&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99010</span><span class="p">)</span>
+<span class="mi">99010</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;WILL BE CARRIED OVER INTO Y&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span>
+<span class="mi">99011</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;FOR WHICH THE CORRESPONDING ELEMENTS OF &#39;</span><span class="p">,</span><span class="w">     </span><span class="s1">&#39;D1 AND D2&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span>
+<span class="mi">99012</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;ARE SIMULTANEOUSLY WITHIN (INCLUSIVE)&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span>
+<span class="mi">99013</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;EACH SPECIFIED LIMIT.&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99014</span><span class="p">)</span>
+<span class="mi">99014</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;NO OBSERVATIONS OUTSIDE OF THIS INTERVAL&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99015</span><span class="p">)</span>
+<span class="mi">99015</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;HAVE BEEN CARRIED OVER INTO Y.&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99016</span><span class="p">)</span><span class="w"> </span><span class="n">N</span>
+<span class="mi">99016</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE INPUT  NUMBER OF OBSERVATIONS (IN X) IS &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">I0</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99017</span><span class="p">)</span><span class="w"> </span><span class="n">Ny</span>
+<span class="mi">99017</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE OUTPUT NUMBER OF OBSERVATIONS (IN Y) IS &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">I0</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span><span class="w"> </span><span class="n">ndel</span>
+<span class="mi">99018</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">7</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;THE NUMBER OF OBSERVATIONS DELETED       IS &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">I0</span><span class="p">)</span>
+<span class="w">      </span><span class="k">ENDIF</span>
+<span class="c">!</span>
+<span class="k">END SUBROUTINE </span><span class="n">SUBSE2</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col"><p>M_datapac was developed by John S. Urban<br>&copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2024-03-29 03:40              </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>

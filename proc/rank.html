@@ -1,0 +1,553 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Statistics">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>RANK &ndash; M_datapac</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+      <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_datapac </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>RANK
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title=" 0.3% of total for procedures.">85 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_datapac__d.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_datapac__d.f90.html'>M_datapac__d.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_datapac__d.html'>M_datapac__d</a></li>
+            <li class="breadcrumb-item active" aria-current="page">RANK</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#common-0"
+         aria-expanded="false" aria-controls="common-0">
+         <h4 class="card-header bg-primary text-white">Common Blocks</h4>
+      </a>
+      <div id="common-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../proc/rank.html#common-block4_real64">BLOCK4_real64</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/rank.html#src">RANK</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine RANK(X, N, Xr)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>rank(3f) - [M_datapac:SORT] rank a vector of sample observations
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>   SUBROUTINE RANK(X,N,Xr)
+
+    REAL(kind=wp),intent(in)  :: X(:)
+    INTEGER,intent(in)        :: N
+    REAL(kind=wp),intent(out) :: Xr(:)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">RANK</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span><span class="w"> </span><span class="nv">ranks</span><span class="w"> </span><span class="ss">(</span><span class="nv">in</span><span class="w"> </span><span class="nv">ascending</span><span class="w"> </span><span class="nv">order</span><span class="ss">)</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">N</span><span class="w"> </span><span class="nv">elements</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">precision</span>
+<span class="nv">precision</span><span class="w"> </span><span class="nv">vector</span><span class="w"> </span><span class="nv">X</span>,<span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">puts</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">resulting</span><span class="w"> </span><span class="nv">N</span><span class="w"> </span><span class="nv">ranks</span><span class="w"> </span><span class="nv">into</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">precision</span>
+<span class="nv">precision</span><span class="w"> </span><span class="nv">vector</span><span class="w"> </span><span class="nv">XR</span>.
+
+<span class="nv">RANK</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span><span class="w"> </span><span class="nv">gives</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">analyst</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">ability</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="ss">(</span><span class="k">for</span><span class="w"> </span><span class="nv">example</span><span class="ss">)</span><span class="w"> </span><span class="nv">rank</span>
+<span class="nv">the</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">preliminary</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">certain</span><span class="w"> </span><span class="nv">distribution</span><span class="o">-</span><span class="nv">free</span><span class="w"> </span><span class="nv">analyses</span>.
+</code></pre></div>
+
+<h2 id="notes">NOTES</h2>
+<p>The rank of the first element of the vector X will be placed in the
+   first position of the vector XR, the rank of the second element of the
+   vector X will be placed in the second position of the vector XR, etc.</p>
+<p>The smallest element in the vector X will have a rank of 1 (unless
+   ties exist).  the largest element in the vector X will have a rank of N
+   (unless ties exist).</p>
+<p>Although ranks are usually (unless ties exist) integral values from
+   1 to N, it is to be noted that they are outputted as REAL values in
+   the vector XR.  XR is so as to be consistent with the fact that all
+   vector arguments in all other datapac subroutines are REAL; but more
+   importantly, because ties frequently do exist in data sets and so some
+   of the resulting ranks will be non-integral and so the output vector
+   of ranks must necessarily be REAL and not INTEGER.</p>
+<p>The input vector X remains unaltered.</p>
+<p>Due to conflicting use of labeled common /block2_real64/ by this
+   rank subroutine and the SPCORR (Spearman rank correlation coefficient)
+   subroutine, the vector XS of this rank subroutine has been placed in
+   labeled common /block4_real64/</p>
+<p>The first and third arguments in the calling sequence may be identical;
+   that is, an &lsquo;in place&rsquo; ranking is permitted. The calling sequence
+   call RANK(X,N,X) is valid, if desired.</p>
+<p>The sorting algorthm used herein is the binary sort. This algorthim
+   is extremely fast as the following time trials indicate.  These time
+   trials were carried out on the UNIVAC 1108 EXEC 8 system at NBS in
+   August of 1974.  by way of comparison, the time trial values for the
+   easy-to-program but extremely inefficient bubble sort algorithm have
+   also been included&ndash;</p>
+<p>Number of random        Binary sort       Bubble sort
+    numbers sorted
+     n = 10                 .002 sec          .002 sec
+     n = 100                .011 sec          .045 sec
+     n = 1000               .141 sec         4.332 sec
+     n = 3000               .476 sec        37.683 sec
+     n = 10000             1.887 sec      not computed</p>
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">X</span><span class="w">     </span><span class="nv">The</span><span class="w"> </span><span class="nv">vector</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">observations</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">ranked</span>.
+<span class="nv">N</span><span class="w">     </span><span class="nv">The</span><span class="w"> </span><span class="nv">integer</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">observations</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">vector</span><span class="w"> </span><span class="nv">X</span>.
+<span class="w">      </span><span class="nv">The</span><span class="w"> </span><span class="nv">maximum</span><span class="w"> </span><span class="nv">allowable</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">N</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">subroutine</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="mi">7500</span>.
+</code></pre></div>
+
+<h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code>XR    The vector into which the ranks of the X values will be placed
+      (in ascending order)
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">program</span><span class="w"> </span><span class="nx">demo_rank</span>
+<span class="nx">use</span><span class="w"> </span><span class="nx">M_datapac</span><span class="p">,</span><span class="w"> </span><span class="nx">only</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">rank</span>
+<span class="nx">implicit</span><span class="w"> </span><span class="nx">none</span>
+<span class="p">!</span><span class="w"> </span><span class="nx">call</span><span class="w"> </span><span class="nx">rank</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">)</span>
+<span class="nx">end</span><span class="w"> </span><span class="nx">program</span><span class="w"> </span><span class="nx">demo_rank</span>
+</code></pre></div>
+
+<p>Results:</p>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code><span class="nx">The</span><span class="w"> </span><span class="nx">original</span><span class="w"> </span><span class="nx">DATAPAC</span><span class="w"> </span><span class="kn">library</span><span class="w"> </span><span class="nx">was</span><span class="w"> </span><span class="nx">written</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">James</span><span class="w"> </span><span class="nx">Filliben</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span>
+<span class="nx">Statistical</span><span class="w"> </span><span class="nx">Engineering</span><span class="w"> </span><span class="nx">Division</span><span class="p">,</span><span class="w"> </span><span class="nx">National</span><span class="w"> </span><span class="nx">Institute</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">Standards</span>
+<span class="k">and</span><span class="w"> </span><span class="nx">Technology</span><span class="p">.</span>
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+
+<h2 id="references">REFERENCES</h2>
+<ul>
+<li>CACM March 1969, page 186 (Binary Sort Algorithm by Richard
+     C. Singleton).</li>
+<li>CACM January 1970, page 54.</li>
+<li>CACM October 1970, page 624.</li>
+<li>JACM January 1961, page 41.</li>
+</ul>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~103"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>X</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~86"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>N</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xr"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Xr</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+
+    <section>
+      <h2>Common Blocks</h2>
+        <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="common-block4_real64"></span>
+      <h3>
+        <a href="#"
+           data-bs-toggle="popover"
+           data-bs-html="true"
+           data-bs-trigger="focus"
+           data-bs-title="Used elsewhere:"
+           data-bs-content="">
+           common /BLOCK4_real64/        </a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xs~2"></span>
+              real
+            </td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>XS</strong>(7500)</td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  </div>
+
+    </section>
+    <br>
+    <script>
+      $(function () {
+      $('[data-bs-toggle="popover"]').popover()
+      })
+    </script>
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">RANK</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">Xr</span><span class="p">)</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">X</span><span class="p">(:)</span>
+<span class="kt">INTEGER</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">        </span><span class="kd">::</span><span class="w"> </span><span class="n">N</span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Xr</span><span class="p">(:)</span>
+
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">avrank</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">rprev</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">xprev</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">XS</span>
+<span class="kt">INTEGER</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ibran</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">iupper</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">jmin</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">jp1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nm1</span>
+<span class="k">COMMON</span><span class="w"> </span><span class="o">/</span><span class="n">BLOCK4_real64</span><span class="o">/</span><span class="w"> </span><span class="n">XS</span><span class="p">(</span><span class="mi">7500</span><span class="p">)</span>
+
+<span class="c">!---------------------------------------------------------------------</span>
+<span class="w">      </span><span class="n">an</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span>
+<span class="w">      </span><span class="n">iupper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7500</span>
+<span class="c">!</span>
+<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="o">&lt;</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">OR</span><span class="p">.</span><span class="w"> </span><span class="n">N</span><span class="o">&gt;</span><span class="n">iupper</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">         WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span><span class="w"> </span><span class="n">iupper</span>
+<span class="w">         </span><span class="mi">99001</span><span class="w"> </span><span class="k">FORMAT</span><span class="p">(&amp;</span>
+<span class="w">         </span><span class="p">&amp;</span><span class="w"> </span><span class="s1">&#39; ***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO RANK(3f) IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span><span class="w"> </span><span class="n">N</span>
+<span class="w">         </span><span class="mi">99002</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="w">         </span><span class="k">RETURN</span>
+<span class="k">      ELSE</span>
+<span class="k">         IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">            WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span>
+<span class="w">            </span><span class="mi">99003</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO RANK(3f) HAS THE VALUE 1 *****&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">Xr</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span>
+<span class="w">            </span><span class="k">RETURN</span>
+<span class="k">         ELSE</span>
+<span class="k">            </span><span class="n">hold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">            </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span>
+<span class="w">               </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">50</span>
+<span class="w">            </span><span class="k">ENDDO</span>
+<span class="k">            WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span><span class="w"> </span><span class="n">hold</span>
+<span class="w">            </span><span class="mi">99004</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; ***** NON-FATAL DIAGNOSTIC--THE FIRST INPUT ARGUMENT (A VECTOR) TO RANK(3f) HAS ALL ELEMENTS = &#39;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">            </span><span class="p">&amp;</span><span class="w"> </span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">avrank</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">an</span><span class="o">+</span><span class="mf">1.0_wp</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0_wp</span>
+<span class="w">            </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span>
+<span class="w">               </span><span class="n">Xr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">avrank</span>
+<span class="w">            </span><span class="k">ENDDO</span>
+<span class="k">            RETURN</span>
+<span class="k">         ENDIF</span>
+<span class="c">!</span>
+<span class="c">!-----START POINT-----------------------------------------------------</span>
+<span class="c">!</span>
+<span class="c">!     FIRST SORT THE DATA FROM THE INPUT VECTOR X</span>
+<span class="c">!     INTO THE INTERMEDIATE STORAGE VECTOR XS.</span>
+<span class="c">!</span>
+<span class="w"> </span><span class="mi">50</span><span class="w">      </span><span class="k">CALL </span><span class="n">SORT</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">XS</span><span class="p">)</span>
+<span class="c">!</span>
+<span class="c">!     NOW DETERMINE THE RANKS.</span>
+<span class="c">!     THE BASIC ALGORITHM IS TO TAKE A GIVEN ELEMENT</span>
+<span class="c">!     IN THE ORIGINAL INPUT VECTOR X,</span>
+<span class="c">!     AND SCAN THE SORTED VALUES IN THE XS VECTOR</span>
+<span class="c">!     UNTIL A MATCH IS FOUND;</span>
+<span class="c">!     WHEN A MATCH IS FOUND, THEN THE RANK FOR THAT</span>
+<span class="c">!     VALUE IN THE XS VECTOR IS DETERMINED.</span>
+<span class="c">!     THAT RANK IS THEN WRITTEN INTO THAT POSITION</span>
+<span class="c">!     IN THE OUTPUT Y VECTOR WHICH CORRESPONDS TO THE POSITION OF THE</span>
+<span class="c">!     GIVEN ELEMENT OF INTEREST IN THE ORIGINAL X VECTOR.</span>
+<span class="c">!     THE CODE IS LENGTHENED FROM THIS BASIC ALGORITHM</span>
+<span class="c">!     BY A SECTION WHICH CUTS DOWN THE SEARCH IN THE XS VECTOR,</span>
+<span class="c">!     AND BY A SECTION WHICH OBVIATES (UNDER CERTAIN CIRCUMSTANCES)</span>
+<span class="c">!     THE NEED FOR RECALCULATING THE RANK OF AN ELEMENT IN XS.</span>
+<span class="c">!</span>
+<span class="w">         </span><span class="n">nm1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">         </span><span class="n">xprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">         </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span>
+<span class="w">            </span><span class="n">jmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="n">xprev</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">               </span><span class="n">jmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span>
+<span class="w">               </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">jmin</span><span class="o">&gt;=</span><span class="n">N</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">                  IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">jmin</span><span class="o">==</span><span class="n">N</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">60</span>
+<span class="w">                  </span><span class="n">ibran</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span><span class="w"> </span><span class="n">ibran</span>
+<span class="w">                  </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span><span class="w"> </span><span class="n">jmin</span>
+<span class="w">                  </span><span class="mi">99005</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;JMIN = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span>
+<span class="w">                  </span><span class="k">STOP</span>
+<span class="k">               ENDIF</span>
+<span class="k">            ELSEIF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="o">/=</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">               IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="n">xprev</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">                  </span><span class="n">Xr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rprev</span>
+<span class="w">                  </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">80</span>
+<span class="w">               </span><span class="k">ENDIF</span>
+<span class="k">            ENDIF</span>
+<span class="k">            DO </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jmin</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nm1</span>
+<span class="w">               </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="n">XS</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">                  </span><span class="n">jp1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="k">DO </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jp1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span>
+<span class="w">                     </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">XS</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">/=</span><span class="n">XS</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">55</span>
+<span class="w">                  </span><span class="k">ENDDO</span>
+<span class="k">                  </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w"> </span><span class="mi">55</span><span class="w">               </span><span class="n">avrank</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                  </span><span class="n">avrank</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">avrank</span><span class="o">/</span><span class="mf">2.0_wp</span>
+<span class="w">                  </span><span class="n">Xr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">avrank</span>
+<span class="w">                  </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">80</span>
+<span class="w">               </span><span class="k">ENDIF</span>
+<span class="k">            ENDDO</span>
+<span class="k"> </span><span class="mi">60</span><span class="w">         </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span>
+<span class="w">            </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="n">XS</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">               </span><span class="n">Xr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span>
+<span class="w">            </span><span class="k">ELSE</span>
+<span class="k">               </span><span class="n">ibran</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">               </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span><span class="w"> </span><span class="n">ibran</span>
+<span class="w">               </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">XS</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="w">               </span><span class="mi">99006</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;X(I) = &#39;</span><span class="p">,</span><span class="n">F15</span><span class="p">.</span><span class="mi">7</span><span class="p">,</span><span class="s1">&#39;   XS(J) = &#39;</span><span class="p">,</span><span class="n">F15</span><span class="p">.</span><span class="mi">7</span><span class="p">)</span>
+<span class="w">               </span><span class="k">STOP</span>
+<span class="k">            ENDIF</span>
+<span class="k"> </span><span class="mi">80</span><span class="w">         </span><span class="n">xprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">            </span><span class="n">rprev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Xr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">         </span><span class="k">ENDDO</span>
+<span class="k">      ENDIF</span>
+<span class="mi">99007</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;*****INTERNAL ERROR IN RANK SUBROUTINE-- IMPOSSIBLE BRANCH CONDITION AT BRANCH POINT = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span>
+
+<span class="k">END SUBROUTINE </span><span class="n">RANK</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col"><p>M_datapac was developed by John S. Urban<br>&copy; 2024 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2024-03-29 03:40              </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+
+    <!-- MathJax JavaScript
+             ================================================== -->
+             <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+          jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+          extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+          });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+          <script src="../tipuesearch/tipuesearch_content.js"></script>
+          <script src="../tipuesearch/tipuesearch_set.js"></script>
+          <script src="../tipuesearch/tipuesearch.js"></script>
+
+  </body>
+</html>
