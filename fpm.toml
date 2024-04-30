@@ -11,17 +11,19 @@ keywords = ["fortran", "statistics"]
 homepage = "https://github.com/urbanjost/M_datapac.git"
 
 [install]
-library=true
+   library=true
 
 [build]
-auto-executables = true
-auto-tests = true
-auto-examples = true
-module-naming = true
+   auto-executables = true
+   auto-tests = true
+   auto-examples = true
+   module-naming = true
 
 [[test]]
-name="test_suite"
-source-dir="test"
-main="test_suite_M_datapac.f90"
-[test.dependencies]
-M_framework = {namespace = "GPF"}
+   name="test_suite"
+   source-dir="test"
+   main="test_suite_M_datapac.f90"
+   [test.dependencies]
+   M_framework          = { git = "https://github.com/urbanjost/M_framework.git" }
+   #M_framework = {namespace = "GPF"}
+
