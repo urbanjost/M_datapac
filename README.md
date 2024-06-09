@@ -29,39 +29,37 @@
 ```
 ## Description
 
-**A WORK IN PROGRESS**
+A modernized version of DATAPAC including man-pages and HTML documentation as
+a stand-alone library independent of Dataplot available as an fpm(1) package.
 
-The M_datapac Fortran module contains a variety of
-[statistical procedures](https://urbanjost.github.io/M_datapac/man3.html) 
-as well as a number of general utilities useful in statistical analysis.
+The M_datapac Fortran module contains a variety of 
+[statistical procedures](https://urbanjost.github.io/M_datapac/man3.html) as well as
+a number of general utilities useful in statistical analysis.
 
 The original DATAPAC library was written by James Filliben of the Statistical
 Engineering Division,
 [National Institute of Standards and Technology](https://www.nist.gov/).
 After these routines were incorporated into the [Dataplot](
 https://www.nist.gov/statistical-engineering-division/dataplot)
-program, development of DATAPAC stopped. However, there are some
-subroutines here that may be of interest. In particular, there are
+program, development of DATAPAC stopped. However, there are many routines
+that are useful external to Dataplot. In particular, there are
 a number of routines for computing various probability functions.
 
-It is also useful to have the routines apart from Dataplot as a separate
-make(1) and fpm(1) package for use in other applications.
-
-It is provided on an "as is" basis.
+Therefore, DATAPAC is presented here on an "as-is" bais apart from
+Dataplot as a separate make(1) and fpm(1) package for use in other
+applications.
 
 This software is not formally supported and is not being further developed
-other than to develop a test suite at this time.
-
+other than to develop a test suite at this time, but has been updated to
+use more modern syntax and structure as the original source is written in
+Fortran 77.
 
 There initially was no formal documentation apart from most of the
-subroutines contain extensive usage instructions in the comments
-in the source code. This documentation was modified so man-pages and 
-HTML documents are also generated based on this information.
+subroutines contain extensive usage instructions in the comments in
+the source code. This documentation was modified so man-pages and HTML
+documents are also generated based on this information.
 
-These routines were written in Fortran 77 and were ported to a modern
-Fortran module accessible via `fpm`.
-
-The initial conversion was done with
+The initial conversion from Fortran 77 was done with
 [spag](https://polyhedron.com/?product=plusfort) from plusfort.
 
 ## Needs
