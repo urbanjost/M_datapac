@@ -52,9 +52,11 @@ It is provided on an "as is" basis.
 This software is not formally supported and is not being further developed
 other than to develop a test suite at this time.
 
-There is no formal documentation yet for the subroutines. However, most
-of the subroutines contain extensive usage instructions in the comments
-in the source code.
+
+There initially was no formal documentation apart from most of the
+subroutines contain extensive usage instructions in the comments
+in the source code. This documentation was modified so man-pages and 
+HTML documents are also generated based on this information.
 
 These routines were written in Fortran 77 and were ported to a modern
 Fortran module accessible via `fpm`.
@@ -84,7 +86,7 @@ reformat the comments to man-page format.
      make F90=nvfortran nvfortran
 
 This will compile the Fortran module and basic example
-program that exercise the routine and place the resulting
+programs that exercise the routine and place the resulting
 files in the src/lib/ directory.
 
 ## Build and Test with FPM ![-](docs/images/fpm_logo.gif)
