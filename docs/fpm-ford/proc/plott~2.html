@@ -1,0 +1,613 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Statistics">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>PLOTT &ndash; M_datapac</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_datapac </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>PLOTT
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.7% of total for procedures.">204 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_datapac__s.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_datapac__s.f90.html'>M_datapac__s.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_datapac__s.html'>M_datapac__s</a></li>
+            <li class="breadcrumb-item active" aria-current="page">PLOTT</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/plott~2.html#src">PLOTT</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine PLOTT(Y, X, N)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">plott</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_datapac</span>:<span class="nv">GENERIC_LINE_PLOT</span>] <span class="nv">generate</span> <span class="nv">a</span> <span class="nv">line</span> <span class="nv">printer</span>
+<span class="nv">plot</span> <span class="nv">of</span> <span class="nv">Y</span> <span class="nv">vs</span> <span class="nv">X</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">terminal</span> <span class="ss">(</span><span class="mi">71</span> <span class="nv">characters</span> <span class="nv">wide</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>   SUBROUTINE PLOTT(Y,X,N)
+
+    REAL(kind=wp),intent(in) :: X(:)
+    REAL(kind=wp),intent(in) :: Y(:)
+    INTEGER,intent(in)       :: N
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">PLOTT</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">yields</span> <span class="nv">a</span> <span class="nv">narrow</span><span class="o">-</span><span class="nv">width</span> <span class="ss">(</span><span class="mi">71</span><span class="o">-</span><span class="nv">character</span><span class="ss">)</span> <span class="nv">plot</span> <span class="nv">of</span> <span class="nv">Y</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span> <span class="nv">versus</span>
+<span class="nv">X</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>. <span class="nv">Its</span> <span class="nv">narrow</span> <span class="nv">width</span> <span class="nv">makes</span> <span class="nv">it</span> <span class="nv">appropriate</span> <span class="k">for</span> <span class="nv">use</span> <span class="nv">on</span> <span class="nv">a</span> <span class="nv">terminal</span>.
+
+<span class="nv">Note</span> <span class="nv">values</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">vertical</span> <span class="nv">axis</span> <span class="nv">vector</span> <span class="ss">(</span><span class="nv">y</span><span class="ss">)</span> <span class="nv">or</span> <span class="nv">the</span> <span class="nv">horizontal</span> <span class="nv">axis</span>
+<span class="nv">vector</span> <span class="ss">(</span><span class="nv">x</span><span class="ss">)</span> <span class="nv">which</span> <span class="nv">are</span> <span class="nv">equal</span> <span class="nv">to</span> <span class="nv">or</span> <span class="nv">in</span> <span class="nv">excess</span> <span class="nv">of</span> <span class="mi">10</span>.<span class="mi">0</span><span class="o">**</span><span class="mi">10</span> <span class="nv">will</span> <span class="nv">not</span>
+<span class="nv">be</span> <span class="nv">plotted</span>.
+
+<span class="nv">This</span> <span class="nv">convention</span> <span class="nv">greatly</span> <span class="nv">simplifies</span> <span class="nv">the</span> <span class="nv">problem</span> <span class="nv">of</span> <span class="nv">plotting</span> <span class="nv">when</span>
+<span class="nv">some</span> <span class="nv">elements</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">y</span> <span class="ss">(</span><span class="nv">or</span> <span class="nv">x</span><span class="ss">)</span> <span class="nv">are</span> <span class="s1">&#39;</span><span class="s">missing data</span><span class="s1">&#39;</span>, <span class="nv">or</span> <span class="nv">when</span>
+<span class="nv">we</span> <span class="nv">purposely</span> <span class="nv">want</span> <span class="nv">to</span> <span class="nv">ignore</span> <span class="nv">certain</span> <span class="nv">elements</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">vector</span> <span class="nv">y</span> <span class="ss">(</span><span class="nv">or</span> <span class="nv">x</span><span class="ss">)</span>
+<span class="k">for</span> <span class="nv">plotting</span> <span class="nv">purposes</span> <span class="ss">(</span><span class="nv">that</span> <span class="nv">is</span>, <span class="nv">we</span> <span class="k">do</span> <span class="nv">not</span> <span class="nv">want</span> <span class="nv">certain</span> <span class="nv">elements</span> <span class="nv">in</span>
+<span class="nv">y</span> <span class="ss">(</span><span class="nv">or</span> <span class="nv">x</span><span class="ss">)</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">plotted</span><span class="ss">)</span>. <span class="nv">To</span> <span class="nv">cause</span> <span class="nv">specific</span> <span class="nv">elements</span> <span class="nv">in</span> <span class="nv">y</span> <span class="ss">(</span><span class="nv">or</span> <span class="nv">x</span><span class="ss">)</span>
+<span class="nv">to</span> <span class="nv">be</span> <span class="nv">ignored</span>, <span class="nv">we</span> <span class="nv">replace</span> <span class="nv">the</span> <span class="nv">elements</span> <span class="nv">beforehand</span> <span class="ss">(</span><span class="nv">by</span>, <span class="k">for</span> <span class="nv">example</span>,
+<span class="nv">use</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">REPLAC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">subroutine</span><span class="ss">)</span> <span class="nv">by</span> <span class="nv">some</span> <span class="nv">large</span> <span class="nv">value</span> <span class="ss">(</span><span class="nv">like</span>, <span class="nv">say</span>,
+<span class="mi">10</span>.<span class="mi">0</span><span class="o">**</span><span class="mi">10</span><span class="ss">)</span> <span class="nv">and</span> <span class="nv">they</span> <span class="nv">will</span> <span class="nv">subsequently</span> <span class="nv">be</span> <span class="nv">ignored</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">plot</span> <span class="nv">subroutine</span>.
+
+<span class="nv">Note</span> <span class="nv">that</span> <span class="nv">the</span> <span class="nv">storage</span> <span class="nv">requirements</span> <span class="k">for</span> <span class="nv">this</span> <span class="ss">(</span><span class="nv">and</span> <span class="nv">the</span> <span class="nv">other</span><span class="ss">)</span> <span class="nv">terminal</span>
+<span class="nv">plot</span> <span class="nv">subroutines</span> <span class="nv">are</span> <span class="nv">very</span> <span class="nv">small</span>. <span class="nv">This</span> <span class="nv">is</span> <span class="nv">due</span> <span class="nv">to</span> <span class="nv">the</span> <span class="s2">&quot;</span><span class="s">one line at</span>
+<span class="nv">a</span> <span class="nv">time</span><span class="s2">&quot;</span><span class="s"> algorithm employed for the plot.</span>
+</code></pre></div>
+
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<p>Y   The vector of (unsorted or sorted) observations to be plotted
+       vertically.</p>
+<p>X   The REAL vector of (unsorted or sorted) observations
+       to be plotted horizontally.</p>
+<p>N   The integer number of observations in the vector Y.
+       There is no restriction on the maximum value of N for this
+       subroutine.</p>
+<h2 id="output">OUTPUT</h2>
+<div class="codehilite"><pre><span></span><code>A narrow-width (71-character) terminal plot of y(i) versus x(i).
+The body of the plot (not counting axis values and margins) is 25 rows
+(lines) and 49 columns.
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code>  <span class="nv">program</span> <span class="nv">demo_plott</span>
+  <span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">plott</span>, <span class="nv">label</span>
+  <span class="nv">implicit</span> <span class="nv">none</span>
+  <span class="nv">integer</span> ::  <span class="nv">i</span>
+  <span class="nv">integer</span>,<span class="nv">parameter</span> :: <span class="nv">dp</span><span class="o">=</span><span class="nv">kind</span><span class="ss">(</span><span class="mi">0</span>.<span class="mi">0</span><span class="nv">d0</span><span class="ss">)</span>
+  <span class="nv">real</span><span class="ss">(</span><span class="nv">kind</span><span class="o">=</span><span class="nv">dp</span><span class="ss">)</span>, <span class="nv">allocatable</span> ::  <span class="nv">x</span><span class="ss">(</span>:<span class="ss">)</span>, <span class="nv">y</span><span class="ss">(</span>:<span class="ss">)</span>
+     <span class="k">call</span> <span class="nl">label</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">plott</span><span class="s1">&#39;</span><span class="ss">)</span>
+     <span class="nv">y</span><span class="o">=</span>[<span class="ss">(</span><span class="nv">real</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span><span class="o">/</span><span class="mi">10</span>.<span class="mi">0</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="mi">30</span><span class="ss">)</span>]
+     <span class="nv">x</span><span class="o">=</span><span class="nv">y</span><span class="o">**</span><span class="mi">3</span>.<span class="mi">78</span><span class="o">-</span><span class="mi">6</span><span class="o">*</span><span class="nv">y</span><span class="o">**</span><span class="mi">2</span>.<span class="mi">52</span><span class="o">+</span><span class="mi">9</span><span class="o">*</span><span class="nv">y</span><span class="o">**</span><span class="mi">1</span>.<span class="mi">26</span>
+     <span class="k">call</span> <span class="nl">plott</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">))</span>
+  <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_plott</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code> The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                   I-----------I-----------I-----------I-----------I
+  0.4000000E+01 -               X X X                              X
+  0.3833356E+01 I              X     X
+  0.3666712E+01 I                      X
+  0.3500068E+01 I            X
+  0.3333424E+01 I                        X
+  0.3166780E+01 I          X
+  0.3000137E+01 -                         X
+  0.2833493E+01 I         X
+  0.2666849E+01 I                                                X
+  0.2500205E+01 I                           X
+  0.2333561E+01 I       X
+  0.2166917E+01 I                            X
+  0.2000273E+01 -
+  0.1833629E+01 I
+  0.1666985E+01 I     X                        X                X
+  0.1500341E+01 I
+  0.1333698E+01 I                                X
+  0.1167054E+01 I
+  0.1000410E+01 -    X
+  0.8337659E+00 I                                 X           X
+  0.6671220E+00 I
+  0.5004781E+00 I  X                                X
+  0.3338342E+00 I                                           X
+  0.1671903E+00 I                                     X    X
+  0.5463774E-03 -                                      X X
+                   I-----------I-----------I-----------I-----------I
+            0.1000E+00  0.8250E+00  0.1550E+01  0.2275E+01  0.3000E+01
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-y~99"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Y</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~228"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>X</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~190"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>N</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">PLOTT</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"></span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">X</span><span class="p">(:)</span><span class="w"></span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Y</span><span class="p">(:)</span><span class="w"></span>
+<span class="kt">INTEGER</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">aim1</span><span class="p">,</span><span class="w"> </span><span class="n">airow</span><span class="p">,</span><span class="w"> </span><span class="n">anumcm</span><span class="p">,</span><span class="w"> </span><span class="n">anumlm</span><span class="p">,</span><span class="w"> </span><span class="n">anumr</span><span class="p">,</span><span class="w"> </span><span class="n">anumrm</span><span class="w"></span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cutoff</span><span class="p">,</span><span class="w">  </span><span class="n">delx</span><span class="p">,</span><span class="w"> </span><span class="n">dely</span><span class="p">,</span><span class="w"> </span><span class="n">hold</span><span class="p">,</span><span class="w"> </span><span class="n">xlable</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">xwidth</span><span class="p">,</span><span class="w"> </span><span class="n">ylable</span><span class="p">,</span><span class="w"> </span><span class="n">ylower</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="w"></span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">yupper</span><span class="p">,</span><span class="w"> </span><span class="n">ywidth</span><span class="w"></span>
+<span class="kt">INTEGER</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">icol</span><span class="p">,</span><span class="w"> </span><span class="n">icolmx</span><span class="p">,</span><span class="w"> </span><span class="n">irow</span><span class="p">,</span><span class="w"> </span><span class="n">ixdel</span><span class="p">,</span><span class="w"> </span><span class="n">n2</span><span class="p">,</span><span class="w"> </span><span class="n">numcol</span><span class="p">,</span><span class="w"> </span><span class="n">numlab</span><span class="p">,</span><span class="w"> </span><span class="n">numr25</span><span class="p">,</span><span class="w"> </span><span class="n">numr50</span><span class="p">,</span><span class="w"> </span><span class="n">numr75</span><span class="p">,</span><span class="w"> </span><span class="n">numrow</span><span class="w"></span>
+<span class="kt">CHARACTER</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iline</span><span class="w"></span>
+<span class="kt">CHARACTER</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iaxisc</span><span class="w"></span>
+<span class="kt">CHARACTER</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">sbnam1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam2</span><span class="w"></span>
+<span class="kt">CHARACTER</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">alph11</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph12</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph21</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph22</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph31</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph32</span><span class="w"></span>
+<span class="kt">CHARACTER</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">blank</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">hyphen</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alphai</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alphax</span><span class="w"></span>
+
+<span class="k">DIMENSION </span><span class="n">iline</span><span class="p">(</span><span class="mi">72</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">xlable</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">DATA </span><span class="n">sbnam1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam2</span><span class="o">/</span><span class="s1">&#39;PLOT&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;T   &#39;</span><span class="o">/</span><span class="w"></span>
+<span class="k">DATA </span><span class="n">alph11</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph12</span><span class="o">/</span><span class="s1">&#39;FIRS&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;T   &#39;</span><span class="o">/</span><span class="w"></span>
+<span class="k">DATA </span><span class="n">alph21</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph22</span><span class="o">/</span><span class="s1">&#39;SECO&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ND  &#39;</span><span class="o">/</span><span class="w"></span>
+<span class="k">DATA </span><span class="n">alph31</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph32</span><span class="o">/</span><span class="s1">&#39;THIR&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;D   &#39;</span><span class="o">/</span><span class="w"></span>
+<span class="k">DATA </span><span class="n">blank</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">hyphen</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alphai</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alphax</span><span class="o">/</span><span class="s1">&#39; &#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;I&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="o">/</span><span class="w"></span>
+<span class="c">!</span>
+<span class="w">      </span><span class="n">cutoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="mf">0.0_wp</span><span class="o">**</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">100</span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="o">&lt;</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">         WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span><span class="w"> </span><span class="n">alph31</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph32</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam2</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">         </span><span class="mi">99001</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; is non-negative (with value = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">RETURN</span>
+<span class="k">      ELSE</span>
+<span class="k">         IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">            WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span><span class="w"> </span><span class="n">alph31</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph32</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam2</span><span class="w"></span>
+<span class="w">            </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">            </span><span class="mi">99002</span><span class="w">       </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; has the value 1&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">RETURN</span>
+<span class="k">         ELSE</span><span class="w"></span>
+<span class="c">!</span>
+<span class="w">            </span><span class="n">hold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">               </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">50</span><span class="w"></span>
+<span class="w">            </span><span class="k">ENDDO</span>
+<span class="k">            WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span><span class="w"> </span><span class="n">alph11</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph12</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam2</span><span class="w"></span>
+<span class="w">            </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99014</span><span class="p">)</span><span class="w"> </span><span class="n">hold</span><span class="w"></span>
+<span class="w">            </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">RETURN</span>
+<span class="k">         ENDIF</span>
+<span class="k"> </span><span class="mi">50</span><span class="w">      </span><span class="k">continue</span>
+<span class="k">         </span><span class="n">hold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
+<span class="w">         </span><span class="k">ENDDO</span>
+<span class="k">         WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span><span class="w"> </span><span class="n">alph21</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph22</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam2</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99014</span><span class="p">)</span><span class="w"> </span><span class="n">hold</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">RETURN</span>
+<span class="k">      ENDIF</span><span class="w"></span>
+<span class="c">!</span>
+<span class="w"> </span><span class="mi">100</span><span class="w">  </span><span class="k">continue</span>
+<span class="k">      DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">200</span><span class="w"></span>
+<span class="w">      </span><span class="k">ENDDO</span>
+<span class="k">      WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span><span class="w"> </span><span class="n">alph11</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph12</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam2</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99015</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99016</span><span class="p">)</span><span class="w"> </span><span class="n">cutoff</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">RETURN</span>
+<span class="k"> </span><span class="mi">200</span><span class="w">  </span><span class="k">continue</span>
+<span class="k">      DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">300</span><span class="w"></span>
+<span class="w">      </span><span class="k">ENDDO</span>
+<span class="k">      WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99013</span><span class="p">)</span><span class="w"> </span><span class="n">alph21</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph22</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam2</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99015</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99016</span><span class="p">)</span><span class="w"> </span><span class="n">cutoff</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">RETURN</span><span class="w"></span>
+<span class="c">!</span>
+<span class="w"> </span><span class="mi">300</span><span class="w">  </span><span class="k">continue</span>
+<span class="k">      </span><span class="n">n2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">      </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">            </span><span class="n">n2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">n2</span><span class="o">&gt;=</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">400</span><span class="w"></span>
+<span class="w">         </span><span class="k">ENDIF</span>
+<span class="k">      ENDDO</span>
+<span class="k">      WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99012</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span><span class="w"> </span><span class="n">alph11</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph12</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph21</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">alph22</span><span class="w"></span>
+<span class="w">      </span><span class="mi">99003</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; The &#39;</span><span class="p">,</span><span class="n">A4</span><span class="p">,</span><span class="n">A4</span><span class="p">,</span><span class="s1">&#39;, and &#39;</span><span class="p">,</span><span class="n">A4</span><span class="p">,</span><span class="n">A4</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span><span class="w"> </span><span class="n">sbnam1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sbnam2</span><span class="w"></span>
+<span class="w">      </span><span class="mi">99004</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; input arguments to the &#39;</span><span class="p">,</span><span class="n">A4</span><span class="p">,</span><span class="n">A4</span><span class="p">,</span><span class="s1">&#39; subroutine&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="mi">99005</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; are such that too many points have been&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; excluded from the plot.&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span><span class="w"> </span><span class="n">n2</span><span class="w"></span>
+<span class="w">      </span><span class="mi">99006</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; only &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; points are left to be plotted.&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99011</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">RETURN</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!-----START POINT-----------------------------------------------------</span>
+<span class="c">!</span>
+<span class="c">!     DEFINE THE NUMBER OF ROWS AND COLUMNS WITHIN THE PLOT--</span>
+<span class="c">!     THIS HAS BEEN SET TO 25 ROWS AND 49 COLUMNS.</span>
+<span class="c">!</span>
+<span class="w"> </span><span class="mi">400</span><span class="w">  </span><span class="k">continue</span>
+<span class="k">      </span><span class="n">numrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">25</span><span class="w"></span>
+<span class="w">      </span><span class="n">numcol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">49</span><span class="w"></span>
+<span class="w">      </span><span class="n">anumr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numrow</span><span class="w"></span>
+<span class="w">      </span><span class="n">anumrm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numrow</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">anumcm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numcol</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">numr25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">numrow</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">numr50</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">numrow</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">numr75</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">numrow</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">      </span><span class="n">ixdel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">numcol</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="w"></span>
+<span class="w">      </span><span class="n">numlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+<span class="w">      </span><span class="n">anumlm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numlab</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     SKIP A LINE, WRITE OUT AN IDENTIFYING LINE FOR THE TYPE OF PLOT,</span>
+<span class="c">!     WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT, AND SKIP 1 LINE</span>
+<span class="c">!     FOR A MARGIN WITHIN THE PLOT.</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99007</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="mi">99007</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99008</span><span class="p">)</span><span class="w"></span>
+<span class="c">!</span>
+<span class="w">      </span><span class="mi">99008</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; The following is a plot of Y(I) (vertically) versus X(I) (horizontally)&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">DO </span><span class="n">icol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">numcol</span><span class="w"></span>
+<span class="w">         </span><span class="n">iline</span><span class="p">(</span><span class="n">icol</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hyphen</span><span class="w"></span>
+<span class="w">      </span><span class="k">ENDDO</span>
+<span class="k">      DO </span><span class="n">icol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">numcol</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ixdel</span><span class="w"></span>
+<span class="w">         </span><span class="n">iline</span><span class="p">(</span><span class="n">icol</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alphai</span><span class="w"></span>
+<span class="w">      </span><span class="k">ENDDO</span>
+<span class="k">      WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99017</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">iline</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">numcol</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span><span class="w"> </span><span class="n">blank</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     DETERMINE THE MIN AND MAX VALUES OF Y, AND OF X.</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">            IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">               </span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="n">xmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="n">xmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="k">EXIT</span>
+<span class="k">            ENDIF</span>
+<span class="k">         ENDIF</span>
+<span class="k">      ENDDO</span>
+<span class="k">      DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">            IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">               IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">ymin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="n">ymax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">xmin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">               </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="n">xmax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">ENDIF</span>
+<span class="k">         ENDIF</span>
+<span class="k">      ENDDO</span>
+<span class="k">      </span><span class="n">dely</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ymin</span><span class="w"></span>
+<span class="w">      </span><span class="n">delx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmax</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">xmin</span><span class="w"></span>
+<span class="w">      </span><span class="n">ywidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dely</span><span class="o">/</span><span class="n">anumrm</span><span class="w"></span>
+<span class="w">      </span><span class="n">xwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delx</span><span class="o">/</span><span class="n">anumcm</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     DETERMINE AND WRITE OUT THE PLOT POSITIONS ONE LINE AT A TIME.</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">DO </span><span class="n">irow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">numrow</span><span class="w"></span>
+<span class="w">         </span><span class="k">DO </span><span class="n">icol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">numcol</span><span class="w"></span>
+<span class="w">            </span><span class="n">iline</span><span class="p">(</span><span class="n">icol</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">blank</span><span class="w"></span>
+<span class="w">         </span><span class="k">ENDDO</span>
+<span class="k">         </span><span class="n">airow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">irow</span><span class="w"></span>
+<span class="w">         </span><span class="n">yupper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="mf">1.5_wp</span><span class="o">-</span><span class="n">airow</span><span class="p">)</span><span class="o">*</span><span class="n">ywidth</span><span class="w"></span>
+<span class="w">         </span><span class="n">ylable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0_wp</span><span class="o">-</span><span class="n">airow</span><span class="p">)</span><span class="o">*</span><span class="n">ywidth</span><span class="w"></span>
+<span class="w">         </span><span class="n">ylower</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="mf">0.5_wp</span><span class="o">-</span><span class="n">airow</span><span class="p">)</span><span class="o">*</span><span class="n">ywidth</span><span class="w"></span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">irow</span><span class="o">==</span><span class="n">numrow</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ylable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymin</span><span class="w"></span>
+<span class="w">         </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">               IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">                  IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ylower</span><span class="o">&lt;=</span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">AND</span><span class="p">.</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">yupper</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">                     </span><span class="n">icol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">xmin</span><span class="p">)</span><span class="o">/</span><span class="n">xwidth</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1.5_wp</span><span class="w"></span>
+<span class="w">                     </span><span class="n">iline</span><span class="p">(</span><span class="n">icol</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alphax</span><span class="w"></span>
+<span class="w">                  </span><span class="k">ENDIF</span>
+<span class="k">               ENDIF</span>
+<span class="k">            ENDIF</span>
+<span class="k">         ENDDO</span>
+<span class="k">         </span><span class="n">icolmx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">         </span><span class="k">DO </span><span class="n">icol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">numcol</span><span class="w"></span>
+<span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iline</span><span class="p">(</span><span class="n">icol</span><span class="p">)</span><span class="o">==</span><span class="n">alphax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">icolmx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icol</span><span class="w"></span>
+<span class="w">         </span><span class="k">ENDDO</span>
+<span class="k">         </span><span class="n">iaxisc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alphai</span><span class="w"></span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">irow</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">OR</span><span class="p">.</span><span class="w"> </span><span class="n">irow</span><span class="o">==</span><span class="n">numrow</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iaxisc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hyphen</span><span class="w"></span>
+<span class="w">         </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">irow</span><span class="o">==</span><span class="n">numr25</span><span class="w"> </span><span class="p">.</span><span class="nb">OR</span><span class="p">.</span><span class="w"> </span><span class="n">irow</span><span class="o">==</span><span class="n">numr50</span><span class="w"> </span><span class="p">.</span><span class="nb">OR</span><span class="p">.</span><span class="w"> </span><span class="n">irow</span><span class="o">==</span><span class="n">numr75</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">iaxisc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hyphen</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99009</span><span class="p">)</span><span class="w"> </span><span class="n">ylable</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">iaxisc</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">iline</span><span class="p">(</span><span class="n">icol</span><span class="p">),</span><span class="n">icol</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">icolmx</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="mi">99009</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">E14</span><span class="p">.</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="n">X</span><span class="p">,</span><span class="n">A1</span><span class="p">,</span><span class="mi">2</span><span class="n">X</span><span class="p">,</span><span class="mi">50</span><span class="n">A1</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">ENDDO</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     SKIP 1 LINE FOR A BOTTOM MARGIN WITHIN THE PLOT, WRITE OUT THE</span>
+<span class="c">!     BOTTOM HORIZONTAL AXIS, AND WRITE OUT THE X AXIS LABELS.</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99018</span><span class="p">)</span><span class="w"> </span><span class="n">blank</span><span class="w"></span>
+<span class="w">      </span><span class="k">DO </span><span class="n">icol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">numcol</span><span class="w"></span>
+<span class="w">         </span><span class="n">iline</span><span class="p">(</span><span class="n">icol</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hyphen</span><span class="w"></span>
+<span class="w">      </span><span class="k">ENDDO</span>
+<span class="k">      DO </span><span class="n">icol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">numcol</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ixdel</span><span class="w"></span>
+<span class="w">         </span><span class="n">iline</span><span class="p">(</span><span class="n">icol</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alphai</span><span class="w"></span>
+<span class="w">      </span><span class="k">ENDDO</span>
+<span class="k">      WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99017</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">iline</span><span class="p">(</span><span class="n">icol</span><span class="p">),</span><span class="n">icol</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">numcol</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">numlab</span><span class="w"></span>
+<span class="w">         </span><span class="n">aim1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">         </span><span class="n">xlable</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">aim1</span><span class="o">/</span><span class="n">anumlm</span><span class="p">)</span><span class="o">*</span><span class="n">delx</span><span class="w"></span>
+<span class="w">      </span><span class="k">ENDDO</span>
+<span class="k">      WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99010</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">xlable</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">numlab</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="mi">99010</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">9</span><span class="n">X</span><span class="p">,</span><span class="mf">5E12</span><span class="p">.</span><span class="mi">4</span><span class="p">)</span><span class="w"></span>
+
+<span class="mi">99011</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; **********************************************************************&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="mi">99012</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;                    FATAL ERROR                    &#39;</span><span class="p">)</span><span class="w"></span>
+<span class="mi">99013</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; The &#39;</span><span class="p">,</span><span class="n">A4</span><span class="p">,</span><span class="n">A4</span><span class="p">,</span><span class="s1">&#39; input argument to the &#39;</span><span class="p">,</span><span class="n">A4</span><span class="p">,</span><span class="n">A4</span><span class="p">,</span><span class="s1">&#39; subroutine&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="mi">99014</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; has all elements = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span><span class="w"></span>
+<span class="mi">99015</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; has all elements in excess of the cutoff&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="mi">99016</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; value of &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span><span class="w"></span>
+<span class="mi">99017</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">18</span><span class="n">X</span><span class="p">,</span><span class="mi">54</span><span class="n">A1</span><span class="p">)</span><span class="w"></span>
+<span class="mi">99018</span><span class="w"> </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="mi">15</span><span class="n">X</span><span class="p">,</span><span class="n">A1</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">END SUBROUTINE </span><span class="n">PLOTT</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_datapac
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 01:03 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

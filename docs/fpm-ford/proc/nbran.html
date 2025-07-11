@@ -1,0 +1,557 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Statistics">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>NBRAN &ndash; M_datapac</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_datapac </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>NBRAN
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.2% of total for procedures.">69 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_datapac__d.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_datapac__d.f90.html'>M_datapac__d.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_datapac__d.html'>M_datapac__d</a></li>
+            <li class="breadcrumb-item active" aria-current="page">NBRAN</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine NBRAN(N, P, Npar, Istart, X)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">nbran</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_datapac</span>:<span class="k">RANDOM</span>] <span class="nv">generate</span> <span class="nv">negative</span> <span class="nv">binomial</span> <span class="k">random</span> <span class="nv">numbers</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>   SUBROUTINE NBRAN(N,P,Npar,Istart,X)
+
+    INTEGER,intent(in)        :: N
+    REAL(kind=wp),intent(in)  :: P
+    INTEGER,intent(in)        :: Npar
+    INTEGER,intent(inout)     :: Istart
+    REAL(kind=wp),intent(out) :: X(:)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">NBRAN</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">generates</span> <span class="nv">a</span> <span class="k">random</span> <span class="nv">sample</span> <span class="nv">of</span> <span class="nv">size</span> <span class="nv">N</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nv">negative</span>
+<span class="nv">binomial</span> <span class="nv">distribution</span> <span class="nv">with</span> <span class="nv">precision</span> <span class="s1">&#39;</span><span class="s">Bernoulli probability</span><span class="s1">&#39;</span>
+<span class="nv">parameter</span> <span class="o">=</span> <span class="nv">P</span>, <span class="nv">and</span> <span class="nv">integer</span> <span class="s1">&#39;</span><span class="s">number of successes in Bernoulli trials</span><span class="s1">&#39;</span>
+<span class="nv">parameter</span> <span class="o">=</span> <span class="nv">NPAR</span>. <span class="nv">The</span> <span class="nv">negative</span> <span class="nv">binomial</span> <span class="nv">distribution</span> <span class="nv">used</span> <span class="nv">herein</span> <span class="nv">has</span>
+<span class="nv">mean</span> <span class="o">=</span> <span class="nv">NPAR</span><span class="o">*</span><span class="ss">(</span><span class="mi">1</span><span class="o">-</span><span class="nv">P</span><span class="ss">)</span><span class="o">/</span><span class="nv">P</span> <span class="nv">and</span> <span class="nv">standard</span> <span class="nv">deviation</span> <span class="o">=</span> <span class="nv">sqrt</span><span class="ss">(</span><span class="nv">NPAR</span><span class="o">*</span><span class="ss">(</span><span class="mi">1</span><span class="o">-</span><span class="nv">P</span><span class="ss">)</span><span class="o">/</span><span class="ss">(</span><span class="nv">P</span><span class="o">*</span><span class="nv">P</span><span class="ss">)))</span>.
+
+<span class="nv">This</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">defined</span> <span class="k">for</span> <span class="nv">all</span> <span class="nv">non</span><span class="o">-</span><span class="nv">negative</span> <span class="nv">integer</span> <span class="nv">X</span><span class="o">--</span> <span class="nv">X</span> <span class="o">=</span> <span class="mi">0</span>,
+<span class="mi">1</span>, <span class="mi">2</span>, ... .
+
+<span class="nv">This</span> <span class="nv">distribution</span> <span class="nv">has</span> <span class="nv">the</span> <span class="nv">probability</span> <span class="nv">function</span>
+
+    <span class="nv">f</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="nv">c</span><span class="ss">(</span><span class="nv">NPAR</span><span class="o">+</span><span class="nv">X</span><span class="o">-</span><span class="mi">1</span>,<span class="nv">NPAR</span><span class="ss">)</span> <span class="o">*</span> <span class="nv">P</span><span class="o">**</span><span class="nv">NPAR</span> <span class="o">*</span> <span class="ss">(</span><span class="mi">1</span><span class="o">-</span><span class="nv">P</span><span class="ss">)</span><span class="o">**</span><span class="nv">X</span>
+
+<span class="nv">Where</span> <span class="nv">c</span><span class="ss">(</span><span class="nv">NPAR</span><span class="o">+</span><span class="nv">X</span><span class="o">-</span><span class="mi">1</span>,<span class="nv">NPAR</span><span class="ss">)</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">combinatorial</span> <span class="nv">function</span> <span class="nv">equaling</span> <span class="nv">the</span>
+<span class="nv">number</span> <span class="nv">of</span> <span class="nv">combinations</span> <span class="nv">of</span> <span class="nv">NPAR</span><span class="o">+</span><span class="nv">X</span><span class="o">-</span><span class="mi">1</span> <span class="nv">items</span> <span class="nv">taken</span> <span class="nv">NPAR</span> <span class="nv">at</span> <span class="nv">a</span> <span class="nv">time</span>.
+
+<span class="nv">The</span> <span class="nv">negative</span> <span class="nv">binomial</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">distribution</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">number</span>
+<span class="nv">of</span> <span class="nv">failures</span> <span class="nv">before</span> <span class="nv">obtaining</span> <span class="nv">NPAR</span> <span class="nv">successes</span> <span class="nv">in</span> <span class="nv">an</span> <span class="nv">indefinite</span> <span class="nv">sequence</span>
+<span class="nv">of</span> <span class="nv">Bernoulli</span> <span class="ss">(</span><span class="mi">0</span>,<span class="mi">1</span><span class="ss">)</span> <span class="nv">trials</span> <span class="nv">where</span> <span class="nv">the</span> <span class="nv">probability</span> <span class="nv">of</span> <span class="nv">success</span> <span class="nv">in</span> <span class="nv">a</span> <span class="nv">precision</span>
+<span class="nv">trial</span> <span class="o">=</span> <span class="nv">P</span>.
+</code></pre></div>
+
+<h2 id="input-arguments">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">N</span>       <span class="nv">The</span> <span class="nv">desired</span> <span class="nv">integer</span> <span class="nv">number</span> <span class="nv">of</span> <span class="k">random</span> <span class="nv">numbers</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">generated</span>.
+
+<span class="nv">P</span>       <span class="nv">The</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">the</span> <span class="s1">&#39;</span><span class="s">Bernoulli probability</span><span class="s1">&#39;</span> <span class="nv">parameter</span> <span class="k">for</span> <span class="nv">the</span>
+        <span class="nv">negative</span> <span class="nv">binomial</span> <span class="nv">distribution</span>. <span class="nv">P</span> <span class="nv">Should</span> <span class="nv">be</span> <span class="nv">between</span>
+        <span class="mi">0</span>.<span class="mi">0</span> <span class="ss">(</span><span class="nv">exclusively</span><span class="ss">)</span> <span class="nv">and</span> <span class="mi">1</span>.<span class="mi">0</span> <span class="ss">(</span><span class="nv">exclusively</span><span class="ss">)</span>.
+
+<span class="nv">NPAR</span>    <span class="nv">The</span> <span class="nv">integer</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">the</span> <span class="s1">&#39;</span><span class="s">number of successes in Bernoulli</span>
+        <span class="nv">trials</span><span class="s1">&#39;</span><span class="s"> parameter. NPAR should be a positive integer.</span>
+
+<span class="nv">ISTART</span>  <span class="nv">An</span> <span class="nv">integer</span> <span class="nv">flag</span> <span class="nv">code</span> <span class="nv">which</span> <span class="ss">(</span><span class="k">if</span> <span class="nv">set</span> <span class="nv">to</span> <span class="mi">0</span><span class="ss">)</span> <span class="nv">will</span> <span class="nv">start</span> <span class="nv">the</span>
+        <span class="nv">generator</span> <span class="nv">over</span> <span class="nv">and</span> <span class="nv">hence</span> <span class="nv">produce</span> <span class="nv">the</span> <span class="nv">same</span> <span class="k">random</span> <span class="nv">sample</span>
+        <span class="nv">over</span> <span class="nv">and</span> <span class="nv">over</span> <span class="nv">again</span> <span class="nv">upon</span> <span class="nv">successive</span> <span class="nv">calls</span> <span class="nv">to</span> <span class="nv">this</span> <span class="nv">subroutine</span>
+        <span class="nv">within</span> <span class="nv">a</span> <span class="nv">run</span><span class="c1">; or (if set to some integer value not equal to 0,</span>
+        <span class="nv">like</span>, <span class="nv">say</span>, <span class="mi">1</span><span class="ss">)</span> <span class="nv">will</span> <span class="nv">allow</span> <span class="nv">the</span> <span class="nv">generator</span> <span class="nv">to</span> <span class="k">continue</span> <span class="nv">from</span> <span class="nv">where</span>
+        <span class="nv">it</span> <span class="nv">stopped</span> <span class="nv">and</span> <span class="nv">hence</span> <span class="nv">produce</span> <span class="nv">different</span> <span class="k">random</span> <span class="nv">samples</span> <span class="nv">upon</span>
+        <span class="nv">successive</span> <span class="nv">calls</span> <span class="nv">to</span> <span class="nv">this</span> <span class="nv">subroutine</span> <span class="nv">within</span> <span class="nv">a</span> <span class="nv">run</span>.
+</code></pre></div>
+
+<h2 id="output-arguments">OUTPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">X</span>       <span class="nv">A</span> <span class="nv">vector</span> <span class="ss">(</span><span class="nv">of</span> <span class="nv">dimension</span> <span class="nv">at</span> <span class="nv">least</span> <span class="nv">N</span><span class="ss">)</span> <span class="nv">into</span> <span class="nv">which</span> <span class="nv">the</span> <span class="nv">generated</span>
+        <span class="k">random</span> <span class="nv">sample</span> <span class="nv">of</span> <span class="nv">size</span> <span class="nv">N</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nv">negative</span> <span class="nv">binomial</span> <span class="nv">distribution</span>
+        <span class="nv">will</span> <span class="nv">be</span> <span class="nv">placed</span>.
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_nbran</span>
+<span class="nv">use</span> <span class="nv">m_datapac</span>, <span class="nv">only</span> : <span class="nv">nbran</span>, <span class="nv">plott</span>, <span class="nv">label</span>, <span class="nv">plotxt</span>, <span class="nv">sort</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">integer</span>,<span class="nv">parameter</span> :: <span class="nv">n</span><span class="o">=</span><span class="mi">400</span>
+<span class="nv">real</span>              :: <span class="nv">p</span>
+<span class="nv">integer</span>           :: <span class="nv">Npar</span>
+<span class="nv">integer</span>           :: <span class="nv">Istart</span>
+<span class="nv">real</span>              :: <span class="nv">x</span><span class="ss">(</span><span class="nv">n</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">label</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">nbran</span><span class="s1">&#39;</span><span class="ss">)</span>
+   <span class="nv">p</span><span class="o">=</span><span class="mi">0</span>.<span class="mi">4</span>
+   <span class="nv">Npar</span><span class="o">=</span><span class="mi">3</span>
+   <span class="nv">istart</span><span class="o">=</span><span class="mi">12345</span>
+   <span class="k">call</span> <span class="nl">nbran</span><span class="ss">(</span><span class="nv">N</span>,<span class="nv">P</span>,<span class="nv">Npar</span>,<span class="nv">Istart</span>,<span class="nv">X</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">plotxt</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">n</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">sort</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">n</span>,<span class="nv">x</span><span class="ss">)</span> <span class="o">!</span> <span class="nv">sort</span> <span class="nv">to</span> <span class="k">show</span> <span class="nv">distribution</span>
+   <span class="k">call</span> <span class="nl">plotxt</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">n</span><span class="ss">)</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_nbran</span>
+</code></pre></div>
+
+<p>Results:</p>
+<p>The following is a plot of X(I) (vertically) versus I (horizontally)
+                    I-----------I-----------I-----------I-----------I
+   0.2700000E+02 -                                               X
+   0.2600000E+02 I
+   0.2500000E+02 I
+   0.2400000E+02 I                          X
+   0.2300000E+02 I
+   0.2200000E+02 I
+   0.2100000E+02 -
+   0.2000000E+02 I                     X
+   0.1900000E+02 I
+   0.1800000E+02 I         X                          X X X
+   0.1700000E+02 I                X
+   0.1600000E+02 I             X                            X
+   0.1500000E+02 -            X      X X           X          X
+   0.1400000E+02 I           X  X         X        X  X       X
+   0.1300000E+02 I                X    X X    X  X  XX      X  X XXXX
+   0.1200000E+02 I   X     X    X    X          X              X
+   0.1100000E+02 I   XX   X X    X   XX   X      XXX   XXXXX XX   XX
+   0.1000000E+02 I    X XX   XXXX   X    XXX   X  XX    X  X     X
+   0.9000000E+01 -     XX    XXXX XX   X  XX XX X   X X    X  X XX  X
+   0.8000000E+01 I  XXXX XX  XXX  XX XXXXXXX X XX    X XXX   XXXX X X
+   0.7000000E+01 I     XX XXXXXX XXXXX X    XXXX  X XXX  X XXX XXXXX
+   0.6000000E+01 I  X XXX X X XXXXXX X  X  XXX X XXXX X XXXXX XXXX X
+   0.5000000E+01 I  XXXXXXXXXX XXXXXX XX XX XXX XXXX X XXXXXXXXXXX  X
+   0.4000000E+01 I  XX X X XXXX  XXXX XXXX XX X  XXXX XX XX   XX   X
+   0.3000000E+01 -     X XXX    XX  X XXX  XX XXX    X XX XX     XX X
+                    I-----------I-----------I-----------I-----------I
+             0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03</p>
+<p>The following is a plot of X(I) (vertically) versus I (horizontally)
+                    I-----------I-----------I-----------I-----------I
+   0.2700000E+02 -                                                  X
+   0.2600000E+02 I
+   0.2500000E+02 I
+   0.2400000E+02 I                                                  X
+   0.2300000E+02 I
+   0.2200000E+02 I
+   0.2100000E+02 -
+   0.2000000E+02 I                                                  X
+   0.1900000E+02 I
+   0.1800000E+02 I                                                 XX
+   0.1700000E+02 I                                                 X
+   0.1600000E+02 I                                                 X
+   0.1500000E+02 -                                                XX
+   0.1400000E+02 I                                               XX
+   0.1300000E+02 I                                              XX
+   0.1200000E+02 I                                             XX
+   0.1100000E+02 I                                          XXXX
+   0.1000000E+02 I                                       XXXX
+   0.9000000E+01 -                                    XXXX
+   0.8000000E+01 I                              XXXXXXX
+   0.7000000E+01 I                        XXXXXXX
+   0.6000000E+01 I                  XXXXXXX
+   0.5000000E+01 I           XXXXXXXX
+   0.4000000E+01 I      XXXXXX
+   0.3000000E+01 -  XXXX
+                    I-----------I-----------I-----------I-----------I
+             0.1000E+01  0.1008E+03  0.2005E+03  0.3002E+03  0.4000E+03</p>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+
+<h2 id="references">REFERENCES</h2>
+<ul>
+<li>Hastings and Peacock, Statistical Distributions&ndash;A Handbook for
+     Students and Practitioners, 1975, page 95.</li>
+<li>Johnson and Kotz, Discrete Distributions, 1969, pages 122-142.</li>
+<li>Feller, an Introduction to Probability Theory and its Applications,
+     Volume 1, Edition 2, 1957, pages 155-157, 210.</li>
+<li>National Bureau of Standards Applied Mathematics Series 55, 1964,
+     page 929.</li>
+<li>Kendall and Stuart, the Advanced Theory of Statistics, Volume 1,
+     Edition 2, 1963, pages 130-131.</li>
+</ul>
+<h2 id="name_1">NAME</h2>
+<div class="codehilite"><pre><span></span><code>norcdf(3f) - [M_datapac:CUMULATIVE_DISTRIBUTION] compute the normal cumulative
+distribution function
+</code></pre></div>
+
+<h2 id="synopsis_1">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>   SUBROUTINE NORCDF(X,Cdf)
+
+    REAL(kind=wp),intent(out) :: Cdf
+    REAL(kind=wp),intent(in)  :: X
+</code></pre></div>
+
+<h2 id="description_1">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">NORCDF</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">computes</span> <span class="nv">the</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span> <span class="nv">value</span> <span class="k">for</span> <span class="nv">the</span>
+<span class="nv">normal</span> <span class="ss">(</span><span class="nv">Gaussian</span><span class="ss">)</span> <span class="nv">distribution</span> <span class="nv">with</span> <span class="nv">mean</span> <span class="o">=</span> <span class="mi">0</span> <span class="nv">and</span> <span class="nv">standard</span> <span class="nv">deviation</span>
+<span class="o">=</span> <span class="mi">1</span>.
+
+<span class="nv">This</span> <span class="nv">distribution</span> <span class="nv">is</span> <span class="nv">defined</span> <span class="k">for</span> <span class="nv">all</span> <span class="nv">X</span> <span class="nv">and</span> <span class="nv">has</span> <span class="nv">the</span> <span class="nv">probability</span>
+<span class="nv">density</span> <span class="nv">function</span>
+
+    <span class="nv">f</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span> <span class="o">=</span> <span class="ss">(</span><span class="mi">1</span><span class="o">/</span><span class="nv">sqrt</span><span class="ss">(</span><span class="mi">2</span><span class="o">*</span><span class="nv">pi</span><span class="ss">))</span><span class="o">*</span><span class="nv">exp</span><span class="ss">(</span><span class="o">-</span><span class="nv">X</span><span class="o">*</span><span class="nv">X</span><span class="o">/</span><span class="mi">2</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="input-arguments_1">INPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code>X      The value at which the cumulative distribution function is to
+       be evaluated.
+</code></pre></div>
+
+<h2 id="output-arguments_1">OUTPUT ARGUMENTS</h2>
+<div class="codehilite"><pre><span></span><code>CDF    The cumulative distribution function value.
+</code></pre></div>
+
+<h2 id="examples_1">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_norcdf</span>
+<span class="o">!</span>@<span class="ss">(</span>#<span class="ss">)</span> <span class="nv">line</span> <span class="nv">plotter</span> <span class="nv">graph</span> <span class="nv">of</span> <span class="nv">cumulative</span> <span class="nv">distribution</span> <span class="nv">function</span>
+<span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">norcdf</span>, <span class="nv">plott</span>, <span class="nv">label</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">real</span>,<span class="nv">allocatable</span>  :: <span class="nv">x</span><span class="ss">(</span>:<span class="ss">)</span>, <span class="nv">y</span><span class="ss">(</span>:<span class="ss">)</span>
+<span class="nv">integer</span>           :: <span class="nv">i</span>
+   <span class="k">call</span> <span class="nl">label</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">norcdf</span><span class="s1">&#39;</span><span class="ss">)</span>
+   <span class="nv">x</span><span class="o">=</span>[<span class="ss">(</span><span class="nv">real</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>,<span class="nv">i</span><span class="o">=-</span><span class="mi">100</span>,<span class="mi">100</span>,<span class="mi">1</span><span class="ss">)</span>]
+   <span class="k">if</span><span class="ss">(</span><span class="nv">allocated</span><span class="ss">(</span><span class="nv">y</span><span class="ss">))</span><span class="nv">deallocate</span><span class="ss">(</span><span class="nv">y</span><span class="ss">)</span>
+   <span class="nv">allocate</span><span class="ss">(</span><span class="nv">y</span><span class="ss">(</span><span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)))</span>
+   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span>
+      <span class="k">call</span> <span class="nl">norcdf</span><span class="ss">(</span><span class="nv">x</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span><span class="o">/</span><span class="mi">10</span>.<span class="mi">0</span>,<span class="nv">y</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>
+   <span class="nv">enddo</span>
+   <span class="k">call</span> <span class="nl">plott</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">x</span><span class="ss">))</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_norcdf</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code> The following is a plot of Y(I) (vertically) versus X(I) (horizontally)
+                   I-----------I-----------I-----------I-----------I
+  0.1000000E+03 -                                                  X
+  0.9166666E+02 I                                                  X
+  0.8333334E+02 I                                                  X
+  0.7500000E+02 I                                                  X
+  0.6666667E+02 I                                                  X
+  0.5833334E+02 I                                                  X
+  0.5000000E+02 -                                                  X
+  0.4166667E+02 I                                                  X
+  0.3333334E+02 I                                                  X
+  0.2500000E+02 I                                                 XX
+  0.1666667E+02 I                                             XXXXX
+  0.8333336E+01 I                                   X XX XXXXX
+  0.0000000E+00 -                   XX X X X X X XX
+ -0.8333328E+01 I        XXXXX XX X
+ -0.1666666E+02 I   XXXXX
+ -0.2499999E+02 I  XX
+ -0.3333333E+02 I  X
+ -0.4166666E+02 I  X
+ -0.5000000E+02 -  X
+ -0.5833333E+02 I  X
+ -0.6666666E+02 I  X
+ -0.7500000E+02 I  X
+ -0.8333333E+02 I  X
+ -0.9166666E+02 I  X
+ -0.1000000E+03 -  X
+                   I-----------I-----------I-----------I-----------I
+            0.0000E+00  0.2500E+00  0.5000E+00  0.7500E+00  0.1000E+01
+</code></pre></div>
+
+<h2 id="author_1">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
+</code></pre></div>
+
+<h2 id="maintainer_1">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license_1">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+
+<h2 id="references_1">REFERENCES</h2>
+<ul>
+<li>National Bureau of Standards Applied Mathematics Series 55, 1964,
+     page 932, Formula 26.2.17.</li>
+<li>Johnson and Kotz, Continuous Univariate Distributions&ndash;1, 1970,
+     pages 40-111.</li>
+</ul>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~56"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>N</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-p~26"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>P</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-npar~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Npar</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-istart~3"></span>
+              integer,
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Istart</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~70"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>X</strong>(:)</td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_datapac
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 01:03 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

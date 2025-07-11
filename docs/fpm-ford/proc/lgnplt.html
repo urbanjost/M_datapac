@@ -1,0 +1,550 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Statistics">
+    <meta name="author" content="John S. Urban" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>LGNPLT &ndash; M_datapac</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">M_datapac </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>LGNPLT
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.2% of total for procedures.">61 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/M_datapac__d.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_datapac__d.f90.html'>M_datapac__d.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_datapac__d.html'>M_datapac__d</a></li>
+            <li class="breadcrumb-item active" aria-current="page">LGNPLT</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#common-0"
+         aria-expanded="false" aria-controls="common-0">
+         <h4 class="card-header bg-primary text-white">Common Blocks</h4>
+      </a>
+      <div id="common-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../proc/lgnplt.html#common-block2_real64~18">BLOCK2_real64</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/lgnplt.html#src">LGNPLT</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine LGNPLT(X, N)  
+</h2>
+    
+
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>lgnplt(3f) - [M_datapac:LINE_PLOT] generates a lognormal probability
+plot
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code>   SUBROUTINE LGNPLT(X,N)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">lgnplt</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">generates</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">lognormal</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="n">plot</span><span class="o">.</span><span class="w"></span>
+
+<span class="n">the</span><span class="w"> </span><span class="n">prototype</span><span class="w"> </span><span class="n">lognormal</span><span class="w"> </span><span class="n">distribution</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">herein</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="o">=</span><span class="w"> </span><span class="mf">1.64872127</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">deviation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">e</span><span class="o">*</span><span class="p">(</span><span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.16119742</span><span class="o">.</span><span class="w"></span>
+<span class="n">this</span><span class="w"> </span><span class="n">distribution</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">positive</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">probability</span><span class="w"></span>
+<span class="n">density</span><span class="w"> </span><span class="n">function</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="nb">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">)))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="nb">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="nb">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+
+<span class="n">the</span><span class="w"> </span><span class="n">prototype</span><span class="w"> </span><span class="n">lognormal</span><span class="w"> </span><span class="n">distribution</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">herein</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">distribution</span><span class="w"></span>
+<span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">variate</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">variate</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">normally</span><span class="w"> </span><span class="n">distributed</span><span class="w"></span>
+<span class="n">with</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">deviation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="w"></span>
+
+<span class="k">as</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">herein</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="n">plot</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">distribution</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">plot</span><span class="w"></span>
+<span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ordered</span><span class="w"> </span><span class="n">observations</span><span class="w"> </span><span class="n">versus</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="n">statistic</span><span class="w"> </span><span class="n">medians</span><span class="w"> </span><span class="k">for</span><span class="w"></span>
+<span class="n">that</span><span class="w"> </span><span class="n">distribution</span><span class="o">.</span><span class="w"></span>
+
+<span class="n">the</span><span class="w"> </span><span class="n">lognormal</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="n">plot</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">useful</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">graphically</span><span class="w"> </span><span class="n">testing</span><span class="w"></span>
+<span class="n">the</span><span class="w"> </span><span class="n">composite</span><span class="w"> </span><span class="p">(</span><span class="n">that</span><span class="w"> </span><span class="k">is</span><span class="p">,</span><span class="w"> </span><span class="n">location</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="n">need</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">be</span><span class="w"></span>
+<span class="n">specified</span><span class="p">)</span><span class="w"> </span><span class="n">hypothesis</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">underlying</span><span class="w"> </span><span class="n">distribution</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">which</span><span class="w"></span>
+<span class="n">the</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">randomly</span><span class="w"> </span><span class="n">drawn</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">lognormal</span><span class="w"> </span><span class="n">distribution</span><span class="o">.</span><span class="w"></span>
+
+<span class="k">if</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">hypothesis</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="bp">true</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">probability</span><span class="w"> </span><span class="n">plot</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">near</span><span class="o">-</span><span class="n">linear</span><span class="o">.</span><span class="w"></span>
+
+<span class="n">a</span><span class="w"> </span><span class="n">measure</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">linearity</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">calculated</span><span class="w"> </span><span class="n">probability</span><span class="w"></span>
+<span class="n">plot</span><span class="w"> </span><span class="n">correlation</span><span class="w"> </span><span class="n">coefficient</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> X   description of parameter
+ Y   description of parameter
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_lgnplt</span>
+<span class="nv">use</span> <span class="nv">M_datapac</span>, <span class="nv">only</span> : <span class="nv">lgnplt</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="o">!</span> <span class="k">call</span> <span class="nl">lgnplt</span><span class="ss">(</span><span class="nv">x</span>,<span class="nv">y</span><span class="ss">)</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_lgnplt</span>
+</code></pre></div>
+
+<p>Results:</p>
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>The original DATAPAC library was written by James Filliben of the
+Statistical Engineering Division, National Institute of Standards
+and Technology.
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.05.31
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+
+<h2 id="references">REFERENCES</h2>
+<ul>
+<li>FILLIBEN, &lsquo;TECHNIQUES FOR TAIL LENGTH ANALYSIS&rsquo;, PROCEEDINGS OF THE
+     EIGHTEENTH CONFERENCE ON THE DESIGN OF EXPERIMENTS IN ARMY RESEARCH
+     DEVELOPMENT AND TESTING (ABERDEEN, MARYLAND, OCTOBER, 1972), pages
+     425-450.</li>
+<li>HAHN AND SHAPIRO, STATISTICAL METHODS IN ENGINEERING, 1967, pages
+     260-308.</li>
+<li>JOHNSON AND KOTZ, CONTINUOUS UNIVARIATE DISTRIBUTIONS&ndash;1, 1970,
+     pages 112-136.</li>
+<li>CRAMER, MATHEMATICAL METHODS OF STATISTICS, 1946, pages 219-220.</li>
+</ul>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~55"></span>
+              real(kind=wp),
+            </td>
+<td></td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>X</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~43"></span>
+              integer
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>N</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+
+    <section>
+      <h2>Common Blocks</h2>
+        <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="common-block2_real64~18"></span>
+      <h3>
+        <a href="#"
+           data-bs-toggle="popover"
+           data-bs-html="true"
+           data-bs-trigger="focus"
+           data-bs-title="Used elsewhere:"
+           data-bs-content="<a href="../proc/cauplt.html#common-block2_real64">CAUPLT</a>
+      (subroutine)<br><a href="../proc/chscdf.html#common-block2_real64~2">CHSCDF</a>
+      (subroutine)<br><a href="../proc/code.html#common-block2_real64~3">CODE</a>
+      (subroutine)<br><a href="../proc/decomp.html#common-block2_real64~4">DECOMP</a>
+      (subroutine)<br><a href="../proc/demod.html#common-block2_real64~5">DEMOD</a>
+      (subroutine)<br><a href="../proc/dexplt.html#common-block2_real64~6">DEXPLT</a>
+      (subroutine)<br><a href="../proc/ev1plt.html#common-block2_real64~7">EV1PLT</a>
+      (subroutine)<br><a href="../proc/ev2plt.html#common-block2_real64~8">EV2PLT</a>
+      (subroutine)<br><a href="../proc/expplt.html#common-block2_real64~9">EXPPLT</a>
+      (subroutine)<br><a href="../proc/extrem.html#common-block2_real64~10">EXTREM</a>
+      (subroutine)<br><a href="../proc/extrem.html#common-block2_real64~11">EXTREM</a>
+      (subroutine)<br><a href="../proc/freq.html#common-block2_real64~12">FREQ</a>
+      (subroutine)<br><a href="../proc/gamplt.html#common-block2_real64~13">GAMPLT</a>
+      (subroutine)<br><a href="../proc/geoplt.html#common-block2_real64~14">GEOPLT</a>
+      (subroutine)<br><a href="../proc/hfnplt.html#common-block2_real64~15">HFNPLT</a>
+      (subroutine)<br><a href="../proc/invxwx.html#common-block2_real64~16">INVXWX</a>
+      (subroutine)<br><a href="../proc/lamplt.html#common-block2_real64~17">LAMPLT</a>
+      (subroutine)<br><a href="../proc/logplt.html#common-block2_real64~19">LOGPLT</a>
+      (subroutine)<br><a href="../proc/median.html#common-block2_real64~20">MEDIAN</a>
+      (subroutine)<br><a href="../proc/norout.html#common-block2_real64~21">norout</a>
+      (subroutine)<br><a href="../proc/norplt.html#common-block2_real64~22">NORPLT</a>
+      (subroutine)<br><a href="../proc/parplt.html#common-block2_real64~23">PARPLT</a>
+      (subroutine)<br><a href="../proc/plotu.html#common-block2_real64~24">PLOTU</a>
+      (subroutine)<br><a href="../proc/poiplt.html#common-block2_real64~25">POIPLT</a>
+      (subroutine)<br><a href="../proc/runs.html#common-block2_real64~26">RUNS</a>
+      (subroutine)<br><a href="../proc/sampp.html#common-block2_real64~27">SAMPP</a>
+      (subroutine)<br><a href="../proc/spcorr.html#common-block2_real64~28">SPCORR</a>
+      (subroutine)<br><a href="../proc/tail.html#common-block2_real64~29">TAIL</a>
+      (subroutine)<br><a href="../proc/tplt.html#common-block2_real64~30">TPLT</a>
+      (subroutine)<br><a href="../proc/trim.html#common-block2_real64~31">TRIM</a>
+      (subroutine)<br><a href="../proc/uniplt.html#common-block2_real64~32">UNIPLT</a>
+      (subroutine)<br><a href="../proc/weib.html#common-block2_real64~33">WEIB</a>
+      (subroutine)<br><a href="../proc/weiplt.html#common-block2_real64~34">WEIPLT</a>
+      (subroutine)<br><a href="../proc/wind.html#common-block2_real64~35">WIND</a>
+      (subroutine)<br>">
+           common /BLOCK2_real64/        </a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ws~54"></span>
+              real
+            </td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>WS</strong>(15000)</td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  </div>
+
+    </section>
+    <br>
+    <script>
+      $(function () {
+      $('[data-bs-toggle="popover"]').popover()
+      })
+    </script>
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">SUBROUTINE </span><span class="n">LGNPLT</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"></span>
+<span class="kt">REAL</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">cc</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sum1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sum2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sum3</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">tau</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">wbar</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">WS</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">ybar</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">yint</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">yslope</span><span class="w"></span>
+<span class="kt">INTEGER</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">iupper</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     INPUT ARGUMENTS--X      = THE  VECTOR OF</span>
+<span class="c">!                                (UNSORTED OR SORTED) OBSERVATIONS.</span>
+<span class="c">!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS</span>
+<span class="c">!                                IN THE VECTOR X.</span>
+<span class="c">!     OUTPUT--A ONE-page LOGNORMAL PROBABILITY PLOT.</span>
+<span class="c">!     PRINTING--YES.</span>
+<span class="c">!     RESTRICTIONS--THE MAXIMUM ALLOWABLE VALUE OF N</span>
+<span class="c">!                   FOR THIS SUBROUTINE IS 7500.</span>
+
+<span class="c">!     ORIGINAL VERSION--JUNE      1972.</span>
+<span class="c">!     UPDATED         --SEPTEMBER 1975.</span>
+<span class="c">!     UPDATED         --NOVEMBER  1975.</span>
+<span class="c">!     UPDATED         --FEBRUARY  1976.</span>
+<span class="c">!</span>
+<span class="c">!---------------------------------------------------------------------</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">DIMENSION </span><span class="n">X</span><span class="p">(:)</span><span class="w"></span>
+<span class="w">      </span><span class="k">DIMENSION </span><span class="n">Y</span><span class="p">(</span><span class="mi">7500</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="mi">7500</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">COMMON</span><span class="w"> </span><span class="o">/</span><span class="n">BLOCK2_real64</span><span class="o">/</span><span class="w"> </span><span class="n">WS</span><span class="p">(</span><span class="mi">15000</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">EQUIVALENCE</span><span class="w"> </span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="w">      </span><span class="k">EQUIVALENCE</span><span class="w"> </span><span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">WS</span><span class="p">(</span><span class="mi">7501</span><span class="p">))</span><span class="w"></span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">DATA </span><span class="n">tau</span><span class="o">/</span><span class="mf">2.37134890_wp</span><span class="o">/</span><span class="w"></span>
+<span class="c">!</span>
+<span class="w">      </span><span class="n">iupper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7500</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     CHECK THE INPUT ARGUMENTS FOR ERRORS</span>
+<span class="c">!</span>
+<span class="w">      </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="o">&lt;</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">OR</span><span class="p">.</span><span class="w"> </span><span class="n">N</span><span class="o">&gt;</span><span class="n">iupper</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">         WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99001</span><span class="p">)</span><span class="w"> </span><span class="n">iupper</span><span class="w"></span>
+<span class="mi">99001</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w">                                                   </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">     </span><span class="p">&amp;</span><span class="s1">&#39;***** FATAL ERROR--THE SECOND INPUT ARGUMENT TO THE LGNPLT SUBROU&amp;</span>
+<span class="s1">     &amp;TINE IS OUTSIDE THE ALLOWABLE (1,&#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39;) INTERVAL *****&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99002</span><span class="p">)</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="mi">99002</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;***** THE VALUE OF THE ARGUMENT IS &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">RETURN</span>
+<span class="k">      </span><span class="n">ELSEIF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="o">==</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="k">         WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99003</span><span class="p">)</span><span class="w"></span>
+<span class="mi">99003</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w">                                                   </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">     </span><span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE SECOND INPUT ARGUMENT TO THE LGNP&amp;</span>
+<span class="s1">     &amp;LT SUBROUTINE HAS THE VALUE 1 *****&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">RETURN</span>
+<span class="k">      ELSE</span>
+<span class="k">         </span><span class="n">hold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">            </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/=</span><span class="n">hold</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">50</span><span class="w"></span>
+<span class="w">         </span><span class="k">ENDDO</span>
+<span class="k">         WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99004</span><span class="p">)</span><span class="w"> </span><span class="n">hold</span><span class="w"></span>
+<span class="mi">99004</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w">                                                   </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">     </span><span class="p">&amp;</span><span class="s1">&#39;***** NON-FATAL DIAGNOSTIC--THE FIRST  INPUT ARGUMENT (A VECTOR) &amp;</span>
+<span class="s1">     &amp;TO THE LGNPLT SUBROUTINE HAS ALL ELEMENTS = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39; *****&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!-----START POINT-----------------------------------------------------</span>
+<span class="c">!</span>
+<span class="w"> </span><span class="mi">50</span><span class="w">      </span><span class="n">an</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     SORT THE DATA</span>
+<span class="c">!</span>
+<span class="w">         </span><span class="k">CALL </span><span class="n">SORT</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     GENERATE UNIFORM ORDER STATISTIC MEDIANS</span>
+<span class="c">!</span>
+<span class="w">         </span><span class="k">CALL </span><span class="n">UNIMED</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">W</span><span class="p">)</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     COMPUTE LOGNORMAL ORDER STATISTIC MEDIANS</span>
+<span class="c">!</span>
+<span class="w">         </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">            </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">CALL </span><span class="n">NORPPF</span><span class="p">(</span><span class="n">q</span><span class="p">,</span><span class="n">q</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">EXP</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">ENDDO</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     PLOT THE ORDERED OBSERVATIONS VERSUS ORDER STATISTICS MEDIANS.</span>
+<span class="c">!     WRITE OUT THE TAIL LENGTH MEASURE OF THE DISTRIBUTION</span>
+<span class="c">!     AND THE SAMPLE SIZE.</span>
+<span class="c">!</span>
+<span class="w">         </span><span class="k">CALL </span><span class="n">PLOT</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">N</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99005</span><span class="p">)</span><span class="w"> </span><span class="n">tau</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="c">!</span>
+<span class="mi">99005</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;LOGNORMAL PROBABILITY PLOT (TAU = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">,</span><span class="mi">53</span><span class="n">X</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">     </span><span class="p">&amp;</span><span class="w">           </span><span class="s1">&#39;THE SAMPLE SIZE N = &#39;</span><span class="p">,</span><span class="n">I0</span><span class="p">)</span><span class="w"></span>
+<span class="c">!</span>
+<span class="c">!     COMPUTE THE PROBABILITY PLOT CORRELATION COEFFICIENT.</span>
+<span class="c">!     COMPUTE LOCATION AND SCALE ESTIMATES</span>
+<span class="c">!     FROM THE INTERCEPT AND SLOPE OF THE PROBABILITY PLOT.</span>
+<span class="c">!     THEN WRITE THEM OUT.</span>
+<span class="c">!</span>
+<span class="w">         </span><span class="n">sum1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">         </span><span class="n">sum2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">         </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">            </span><span class="n">sum1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">sum2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">ENDDO</span>
+<span class="k">         </span><span class="n">ybar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum1</span><span class="o">/</span><span class="n">an</span><span class="w"></span>
+<span class="w">         </span><span class="n">wbar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum2</span><span class="o">/</span><span class="n">an</span><span class="w"></span>
+<span class="w">         </span><span class="n">sum1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">         </span><span class="n">sum2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">         </span><span class="n">sum3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">         </span><span class="k">DO </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"></span>
+<span class="w">            </span><span class="n">sum1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">ybar</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">ybar</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">sum2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">Y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">ybar</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">wbar</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">sum3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">wbar</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="n">wbar</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="k">ENDDO</span>
+<span class="k">         </span><span class="n">cc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum2</span><span class="o">/</span><span class="nb">SQRT</span><span class="p">(</span><span class="n">sum3</span><span class="o">*</span><span class="n">sum1</span><span class="p">)</span><span class="w"></span>
+<span class="w">         </span><span class="n">yslope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum2</span><span class="o">/</span><span class="n">sum3</span><span class="w"></span>
+<span class="w">         </span><span class="n">yint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ybar</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">yslope</span><span class="o">*</span><span class="n">wbar</span><span class="w"></span>
+<span class="w">         </span><span class="k">WRITE</span><span class="w"> </span><span class="p">(</span><span class="n">G_IO</span><span class="p">,</span><span class="mi">99006</span><span class="p">)</span><span class="w"> </span><span class="n">cc</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">yint</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">yslope</span><span class="w"></span>
+<span class="mi">99006</span><span class="w">    </span><span class="k">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;PROBABILITY PLOT CORRELATION COEFFICIENT = &#39;</span><span class="p">,</span><span class="n">F8</span><span class="p">.</span><span class="mi">5</span><span class="p">,&amp;</span><span class="w"></span>
+<span class="w">     </span><span class="p">&amp;</span><span class="w">           </span><span class="mi">5</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;ESTIMATED INTERCEPT = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="n">X</span><span class="p">,</span><span class="w">                  </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">     </span><span class="p">&amp;</span><span class="w">           </span><span class="s1">&#39;ESTIMATED SLOPE = &#39;</span><span class="p">,</span><span class="n">E15</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">ENDIF</span><span class="w"></span>
+<span class="c">!</span>
+<span class="k">END SUBROUTINE </span><span class="n">LGNPLT</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_datapac
+ was developed by John S. Urban<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 01:03 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>
